@@ -1,0 +1,14 @@
+# Bounded SQLite bootstrap concurrency
+
+The chapter-fix full regression exposed a real Windows race: `test_state.py::test_concurrent_database_migration` failed at `PRAGMA journal_mode=WAL` with `sqlite3.OperationalError: database is locked`. The complete failed snapshot remains in `chapter-fixes-full-20260920-025628.log/.xml`; no result was replaced or relabeled as passing.
+
+`Store.migrate` now retries only SQLite BUSY/LOCKED bootstrap failures with one 20-second total lock-wait deadline. Individual SQLite waits are capped at 250 ms or the remaining deadline, followed by at most 50 ms delay. Every attempt uses a fresh connection, verifies that WAL is active, acquires `BEGIN IMMEDIATE`, applies the complete migration transaction, and commits the version record with the schema. Failed attempts roll back and close. Other SQL errors surface immediately; exhausting the deadline preserves the lock error. There is no process-local mutex substituting for SQLite's cross-process locking, no skipped migration, and no fallback out of WAL.
+
+Tests cover a deterministic initial WAL race, contention after DDL but before the migration version record, held-lock timeout and recovery after release, immediate non-lock error propagation, twelve fresh databases with eight simultaneous threads each, and four actual independent Windows Python processes each opening the same new database five times. WAL mode, one migration version and SQLite integrity are checked. Process tests use a minimal environment without model credentials and do not start the existing application services.
+
+- `migration_concurrency_red.log`: deterministic bootstrap fixture failed before the fix.
+- `migration_concurrency_targeted.log/.xml`: 74 passed, three answer-recovery tests failed because the selected pytest temporary path exceeded Windows path limits. This failure evidence is retained.
+- `migration_concurrency_final.log/.xml`: the same suite in a shorter unique directory passed all 77 tests in 17.59 seconds; includes the late-added fourth answer-recovery integration test.
+- `migration_state_integration.log/.xml`: 27 passed in 16.02 seconds after adding the partial-DDL rollback fixture. Includes state/lease/approval behavior, API endpoints, benchmark actor, exercise-policy decisions and actual Windows mock workflows. Two dependency deprecation warnings remain.
+
+No API call or application/worker restart was performed. Concurrent live benchmark processes had already imported the prior Store implementation; this report does not attribute their behavior to the later disk patch. Teacher visual acceptance remains NOT_RUN. The original 361-test snapshot and its failure are retained. A later complete rerun after all fixes passed 369 tests, with six deliberately deselected and no failures/skips: `chapter-final-full-20260920-030902.log/.xml/-metadata.json`. Source/test hashes were unchanged throughout that successful rerun.

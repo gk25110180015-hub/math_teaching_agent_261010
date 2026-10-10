@@ -1,0 +1,29 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+______ test_local_review_rejects_outside_section_id_then_rechecks_scope _______
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/i2reviewred/test_local_review_rejects_outs0')
+
+    def test_local_review_rejects_outside_section_id_then_rechecks_scope(tmp_path):
+        provider=Provider();p=pipeline(tmp_path,provider)
+>       result=p.review_units([{'id':'S01-U01','kind':'definition','tex':'���ṩ�Ķ��塣'}],
+               ^^^^^^^^^^^^^^
+            {'scope':{'kind':'section_local','current_section':'S01','pending_sections':['S02']}},tmp_path,'local')
+E       AttributeError: 'Pipeline' object has no attribute 'review_units'
+
+tests\test_review_scope.py:20: AttributeError
+_____ test_persistent_out_of_scope_review_is_blocked_not_silently_removed _____
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/i2reviewred/test_persistent_out_of_scope_r0')
+
+    def test_persistent_out_of_scope_review_is_blocked_not_silently_removed(tmp_path):
+        provider=Provider(False);p=pipeline(tmp_path,provider)
+>       with pytest.raises(AgentError) as exc:p.review_units([{'id':'S01-U01','tex':'���塣'}],{'scope':{'kind':'section_local'}},tmp_path,'local')
+                                              ^^^^^^^^^^^^^^
+E       AttributeError: 'Pipeline' object has no attribute 'review_units'
+
+tests\test_review_scope.py:28: AttributeError
+=========================== short test summary info ===========================
+FAILED tests/test_review_scope.py::test_local_review_rejects_outside_section_id_then_rechecks_scope
+FAILED tests/test_review_scope.py::test_persistent_out_of_scope_review_is_blocked_not_silently_removed
+2 failed in 0.27s

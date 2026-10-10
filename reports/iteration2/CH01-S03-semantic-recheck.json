@@ -1,0 +1,512 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-19T19:41:59.664Z",
+  "method": "独立AI逐单元数学文本审读 + 只读程序差异/哈希校验 + 本机真实SymPy复算。",
+  "api_calls": 0,
+  "database_mutations": 0,
+  "source_or_product_changes": 0,
+  "teacher_visual_review": "NOT_RUN",
+  "human_acceptance": "NOT_RUN",
+  "whole_chapter_assessment": "PENDING_OUTPUT",
+  "new_windows_compile": "NOT_RUN",
+  "new_visual_render_or_inspection": "NOT_RUN",
+  "new_mock_tests": "NOT_RUN",
+  "dataset": "CH01",
+  "section_id": "S03",
+  "run_id": "05748ab6260c40989a560a98e1e2065a",
+  "local_answer_result": "APPENDED_ANSWERS_CONFIRMED",
+  "approved_plan": {
+    "hash": "60e76cc0b1271ac1b32a9f48c9ae760665bb7180cbdd52df6f5f5958f25db4ac",
+    "section": {
+      "id": "S03",
+      "objectives": [
+        "理解并证明数列夹逼定理的基本思想",
+        "能够利用绝对值估计、上下界和已知极限处理振荡因子",
+        "掌握常见基本极限的推导或使用条件，如\\(1/n\\)趋于零及有理式的无穷远行为",
+        "通过例题分析含有有界因子、符号变化因子或根式变形的数列",
+        "练习应覆盖至少一个不能直接套用四则运算法则而需夹逼的数列"
+      ],
+      "prerequisites": [
+        "S02"
+      ],
+      "reference_labels": [
+        "thm:squeeze-sequence",
+        "thm:basic-reciprocal-limit",
+        "thm:bounded-times-zero"
+      ],
+      "required_kinds": [
+        "definition",
+        "theorem",
+        "example",
+        "solution",
+        "proof",
+        "exercise"
+      ],
+      "title": "夹逼定理与常见极限"
+    },
+    "proof_policy": "key"
+  },
+  "base": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS03_9352d2ae9887",
+  "initial_hash": "7dbd0e0f1f4cf3ac3f713477ed9e9adc9e1c13e2d2fb34202ddd70f04a54e02e",
+  "final_hash": "6e5e8c24f9761326a9a9cfab675fdc3c67822a864f11dd5fd804f9d77240db13",
+  "diff": {
+    "status": "PASS",
+    "original_unit_count": 17,
+    "original_units_exact": true,
+    "added_units": [
+      {
+        "id": "S03.U16.answer",
+        "kind": "solution",
+        "tex": "对所有正整数 $n$，由 $|\\sin n|\\leq1$ 及 $n+1>0$，有\n\\[\n|b_n|=\\frac{|\\sin n|}{n+1}\\leq\\frac1{n+1}\\leq\\frac1n.\n\\]\n由于 $1/n\\to0$，故\n\\[\n-\\frac1n\\leq b_n\\leq\\frac1n\n\\]\n两侧均趋于零。由夹逼定理，$\\displaystyle\\lim_{n\\to\\infty}b_n=0$；同时上述估计也说明上界 $1/(n+1)$ 趋于零。\n\n虽然 $b_n=(\\sin n)\\cdot1/(n+1)$，但乘积极限法则要求两个因子数列均收敛，不能仅凭 $|\\sin n|\\leq1$ 就认定 $\\{\\sin n\\}$ 收敛，因而不能未经证明就把两个因子的极限相乘。本题只需利用正弦因子的有界性，无需确定其收敛性；也可用有界数列与无穷小数列的乘积趋于零来说明。",
+        "relates_to": "S03.U16"
+      },
+      {
+        "id": "S03.U17.answer",
+        "kind": "solution",
+        "tex": "(1) 对所有正整数 $n$，根号内为正，且共轭式 $\\sqrt{n^2+n}+n>0$，所以\n\\[\n\\sqrt{n^2+n}-n\n=\\frac{n}{\\sqrt{n^2+n}+n}\n=\\frac1{\\sqrt{1+1/n}+1}.\n\\]\n这里利用了 $n>0$，从而 $\\sqrt{n^2+n}=n\\sqrt{1+1/n}$。再作共轭变形并估计：\n\\[\n0\\leq\\sqrt{1+1/n}-1\n=\\frac{1/n}{\\sqrt{1+1/n}+1}\n\\leq\\frac1{2n}.\n\\]\n由 $1/(2n)\\to0$ 和夹逼定理，$\\sqrt{1+1/n}-1\\to0$，故 $\\sqrt{1+1/n}\\to1$。变形后分母处处为正，且趋于 $2\\neq0$，由商法则得\n\\[\n\\lim_{n\\to\\infty}\\bigl(\\sqrt{n^2+n}-n\\bigr)=\\frac12.\n\\]\n关键是先用共轭变形及夹逼证明根式数列的极限，再检查商法则的分母条件，并未援引函数连续性。\n\n(2) 由于 $n^2+1>0$，将原式与 $2$ 作差得\n\\[\n\\frac{2n^2+(-1)^n}{n^2+1}-2\n=\\frac{(-1)^n-2}{n^2+1}.\n\\]\n符号变化项满足 $|(-1)^n|=1$，因此对所有正整数 $n$，\n\\[\n\\left|\\frac{2n^2+(-1)^n}{n^2+1}-2\\right|\n\\leq\\frac{|(-1)^n|+2}{n^2+1}\n=\\frac3{n^2+1}\\leq\\frac3{n^2}\\to0.\n\\]\n由误差估计形式的夹逼定理，\n\\[\n\\lim_{n\\to\\infty}\\frac{2n^2+(-1)^n}{n^2+1}=2.\n\\]\n关键是分母为正，且符号变化项造成的误差具有趋于零的绝对值上界；无需对 $(-1)^n$ 本身取极限。",
+        "relates_to": "S03.U17"
+      }
+    ],
+    "original_calculation_count": 2,
+    "original_calculations_exact": true,
+    "new_calculations": [
+      {
+        "id": "S03.C03",
+        "unit_id": "S03.U17.answer",
+        "kind": "limit",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "expression": {
+          "op": "Add",
+          "args": [
+            {
+              "op": "sqrt",
+              "args": [
+                {
+                  "op": "Add",
+                  "args": [
+                    {
+                      "op": "Pow",
+                      "args": [
+                        {
+                          "op": "Symbol",
+                          "name": "n"
+                        },
+                        {
+                          "op": "Integer",
+                          "value": 2
+                        }
+                      ]
+                    },
+                    {
+                      "op": "Symbol",
+                      "name": "n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "op": "Mul",
+              "args": [
+                {
+                  "op": "Integer",
+                  "value": -1
+                },
+                {
+                  "op": "Symbol",
+                  "name": "n"
+                }
+              ]
+            }
+          ]
+        },
+        "variable": "n",
+        "point": {
+          "op": "Infinity"
+        },
+        "direction": "-",
+        "expected": {
+          "op": "Rational",
+          "p": 1,
+          "q": 2
+        }
+      }
+    ],
+    "new_calculation_limitations": [
+      "新增核算仅请求核对 S03.U17 第 (1) 题的具体极限；它不核验两个答案中对所有正整数成立的不等式链，也不替代夹逼证明及乘积、商法则适用条件的论证。协议没有用于直接核验此类全称不等式证明的请求类型。"
+    ],
+    "source_hash": "7dbd0e0f1f4cf3ac3f713477ed9e9adc9e1c13e2d2fb34202ddd70f04a54e02e",
+    "result_hash": "6e5e8c24f9761326a9a9cfab675fdc3c67822a864f11dd5fd804f9d77240db13",
+    "original_units": [
+      {
+        "id": "S03.U01",
+        "sha256": "c2c2fc5191f0488a36bc65f74ebf96ae556bd097d0162e8bae76058397dca4c9"
+      },
+      {
+        "id": "S03.U02",
+        "sha256": "3cf777537795f4e2ab21eca54a39c20f0b038d8cf232613122b70e13f81f6e02"
+      },
+      {
+        "id": "S03.U03",
+        "sha256": "7bb422ecda573978aa7e27648be4a02dd8aaee18879f1a3712d2b4029b47b5f1"
+      },
+      {
+        "id": "S03.U04",
+        "sha256": "dccdd3f87ddaba77e7bbbc07750d4949d296a61ee45f1eb3523235435ed8b9e1"
+      },
+      {
+        "id": "S03.U05",
+        "sha256": "a12641403193f864e9a017fd107e79fba1d20a1031658b27cbc046e11eac9db2"
+      },
+      {
+        "id": "S03.U06",
+        "sha256": "d03271c7154a6d14761dd01e28708566ad03991c4b81903bc7fd875f092c5a22"
+      },
+      {
+        "id": "S03.U07",
+        "sha256": "df56353a7d668c8b12ad760cb49d13832578c98564e3de0bad83712c0f1c34cb"
+      },
+      {
+        "id": "S03.U08",
+        "sha256": "c1b763b284689120fa180ad042a56236b0d0952be3f3e5d1903efe4bda723f51"
+      },
+      {
+        "id": "S03.U09",
+        "sha256": "9e58adef7168d6e05f2366c1bd3755990f8d596c5974bf2bd587e7e508250695"
+      },
+      {
+        "id": "S03.U10",
+        "sha256": "c5c5335951d08bfa62692c7433731d1d479d96106fba7a434ba4f996d4803d80"
+      },
+      {
+        "id": "S03.U11",
+        "sha256": "a73452917fba18945ccb375e2c1dd7912da7dbf8e8953247c5e649a7e3e35fa4"
+      },
+      {
+        "id": "S03.U12",
+        "sha256": "53f3c0b09daf259bbe9c46cd35419bad3ebc612550f3b6d65a8062cdb387db3c"
+      },
+      {
+        "id": "S03.U13",
+        "sha256": "4007d77ceff617ab701c43567a24eb6fb09ff3c1620c3af36f8c6a64c3392b54"
+      },
+      {
+        "id": "S03.U14",
+        "sha256": "e8093acf8cc0cbbf4f11fd653608e9522cfe10fc3397c8ed0027e61c1eb1cb9f"
+      },
+      {
+        "id": "S03.U15",
+        "sha256": "6d8a568d0683f671c6630594c77d9cc4c4d627a02f62a0ea7f8ecc95484e122f"
+      },
+      {
+        "id": "S03.U16",
+        "sha256": "593736af0294a0e878eed90ef79288f34de3295113a854be4d92dd69447ac2f1"
+      },
+      {
+        "id": "S03.U17",
+        "sha256": "01efbc7f3f4714357ce7ad0795c3bc3c0b359a0435cfb2ecc04a82c009165b76"
+      }
+    ]
+  },
+  "compile": {
+    "status": "PASS",
+    "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS03_9352d2ae9887\\build\\lecture.pdf",
+    "issues": [],
+    "log_paths": [
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS03_9352d2ae9887\\build\\pass-1.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS03_9352d2ae9887\\build\\pass-1.tex.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS03_9352d2ae9887\\build\\pass-2.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS03_9352d2ae9887\\build\\pass-2.tex.log"
+    ],
+    "engine": {
+      "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+    },
+    "passes": 2,
+    "compile_mode": "trusted_local",
+    "isolation": "NOT_IMPLEMENTED",
+    "limitations": [
+      "原生可信本机编译不是文件系统或网络隔离沙箱。"
+    ],
+    "command": [
+      "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "-no-shell-escape",
+      "-recorder",
+      "-synctex=1",
+      "-jobname=lecture",
+      "-output-directory=.",
+      "lecture.tex"
+    ],
+    "elapsed_seconds": 3.75,
+    "page_count": 7,
+    "pdf_sha256": "5be03a87daeeb6eacce883737938e55fbc07c13ff55f6b81cbe5f3bdb753d682",
+    "auxiliary_hashes": {
+      ".aux": "6786e2ac440700688bcf2c897c161360a69cdc4ba2a93669effd882901f48612",
+      ".out": "fe06c2ada36ddea62d6a87c8c1ad1d758d52970e60ad1a6b4ea96003545366d4"
+    }
+  },
+  "new_offline_mathcheck": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "limit",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "0",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U12"
+      },
+      {
+        "kind": "limit",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "3/2",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S03.C02",
+        "unit_id": "S03.U14"
+      },
+      {
+        "kind": "limit",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "1/2",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S03.C03",
+        "unit_id": "S03.U17.answer"
+      }
+    ],
+    "coverage": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10",
+      "S03.U11",
+      "S03.U12",
+      "S03.U13",
+      "S03.U14",
+      "S03.U15",
+      "S03.U16",
+      "S03.U17",
+      "S03.U16.answer",
+      "S03.U17.answer"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "核算请求仅覆盖根式例题和有理式例题的具体极限；协议的表达式树不能表达夹逼定理及有界数列乘无穷小定理中关于任意数列、最终不等式和任意误差的量词结构，这些一般结论由正文证明支持。",
+      "新增核算仅请求核对 S03.U17 第 (1) 题的具体极限；它不核验两个答案中对所有正整数成立的不等式链，也不替代夹逼证明及乘积、商法则适用条件的论证。协议没有用于直接核验此类全称不等式证明的请求类型。"
+    ]
+  },
+  "plan_hash": "60e76cc0b1271ac1b32a9f48c9ae760665bb7180cbdd52df6f5f5958f25db4ac",
+  "plan_section": {
+    "id": "S03",
+    "objectives": [
+      "理解并证明数列夹逼定理的基本思想",
+      "能够利用绝对值估计、上下界和已知极限处理振荡因子",
+      "掌握常见基本极限的推导或使用条件，如\\(1/n\\)趋于零及有理式的无穷远行为",
+      "通过例题分析含有有界因子、符号变化因子或根式变形的数列",
+      "练习应覆盖至少一个不能直接套用四则运算法则而需夹逼的数列"
+    ],
+    "prerequisites": [
+      "S02"
+    ],
+    "reference_labels": [
+      "thm:squeeze-sequence",
+      "thm:basic-reciprocal-limit",
+      "thm:bounded-times-zero"
+    ],
+    "required_kinds": [
+      "definition",
+      "theorem",
+      "example",
+      "solution",
+      "proof",
+      "exercise"
+    ],
+    "title": "夹逼定理与常见极限"
+  },
+  "proof_policy": "key",
+  "evidence": [
+    {
+      "name": "candidate-normalized.json",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS03_9352d2ae9887\\candidate-normalized.json",
+      "sha256": "c6a0071f3fbb8cb18c19e06c938816b5fe65edfad02eca34e2d70d62d42d644d",
+      "bytes": 12793
+    },
+    {
+      "name": "answer-repair-1-candidate.json",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS03_9352d2ae9887\\answer-repair-1-candidate.json",
+      "sha256": "ab01b3b863f5769c6746bf960b4d91ae908a24fa6ff1bb08e0fd49e446db873a",
+      "bytes": 16778
+    },
+    {
+      "name": "answer-repair-1-evidence.json",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS03_9352d2ae9887\\answer-repair-1-evidence.json",
+      "sha256": "342f9e90d6c7020f1768f8e4bd514809634596c96ec6f79a8f9f7fc7937f448a",
+      "bytes": 1620
+    },
+    {
+      "name": "answer-repair-1-normalization.json",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS03_9352d2ae9887\\answer-repair-1-normalization.json",
+      "sha256": "7e9d9219257ee0b0ad3ff730b57c304267cd6de0d1ca2897f3f808fcebd84406",
+      "bytes": 12786
+    },
+    {
+      "name": "review-0.json",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS03_9352d2ae9887\\review-0.json",
+      "sha256": "17a6f813f68cd1e7ec6a1471b9d06d17418c8b0a2595861e1d1dbf2310468358",
+      "bytes": 3769
+    },
+    {
+      "name": "review-1.json",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS03_9352d2ae9887\\review-1.json",
+      "sha256": "5feed62a4b577402563a43548f97f6bff566a78696a155fbb489b06da2f79b6f",
+      "bytes": 5982
+    },
+    {
+      "name": "compile.json",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS03_9352d2ae9887\\compile.json",
+      "sha256": "cac6207c3673e258d8109b336074ba9264a2dc3fc4496c1baf90120f98410271",
+      "bytes": 1821
+    },
+    {
+      "name": "source/lecture.tex",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS03_9352d2ae9887\\source\\lecture.tex",
+      "sha256": "d858786506f43cb8644f46a368cc95e1f16c25d6bc8652231dfe9b3b1c86333c",
+      "bytes": 19743
+    },
+    {
+      "name": "build/lecture.pdf",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS03_9352d2ae9887\\build\\lecture.pdf",
+      "sha256": "5be03a87daeeb6eacce883737938e55fbc07c13ff55f6b81cbe5f3bdb753d682",
+      "bytes": 270065
+    }
+  ],
+  "source_anchors": [
+    {
+      "line": 290,
+      "text": "% UNIT S03.U16"
+    },
+    {
+      "line": 299,
+      "text": "% UNIT S03.U17"
+    },
+    {
+      "line": 326,
+      "text": "% UNIT S03.U16.answer"
+    },
+    {
+      "line": 338,
+      "text": "% UNIT S03.U17.answer"
+    }
+  ],
+  "review_issues": [],
+  "independent_checks": {
+    "sin_ratio_limit": "0",
+    "sqrt_shift_limit": "1/2",
+    "alternating_error_bound_limit": "0",
+    "even_sign_limit": "2",
+    "odd_sign_limit": "2",
+    "tool": "SymPy",
+    "version": "1.14.0"
+  },
+  "checkpoint": {
+    "run_id": "05748ab6260c40989a560a98e1e2065a",
+    "step_key": "section.S03",
+    "input_hash": "eedb8b25d9436e6463dbd80828fed60989df9a3a8835bd4afaefa1a7aeeb6ed1",
+    "output_hash": "1e8cb75a494959efc5358a9ad36ad4a8719873e3d4ebbe19e187da1ce2f3f2e9",
+    "created_at": "2026-09-19T19:11:42.028689+00:00",
+    "generated_hash": "6e5e8c24f9761326a9a9cfab675fdc3c67822a864f11dd5fd804f9d77240db13",
+    "source_key": "b/05748ab6260c4098/sS03_9352d2ae9887/source/lecture.tex",
+    "source_hash": "d858786506f43cb8644f46a368cc95e1f16c25d6bc8652231dfe9b3b1c86333c",
+    "stored_payload_hash_verified": true,
+    "generated_matches_reviewed_final": true,
+    "compiled_source_hash_verified": true,
+    "report_hash": "533a1a544b85fc02e3a28f2a5e0a4b07ed20eb649050136f3fe361c8b7965410",
+    "report_compile_status": "PASS",
+    "references": {
+      "pending_labels": [],
+      "status": "PASS"
+    },
+    "sqlite_open_mode": "mode=ro plus PRAGMA query_only=ON"
+  },
+  "semantic_review": [
+    {
+      "id": "CH01-S03-U16",
+      "question_unit": "S03.U16",
+      "answer_unit": "S03.U16.answer",
+      "result": "CORRECT_WITH_STATED_DOMAIN",
+      "reason": "n为正整数保证n+1>0，|sin n|≤1给出|b_n|≤1/(n+1)≤1/n，双侧±1/n均趋0，夹逼得0。答案没有未经证明断言sin n收敛，也没有把有界当作收敛；说明乘积法则要两因子均收敛，而本题无需这一条件。",
+      "answer_satisfies": "全体正整数上的界、上界趋0的理由、不能直接相乘的解释均齐全。"
+    },
+    {
+      "id": "CH01-S03-U17A",
+      "question_unit": "S03.U17",
+      "answer_unit": "S03.U17.answer",
+      "result": "CORRECT_WITH_STATED_DOMAIN",
+      "reason": "正整数n使共轭分母正且sqrt(n²+n)=n sqrt(1+1/n)，原式=1/(sqrt(1+1/n)+1)。再由0≤sqrt(1+1/n)−1=(1/n)/(sqrt(1+1/n)+1)≤1/(2n)直接夹逼，根式趋1，分母趋2≠0，极限1/2。没有偷用函数连续性。"
+    },
+    {
+      "id": "CH01-S03-U17B",
+      "question_unit": "S03.U17",
+      "answer_unit": "S03.U17.answer",
+      "result": "CORRECT_WITH_STATED_DOMAIN",
+      "reason": "原式减2精确为[(-1)^n−2]/(n²+1)，n²+1>0。绝对误差≤3/(n²+1)≤3/n²→0，故极限2；不需要(-1)^n收敛。"
+    }
+  ],
+  "preservation_interpretation": "原17个unit完整对象及顺序逐字相同，原2个calculation完整对象及顺序相同；新增2个solution、1个绑定U17.answer的C03计算以及1条核算覆盖限制。因此不能说calculation列表整体未变，应说原请求保留并追加1条。",
+  "checkpoint_interpretation": "answer-repair evidence中的APPLIED_UNCHECKED/NOT_RUN是补丁刚应用时的不可变证据；后续review-1及数据库section.S03检查点已完成数学/实际编译。不能把旧补丁证据状态误当作最终未检查，也不篡改旧证据。",
+  "remaining_limitations": [
+    "一般不等式及量词结构由AI数学文本审读核对，没有交给形式化定理证明器；SymPy几项具体极限不是完整证明。",
+    "未进行本次页面视觉审查；不宣称末尾题号/排版经过新的人工验收。",
+    "本次重点为两个追加答案及原文保真，不代替整个CH01最终语义覆盖审查。"
+  ],
+  "verification_boundaries": {
+    "AI_text_review": "COMPLETED for the two answers and their prerequisite reasoning",
+    "programmatic": "17个原单元+2个原calculation逐字保留，hash链和checkpoint核对；实际SymPy原2项加新C03分别0、3/2、1/2，并独立复算sin比值、根式和交错误差上界。",
+    "existing_windows": "worker实际XeLaTeX两遍PASS；7页是S01+S02+S03累积稿，PDF hash核验一致。本任务未重编译。",
+    "human": "教师与人工页面验收均NOT_RUN"
+  }
+}
+

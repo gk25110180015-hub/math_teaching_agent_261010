@@ -1,0 +1,159 @@
+FFFFFF........FF...F                                                     [100%]
+================================== FAILURES ===================================
+_ test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character[\\[-\\]] _
+
+opening = '\\[', closing = '\\]'
+
+    @pytest.mark.parametrize('opening,closing',[(r'\[',r'\]'),(r'\(',r'\)'),('$','$'),('$$','$$'),
+        (r'\begin{equation}',r'\end{equation}'),(r'\begin{align*}',r'\end{align*}')])
+    def test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character(opening,closing):
+        raw='���ġ�'+opening+r'\frac{1}{n}=0��'+closing+'���ģ�'
+        result,evidence=normalize(raw)
+>       assert result=='���ġ�'+opening+r'\frac{1}{n}=0\text{��}'+closing+'���ģ�'
+E       AssertionError: assert '���ġ�\\[\\frac{1}{n}=0��\\]���ģ�' == '���ġ�\\[\\frac...text{��}\\]���ģ�'
+E         
+E         - ���ġ�\[\frac{1}{n}=0\text{��}\]���ģ�
+E         ?                   ------ -
+E         + ���ġ�\[\frac{1}{n}=0��\]���ģ�
+
+tests\test_math_punctuation.py:25: AssertionError
+_ test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character[\\(-\\)] _
+
+opening = '\\(', closing = '\\)'
+
+    @pytest.mark.parametrize('opening,closing',[(r'\[',r'\]'),(r'\(',r'\)'),('$','$'),('$$','$$'),
+        (r'\begin{equation}',r'\end{equation}'),(r'\begin{align*}',r'\end{align*}')])
+    def test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character(opening,closing):
+        raw='���ġ�'+opening+r'\frac{1}{n}=0��'+closing+'���ģ�'
+        result,evidence=normalize(raw)
+>       assert result=='���ġ�'+opening+r'\frac{1}{n}=0\text{��}'+closing+'���ģ�'
+E       AssertionError: assert '���ġ�\\(\\frac{1}{n}=0��\\)���ģ�' == '���ġ�\\(\\frac...text{��}\\)���ģ�'
+E         
+E         - ���ġ�\(\frac{1}{n}=0\text{��}\)���ģ�
+E         ?                   ------ -
+E         + ���ġ�\(\frac{1}{n}=0��\)���ģ�
+
+tests\test_math_punctuation.py:25: AssertionError
+_ test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character[$-$] _
+
+opening = '$', closing = '$'
+
+    @pytest.mark.parametrize('opening,closing',[(r'\[',r'\]'),(r'\(',r'\)'),('$','$'),('$$','$$'),
+        (r'\begin{equation}',r'\end{equation}'),(r'\begin{align*}',r'\end{align*}')])
+    def test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character(opening,closing):
+        raw='���ġ�'+opening+r'\frac{1}{n}=0��'+closing+'���ģ�'
+        result,evidence=normalize(raw)
+>       assert result=='���ġ�'+opening+r'\frac{1}{n}=0\text{��}'+closing+'���ģ�'
+E       AssertionError: assert '���ġ�$\\frac{1}{n}=0��$���ģ�' == '���ġ�$\\frac{1...\\text{��}$���ģ�'
+E         
+E         - ���ġ�$\frac{1}{n}=0\text{��}$���ģ�
+E         ?                  ------ -
+E         + ���ġ�$\frac{1}{n}=0��$���ģ�
+
+tests\test_math_punctuation.py:25: AssertionError
+_ test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character[$$-$$] _
+
+opening = '$$', closing = '$$'
+
+    @pytest.mark.parametrize('opening,closing',[(r'\[',r'\]'),(r'\(',r'\)'),('$','$'),('$$','$$'),
+        (r'\begin{equation}',r'\end{equation}'),(r'\begin{align*}',r'\end{align*}')])
+    def test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character(opening,closing):
+        raw='���ġ�'+opening+r'\frac{1}{n}=0��'+closing+'���ģ�'
+        result,evidence=normalize(raw)
+>       assert result=='���ġ�'+opening+r'\frac{1}{n}=0\text{��}'+closing+'���ģ�'
+E       AssertionError: assert '���ġ�$$\\frac{1}{n}=0��$$���ģ�' == '���ġ�$$\\frac{...\text{��}$$���ģ�'
+E         
+E         - ���ġ�$$\frac{1}{n}=0\text{��}$$���ģ�
+E         ?                   ------ -
+E         + ���ġ�$$\frac{1}{n}=0��$$���ģ�
+
+tests\test_math_punctuation.py:25: AssertionError
+_ test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character[\\begin{equation}-\\end{equation}] _
+
+opening = '\\begin{equation}', closing = '\\end{equation}'
+
+    @pytest.mark.parametrize('opening,closing',[(r'\[',r'\]'),(r'\(',r'\)'),('$','$'),('$$','$$'),
+        (r'\begin{equation}',r'\end{equation}'),(r'\begin{align*}',r'\end{align*}')])
+    def test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character(opening,closing):
+        raw='���ġ�'+opening+r'\frac{1}{n}=0��'+closing+'���ģ�'
+        result,evidence=normalize(raw)
+>       assert result=='���ġ�'+opening+r'\frac{1}{n}=0\text{��}'+closing+'���ģ�'
+E       AssertionError: assert '���ġ�\\begin{e...{equation}���ģ�' == '���ġ�\\begin{e...{equation}���ģ�'
+E         
+E         - ���ġ�\begin{equation}\frac{1}{n}=0\text{��}\end{equation}���ģ�
+E         ?                                 ------ -
+E         + ���ġ�\begin{equation}\frac{1}{n}=0��\end{equation}���ģ�
+
+tests\test_math_punctuation.py:25: AssertionError
+_ test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character[\\begin{align*}-\\end{align*}] _
+
+opening = '\\begin{align*}', closing = '\\end{align*}'
+
+    @pytest.mark.parametrize('opening,closing',[(r'\[',r'\]'),(r'\(',r'\)'),('$','$'),('$$','$$'),
+        (r'\begin{equation}',r'\end{equation}'),(r'\begin{align*}',r'\end{align*}')])
+    def test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character(opening,closing):
+        raw='���ġ�'+opening+r'\frac{1}{n}=0��'+closing+'���ģ�'
+        result,evidence=normalize(raw)
+>       assert result=='���ġ�'+opening+r'\frac{1}{n}=0\text{��}'+closing+'���ģ�'
+E       AssertionError: assert '���ġ�\\begin{a...nd{align*}���ģ�' == '���ġ�\\begin{a...nd{align*}���ģ�'
+E         
+E         - ���ġ�\begin{align*}\frac{1}{n}=0\text{��}\end{align*}���ģ�
+E         ?                               ------ -
+E         + ���ġ�\begin{align*}\frac{1}{n}=0��\end{align*}���ģ�
+
+tests\test_math_punctuation.py:25: AssertionError
+__ test_cases_and_existing_text_preserved_while_bare_punctuation_is_wrapped ___
+
+    def test_cases_and_existing_text_preserved_while_bare_punctuation_is_wrapped():
+        raw=r'\[f(x)=\begin{cases}1,&x<0\\2,&x>0\end{cases}��\quad\text{�ҡ�}\]'
+        result,evidence=normalize(raw)
+>       assert result==raw.replace('��',r'\text{��}') and evidence['status']=='PASS'
+E       AssertionError: assert ('\\[f(x)=\\be...\\text{�ҡ�}\\]' == '\\[f(x)=\\be...\\text{�ҡ�}\\]'
+E         
+E         Skipping 35 identical leading characters in diff, use -v to show
+E         - end{cases}\text{��}\quad\text{�ҡ�}\]
+E         ?           ------ -
+E         + end{cases}��\quad\text{�ҡ�}\])
+
+tests\test_math_punctuation.py:50: AssertionError
+_____ test_labeled_display_and_punctuation_changes_have_separate_evidence _____
+
+    def test_labeled_display_and_punctuation_changes_have_separate_evidence():
+        result,evidence=normalize(r'\[a=b��\label{eq:safe}\]')
+>       assert result==r'\begin{equation}a=b\text{��}\label{eq:safe}\end{equation}'
+E       AssertionError: assert '\\begin{equa...end{equation}' == '\\begin{equa...end{equation}'
+E         
+E         - \begin{equation}a=b\text{��}\label{eq:safe}\end{equation}
+E         ?                    ------ -
+E         + \begin{equation}a=b��\label{eq:safe}\end{equation}
+
+tests\test_math_punctuation.py:55: AssertionError
+_ test_actual_ch03_changes_exactly_seven_punctuation_tokens_and_preserves_other_content _
+
+    def test_actual_ch03_changes_exactly_seven_punctuation_tokens_and_preserves_other_content():
+        section,fixed,evidence,before,after=captured()
+        assert evidence['status']=='PASS'
+>       assert sum(len(u['punctuation_normalizations']) for u in evidence['units'])==7
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_math_punctuation.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+.0 = <list_iterator object at 0x000002AD0A2411E0>
+
+>   assert sum(len(u['punctuation_normalizations']) for u in evidence['units'])==7
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'punctuation_normalizations'
+
+tests\test_math_punctuation.py:82: KeyError
+=========================== short test summary info ===========================
+FAILED tests/test_math_punctuation.py::test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character[\\[-\\]]
+FAILED tests/test_math_punctuation.py::test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character[\\(-\\)]
+FAILED tests/test_math_punctuation.py::test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character[$-$]
+FAILED tests/test_math_punctuation.py::test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character[$$-$$]
+FAILED tests/test_math_punctuation.py::test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character[\\begin{equation}-\\end{equation}]
+FAILED tests/test_math_punctuation.py::test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character[\\begin{align*}-\\end{align*}]
+FAILED tests/test_math_punctuation.py::test_cases_and_existing_text_preserved_while_bare_punctuation_is_wrapped
+FAILED tests/test_math_punctuation.py::test_labeled_display_and_punctuation_changes_have_separate_evidence
+FAILED tests/test_math_punctuation.py::test_actual_ch03_changes_exactly_seven_punctuation_tokens_and_preserves_other_content
+9 failed, 11 passed, 1 deselected in 0.16s

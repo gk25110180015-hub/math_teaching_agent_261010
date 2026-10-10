@@ -1,0 +1,22 @@
+FF.                                                                      [100%]
+================================== FAILURES ===================================
+__________ test_section_prerequisites_must_be_ids_and_prior_sections __________
+
+    def test_section_prerequisites_must_be_ids_and_prior_sections():
+        p=proposal();p['sections'][0]['prerequisites']=['ʵ����������']
+>       with pytest.raises(ValidationError):LectureProposal.model_validate(p)
+E       Failed: DID NOT RAISE ValidationError
+
+tests\test_plan_dependencies.py:11: Failed
+_______________________ test_section_ids_cannot_repeat ________________________
+
+    def test_section_ids_cannot_repeat():
+        p=proposal();p['sections'][1]['id']='S01'
+>       with pytest.raises(ValidationError):LectureProposal.model_validate(p)
+E       Failed: DID NOT RAISE ValidationError
+
+tests\test_plan_dependencies.py:17: Failed
+=========================== short test summary info ===========================
+FAILED tests/test_plan_dependencies.py::test_section_prerequisites_must_be_ids_and_prior_sections
+FAILED tests/test_plan_dependencies.py::test_section_ids_cannot_repeat - Fail...
+2 failed, 1 passed in 0.28s

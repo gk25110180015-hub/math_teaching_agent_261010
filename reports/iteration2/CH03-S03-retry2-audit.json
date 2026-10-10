@@ -1,0 +1,1047 @@
+{
+  "schema_version": 1,
+  "title": "CH03 S03 retry2 独立只读审计",
+  "captured_at": "2026-09-19T20:26:47.466307+00:00",
+  "run_id": "a45be503af594ce8aae0bb1e4c30184b",
+  "conclusion": "直接阻塞为U06局部修订预算耗尽；最新U02为上下文误读，U06为对已证法则直接应用要求重复展开的过严判断。未发现这两条对应的确定数学错误；不能据此宣称全节或整章通过。",
+  "actual_state": {
+    "id": "a45be503af594ce8aae0bb1e4c30184b",
+    "status": "BLOCKED",
+    "stage": "review.section.S03",
+    "request_count": 27,
+    "active_plan_revision": 2,
+    "error": {
+      "attempt": 3,
+      "budget_version": 0,
+      "code": "BUDGET_EXHAUSTED",
+      "job_id": "27979f9a88114ed1a41b9d3c3c5facd8",
+      "message": "kind=local_repairs_per_unit; units=['S03.U02', 'S03.U06']; used={'S03.U06': 2, 'S03.U04': 1, 'S03.U03': 1, 'S03.U01': 1}; limit=2; proposal_keys=['unit:S03.U02', 'unit:S03.U06']; calls={'unit:S03.U06': 3, 'unit:S03.U03': 3, 'unit:S03.U04': 1, 'unit:S03.U01': 1}; rejected={'unit:S03.U06': 1, 'unit:S03.U03': 1}。合法稿、原审批和未决问题均保留；显式增加预算后才可继续。",
+      "recovery": "原审批和已通过章节保留；修复条件后点击重试。崩溃边界的外部调用可能重复计费。",
+      "timestamp": "2026-09-19T20:22:07.138262+00:00"
+    }
+  },
+  "budget": {
+    "run_id": "a45be503af594ce8aae0bb1e4c30184b",
+    "version": 0,
+    "source": "VERIFIED_BENCHMARK_STATE",
+    "created_at": "2026-09-19T20:05:41.934820+00:00",
+    "updated_at": "2026-09-19T20:18:02.440083+00:00",
+    "defaults": {
+      "global_repair_rounds": 2,
+      "local_repairs_per_unit": 2,
+      "requests": 60
+    },
+    "overrides": {}
+  },
+  "approval": {
+    "run_id": "a45be503af594ce8aae0bb1e4c30184b",
+    "revision": 2,
+    "hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+    "input_hash": "3b4e20cb757d221f1c974ffadb5918b392f9092cd5d1a8d9e5847c07c37930b7",
+    "action_id": "benchmark_driver:CH03:fbd172c8df0c12fc",
+    "confirmed_at": "2026-09-19T18:44:39.087182+00:00"
+  },
+  "issue_assessments": [
+    {
+      "unit_id": "S03.U02",
+      "classification": "MATHEMATICAL_FALSE_POSITIVE_FROM_MISREAD_SCOPE",
+      "is_definite_math_error": false,
+      "actual_wording": "则称 α(x) 与 β(x) 当 x→x0 时等价……等价无穷小首先要求二者都是同一极限过程下的无穷小",
+      "analysis": "前句定义一般渐近等价，后句将等价无穷小限制为同时趋零。α=β=1仅满足前者，不满足后者，不能反驳整个单元。定理条件可跨同一完整单元的相邻句表达，不必须重复置于同一个“若”句。",
+      "optional_pedagogy": "可为初学者合并成一个带零极限条件的定义，但这是可选教学编辑，不是修复已证实数学错误。",
+      "reference_lines": [
+        799,
+        802,
+        977,
+        981
+      ]
+    },
+    {
+      "unit_id": "S03.U06",
+      "classification": "OVERSTRICT_PROOF_EXPANSION_REQUEST_WITH_WRONG_PREMISE_LOCATION",
+      "is_definite_math_error": false,
+      "actual_conditions_location": "S03.U05明确α、β在同一去心邻域均非零；U06结尾也重申。review错误把该双非零条件归于U02。",
+      "derivation": "令r=α/β。由α∼β有r→1。U05使r在共同去心邻域有定义且非零，且极限1≠0；直接使用先修S02已证倒数法则得β/α=1/r→1，再由Fα→L有限与乘法法则得Fβ→L。没有新增前提、除零或循环证明。",
+      "implicit_nonzero_boundary": "即使没有逐字写α最终非零，已定义的比值r→1也能由|r−1|<1/2推出最终非零；不能把这类可立即推出的性质当缺失新假设。",
+      "optional_pedagogy": "增加“由前节倒数法则”有助教学，但省略一次对已证明定理的直接代入，不自动构成重大数学疑点。",
+      "prior_context_status": "EXACT_ACTUAL_REQUEST_HASH_RECONSTRUCTED_PRIOR_FULL_TEXT_PRESENT"
+    }
+  ],
+  "actual_reviewer_context": {
+    "reconstruction_only_no_request": true,
+    "actual_request_input_hash": "f07ab352682bca2dec2ba7a76a0c1e1e273307681b6147b0d98feeaaf6ce74d9",
+    "reconstructed_messages_hash": "f07ab352682bca2dec2ba7a76a0c1e1e273307681b6147b0d98feeaaf6ce74d9",
+    "exact_hash_match": true,
+    "prompt_hash_matches": true,
+    "schema_hash_matches": true,
+    "provided_prior_sections": [
+      "S01",
+      "S02"
+    ],
+    "prior_section_unit_counts": [
+      13,
+      13
+    ],
+    "checkpoints": [
+      {
+        "section_id": "S01",
+        "output_hash": "40f7f12c2119ecd8299721b0e16a5165a7366bb63372c8afd37be41f90d5d387",
+        "generated_hash": "b081d105ff0f3374d07d92928f3bb3272b50f179f1a6d4be6f33285c145ec8a6"
+      },
+      {
+        "section_id": "S02",
+        "output_hash": "2584772cefafb730199dd2a3516512e312c08f0a2495b7a35ff7a3720ba60a11",
+        "generated_hash": "f99d591de59dbcd1cc5e0d711d7e8c4c6593b0709290786fe3f04dc035809561"
+      }
+    ],
+    "prior_unit_id": "S02.U03",
+    "prior_unit_full_object_hash": "1364b96e89206a0def1a08eab6e3132fccc06355e04dc1da3f32b41aa811ed3e",
+    "prior_tex_hash": "49755d5b82226a8d940c581c21d99155a50830ffc7d7c528b028b074dbf3ad94",
+    "prior_contains_reciprocal_proof": true,
+    "prior_reciprocal_excerpt": "若 $B\\neq0$，由 $g(x)\\to B$，可取 $\\delta_3>0$，使得当 $0<|x-x_0|<\\delta_3$ 时 $|g(x)-B|<|B|/2$。于是\n\\[\n|g(x)|\\geq |B|-|g(x)-B|>\\frac{|B|}{2}>0,\n\\]\n故分母不仅非零，而且远离零，并有\n\\[\n\\left|\\frac{1}{g(x)}-\\frac{1}{B}\\right|=\\frac{|g(x)-B|}{|g(x)||B|}\\leq\\frac{2|g(x)-B|}{|B|^2}.\n\\]\n给定 $\\varepsilon>0$，再由极限定义取 $\\delta_4>0$，使得当 $0<|x-x_0|<\\delta_4$ 时 $|g(x)-B|<\\varepsilon|B|^2/2$。当 $0<|x-x_0|<\\min\\{\\delta_3,\\delta_4\\}$ 时，上述倒数误差小于 $\\varepsilon$。所以 $1/g(x)\\to1/B$。再由已证明的积的法则，得到\n\\[\n\\frac{f(x)}{g(x)}=f(x)\\frac{1}{g(x)}\\to\\frac{A}{B}.\n\\]\n\n",
+    "actual_scope": {
+      "kind": "section_local",
+      "current_section": {
+        "id": "S03",
+        "objectives": [
+          "理解无穷小与无穷大的相对概念。",
+          "掌握常用基本极限及其适用条件。",
+          "理解等价无穷小的定义，并能在乘积和商的极限中进行规范替换。"
+        ],
+        "prerequisites": [
+          "S02"
+        ],
+        "reference_labels": [
+          "def:infinitesimal",
+          "def:equivalent-infinitesimal",
+          "thm:fundamental-limits",
+          "thm:equivalent-substitution"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "无穷小、基本极限与等价无穷小"
+      },
+      "pending_sections": [
+        "S04",
+        "S05"
+      ]
+    },
+    "current_unit_nonzero_premise": "S03.U05",
+    "context_bytes": 37192
+  },
+  "previous_repairs": {
+    "legacy_count": 22,
+    "legacy_records": {
+      "origin_candidate_key": "b/a45be503af594ce8/sS03_4e86629a0d4a/candidate.json",
+      "origin_candidate_hash": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+      "records": [
+        {
+          "number": 1,
+          "raw_key": "b/a45be503af594ce8/sS03_4e86629a0d4a/repair-1-raw.json",
+          "raw_hash": "f83fb0ad488a76716c1035b4227e264228a769263ed65df8cb1c2e64bcf5fc31",
+          "review_key": "b/a45be503af594ce8/sS03_4e86629a0d4a/review-0.json",
+          "review_hash": "82d99330205c20d3ef65c42bdfcb6ad2e98447a870236770e6030a67e461a9df",
+          "status": "VERIFIED_APPLIED",
+          "applied_hash": "27ab613ba344ae302646d8292dcdfdc5e5b1c40609653ffee3aba85ea6c6aa9c"
+        },
+        {
+          "number": 2,
+          "raw_key": "b/a45be503af594ce8/sS03_4e86629a0d4a/repair-2-raw.json",
+          "raw_hash": "a6450eb8ea431009ed23e2b766d73056e57cd17608549d4bb9c5c58578df9c23",
+          "review_key": "b/a45be503af594ce8/sS03_4e86629a0d4a/review-1.json",
+          "review_hash": "36fcaca67eeb744e502668fb685bd5d874d153e91a31aaefee9a404413167658",
+          "status": "REJECTED_NOT_ADOPTED"
+        }
+      ],
+      "total_request_count_at_import": 22,
+      "old_reviewer_prompt_hash": "UNKNOWN_NOT_ARCHIVED",
+      "migration_policy": "Explicit patch-protocol migration: retain applied/rejected/proposal counters and all existing total requests; no budget reset."
+    },
+    "requests_after_import": [
+      {
+        "ordinal": 23,
+        "sequence": 620,
+        "timestamp": "2026-09-19T20:18:04.456837+00:00",
+        "metadata": {
+          "attempt": 1,
+          "input_hash": "7b1ecc7790460a5e3177530bf3e3495e7ffe684b286069af90c452ab591e23b7",
+          "model": "gpt-6-astra",
+          "prompt_hash": "86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc",
+          "prompt_version": 3,
+          "prompt_version_source": "declared_prompt_header",
+          "role": "reviewer_math",
+          "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+          "streaming": true,
+          "temperature": 0.1,
+          "timestamp": "2026-09-19T20:18:04.455837+00:00"
+        }
+      },
+      {
+        "ordinal": 24,
+        "sequence": 627,
+        "timestamp": "2026-09-19T20:18:44.718197+00:00",
+        "metadata": {
+          "attempt": 1,
+          "input_hash": "a2ee1c0f7959fcc9c8a852780e2d9cbe9e949cfb2eb49c07e700e814ae3e7d26",
+          "model": "gpt-6-astra",
+          "prompt_hash": "362fb34b2529572af9620c5433dbb223290c519889e89192c1d52c5d65e60943",
+          "prompt_version": 1,
+          "prompt_version_source": "declared_prompt_header",
+          "role": "repair_local_patch",
+          "schema_hash": "0d86c8d71317f64b5b07f16f49a50ad4dd13c072cbf83dcaa1babdd53d1510dd",
+          "streaming": true,
+          "temperature": 0.4,
+          "timestamp": "2026-09-19T20:18:44.717194+00:00"
+        }
+      },
+      {
+        "ordinal": 25,
+        "sequence": 633,
+        "timestamp": "2026-09-19T20:19:21.319031+00:00",
+        "metadata": {
+          "attempt": 1,
+          "input_hash": "a2c1c23a99037d96bd917f05f34c85c86c9234e11a7256c86905bf27cd89308d",
+          "model": "gpt-6-astra",
+          "prompt_hash": "86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc",
+          "prompt_version": 3,
+          "prompt_version_source": "declared_prompt_header",
+          "role": "reviewer_math",
+          "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+          "streaming": true,
+          "temperature": 0.1,
+          "timestamp": "2026-09-19T20:19:21.317037+00:00"
+        }
+      },
+      {
+        "ordinal": 26,
+        "sequence": 640,
+        "timestamp": "2026-09-19T20:20:27.885197+00:00",
+        "metadata": {
+          "attempt": 1,
+          "input_hash": "3854ce6059bef2aa8f8d66ca317ee8da606891422766c67bd7bb805c6a252c96",
+          "model": "gpt-6-astra",
+          "prompt_hash": "362fb34b2529572af9620c5433dbb223290c519889e89192c1d52c5d65e60943",
+          "prompt_version": 1,
+          "prompt_version_source": "declared_prompt_header",
+          "role": "repair_local_patch",
+          "schema_hash": "0d86c8d71317f64b5b07f16f49a50ad4dd13c072cbf83dcaa1babdd53d1510dd",
+          "streaming": true,
+          "temperature": 0.4,
+          "timestamp": "2026-09-19T20:20:27.884197+00:00"
+        }
+      },
+      {
+        "ordinal": 27,
+        "sequence": 646,
+        "timestamp": "2026-09-19T20:20:53.124219+00:00",
+        "metadata": {
+          "attempt": 1,
+          "input_hash": "f07ab352682bca2dec2ba7a76a0c1e1e273307681b6147b0d98feeaaf6ce74d9",
+          "model": "gpt-6-astra",
+          "prompt_hash": "86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc",
+          "prompt_version": 3,
+          "prompt_version_source": "declared_prompt_header",
+          "role": "reviewer_math",
+          "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+          "streaming": true,
+          "temperature": 0.1,
+          "timestamp": "2026-09-19T20:20:53.123218+00:00"
+        }
+      }
+    ],
+    "counters": {
+      "phase": "BUDGET_EXHAUSTED",
+      "applied_rounds": 3,
+      "proposal_calls": 4,
+      "rejected_proposals": 1,
+      "unit_applied_counts": {
+        "S03.U06": 2,
+        "S03.U04": 1,
+        "S03.U03": 1,
+        "S03.U01": 1
+      },
+      "proposal_counts_by_key": {
+        "unit:S03.U06": 3,
+        "unit:S03.U03": 3,
+        "unit:S03.U04": 1,
+        "unit:S03.U01": 1
+      },
+      "rejected_counts_by_key": {
+        "unit:S03.U06": 1,
+        "unit:S03.U03": 1
+      }
+    },
+    "transitions": [
+      {
+        "number": 3,
+        "record_keys": [
+          "before_hash",
+          "after_hash",
+          "section"
+        ],
+        "before_hash": "4eba810e7aec513a2f634127bccab3990b3297d9521d1be4a665b4ea4ebf1440",
+        "after_hash": "43c90fed037e07fbff6403d9d962c27a8214639770cf2b9d5432fce1d5669219",
+        "record_before_hash_matches": true,
+        "record_after_hash_matches": true,
+        "evidence_source_hash_matches": true,
+        "evidence_result_hash_matches": true,
+        "patch_hash_matches": true,
+        "allowed_unit_ids": [
+          "S03.U03",
+          "S03.U06"
+        ],
+        "body_changed_unit_ids": [
+          "S03.U06"
+        ],
+        "non_target_units_unchanged": true,
+        "unit_order_unchanged": true,
+        "calculations_before_hash": "fbd89bcfbac091ee73c6bcf1a1a2b07f44eb1ba547ed33df9e1d8cfdc9aa337a",
+        "calculations_after_hash": "148fbdf0358b5eafb518977a5be4fcd83f58e7fc6cabb3499c4f873ed26920fb",
+        "uncertainties_unchanged": true,
+        "calculation_limitations_append_count": 1
+      },
+      {
+        "number": 4,
+        "record_keys": [
+          "before_hash",
+          "after_hash",
+          "section"
+        ],
+        "before_hash": "43c90fed037e07fbff6403d9d962c27a8214639770cf2b9d5432fce1d5669219",
+        "after_hash": "ad447154eb982fd8d8b75318a155ed61e4432af3ce757e75014031aef0a71188",
+        "record_before_hash_matches": true,
+        "record_after_hash_matches": true,
+        "evidence_source_hash_matches": true,
+        "evidence_result_hash_matches": true,
+        "patch_hash_matches": true,
+        "allowed_unit_ids": [
+          "S03.U01"
+        ],
+        "body_changed_unit_ids": [
+          "S03.U01"
+        ],
+        "non_target_units_unchanged": true,
+        "unit_order_unchanged": true,
+        "calculations_before_hash": "148fbdf0358b5eafb518977a5be4fcd83f58e7fc6cabb3499c4f873ed26920fb",
+        "calculations_after_hash": "148fbdf0358b5eafb518977a5be4fcd83f58e7fc6cabb3499c4f873ed26920fb",
+        "uncertainties_unchanged": true,
+        "calculation_limitations_append_count": 1
+      }
+    ],
+    "current_candidate_file_sha256": "6020d175640cba9fa72772276d7161d5e0f885e44ef6abee16c210c3bfae5a21",
+    "current_candidate_canonical_sha256": "ad447154eb982fd8d8b75318a155ed61e4432af3ce757e75014031aef0a71188",
+    "current_equals_repair4": true,
+    "candidate_state_hash_matches": true,
+    "findings": [
+      "repair-3授权U03/U06，实际数学正文仅U06改变；U03正文未改，但C01受限AST被合法替换，因此U03接受计数增加是计算修改绑定导致。",
+      "repair-3将α→β因子替换与整体乘β/α区分，消除了旧的真实操作文字歧义；此项是有效修复。",
+      "repair-4仅改U01，明确绝对值意义无穷大并分别定义±∞；9个非目标完整单元与C01均保持。该澄清数学上正确。",
+      "原repair-2仍拒绝，未把其较早正确AST追认为已采用或已核算。"
+    ]
+  },
+  "current_programmatic_math": {
+    "status": "PASS_FOR_SINGLE_EXPLICIT_CALCULATION_ONLY",
+    "new_check_executed": true,
+    "result": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "limit",
+          "assumptions": {
+            "x": {
+              "real": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "1",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S03.C01",
+          "unit_id": "S03.U03"
+        }
+      ],
+      "coverage": [
+        "S03.U01",
+        "S03.U02",
+        "S03.U03",
+        "S03.U04",
+        "S03.U05",
+        "S03.U06",
+        "S03.U07",
+        "S03.U08",
+        "S03.U09",
+        "S03.U10"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "协议支持的极限核算可以核对 $\\sin x/x$ 在 $x\\to0$ 时的代表性结论，但不能表达弧度制、三角函数的几何不等式或完整的夹逼证明。",
+        "协议中的布尔假设不能完整表达去心邻域和函数定义域条件；正文仍保留了 $x\\neq0$ 及相应表达式有定义的条件。",
+        "本次修正 S03.C01 的表达式树格式并重新提交请求，不将此前 UNKNOWN 记录视为核验通过。该请求仅覆盖 S03.U03 中的正弦基本极限，不覆盖指数基本极限及 S03.U06 中一般函数的等价替换证明。",
+        "S03.U01 的修订涉及一般函数的量词定义，以及绝对值趋于无穷与正、负无穷极限的区别；现有有界核算协议不能表达一般函数及其去心邻域量词条件，故不为该定义新增符号核算请求。"
+      ]
+    },
+    "limitation": "只实际复算C01: real x, sin(x)/x, 双侧x→0, 结果1；不是对U02定义、U04证明或U06一般函数定理的机器证明。"
+  },
+  "recovery": {
+    "current_runtime": "BUDGET_EXHAUSTED version0；普通Service.retry仍会阻断，报告不改变这一状态。",
+    "why_guard_is_correct": "U06 unit_applied_counts=2达到上限2，同时该key proposal_count=3达到最大proposal数limit+1=3。调用下一次补丁前即阻断，没有第28次模型请求。",
+    "request_limit": "27/60，当前不是总请求预算耗尽；global_repair_rounds当前也非本次阻塞项。",
+    "recommendation": "先校准审阅的完整上下文阅读和既有法则应用判断，保留原未决记录与所有计数。数学正确的正文不应仅为迁就审阅误报而扩预算或反复改写。",
+    "if_actual_further_content_edit_is_chosen": "仅当仍决定追加U02/U06正文教学修订时，当前产品需要用户显式将local_repairs_per_unit从2提高到至少3；不能清零计数、伪造确认或顺带提高requests/global。",
+    "after_review_only_recovery": "若将误报作为审阅纠正恢复，须由产品显式保留纠正依据与历史记录并重跑必要门禁；本审查没有提供绕过预算或直接把状态改PASS的操作，也不宣称现有普通retry已支持。",
+    "scope": "下一步局部证据关注U02/U05/U06及已检查S02.U03，不需要重写整章或修复未经证实的数学错误。"
+  },
+  "remaining_limits": {
+    "section_checkpoint": "NOT_CREATED",
+    "windows_compile": "NOT_RUN_FOR_THIS_CANDIDATE",
+    "pdf": "NOT_CREATED_FOR_THIS_CANDIDATE",
+    "teacher_visual_review": "NOT_RUN",
+    "whole_chapter": "PENDING_OUTPUT",
+    "section_S01_S02_checkpoints": [
+      {
+        "step_key": "section.S01",
+        "input_hash": "b0125f9118d53ab0b43521155f8d02d2117f6f394848310fc5270e68f3fa1f12",
+        "output_hash": "40f7f12c2119ecd8299721b0e16a5165a7366bb63372c8afd37be41f90d5d387",
+        "created_at": "2026-09-19T19:22:33.783696+00:00"
+      },
+      {
+        "step_key": "section.S02",
+        "input_hash": "8ea263bec986a588b26b4b4135c072d078211815c8354133fa68dafec77a6c65",
+        "output_hash": "2584772cefafb730199dd2a3516512e312c08f0a2495b7a35ff7a3720ba60a11",
+        "created_at": "2026-09-19T19:29:32.464677+00:00"
+      }
+    ],
+    "additional_pedagogy": "先前review-1对U07/U08“直接用基本极限而未显式对应替换定理”的warning仍有教学参考价值，但计算结果正确，不作为当前硬阻塞或全章错误率。"
+  },
+  "original_reference": {
+    "path": "D:\\研究生阶段\\数学教学agent\\第三章\\大学数学（一）(1).tex",
+    "sha256": "73f3c32c19af46bf3c9b3e2881b18327a1aa8970ad2ff8bc2610d979ef655f3f",
+    "anchors": [
+      {
+        "lines": [
+          798,
+          805
+        ],
+        "description": "先设两个函数均为无穷小，再按比值极限定义等价。"
+      },
+      {
+        "lines": [
+          976,
+          983
+        ],
+        "description": "α→0、β→0且β非零，比值1时为等价无穷小。"
+      },
+      {
+        "lines": [
+          869,
+          876
+        ],
+        "description": "乘除结构替换与加减不可随意替换的教学原则。"
+      }
+    ],
+    "comparison": "生成内容先定义更一般渐近等价再明确趋零子类，与原文数学条件相容；不能仅因书写组织不同判错误。"
+  },
+  "validation_categories": {
+    "read_only_database": "mode=ro + query_only",
+    "hash_checks": "11条依赖及修复source/result/patch链匹配",
+    "actual_live_api_by_this_audit": 0,
+    "existing_live_reviews": "只读核验真实retry2共5次新增请求：3审阅、2补丁",
+    "offline_symbolic_check": "本次SymPy1.14.0实际单项复算PASS",
+    "windows_compile": "本次与该候选均NOT_RUN；S01/S02历史编译不冒充S03",
+    "teacher_visual_review": "NOT_RUN"
+  },
+  "db_evidence": {
+    "captured_at": "2026-09-19T20:26:47.466307+00:00",
+    "run": {
+      "id": "a45be503af594ce8aae0bb1e4c30184b",
+      "status": "BLOCKED",
+      "stage": "review.section.S03",
+      "request_count": 27,
+      "active_plan_revision": 2,
+      "error": {
+        "attempt": 3,
+        "budget_version": 0,
+        "code": "BUDGET_EXHAUSTED",
+        "job_id": "27979f9a88114ed1a41b9d3c3c5facd8",
+        "message": "kind=local_repairs_per_unit; units=['S03.U02', 'S03.U06']; used={'S03.U06': 2, 'S03.U04': 1, 'S03.U03': 1, 'S03.U01': 1}; limit=2; proposal_keys=['unit:S03.U02', 'unit:S03.U06']; calls={'unit:S03.U06': 3, 'unit:S03.U03': 3, 'unit:S03.U04': 1, 'unit:S03.U01': 1}; rejected={'unit:S03.U06': 1, 'unit:S03.U03': 1}。合法稿、原审批和未决问题均保留；显式增加预算后才可继续。",
+        "recovery": "原审批和已通过章节保留；修复条件后点击重试。崩溃边界的外部调用可能重复计费。",
+        "timestamp": "2026-09-19T20:22:07.138262+00:00"
+      }
+    },
+    "budget": {
+      "run_id": "a45be503af594ce8aae0bb1e4c30184b",
+      "version": 0,
+      "source": "VERIFIED_BENCHMARK_STATE",
+      "created_at": "2026-09-19T20:05:41.934820+00:00",
+      "updated_at": "2026-09-19T20:18:02.440083+00:00",
+      "defaults": {
+        "global_repair_rounds": 2,
+        "local_repairs_per_unit": 2,
+        "requests": 60
+      },
+      "overrides": {}
+    },
+    "approval": {
+      "run_id": "a45be503af594ce8aae0bb1e4c30184b",
+      "revision": 2,
+      "hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+      "input_hash": "3b4e20cb757d221f1c974ffadb5918b392f9092cd5d1a8d9e5847c07c37930b7",
+      "action_id": "benchmark_driver:CH03:fbd172c8df0c12fc",
+      "confirmed_at": "2026-09-19T18:44:39.087182+00:00"
+    },
+    "request_event_count": 27,
+    "requests_since_import": [
+      {
+        "ordinal": 23,
+        "sequence": 620,
+        "timestamp": "2026-09-19T20:18:04.456837+00:00",
+        "metadata": {
+          "attempt": 1,
+          "input_hash": "7b1ecc7790460a5e3177530bf3e3495e7ffe684b286069af90c452ab591e23b7",
+          "model": "gpt-6-astra",
+          "prompt_hash": "86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc",
+          "prompt_version": 3,
+          "prompt_version_source": "declared_prompt_header",
+          "role": "reviewer_math",
+          "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+          "streaming": true,
+          "temperature": 0.1,
+          "timestamp": "2026-09-19T20:18:04.455837+00:00"
+        }
+      },
+      {
+        "ordinal": 24,
+        "sequence": 627,
+        "timestamp": "2026-09-19T20:18:44.718197+00:00",
+        "metadata": {
+          "attempt": 1,
+          "input_hash": "a2ee1c0f7959fcc9c8a852780e2d9cbe9e949cfb2eb49c07e700e814ae3e7d26",
+          "model": "gpt-6-astra",
+          "prompt_hash": "362fb34b2529572af9620c5433dbb223290c519889e89192c1d52c5d65e60943",
+          "prompt_version": 1,
+          "prompt_version_source": "declared_prompt_header",
+          "role": "repair_local_patch",
+          "schema_hash": "0d86c8d71317f64b5b07f16f49a50ad4dd13c072cbf83dcaa1babdd53d1510dd",
+          "streaming": true,
+          "temperature": 0.4,
+          "timestamp": "2026-09-19T20:18:44.717194+00:00"
+        }
+      },
+      {
+        "ordinal": 25,
+        "sequence": 633,
+        "timestamp": "2026-09-19T20:19:21.319031+00:00",
+        "metadata": {
+          "attempt": 1,
+          "input_hash": "a2c1c23a99037d96bd917f05f34c85c86c9234e11a7256c86905bf27cd89308d",
+          "model": "gpt-6-astra",
+          "prompt_hash": "86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc",
+          "prompt_version": 3,
+          "prompt_version_source": "declared_prompt_header",
+          "role": "reviewer_math",
+          "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+          "streaming": true,
+          "temperature": 0.1,
+          "timestamp": "2026-09-19T20:19:21.317037+00:00"
+        }
+      },
+      {
+        "ordinal": 26,
+        "sequence": 640,
+        "timestamp": "2026-09-19T20:20:27.885197+00:00",
+        "metadata": {
+          "attempt": 1,
+          "input_hash": "3854ce6059bef2aa8f8d66ca317ee8da606891422766c67bd7bb805c6a252c96",
+          "model": "gpt-6-astra",
+          "prompt_hash": "362fb34b2529572af9620c5433dbb223290c519889e89192c1d52c5d65e60943",
+          "prompt_version": 1,
+          "prompt_version_source": "declared_prompt_header",
+          "role": "repair_local_patch",
+          "schema_hash": "0d86c8d71317f64b5b07f16f49a50ad4dd13c072cbf83dcaa1babdd53d1510dd",
+          "streaming": true,
+          "temperature": 0.4,
+          "timestamp": "2026-09-19T20:20:27.884197+00:00"
+        }
+      },
+      {
+        "ordinal": 27,
+        "sequence": 646,
+        "timestamp": "2026-09-19T20:20:53.124219+00:00",
+        "metadata": {
+          "attempt": 1,
+          "input_hash": "f07ab352682bca2dec2ba7a76a0c1e1e273307681b6147b0d98feeaaf6ce74d9",
+          "model": "gpt-6-astra",
+          "prompt_hash": "86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc",
+          "prompt_version": 3,
+          "prompt_version_source": "declared_prompt_header",
+          "role": "reviewer_math",
+          "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+          "streaming": true,
+          "temperature": 0.1,
+          "timestamp": "2026-09-19T20:20:53.123218+00:00"
+        }
+      }
+    ],
+    "section_checkpoints": [
+      {
+        "step_key": "section.S01",
+        "input_hash": "b0125f9118d53ab0b43521155f8d02d2117f6f394848310fc5270e68f3fa1f12",
+        "output_hash": "40f7f12c2119ecd8299721b0e16a5165a7366bb63372c8afd37be41f90d5d387",
+        "created_at": "2026-09-19T19:22:33.783696+00:00"
+      },
+      {
+        "step_key": "section.S02",
+        "input_hash": "8ea263bec986a588b26b4b4135c072d078211815c8354133fa68dafec77a6c65",
+        "output_hash": "2584772cefafb730199dd2a3516512e312c08f0a2495b7a35ff7a3720ba60a11",
+        "created_at": "2026-09-19T19:29:32.464677+00:00"
+      }
+    ],
+    "local_events": [
+      {
+        "sequence": 617,
+        "type": "local.repair_state",
+        "timestamp": "2026-09-19T20:18:02.539661+00:00",
+        "payload": {
+          "applied_rounds": 0,
+          "phase": "UNCHECKED",
+          "proposal_calls": 0,
+          "rejected_proposals": 0,
+          "section_id": "S03"
+        }
+      },
+      {
+        "sequence": 618,
+        "type": "local.repair_state",
+        "timestamp": "2026-09-19T20:18:02.590209+00:00",
+        "payload": {
+          "applied_rounds": 1,
+          "phase": "UNCHECKED_REPAIRED",
+          "proposal_calls": 2,
+          "rejected_proposals": 1,
+          "section_id": "S03"
+        }
+      },
+      {
+        "sequence": 624,
+        "type": "local.repair_state",
+        "timestamp": "2026-09-19T20:18:44.542451+00:00",
+        "payload": {
+          "applied_rounds": 1,
+          "phase": "NEEDS_REPAIR",
+          "proposal_calls": 2,
+          "rejected_proposals": 1,
+          "section_id": "S03"
+        }
+      },
+      {
+        "sequence": 625,
+        "type": "local.repair_state",
+        "timestamp": "2026-09-19T20:18:44.554508+00:00",
+        "payload": {
+          "applied_rounds": 1,
+          "phase": "PROPOSAL_PENDING",
+          "proposal_calls": 3,
+          "rejected_proposals": 1,
+          "section_id": "S03"
+        }
+      },
+      {
+        "sequence": 631,
+        "type": "local.repair_state",
+        "timestamp": "2026-09-19T20:19:19.431847+00:00",
+        "payload": {
+          "applied_rounds": 2,
+          "phase": "UNCHECKED_REPAIRED",
+          "proposal_calls": 3,
+          "rejected_proposals": 1,
+          "section_id": "S03"
+        }
+      },
+      {
+        "sequence": 637,
+        "type": "local.repair_state",
+        "timestamp": "2026-09-19T20:20:27.674665+00:00",
+        "payload": {
+          "applied_rounds": 2,
+          "phase": "NEEDS_REPAIR",
+          "proposal_calls": 3,
+          "rejected_proposals": 1,
+          "section_id": "S03"
+        }
+      },
+      {
+        "sequence": 638,
+        "type": "local.repair_state",
+        "timestamp": "2026-09-19T20:20:27.687664+00:00",
+        "payload": {
+          "applied_rounds": 2,
+          "phase": "PROPOSAL_PENDING",
+          "proposal_calls": 4,
+          "rejected_proposals": 1,
+          "section_id": "S03"
+        }
+      },
+      {
+        "sequence": 644,
+        "type": "local.repair_state",
+        "timestamp": "2026-09-19T20:20:51.124764+00:00",
+        "payload": {
+          "applied_rounds": 3,
+          "phase": "UNCHECKED_REPAIRED",
+          "proposal_calls": 4,
+          "rejected_proposals": 1,
+          "section_id": "S03"
+        }
+      },
+      {
+        "sequence": 650,
+        "type": "local.repair_state",
+        "timestamp": "2026-09-19T20:22:07.122920+00:00",
+        "payload": {
+          "applied_rounds": 3,
+          "phase": "NEEDS_REPAIR",
+          "proposal_calls": 4,
+          "rejected_proposals": 1,
+          "section_id": "S03"
+        }
+      },
+      {
+        "sequence": 651,
+        "type": "local.repair_state",
+        "timestamp": "2026-09-19T20:22:07.134254+00:00",
+        "payload": {
+          "applied_rounds": 3,
+          "phase": "BUDGET_EXHAUSTED",
+          "proposal_calls": 4,
+          "rejected_proposals": 1,
+          "section_id": "S03"
+        }
+      }
+    ],
+    "budget_events": [
+      {
+        "type": "budget.initialized",
+        "timestamp": "2026-09-19T20:05:41.934820+00:00",
+        "payload": {
+          "defaults": {
+            "requests": 60
+          },
+          "existing_request_count": 22,
+          "historical_limit_inferred": false,
+          "source": "VERIFIED_BENCHMARK_STATE"
+        }
+      },
+      {
+        "type": "budget.legacy_requests_imported",
+        "timestamp": "2026-09-19T20:05:41.935812+00:00",
+        "payload": {
+          "actor": "local_user",
+          "case": "CH03",
+          "evidence_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration2\\budget-migration-20260920-040218\\benchmark_state.json",
+          "evidence_sha256": "4e21b76233b7b785930656436d2edae6807578ab99dec72612a79630a68b37f3",
+          "execution": "NOT_STARTED",
+          "historical_limit_inferred": false,
+          "local_global_historical_limits": "UNKNOWN",
+          "request_count_preserved": 22,
+          "requests": 60,
+          "run_id": "a45be503af594ce8aae0bb1e4c30184b",
+          "workspace": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live"
+        }
+      },
+      {
+        "type": "budget.initial_fields_recorded",
+        "timestamp": "2026-09-19T20:18:02.440083+00:00",
+        "payload": {
+          "fields": {
+            "global_repair_rounds": 2,
+            "local_repairs_per_unit": 2
+          },
+          "source": "ACTUAL_EXECUTION_SETTINGS_LEGACY"
+        }
+      }
+    ]
+  },
+  "dependency_hash_checks": [
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/candidate.json",
+      "expected": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+      "actual": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+      "equal": true
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/candidate-normalization.json",
+      "expected": "7a16722e222b0f53d7139bbf141bf65d8fa4d5031ca800197ad8e03124d69907",
+      "actual": "7a16722e222b0f53d7139bbf141bf65d8fa4d5031ca800197ad8e03124d69907",
+      "equal": true
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/candidate-normalized.json",
+      "expected": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+      "actual": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+      "equal": true
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/repair-1-raw.json",
+      "expected": "f83fb0ad488a76716c1035b4227e264228a769263ed65df8cb1c2e64bcf5fc31",
+      "actual": "f83fb0ad488a76716c1035b4227e264228a769263ed65df8cb1c2e64bcf5fc31",
+      "equal": true
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/review-0.json",
+      "expected": "82d99330205c20d3ef65c42bdfcb6ad2e98447a870236770e6030a67e461a9df",
+      "actual": "82d99330205c20d3ef65c42bdfcb6ad2e98447a870236770e6030a67e461a9df",
+      "equal": true
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/repair-1.json",
+      "expected": "27ab613ba344ae302646d8292dcdfdc5e5b1c40609653ffee3aba85ea6c6aa9c",
+      "actual": "27ab613ba344ae302646d8292dcdfdc5e5b1c40609653ffee3aba85ea6c6aa9c",
+      "equal": true
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/review-1.json",
+      "expected": "36fcaca67eeb744e502668fb685bd5d874d153e91a31aaefee9a404413167658",
+      "actual": "36fcaca67eeb744e502668fb685bd5d874d153e91a31aaefee9a404413167658",
+      "equal": true
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/repair-2-raw.json",
+      "expected": "a6450eb8ea431009ed23e2b766d73056e57cd17608549d4bb9c5c58578df9c23",
+      "actual": "a6450eb8ea431009ed23e2b766d73056e57cd17608549d4bb9c5c58578df9c23",
+      "equal": true
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/review-1.json",
+      "expected": "36fcaca67eeb744e502668fb685bd5d874d153e91a31aaefee9a404413167658",
+      "actual": "36fcaca67eeb744e502668fb685bd5d874d153e91a31aaefee9a404413167658",
+      "equal": true
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_7a1a1a12cc06/repair-3-patch.json",
+      "expected": "1c3f2d131422826b93d445f8da712fec178b8127616c2ebebe006e3f45b2757f",
+      "actual": "1c3f2d131422826b93d445f8da712fec178b8127616c2ebebe006e3f45b2757f",
+      "equal": true
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_7a1a1a12cc06/repair-4-patch.json",
+      "expected": "6f338c0f9193e532f2e58c001218da3ce30b583326489c390eb1e7afa9417749",
+      "actual": "6f338c0f9193e532f2e58c001218da3ce30b583326489c390eb1e7afa9417749",
+      "equal": true
+    }
+  ],
+  "source_unit_json_lines": {
+    "S03.U01": 5,
+    "S03.U02": 11,
+    "S03.U03": 17,
+    "S03.U04": 23,
+    "S03.U05": 29,
+    "S03.U06": 35,
+    "S03.U07": 41,
+    "S03.U08": 47,
+    "S03.U09": 53,
+    "S03.U10": 59
+  },
+  "evidence_files": [
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\第三章\\大学数学（一）(1).tex",
+      "sha256": "73f3c32c19af46bf3c9b3e2881b18327a1aa8970ad2ff8bc2610d979ef655f3f",
+      "bytes": 60205
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration2\\CH03-S03-rejected-repair-audit.json",
+      "sha256": "a88f5fb0ce156b3a4aef18d2c71592fe21403ebd4c3848940fc8cfe13cab5a8a",
+      "bytes": 9117
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration2\\live-lectures\\CH03\\attempts\\attempt-3-result-1789849327228441700\\run_snapshot.json",
+      "sha256": "ec4ac976302069ce7717e8f335181f3ffd85f6e21cd8cdb611f64ddffe07d4f4",
+      "bytes": 19387
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS02_f4c6b3226390\\repair-2.json",
+      "sha256": "19581b63844e84cd14edd474d9e84f4d89176122d2d191dfd04b1a8676a10a30",
+      "bytes": 9551
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_4e86629a0d4a\\candidate-normalization.json",
+      "sha256": "7a16722e222b0f53d7139bbf141bf65d8fa4d5031ca800197ad8e03124d69907",
+      "bytes": 7248
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_4e86629a0d4a\\candidate-normalized.json",
+      "sha256": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+      "bytes": 7211
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_4e86629a0d4a\\candidate.json",
+      "sha256": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+      "bytes": 7211
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_4e86629a0d4a\\repair-1-raw.json",
+      "sha256": "f83fb0ad488a76716c1035b4227e264228a769263ed65df8cb1c2e64bcf5fc31",
+      "bytes": 8360
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_4e86629a0d4a\\repair-1.json",
+      "sha256": "27ab613ba344ae302646d8292dcdfdc5e5b1c40609653ffee3aba85ea6c6aa9c",
+      "bytes": 8794
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_4e86629a0d4a\\repair-2-raw.json",
+      "sha256": "a6450eb8ea431009ed23e2b766d73056e57cd17608549d4bb9c5c58578df9c23",
+      "bytes": 8322
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_4e86629a0d4a\\review-0.json",
+      "sha256": "82d99330205c20d3ef65c42bdfcb6ad2e98447a870236770e6030a67e461a9df",
+      "bytes": 7683
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_4e86629a0d4a\\review-1.json",
+      "sha256": "36fcaca67eeb744e502668fb685bd5d874d153e91a31aaefee9a404413167658",
+      "bytes": 5003
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\candidate-normalization.json",
+      "sha256": "7a16722e222b0f53d7139bbf141bf65d8fa4d5031ca800197ad8e03124d69907",
+      "bytes": 7248
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\candidate-normalized.json",
+      "sha256": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+      "bytes": 7211
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\candidate.json",
+      "sha256": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+      "bytes": 7211
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\draft-reuse.json",
+      "sha256": "0b2628e814808702056ad596675e8d017eae07219134d9ad7243e65e6e9d38b0",
+      "bytes": 999
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\local-0-review-0.json",
+      "sha256": "11677dd02755750dbbdd301bbe9a9dee491cfef02cd70dc1018afa01b338d96f",
+      "bytes": 2253
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\local-1-review-0.json",
+      "sha256": "59c5ae884c710bdb64f098b4819f8a1a4f5c4d67cd11019329f1e482354b9fd8",
+      "bytes": 2399
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\local-2-review-0.json",
+      "sha256": "ea50cfbe11e0f5b05f1f3d04fd9d2e0b7ca58978b155b54e828d328cf20188a5",
+      "bytes": 2523
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\local-recovery.json",
+      "sha256": "b7bc5a5f297b6d8e4bc4cd069354e50b639a4ad2252f56a39964c488838d25b9",
+      "bytes": 1481
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\local-resume-normalization.json",
+      "sha256": "2dd120bbce1e822122afc1885c5731fc2c28e4a50292d67906cf13df37058f75",
+      "bytes": 7248
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\repair-3-evidence.json",
+      "sha256": "853e6d2c769ba9f1d12a1c2125cabfb16465c032a816f02a8594147fe144b75e",
+      "bytes": 945
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\repair-3-normalization.json",
+      "sha256": "a7b1bb15b7266799573232a2b772f80820e698106f0566986d3b012498248b25",
+      "bytes": 2337
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\repair-3-patch.json",
+      "sha256": "1c3f2d131422826b93d445f8da712fec178b8127616c2ebebe006e3f45b2757f",
+      "bytes": 3143
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\repair-3.json",
+      "sha256": "fc46b716df1c3a525acde8f0874128db48c8d7392736a2894077f30b8d1def9e",
+      "bytes": 9103
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\repair-4-evidence.json",
+      "sha256": "19d05a69ee7f2dee0595740c458ca5b945eb7cd1ddabb111562c78156cf12eb9",
+      "bytes": 910
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\repair-4-normalization.json",
+      "sha256": "e5812ce3e7cbd47bd4a36217c83210386c31192df515bb163575adcb5442e68f",
+      "bytes": 1729
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\repair-4-patch.json",
+      "sha256": "6f338c0f9193e532f2e58c001218da3ce30b583326489c390eb1e7afa9417749",
+      "bytes": 1720
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\repair-4.json",
+      "sha256": "4ed4204a0e76c4e778326ed23c139f528fe18700d775fb9f48080173a8f7f3b9",
+      "bytes": 10025
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\review-0.json",
+      "sha256": "60da4cdc32d3899f7e23044330143154a91a94ab6017f424c1b4372db84be510",
+      "bytes": 7278
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\review-1.json",
+      "sha256": "df39bc15c8b20a46bc0fc69ed7edab1a0e223760098106b5b4656cf2e20cc04c",
+      "bytes": 8098
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS03_7a1a1a12cc06\\review-2.json",
+      "sha256": "8b83d5b111e3f06db797b5df0a3a5529c2f0b578d26c154ce2662268eb7fbd02",
+      "bytes": 7735
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\runs\\a45be503af594ce8aae0bb1e4c30184b\\local-repair\\S03\\candidate-8e5a43ddec81.json",
+      "sha256": "6020d175640cba9fa72772276d7161d5e0f885e44ef6abee16c210c3bfae5a21",
+      "bytes": 9595
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\runs\\a45be503af594ce8aae0bb1e4c30184b\\local-repair\\S03\\legacy-import-c6fd31a5f0.json",
+      "sha256": "8e4a8c4697a35c8b045f89c91b57cf979b435fdaf6d211a2c64511734b557536",
+      "bytes": 1343
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\runs\\a45be503af594ce8aae0bb1e4c30184b\\local-repair\\S03\\review-33997bf7f428.json",
+      "sha256": "1a4a8e6ca9737700137be1ca144df2d7a99495703e2b09bdf90bffca18b0fad6",
+      "bytes": 9013
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\runs\\a45be503af594ce8aae0bb1e4c30184b\\local-repair\\S03\\review-5002924e9265.json",
+      "sha256": "78a9952a4edcb05447f1ab041c1dde6bd62f028a08aa114dc8c795f32fea0d6f",
+      "bytes": 9025
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\runs\\a45be503af594ce8aae0bb1e4c30184b\\local-repair\\S03\\review-8ccdd7a1417b.json",
+      "sha256": "bebd6349b0860775f2d188d9a36744093fefadbda15218691c8db539b7fa8ba6",
+      "bytes": 9522
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\runs\\a45be503af594ce8aae0bb1e4c30184b\\local-repair\\S03.json",
+      "sha256": "2a82ecc646e0cde0e1674350f2fa656f264bc87958ee555fd319c03794d6ade1",
+      "bytes": 8356
+    }
+  ]
+}

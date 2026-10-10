@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "request_count": 2,
+  "cases": [
+    {
+      "case": "C01",
+      "status": "PASS",
+      "coverage_complete": true,
+      "proof_flagged": true,
+      "expected_flagged": true,
+      "review": {
+        "issues": [
+          {
+            "unit_id": "U02",
+            "severity": "blocking",
+            "message": "证明直接使用课程明确禁止引用的上确界、下确界性质，并对计划规定只作为已知结论使用的单调有界定理进行了证明。虽然数学推理成立，但违反锁定课程限制；“不展开其公理体系”不能消除这一冲突。应移除该证明，将 U01 作为已知结论使用。",
+            "evidence": "plan.exclusions 明确规定“禁止引用上确界、下确界及等价的完备性性质”，且“单调有界定理……只作为已知结论使用，不证明它”。U02 则明确声明采用上确界与下确界性质，并分别令 L=\\sup A、L=\\inf B，据此选取满足 a_N>L-\\varepsilon 或 a_N<L+\\varepsilon 的 N；这些被禁止的性质是证明的关键依据。"
+          }
+        ],
+        "checked_unit_ids": [
+          "U01",
+          "U02"
+        ],
+        "limitations": [
+          "本次仅审阅所提供的 U01、U02 及明确课程限制，不对其他章节或整份课程作判断。",
+          "U01 的两个定理分支假设与结论正确。U02 中集合非空性、有界性、单调性、任意正 ε 下 N 的存在及后续绝对值估计均符合相应数学条件，公式与解释一致；未发现独立于课程限制冲突的数学错误。",
+          "本次为普通模型文本审阅，不是形式化证明，也未检查最终 PDF 的排版与呈现。"
+        ]
+      },
+      "teacher_visual_review": "NOT_RUN"
+    },
+    {
+      "case": "C02",
+      "status": "PASS",
+      "coverage_complete": true,
+      "proof_flagged": false,
+      "expected_flagged": false,
+      "review": {
+        "issues": [],
+        "checked_unit_ids": [
+          "U01",
+          "U02"
+        ],
+        "limitations": [
+          "本次仅核对所提供的 U01 定理、U02 证明及明确课程限制，不涉及其他正文或最终 PDF。",
+          "U01 的两种情形均具备所需的单调性和相应方向的有界性。U02 对非空项集使用上确界、下确界性质，从任意 ε>0 得到正整数 N，再对所有 n≥N 建立严格误差界；所用不等号、量词及极限结论一致，未发现数学错误。",
+          "U02 明确将正确的上确界、下确界性质作为已知实数基础，并以最小上界、最大下界解释其含义，未展开完备性公理体系。这不违反所提供的排除项；本证明依赖这些已声明基础，并非从算术或归纳法独立推导完备性。",
+          "本次属于普通模型数学审阅，不等同于形式化证明；未发现问题不保证不存在遗漏。"
+        ]
+      },
+      "teacher_visual_review": "NOT_RUN"
+    }
+  ],
+  "prompt_hash": "86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc",
+  "teacher_visual_review": "NOT_RUN",
+  "limitations": [
+    "Two authored scope scenarios on the same mathematically valid proof, not independent mathematical accuracy samples.",
+    "Prompt regression only; no approval change, original run mutation, TeX compilation or teacher review."
+  ]
+}

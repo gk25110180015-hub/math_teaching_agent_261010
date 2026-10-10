@@ -1,0 +1,491 @@
+{
+  "id": "426866cf71d2437bb17b54ac801a8c18",
+  "workflow_id": "lecture.generate",
+  "version": 1,
+  "owner_id": "local",
+  "status": "BLOCKED",
+  "stage": "repair.section.S01",
+  "input_hash": "3bccababa66c93c2b588d4ca13966c61834dcbc8bff9f746a29fd2a3fa089549",
+  "active_plan_revision": 2,
+  "created_at": "2026-09-19T17:26:00.522827+00:00",
+  "updated_at": "2026-09-19T17:38:59.750111+00:00",
+  "request_count": 9,
+  "schema_version": 1,
+  "input": {
+    "attachments": [],
+    "difficulty": "经济学本科一年级微积分",
+    "provider": "live",
+    "schema_version": 1,
+    "theme": "default",
+    "topic": "数列极限入门。此为小型基准测试，严格只规划两节：数列极限的定义与唯一性；简单数列极限及运算。每节安排一个例题及一个练习，避免扩展为整章。",
+    "trusted_input": true,
+    "units": [],
+    "workflow_id": "lecture.generate"
+  },
+  "error": {
+    "attempt": 1,
+    "code": "PROVIDER_UNAVAILABLE",
+    "job_id": "38535e95a5654034898bcd181e5fad02",
+    "message": "供应商临时失败，有限重试已耗尽",
+    "recovery": "原审批和已通过章节保留；修复条件后点击重试。崩溃边界的外部调用可能重复计费。",
+    "timestamp": "2026-09-19T17:38:59.740110+00:00"
+  },
+  "plan": {
+    "additions": [],
+    "decision_ids": [
+      "3fdf52991075453ea3a00fcc080019ee",
+      "d9f2e3f756a04b4487b75f42792cc8c7",
+      "c1e3a2c6030e409c8325984b27cb3030",
+      "d27351cb49aa4167bb567fc01bd4b130"
+    ],
+    "decisions": [
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "custom_input": "",
+        "id": "3fdf52991075453ea3a00fcc080019ee",
+        "question_id": "Q-PROOF",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "key"
+        },
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "timestamp": "2026-09-19T17:33:43.978829+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "custom_input": "",
+        "id": "d9f2e3f756a04b4487b75f42792cc8c7",
+        "question_id": "Q-EXAMPLE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "balanced"
+        },
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "timestamp": "2026-09-19T17:33:43.978829+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "custom_input": "",
+        "id": "c1e3a2c6030e409c8325984b27cb3030",
+        "question_id": "Q-EXERCISE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "with_answers"
+        },
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "timestamp": "2026-09-19T17:33:43.978829+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "custom_input": "",
+        "id": "d27351cb49aa4167bb567fc01bd4b130",
+        "question_id": "Q-ANSWERS",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "end"
+        },
+        "selected_option_ids": [
+          "END"
+        ],
+        "timestamp": "2026-09-19T17:33:43.978829+00:00"
+      }
+    ],
+    "diff": [
+      {
+        "after": {
+          "answers_location": "end",
+          "example_focus": "balanced",
+          "exercises": "with_answers",
+          "proof_policy": "key"
+        },
+        "before": {
+          "answers_location": null,
+          "example_focus": null,
+          "exercises": null,
+          "proof_policy": null
+        },
+        "field": "lecture"
+      }
+    ],
+    "difficulty": "经济学本科一年级微积分",
+    "exclusions": [
+      "严格只规划两节，每节一个例题和一个练习，不扩展为整章。",
+      "不安排数列一般定义的独立章节，仅将其作为先修知识。",
+      "不讲差分、离散求和公式或数列应用专题。",
+      "不讲单调有界定理、夹逼定理、子列、柯西准则及上极限或下极限。",
+      "不讲无穷大量、不定式分类、斯托尔茨公式及高级渐近技巧。",
+      "不引入函数极限、导数或积分。",
+      "不将风格参考中的原例题直接复制为本计划例题。",
+      "本候选只列讲义安排与解答要求，不展开讲义正文或完整解答。"
+    ],
+    "input_snapshot_hash": "3bccababa66c93c2b588d4ca13966c61834dcbc8bff9f746a29fd2a3fa089549",
+    "lecture": {
+      "answers_location": "end",
+      "example_focus": "balanced",
+      "exercises": "with_answers",
+      "proof_policy": "key"
+    },
+    "objectives": [
+      "面向经济学本科一年级微积分，理解数列极限的直观意义与 ε–N 定义。",
+      "理解并能简要证明数列极限的唯一性。",
+      "能够使用基本极限与四则运算法则求简单数列的极限，并检查法则的适用条件。"
+    ],
+    "omissions": [],
+    "prerequisites": [
+      "实数运算与绝对值不等式",
+      "正整数、数列与通项的基本概念",
+      "简单分式的化简",
+      "不等式求解及基本逻辑量词的初步认识"
+    ],
+    "provider": "live",
+    "questions": [
+      {
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-PROOF",
+        "options": [
+          {
+            "effects": {
+              "value": "key"
+            },
+            "id": "KEY",
+            "label": "关键定理完整证明，其余说明",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "all"
+            },
+            "id": "ALL",
+            "label": "所有定理完整证明",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "定理证明采用哪种深度？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXAMPLE",
+        "options": [
+          {
+            "effects": {
+              "value": "balanced"
+            },
+            "id": "BALANCED",
+            "label": "概念与计算均衡",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "economics"
+            },
+            "id": "ECONOMICS",
+            "label": "更多经济应用",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "例题侧重什么？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXERCISE",
+        "options": [
+          {
+            "effects": {
+              "value": "with_answers"
+            },
+            "id": "WITH",
+            "label": "安排练习并附答案",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "none"
+            },
+            "id": "NONE",
+            "label": "不安排额外练习",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "是否安排练习与答案？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-ANSWERS",
+        "options": [
+          {
+            "effects": {
+              "value": "section"
+            },
+            "id": "SECTION",
+            "label": "各节之后",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "end"
+            },
+            "id": "END",
+            "label": "讲义末尾",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "练习答案放在哪里？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "END"
+        ],
+        "selection_mode": "single"
+      }
+    ],
+    "reference_context": {
+      "dataset": "第一章",
+      "instruction": "Only observe structure, proof depth and notation. Do not copy these examples into a different topic.",
+      "label": "UNTRUSTED_STYLE_REFERENCE_ONLY",
+      "section_titles": [
+        "数列的一般定义",
+        "拓展阅读：数列的应用",
+        "差分及其应用",
+        "数列极限",
+        "收敛数列的基本性质",
+        "极限存在性定理"
+      ],
+      "source_hash": "49a18ae541e03d6f60b99782fa5c1413a1f1c9e93a3614f865b4b263acb0045d",
+      "status": "RETRIEVED",
+      "weight_training": false
+    },
+    "reference_registry": {
+      "def:sequence-limit": "S01",
+      "eq:reciprocal-limit": "S01",
+      "sec:S01": "S01",
+      "sec:S02": "S02",
+      "thm:limit-uniqueness": "S01"
+    },
+    "revision": 2,
+    "rules": {
+      "allowed_text_sizes": [
+        "footnotesize",
+        "small",
+        "normalsize",
+        "large"
+      ],
+      "rule_version": 1,
+      "summary_frames": false
+    },
+    "schema_version": 1,
+    "sections": [
+      {
+        "id": "S01",
+        "objectives": [
+          "必需定义：从数列项最终接近某个实数的直观描述，引出数列收敛、极限及 ε–N 定义；强调任意 ε>0、存在正整数 N 和所有 n>N 的量词顺序。",
+          "必需定理：数列极限的唯一性；安排利用三角不等式的简短反证法证明，不引入抽象拓扑语言。",
+          "安排且仅安排一个例题：用定义证明 a_n=1/n 的极限为 0。",
+          "例题解答安排：由误差小于 ε 的要求选择正整数 N，并逐步验证所有 n>N 均满足定义；解释 N 可以依赖 ε，但不能随待验证的 n 改变。",
+          "安排且仅安排一个练习：用定义证明 a_n=2+3/n 的极限为 2。",
+          "练习解答安排：给出误差化简、N 的选择依据及按定义验证的参考解答。",
+          "证明与解答保持本科一年级可读深度，突出量词理解与基本不等式。"
+        ],
+        "prerequisites": [],
+        "reference_labels": [
+          "def:sequence-limit",
+          "thm:limit-uniqueness",
+          "eq:reciprocal-limit"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "proof",
+          "example",
+          "solution",
+          "exercise"
+        ],
+        "title": "数列极限的定义与唯一性"
+      },
+      {
+        "id": "S02",
+        "objectives": [
+          "必需定义：按项定义数列的和、差、积、商与常数倍；商数列须在所讨论的指标上分母非零。",
+          "必需定理：常数数列的极限以及收敛数列的四则运算法则；商法则明确要求分母数列的极限非零，并说明由此可得分母最终非零。",
+          "引用 S01 的极限定义、唯一性与 1/n 的基本极限，不重复声明相应标签；说明有限个初始项不影响极限。",
+          "证明安排：用定义简证常数数列极限与加法法则，其余运算法则给出适用条件与必要解释，不展开冗长证明。",
+          "安排且仅安排一个例题：求 a_n=(3n+2)/(2n+1) 的极限。",
+          "例题解答安排：分子分母同除以 n，调用 S01 的基本极限，逐项应用运算法则，并检查分母极限非零。",
+          "安排且仅安排一个练习：求 b_n=(2n^2-n+1)/(n^2+3) 的极限。",
+          "练习解答安排：同除以 n^2，用乘法法则得到 1/n^2 的极限，展示各项极限及商法则检查，提供参考结论。",
+          "强调运算法则以相关数列收敛及相应附加条件成立为前提，不把分母极限为零的情形直接代入商法则。"
+        ],
+        "prerequisites": [
+          "S01"
+        ],
+        "reference_labels": [],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "proof",
+          "example",
+          "solution",
+          "exercise"
+        ],
+        "title": "简单数列极限及运算"
+      }
+    ],
+    "symbols": {
+      "A,B": "实数极限值",
+      "N": "依赖于 ε 的正整数阈值，定义中使用 n>N",
+      "\\lim_{n\\to\\infty}a_n=A": "数列 a_n 收敛于 A",
+      "\\mathbb{N}^+": "正整数集合",
+      "\\varepsilon": "任意给定的正误差容限",
+      "\\{a_n\\},\\{b_n\\}": "实数数列",
+      "a_n,b_n": "数列的第 n 项",
+      "c": "实常数",
+      "n": "数列项的正整数下标",
+      "|a_n-A|": "第 n 项与候选极限的距离"
+    },
+    "theme": "default",
+    "title": "数列极限入门：定义、唯一性与简单运算",
+    "unresolved_blocking_questions": [],
+    "workflow_id": "lecture.generate",
+    "hash": "9e57a417de22ea8854850c2e7554dbb6603347d7547f552813e76f6cca122a2d"
+  },
+  "approval": {
+    "run_id": "426866cf71d2437bb17b54ac801a8c18",
+    "revision": 2,
+    "hash": "9e57a417de22ea8854850c2e7554dbb6603347d7547f552813e76f6cca122a2d",
+    "input_hash": "3bccababa66c93c2b588d4ca13966c61834dcbc8bff9f746a29fd2a3fa089549",
+    "action_id": "benchmark_driver:smoke:9e57a417de22ea88",
+    "confirmed_at": "2026-09-19T17:33:43.989869+00:00"
+  },
+  "jobs": [
+    {
+      "id": "a51d7a71d0954122a1b29383c20a2cb9",
+      "kind": "plan",
+      "status": "done",
+      "attempt": 3,
+      "fencing_token": 3
+    },
+    {
+      "id": "38535e95a5654034898bcd181e5fad02",
+      "kind": "build",
+      "status": "failed",
+      "attempt": 1,
+      "fencing_token": 1
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "d5e9652b8c414b1fab7cf38a793a4a38",
+      "run_id": "426866cf71d2437bb17b54ac801a8c18",
+      "revision": 0,
+      "name": "failure_diagnostic.json",
+      "sha256": "88f415359ce285e109fda5cdbea1545b9ff045befd589c0f7ca0f75bf4ee4ed4",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-19T17:26:33.128295+00:00",
+      "metadata": {
+        "attempt": 1,
+        "kind": "failure_diagnostic"
+      }
+    },
+    {
+      "artifact_id": "d67ff896814e4fc59cecc033e2fc9a6d",
+      "run_id": "426866cf71d2437bb17b54ac801a8c18",
+      "revision": 0,
+      "name": "failure_diagnostic.json",
+      "sha256": "31977f798798b4092307b05da78564969846ea07d8b03316e4c4e1d832ddb731",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-19T17:30:31.315045+00:00",
+      "metadata": {
+        "attempt": 2,
+        "kind": "failure_diagnostic"
+      }
+    },
+    {
+      "artifact_id": "e5b42b4ed0a24f36be85d7fd1030d64c",
+      "run_id": "426866cf71d2437bb17b54ac801a8c18",
+      "revision": 2,
+      "name": "failure_diagnostic.json",
+      "sha256": "c869c130f0aa2601d47dac87cbad53092285125e4dca8acba5067f4b0e6962bc",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-19T17:38:59.746112+00:00",
+      "metadata": {
+        "attempt": 1,
+        "kind": "failure_diagnostic"
+      }
+    }
+  ],
+  "reviews": []
+}

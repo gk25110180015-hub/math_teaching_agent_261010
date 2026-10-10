@@ -1,0 +1,18 @@
+........................F....                                            [100%]
+================================== FAILURES ===================================
+_____________________ test_concurrent_database_migration ______________________
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/t/lr4/test_concurrent_database_migra0')
+
+    def test_concurrent_database_migration(tmp_path):
+        path=tmp_path/'concurrent.db'
+        with ThreadPoolExecutor(2) as pool:
+            stores=list(pool.map(lambda _:Store(path),range(2)))
+        with stores[0].connect() as c:
+>           assert c.execute('SELECT count(*) FROM schema_migrations').fetchone()[0]==1
+E           assert 2 == 1
+
+tests\test_state.py:92: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_state.py::test_concurrent_database_migration - assert 2 == 1
+1 failed, 28 passed, 2 deselected in 14.61s

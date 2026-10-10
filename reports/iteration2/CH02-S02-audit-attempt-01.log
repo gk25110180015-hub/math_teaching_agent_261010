@@ -1,0 +1,7 @@
+Read-only audit script first attempt (no model/compile/database write):
+Traceback (most recent call last):
+  File "reports/iteration2/audit_CH02_S02_live_recovery.py", line 113, in <module>
+    'original_plan_identity_preserved': state['identity']['plan_hash'] == approval['plan_hash'],
+KeyError: 'plan_hash'
+
+Audit script used the wrong approval column name. Product artifacts and task state were not changed. The schema was checked before correcting the auditor.

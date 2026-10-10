@@ -1,0 +1,169 @@
+FFFFFF......FF                                                           [100%]
+================================== FAILURES ===================================
+_ test_known_text_argument_has_independent_math_scope_and_is_byte_exact[\\[\\text{$\\varepsilon$--$N$ \u5b9a\u4e49}\\]] _
+
+tex = '\\[\\text{$\\varepsilon$--$N$ ����}\\]'
+
+    @pytest.mark.parametrize('tex',[
+        r'\[\text{$\varepsilon$--$N$ ����}\]',
+        r'\[\begin{array}{c|c}\text{������ $\varepsilon>0$}&\text{ͳһ�������� $N$}\end{array}\]',
+        r'\[\text{�� \(x>0\) ������}\]',
+        r'\[\text{$a+\text{$b$ ����}$}\]',
+        r'\[\text{�������ģ��� $a$��}\]',
+        r'\[\text{\{ת������\}�� $x$}\]',
+    ])
+    def test_known_text_argument_has_independent_math_scope_and_is_byte_exact(tex):
+        output,evidence=normalize(tex)
+>       assert evidence['status']=='PASS',evidence
+E       AssertionError: {'schema_version': 3, 'status': 'BLOCKED', 'raw_hash': '334349b7480d8d787ae10ad98e8970fd38ff57cd6773f5d9e36b62f02c5ee62a', 'normalized_hash': '334349b7480d8d787ae10ad98e8970fd38ff57cd6773f5d9e36b62f02c5ee62a', ...}
+E       assert 'BLOCKED' == 'PASS'
+E         
+E         - PASS
+E         + BLOCKED
+
+tests\test_text_math_scopes.py:28: AssertionError
+_ test_known_text_argument_has_independent_math_scope_and_is_byte_exact[\\[\\begin{array}{c|c}\\text{\u5bf9\u4efb\u610f $\\varepsilon>0$}&\\text{\u7edf\u4e00\u7684\u6b63\u6574\u6570 $N$}\\end{array}\\]] _
+
+tex = '\\[\\begin{array}{c|c}\\text{������ $\\varepsilon>0$}&\\text{ͳһ�������� $N$}\\end{array}\\]'
+
+    @pytest.mark.parametrize('tex',[
+        r'\[\text{$\varepsilon$--$N$ ����}\]',
+        r'\[\begin{array}{c|c}\text{������ $\varepsilon>0$}&\text{ͳһ�������� $N$}\end{array}\]',
+        r'\[\text{�� \(x>0\) ������}\]',
+        r'\[\text{$a+\text{$b$ ����}$}\]',
+        r'\[\text{�������ģ��� $a$��}\]',
+        r'\[\text{\{ת������\}�� $x$}\]',
+    ])
+    def test_known_text_argument_has_independent_math_scope_and_is_byte_exact(tex):
+        output,evidence=normalize(tex)
+>       assert evidence['status']=='PASS',evidence
+E       AssertionError: {'schema_version': 3, 'status': 'BLOCKED', 'raw_hash': 'c27a4c5608a2f57880528ceaec1ccb7f1aed9d8e5a16ebccc6e8df027ccc15f1', 'normalized_hash': 'c27a4c5608a2f57880528ceaec1ccb7f1aed9d8e5a16ebccc6e8df027ccc15f1', ...}
+E       assert 'BLOCKED' == 'PASS'
+E         
+E         - PASS
+E         + BLOCKED
+
+tests\test_text_math_scopes.py:28: AssertionError
+_ test_known_text_argument_has_independent_math_scope_and_is_byte_exact[\\[\\text{\u542b \\(x>0\\) \u7684\u6587\u5b57}\\]] _
+
+tex = '\\[\\text{�� \\(x>0\\) ������}\\]'
+
+    @pytest.mark.parametrize('tex',[
+        r'\[\text{$\varepsilon$--$N$ ����}\]',
+        r'\[\begin{array}{c|c}\text{������ $\varepsilon>0$}&\text{ͳһ�������� $N$}\end{array}\]',
+        r'\[\text{�� \(x>0\) ������}\]',
+        r'\[\text{$a+\text{$b$ ����}$}\]',
+        r'\[\text{�������ģ��� $a$��}\]',
+        r'\[\text{\{ת������\}�� $x$}\]',
+    ])
+    def test_known_text_argument_has_independent_math_scope_and_is_byte_exact(tex):
+        output,evidence=normalize(tex)
+>       assert evidence['status']=='PASS',evidence
+E       AssertionError: {'schema_version': 3, 'status': 'BLOCKED', 'raw_hash': 'a17330e2e582477ada45c9bc29cb6775982da90b8b6a2a000f8f6dbf808645ad', 'normalized_hash': 'a17330e2e582477ada45c9bc29cb6775982da90b8b6a2a000f8f6dbf808645ad', ...}
+E       assert 'BLOCKED' == 'PASS'
+E         
+E         - PASS
+E         + BLOCKED
+
+tests\test_text_math_scopes.py:28: AssertionError
+_ test_known_text_argument_has_independent_math_scope_and_is_byte_exact[\\[\\text{$a+\\text{$b$ \u6761\u4ef6}$}\\]] _
+
+tex = '\\[\\text{$a+\\text{$b$ ����}$}\\]'
+
+    @pytest.mark.parametrize('tex',[
+        r'\[\text{$\varepsilon$--$N$ ����}\]',
+        r'\[\begin{array}{c|c}\text{������ $\varepsilon>0$}&\text{ͳһ�������� $N$}\end{array}\]',
+        r'\[\text{�� \(x>0\) ������}\]',
+        r'\[\text{$a+\text{$b$ ����}$}\]',
+        r'\[\text{�������ģ��� $a$��}\]',
+        r'\[\text{\{ת������\}�� $x$}\]',
+    ])
+    def test_known_text_argument_has_independent_math_scope_and_is_byte_exact(tex):
+        output,evidence=normalize(tex)
+>       assert evidence['status']=='PASS',evidence
+E       AssertionError: {'schema_version': 3, 'status': 'BLOCKED', 'raw_hash': '6684ab3181eb4fa3e72adedee5e3dc7c3a9237ded5f6c5c0112fc0f3aa78f1b2', 'normalized_hash': '6684ab3181eb4fa3e72adedee5e3dc7c3a9237ded5f6c5c0112fc0f3aa78f1b2', ...}
+E       assert 'BLOCKED' == 'PASS'
+E         
+E         - PASS
+E         + BLOCKED
+
+tests\test_text_math_scopes.py:28: AssertionError
+_ test_known_text_argument_has_independent_math_scope_and_is_byte_exact[\\[\\text{\u4fdd\u7559\u4e2d\u6587\uff0c\u53ca $a$\u3002}\\]] _
+
+tex = '\\[\\text{�������ģ��� $a$��}\\]'
+
+    @pytest.mark.parametrize('tex',[
+        r'\[\text{$\varepsilon$--$N$ ����}\]',
+        r'\[\begin{array}{c|c}\text{������ $\varepsilon>0$}&\text{ͳһ�������� $N$}\end{array}\]',
+        r'\[\text{�� \(x>0\) ������}\]',
+        r'\[\text{$a+\text{$b$ ����}$}\]',
+        r'\[\text{�������ģ��� $a$��}\]',
+        r'\[\text{\{ת������\}�� $x$}\]',
+    ])
+    def test_known_text_argument_has_independent_math_scope_and_is_byte_exact(tex):
+        output,evidence=normalize(tex)
+>       assert evidence['status']=='PASS',evidence
+E       AssertionError: {'schema_version': 3, 'status': 'BLOCKED', 'raw_hash': 'f814adcade5067b897fc8594b56ceae862bc1705b81b152478642c92b168c100', 'normalized_hash': 'f814adcade5067b897fc8594b56ceae862bc1705b81b152478642c92b168c100', ...}
+E       assert 'BLOCKED' == 'PASS'
+E         
+E         - PASS
+E         + BLOCKED
+
+tests\test_text_math_scopes.py:28: AssertionError
+_ test_known_text_argument_has_independent_math_scope_and_is_byte_exact[\\[\\text{\\{\u8f6c\u4e49\u62ec\u53f7\\}\u4e0e $x$}\\]] _
+
+tex = '\\[\\text{\\{ת������\\}�� $x$}\\]'
+
+    @pytest.mark.parametrize('tex',[
+        r'\[\text{$\varepsilon$--$N$ ����}\]',
+        r'\[\begin{array}{c|c}\text{������ $\varepsilon>0$}&\text{ͳһ�������� $N$}\end{array}\]',
+        r'\[\text{�� \(x>0\) ������}\]',
+        r'\[\text{$a+\text{$b$ ����}$}\]',
+        r'\[\text{�������ģ��� $a$��}\]',
+        r'\[\text{\{ת������\}�� $x$}\]',
+    ])
+    def test_known_text_argument_has_independent_math_scope_and_is_byte_exact(tex):
+        output,evidence=normalize(tex)
+>       assert evidence['status']=='PASS',evidence
+E       AssertionError: {'schema_version': 3, 'status': 'BLOCKED', 'raw_hash': '5b99eec7fd8e36424835b8aedc6c337e0469cc0987a8c0edb1d5d8f9e396f6af', 'normalized_hash': '5b99eec7fd8e36424835b8aedc6c337e0469cc0987a8c0edb1d5d8f9e396f6af', ...}
+E       assert 'BLOCKED' == 'PASS'
+E         
+E         - PASS
+E         + BLOCKED
+
+tests\test_text_math_scopes.py:28: AssertionError
+______ test_text_argument_does_not_mask_outer_label_or_comment_verbatim _______
+
+    def test_text_argument_does_not_mask_outer_label_or_comment_verbatim():
+        raw=r'\[a+\text{$b$ ����}��\label{eq:one}\]'
+        output,evidence=normalize(raw)
+>       assert evidence['status']=='PASS'
+E       AssertionError: assert 'BLOCKED' == 'PASS'
+E         
+E         - PASS
+E         + BLOCKED
+
+tests\test_text_math_scopes.py:48: AssertionError
+_ test_actual_original_and_rejected_patch_u02_are_structurally_valid_without_edits _
+
+    def test_actual_original_and_rejected_patch_u02_are_structurally_valid_without_edits():
+        for name,unit in captured_units()['units'].items():
+            output,evidence=normalize(unit['tex'])
+>           assert evidence['status']=='PASS',(name,evidence)
+E           AssertionError: ('original', {'schema_version': 3, 'status': 'BLOCKED', 'raw_hash': '9439fe8dccf935b5bc492232a878152aa3d3378e61c5316eaf58e439519a8557', 'normalized_hash': '9439fe8dccf935b5bc492232a878152aa3d3378e61c5316eaf58e439519a8557', ...})
+E           assert 'BLOCKED' == 'PASS'
+E             
+E             - PASS
+E             + BLOCKED
+
+tests\test_text_math_scopes.py:61: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_text_math_scopes.py::test_known_text_argument_has_independent_math_scope_and_is_byte_exact[\\[\\text{$\\varepsilon$--$N$ \u5b9a\u4e49}\\]]
+FAILED tests/test_text_math_scopes.py::test_known_text_argument_has_independent_math_scope_and_is_byte_exact[\\[\\begin{array}{c|c}\\text{\u5bf9\u4efb\u610f $\\varepsilon>0$}&\\text{\u7edf\u4e00\u7684\u6b63\u6574\u6570 $N$}\\end{array}\\]]
+FAILED tests/test_text_math_scopes.py::test_known_text_argument_has_independent_math_scope_and_is_byte_exact[\\[\\text{\u542b \\(x>0\\) \u7684\u6587\u5b57}\\]]
+FAILED tests/test_text_math_scopes.py::test_known_text_argument_has_independent_math_scope_and_is_byte_exact[\\[\\text{$a+\\text{$b$ \u6761\u4ef6}$}\\]]
+FAILED tests/test_text_math_scopes.py::test_known_text_argument_has_independent_math_scope_and_is_byte_exact[\\[\\text{\u4fdd\u7559\u4e2d\u6587\uff0c\u53ca $a$\u3002}\\]]
+FAILED tests/test_text_math_scopes.py::test_known_text_argument_has_independent_math_scope_and_is_byte_exact[\\[\\text{\\{\u8f6c\u4e49\u62ec\u53f7\\}\u4e0e $x$}\\]]
+FAILED tests/test_text_math_scopes.py::test_text_argument_does_not_mask_outer_label_or_comment_verbatim
+FAILED tests/test_text_math_scopes.py::test_actual_original_and_rejected_patch_u02_are_structurally_valid_without_edits
+8 failed, 6 passed, 1 deselected in 0.20s

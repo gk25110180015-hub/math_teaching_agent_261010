@@ -1,0 +1,22 @@
+usage: verify_live_delivery_ui.py [-h] [--base-url BASE_URL] [--state STATE]
+                                  [--output OUTPUT]
+                                  [--case {smoke,CH01,CH02,CH03} | --cases {smoke,CH01,CH02,CH03} [{smoke,CH01,CH02,CH03} ...]]
+                                  [--timeout-ms TIMEOUT_MS]
+
+Read-only Edge verification of existing live runs; never starts services or
+models. Only call this after the benchmark driver has finished and the
+intended workspace is already served. This is automated UI/delivery evidence,
+not teacher acceptance.
+
+options:
+  -h, --help            show this help message and exit
+  --base-url BASE_URL
+  --state STATE
+  --output OUTPUT       New directory within reports/iteration2; must not
+                        exist
+  --case {smoke,CH01,CH02,CH03}
+                        Verify this ready case; repeat to select multiple
+                        cases
+  --cases {smoke,CH01,CH02,CH03} [{smoke,CH01,CH02,CH03} ...]
+                        Compatibility alias accepting multiple cases
+  --timeout-ms TIMEOUT_MS

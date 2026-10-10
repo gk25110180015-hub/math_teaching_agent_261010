@@ -1,0 +1,578 @@
+{
+  "id": "a45be503af594ce8aae0bb1e4c30184b",
+  "workflow_id": "lecture.generate",
+  "version": 1,
+  "owner_id": "local",
+  "status": "BLOCKED",
+  "stage": "repair.section.S03",
+  "input_hash": "3b4e20cb757d221f1c974ffadb5918b392f9092cd5d1a8d9e5847c07c37930b7",
+  "active_plan_revision": 2,
+  "created_at": "2026-09-19T18:43:46.907219+00:00",
+  "updated_at": "2026-09-19T19:34:29.523700+00:00",
+  "request_count": 22,
+  "schema_version": 1,
+  "input": {
+    "attachments": [],
+    "difficulty": "经济学本科一年级微积分",
+    "provider": "live",
+    "schema_version": 1,
+    "theme": "default",
+    "topic": "函数极限与连续。覆盖函数极限定义、左右极限与无穷远极限、极限性质与运算、无穷小和连续性，规划4至6节完整的本科入门讲义，每节至少一个例题和一个练习。",
+    "trusted_input": true,
+    "units": [],
+    "use_reference_bibliography": false,
+    "workflow_id": "lecture.generate"
+  },
+  "error": {
+    "attempt": 2,
+    "code": "REPAIR_SCOPE_VIOLATION",
+    "job_id": "27979f9a88114ed1a41b9d3c3c5facd8",
+    "message": "修复修改了未授权单元",
+    "recovery": "原审批和已通过章节保留；修复条件后点击重试。崩溃边界的外部调用可能重复计费。",
+    "timestamp": "2026-09-19T19:34:29.512503+00:00"
+  },
+  "plan": {
+    "additions": [],
+    "decision_ids": [
+      "f5391dff983a4c9abb85da431cb31909",
+      "7ca7cf70f16741558e7c2f5f52b15a8a",
+      "9e01f2db34b441de925b672b5caa32e7",
+      "9d39de0f38b149659cfdd61fc2be8cf2"
+    ],
+    "decisions": [
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "custom_input": "",
+        "id": "f5391dff983a4c9abb85da431cb31909",
+        "question_id": "Q-PROOF",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "key"
+        },
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "timestamp": "2026-09-19T18:44:39.074420+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "custom_input": "",
+        "id": "7ca7cf70f16741558e7c2f5f52b15a8a",
+        "question_id": "Q-EXAMPLE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "balanced"
+        },
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "timestamp": "2026-09-19T18:44:39.074420+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "custom_input": "",
+        "id": "9e01f2db34b441de925b672b5caa32e7",
+        "question_id": "Q-EXERCISE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "with_answers"
+        },
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "timestamp": "2026-09-19T18:44:39.074420+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "custom_input": "",
+        "id": "9d39de0f38b149659cfdd61fc2be8cf2",
+        "question_id": "Q-ANSWERS",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "end"
+        },
+        "selected_option_ids": [
+          "END"
+        ],
+        "timestamp": "2026-09-19T18:44:39.074420+00:00"
+      }
+    ],
+    "diff": [
+      {
+        "after": {
+          "answers_location": "end",
+          "example_focus": "balanced",
+          "exercises": "with_answers",
+          "proof_policy": "key"
+        },
+        "before": {
+          "answers_location": null,
+          "example_focus": null,
+          "exercises": null,
+          "proof_policy": null
+        },
+        "field": "lecture"
+      }
+    ],
+    "difficulty": "经济学本科一年级微积分",
+    "exclusions": [
+      "不系统讲授导数、微分及其几何应用。",
+      "不展开多元函数极限与连续性。",
+      "不讨论严格的拓扑空间定义、度量空间完备性和序列完备性证明。",
+      "不系统讲授渐近展开、泰勒公式及高阶无穷小理论。",
+      "不涉及测度论、勒贝格积分或高级实分析中的连续性定理证明。"
+    ],
+    "input_snapshot_hash": "3b4e20cb757d221f1c974ffadb5918b392f9092cd5d1a8d9e5847c07c37930b7",
+    "lecture": {
+      "answers_location": "end",
+      "example_focus": "balanced",
+      "exercises": "with_answers",
+      "proof_policy": "key"
+    },
+    "objectives": [
+      "建立一元函数极限的直观与严格认识，掌握点极限、左右极限和无穷远极限的表达方式。",
+      "掌握极限的唯一性、保号性、四则运算等基本性质，并能处理常见极限计算。",
+      "理解无穷小及其阶的基本思想，掌握等价无穷小在极限计算中的使用条件。",
+      "掌握函数连续性的定义、间断点分类及连续函数的基本运算性质。",
+      "理解闭区间上连续函数的有界性、最值性和介值性，并能解决基础经济学模型中的连续性问题。"
+    ],
+    "omissions": [],
+    "prerequisites": [
+      "实数运算与绝对值不等式",
+      "集合、区间与邻域的基本概念",
+      "初等函数及其图像",
+      "代数式变形与因式分解",
+      "指数函数、对数函数和三角函数的基本性质"
+    ],
+    "provider": "live",
+    "questions": [
+      {
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-PROOF",
+        "options": [
+          {
+            "effects": {
+              "value": "key"
+            },
+            "id": "KEY",
+            "label": "关键定理完整证明，其余说明",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "all"
+            },
+            "id": "ALL",
+            "label": "所有定理完整证明",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "定理证明采用哪种深度？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXAMPLE",
+        "options": [
+          {
+            "effects": {
+              "value": "balanced"
+            },
+            "id": "BALANCED",
+            "label": "概念与计算均衡",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "economics"
+            },
+            "id": "ECONOMICS",
+            "label": "更多经济应用",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "例题侧重什么？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXERCISE",
+        "options": [
+          {
+            "effects": {
+              "value": "with_answers"
+            },
+            "id": "WITH",
+            "label": "安排练习并附答案",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "none"
+            },
+            "id": "NONE",
+            "label": "不安排额外练习",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "是否安排练习与答案？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-ANSWERS",
+        "options": [
+          {
+            "effects": {
+              "value": "section"
+            },
+            "id": "SECTION",
+            "label": "各节之后",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "end"
+            },
+            "id": "END",
+            "label": "讲义末尾",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "练习答案放在哪里？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "END"
+        ],
+        "selection_mode": "single"
+      }
+    ],
+    "reference_context": {
+      "dataset": "第三章",
+      "instruction": "Only observe structure, proof depth and notation. Do not copy these examples into a different topic.",
+      "label": "UNTRUSTED_STYLE_REFERENCE_ONLY",
+      "section_titles": [
+        "一元函数极限",
+        "函数极限的基本性质",
+        "两个重要极限",
+        "等价无穷小",
+        "一元函数的连续性",
+        "闭区间连续函数的两个基本定理",
+        "二元函数的极限与连续"
+      ],
+      "source_hash": "73f3c32c19af46bf3c9b3e2881b18327a1aa8970ad2ff8bc2610d979ef655f3f",
+      "status": "RETRIEVED",
+      "weight_training": false
+    },
+    "reference_registry": {
+      "def:bounded-on-closed-interval": "S05",
+      "def:discontinuity-types": "S04",
+      "def:equivalent-infinitesimal": "S03",
+      "def:infinite-limit": "S01",
+      "def:infinitesimal": "S03",
+      "def:interval-continuity": "S04",
+      "def:one-sided-limit": "S01",
+      "def:point-continuity": "S04",
+      "def:point-limit": "S01",
+      "def:squeeze-principle": "S02",
+      "sec:S01": "S01",
+      "sec:S02": "S02",
+      "sec:S03": "S03",
+      "sec:S04": "S04",
+      "sec:S05": "S05",
+      "thm:composition-continuity": "S04",
+      "thm:continuity-algebra": "S04",
+      "thm:equivalent-substitution": "S03",
+      "thm:extreme-value-theorem": "S05",
+      "thm:fundamental-limits": "S03",
+      "thm:intermediate-value-theorem": "S05",
+      "thm:limit-algebra": "S02",
+      "thm:limit-sign-preservation": "S02",
+      "thm:limit-uniqueness": "S01",
+      "thm:squeeze-theorem": "S02",
+      "thm:two-sided-limit-criterion": "S01",
+      "thm:zero-existence-theorem": "S05"
+    },
+    "revision": 2,
+    "rules": {
+      "allowed_text_sizes": [
+        "footnotesize",
+        "small",
+        "normalsize",
+        "large"
+      ],
+      "rule_version": 1,
+      "summary_frames": false
+    },
+    "schema_version": 1,
+    "sections": [
+      {
+        "id": "S01",
+        "objectives": [
+          "理解函数在一点处趋近时的局部行为。",
+          "掌握点极限、左极限、右极限及无穷远极限的定义。",
+          "能够使用极限定义判断简单函数的极限，并用左右极限分析极限存在性。"
+        ],
+        "prerequisites": [],
+        "reference_labels": [
+          "def:point-limit",
+          "def:one-sided-limit",
+          "def:infinite-limit",
+          "thm:two-sided-limit-criterion",
+          "thm:limit-uniqueness"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "一元函数极限：定义、左右极限与无穷远极限"
+      },
+      {
+        "id": "S02",
+        "objectives": [
+          "掌握极限的唯一性、局部有界性和保号性。",
+          "掌握极限的和、差、积、商运算法则及复合函数的基础结论。",
+          "能够运用代数变形、夹逼思想和基本极限完成初等计算。"
+        ],
+        "prerequisites": [
+          "S01"
+        ],
+        "reference_labels": [
+          "def:squeeze-principle",
+          "thm:limit-algebra",
+          "thm:squeeze-theorem",
+          "thm:limit-sign-preservation"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "极限的基本性质与运算"
+      },
+      {
+        "id": "S03",
+        "objectives": [
+          "理解无穷小与无穷大的相对概念。",
+          "掌握常用基本极限及其适用条件。",
+          "理解等价无穷小的定义，并能在乘积和商的极限中进行规范替换。"
+        ],
+        "prerequisites": [
+          "S02"
+        ],
+        "reference_labels": [
+          "def:infinitesimal",
+          "def:equivalent-infinitesimal",
+          "thm:fundamental-limits",
+          "thm:equivalent-substitution"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "无穷小、基本极限与等价无穷小"
+      },
+      {
+        "id": "S04",
+        "objectives": [
+          "掌握函数在一点、区间内连续的定义。",
+          "理解连续性与极限、函数值之间的关系。",
+          "能够判断可去间断点、跳跃间断点和无穷间断点，并掌握连续函数的四则运算与复合性质。"
+        ],
+        "prerequisites": [
+          "S03"
+        ],
+        "reference_labels": [
+          "def:point-continuity",
+          "def:interval-continuity",
+          "def:discontinuity-types",
+          "thm:continuity-algebra",
+          "thm:composition-continuity"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "函数连续性与间断点"
+      },
+      {
+        "id": "S05",
+        "objectives": [
+          "掌握闭区间连续函数有界定理和最值定理。",
+          "理解介值定理与零点存在性定理。",
+          "能够将连续性定理用于判断方程根的存在性及简单经济学模型的可行性。"
+        ],
+        "prerequisites": [
+          "S04"
+        ],
+        "reference_labels": [
+          "def:bounded-on-closed-interval",
+          "thm:extreme-value-theorem",
+          "thm:intermediate-value-theorem",
+          "thm:zero-existence-theorem"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "闭区间连续函数的基本定理及应用"
+      }
+    ],
+    "symbols": {
+      "A": "函数极限值或常数",
+      "[a,b]": "由a与b确定的闭区间，其中a≤b",
+      "\\delta": "依赖于\\varepsilon的正数",
+      "\\lim_{x\\to x_0^+}f(x)": "函数在x从右侧趋近于x_0时的右极限",
+      "\\lim_{x\\to x_0^-}f(x)": "函数在x从左侧趋近于x_0时的左极限",
+      "\\lim_{x\\to x_0}f(x)": "函数在x趋近于x_0时的极限",
+      "\\varepsilon": "任意给定的正数",
+      "f(x)": "定义在相应区间或邻域上的函数",
+      "o(1)": "当自变量趋近相应极限位置时趋于零的量",
+      "x": "自变量",
+      "x_0": "考察的有限点"
+    },
+    "theme": "default",
+    "title": "函数极限与连续：本科一年级微积分讲义计划",
+    "unresolved_blocking_questions": [],
+    "workflow_id": "lecture.generate",
+    "hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7"
+  },
+  "approval": {
+    "run_id": "a45be503af594ce8aae0bb1e4c30184b",
+    "revision": 2,
+    "hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+    "input_hash": "3b4e20cb757d221f1c974ffadb5918b392f9092cd5d1a8d9e5847c07c37930b7",
+    "action_id": "benchmark_driver:CH03:fbd172c8df0c12fc",
+    "confirmed_at": "2026-09-19T18:44:39.087182+00:00"
+  },
+  "jobs": [
+    {
+      "id": "cd46a095dfbe4810a7bb81f061b5a63d",
+      "kind": "plan",
+      "status": "done",
+      "attempt": 1,
+      "fencing_token": 1
+    },
+    {
+      "id": "27979f9a88114ed1a41b9d3c3c5facd8",
+      "kind": "build",
+      "status": "failed",
+      "attempt": 2,
+      "fencing_token": 2
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "e17df383464543919cc1e8fa45e0247f",
+      "run_id": "a45be503af594ce8aae0bb1e4c30184b",
+      "revision": 2,
+      "name": "failure_diagnostic.json",
+      "sha256": "4b2bb6c13441fe44e4aaeaea638d6767635eb950f416843b2d728380e0b7633c",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-19T18:49:36.866195+00:00",
+      "metadata": {
+        "attempt": 1,
+        "kind": "failure_diagnostic"
+      }
+    },
+    {
+      "artifact_id": "2f6c305adde549b3885b198b0e3e8089",
+      "run_id": "a45be503af594ce8aae0bb1e4c30184b",
+      "revision": 2,
+      "name": "failure_diagnostic.json",
+      "sha256": "311ab01bcad15a2f4c337141c715bf2ea375f55d1e940b534b39226c3feb53cb",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-19T19:34:29.518701+00:00",
+      "metadata": {
+        "attempt": 2,
+        "kind": "failure_diagnostic"
+      }
+    }
+  ],
+  "reviews": []
+}

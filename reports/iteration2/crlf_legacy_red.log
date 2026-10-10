@@ -1,0 +1,237 @@
+FFFFF                                                                    [100%]
+================================== FAILURES ===================================
+_________ test_lecture_source_preserves_rendered_crlf_exactly[local] __________
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/t/red-crlflegacy/test_lecture_source_preserves_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000021B7BA4A720>
+mode = 'local'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('mode',['local','final'])
+    def test_lecture_source_preserves_rendered_crlf_exactly(tmp_path,monkeypatch,mode):
+        import math_agent.pipeline as module
+        provider=OfflineProvider()
+        _,pipeline,plan=setup_pipeline(tmp_path,provider)
+        rendered='before\r\n\\newcommand{\\macro}[1]{line\r\n#1}\r\nafter\n'
+        monkeypatch.setattr(module,'render_lecture',lambda *args:rendered)
+        observed=[]
+        class StopAfterWrite(Exception):pass
+        def compile(self,source,entry,build):
+            observed.append((source/entry).read_bytes())
+            if mode=='final':raise StopAfterWrite()
+            build.mkdir()
+            return {'status':'PASS','issues':[],'passes':2,'page_count':1,'pdf_path':None,'fixture':'OFFLINE_FAKE_COMPILER'}
+        monkeypatch.setattr(Pipeline,'compile',compile)
+        if mode=='final':
+            monkeypatch.setattr(Pipeline,'lecture',lambda *args:([],[]))
+            with pytest.raises(StopAfterWrite):pipeline.build()
+        else:
+            pipeline.lecture(plan)
+>       assert observed==[rendered.encode('utf-8')]
+E       AssertionError: assert [b'before\r\r...r\nafter\r\n'] == [b'before\r\n...}\r\nafter\n']
+E         
+E         At index 0 diff: b'before\r\r\n\\newcommand{\\macro}[1]{line\r\r\n#1}\r\r\nafter\r\n' != b'before\r\n\\newcommand{\\macro}[1]{line\r\n#1}\r\nafter\n'
+E         Use -v to get more diff
+
+tests\test_lecture_crlf.py:29: AssertionError
+_________ test_lecture_source_preserves_rendered_crlf_exactly[final] __________
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/t/red-crlflegacy/test_lecture_source_preserves_1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000021B7BA77FE0>
+mode = 'final'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('mode',['local','final'])
+    def test_lecture_source_preserves_rendered_crlf_exactly(tmp_path,monkeypatch,mode):
+        import math_agent.pipeline as module
+        provider=OfflineProvider()
+        _,pipeline,plan=setup_pipeline(tmp_path,provider)
+        rendered='before\r\n\\newcommand{\\macro}[1]{line\r\n#1}\r\nafter\n'
+        monkeypatch.setattr(module,'render_lecture',lambda *args:rendered)
+        observed=[]
+        class StopAfterWrite(Exception):pass
+        def compile(self,source,entry,build):
+            observed.append((source/entry).read_bytes())
+            if mode=='final':raise StopAfterWrite()
+            build.mkdir()
+            return {'status':'PASS','issues':[],'passes':2,'page_count':1,'pdf_path':None,'fixture':'OFFLINE_FAKE_COMPILER'}
+        monkeypatch.setattr(Pipeline,'compile',compile)
+        if mode=='final':
+            monkeypatch.setattr(Pipeline,'lecture',lambda *args:([],[]))
+            with pytest.raises(StopAfterWrite):pipeline.build()
+        else:
+            pipeline.lecture(plan)
+>       assert observed==[rendered.encode('utf-8')]
+E       AssertionError: assert [b'before\r\r...r\nafter\r\n'] == [b'before\r\n...}\r\nafter\n']
+E         
+E         At index 0 diff: b'before\r\r\n\\newcommand{\\macro}[1]{line\r\r\n#1}\r\r\nafter\r\n' != b'before\r\n\\newcommand{\\macro}[1]{line\r\n#1}\r\nafter\n'
+E         Use -v to get more diff
+
+tests\test_lecture_crlf.py:29: AssertionError
+_____ test_legacy_failure_is_repaired_before_any_new_global_review[none] ______
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/t/red-crlflegacy/test_legacy_failure_is_repaire0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000021B7BA774D0>
+invalid = 'none'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('invalid',['none','unknown_unit','changed_hash'])
+    def test_legacy_failure_is_repaired_before_any_new_global_review(tmp_path,monkeypatch,invalid):
+        from math_agent.util import write_json,digest
+        provider=GlobalRepairProvider();_,p,plan,_=setup(tmp_path,provider,monkeypatch)
+        completed,_=p._lecture_sections(plan)
+        issue={'unit_id':'S01.U01','severity':'review','message':'Persisted integer existence concern','evidence':'old review'}
+        failure={'issues':[issue],'checked_unit_ids':[u['id'] for _,s in completed for u in s['units']]}
+        if invalid=='unknown_unit':issue['unit_id']='OTHER.U01'
+        if invalid=='changed_hash':failure['unit_hashes']={'S01.U01':digest('different old unit')}
+        write_json(p.root/'global_review_failure.json',failure)
+        original=(p.root/'global_review_failure.json').read_bytes()
+        original_generate=provider.generate
+        def generate(role,context,schema):
+            if role=='reviewer_math' and context['scope']['kind']=='adjacent_interface':
+                assert provider.repairs, 'Persisted issue must be repaired before another reviewer roll'
+            return original_generate(role,context,schema)
+        provider.generate=generate
+        if invalid!='none':
+            with pytest.raises(AgentError) as error:p.lecture(plan)
+            assert error.value.code=='GLOBAL_REPAIR_LEGACY_UNVERIFIED'
+            assert not provider.repairs and not provider.global_calls
+        else:
+>           sections,_=p.lecture(plan)
+                       ^^^^^^^^^^^^^^^
+
+tests\test_global_repair.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\math_agent\pipeline.py:391: in lecture
+    global_reports,issues=self._global_interfaces(completed,plan)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\math_agent\pipeline.py:524: in _global_interfaces
+    review=self.review_units(units,{'plan':plan,'scope':{'kind':'adjacent_interface','sections':[completed[i][0]['id'],completed[i+1][0]['id']],
+src\math_agent\pipeline.py:155: in review_units
+    review=self.provider.generate('reviewer_math',payload,MathReview)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+role = 'reviewer_math'
+context = {'plan': {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exer...planation', 'relates_to': None, 'tex': '��������Ԫ�������ݡ�'}], 'actual_unit_ids': ['S01.U01', 'S01.U02', 'S02.U01', 'S02.U02']}
+schema = <class 'math_agent.domain.MathReview'>
+
+    def generate(role,context,schema):
+        if role=='reviewer_math' and context['scope']['kind']=='adjacent_interface':
+>           assert provider.repairs, 'Persisted issue must be repaired before another reviewer roll'
+E           AssertionError: Persisted issue must be repaired before another reviewer roll
+E           assert []
+E            +  where [] = <test_global_repair.GlobalRepairProvider object at 0x0000021B7BA773E0>.repairs
+
+tests\test_global_repair.py:29: AssertionError
+_ test_legacy_failure_is_repaired_before_any_new_global_review[unknown_unit] __
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/t/red-crlflegacy/test_legacy_failure_is_repaire1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000021B7BAB2030>
+invalid = 'unknown_unit'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('invalid',['none','unknown_unit','changed_hash'])
+    def test_legacy_failure_is_repaired_before_any_new_global_review(tmp_path,monkeypatch,invalid):
+        from math_agent.util import write_json,digest
+        provider=GlobalRepairProvider();_,p,plan,_=setup(tmp_path,provider,monkeypatch)
+        completed,_=p._lecture_sections(plan)
+        issue={'unit_id':'S01.U01','severity':'review','message':'Persisted integer existence concern','evidence':'old review'}
+        failure={'issues':[issue],'checked_unit_ids':[u['id'] for _,s in completed for u in s['units']]}
+        if invalid=='unknown_unit':issue['unit_id']='OTHER.U01'
+        if invalid=='changed_hash':failure['unit_hashes']={'S01.U01':digest('different old unit')}
+        write_json(p.root/'global_review_failure.json',failure)
+        original=(p.root/'global_review_failure.json').read_bytes()
+        original_generate=provider.generate
+        def generate(role,context,schema):
+            if role=='reviewer_math' and context['scope']['kind']=='adjacent_interface':
+                assert provider.repairs, 'Persisted issue must be repaired before another reviewer roll'
+            return original_generate(role,context,schema)
+        provider.generate=generate
+        if invalid!='none':
+>           with pytest.raises(AgentError) as error:p.lecture(plan)
+                                                    ^^^^^^^^^^^^^^^
+
+tests\test_global_repair.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\math_agent\pipeline.py:391: in lecture
+    global_reports,issues=self._global_interfaces(completed,plan)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\math_agent\pipeline.py:524: in _global_interfaces
+    review=self.review_units(units,{'plan':plan,'scope':{'kind':'adjacent_interface','sections':[completed[i][0]['id'],completed[i+1][0]['id']],
+src\math_agent\pipeline.py:155: in review_units
+    review=self.provider.generate('reviewer_math',payload,MathReview)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+role = 'reviewer_math'
+context = {'plan': {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exer...planation', 'relates_to': None, 'tex': '��������Ԫ�������ݡ�'}], 'actual_unit_ids': ['S01.U01', 'S01.U02', 'S02.U01', 'S02.U02']}
+schema = <class 'math_agent.domain.MathReview'>
+
+    def generate(role,context,schema):
+        if role=='reviewer_math' and context['scope']['kind']=='adjacent_interface':
+>           assert provider.repairs, 'Persisted issue must be repaired before another reviewer roll'
+E           AssertionError: Persisted issue must be repaired before another reviewer roll
+E           assert []
+E            +  where [] = <test_global_repair.GlobalRepairProvider object at 0x0000021B7BAB2660>.repairs
+
+tests\test_global_repair.py:29: AssertionError
+_ test_legacy_failure_is_repaired_before_any_new_global_review[changed_hash] __
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/t/red-crlflegacy/test_legacy_failure_is_repaire2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000021B7BADCFB0>
+invalid = 'changed_hash'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('invalid',['none','unknown_unit','changed_hash'])
+    def test_legacy_failure_is_repaired_before_any_new_global_review(tmp_path,monkeypatch,invalid):
+        from math_agent.util import write_json,digest
+        provider=GlobalRepairProvider();_,p,plan,_=setup(tmp_path,provider,monkeypatch)
+        completed,_=p._lecture_sections(plan)
+        issue={'unit_id':'S01.U01','severity':'review','message':'Persisted integer existence concern','evidence':'old review'}
+        failure={'issues':[issue],'checked_unit_ids':[u['id'] for _,s in completed for u in s['units']]}
+        if invalid=='unknown_unit':issue['unit_id']='OTHER.U01'
+        if invalid=='changed_hash':failure['unit_hashes']={'S01.U01':digest('different old unit')}
+        write_json(p.root/'global_review_failure.json',failure)
+        original=(p.root/'global_review_failure.json').read_bytes()
+        original_generate=provider.generate
+        def generate(role,context,schema):
+            if role=='reviewer_math' and context['scope']['kind']=='adjacent_interface':
+                assert provider.repairs, 'Persisted issue must be repaired before another reviewer roll'
+            return original_generate(role,context,schema)
+        provider.generate=generate
+        if invalid!='none':
+>           with pytest.raises(AgentError) as error:p.lecture(plan)
+                                                    ^^^^^^^^^^^^^^^
+
+tests\test_global_repair.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\math_agent\pipeline.py:391: in lecture
+    global_reports,issues=self._global_interfaces(completed,plan)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\math_agent\pipeline.py:524: in _global_interfaces
+    review=self.review_units(units,{'plan':plan,'scope':{'kind':'adjacent_interface','sections':[completed[i][0]['id'],completed[i+1][0]['id']],
+src\math_agent\pipeline.py:155: in review_units
+    review=self.provider.generate('reviewer_math',payload,MathReview)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+role = 'reviewer_math'
+context = {'plan': {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exer...planation', 'relates_to': None, 'tex': '��������Ԫ�������ݡ�'}], 'actual_unit_ids': ['S01.U01', 'S01.U02', 'S02.U01', 'S02.U02']}
+schema = <class 'math_agent.domain.MathReview'>
+
+    def generate(role,context,schema):
+        if role=='reviewer_math' and context['scope']['kind']=='adjacent_interface':
+>           assert provider.repairs, 'Persisted issue must be repaired before another reviewer roll'
+E           AssertionError: Persisted issue must be repaired before another reviewer roll
+E           assert []
+E            +  where [] = <test_global_repair.GlobalRepairProvider object at 0x0000021B7BADD070>.repairs
+
+tests\test_global_repair.py:29: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_lecture_crlf.py::test_lecture_source_preserves_rendered_crlf_exactly[local]
+FAILED tests/test_lecture_crlf.py::test_lecture_source_preserves_rendered_crlf_exactly[final]
+FAILED tests/test_global_repair.py::test_legacy_failure_is_repaired_before_any_new_global_review[none]
+FAILED tests/test_global_repair.py::test_legacy_failure_is_repaired_before_any_new_global_review[unknown_unit]
+FAILED tests/test_global_repair.py::test_legacy_failure_is_repaired_before_any_new_global_review[changed_hash]
+5 failed, 8 deselected in 1.80s

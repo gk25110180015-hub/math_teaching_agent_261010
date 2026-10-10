@@ -1,0 +1,27 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+____ test_benchmark_approval_is_attributed_and_cannot_claim_teacher_review ____
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/i2actorred/test_benchmark_approval_is_att0')
+
+    def test_benchmark_approval_is_attributed_and_cannot_claim_teacher_review(tmp_path):
+        settings=Settings(workspace=tmp_path)
+>       service=Service(settings,actor='benchmark_driver')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Service.__init__() got an unexpected keyword argument 'actor'
+
+tests\test_benchmark_actor.py:11: TypeError
+____________________ test_unknown_internal_actor_rejected _____________________
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/i2actorred/test_unknown_internal_actor_re0')
+
+    def test_unknown_internal_actor_rejected(tmp_path):
+>       with pytest.raises(ValueError):Service(Settings(workspace=tmp_path),actor='model')
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Service.__init__() got an unexpected keyword argument 'actor'
+
+tests\test_benchmark_actor.py:26: TypeError
+=========================== short test summary info ===========================
+FAILED tests/test_benchmark_actor.py::test_benchmark_approval_is_attributed_and_cannot_claim_teacher_review
+FAILED tests/test_benchmark_actor.py::test_unknown_internal_actor_rejected - ...
+2 failed in 0.27s

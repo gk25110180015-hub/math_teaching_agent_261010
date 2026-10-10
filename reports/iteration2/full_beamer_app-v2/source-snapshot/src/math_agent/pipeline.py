@@ -1,0 +1,708 @@
+"""Deterministic workflows; unchecked draft reuse always repeats every local check."""
+import copy
+import importlib.metadata
+import json
+import mimetypes
+import platform
+import re
+import shutil
+import zipfile
+from pathlib import Path
+from .compiler import TexCompiler
+from .domain import LectureProposal, WrittenSection, MathReview, QUALITY_DIMENSIONS
+from .provider import CompatibleChatProvider, MockProvider
+from .util import AgentError, canonical, digest, now, uid, within, write_json
+
+
+def question(qid, prompt, field, choices):
+    return {'id': qid, 'revision': 1, 'prompt': prompt, 'selection_mode': 'single',
+            'affected_fields': [field], 'blocking': True, 'reason': '此项影响写作内容，需由用户选择。',
+            'options': [{'id': key, 'label': label, 'recommended': i == 0, 'effects': {'value': value}} for i,(key,label,value) in enumerate(choices)] + [{'id':'CUSTOM','label':'自定义输入','recommended':False}]}
+
+
+def plain_tex(text):
+    return ''.join({'\\':r'\textbackslash{}','{':r'\{','}':r'\}','%':r'\%','&':r'\&','#':r'\#','_':r'\_','$':r'\$','^':r'\textasciicircum{}','~':r'\textasciitilde{}'}.get(c,c) for c in text)
+
+
+LECTURE_HEADER = r'''\documentclass[UTF8,fontset=fandol,11pt]{ctexart}
+\usepackage[a4paper,margin=24mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,graphicx,tabularx,booktabs,hyperref}
+\newtheorem{definition}{定义}[section]
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{example}[definition]{例题}
+\newtheorem{exercise}[definition]{练习}
+\hypersetup{unicode=true,colorlinks=true,linkcolor=blue}
+'''
+
+
+def render_lecture(title, sections, plan):
+    body, tail_answers = [], []
+    for spec, generated in sections:
+        body.append('\\section{' + plain_tex(spec['title']) + '}\\label{sec:'+spec['id']+'}\n')
+        units = generated['units']
+        by_id = {u['id']: u for u in units}
+        for unit in units:
+            tex, kind = unit['tex'], unit['kind']
+            rendered = '% UNIT ' + unit['id'] + '\n'
+            if kind in ('definition','theorem','example','exercise'):
+                rendered += f'\\begin{{{kind}}}\n{tex}\n\\end{{{kind}}}\n'
+            elif kind == 'proof':
+                rendered += '\\begin{proof}\n' + tex + '\n\\end{proof}\n'
+            elif kind == 'solution':
+                rendered += '\\par\\noindent\\textbf{解：}' + tex + '\\par\n'
+            else:
+                rendered += tex + '\\par\n'
+            is_exercise_answer = kind == 'solution' and by_id.get(unit.get('relates_to'),{}).get('kind') == 'exercise'
+            if is_exercise_answer and plan.get('lecture',{}).get('answers_location') == 'end':
+                tail_answers.append(rendered)
+            else:
+                body.append(rendered)
+    if tail_answers:
+        body += ['\\section*{练习答案}\n'] + tail_answers
+    mock_label = '\\par\\noindent 离线合成演示：不代表真实模型对本专题的教学验收。\\par\n' if plan['provider'] == 'mock' else ''
+    return LECTURE_HEADER + '\\title{' + plain_tex(title) + '}\n\\date{}\n\\begin{document}\n\\maketitle\n' + mock_label + ''.join(body) + '\\end{document}\n'
+
+
+class Pipeline:
+    def __init__(self, settings, store, job):
+        self.settings, self.store, self.job = settings, store, job
+        self.run = store.get_run(job['run_id'])
+        self.root = settings.workspace / 'runs' / self.run['id']
+        self.root.mkdir(parents=True, exist_ok=True)
+        self.build_root=settings.workspace/'b'/self.run['id'][:16]
+        self.build_root.mkdir(parents=True,exist_ok=True)
+        self.compiler = TexCompiler(settings.xelatex_path)
+        self.provider = MockProvider() if self.run['input']['provider'] == 'mock' else CompatibleChatProvider(
+            settings, before_request=lambda m: store.count_request(job, settings.max_requests_per_run, m),
+            record=self.record, active=lambda: store.active(job))
+
+    def record(self, metadata):
+        with self.store.transaction() as c:
+            self.store.assert_fence(c, self.job)
+            self.store.event(c, self.run['id'], 'provider.result', metadata)
+
+    def stage(self, status, stage):
+        self.store.stage(self.job, status, stage)
+
+    def plan(self):
+        self.stage('PLANNING', 'plan.propose')
+        payload = self.run['input']
+        base = {'schema_version':1, 'workflow_id':self.run['workflow_id'], 'input_snapshot_hash':self.run['input_hash'],
+                'difficulty':payload['difficulty'], 'provider':payload['provider'], 'theme':payload['theme'],
+                'decisions':[], 'decision_ids':[], 'omissions':[], 'additions':[], 'diff':[],
+                'rules':{'allowed_text_sizes':['footnotesize','small','normalsize','large'], 'summary_frames':False, 'rule_version':1}}
+        if self.run['workflow_id'] == 'lecture.generate':
+            from .retrieval import style_context
+            style=style_context(self.settings.reference_root,payload['topic'])
+            proposal = self.provider.generate('planner_lecture', {**payload,'style_reference':style}, LectureProposal)
+            write_json(self.root/('plan-candidate-'+uid()[:12]+'.json'),proposal)
+            ids = [s['id'] for s in proposal['sections']]
+            if len(ids) != len(set(ids)):
+                raise AgentError('DUPLICATE_SECTION', '模型计划 section ID 不唯一')
+            seen = set()
+            for section in proposal['sections']:
+                if not set(section['prerequisites']).issubset(seen):
+                    raise AgentError('PLAN_DEPENDENCY', '计划先修关系未闭合或存在循环')
+                seen.add(section['id'])
+            base.update(proposal)
+            from .crossrefs import reference_registry
+            base['reference_registry'] = reference_registry(base)
+            base['reference_context']={k:v for k,v in style.items() if k!='snippets'}
+            base['lecture'] = {'proof_policy':None, 'example_focus':None, 'exercises':None, 'answers_location':None}
+            base['questions'] = [
+                question('Q-PROOF','定理证明采用哪种深度？','lecture.proof_policy',[('KEY','关键定理完整证明，其余说明','key'),('ALL','所有定理完整证明','all')]),
+                question('Q-EXAMPLE','例题侧重什么？','lecture.example_focus',[('BALANCED','概念与计算均衡','balanced'),('ECONOMICS','更多经济应用','economics')]),
+                question('Q-EXERCISE','是否安排练习与答案？','lecture.exercises',[('WITH','安排练习并附答案','with_answers'),('NONE','不安排额外练习','none')]),
+                question('Q-ANSWERS','练习答案放在哪里？','lecture.answers_location',[('SECTION','各节之后','section'),('END','讲义末尾','end')])]
+        else:
+            parsed = payload['parsed']
+            base.update(title=payload.get('topic') or Path(payload['filename']).stem,
+                        sections=parsed['sections'], questions=[])
+            from .beamer import theme_status
+            base['template_status'] = theme_status(self.settings.reference_root)
+            theme = base['template_status'].get(payload['theme'], {})
+            if not theme.get('available', True):
+                raise AgentError('THEME_UNAVAILABLE', '所选主题资源不完整；请补齐依赖后重试，或新建默认模板任务')
+            base['theme_hash'] = theme.get('selected_sha256') or theme.get('sha256') or theme.get('hash') or theme.get('theme_hash')
+            if payload['theme']=='fduclassroom':
+                base['theme_adaptations']=['使用原始 FDU 主题；字号由独立适配层约束为四档。',
+                    '页眉只显示当前一级章节，避免原主题长导航横向溢出；每节开始的完整三态目录保留全部一级章节。',
+                    '主题原件字节保持不变；实际正文和页眉安全区仍需逐页复核。']
+            base['source_issues'] = parsed.get('issues', [])
+            if payload.get('source_enrichment'):
+                base['source_enrichment']=payload['source_enrichment']
+        base['unresolved_blocking_questions'] = [q['id'] for q in base['questions'] if q['blocking']]
+        with self.store.transaction() as c:
+            self.store.assert_fence(c, self.job)
+            plan = self.store.save_plan(c, self.run['id'], base)
+        self.store.finish(self.job, 'AWAITING_PLAN_INPUT' if base['unresolved_blocking_questions'] else 'PLAN_READY', 'plan.ready')
+        return plan
+
+    def compile(self, source, entry, build):
+        if self.settings.compile_mode != 'trusted_local':
+            raise AgentError('ISOLATION_UNAVAILABLE', '隔离模式尚未实现；不会自动降级为原生编译')
+        return self.compiler.compile(source, entry, build, trusted=self.run['input']['trusted_input'], cancel_check=lambda: not self.store.active(self.job))
+
+    def assert_compile(self, result):
+        if result['status'] != 'PASS':
+            raise AgentError('COMPILE_BLOCKED' if result['status'] == 'BLOCKED' else 'COMPILE_FAILED',
+                             '本次编译未通过；日志、源码和原审批已保留：' + canonical(result.get('issues',[]))[:3000])
+
+    def review_units(self, units, context, evidence_dir, label):
+        actual={u['id'] for u in units}
+        payload={**context,'units':units,'actual_unit_ids':sorted(actual)}
+        for attempt in range(self.settings.max_local_repair_attempts+1):
+            review=self.provider.generate('reviewer_math',payload,MathReview)
+            write_json(evidence_dir/f'{label}-review-{attempt}.json',review)
+            invalid=sorted({i['unit_id'] for i in review['issues'] if i['unit_id'] not in actual})
+            missing=sorted(actual-set(review['checked_unit_ids']))
+            extra=sorted(set(review['checked_unit_ids'])-actual)
+            if not invalid and not missing and not extra:
+                return review
+            payload['review_validation_feedback']={'invalid_issue_unit_ids':invalid,'unchecked_unit_ids':missing,'unknown_checked_ids':extra,
+                'instruction':'Review only the supplied actual units in scope. Pending sections are not missing content in a local review. Never fabricate new unit IDs or suppress an actual in-scope mathematical error.'}
+        raise AgentError('REVIEW_SCOPE_BLOCKED','审阅的单元范围或覆盖不正确；已保留全部原始审阅，不将越界问题当作正文重写依据')
+
+    def writer_draft(self, spec, context):
+        """Reuse only immutable, hash-verified writer output, never its checks.
+
+        This is a file cache separate from Store.steps. Every return creates a
+        fresh attempt directory; callers must normalize/review/compile anew.
+        """
+        from .provider import PROMPTS
+        sid=spec['id']
+        if not re.fullmatch(r'S[0-9]+',sid):
+            raise AgentError('DRAFT_SECTION_ID','草稿缓存需要合法的 section ID')
+        identity={'schema_version':1,'context_hash':digest(context),
+            'writer_prompt_hash':digest((PROMPTS/'writer_lecture_section.md').read_bytes()),
+            'written_section_schema_hash':digest(WrittenSection.model_json_schema()),
+            'model':self.settings.model,'provider':self.run['input']['provider']}
+        cache_key=digest(identity)
+        cache_path=self.root/'draft-cache'/(sid+'.json')
+        generated=None; candidate_bytes=None; reused_from=None; miss_reason='NO_CACHE'
+        if cache_path.is_file():
+            try:
+                cached=json.loads(cache_path.read_text(encoding='utf-8'))
+                if cached.get('cache_key')!=cache_key or cached.get('identity')!=identity:
+                    miss_reason='INPUT_IDENTITY_CHANGED'
+                elif cached.get('status')!='unchecked' or cached.get('section_id')!=sid:
+                    miss_reason='NOT_AN_UNCHECKED_SECTION_DRAFT'
+                else:
+                    source=within(self.settings.workspace,cached['candidate_key'])
+                    if not source.is_relative_to(self.build_root.resolve()) or source.name!='candidate.json':
+                        raise ValueError('Draft is outside its controlled build directory')
+                    if source.stat().st_size>8*1024*1024:
+                        raise ValueError('Draft exceeds the bounded provider output size')
+                    raw=source.read_bytes()
+                    if digest(raw)!=cached['candidate_hash']:
+                        miss_reason='CANDIDATE_HASH_CHANGED'
+                    else:
+                        loaded=WrittenSection.model_validate(json.loads(raw)).model_dump()
+                        if loaded['section_id']!=sid:
+                            raise ValueError('Cached section ID differs')
+                        generated=loaded
+                        candidate_bytes=raw
+                        reused_from=cached['candidate_key']
+            except (OSError,ValueError,KeyError,TypeError):
+                miss_reason='CACHE_INVALID_OR_UNREADABLE'
+        with self.store.transaction() as c:
+            self.store.assert_fence(c,self.job)
+            if generated is None:
+                self.store.event(c,self.run['id'],'writer.draft_cache_miss',
+                    {'section_id':sid,'cache_key':cache_key,'reason':miss_reason})
+        if generated is None:
+            generated=self.provider.generate('writer_lecture_section',context,WrittenSection)
+        draft=self.build_root/('s'+sid+'_'+uid()[:12])
+        draft.mkdir(parents=True,exist_ok=False)
+        candidate=draft/'candidate.json'
+        if candidate_bytes is None:
+            write_json(candidate,generated)
+            candidate_bytes=candidate.read_bytes()
+        else:
+            candidate.write_bytes(candidate_bytes)
+        # Validate the stored content once more; no content/claim is marked checked.
+        generated=WrittenSection.model_validate(json.loads(candidate_bytes)).model_dump()
+        candidate_hash=digest(candidate_bytes)
+        evidence={'schema_version':1,'status':'UNCHECKED_REUSED' if reused_from else 'UNCHECKED_GENERATED',
+            'section_id':sid,'cache_key':cache_key,'identity':identity,'candidate_hash':candidate_hash,
+            'candidate_key':candidate.relative_to(self.settings.workspace).as_posix(),
+            'reused_from':reused_from,'must_rerun_checks':True,
+            'checks':['fragment_normalization','content_and_references','local_math','model_review','compile'],
+            'prior_cache_miss_reason':None if reused_from else miss_reason}
+        write_json(draft/'draft-reuse.json',evidence)
+        with self.store.transaction() as c:
+            self.store.assert_fence(c,self.job)
+            if reused_from:
+                self.store.event(c,self.run['id'],'writer.draft_reused',evidence)
+            elif generated['section_id']==sid:
+                if cache_path.is_file():
+                    history=cache_path.parent/'history'/(sid+'-'+uid()[:12]+'.json')
+                    history.parent.mkdir(parents=True,exist_ok=True)
+                    shutil.copyfile(cache_path,history)
+                write_json(cache_path,{'schema_version':1,'status':'unchecked','section_id':sid,
+                    'cache_key':cache_key,'identity':identity,'candidate_key':evidence['candidate_key'],
+                    'candidate_hash':candidate_hash,'created_at':now(),
+                    'job_id':self.job['id'],'fencing_token':self.job['fencing_token']})
+                self.store.event(c,self.run['id'],'writer.draft_saved',evidence)
+        return generated,draft
+
+    def _global_repair_identity(self, plan):
+        from .provider import PROMPTS
+        return {'plan_hash':plan['hash'],'model':self.settings.model,'provider':self.run['input']['provider'],
+            'repair_prompt_hash':digest((PROMPTS/'repair_content_unit.md').read_bytes()),
+            'written_schema_hash':digest(WrittenSection.model_json_schema()),
+            'normalizer_hash':digest(Path(__file__).with_name('lecture_fragments.py').read_bytes())}
+
+    def _save_global_repair_state(self, state):
+        path=self.root/'global-repair-state.json'
+        with self.store.transaction() as c:
+            self.store.assert_fence(c,self.job)
+            if path.is_file():
+                history=self.root/'global-repairs'/'state-history'/(uid()[:12]+'.json')
+                history.parent.mkdir(parents=True,exist_ok=True)
+                shutil.copyfile(path,history)
+            write_json(path,state)
+            self.store.event(c,self.run['id'],'global.repair_state',
+                {'phase':state['phase'],'rounds_used':state['rounds_used'],
+                 'pending_sections':[p['section_id'] for p in state.get('pending',[])]})
+
+    def _global_repair_sections(self, state):
+        sections={}
+        try:
+            for sid,record in state.get('sections',{}).items():
+                path=within(self.settings.workspace,record['candidate_key'])
+                if not path.is_relative_to((self.root/'global-repairs').resolve()) or not path.is_file():
+                    raise ValueError('Uncontrolled repaired candidate')
+                data=path.read_bytes()
+                if digest(data)!=record['candidate_hash']:
+                    raise ValueError('Repaired candidate hash changed')
+                section=WrittenSection.model_validate(json.loads(data)).model_dump()
+                if section['section_id']!=sid:
+                    raise ValueError('Repaired section ID changed')
+                sections[sid]=section
+        except (OSError,ValueError,KeyError,TypeError):
+            raise AgentError('GLOBAL_REPAIR_CACHE_INVALID','全局修复候选路径、哈希或结构失配；保留证据并阻止静默替换') from None
+        return sections
+
+    def _load_global_repair_state(self, plan):
+        identity=self._global_repair_identity(plan)
+        path=self.root/'global-repair-state.json'
+        if path.is_file():
+            try:
+                state=json.loads(path.read_text(encoding='utf-8'))
+                if state['identity']==identity:
+                    self._global_repair_sections(state)
+                    return state
+            except (OSError,ValueError,KeyError,TypeError):
+                raise AgentError('GLOBAL_REPAIR_CACHE_INVALID','全局修复状态不可读；已保留，不能假定通过') from None
+        return {'schema_version':1,'identity':identity,'rounds_used':0,'phase':'not_started',
+                'sections':{},'pending':[],'teacher_visual_review':'NOT_RUN'}
+
+    def _start_global_repair(self, completed, issues, state):
+        locations={}
+        for index,(spec,section) in enumerate(completed):
+            for unit in section['units']:
+                if unit['id'] in locations:
+                    raise AgentError('GLOBAL_REPAIR_SCOPE_UNCLEAR','跨节单元ID不唯一，不能自动定位全局修复')
+                locations[unit['id']]=(index,spec['id'])
+        grouped={}
+        for issue in issues:
+            unit_id=issue.get('unit_id')
+            if unit_id not in locations:
+                raise AgentError('GLOBAL_REPAIR_SCOPE_UNCLEAR','全局问题未指向实际已生成单元，不能扩大修改范围')
+            grouped.setdefault(locations[unit_id][1],[]).append(issue)
+        first=min(locations[i['unit_id']][0] for i in issues)
+        round_number=state['rounds_used']+1
+        folder=self.root/'global-repairs'/('r'+str(round_number)+'-'+uid()[:8])
+        folder.mkdir(parents=True,exist_ok=False)
+        state.update(rounds_used=round_number,phase='repair_pending',sections={},pending=[],
+                     round_directory=folder.relative_to(self.settings.workspace).as_posix(),issues=issues)
+        for index,(spec,section) in enumerate(completed):
+            sid=spec['id']
+            if index>=first:
+                path=folder/(sid+'-before.json')
+                write_json(path,section)
+                state['sections'][sid]={'candidate_key':path.relative_to(self.settings.workspace).as_posix(),
+                    'candidate_hash':digest(path.read_bytes())}
+            if sid in grouped:
+                state['pending'].append({'section_id':sid,'issues':grouped[sid],
+                    'allowed_unit_ids':sorted({i['unit_id'] for i in grouped[sid]}),
+                    'neighbors':[{'section':other_spec,'generated':other} for j,(other_spec,other) in enumerate(completed)
+                                 if abs(j-index)==1]})
+        self._save_global_repair_state(state)
+
+    def _continue_global_repairs(self, plan, state):
+        from .calculation_protocol import calculation_protocol
+        from .lecture_fragments import normalize_written_section
+        folder=within(self.settings.workspace,state['round_directory'])
+        while state['pending']:
+            request=state['pending'][0]
+            sid=request['section_id'];allowed=set(request['allowed_unit_ids'])
+            before=self._global_repair_sections(state)[sid]
+            prefix=sid+'-'+uid()[:8]
+            write_json(folder/(prefix+'-before.json'),before)
+            self.stage('REPAIRING','repair.global.'+sid)
+            raw=self.provider.generate('repair_content_unit',{'section':before,'issues':request['issues'],
+                'allowed_unit_ids':sorted(allowed),'plan':plan,'calculation_protocol':calculation_protocol(),
+                'scope':'global_interface_repair','adjacent_sections':request['neighbors'],
+                'metadata_policy':'Keep all unit IDs, non-target units, their calculations and unrelated uncertainty metadata unchanged.'},WrittenSection)
+            write_json(folder/(prefix+'-raw.json'),raw)
+            repaired,normalization=normalize_written_section(raw)
+            write_json(folder/(prefix+'-normalization.json'),normalization)
+            write_json(folder/(prefix+'-normalized.json'),repaired)
+            before_ids=[u['id'] for u in before['units']]
+            after_ids=[u['id'] for u in repaired['units']]
+            by_id={u['id']:u for u in repaired['units']}
+            if (repaired['section_id']!=sid or before_ids!=after_ids
+                or not allowed.issubset(before_ids)
+                or any(u!=by_id.get(u['id']) for u in before['units'] if u['id'] not in allowed)):
+                raise AgentError('GLOBAL_REPAIR_SCOPE_VIOLATION','全局修复改变了单元ID/顺序或未授权单元；原稿和修复稿均保留')
+            old_calcs=[c for c in before.get('calculations',[]) if c.get('unit_id') not in allowed]
+            new_calcs=[c for c in repaired.get('calculations',[]) if c.get('unit_id') not in allowed]
+            if old_calcs!=new_calcs or before.get('uncertainties',[])!=repaired.get('uncertainties',[]):
+                raise AgentError('GLOBAL_REPAIR_SCOPE_VIOLATION','全局修复改动了非目标单元核算或无关不确定性元数据')
+            if normalization['status']!='PASS':
+                raise AgentError('GLOBAL_REPAIR_NORMALIZATION_BLOCKED','全局修复片段存在不明确结构，不能自动采用')
+            path=folder/(prefix+'-candidate.json')
+            write_json(path,repaired)
+            state['sections'][sid]={'candidate_key':path.relative_to(self.settings.workspace).as_posix(),
+                'candidate_hash':digest(path.read_bytes())}
+            state['pending'].pop(0)
+            self._save_global_repair_state(state)
+        state['phase']='checking'
+        self._save_global_repair_state(state)
+
+    def lecture(self, plan):
+        state=self._load_global_repair_state(plan)
+        if state['phase']=='budget_exhausted':
+            raise AgentError('GLOBAL_MATH_BLOCKED','全局修复预算已耗尽；已保留实际疑点、所有修复与原审批')
+        if state['pending']:
+            self._continue_global_repairs(plan,state)
+        while True:
+            forced={} if state['phase'] in ('not_started','validated') else self._global_repair_sections(state)
+            def preserve_rechecked(sid,generated):
+                folder=within(self.settings.workspace,state['round_directory'])
+                path=folder/(sid+'-locally-checked-'+uid()[:8]+'.json')
+                write_json(path,generated)
+                state['sections'][sid]={'candidate_key':path.relative_to(self.settings.workspace).as_posix(),
+                    'candidate_hash':digest(path.read_bytes())}
+                self._save_global_repair_state(state)
+            completed,local_reports=self._lecture_sections(plan,forced,preserve_rechecked if forced else None)
+            global_reports,issues=self._global_interfaces(completed,plan)
+            if not issues:
+                if state['rounds_used']:
+                    state['phase']='validated'
+                    self._save_global_repair_state(state)
+                return completed,local_reports+global_reports
+            failure=self.root/'global_review_failure.json'
+            if failure.exists():
+                archived=self.root/'global-repairs'/'failures'/(uid()[:12]+'.json')
+                archived.parent.mkdir(parents=True,exist_ok=True)
+                shutil.copyfile(failure,archived)
+            write_json(failure,{'issues':issues,'reviews':global_reports,'rounds_used':state['rounds_used'],
+                'teacher_visual_review':'NOT_RUN'})
+            if state['rounds_used']>=self.settings.max_local_repair_attempts:
+                state['phase']='budget_exhausted'
+                self._save_global_repair_state(state)
+                raise AgentError('GLOBAL_MATH_BLOCKED','相邻章节条件/依赖疑点在有限修复后仍未解决；所有证据和原审批保留')
+            self._start_global_repair(completed,issues,state)
+            self._continue_global_repairs(plan,state)
+
+    def _lecture_sections(self, plan, forced_sections=None, on_rechecked=None):
+        from .mathcheck import check_math
+        from .calculation_protocol import calculation_protocol
+        from .lecture_fragments import normalize_written_section
+        from .parsing import preflight_tex
+        from .crossrefs import inspect_section_references, local_reference_gate
+        completed, local_reports = [], []
+        forced_sections=forced_sections or {}
+        for spec in plan['sections']:
+            sid = spec['id']
+            self.stage('BUILDING', 'write.section.' + sid)
+            cache_key = digest([plan['hash'], spec, [digest(g) for _,g in completed], 'writer-v4-labeled-eq-global-repair', self.settings.model, self.settings.xelatex_path, 'rules-v1'])
+            cached = self.store.cached_step(self.run['id'], 'section.'+sid, cache_key)
+            if cached and sid not in forced_sections:
+                p = within(self.settings.workspace, cached['source_key'])
+                if p.is_file() and digest(p.read_bytes()) == cached['source_hash']:
+                    completed.append((spec,cached['generated']))
+                    local_reports.append(cached['report'])
+                    continue
+            from .retrieval import style_context
+            context = {'section':spec, 'plan':plan, 'completed_sections':[g for _,g in completed], 'topic':self.run['input']['topic'], 'difficulty':plan['difficulty'],
+                       'style_reference':style_context(self.settings.reference_root,self.run['input']['topic']),
+                       'calculation_protocol':calculation_protocol()}
+            if sid in forced_sections:
+                generated=copy.deepcopy(forced_sections[sid])
+                draft=self.build_root/('s'+sid+'_'+uid()[:12])
+                draft.mkdir(parents=True,exist_ok=False)
+                write_json(draft/'candidate.json',generated)
+                write_json(draft/'global-repair-recheck.json',{'section_id':sid,'status':'UNCHECKED',
+                    'candidate_hash':digest(generated),'reason':'Recheck affected section and all following sections without reauthoring'})
+            else:
+                generated,draft = self.writer_draft(spec,context)
+            generated, normalization = normalize_written_section(generated)
+            write_json(draft/'candidate-normalization.json', normalization)
+            write_json(draft/'candidate-normalized.json', generated)
+            report = None
+            for attempt in range(self.settings.max_local_repair_attempts + 1):
+                self.stage('LOCAL_REVIEW', 'review.section.' + sid)
+                issues = self.validate_written(spec, generated, plan)
+                issues.extend(normalization['issues'])
+                references = inspect_section_references(spec, generated, completed, plan)
+                issues.extend(references['issues'])
+                for unit in generated['units']:
+                    issues.extend({**issue,'unit_id':unit['id']} for issue in preflight_tex(unit['tex']))
+                math = check_math(generated)
+                issues.extend(math.get('issues', []))
+                review = self.review_units(generated['units'], {'plan':plan,'prior_sections':[g for _,g in completed],'tool_checks':math,
+                    'scope':{'kind':'section_local','current_section':spec,'pending_sections':[s['id'] for s in plan['sections'] if s['id'] not in {x['id'] for x,_ in completed} and s['id']!=sid]}},draft,f'local-{attempt}')
+                if set(review['checked_unit_ids']) != {u['id'] for u in generated['units']}:
+                    issues.append({'rule_id':'REVIEW_COVERAGE','severity':'blocking','message':'审阅未覆盖全部实际单元'})
+                issues.extend(review['issues'])
+                if generated.get('uncertainties'):
+                    issues.extend({'severity':'review','message':i} for i in generated['uncertainties'])
+                report = {'section_id':sid,'math':math,'llm_review':review, 'issues':issues, 'mock':self.run['input']['provider']=='mock'}
+                write_json(draft/f'review-{attempt}.json',report)
+                blocking = [i for i in issues if i.get('severity','blocking') in ('blocking','review')]
+                if not blocking:
+                    break
+                if attempt >= self.settings.max_local_repair_attempts or self.run['input']['provider']=='mock':
+                    raise AgentError('MATH_REVIEW_BLOCKED', '本节存在数学/内容疑点，已保留草稿：'+canonical(blocking)[:2000])
+                self.stage('REPAIRING','repair.section.'+sid)
+                before = generated
+                target_ids = {i.get('unit_id') or i.get('location',{}).get('unit_id') for i in blocking}
+                target_ids.discard(None)
+                if not target_ids.issubset({u['id'] for u in before['units']}):
+                    raise AgentError('REPAIR_SCOPE_UNCLEAR','问题定位到未提供的单元，不能扩大修改范围')
+                if not target_ids:
+                    raise AgentError('REPAIR_SCOPE_UNCLEAR','问题不能定位到单元；需保留草稿后人工调整，不能全节重写')
+                generated = self.provider.generate('repair_content_unit',{'section':before,'issues':blocking,'allowed_unit_ids':sorted(target_ids),'plan':plan,'calculation_protocol':calculation_protocol()},WrittenSection)
+                write_json(draft/f'repair-{attempt+1}-raw.json',generated)
+                generated, normalization = normalize_written_section(generated)
+                write_json(draft/f'repair-{attempt+1}-normalization.json',normalization)
+                if {u['id'] for u in before['units']} != {u['id'] for u in generated['units']}:
+                    raise AgentError('REPAIR_SCOPE_VIOLATION','修复不能增删单元')
+                after_by_id = {u['id']:u for u in generated['units']}
+                if any(u != after_by_id[u['id']] for u in before['units'] if u['id'] not in target_ids):
+                    raise AgentError('REPAIR_SCOPE_VIOLATION','修复修改了未授权单元')
+                write_json(draft/f'repair-{attempt+1}.json',{'before_hash':digest(before),'after_hash':digest(generated),'section':generated})
+            source = draft/'source'
+            source.mkdir()
+            tex = render_lecture(plan['title'],completed+[(spec,generated)],plan)
+            (source/'lecture.tex').write_text(tex,encoding='utf-8')
+            self.stage('LOCAL_REVIEW','compile.section.'+sid)
+            compile_result = self.compile(source,'lecture.tex',draft/'build')
+            write_json(draft/'compile.json',compile_result)
+            reference_check = local_reference_gate(compile_result, references['pending_labels'])
+            if reference_check['status']=='FAIL':
+                self.assert_compile(compile_result)
+            report['compile']=compile_result
+            report['references']=reference_check
+            checkpoint = {'generated':generated,'report':report,'source_key':(source/'lecture.tex').relative_to(self.settings.workspace).as_posix(),'source_hash':digest((source/'lecture.tex').read_bytes())}
+            self.store.checkpoint(self.job,'section.'+sid,cache_key,checkpoint)
+            if on_rechecked and sid in forced_sections:
+                on_rechecked(sid,generated)
+            completed.append((spec,generated))
+            local_reports.append(report)
+        return completed,local_reports
+
+    def _global_interfaces(self, completed, plan):
+        self.stage('GLOBAL_REVIEW','math.global_interfaces')
+        global_reports=[];issues=[]
+        review_cycle=uid()[:8]
+        # Check actual complete bodies plus each adjacent dependency interface.
+        seen={}
+        for _,generated in completed:
+            for u in generated['units']:
+                if u['kind'] in ('definition','theorem','example','exercise'):
+                    key=digest(''.join(u['tex'].split()))
+                    if key in seen:
+                        raise AgentError('DUPLICATE_CONTENT_BLOCKED','重复数学单元：'+seen[key]+' 与 '+u['id'])
+                    seen[key]=u['id']
+        for i in range(len(completed)-1):
+            units=completed[i][1]['units']+completed[i+1][1]['units']
+            review=self.review_units(units,{'plan':plan,'scope':{'kind':'adjacent_interface','sections':[completed[i][0]['id'],completed[i+1][0]['id']],
+                'instruction':'Check actual adjacent bodies and their dependency interface. Other plan sections are outside this pair; full coverage is checked separately.'}},self.root,'global-'+review_cycle+'-'+str(i))
+            issues.extend(issue for issue in review['issues'] if issue['severity'] in ('blocking','review'))
+            global_reports.append({'global_interface':[completed[i][0]['id'],completed[i+1][0]['id']],'review':review})
+        return global_reports,issues
+
+    def validate_written(self, spec, data, plan):
+        issues = []
+        units = data['units']; ids = [u['id'] for u in units]; kinds = {u['kind'] for u in units}
+        if data['section_id'] != spec['id'] or len(ids)!=len(set(ids)):
+            issues.append({'severity':'blocking','message':'section/单元 ID 不匹配'})
+        for k in spec.get('required_kinds',[]):
+            if k not in kinds:
+                issues.append({'severity':'blocking','message':'未生成计划要求的 '+k})
+        for u in units:
+            if re.search(r'\\(?:documentclass|usepackage|RequirePackage|newcommand|renewcommand|def|gdef|global|section|subsection|input|include)(?![A-Za-z@])|\\(?:begin|end)\{document\}',u['tex']):
+                issues.append({'severity':'blocking','unit_id':u['id'],'message':'内容单元越过片段边界，尝试修改全局模板/宏/章节或读取文件'})
+            if u['kind'] in ('example','exercise') and not any(v['kind']=='solution' and v.get('relates_to')==u['id'] for v in units):
+                issues.append({'severity':'blocking','unit_id':u['id'],'message':'例题/练习缺少显式关联答案'})
+            if u['kind']=='theorem' and plan.get('lecture',{}).get('proof_policy')=='all' and not any(v['kind']=='proof' and v.get('relates_to')==u['id'] for v in units):
+                issues.append({'severity':'blocking','unit_id':u['id'],'message':'用户选择全部证明，但此定理缺少证明'})
+        exercises = plan.get('lecture',{}).get('exercises')
+        if exercises=='none' and 'exercise' in kinds:
+            issues.append({'severity':'blocking','message':'用户排除练习但实际新增了练习'})
+        if exercises=='with_answers' and 'exercise' not in kinds:
+            issues.append({'severity':'blocking','message':'用户要求练习，但实际缺失'})
+        return issues
+
+    def build(self):
+        from .pdfcheck import inspect_pdf
+        plan = self.run['plan']
+        if not self.run['approval'] or self.run['approval']['hash'] != plan['hash']:
+            raise AgentError('APPROVAL_REQUIRED','worker 不能自行确认计划')
+        if plan.get('theme')=='fduclassroom':
+            from .beamer import theme_status
+            current_theme=theme_status(self.settings.reference_root)['fduclassroom']
+            if not current_theme.get('available') or current_theme.get('selected_sha256')!=plan.get('theme_hash'):
+                raise AgentError('THEME_CHANGED_BLOCKED','FDU 主题在审批后改变；本次未构建，请恢复原主题或重新规划')
+        output = self.build_root/('v'+uid()[:12])
+        output.mkdir(parents=True)
+        write_json(self.root/'latest_build.json',{'storage_key':output.relative_to(self.settings.workspace).as_posix(),'plan_revision':plan['revision'],'plan_hash':plan['hash'],'status':'draft'})
+        source=output/'source'; source.mkdir()
+        quality = {k:{'status':'NOT_RUN','evidence':[],'limitations':[]} for k in QUALITY_DIMENSIONS}
+        quality.update(schema_version=1, provider=self.run['input']['provider'], human_visual_review='NOT_RUN', model_visual_review='NOT_RUN', issues=[])
+        beamer = self.run['workflow_id']=='beamer.from_tex'
+        rendered = None; local_reports=[]; compiled=None
+        if not beamer:
+            sections, local_reports = self.lecture(plan)
+            entry='lecture.tex'
+            (source/entry).write_text(render_lecture(plan['title'],sections,plan),encoding='utf-8')
+            quality['content']={'status':'PASS','evidence':['计划必需类型、题解关联及各节局部检查'], 'limitations':['课程难度与经济应用等语义要求需教师审核']}
+            math_pending=self.run['input']['provider']=='mock' or any(r.get('math',{}).get('status','PASS')!='PASS' for r in local_reports)
+            quality['math']={'status':'NEEDS_REVIEW' if math_pending else 'PASS', 'evidence':local_reports,'limitations':['同模型分角色审阅不是形式化证明；未支持或未请求的核算仍需人工复核']}
+            quality['fidelity']={'status':'NOT_APPLICABLE','evidence':[], 'limitations':[]}
+            write_json(output/'source_map.json',{'sections':[{'id':s['id'],'units':[u['id'] for u in g['units']]} for s,g in sections]})
+        else:
+            from .beamer import render_beamer, check_fidelity
+            entry='slides.tex'
+            parsed=self.run['input']['parsed']
+            candidate_results=[]
+            for idx, layout in enumerate([{'split_long':True},{'font_size':'normalsize','split_long':False},{'font_size':'small','split_long':False},{'font_size':'footnotesize','split_long':False},{'font_size':'footnotesize','split_long':True}]):
+                self.stage('BUILDING',f'layout.candidate.{idx+1}')
+                candidate=output/f'candidate-{idx+1}'
+                candidate.mkdir()
+                render_plan={**plan,'_layout':layout}
+                rendered=render_beamer(parsed,render_plan,candidate,self.settings.reference_root)
+                issues=rendered.get('issues',[])
+                fidelity=check_fidelity(parsed,{**plan,'_render_scaffold_hash':rendered.get('render_scaffold_hash')},(candidate/entry).read_text(encoding='utf-8'))
+                write_json(output/f'fidelity-{idx+1}.json',fidelity)
+                quality['fidelity']=fidelity
+                quality['issues']=issues+fidelity.get('issues',[])
+                if fidelity.get('status')=='FAIL' or any(i.get('severity','blocking')=='blocking' for i in issues):
+                    source=candidate
+                    break
+                self.stage('LOCAL_REVIEW',f'compile.layout.{idx+1}')
+                compiled=self.compile(candidate,entry,output/f'build-{idx+1}')
+                candidate_results.append({'layout':layout,'compile':compiled})
+                write_json(output/'layout_candidates.json',candidate_results)
+                source=candidate
+                if compiled['status']=='PASS':
+                    break
+                # Only layout overflow is reparable by font/semantic refinement.
+                if any(i.get('rule_id')!='OVERFULL_BOX' and i.get('severity')=='blocking' for i in compiled.get('issues',[])):
+                    break
+            quality['content']={'status':'PASS' if fidelity.get('status')=='PASS' else 'FAIL','evidence':['实际 TeX 与保留源单元对照'],'limitations':[]}
+            quality['math']={'status':'NEEDS_REVIEW','evidence':['原文保真；未自动修正源讲义数学结论'],'limitations':['教师须复核原文的具体数学疑点']}
+            for name in ('source_map','frame_plan','layout_plan'):
+                write_json(output/(name+'.json'),rendered.get(name,{}))
+        self.stage('GLOBAL_REVIEW','compile.global')
+        if compiled is None:
+            if not any(i.get('severity','blocking')=='blocking' for i in quality['issues']):
+                compiled=self.compile(source,entry,output/'build')
+            else:
+                compiled={'status':'BLOCKED','issues':quality['issues'],'pdf_path':None}
+        quality['compile']=compiled
+        quality['issues'].extend(compiled.get('issues',[]))
+        pdf_result=None
+        if compiled.get('pdf_path'):
+            pdf_path=Path(compiled['pdf_path'])
+            if rendered:
+                frames=rendered.get('frame_plan',[])
+                if isinstance(frames,dict):
+                    frames=frames.get('frames',[])
+                frame_ids=[f.get('frame_id',f.get('id',f'F{i+1:03}')) for i,f in enumerate(frames)]
+                if frame_ids:
+                    (pdf_path.parent/'frame_ids.txt').write_text('\n'.join(frame_ids),encoding='utf-8')
+            self.stage('GLOBAL_REVIEW','render.all_pages')
+            pdf_result=inspect_pdf(pdf_path,output/'pages',beamer=beamer)
+            write_json(output/'pdf_inspection.json',pdf_result)
+            quality['layout']={'status':pdf_result['status'],'evidence':{'page_count':pdf_result['page_count'],'all_rendered':len(pdf_result['pages'])==pdf_result['page_count']},'limitations':pdf_result.get('limitations',[])}
+            quality['issues'].extend(pdf_result.get('issues',[]))
+            if beamer:
+                write_json(output/'overlay_map.json',pdf_result.get('overlay_map',{}))
+                # Section checkpoints are tied to the actual compiled document and all its
+                # physical overlay pages; a model's claimed source map is insufficient.
+                if compiled['status']=='PASS' and fidelity.get('status')=='PASS' and not any(i.get('severity')=='blocking' for i in quality['issues']):
+                    frames=rendered.get('frame_plan',[])
+                    if isinstance(frames,dict):frames=frames.get('frames',[])
+                    actual_map=pdf_result.get('overlay_map',{}).get('pages',[])
+                    for section in plan['sections']:
+                        section_frames={f.get('frame_id',f.get('id')) for f in frames if f.get('section_id')==section['id']}
+                        physical=[p['physical_page'] for p in actual_map if p['frame_id'] in section_frames]
+                        if physical:
+                            self.store.checkpoint(self.job,'beamer.section.'+section['id'],digest([plan['hash'],section,rendered.get('theme_hash'),'rules-v1']),
+                                {'source_unit_ids':section.get('source_unit_ids',[]),'physical_pages':physical,'fidelity':'PASS',
+                                 'compile':'PASS','pdf_hash':digest(pdf_path.read_bytes()),'visual_review':'NEEDS_REVIEW',
+                                 'source_key':(source/entry).relative_to(self.settings.workspace).as_posix()})
+        coverage=self.decision_coverage(plan,source/entry,quality)
+        quality['policy']={'status':'NEEDS_REVIEW' if any(x['status']=='NEEDS_REVIEW' for x in coverage['decisions']) else 'PASS','evidence':coverage,'limitations':[]}
+        quality['security']={'status':'PASS' if compiled.get('status')=='PASS' else 'NOT_RUN','evidence':['回环服务、受控源码、编译参数及白名单子进程环境'],'limitations':['trusted_local 不是文件系统/网络隔离沙箱']}
+        write_json(output/'decision_coverage.json',coverage)
+        write_json(output/'plan.json',plan)
+        write_json(output/'quality_report.json',quality)
+        (output/'quality_report.md').write_text('# 质量报告\n\n'+ '\n'.join(f'- {k}: {quality[k].get("status", "NOT_RUN")}' for k in QUALITY_DIMENSIONS)+'\n\n人工视觉复核：NOT_RUN（须在界面逐页确认，并审阅此报告）。\n真实模型视觉复核：NOT_RUN。\n',encoding='utf-8')
+        self.export_source(source,entry,output,plan,compiled)
+        artifacts=[]
+        deliver=[p for p in output.iterdir() if p.is_file() and p.suffix in ('.json','.md','.zip')]
+        deliver.append(source/entry)
+        if compiled.get('pdf_path'):
+            deliver.append(Path(compiled['pdf_path']))
+        if pdf_result:
+            deliver += [Path(p['image_path']) for p in pdf_result['pages']]
+        page_meta={str(Path(p['image_path']).resolve()):p for p in (pdf_result or {}).get('pages',[])}
+        for p in deliver:
+            if p.is_file():
+                metadata=page_meta.get(str(p.resolve()),{})
+                artifacts.append({'storage_key':p.relative_to(self.settings.workspace).as_posix(),'name':p.name,'sha256':digest(p.read_bytes()),'media_type':mimetypes.guess_type(p.name)[0] or 'application/octet-stream',
+                                  'metadata':{k:v for k,v in metadata.items() if k not in ('image_path',)}})
+        self.store.publish_artifacts(self.job,artifacts)
+        blocking=compiled.get('status')!='PASS' or any(i.get('severity')=='blocking' for i in quality['issues']) or quality['fidelity'].get('status')=='FAIL' or quality['layout'].get('status')=='FAIL'
+        if blocking:
+            raise AgentError('QUALITY_BLOCKED','本次构建存在未通过门禁；草稿、日志与已完成章节保留，请查看质量报告后重试')
+        self.store.finish(self.job,'AWAITING_USER_REVIEW','review.pages_and_quality')
+        return output
+
+    def decision_coverage(self, plan, tex_path, quality):
+        text=tex_path.read_text(encoding='utf-8')
+        evidence=[]
+        for d in plan.get('decisions',[]):
+            fields=d.get('affected_fields',[])
+            semantic=any(f in ('lecture.example_focus','lecture.proof_policy') for f in fields) or 'CUSTOM' in d.get('selected_option_ids',[])
+            evidence.append({'decision_id':d['id'],'resolved_effects':d.get('resolved_effects',d.get('resolved')),
+                             'status':'NEEDS_REVIEW' if semantic else 'PASS',
+                             'artifact':tex_path.name,'artifact_hash':digest(text),
+                             'evidence':'需教师检查具体语义是否落实' if semantic else '范围/练习/题解/答案位置由确定性渲染和来源检查落实'})
+        return {'schema_version':1,'decisions':evidence,'limitations':['语义自定义不能仅凭模型自评当作落实；发布前须人工审阅质量报告。']}
+
+    def export_source(self, source, entry, output, plan,compiled=None):
+        (output/'SOURCE_README.md').write_text('本地私人使用的完整源包。主文件 '+entry+'。使用 XeLaTeX 连续编译至少两遍，需 TeX Live、ctex、Fandol、amsmath 和主题相应依赖。无需模型密钥。FDU 和用户图片的许可未核定，不据此公开分发。\n',encoding='utf-8')
+        manifest={'schema_version':1,'created_at':now(),'python':platform.python_version(),'platform':platform.platform(),'input_hash':self.run['input_hash'],'plan_hash':plan['hash'],'rule_version':1,'model':self.settings.model,'provider':self.run['input']['provider'],'font':'Fandol','theme_hash':plan.get('theme_hash'),'files':[],
+                  'compiler':{k:v for k,v in (compiled or {'status':'NOT_RUN'}).items() if k in ('status','engine','passes','engine_version')},
+                  'dependencies':{name:importlib.metadata.version(name) for name in ('fastapi','pydantic','httpx','sympy','pypdfium2','pdfplumber','pylatexenc')}}
+        with zipfile.ZipFile(output/'source_bundle.zip','w',zipfile.ZIP_DEFLATED) as z:
+            for p in sorted(source.rglob('*')):
+                if p.is_file() and p.suffix.lower() in ('.tex','.sty','.cls','.png','.jpg','.jpeg','.pdf','.eps','.pgf','.tikz'):
+                    rel=p.relative_to(source).as_posix()
+                    z.write(p,rel)
+                    manifest['files'].append({'path':rel,'sha256':digest(p.read_bytes())})
+            z.write(output/'SOURCE_README.md','README.md')
+        manifest['source_bundle_sha256']=digest((output/'source_bundle.zip').read_bytes())
+        if compiled and compiled.get('pdf_path') and Path(compiled['pdf_path']).exists():
+            manifest['pdf_sha256']=digest(Path(compiled['pdf_path']).read_bytes())
+        lock=Path(__file__).resolve().parents[2]/'uv.lock'
+        manifest['dependency_lock_sha256']=digest(lock.read_bytes()) if lock.exists() else None
+        write_json(output/'build_manifest.json',manifest)

@@ -1,0 +1,91 @@
+{
+  "observed_at": "2026-09-19T19:08:50.516532+00:00",
+  "audit_mode": "READ_ONLY_SQLITE_MODE_RO_AND_FILES",
+  "run": {
+    "id": "05748ab6260c40989a560a98e1e2065a",
+    "status": "BUILDING",
+    "stage": "write.section.S03",
+    "error_json": null,
+    "request_count": 17
+  },
+  "original_candidate": {
+    "path": "workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\candidate-normalized.json",
+    "sha256": "76b184748f4661fabfc6b37aa54ebb1b814ffa291c0a05093762fd66df994f05"
+  },
+  "repairs": [
+    {
+      "path": "workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\repair-1.json",
+      "sha256": "a3db99f661683053d9ad2c602a8488d513284936d120400f28e9de894128189c",
+      "before_hash_matches_previous": true,
+      "after_hash_valid": true,
+      "changed_units": [
+        "S02.U11"
+      ]
+    },
+    {
+      "path": "workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\repair-2.json",
+      "sha256": "50b27489e552bfc9d12accf26c7a83df81fee926da4c8a3e2f901363535f99ac",
+      "before_hash_matches_previous": true,
+      "after_hash_valid": true,
+      "changed_units": [
+        "S02.U09"
+      ]
+    }
+  ],
+  "last_review": {
+    "path": "workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\review-2.json",
+    "sha256": "ed9643ef4580102974bccadbe773adcb0d311051406fc1989a356a600f4b1c91",
+    "math_status": "PASS",
+    "blocking_or_review_count": 0,
+    "issues": [
+      {
+        "unit_id": "S02.U12",
+        "severity": "warning",
+        "message": "本节例题与练习覆盖了常数倍、和差积及有理式，但未落实当前节目标中“处理含有绝对值的基本数列极限”的应用训练。这是本节教学覆盖的非阻塞限制，不影响已给出计算的正确性。可在本例增加绝对值极限的小题，并通过反三角不等式说明依据。",
+        "evidence": "当前节目标明确包含“能够处理含有有理式、绝对值和常数倍的基本数列极限”。S02.U12 仅给出 3(1/n)+2 与 (2n+1)/(n+3)；S02.U14 的三题也仅涉及线性组合、乘积与商。S02.U01—S02.U11 虽在定义及证明中使用绝对值估计，但未说明 a_n→L 蕴含 |a_n|→|L|，也未安排相应应用。"
+      }
+    ]
+  },
+  "compile": {
+    "path": "workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\compile.json",
+    "sha256": "765949227daed41aaa400f399b56de93324855ff178bd68c9c6d77eb115712e1",
+    "status": "PASS"
+  },
+  "writer_cache": {
+    "path": "workspace\\iteration2-live\\runs\\05748ab6260c40989a560a98e1e2065a\\draft-cache\\S02.json",
+    "sha256": "71f3ed4c5ed013289a9ec1cce9fae2c0b598e3c4203d5f3723cf131511b4c7bf",
+    "candidate_key": "b/05748ab6260c4098/sS02_d764aedf5652/candidate.json",
+    "status": "unchecked",
+    "candidate_hash_matches": true,
+    "still_original_candidate": true
+  },
+  "section_checkpoint": {
+    "created_at": "2026-09-19T19:07:18.473650+00:00",
+    "output_hash_valid": true,
+    "generated_equals_repair_2": true,
+    "source": {
+      "path": "workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\source\\lecture.tex",
+      "sha256": "8171c519f902166b99f31301c7e2b57e9e929d3c1bdc593a36e68f2303169ee8"
+    },
+    "source_hash_valid": true
+  },
+  "observed_postrepair_failure": false,
+  "fault_injection": "NOT_RUN",
+  "api": "NOT_RUN",
+  "tests": "NOT_RUN_IN_READ_ONLY_AUDIT",
+  "teacher_visual_review": "NOT_RUN",
+  "source_files": {
+    "src/math_agent/pipeline.py": {
+      "path": "src\\math_agent\\pipeline.py",
+      "sha256": "23feed5c5177b3c58efe843f000bd10e06d979faaf33e5bab9234887d7c9bd2d"
+    },
+    "tests/test_draft_recovery.py": {
+      "path": "tests\\test_draft_recovery.py",
+      "sha256": "da9476d9c8fe90a917c6283bed444a467b93c4f74ee33ce740863761cd1893f9"
+    },
+    "tests/test_global_repair.py": {
+      "path": "tests\\test_global_repair.py",
+      "sha256": "03b335064a0821c4dde84c0fb70a4ed58c3a4a844e885f18dd4483ba119c84e8"
+    }
+  }
+}

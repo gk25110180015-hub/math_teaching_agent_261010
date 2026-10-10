@@ -1,0 +1,1405 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="36" failures="0" skipped="0" tests="42" time="4.553" timestamp="2026-09-20T03:52:34.867233+08:00" hostname="Asuna"><testcase classname="tests.test_budget_api" name="test_explicit_increase_preserves_count_approval_error_artifacts_and_never_enqueues" time="0.075"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_explicit_increase_preserv0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162CBA3290&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162CA172C0&gt;
+run_id = '41e2ba968231433887055d4e5a9ca42b'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_retry_cannot_reset_exhausted_budget_without_explicit_user_action" time="0.036"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_retry_cannot_reset_exhaus0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DD5B380&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DD5B230&gt;
+run_id = '6b017bb220e64b31aa8164b26e44876d'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_idempotent_replay_does_not_increase_again_or_erase_failed_records" time="0.039"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_idempotent_replay_does_no0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DDE3920&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DDE23F0&gt;
+run_id = '9aa876f5700b4d0e9652ce8c20743deb'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_ambiguous_or_out_of_bounds_budget_values_rejected[True-requests]" time="0.035"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_ambiguous_or_out_of_bound0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DDB42F0&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DDB4E60&gt;
+run_id = 'd20e36ccd8334adb9611d8bdc53b8ac2'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_ambiguous_or_out_of_bounds_budget_values_rejected[True-local_repairs_per_unit]" time="0.040"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_ambiguous_or_out_of_bound1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DEC6C00&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DEC7800&gt;
+run_id = 'd56a29fa78b349aa8f17ec63049aa92f'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_ambiguous_or_out_of_bounds_budget_values_rejected[True-global_repair_rounds]" time="0.035"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_ambiguous_or_out_of_bound2')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DEF79E0&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DEF6E70&gt;
+run_id = 'd611bfdd6ef04eb1b66fe64a7c761310'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_ambiguous_or_out_of_bounds_budget_values_rejected[3-requests]" time="0.037"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_ambiguous_or_out_of_bound3')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DEBB6B0&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DEBB680&gt;
+run_id = '5fe0347036b04e0cb50b6065f6e14d8f'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_ambiguous_or_out_of_bounds_budget_values_rejected[3-local_repairs_per_unit]" time="0.041"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_ambiguous_or_out_of_bound4')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DDB7F50&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DDB5220&gt;
+run_id = 'dcc7bf3dc3354665b8159ae0cefac760'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_ambiguous_or_out_of_bounds_budget_values_rejected[3-global_repair_rounds]" time="0.036"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_ambiguous_or_out_of_bound5')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DDCC1D0&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DDCD550&gt;
+run_id = '5cc738ee37974b8f9f4aef13db4829ba'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_ambiguous_or_out_of_bounds_budget_values_rejected[2.5-requests]" time="0.036"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_ambiguous_or_out_of_bound6')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DF2D670&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DF2FB90&gt;
+run_id = '6537856ef2a74c7daa1ea2029bebe2b1'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_ambiguous_or_out_of_bounds_budget_values_rejected[2.5-local_repairs_per_unit]" time="0.041"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_ambiguous_or_out_of_bound7')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DF97440&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DF972F0&gt;
+run_id = '7e3d672b5f4c40d38c21338a636322ab'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_ambiguous_or_out_of_bounds_budget_values_rejected[2.5-global_repair_rounds]" time="0.035"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_ambiguous_or_out_of_bound8')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DE5AB40&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DE5ABA0&gt;
+run_id = 'd48a5396279e4fc28f60b61c85c46245'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_ambiguous_or_out_of_bounds_budget_values_rejected[-1-requests]" time="0.034"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_ambiguous_or_out_of_bound9')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DF81070&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DF83DA0&gt;
+run_id = '75d5bc7bed904b7380d69d4035fa2a05'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_ambiguous_or_out_of_bounds_budget_values_rejected[-1-local_repairs_per_unit]" time="0.039"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_ambiguous_or_out_of_bound10')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DD5AC90&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DE6A960&gt;
+run_id = 'd333c89ba1db4be1b52f3e2b56994209'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_ambiguous_or_out_of_bounds_budget_values_rejected[-1-global_repair_rounds]" time="0.038"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_ambiguous_or_out_of_bound11')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DFF7CE0&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DFF7110&gt;
+run_id = '5f36f5adbc5547099b69941ef2da4906'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_ambiguous_or_out_of_bounds_budget_values_rejected[0-requests]" time="0.054"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_ambiguous_or_out_of_bound12')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DEC67E0&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DEC6AB0&gt;
+run_id = '599084e74a77493ebcc0f90e4c59391f'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_ambiguous_or_out_of_bounds_budget_values_rejected[0-local_repairs_per_unit]" time="0.043"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_ambiguous_or_out_of_bound13')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DFB39B0&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DFB3470&gt;
+run_id = 'b0716f998eab44dfbbe4230ee30cae55'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_ambiguous_or_out_of_bounds_budget_values_rejected[0-global_repair_rounds]" time="0.039"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_ambiguous_or_out_of_bound14')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DF13020&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DF13A10&gt;
+run_id = '26346f53c4bc43169a5104c16e410968'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_ambiguous_or_out_of_bounds_budget_values_rejected[1001-requests]" time="0.041"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_ambiguous_or_out_of_bound15')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162E005400&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162E0052B0&gt;
+run_id = '27716e27a05e48b1b83bd517440be0a7'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_ambiguous_or_out_of_bounds_budget_values_rejected[1001-local_repairs_per_unit]" time="0.032"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_ambiguous_or_out_of_bound16')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DEC6990&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DEC5C10&gt;
+run_id = 'cc1680febd9f4cc79cae4f2aaad780b4'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_ambiguous_or_out_of_bounds_budget_values_rejected[1001-global_repair_rounds]" time="0.037"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_ambiguous_or_out_of_bound17')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DFCFC50&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DFCDE20&gt;
+run_id = '9ac9a2a56f294933aabba102616292ee'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_decrease_unchanged_or_stale_preconditions_rejected[changes0]" time="0.038"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_decrease_unchanged_or_sta0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DD31100&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DD33A40&gt;
+run_id = 'fe04dd43eaea4ae9be016f7fe3a4f7ec'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_decrease_unchanged_or_stale_preconditions_rejected[changes1]" time="0.040"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_decrease_unchanged_or_sta1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DF2EDB0&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DF2F5F0&gt;
+run_id = '5fbafb195ba54e86995d9fe8207bc370'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_decrease_unchanged_or_stale_preconditions_rejected[changes2]" time="0.039"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_decrease_unchanged_or_sta2')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DFF4770&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DF949E0&gt;
+run_id = '3f6e1918bd134f8aa619233e65f3065e'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_decrease_unchanged_or_stale_preconditions_rejected[changes3]" time="0.038"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_decrease_unchanged_or_sta3')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DD300E0&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DD30DA0&gt;
+run_id = '45f3762376d84eafa95e3c85799a1336'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_decrease_unchanged_or_stale_preconditions_rejected[changes4]" time="0.038"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_decrease_unchanged_or_sta4')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DEC66F0&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DEC4950&gt;
+run_id = 'f763abfd88b248e98abec95a5f42c171'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_only_blocked_and_no_active_job_and_local_user_may_increase" time="0.037"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_only_blocked_and_no_activ0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DF64C80&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DF66060&gt;
+run_id = '4d17d96d7aaf4306ba8b91c3b3b0c054'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_budget_endpoint_requires_session_csrf_and_same_origin" time="0.039"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_budget_endpoint_requires_0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162E12C830&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162E12E0C0&gt;
+run_id = 'c3a5b4a19bf84027bdd2e7c37a3aad00'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_persisted_initial_budget_is_not_raised_by_different_service_defaults" time="0.038"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_persisted_initial_budget_0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DF6BDA0&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DF6BE30&gt;
+run_id = '8a72ad21068a4eb7a474b3738d35644f'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_override_can_resume_requests_but_caller_hard_cap_remains_independent" time="0.036"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_override_can_resume_reque0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162E04F080&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162E04E300&gt;
+run_id = '9a56a24b86fe48acba7cbae7f579f4b7'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_partial_source_pdf_json_are_hash_checked_and_not_teacher_artifacts" time="0.038"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_partial_source_pdf_json_a0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DE3F920&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DE3FBF0&gt;
+run_id = 'e50653f94ee24c43939898ae85ea024f'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_partial_download_blocks_tamper_and_foreign_run_paths[source_changed]" time="0.041"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_partial_download_blocks_t0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162E0A7C20&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162E0A7FB0&gt;
+run_id = '76d721bebb764a1cae51c88b6ad594e2'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_partial_download_blocks_tamper_and_foreign_run_paths[pdf_changed]" time="0.039"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_partial_download_blocks_t1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162DF2D7C0&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162DF2D670&gt;
+run_id = '2d1030c0a1bb4fcea062e500e9185998'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_partial_download_blocks_tamper_and_foreign_run_paths[checkpoint_hash]" time="0.040"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_partial_download_blocks_t2')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162E1D64B0&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162E1D68D0&gt;
+run_id = '8da75d862cbd4211a7bc036ea25b052a'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_partial_download_blocks_tamper_and_foreign_run_paths[foreign_source]" time="0.037"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_partial_download_blocks_t3')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162E1CFFB0&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162E1CFDD0&gt;
+run_id = '5eb97275d84a40519730ca4c850e9d2d'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_budget_api" name="test_partial_download_blocks_tamper_and_foreign_run_paths[foreign_pdf]" time="0.037"><error message="failed on setup with &quot;math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信&quot;">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/bu01/test_partial_download_blocks_t4')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002162E1C6B10&gt;
+
+    @pytest.fixture
+    def setup(tmp_path, monkeypatch):
+        monkeypatch.setenv('MATH_AGENT_API_KEY', '')
+        monkeypatch.setenv('MATH_AGENT_LIVE_API_ENABLED', 'false')
+        settings = Settings(workspace=tmp_path / 'w', reference_root=tmp_path / 'refs', max_requests_per_run=2)
+        app = create_app(settings)
+        with TestClient(app, base_url='http://127.0.0.1:8765') as client:
+            client.headers['X-CSRF-Token'] = client.get('/api/session').json()['csrf_token']
+            service = app.state.service
+            run = service.create(NewRun(workflow_id='lecture.generate', topic='Offline budget fixture'))
+            rid = run['id']
+            with service.store.transaction() as connection:
+                service.store.save_plan(connection, rid, {'title': 'Budget fixture', 'provider': 'mock',
+                    'sections': [{'id': 'S01', 'title': 'One'}], 'questions': [], 'unresolved_blocking_questions': []})
+            plan = service.store.get_run(rid)['plan']
+&gt;           service.confirm(rid, ConfirmRequest(expected_plan_revision=plan['revision'], expected_plan_hash=plan['hash'], action_id='fixture'))
+
+tests\test_budget_api.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.service.Service object at 0x000002162E1C76E0&gt;
+run_id = '356465e6a05d4d1c9506d2f216a40ed0'
+req = ConfirmRequest(expected_plan_revision=1, expected_plan_hash='8a9e784b4b908fc42e29d666705cd40a519ff4ae7a2ea2deeb08330ea5b1d2b9', action_id='fixture')
+
+    def confirm(self, run_id, req: ConfirmRequest):
+        with self.store.transaction() as c:
+            run, p = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+            if p.get('unresolved_blocking_questions'):
+                raise AgentError('UNANSWERED_QUESTIONS', '请完成必要选择后确认')
+            if run['status'] not in ('PLAN_READY', 'PLAN_CONFIRMED'):
+                raise AgentError('INVALID_STATE', '当前状态不能确认计划', 409)
+            payload = json.loads(run['input_json'])
+            if not payload.get('trusted_input'):
+&gt;               raise AgentError('TRUST_REQUIRED', '原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信')
+E               math_agent.util.AgentError: 原生编译不是隔离沙箱；请在新建任务时明确确认输入及模板可信
+
+src\math_agent\service.py:329: AgentError</error></testcase><testcase classname="tests.test_migration_concurrency" name="test_transient_wal_busy_retries_whole_bootstrap_without_skipping_migration[wal]" time="0.061" /><testcase classname="tests.test_migration_concurrency" name="test_transient_wal_busy_retries_whole_bootstrap_without_skipping_migration[migration_record]" time="0.065" /><testcase classname="tests.test_migration_concurrency" name="test_bootstrap_lock_timeout_is_bounded_and_retry_after_unlock_recovers" time="0.364" /><testcase classname="tests.test_migration_concurrency" name="test_non_lock_sql_error_is_not_hidden_or_retried" time="0.002" /><testcase classname="tests.test_migration_concurrency" name="test_repeated_simultaneous_threads_keep_wal_and_single_migration" time="1.274" /><testcase classname="tests.test_migration_concurrency" name="test_separate_processes_can_start_against_same_new_database" time="0.201" /></testsuite></testsuites>

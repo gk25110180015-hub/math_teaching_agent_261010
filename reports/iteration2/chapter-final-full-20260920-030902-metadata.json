@@ -1,0 +1,2266 @@
+{
+  "suite": "final full local rerun after proven Store/provider product fixes",
+  "started_at": "2026-09-20T03:09:02+0800",
+  "python": "3.12.4 | packaged by Anaconda, Inc. | (main, Jun 18 2024, 15:03:56) [MSC v.1929 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "basetemp": "workspace/t/v66b82",
+  "real_api": "DISABLED_NOT_RUN",
+  "provider_tests": "MOCK_OR_FAKE_TRANSPORT",
+  "teacher_visual_review": "NOT_RUN",
+  "env": {
+    "MATH_AGENT_LIVE_API_ENABLED": "false",
+    "api_key_empty": true,
+    "MATH_AGENT_LLM_STREAMING": "false"
+  },
+  "source_snapshot_before": {
+    "src/math_agent/answer_completion.py": "3ec9e3ba686daea8447efbe4832827ef86797ed21965a6184dd29540d321baf8",
+    "src/math_agent/answer_recovery.py": "2da67b8f82c385c4abccb8c2a345e50c7ef2d3c22a72b46dcde061c2bfb8c18d",
+    "src/math_agent/beamer.py": "155eb21ea09a70aaf4300856cdb5e0ccafacfbc3adbcb5a7d451e8ed76d5c16b",
+    "src/math_agent/benchmark.py": "f091982a672aa34a23da5196045bfd6e5b34ac5205dd66056c40ea9b3b622a76",
+    "src/math_agent/calculation_protocol.py": "bdd5aa1466c3bf2918dcd3bb03f59d0edbd037fd637c57d1ecc00344ed78a381",
+    "src/math_agent/cli.py": "fa86f81c27eee31b4e32328ea6e84e32413c1ec5902157f93284d30f68e66d0d",
+    "src/math_agent/compiler.py": "632e1545be3bd59c5fd6889e1d9631afb6ddfcc62d0c584f7304eacd4964519c",
+    "src/math_agent/config.py": "6a634d5b8790271b4f126949b64555186ab00e97cd0486eaf46a0f729eb01701",
+    "src/math_agent/crossrefs.py": "ce87617882930e6cbf9b75e14a8f252d1244dfdb4a8b10c4e1e88dc0dd6b2f23",
+    "src/math_agent/domain.py": "b118872abbb44d2fd2b76d00a597457545f88c69c5abfd8ae0c9d8221943485d",
+    "src/math_agent/lecture_fragments.py": "ca84bc050fdfe8aa5a30fac8ce893b2a4aed865fdd3cd72fb53185cd4074c216",
+    "src/math_agent/manuscript.py": "d7098ed950c0a585d0cfd2876282188f09a4c8d97ba93a865bb5c62bcda304aa",
+    "src/math_agent/mathcheck.py": "46e6aa2bf059878d7de714abb8daefbe8ab19752a38312f68a09be31157c1d78",
+    "src/math_agent/parsing.py": "b6f72c7aa85072610797e2be793203d82a5b8449911d9bfd4f2e6cd6602574cf",
+    "src/math_agent/pdfcheck.py": "3592bd7b8c5c77008c4df70239b477b7ad7fe9c6a13be2eeb9c73b4d6048105c",
+    "src/math_agent/pipeline.py": "23feed5c5177b3c58efe843f000bd10e06d979faaf33e5bab9234887d7c9bd2d",
+    "src/math_agent/provider.py": "61195a8c6922544e8eb216f65fcff5798e96e540c45c59fdb037225e231befdf",
+    "src/math_agent/references.py": "ecfa52139e3a3ec343c415d0b0fa4a28e747eb5f7a8e97379e3d0807aa1347f8",
+    "src/math_agent/reference_recovery.py": "71f0787701e59f0b33b1dc2fd2f72337cc963379a408894d7a8b406d8e62370b",
+    "src/math_agent/retrieval.py": "87135fdfa5d7b048aee8ea2b07365804d7e4067819713a87fea6af9f9d107698",
+    "src/math_agent/service.py": "6ee85a5b063d58bd804e83fec9f1c536615b164af07522af9d56bfe5a8151ea8",
+    "src/math_agent/settings.py": "a1a0d9c5e9ad9e87c81fbd13803f59fd0f22a5cea2bc641fac15dc6695767b88",
+    "src/math_agent/store.py": "fef7d66eb325e3995e2e160e9607a6d276da8b2e54a150798b9219c37a8d157f",
+    "src/math_agent/util.py": "59d0ebb277f8f9aef555b0c4a628505f848a6c73a65aaa281b98cb37a86ce722",
+    "src/math_agent/worker.py": "8c1fef6e4550e9ab5fde3a309004c9111460d187f44de38862186a94302fc3e2",
+    "src/math_agent/__init__.py": "733a5e2c5457d7c1c3145004d7d1fca286573e53d61b87324f19cff145791625",
+    "src/math_agent/__main__.py": "79ee6f134c5c5193377cf9b189cbdcc3e2095e49ba9cec310114441c15a917c4",
+    "src/math_agent/migrations/001_initial.sql": "3aea006fb9f1248c6a4722b8ad825c6911f1e5cf871be9b5dd3f58f2f95f65aa",
+    "src/math_agent/prompts/planner_lecture.md": "b15fddf92930e5ca086fa591e56f0d92c13dd0904811cf826d1aae624629db03",
+    "src/math_agent/prompts/propose_reference_labels.md": "0b967bf320e6d35e1f145a07a1ee0bd1e6fdd6c6627866a8a4a13a2ea8626f15",
+    "src/math_agent/prompts/repair_content_unit.md": "46c1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9",
+    "src/math_agent/prompts/repair_missing_answers.md": "3f4beaf0cea232c9067c05d0326b08ebba71227e57fd50b283fb3401d8340da3",
+    "src/math_agent/prompts/reviewer_math.md": "875059cdfa88e1d8b8c03cf40d834cb464ea364a782b20f508a7313ab6d80f3f",
+    "src/math_agent/prompts/writer_lecture_section.md": "d603578073786e5fe7656bafb7d310c563810aee7b912e7c3eb3158129e7778a",
+    "src/math_agent/web/app.py": "bd0819d5ffbb7f6234b4df98cf382a3f760361f629e3b825bb944748f3d8ca28",
+    "src/math_agent/web/__init__.py": "f8cfb938de46c42d2136d0b71470915a94b814171e22f8bfe55c24ba50100a41",
+    "src/math_agent/workflows/registry.py": "0c00be937ff260136b3d6cd6ee0936d37977993b7e3c6791c9542540582c8826",
+    "src/math_agent/workflows/__init__.py": "307c5a1b450eab8a0deaa047dae1e58b4fc44b20f268f3766937f6c441abbade",
+    "src/math_agent/web/static/app.js": "616cb431ed1d3a9c78fe168b6cf9d6281e4303c2b6957d6392e23218c4cdaef7",
+    "src/math_agent/web/static/index.html": "64a95cf85eb4bd8474ca135f25609d0a05d469a4e585fea02e7d50ddaff83e34",
+    "src/math_agent/web/static/style.css": "cd6b053aca0c4c843e086a830753eb1b67e34cab161eb79f1a8efc52617a2837",
+    "tests/test_answer_completion.py": "f185cc78051f26ac6bead54378c88579a6e442884ba690645488eb90820423dd",
+    "tests/test_answer_recovery_pipeline.py": "ec2ed19f1b5b76fb943569dcd88f7dd9ff16b33dbe17e95ee08829c0e9d30445",
+    "tests/test_answer_references.py": "96ba46cb9d768351d3570f1988040b5f2fe87b4b8da7c9a0f69e3d9b5785d23d",
+    "tests/test_api.py": "05cf626a25f802b2be949ffadd5bf4d35c707d043a06a182f589b1cd946fc3b9",
+    "tests/test_beamer_iteration2.py": "5f7e1caa5cdc301c295d7acd577450f92dfba1e9c47dd3c29498a84acb9e06dc",
+    "tests/test_benchmark_actor.py": "8eaab348ea2b53af9d0fabefab5d2bd33fde0f68f944315baddfa0431eac83bc",
+    "tests/test_benchmark_latency.py": "85ee51ac90bf034b7b4c6dc9caa2b0969739fbaf7e0a1a47b7f1836dd94c92e6",
+    "tests/test_benchmark_metrics.py": "9fbfba1a1493262c106f7e54a3e5b15b38f387bf3c5d94481e0594467a1ee582",
+    "tests/test_bibliography_crlf.py": "245b932b930e1d161e4f7a88f9dc734bdf2d346f666aab1b9b058965cd7c2d54",
+    "tests/test_bibliography_integration.py": "3b85984281af418b6f7d0273eaf6943734f715278d971c5ce3ca9bec7498356d",
+    "tests/test_calculation_location.py": "47b1013f873fd76d32714cd90099b6996db4f2305155761bae5d05fa1374c564",
+    "tests/test_calculation_protocol.py": "237c19b9d5fa19a9d91d59eb40cc9a9b5010d325e31c1b5c82e0934c4dd86af7",
+    "tests/test_compiler_pdf.py": "77bd034599f934183bdfba08a93cf403e5450bfecb5ee43a53b18cb2e81b02c9",
+    "tests/test_config.py": "e4580b2b539512155f995030a678f4b16bafee0ca31bf3cc3cdb38c0b9af18b5",
+    "tests/test_crossrefs.py": "2e09caeab44553ffacfb56e5957cbead9de613473c993c8bb053b9521a947e1e",
+    "tests/test_delivery.py": "6b3301f72e608b8927b871fc07d50bfcab40e212d9ee07fd0b30dc1f3140af46",
+    "tests/test_draft_recovery.py": "da9476d9c8fe90a917c6283bed444a467b93c4f74ee33ce740863761cd1893f9",
+    "tests/test_exercise_policy.py": "577d7396fee36ccedb9edafbed65a843348883044e9ba4d037c7e62a7714db1b",
+    "tests/test_global_repair.py": "03b335064a0821c4dde84c0fb70a4ed58c3a4a844e885f18dd4483ba119c84e8",
+    "tests/test_labeled_equations.py": "f94efb26145f08e36f993a4987637538b08ff861c67c02da1ed455f882802233",
+    "tests/test_lecture_crlf.py": "c8374b33b38b782260883a8919c063e65c9cbfaef22120b52f8963961abc241b",
+    "tests/test_lecture_fragments.py": "cf7dcca4e9af1784229afeca499caa5e48af0f1df44f5987bebba61f771bade0",
+    "tests/test_manuscript.py": "e624c4833de84077d6abc0f0fd523a3e9ccddcfff056f1881e016a0f3fa8724e",
+    "tests/test_mathcheck.py": "a3e670bd8a7e3c3e04a4eda048bc58925103995c2f5f773e6069185f0ec40bec",
+    "tests/test_math_punctuation.py": "89b7e90d9a70ac40bddc8de1c758c866ff144f20b535eabc6d2b4c3c86db7f6a",
+    "tests/test_migration_concurrency.py": "d7dd9001f9c912e048bdd44a5506bcc97ef211725c828af1a18bf724d841cbc3",
+    "tests/test_parsing_beamer.py": "f460715594f73f44f263b985c6f3b5cc0c5aa51728f3e63c6b4bec67e5a702fd",
+    "tests/test_plan_dependencies.py": "f2af36e5bc218f9613bd4b4f9b47e3b2fe70f3199bf66e7c16eeb8c8938bb3d7",
+    "tests/test_process_recovery.py": "219ec5d2543d7364fa66e0aaf55a096436b89797868b3beba18f02dad0b02cf0",
+    "tests/test_provider.py": "9d2d1af944fefbc4f506f0cfa59dc3512d0af567da9fc817b50fc6313625cca4",
+    "tests/test_provider_failure_artifacts.py": "663ccbac19b9ed78ca049cc645fea91095c30102b82c94f6dcc1cac2f0fe334b",
+    "tests/test_provider_stream.py": "7ff726a0407702779c74ea16c366433720e577c629079668c1962b01f62009c9",
+    "tests/test_reference_recovery.py": "f21c7aa84c5de7927d77f5acad6cca9a1375b594e6bdccd5ddfe436744082b88",
+    "tests/test_regressions.py": "f5796dc1d60de8ac73472e91522f73a759e23179251c1287c20b19dea1958c71",
+    "tests/test_review_rendering_contract.py": "cbcd6623215a94640b12f1a18488d63cdda7484dd058132a9a5895abaf8bf907",
+    "tests/test_review_scope.py": "106aa445fefdab04045499d4e92e6014c734f48d030e37e83bfb995e96903e50",
+    "tests/test_source_acceptance.py": "f78f54a1d0993c54f006393daeb9bb01d78b9548aa9ea18b03182d74c0c9fb0c",
+    "tests/test_state.py": "5e1648558bf55e7d4c788c5a4c2f45fbec2d65004efd6ae3d39f221b172f0250",
+    "tests/test_workflows.py": "d34c830a850084ddb8b634cd7caaa04c4f64aff8b09869ce0d68391b7b3d8dbb",
+    "tests/e2e/test_browser_workflows.py": "2f6e8767cbd5bb7343569719116b09b122ee2ecd87ac510685f5c33a55901403",
+    "tests/fixtures/answer_completion_ch02_s02.json": "fbe0234a6255d1dbb6d9a5aea13b907475df12024956309f831901516e14140b",
+    "tests/fixtures/live_ch01_missing_labels.json": "c0e0e80b6c2760e3748b24f718ad6296e88a3022c8ec9db0718aef7a7540e802",
+    "tests/fixtures/live_ch03_math_punctuation.json": "77da13c310db113c827afd808bba19bdbe6f7d52bc72bd29d758f82463e10ea1",
+    "tests/fixtures/live_ch03_math_punctuation.tex": "5b4ac1cd93cf03081c88927910f727f32a57fe6534cee4e7f9b65a85eb7dcc8f",
+    "pyproject.toml": "6c7747b270e7b0ac1b2a70988990848f34e0ba6033cb092f49cf3253b431b55b",
+    "uv.lock": "bb43a8f46f460c621957ab94c673159a6f3c7f8e108d32d18c927611138faba8"
+  },
+  "selected_tests": [
+    {
+      "nodeid": "tests/test_answer_completion.py::test_real_fixture_is_exact_preserved_candidate",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_multi_target_append_preserves_every_original_field",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_context_is_detached_and_read_only_to_source",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_reply_order_and_explicit_subset_use_original_target_order",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_invalid_requested_targets_fail_before_proposal[targets0]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_invalid_requested_targets_fail_before_proposal[targets1]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_invalid_requested_targets_fail_before_proposal[targets2]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_invalid_requested_targets_fail_before_proposal[targets3]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_invalid_requested_targets_fail_before_proposal[targets4]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_invalid_requested_targets_fail_before_proposal[targets5]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_invalid_requested_targets_fail_before_proposal[targets6]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_invalid_requested_targets_fail_before_proposal[S02.U18]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_response_scope_is_exact[missing]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_response_scope_is_exact[extra]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_response_scope_is_exact[duplicate]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_response_scope_is_exact[wrong_section]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_response_cannot_replace_section_fields[units]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_response_cannot_replace_section_fields[metadata]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_response_cannot_replace_section_fields[status]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_model_cannot_choose_new_identity_or_relation[id]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_model_cannot_choose_new_identity_or_relation[kind]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_model_cannot_choose_new_identity_or_relation[relates_to]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_collision_does_not_overwrite_or_invent_another_id",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_hundred_unit_capacity_boundary[97-True]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_hundred_unit_capacity_boundary[98-False]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_duplicate_original_ids_block",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_invalid_original_kind_type_blocks_without_typeerror",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_new_calculations_cannot_bind_existing_or_foreign_units[S02.U19]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_new_calculations_cannot_bind_existing_or_foreign_units[FOREIGN.answer]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_new_calculations_cannot_bind_existing_or_foreign_units[None]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_new_calculations_cannot_bind_existing_or_foreign_units[unit_id3]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_new_calculations_cannot_bind_existing_or_foreign_units[unit_id4]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_calculation_id_collisions_block[existing]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_calculation_id_collisions_block[duplicate]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_calculation_id_collisions_block[fallback]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_new_calculation_fields_cannot_claim_results[status]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_new_calculation_fields_cannot_claim_results[evidence]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_new_calculation_fields_cannot_claim_results[python]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_calculation_limits_are_bounded[unsupported]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_calculation_limits_are_bounded[oversized]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_calculation_limits_are_bounded[nonfinite]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_calculation_limits_are_bounded[total_count]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_answer_cannot_introduce_document_or_teaching_structure[\\\\section{New theory}]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_answer_cannot_introduce_document_or_teaching_structure[\\\\input{other.tex}]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_answer_cannot_introduce_document_or_teaching_structure[\\\\newcommand{\\\\change}{x}]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_answer_cannot_introduce_document_or_teaching_structure[\\\\begin{exercise}New question\\\\end{exercise}]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_answer_cannot_introduce_document_or_teaching_structure[\\\\begin{theorem}New theorem\\\\end{theorem}]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_answer_cannot_introduce_document_or_teaching_structure[\\\\documentclass{book}]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_answer_cannot_introduce_document_or_teaching_structure[\\\\begin{lemma*}New lemma\\\\end{lemma*}]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_answer_cannot_introduce_document_or_teaching_structure[\\\\begin{problem}New problem\\\\end{problem}]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_empty_new_notes_do_not_clear_old_doubts",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_absent_optional_source_fields_stay_absent_without_additions",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_second_apply_does_not_duplicate_answers",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_bounded_nonblank_answers[blank_body]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_bounded_nonblank_answers[blank_target]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_bounded_nonblank_answers[oversized_body]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_actual_bounded_sympy_checker_runs_new_answer_request",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_completion.py::test_invalid_ast_remains_unchecked_until_original_checker_rejects",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_recovery_pipeline.py::test_completion_pipeline_compiles_answers_at_end_with_numbered_link",
+      "markers": [
+        "windows_compile"
+      ]
+    },
+    {
+      "nodeid": "tests/test_answer_recovery_pipeline.py::test_cached_answer_after_review_failure_is_rechecked_not_regenerated",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_answer_recovery_pipeline.py::test_added_wrong_calculation_cannot_pass_even_if_model_review_is_empty",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_answer_recovery_pipeline.py::test_capacity_preflight_is_blocked_and_archived_before_model_call",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_answer_references.py::test_end_answers_have_deterministic_distinct_exercise_links_and_unchanged_bodies",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_answer_references.py::test_section_answers_keep_existing_inline_heading_and_position",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_answer_references.py::test_generated_exercise_label_namespace_cannot_be_shadowed_by_body",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_answer_references.py::test_actual_aux_numbers_and_pdf_links_target_each_exercise",
+      "markers": [
+        "windows_compile"
+      ]
+    },
+    {
+      "nodeid": "tests/test_api.py::test_T01_no_body_before_plan",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_api.py::test_T56_csrf_origin_host",
+      "markers": [
+        "security"
+      ]
+    },
+    {
+      "nodeid": "tests/test_api.py::test_unknown_fields_do_not_echo_input",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_api.py::test_T54_source_injection_not_permission",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_beamer_iteration2.py::test_short_adjacent_explanations_share_a_readable_frame",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_beamer_iteration2.py::test_long_proof_packs_whole_steps_instead_of_one_paragraph_per_slide",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_beamer_iteration2.py::test_twelve_sections_use_legal_directory_capacity_before_multiple_pages",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_beamer_iteration2.py::test_long_directory_uses_two_columns_and_keeps_all_headings",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_beamer_iteration2.py::test_bibliography_pages_preserve_each_whole_item_once",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_benchmark_actor.py::test_benchmark_approval_is_attributed_and_cannot_claim_teacher_review",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_benchmark_actor.py::test_unknown_internal_actor_rejected",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_benchmark_latency.py::test_early_stream_headers_timing_is_not_reported_as_full_completion",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_benchmark_latency.py::test_full_provider_timer_takes_precedence_over_event_persistence_delay",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_benchmark_metrics.py::test_baseline_topics_follow_actual_three_reference_chapters",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_benchmark_metrics.py::test_structure_counts_exclude_hidden_scaffolding_but_do_not_judge_conditions",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_benchmark_metrics.py::test_density_uses_all_physical_pages_and_missing_pdf_is_not_zero",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_benchmark_metrics.py::test_provider_attempts_usage_missingness_and_schema_failure_stay_distinct",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_benchmark_metrics.py::test_comparison_never_upgrades_counts_or_all_automated_passes_to_teacher_pass",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_benchmark_metrics.py::test_missing_quality_is_not_a_successful_comparison",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_benchmark_metrics.py::test_partial_usage_fields_remain_unknown_instead_of_zero",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_benchmark_metrics.py::test_driver_missing_env_cannot_create_a_live_run_or_fallback",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_benchmark_metrics.py::test_driver_records_real_selections_and_stops_before_teacher_review",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_benchmark_metrics.py::test_driver_budget_refuses_an_extra_request_before_worker_claim",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_benchmark_metrics.py::test_failed_attempt_archive_is_immutable_across_report_updates",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_benchmark_metrics.py::test_pedagogical_diagnostics_expose_wrappers_and_empty_math_protocol_without_judging_math",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_benchmark_metrics.py::test_pedagogical_diagnostics_do_not_count_calculation_requests_as_proofs",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_bibliography_crlf.py::test_enrichment_preserves_exact_output_bytes_and_crlf_macro_arguments",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_bibliography_crlf.py::test_crlf_enriched_source_macro_and_reference_really_compile",
+      "markers": [
+        "windows_compile"
+      ]
+    },
+    {
+      "nodeid": "tests/test_bibliography_integration.py::test_explicit_bibliography_opt_in_preserves_raw_upload_and_locks_provenance",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_bibliography_integration.py::test_without_opt_in_no_manuscript_content_is_injected",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_calculation_location.py::test_actual_failed_countercheck_locates_own_content_unit",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_calculation_location.py::test_actual_unknown_countercheck_keeps_unit_location",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_calculation_location.py::test_actual_success_is_bound_and_legacy_missing_unit_id_remains_supported",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_calculation_location.py::test_explicit_unknown_unit_is_blocked_before_any_math_execution[OTHER-SECTION.U1]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_calculation_location.py::test_explicit_unknown_unit_is_blocked_before_any_math_execution[None]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_calculation_location.py::test_explicit_unknown_unit_is_blocked_before_any_math_execution[unknown2]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_calculation_location.py::test_oversized_request_retains_unit_and_not_run_evidence",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_calculation_location.py::test_non_json_request_is_located_without_crashing",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_calculation_location.py::test_subprocess_start_failure_is_located_fault_injection",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_calculation_location.py::test_per_request_timeout_is_located_fault_injection",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_calculation_location.py::test_total_budget_marks_each_unexecuted_request_with_location",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_calculation_protocol.py::test_protocol_is_serializable_fresh_and_bound_to_supported_requests",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_calculation_protocol.py::test_protocol_example_passes_actual_json_ast_calculation[limit]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_calculation_protocol.py::test_protocol_example_passes_actual_json_ast_calculation[series]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_calculation_protocol.py::test_protocol_example_passes_actual_json_ast_calculation[derivative]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_calculation_protocol.py::test_log_derivative_does_not_pass_after_required_domain_is_removed",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_calculation_protocol.py::test_undeclared_symbol_does_not_turn_into_pass",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_calculation_protocol.py::test_numeric_example_is_review_evidence_not_symbolic_proof",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_compiler_pdf.py::test_t55_subprocess_env_excludes_all_secrets",
+      "markers": [
+        "security"
+      ]
+    },
+    {
+      "nodeid": "tests/test_compiler_pdf.py::test_t53_never_resolve_input_directory_fake_compiler",
+      "markers": [
+        "security"
+      ]
+    },
+    {
+      "nodeid": "tests/test_compiler_pdf.py::test_t48_stale_pdf_never_reused",
+      "markers": [
+        "security"
+      ]
+    },
+    {
+      "nodeid": "tests/test_compiler_pdf.py::test_t52_input_reads_and_writes_blocked",
+      "markers": [
+        "security"
+      ]
+    },
+    {
+      "nodeid": "tests/test_compiler_pdf.py::test_native_trust_confirmation_required",
+      "markers": [
+        "security"
+      ]
+    },
+    {
+      "nodeid": "tests/test_compiler_pdf.py::test_harmless_readme_is_allowed_but_not_tex_executed",
+      "markers": [
+        "security"
+      ]
+    },
+    {
+      "nodeid": "tests/test_compiler_pdf.py::test_nav_mapping_all_overlays",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_compiler_pdf.py::test_fatal_condition_and_vrb_error_keep_exact_source_location",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_compiler_pdf.py::test_layout_probe_requires_matching_template_fingerprint",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_compiler_pdf.py::test_pgf_translation_requires_same_frame_visible_glyph_evidence",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_compiler_pdf.py::test_t27_t34_compile_chinese_path_and_all_overlay_pages",
+      "markers": [
+        "windows_compile"
+      ]
+    },
+    {
+      "nodeid": "tests/test_compiler_pdf.py::test_tex_auxiliary_disappearing_during_size_scan_is_not_compile_failure",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_compiler_pdf.py::test_t17_cancel_actual_tex_infinite_loop",
+      "markers": [
+        "windows_compile"
+      ]
+    },
+    {
+      "nodeid": "tests/test_compiler_pdf.py::test_t48_actual_failed_compile_keeps_diagnostics",
+      "markers": [
+        "windows_compile"
+      ]
+    },
+    {
+      "nodeid": "tests/test_compiler_pdf.py::test_t47_middle_overlay_is_rendered_and_overflow_is_blocked",
+      "markers": [
+        "windows_compile"
+      ]
+    },
+    {
+      "nodeid": "tests/test_compiler_pdf.py::test_t52_actual_openout_restriction_probe",
+      "markers": [
+        "security",
+        "windows_compile"
+      ]
+    },
+    {
+      "nodeid": "tests/test_config.py::test_yaml_single_backslash_and_validated_budgets",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_config.py::test_settings_refuses_public_host_and_unbounded_retries",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_crossrefs.py::test_only_registered_future_references_can_be_pending",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_crossrefs.py::test_registration_rejects_duplicate_labels",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_crossrefs.py::test_missing_promised_label_and_unplanned_reference_are_blocked",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_crossrefs.py::test_T21_registered_forward_and_prior_references_full_workflow",
+      "markers": [
+        "integration",
+        "windows_compile"
+      ]
+    },
+    {
+      "nodeid": "tests/test_delivery.py::test_t59_existing_source_bundle_compiles_from_clean_directory",
+      "markers": [
+        "integration",
+        "windows_compile"
+      ]
+    },
+    {
+      "nodeid": "tests/test_delivery.py::test_t49_open_pdf_remains_untouched_while_new_revision_compiles",
+      "markers": [
+        "integration",
+        "windows_compile"
+      ]
+    },
+    {
+      "nodeid": "tests/test_delivery.py::test_t55_export_excludes_environment_key_and_private_sidecars",
+      "markers": [
+        "security"
+      ]
+    },
+    {
+      "nodeid": "tests/test_draft_recovery.py::test_reviewer_timeout_reuses_unchecked_writer_but_reruns_normalize_math_review_compile",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_draft_recovery.py::test_unchecked_cache_invalidates_on_every_relevant_change[context]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_draft_recovery.py::test_unchecked_cache_invalidates_on_every_relevant_change[model]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_draft_recovery.py::test_unchecked_cache_invalidates_on_every_relevant_change[prompt]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_draft_recovery.py::test_unchecked_cache_invalidates_on_every_relevant_change[schema]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_draft_recovery.py::test_unchecked_cache_invalidates_on_every_relevant_change[candidate_hash]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_draft_recovery.py::test_unchecked_cache_invalidates_on_every_relevant_change[schema_payload]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_draft_recovery.py::test_unchecked_cache_invalidates_on_every_relevant_change[path_escape]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_draft_recovery.py::test_reuse_keeps_only_unchecked_status_and_new_attempt_files",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_exercise_policy.py::test_none_removes_required_exercises_but_preserves_example_solutions_and_math_objectives",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_exercise_policy.py::test_with_answers_after_none_restores_required_exercises_and_answers_without_duplicates",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_exercise_policy.py::test_policy_revision_invalidates_old_confirmation_and_preserves_prior_plan",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_exercise_policy.py::test_custom_exercise_policy_is_not_guessed_or_used_to_delete_existing_requirements",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_global_repair.py::test_legacy_failure_is_repaired_before_any_new_global_review[none]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_global_repair.py::test_legacy_failure_is_repaired_before_any_new_global_review[unknown_unit]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_global_repair.py::test_legacy_failure_is_repaired_before_any_new_global_review[changed_hash]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_global_repair.py::test_legacy_failure_is_repaired_before_any_new_global_review[source_hash]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_global_repair.py::test_legacy_failure_is_repaired_before_any_new_global_review[checkpoint_hash]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_global_repair.py::test_legacy_failure_respects_zero_global_repair_budget",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_global_repair.py::test_legacy_nontarget_equation_is_normalized_before_scoped_repair",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_global_repair.py::test_global_issue_repairs_only_target_and_rechecks_affected_and_following_sections",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_global_repair.py::test_global_repair_cannot_change_other_units_or_ids[mutate_other]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_global_repair.py::test_global_repair_cannot_change_other_units_or_ids[add_unit]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_global_repair.py::test_global_repair_cannot_change_other_units_or_ids[drop_other_calculation]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_global_repair.py::test_global_repair_cannot_change_other_units_or_ids[mutate_uncertainties]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_global_repair.py::test_global_round_budget_blocks_unresolved_issue_without_unbounded_recursion",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_global_repair.py::test_repair_is_persisted_before_following_review_timeout_and_resume_reuses_it",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_global_repair.py::test_corrupt_persisted_global_candidate_fails_before_model_call",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_unique_labeled_display_gets_number_without_any_math_body_change",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_shell_removal_and_labeled_equation_normalization_compose",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_unlabeled_tagged_numbered_and_non_executing_displays_are_unchanged[\\\\[a=b\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_unlabeled_tagged_numbered_and_non_executing_displays_are_unchanged[\\\\[a=b\\\\tag{A}\\\\label{eq:one}\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_unlabeled_tagged_numbered_and_non_executing_displays_are_unchanged[\\\\[a=b\\\\tag*{A}\\\\label{eq:one}\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_unlabeled_tagged_numbered_and_non_executing_displays_are_unchanged[\\\\begin{equation}a=b\\\\label{eq:one}\\\\end{equation}]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_unlabeled_tagged_numbered_and_non_executing_displays_are_unchanged[% \\\\[a=b\\\\label{eq:comment}\\\\]\\n\\u666e\\u901a\\u6b63\\u6587\\u3002]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_unlabeled_tagged_numbered_and_non_executing_displays_are_unchanged[\\\\verb|\\\\[a=b\\\\label{eq:verbatim}\\\\]|]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_ambiguous_labeled_display_preserves_entire_original_and_blocks[\\\\[a=b\\\\label{eq:one}\\\\label{eq:two}\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_ambiguous_labeled_display_preserves_entire_original_and_blocks[\\\\[a=b\\\\label{bad label}\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_ambiguous_labeled_display_preserves_entire_original_and_blocks[\\\\[a=b\\\\label{eq:{dynamic}}\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_ambiguous_labeled_display_preserves_entire_original_and_blocks[\\\\[a=b\\\\label{eq:one}\\\\]\\\\label{eq:one}]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_ambiguous_labeled_display_preserves_entire_original_and_blocks[\\\\[\\\\begin{equation}a=b\\\\label{eq:one}\\\\end{equation}\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_ambiguous_labeled_display_preserves_entire_original_and_blocks[\\\\[\\\\begin{align}a&=b\\\\label{eq:one}\\\\end{align}\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_ambiguous_labeled_display_preserves_entire_original_and_blocks[\\\\[\\\\[a=b\\\\label{eq:one}\\\\]\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_ambiguous_labeled_display_preserves_entire_original_and_blocks[\\\\[a=b\\\\notag\\\\label{eq:one}\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_ambiguous_labeled_display_preserves_entire_original_and_blocks[\\\\[{a=b\\\\label{eq:one}}\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_ambiguous_labeled_display_preserves_entire_original_and_blocks[\\\\begin{equation}\\\\[a=b\\\\label{eq:one}\\\\]\\\\end{equation}]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_duplicate_label_in_another_unit_blocks_conversion",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_aligned_body_is_preserved_under_one_equation_number",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_labeled_equations.py::test_captured_two_live_sections_resolve_to_equation_anchor_and_pdf_links",
+      "markers": [
+        "windows_compile"
+      ]
+    },
+    {
+      "nodeid": "tests/test_lecture_crlf.py::test_lecture_source_preserves_rendered_crlf_exactly[local]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_lecture_crlf.py::test_lecture_source_preserves_rendered_crlf_exactly[final]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_lecture_fragments.py::test_preserve_optional_title_math_and_explanations_around_real_definition_shape",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_lecture_fragments.py::test_one_matching_shell_removed_with_relations_untouched[theorem]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_lecture_fragments.py::test_one_matching_shell_removed_with_relations_untouched[proof]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_lecture_fragments.py::test_one_matching_shell_removed_with_relations_untouched[example]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_lecture_fragments.py::test_one_matching_shell_removed_with_relations_untouched[exercise]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_lecture_fragments.py::test_one_matching_shell_removed_with_relations_untouched[solution]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_lecture_fragments.py::test_math_environments_and_verbatim_like_comments_are_not_stripped",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_lecture_fragments.py::test_ambiguous_malformed_or_mismatched_shells_are_preserved_and_blocked[\\\\begin{theorem}wrong kind\\\\end{theorem}]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_lecture_fragments.py::test_ambiguous_malformed_or_mismatched_shells_are_preserved_and_blocked[\\\\begin{definition}missing end]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_lecture_fragments.py::test_ambiguous_malformed_or_mismatched_shells_are_preserved_and_blocked[\\\\begin{definition}bad\\\\end{theorem}]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_lecture_fragments.py::test_ambiguous_malformed_or_mismatched_shells_are_preserved_and_blocked[\\\\begin{definition}outer\\\\begin{definition}inner\\\\end{definition}\\\\end{definition}]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_lecture_fragments.py::test_ambiguous_malformed_or_mismatched_shells_are_preserved_and_blocked[\\\\begin{definition}outer\\\\begin{theorem}inner\\\\end{theorem}\\\\end{definition}]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_lecture_fragments.py::test_ambiguous_malformed_or_mismatched_shells_are_preserved_and_blocked[{\\\\begin{definition}inside a group\\\\end{definition}}]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_lecture_fragments.py::test_ambiguous_malformed_or_mismatched_shells_are_preserved_and_blocked[\\\\begin{definition}one\\\\end{definition}\\\\begin{definition}two\\\\end{definition}]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_lecture_fragments.py::test_ambiguous_malformed_or_mismatched_shells_are_preserved_and_blocked[\\\\begin{definition}[unclosed title text]",
+      "markers": [
+        "parametrize",
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_lecture_fragments.py::test_already_fragment_and_idempotence_preserve_exact_bytes",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_lecture_fragments.py::test_actual_live_first_section_under_controlled_template_compiles_without_duplicate_shells",
+      "markers": [
+        "windows_compile"
+      ]
+    },
+    {
+      "nodeid": "tests/test_manuscript.py::test_chapter_extraction_retains_exact_math_hidden_answers_and_number",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_manuscript.py::test_exact_bibliography_span_and_no_invention",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_manuscript.py::test_existing_entry_never_replaced_and_conflict_reported",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_manuscript.py::test_empty_existing_bibliography_is_filled_without_duplicate_environment",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_manuscript.py::test_unsafe_bibliography_is_rejected[\\\\input{../secret}]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_manuscript.py::test_unsafe_bibliography_is_rejected[\\\\def\\\\bad{x}]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_manuscript.py::test_unsafe_bibliography_is_rejected[\\\\write18{bad}]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_manuscript.py::test_duplicate_key_and_dynamic_citation_rejected",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_manuscript.py::test_write_copy_never_overwrites_source_and_has_provenance",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_manuscript.py::test_supplied_manuscript_provides_real_missing_three_chapter_entries",
+      "markers": [
+        "reference"
+      ]
+    },
+    {
+      "nodeid": "tests/test_manuscript.py::test_prepared_bibliography_really_resolves_windows_citation",
+      "markers": [
+        "windows_compile"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character[\\\\[-\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character[\\\\(-\\\\)]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character[$-$]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character[$$-$$]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character[\\\\begin{equation}-\\\\end{equation}]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_bare_punctuation_in_explicit_math_gets_text_font_without_losing_character[\\\\begin{align*}-\\\\end{align*}]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_text_arguments_comments_verbatim_unknown_groups_and_prose_stay_byte_exact[\\u6b63\\u6587\\uff0c\\u3002\\uff1b\\uff1a\\uff01\\uff1f\\u3001 $a=b$\\u3002]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_text_arguments_comments_verbatim_unknown_groups_and_prose_stay_byte_exact[\\\\[a+\\\\text{\\u6761\\u4ef6\\uff0c\\u542b{\\u5d4c\\u5957\\u3002}\\u6587\\u5b57\\uff01}=b\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_text_arguments_comments_verbatim_unknown_groups_and_prose_stay_byte_exact[\\\\[a+\\\\mbox{\\u6587\\u5b57\\u3002}=b\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_text_arguments_comments_verbatim_unknown_groups_and_prose_stay_byte_exact[\\\\verb|\\\\[x=1\\u3002\\\\]|]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_text_arguments_comments_verbatim_unknown_groups_and_prose_stay_byte_exact[% \\\\[x=1\\u3002\\\\]\\n\\u6b63\\u6587\\u3002]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_text_arguments_comments_verbatim_unknown_groups_and_prose_stay_byte_exact[\\\\[\\\\frac{a\\uff0c}{b}=1\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_text_arguments_comments_verbatim_unknown_groups_and_prose_stay_byte_exact[\\\\[\\\\unknownmacro{\\u6c49\\u5b57\\u3002}=1\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_text_arguments_comments_verbatim_unknown_groups_and_prose_stay_byte_exact[\\\\[a^\\u3002+b_\\uff0c\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_text_arguments_comments_verbatim_unknown_groups_and_prose_stay_byte_exact[\\\\[\\\\left\\u3002a\\\\right\\u3002\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_text_arguments_comments_verbatim_unknown_groups_and_prose_stay_byte_exact[\\\\[{a=b\\u3002}\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_text_arguments_comments_verbatim_unknown_groups_and_prose_stay_byte_exact[\\\\begin{verbatim}\\\\[x=1\\u3002\\\\]\\\\end{verbatim}]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_cases_and_existing_text_preserved_while_bare_punctuation_is_wrapped",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_labeled_display_and_punctuation_changes_have_separate_evidence",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_ambiguous_math_is_unchanged_and_blocked[\\\\[a=b\\u3002]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_ambiguous_math_is_unchanged_and_blocked[\\\\[a=b\\u3002\\\\)]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_ambiguous_math_is_unchanged_and_blocked[\\\\[a+\\\\text{\\u6587\\u5b57\\u3002=b\\\\]]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_actual_ch03_changes_exactly_seven_punctuation_tokens_and_preserves_other_content",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_math_punctuation.py::test_actual_ch03_missing_glyph_before_and_full_compile_after",
+      "markers": [
+        "windows_compile"
+      ]
+    },
+    {
+      "nodeid": "tests/test_mathcheck.py::test_t23_zero_term_is_not_series_convergence",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_mathcheck.py::test_alternating_series_criterion_is_not_falsely_rejected",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_mathcheck.py::test_t24_quantifier_and_log_domain_are_reviewed",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_mathcheck.py::test_symbolic_derivative_and_limit",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_mathcheck.py::test_t25_missing_assumption_does_not_become_true",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_mathcheck.py::test_t24_cancelling_denominator_does_not_erase_domain",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_mathcheck.py::test_series_harmonic_fails_claim_of_convergence",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_mathcheck.py::test_t26_numeric_success_stays_numeric",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_mathcheck.py::test_no_python_eval_or_unbounded_ast",
+      "markers": [
+        "security"
+      ]
+    },
+    {
+      "nodeid": "tests/test_mathcheck.py::test_math_subprocess_env_has_no_api_secret",
+      "markers": [
+        "security"
+      ]
+    },
+    {
+      "nodeid": "tests/test_migration_concurrency.py::test_transient_wal_busy_retries_whole_bootstrap_without_skipping_migration[wal]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_migration_concurrency.py::test_transient_wal_busy_retries_whole_bootstrap_without_skipping_migration[migration_record]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_migration_concurrency.py::test_bootstrap_lock_timeout_is_bounded_and_retry_after_unlock_recovers",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_migration_concurrency.py::test_non_lock_sql_error_is_not_hidden_or_retried",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_migration_concurrency.py::test_repeated_simultaneous_threads_keep_wal_and_single_migration",
+      "markers": [
+        "integration"
+      ]
+    },
+    {
+      "nodeid": "tests/test_migration_concurrency.py::test_separate_processes_can_start_against_same_new_database",
+      "markers": [
+        "integration"
+      ]
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_T06_explicit_example_omission_preserves_related_solution_identity",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_T29_nested_environment_and_exact_spans",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_T30_standard_math_macros_are_safe",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_T45_actual_output_omission_fails_even_with_claimed_source_marker",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_T38_forbidden_size_is_not_used",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_T51_zip_unsafe_members_rejected[../escape.tex]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_T51_zip_unsafe_members_rejected[C:/escape.tex]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_T51_zip_unsafe_members_rejected[/escape.tex]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_T51_zip_unsafe_members_rejected[folder/../../escape.tex]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_T51_zip_unsafe_members_rejected[compiler.exe]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_T51_zip_unsafe_members_rejected[.latexmkrc]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_T52_dangerous_tex_rejected",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_opaque_text_does_not_disappear",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_verbatim_does_not_create_false_sections_or_environments",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_long_proof_splits_only_complete_statements",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_authorized_addition_uses_chosen_section",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_authorized_math_addition_remains_tex_and_is_independently_audited",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_T32_definition_with_explicit_short_illustration_stays_together",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_T42_fdu_missing_resources_never_falls_back",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_T43_different_theme_hashes_require_selection",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_T44_theme_copy_does_not_modify_original",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_windows_crlf_source_does_not_double_carriage_returns",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_literal_false_branch_is_preserved_as_inactive_not_cut_across_frames",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_long_list_uses_complete_items_and_balanced_repeated_context",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_named_statement_heading_is_preserved_inside_allowed_block",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_nested_array_in_boxed_display_is_one_lossless_unit",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_enumitem_numeric_label_adapter_preserves_item_math",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_long_custom_list_splits_complete_items_with_balanced_wrapper",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_tikz_coordinate_adaptation_preserves_original_source_and_label_size",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_diagram_before_list_is_not_repeated_as_list_context",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_parsing_beamer.py::test_article_only_page_layout_commands_do_not_create_blank_beamer_frames",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_plan_dependencies.py::test_section_prerequisites_must_be_ids_and_prior_sections",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_plan_dependencies.py::test_section_ids_cannot_repeat",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_plan_dependencies.py::test_global_prerequisites_remain_natural_language",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_plan_dependencies.py::test_reference_declarations_are_unique_across_sections",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_process_recovery.py::test_real_worker_crash_lease_recovery_keeps_checkpoint",
+      "markers": [
+        "integration"
+      ]
+    },
+    {
+      "nodeid": "tests/test_provider.py::test_T18_invalid_json_bounded",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider.py::test_T18_truncated_not_repaired_as_success",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider.py::test_T19_auth_no_retry_or_body_leak",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider.py::test_T19_429_budget_retries",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider.py::test_T19_timeout_classified",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider.py::test_T20_minimal_protocol_and_exact_url",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider.py::test_T55_scrub",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider.py::test_supplier_usage_cannot_echo_secret_into_logs",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider.py::test_json_reject_multiple_objects",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider_failure_artifacts.py::test_invalid_json_archived_separately_without_environment_secret",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider_failure_artifacts.py::test_cancelled_response_does_not_create_archive",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider_failure_artifacts.py::test_json_repair_feedback_includes_location_without_logging_content",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_stream_setting_defaults_off_and_env_opt_in",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_sse_utf8_fragments_and_reported_usage_are_preserved",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_streamed_json_is_validated_only_after_done",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_stream_never_publishes_partial_refused_or_unfinished_content[events0-True-OUTPUT_TRUNCATED]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_stream_never_publishes_partial_refused_or_unfinished_content[events1-True-PROVIDER_REFUSAL]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_stream_never_publishes_partial_refused_or_unfinished_content[events2-True-PROVIDER_REFUSAL]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_stream_never_publishes_partial_refused_or_unfinished_content[events3-False-OUTPUT_INCOMPLETE]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_stream_never_publishes_partial_refused_or_unfinished_content[events4-True-OUTPUT_INCOMPLETE]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_stream_never_publishes_partial_refused_or_unfinished_content[events5-True-PROVIDER_RESPONSE]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_stream_never_publishes_partial_refused_or_unfinished_content[events6-True-PROVIDER_RESPONSE]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_malformed_sse_json_is_not_success",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_stream_body_limit_counts_all_event_bytes",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_cancellation_interrupts_a_stalled_stream_and_closes_it",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_stream_read_timeout_keeps_billing_uncertain_without_body_leak",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_stream_total_deadline_terminates_stalled_read",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_stream_http_retry_budget_is_unchanged",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_sse_comments_fields_and_multiline_data_are_supported",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_sse_content_after_finish_is_rejected",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_stream_requires_sse_content_type_even_for_valid_json",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_cancel_as_headers_arrive_still_closes_response",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_elapsed_seconds_includes_delayed_response_body[True]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_provider_stream.py::test_elapsed_seconds_includes_delayed_response_body[False]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_reference_recovery.py::test_exact_recovery_allows_two_labels_on_same_definition_without_changing_math",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_reference_recovery.py::test_unsafe_mapping_is_blocked_without_mutating_original[unknown_unit]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_reference_recovery.py::test_unsafe_mapping_is_blocked_without_mutating_original[wrong_kind]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_reference_recovery.py::test_unsafe_mapping_is_blocked_without_mutating_original[invented_quote]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_reference_recovery.py::test_unsafe_mapping_is_blocked_without_mutating_original[duplicate_label]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_reference_recovery.py::test_unsafe_mapping_is_blocked_without_mutating_original[missing_binding]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_reference_recovery.py::test_unsafe_mapping_is_blocked_without_mutating_original[extra_label]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_reference_recovery.py::test_unsafe_mapping_is_blocked_without_mutating_original[equation_label]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_reference_recovery.py::test_unsafe_mapping_is_blocked_without_mutating_original[comment_quote]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_reference_recovery.py::test_unsafe_mapping_is_blocked_without_mutating_original[ambiguous_quote]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_reference_recovery.py::test_unsafe_mapping_is_blocked_without_mutating_original[abstain]",
+      "markers": [
+        "parametrize"
+      ]
+    },
+    {
+      "nodeid": "tests/test_reference_recovery.py::test_pipeline_recovers_labels_then_repeats_checks_and_retains_raw_candidate",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_reference_recovery.py::test_valid_mapping_survives_transient_review_failure_without_reproposal",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_reference_recovery.py::test_semantically_bad_grounded_mapping_cannot_bypass_next_reviewer",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_reference_recovery.py::test_zero_budget_does_not_request_label_proposal",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_reference_recovery.py::test_corrupt_cached_mapping_blocks_without_replacing_evidence",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_reference_recovery.py::test_actual_captured_section_labels_resolve_to_correct_numbered_definitions",
+      "markers": [
+        "windows_compile"
+      ]
+    },
+    {
+      "nodeid": "tests/test_regressions.py::test_T46_formula_inequality_tampering_detected",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_regressions.py::test_T08_model_omission_cannot_authorize_itself",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_regressions.py::test_T57_request_budget_is_persistent",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_regressions.py::test_T22_dependency_hash_invalidates_downstream_cache",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_regressions.py::test_model_fragment_cannot_redefine_template",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_regressions.py::test_failure_diagnostic_is_downloadable_and_secret_free",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_regressions.py::test_T28_three_same_named_originals_and_all_hashes_unchanged",
+      "markers": [
+        "reference"
+      ]
+    },
+    {
+      "nodeid": "tests/test_review_rendering_contract.py::test_review_knows_only_separate_linked_exercise_answers_move_to_end",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_review_scope.py::test_local_review_rejects_outside_section_id_then_rechecks_scope",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_review_scope.py::test_persistent_out_of_scope_review_is_blocked_not_silently_removed",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_source_acceptance.py::test_T07_duplicate_example_titles_have_distinct_locations_and_exact_deletion",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_source_acceptance.py::test_T09_inseparable_introduction_and_hypothesis_are_retained",
+      "markers": [
+        "unit"
+      ]
+    },
+    {
+      "nodeid": "tests/test_source_acceptance.py::test_T31_broken_tabularx_blocks_with_exact_source_location_and_preserved_unit",
+      "markers": [
+        "windows_compile"
+      ]
+    },
+    {
+      "nodeid": "tests/test_state.py::test_T11_double_execute_single_job",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_state.py::test_T12_T13_failure_preserves_approval_retry",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_state.py::test_T14_stale_revision_conflict",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_state.py::test_T15_restart_persists",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_state.py::test_T16_expired_worker_cannot_commit",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_state.py::test_T58_cancel_blocks_late_commit",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_state.py::test_concurrent_database_migration",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_state.py::test_all_pages_and_quality_required_before_test_publication",
+      "markers": []
+    },
+    {
+      "nodeid": "tests/test_workflows.py::test_T02_T03_T60_plan_choices_persist",
+      "markers": [
+        "integration"
+      ]
+    },
+    {
+      "nodeid": "tests/test_workflows.py::test_T06_actual_service_authorized_deletion",
+      "markers": [
+        "integration"
+      ]
+    },
+    {
+      "nodeid": "tests/test_workflows.py::test_mock_lecture_full_checkpoint_compile_preview",
+      "markers": [
+        "integration",
+        "windows_compile"
+      ]
+    }
+  ],
+  "exit_code": 0,
+  "finished_at": "2026-09-20T03:12:01+0800",
+  "elapsed_seconds": 178.479,
+  "source_snapshot_after": {
+    "src/math_agent/answer_completion.py": "3ec9e3ba686daea8447efbe4832827ef86797ed21965a6184dd29540d321baf8",
+    "src/math_agent/answer_recovery.py": "2da67b8f82c385c4abccb8c2a345e50c7ef2d3c22a72b46dcde061c2bfb8c18d",
+    "src/math_agent/beamer.py": "155eb21ea09a70aaf4300856cdb5e0ccafacfbc3adbcb5a7d451e8ed76d5c16b",
+    "src/math_agent/benchmark.py": "f091982a672aa34a23da5196045bfd6e5b34ac5205dd66056c40ea9b3b622a76",
+    "src/math_agent/calculation_protocol.py": "bdd5aa1466c3bf2918dcd3bb03f59d0edbd037fd637c57d1ecc00344ed78a381",
+    "src/math_agent/cli.py": "fa86f81c27eee31b4e32328ea6e84e32413c1ec5902157f93284d30f68e66d0d",
+    "src/math_agent/compiler.py": "632e1545be3bd59c5fd6889e1d9631afb6ddfcc62d0c584f7304eacd4964519c",
+    "src/math_agent/config.py": "6a634d5b8790271b4f126949b64555186ab00e97cd0486eaf46a0f729eb01701",
+    "src/math_agent/crossrefs.py": "ce87617882930e6cbf9b75e14a8f252d1244dfdb4a8b10c4e1e88dc0dd6b2f23",
+    "src/math_agent/domain.py": "b118872abbb44d2fd2b76d00a597457545f88c69c5abfd8ae0c9d8221943485d",
+    "src/math_agent/lecture_fragments.py": "ca84bc050fdfe8aa5a30fac8ce893b2a4aed865fdd3cd72fb53185cd4074c216",
+    "src/math_agent/manuscript.py": "d7098ed950c0a585d0cfd2876282188f09a4c8d97ba93a865bb5c62bcda304aa",
+    "src/math_agent/mathcheck.py": "46e6aa2bf059878d7de714abb8daefbe8ab19752a38312f68a09be31157c1d78",
+    "src/math_agent/parsing.py": "b6f72c7aa85072610797e2be793203d82a5b8449911d9bfd4f2e6cd6602574cf",
+    "src/math_agent/pdfcheck.py": "3592bd7b8c5c77008c4df70239b477b7ad7fe9c6a13be2eeb9c73b4d6048105c",
+    "src/math_agent/pipeline.py": "23feed5c5177b3c58efe843f000bd10e06d979faaf33e5bab9234887d7c9bd2d",
+    "src/math_agent/provider.py": "61195a8c6922544e8eb216f65fcff5798e96e540c45c59fdb037225e231befdf",
+    "src/math_agent/references.py": "ecfa52139e3a3ec343c415d0b0fa4a28e747eb5f7a8e97379e3d0807aa1347f8",
+    "src/math_agent/reference_recovery.py": "71f0787701e59f0b33b1dc2fd2f72337cc963379a408894d7a8b406d8e62370b",
+    "src/math_agent/retrieval.py": "87135fdfa5d7b048aee8ea2b07365804d7e4067819713a87fea6af9f9d107698",
+    "src/math_agent/service.py": "6ee85a5b063d58bd804e83fec9f1c536615b164af07522af9d56bfe5a8151ea8",
+    "src/math_agent/settings.py": "a1a0d9c5e9ad9e87c81fbd13803f59fd0f22a5cea2bc641fac15dc6695767b88",
+    "src/math_agent/store.py": "fef7d66eb325e3995e2e160e9607a6d276da8b2e54a150798b9219c37a8d157f",
+    "src/math_agent/util.py": "59d0ebb277f8f9aef555b0c4a628505f848a6c73a65aaa281b98cb37a86ce722",
+    "src/math_agent/worker.py": "8c1fef6e4550e9ab5fde3a309004c9111460d187f44de38862186a94302fc3e2",
+    "src/math_agent/__init__.py": "733a5e2c5457d7c1c3145004d7d1fca286573e53d61b87324f19cff145791625",
+    "src/math_agent/__main__.py": "79ee6f134c5c5193377cf9b189cbdcc3e2095e49ba9cec310114441c15a917c4",
+    "src/math_agent/migrations/001_initial.sql": "3aea006fb9f1248c6a4722b8ad825c6911f1e5cf871be9b5dd3f58f2f95f65aa",
+    "src/math_agent/prompts/planner_lecture.md": "b15fddf92930e5ca086fa591e56f0d92c13dd0904811cf826d1aae624629db03",
+    "src/math_agent/prompts/propose_reference_labels.md": "0b967bf320e6d35e1f145a07a1ee0bd1e6fdd6c6627866a8a4a13a2ea8626f15",
+    "src/math_agent/prompts/repair_content_unit.md": "46c1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9",
+    "src/math_agent/prompts/repair_missing_answers.md": "3f4beaf0cea232c9067c05d0326b08ebba71227e57fd50b283fb3401d8340da3",
+    "src/math_agent/prompts/reviewer_math.md": "875059cdfa88e1d8b8c03cf40d834cb464ea364a782b20f508a7313ab6d80f3f",
+    "src/math_agent/prompts/writer_lecture_section.md": "d603578073786e5fe7656bafb7d310c563810aee7b912e7c3eb3158129e7778a",
+    "src/math_agent/web/app.py": "bd0819d5ffbb7f6234b4df98cf382a3f760361f629e3b825bb944748f3d8ca28",
+    "src/math_agent/web/__init__.py": "f8cfb938de46c42d2136d0b71470915a94b814171e22f8bfe55c24ba50100a41",
+    "src/math_agent/workflows/registry.py": "0c00be937ff260136b3d6cd6ee0936d37977993b7e3c6791c9542540582c8826",
+    "src/math_agent/workflows/__init__.py": "307c5a1b450eab8a0deaa047dae1e58b4fc44b20f268f3766937f6c441abbade",
+    "src/math_agent/web/static/app.js": "616cb431ed1d3a9c78fe168b6cf9d6281e4303c2b6957d6392e23218c4cdaef7",
+    "src/math_agent/web/static/index.html": "64a95cf85eb4bd8474ca135f25609d0a05d469a4e585fea02e7d50ddaff83e34",
+    "src/math_agent/web/static/style.css": "cd6b053aca0c4c843e086a830753eb1b67e34cab161eb79f1a8efc52617a2837",
+    "tests/test_answer_completion.py": "f185cc78051f26ac6bead54378c88579a6e442884ba690645488eb90820423dd",
+    "tests/test_answer_recovery_pipeline.py": "ec2ed19f1b5b76fb943569dcd88f7dd9ff16b33dbe17e95ee08829c0e9d30445",
+    "tests/test_answer_references.py": "96ba46cb9d768351d3570f1988040b5f2fe87b4b8da7c9a0f69e3d9b5785d23d",
+    "tests/test_api.py": "05cf626a25f802b2be949ffadd5bf4d35c707d043a06a182f589b1cd946fc3b9",
+    "tests/test_beamer_iteration2.py": "5f7e1caa5cdc301c295d7acd577450f92dfba1e9c47dd3c29498a84acb9e06dc",
+    "tests/test_benchmark_actor.py": "8eaab348ea2b53af9d0fabefab5d2bd33fde0f68f944315baddfa0431eac83bc",
+    "tests/test_benchmark_latency.py": "85ee51ac90bf034b7b4c6dc9caa2b0969739fbaf7e0a1a47b7f1836dd94c92e6",
+    "tests/test_benchmark_metrics.py": "9fbfba1a1493262c106f7e54a3e5b15b38f387bf3c5d94481e0594467a1ee582",
+    "tests/test_bibliography_crlf.py": "245b932b930e1d161e4f7a88f9dc734bdf2d346f666aab1b9b058965cd7c2d54",
+    "tests/test_bibliography_integration.py": "3b85984281af418b6f7d0273eaf6943734f715278d971c5ce3ca9bec7498356d",
+    "tests/test_calculation_location.py": "47b1013f873fd76d32714cd90099b6996db4f2305155761bae5d05fa1374c564",
+    "tests/test_calculation_protocol.py": "237c19b9d5fa19a9d91d59eb40cc9a9b5010d325e31c1b5c82e0934c4dd86af7",
+    "tests/test_compiler_pdf.py": "77bd034599f934183bdfba08a93cf403e5450bfecb5ee43a53b18cb2e81b02c9",
+    "tests/test_config.py": "e4580b2b539512155f995030a678f4b16bafee0ca31bf3cc3cdb38c0b9af18b5",
+    "tests/test_crossrefs.py": "2e09caeab44553ffacfb56e5957cbead9de613473c993c8bb053b9521a947e1e",
+    "tests/test_delivery.py": "6b3301f72e608b8927b871fc07d50bfcab40e212d9ee07fd0b30dc1f3140af46",
+    "tests/test_draft_recovery.py": "da9476d9c8fe90a917c6283bed444a467b93c4f74ee33ce740863761cd1893f9",
+    "tests/test_exercise_policy.py": "577d7396fee36ccedb9edafbed65a843348883044e9ba4d037c7e62a7714db1b",
+    "tests/test_global_repair.py": "03b335064a0821c4dde84c0fb70a4ed58c3a4a844e885f18dd4483ba119c84e8",
+    "tests/test_labeled_equations.py": "f94efb26145f08e36f993a4987637538b08ff861c67c02da1ed455f882802233",
+    "tests/test_lecture_crlf.py": "c8374b33b38b782260883a8919c063e65c9cbfaef22120b52f8963961abc241b",
+    "tests/test_lecture_fragments.py": "cf7dcca4e9af1784229afeca499caa5e48af0f1df44f5987bebba61f771bade0",
+    "tests/test_manuscript.py": "e624c4833de84077d6abc0f0fd523a3e9ccddcfff056f1881e016a0f3fa8724e",
+    "tests/test_mathcheck.py": "a3e670bd8a7e3c3e04a4eda048bc58925103995c2f5f773e6069185f0ec40bec",
+    "tests/test_math_punctuation.py": "89b7e90d9a70ac40bddc8de1c758c866ff144f20b535eabc6d2b4c3c86db7f6a",
+    "tests/test_migration_concurrency.py": "d7dd9001f9c912e048bdd44a5506bcc97ef211725c828af1a18bf724d841cbc3",
+    "tests/test_parsing_beamer.py": "f460715594f73f44f263b985c6f3b5cc0c5aa51728f3e63c6b4bec67e5a702fd",
+    "tests/test_plan_dependencies.py": "f2af36e5bc218f9613bd4b4f9b47e3b2fe70f3199bf66e7c16eeb8c8938bb3d7",
+    "tests/test_process_recovery.py": "219ec5d2543d7364fa66e0aaf55a096436b89797868b3beba18f02dad0b02cf0",
+    "tests/test_provider.py": "9d2d1af944fefbc4f506f0cfa59dc3512d0af567da9fc817b50fc6313625cca4",
+    "tests/test_provider_failure_artifacts.py": "663ccbac19b9ed78ca049cc645fea91095c30102b82c94f6dcc1cac2f0fe334b",
+    "tests/test_provider_stream.py": "7ff726a0407702779c74ea16c366433720e577c629079668c1962b01f62009c9",
+    "tests/test_reference_recovery.py": "f21c7aa84c5de7927d77f5acad6cca9a1375b594e6bdccd5ddfe436744082b88",
+    "tests/test_regressions.py": "f5796dc1d60de8ac73472e91522f73a759e23179251c1287c20b19dea1958c71",
+    "tests/test_review_rendering_contract.py": "cbcd6623215a94640b12f1a18488d63cdda7484dd058132a9a5895abaf8bf907",
+    "tests/test_review_scope.py": "106aa445fefdab04045499d4e92e6014c734f48d030e37e83bfb995e96903e50",
+    "tests/test_source_acceptance.py": "f78f54a1d0993c54f006393daeb9bb01d78b9548aa9ea18b03182d74c0c9fb0c",
+    "tests/test_state.py": "5e1648558bf55e7d4c788c5a4c2f45fbec2d65004efd6ae3d39f221b172f0250",
+    "tests/test_workflows.py": "d34c830a850084ddb8b634cd7caaa04c4f64aff8b09869ce0d68391b7b3d8dbb",
+    "tests/e2e/test_browser_workflows.py": "2f6e8767cbd5bb7343569719116b09b122ee2ecd87ac510685f5c33a55901403",
+    "tests/fixtures/answer_completion_ch02_s02.json": "fbe0234a6255d1dbb6d9a5aea13b907475df12024956309f831901516e14140b",
+    "tests/fixtures/live_ch01_missing_labels.json": "c0e0e80b6c2760e3748b24f718ad6296e88a3022c8ec9db0718aef7a7540e802",
+    "tests/fixtures/live_ch03_math_punctuation.json": "77da13c310db113c827afd808bba19bdbe6f7d52bc72bd29d758f82463e10ea1",
+    "tests/fixtures/live_ch03_math_punctuation.tex": "5b4ac1cd93cf03081c88927910f727f32a57fe6534cee4e7f9b65a85eb7dcc8f",
+    "pyproject.toml": "6c7747b270e7b0ac1b2a70988990848f34e0ba6033cb092f49cf3253b431b55b",
+    "uv.lock": "bb43a8f46f460c621957ab94c673159a6f3c7f8e108d32d18c927611138faba8"
+  },
+  "files_changed_during_run": [],
+  "windows_compile_selected": 18
+}

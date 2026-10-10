@@ -1,0 +1,15 @@
+...F                                                                     [100%]
+================================== FAILURES ===================================
+___________ test_reference_declarations_are_unique_across_sections ____________
+
+    def test_reference_declarations_are_unique_across_sections():
+        p=proposal()
+        p['sections'][0]['reference_labels']=['S01_limit_definition']
+        p['sections'][1]['reference_labels']=['S01_limit_definition']
+>       with pytest.raises(ValidationError):LectureProposal.model_validate(p)
+E       Failed: DID NOT RAISE ValidationError
+
+tests\test_plan_dependencies.py:27: Failed
+=========================== short test summary info ===========================
+FAILED tests/test_plan_dependencies.py::test_reference_declarations_are_unique_across_sections
+1 failed, 3 passed in 0.25s

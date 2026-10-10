@@ -1,0 +1,44 @@
+{
+  "created_at": "2026-09-19T20:41:48.987488+00:00",
+  "status": "PASS",
+  "script_sha256": "5a5795bc876dae93626b700fe90455d667aed607d31016f3e0d65af2e3654f8a",
+  "ast_parse": "PASS",
+  "synthetic_classifier_assertions": 8,
+  "cli_checks": [
+    {
+      "args": [
+        "--help"
+      ],
+      "exit_code": 0,
+      "stdout": "usage: benchmark_review_context.py [-h] [--execute-live] --output-dir\n                                   OUTPUT_DIR [--prompt-file PROMPT_FILE]\n                                   [--expected-prompt-version EXPECTED_PROMPT_VERSION]\n\nOpt-in four-control review calibration; frozen prompts, six requests maximum.\n\noptions:\n  -h, --help            show this help message and exit\n  --execute-live        Explicitly enable real requests; environment\n                        configuration is also required.\n  --output-dir OUTPUT_DIR\n                        A NEW directory below the project reports directory.\n  --prompt-file PROMPT_FILE\n                        Local UTF-8 reviewer prompt; defaults to the current\n                        product prompt. Always snapshotted first.\n  --expected-prompt-version EXPECTED_PROMPT_VERSION\n                        Refuse an unexpected declared prompt version.\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "--output-dir",
+        "reports/iteration2/review-context-offline-not-created"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"status\": \"NOT_RUN\", \"reason\": \"Requires --execute-live and environment configuration\", \"case_count\": 4, \"request_limit\": 6, \"prompt_version\": 3, \"prompt_sha256\": \"86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc\", \"output_created\": false}\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "--output-dir",
+        "reports/iteration2/review-context-offline-not-created",
+        "--prompt-file",
+        "reports/iteration2/reviewer_math-v4-candidate.md",
+        "--expected-prompt-version",
+        "4"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"status\": \"NOT_RUN\", \"reason\": \"Requires --execute-live and environment configuration\", \"case_count\": 4, \"request_limit\": 6, \"prompt_version\": 4, \"prompt_sha256\": \"5d38a796ccdff81f3bba09d0c48210a836e83b77be5b31c2a814f7437e1ec69a\", \"output_created\": false}\n",
+      "stderr": ""
+    }
+  ],
+  "output_dir_not_created": true,
+  "live_api": "NOT_RUN",
+  "windows_compile": "NOT_RUN",
+  "teacher_review": "NOT_RUN",
+  "initial_report_write": "sandbox PermissionError; all checks rerun under escalation"
+}

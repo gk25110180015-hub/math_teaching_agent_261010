@@ -1,0 +1,29 @@
+\documentclass[UTF8,fontset=fandol,11pt]{ctexart}
+\usepackage[a4paper,margin=24mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,graphicx,tabularx,booktabs,hyperref}
+\newtheorem{definition}{定义}[section]
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{example}[definition]{例题}
+\newtheorem{exercise}[definition]{练习}
+\hypersetup{unicode=true,colorlinks=true,linkcolor=blue}
+\title{实际表格语法探针}
+\date{}
+\begin{document}
+\maketitle
+\par\noindent 离线合成演示：不代表真实模型对本专题的教学验收。\par
+\section{方法选择}\label{sec:S05}
+% UNIT S05.U02
+\begin{theorem}
+\label{thm:convergence-method-selection}设 \(\{a_n\}\) 是实数数列。判断其收敛性和计算极限时，以下方法在相应条件下有效：
+\[
+\begin{array}{c|c|c}
+\text{方法}&\text{需要验证的条件}&\text{可得到的结论}\\ \hline
+\text{$\varepsilon$--$N$ 定义}&\text{对任意 $\varepsilon>0$ 构造统一的正整数 $N$}&a_n\to L\\
+\text{四则运算法则}&\text{各相关数列的极限存在，且商的分母极限非零}&\text{直接计算极限}\\
+\text{夹逼定理}&\text{最终成立的上下界具有相同极限}&\text{中间数列收敛到该极限}\\
+\text{单调有界原理}&\text{数列单调且有相应方向的界}&\text{数列收敛}.
+\end{array}
+\]
+其中，任何一种方法都不能省略数列的定义域条件；特别是，不能因为某个因子有界就直接把它当作收敛数列使用乘积极限法则。
+\end{theorem}
+\end{document}

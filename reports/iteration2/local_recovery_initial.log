@@ -1,0 +1,105 @@
+......................................................F................. [ 74%]
+..................F..FF..                                                [100%]
+================================== FAILURES ===================================
+_ test_reviewer_timeout_reuses_unchecked_writer_but_reruns_normalize_math_review_compile _
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/t/lrp1/test_reviewer_timeout_reuses_u0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000267DE2D5FD0>
+
+    @pytest.mark.unit
+    def test_reviewer_timeout_reuses_unchecked_writer_but_reruns_normalize_math_review_compile(tmp_path,monkeypatch):
+        from math_agent import mathcheck,lecture_fragments
+        provider=OfflineProvider(fail_review=True)
+        service,pipeline,plan=setup_pipeline(tmp_path,provider)
+        calls={'normalize':0,'math':0,'compile':0}
+        original_normalize=lecture_fragments.normalize_written_section
+        original_math=mathcheck.check_math
+        def normalize(data):
+            calls['normalize']+=1
+            return original_normalize(data)
+        def math(data):
+            calls['math']+=1
+            return original_math(data)
+        def compile(self,source,entry,build):
+            calls['compile']+=1
+            build.mkdir()
+            return {'status':'PASS','issues':[],'passes':2,'page_count':1,'pdf_path':None,'fixture':'OFFLINE_FAKE_COMPILER'}
+        monkeypatch.setattr(lecture_fragments,'normalize_written_section',normalize)
+        monkeypatch.setattr(mathcheck,'check_math',math)
+        monkeypatch.setattr(Pipeline,'compile',compile)
+        with pytest.raises(AgentError,match='reviewer timeout'):
+            pipeline.lecture(plan)
+        original_candidate=next(pipeline.build_root.glob('sS01*/candidate.json'))
+        original_hash=digest(original_candidate.read_bytes())
+        with service.store.connect() as c:assert c.execute('SELECT count(*) FROM steps').fetchone()[0]==0
+        service.store.finish(pipeline.job,'FAILED','review.section.S01',{'code':'PROVIDER_TIMEOUT'})
+        service.retry(pipeline.run['id'])
+        job=service.store.claim('offline-resumed')
+        resumed=Pipeline(pipeline.settings,service.store,job)
+        resumed.provider=provider
+        completed,_=resumed.lecture(plan)
+        assert provider.writer_calls==1 and provider.review_calls==2
+>       assert calls=={'normalize':2,'math':2,'compile':1}
+E       AssertionError: assert {'normalize':... 'compile': 1} == {'normalize':... 'compile': 1}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'normalize': 6} != {'normalize': 2}
+E         Use -v to get more diff
+
+tests\test_draft_recovery.py:88: AssertionError
+___ test_valid_mapping_survives_transient_review_failure_without_reproposal ___
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/t/lrp1/test_valid_mapping_survives_tr0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000267DE398980>
+
+    def test_valid_mapping_survives_transient_review_failure_without_reproposal(tmp_path,monkeypatch):
+        _,p,plan,provider,compiles=setup_recovery(tmp_path,monkeypatch,fail_after=True)
+        with pytest.raises(AgentError,match='post-insertion'):p.lecture(plan)
+        assert provider.maps==1 and not compiles
+        p.lecture(plan)
+>       assert provider.writes==1 and provider.maps==1 and provider.reviews==4 and len(compiles)==1
+E       assert (1 == 1 and 1 == 1 and 3 == 4)
+E        +  where 1 = <test_reference_recovery.setup_recovery.<locals>.Provider object at 0x00000267DE3629C0>.writes
+E        +  and   1 = <test_reference_recovery.setup_recovery.<locals>.Provider object at 0x00000267DE3629C0>.maps
+E        +  and   3 = <test_reference_recovery.setup_recovery.<locals>.Provider object at 0x00000267DE3629C0>.reviews
+
+tests\test_reference_recovery.py:118: AssertionError
+________ test_corrupt_cached_mapping_blocks_without_replacing_evidence ________
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/t/lrp1/test_corrupt_cached_mapping_bl0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000267DE302540>
+
+    def test_corrupt_cached_mapping_blocks_without_replacing_evidence(tmp_path,monkeypatch):
+        _,p,plan,provider,_=setup_recovery(tmp_path,monkeypatch,fail_after=True)
+        with pytest.raises(AgentError):p.lecture(plan)
+        path=next((p.root/'label-recovery').rglob('proposal.json'))
+        path.write_bytes(b'{}')
+>       with pytest.raises(AgentError) as error:p.lecture(plan)
+E       Failed: DID NOT RAISE AgentError
+
+tests\test_reference_recovery.py:141: Failed
+____ test_cached_answer_after_review_failure_is_rechecked_not_regenerated _____
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/t/lrp1/test_cached_answer_after_revie0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000267DE3DB860>
+
+    def test_cached_answer_after_review_failure_is_rechecked_not_regenerated(tmp_path, monkeypatch):
+        provider = Provider(fail_once=True)
+        _, pipeline, plan, compiles = setup(tmp_path, monkeypatch, provider)
+        with pytest.raises(AgentError, match='interruption'):
+            pipeline.lecture(plan)
+        assert provider.patches == 1 and not compiles
+        pipeline.lecture(plan)
+>       assert provider.writes == provider.patches == 1 and provider.reviews == 4 and len(compiles) == 1
+E       assert (1 == 1 and 3 == 4)
+E        +  where 1 = <test_answer_recovery_pipeline.Provider object at 0x00000267DE3DB5F0>.patches
+E        +  and   3 = <test_answer_recovery_pipeline.Provider object at 0x00000267DE3DB5F0>.reviews
+
+tests\test_answer_recovery_pipeline.py:79: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_draft_recovery.py::test_reviewer_timeout_reuses_unchecked_writer_but_reruns_normalize_math_review_compile
+FAILED tests/test_reference_recovery.py::test_valid_mapping_survives_transient_review_failure_without_reproposal
+FAILED tests/test_reference_recovery.py::test_corrupt_cached_mapping_blocks_without_replacing_evidence
+FAILED tests/test_answer_recovery_pipeline.py::test_cached_answer_after_review_failure_is_rechecked_not_regenerated
+4 failed, 93 passed, 2 deselected in 38.24s

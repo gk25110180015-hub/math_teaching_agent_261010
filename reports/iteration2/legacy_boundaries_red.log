@@ -1,0 +1,102 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+___________ test_legacy_failure_respects_zero_global_repair_budget ____________
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/t/legacy-bound-red/test_legacy_failure_respects_z0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000280D81ECD10>
+
+    @pytest.mark.unit
+    def test_legacy_failure_respects_zero_global_repair_budget(tmp_path,monkeypatch):
+        from math_agent.util import write_json
+        provider=GlobalRepairProvider();_,p,plan,_=setup(tmp_path,provider,monkeypatch,limit=0)
+        p._lecture_sections(plan)
+        write_json(p.root/'global_review_failure.json',{'issues':[{'unit_id':'S01.U01',
+            'severity':'review','message':'Unresolved premise','evidence':'old review'}]})
+>       with pytest.raises(AgentError) as error:p.lecture(plan)
+E       Failed: DID NOT RAISE AgentError
+
+tests\test_global_repair.py:58: Failed
+______ test_legacy_nontarget_equation_is_normalized_before_scoped_repair ______
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/t/legacy-bound-red/test_legacy_nontarget_equation0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000280D8227560>
+
+    @pytest.mark.unit
+    def test_legacy_nontarget_equation_is_normalized_before_scoped_repair(tmp_path,monkeypatch):
+        from math_agent.pipeline import render_lecture
+        from math_agent.util import write_json,within,digest
+        provider=GlobalRepairProvider();_,p,plan,_=setup(tmp_path,provider,monkeypatch)
+        p._lecture_sections(plan)
+        with p.store.connect() as c:
+            row=c.execute('SELECT * FROM steps WHERE run_id=? AND step_key=?',(p.run['id'],'section.S01')).fetchone()
+        old=json.loads(row['output_json'])
+        old['generated']['units'][1]['tex']=r'\[1=1\label{eq:old-unchecked}\]'
+        source=within(p.settings.workspace,old['source_key'])
+        source.write_bytes(render_lecture(plan['title'],[(plan['sections'][0],old['generated'])],plan).encode('utf-8'))
+        old['source_hash']=digest(source.read_bytes())
+        p.store.checkpoint(p.job,'section.S01','legacy-version',old)
+        write_json(p.root/'global_review_failure.json',{'issues':[{'unit_id':'S01.U01',
+            'severity':'review','message':'Unresolved premise','evidence':'old review'}]})
+>       completed,_=p.lecture(plan)
+                    ^^^^^^^^^^^^^^^
+
+tests\test_global_repair.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\math_agent\pipeline.py:429: in lecture
+    self._import_legacy_global_failure(plan,state)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <math_agent.pipeline.Pipeline object at 0x00000280D8226B10>
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm...46c1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 0, 'phase': 'not_started', ...}
+
+    def _import_legacy_global_failure(self, plan, state):
+        """Carry unresolved recorded issues forward without another reviewer lottery."""
+        failure=self.root/'global_review_failure.json'
+        if state['phase']!='not_started' or not failure.is_file():
+            return
+        try:
+            raw=failure.read_bytes();record=json.loads(raw)
+            issues=[i for i in record['issues'] if i.get('severity') in ('blocking','review')]
+            if not issues:
+                return
+            if record.get('plan_hash',plan['hash'])!=plan['hash']:
+                raise ValueError('Recorded concern belongs to a different plan')
+            completed=[];checkpoints=[]
+            with self.store.connect() as c:
+                for spec in plan['sections']:
+                    row=c.execute('SELECT * FROM steps WHERE run_id=? AND step_key=?',
+                        (self.run['id'],'section.'+spec['id'])).fetchone()
+                    if not row:
+                        raise ValueError('Missing preserved section checkpoint')
+                    data=json.loads(row['output_json'])
+                    if digest(data)!=row['output_hash']:
+                        raise ValueError('Checkpoint hash mismatch')
+                    source=within(self.settings.workspace,data['source_key'])
+                    if not source.is_relative_to(self.build_root.resolve()) or digest(source.read_bytes())!=data['source_hash']:
+                        raise ValueError('Preserved source hash mismatch')
+                    generated=WrittenSection.model_validate(data['generated']).model_dump()
+                    if generated['section_id']!=spec['id']:
+                        raise ValueError('Preserved section ID mismatch')
+                    completed.append((spec,generated))
+                    checkpoints.append({'section_id':spec['id'],'output_hash':row['output_hash'],
+                        'source_key':data['source_key'],'source_hash':data['source_hash'],
+                        'generated_hash':digest(generated),'status':'UNCHECKED_SEED'})
+            units={u['id']:u for _,s in completed for u in s['units']}
+            if len(units)!=sum(len(s['units']) for _,s in completed):
+                raise ValueError('Ambiguous unit IDs')
+            if not set(record.get('checked_unit_ids',[])).issubset(units):
+                raise ValueError('Old review scope no longer matches preserved units')
+            if any(i.get('unit_id') not in units for i in issues):
+                raise ValueError('Old concern does not identify a preserved unit')
+            if any(k not in units or digest(units[k])!=v for k,v in record.get('unit_hashes',{}).items()):
+                raise ValueError('Recorded unit hashes differ')
+        except (OSError,ValueError,KeyError,TypeError):
+>           raise AgentError('GLOBAL_REPAIR_LEGACY_UNVERIFIED','��ȫ����ѧ�ɵ��޷��뱣����Ԫ/Դ�ļ���ϣ��ȫ�����������ɵ㣬�������³�ȡ�������') from None
+E           math_agent.util.AgentError: ��ȫ����ѧ�ɵ��޷��뱣����Ԫ/Դ�ļ���ϣ��ȫ�����������ɵ㣬�������³�ȡ�������
+
+src\math_agent\pipeline.py:376: AgentError
+=========================== short test summary info ===========================
+FAILED tests/test_global_repair.py::test_legacy_failure_respects_zero_global_repair_budget
+FAILED tests/test_global_repair.py::test_legacy_nontarget_equation_is_normalized_before_scoped_repair
+2 failed, 13 deselected in 1.47s

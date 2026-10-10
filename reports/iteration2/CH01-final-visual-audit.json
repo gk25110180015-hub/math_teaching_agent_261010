@@ -1,0 +1,653 @@
+{
+  "schema_version": 1,
+  "captured_at_utc": "2026-09-19T20:36:30.409968+00:00",
+  "run_id": "05748ab6260c40989a560a98e1e2065a",
+  "case": "CH01",
+  "status": "AGENT_VISUAL_REVIEW_COMPLETED_WITH_MINOR_NOTES",
+  "scope": "Existing final published CH01 artifacts; all 11 PNG pages viewed individually; PDF read directly.",
+  "checks": {
+    "run_awaiting_user_review": true,
+    "37_persisted_requests": true,
+    "no_teacher_reviews": true,
+    "pdf_actual_11_pages": true,
+    "actual_page_count_matches_compile_and_comparison": true,
+    "png_pages_contiguous_1_to_11": true,
+    "all_11_pages_individually_viewed": true,
+    "all_selected_artifacts_hash_match": true,
+    "pdf_hash_matches_compile_record": true,
+    "all_selected_artifacts_unchanged_after_read": true
+  },
+  "failed_checks": [],
+  "state_snapshot": {
+    "status": "AWAITING_USER_REVIEW",
+    "request_count": 37,
+    "active_plan_revision": 2,
+    "approval": {
+      "run_id": "05748ab6260c40989a560a98e1e2065a",
+      "revision": 2,
+      "hash": "60e76cc0b1271ac1b32a9f48c9ae760665bb7180cbdd52df6f5f5958f25db4ac",
+      "input_hash": "6a800bd5cb1a5351711cfe165c1b643dc94fa3d3e00970fba57b54d550e62eeb",
+      "action_id": "benchmark_driver:CH01:60e76cc0b1271ac1",
+      "confirmed_at": "2026-09-19T18:33:03.998268+00:00"
+    },
+    "reviews": []
+  },
+  "quality_statuses": {
+    "content": "PASS",
+    "math": "NEEDS_REVIEW",
+    "fidelity": "NOT_APPLICABLE",
+    "compile": "PASS",
+    "layout": "PASS",
+    "policy": "NEEDS_REVIEW",
+    "security": "PASS"
+  },
+  "quality_top_level_issues": [],
+  "existing_quality_review_flags": {
+    "human_visual_review": "NOT_RUN",
+    "model_visual_review": "NOT_RUN"
+  },
+  "math_section_summary": [
+    {
+      "section_id": "S01",
+      "math_status": "PASS",
+      "math_evidence": [
+        {
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "calculation_id": "S01.C01",
+          "evidence_type": "symbolic_check_passed",
+          "kind": "limit",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "result": "0",
+          "status": "PASS",
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "unit_id": "S01.U07"
+        }
+      ],
+      "issues": [],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+      ]
+    },
+    {
+      "section_id": "S02",
+      "math_status": "PASS",
+      "math_evidence": [
+        {
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "calculation_id": "S02.C01",
+          "evidence_type": "symbolic_check_passed",
+          "kind": "limit",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "result": "2",
+          "status": "PASS",
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "unit_id": "S02.U13"
+        }
+      ],
+      "issues": [
+        {
+          "evidence": "当前节目标明确包含“能够处理含有有理式、绝对值和常数倍的基本数列极限”。S02.U12 仅给出 3(1/n)+2 与 (2n+1)/(n+3)；S02.U14 的三题也仅涉及线性组合、乘积与商。S02.U01—S02.U11 虽在定义及证明中使用绝对值估计，但未说明 a_n→L 蕴含 |a_n|→|L|，也未安排相应应用。",
+          "message": "本节例题与练习覆盖了常数倍、和差积及有理式，但未落实当前节目标中“处理含有绝对值的基本数列极限”的应用训练。这是本节教学覆盖的非阻塞限制，不影响已给出计算的正确性。可在本例增加绝对值极限的小题，并通过反三角不等式说明依据。",
+          "severity": "warning",
+          "unit_id": "S02.U12"
+        }
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+      ]
+    },
+    {
+      "section_id": "S03",
+      "math_status": "PASS",
+      "math_evidence": [
+        {
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "calculation_id": "S03.C01",
+          "evidence_type": "symbolic_check_passed",
+          "kind": "limit",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "result": "0",
+          "status": "PASS",
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "unit_id": "S03.U12"
+        },
+        {
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "calculation_id": "S03.C02",
+          "evidence_type": "symbolic_check_passed",
+          "kind": "limit",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "result": "3/2",
+          "status": "PASS",
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "unit_id": "S03.U14"
+        },
+        {
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "calculation_id": "S03.C03",
+          "evidence_type": "symbolic_check_passed",
+          "kind": "limit",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "result": "1/2",
+          "status": "PASS",
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "unit_id": "S03.U17.answer"
+        }
+      ],
+      "issues": [],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "核算请求仅覆盖根式例题和有理式例题的具体极限；协议的表达式树不能表达夹逼定理及有界数列乘无穷小定理中关于任意数列、最终不等式和任意误差的量词结构，这些一般结论由正文证明支持。",
+        "新增核算仅请求核对 S03.U17 第 (1) 题的具体极限；它不核验两个答案中对所有正整数成立的不等式链，也不替代夹逼证明及乘积、商法则适用条件的论证。协议没有用于直接核验此类全称不等式证明的请求类型。"
+      ]
+    },
+    {
+      "section_id": "S04",
+      "math_status": "NEEDS_REVIEW",
+      "math_evidence": [
+        {
+          "evidence_type": "not_checked",
+          "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。",
+          "status": "NOT_RUN"
+        }
+      ],
+      "issues": [],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "本节结论主要涉及递推数列的归纳、有界性与单调性证明，以及由单调有界原理推出收敛。协议支持的表达式树和核算类型不能表达这些全称量词、递推关系与不等式链，因此未提交符号核算。"
+      ]
+    },
+    {
+      "section_id": "S05",
+      "math_status": "PASS",
+      "math_evidence": [
+        {
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "2",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S05.C01",
+          "unit_id": "S05.U05"
+        }
+      ],
+      "issues": [],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "协议的表达式树不能表达分段定义中的奇偶条件，因此未对 S05.U06--S05.U07 的夹逼论证提交形式化核算；该结论依赖正文中的全称不等式证明。",
+        "协议不能直接核验方法选择定理中关于量词、适用条件和证明策略的完整逻辑结构；相关内容由正文中的定理陈述与证明支持。",
+        "原 S05.C01 核算因表达式树中的 Pow 节点缺少指数而未完成，不能作为核验通过的证据。本次提交使用明确的 -1 次幂表达倒数，重新请求核算 S05.U05 中的有理式极限；结果仍须由程序检查。该请求不覆盖误差不等式及 epsilon--N 量词论证，这些步骤仍须依据正文核对。"
+      ]
+    }
+  ],
+  "policy_evidence": {
+    "status": "NEEDS_REVIEW",
+    "evidence": {
+      "schema_version": 1,
+      "decisions": [
+        {
+          "decision_id": "0d9be895ddb5497799a0d3d74d45e7c7",
+          "resolved_effects": {
+            "value": "key"
+          },
+          "status": "NEEDS_REVIEW",
+          "artifact": "lecture.tex",
+          "artifact_hash": "9cdf4001d836dcaf4162359c3a838f3002c14c80e6c5d00c9fa0dd599e10aaa7",
+          "evidence": "需教师检查具体语义是否落实"
+        },
+        {
+          "decision_id": "d58ade8b491549d3bbc82f9826046722",
+          "resolved_effects": {
+            "value": "balanced"
+          },
+          "status": "NEEDS_REVIEW",
+          "artifact": "lecture.tex",
+          "artifact_hash": "9cdf4001d836dcaf4162359c3a838f3002c14c80e6c5d00c9fa0dd599e10aaa7",
+          "evidence": "需教师检查具体语义是否落实"
+        },
+        {
+          "decision_id": "bdfb1c0ebdb24bc395a555b5f2c5358a",
+          "resolved_effects": {
+            "value": "with_answers"
+          },
+          "status": "PASS",
+          "artifact": "lecture.tex",
+          "artifact_hash": "9cdf4001d836dcaf4162359c3a838f3002c14c80e6c5d00c9fa0dd599e10aaa7",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        },
+        {
+          "decision_id": "1b278740b48247269d568d407072acce",
+          "resolved_effects": {
+            "value": "end"
+          },
+          "status": "PASS",
+          "artifact": "lecture.tex",
+          "artifact_hash": "9cdf4001d836dcaf4162359c3a838f3002c14c80e6c5d00c9fa0dd599e10aaa7",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        }
+      ],
+      "limitations": [
+        "语义自定义不能仅凭模型自评当作落实；发布前须人工审阅质量报告。"
+      ]
+    },
+    "limitations": []
+  },
+  "pdf": {
+    "artifact_id": "0474464afa114b938f329fddec3f6447",
+    "name": "lecture.pdf",
+    "sha256": "387b65fa187488b44e94bc468cb82a956c256cf224a29e636c343f1e7c945b0b",
+    "media_type": "application/pdf",
+    "status": "draft",
+    "revision": 2,
+    "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\vbfde334fb51c\\build\\lecture.pdf",
+    "actual_sha256": "387b65fa187488b44e94bc468cb82a956c256cf224a29e636c343f1e7c945b0b",
+    "hash_matches_run_snapshot": true,
+    "hash_matches_comparison": true,
+    "metadata": {},
+    "actual_page_count": 11,
+    "compile_passes": 2,
+    "compile_elapsed_seconds": 3.734
+  },
+  "pages": [
+    {
+      "physical_page": 1,
+      "artifact_id": "214691bcd4d54d3e9b929ca931106de8",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\vbfde334fb51c\\pages\\page-0001.png",
+      "sha256": "c5ede6ae132690bdefdbe25889dde1b26b71f57f6a0265555ec19ae1b3c2d774",
+      "actual_sha256": "c5ede6ae132690bdefdbe25889dde1b26b71f57f6a0265555ec19ae1b3c2d774",
+      "hash_matches": true,
+      "image_size_px": [
+        953,
+        1348
+      ],
+      "visual_method": "tools.view_image(detail=original), individual full-page inspection",
+      "agent_visual_review": "REVIEWED",
+      "teacher_review": "NOT_RUN",
+      "visual_observation": "标题、定义、显示公式与页码清晰；成稿标题仍含“讲义计划”，建议编辑确认命名。未见裁切或重叠。",
+      "findings": [
+        "V01"
+      ],
+      "automated_page_issues": [],
+      "pdf_page": {
+        "physical_page": 1,
+        "width_pt": 595.28,
+        "height_pt": 841.89,
+        "extracted_character_count": 636,
+        "annotation_count": 0,
+        "first_text_line": "数列与数列极限：经济学本科一年级微积分讲义计划"
+      }
+    },
+    {
+      "physical_page": 2,
+      "artifact_id": "d5caba17745b48d18ef4f82f4ceaa8b3",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\vbfde334fb51c\\pages\\page-0002.png",
+      "sha256": "6feaba2a3c0a14af31c3cef701c307fcd2195b39470f0ae89ad3a87de928c205",
+      "actual_sha256": "6feaba2a3c0a14af31c3cef701c307fcd2195b39470f0ae89ad3a87de928c205",
+      "hash_matches": true,
+      "image_size_px": [
+        953,
+        1348
+      ],
+      "visual_method": "tools.view_image(detail=original), individual full-page inspection",
+      "agent_visual_review": "REVIEWED",
+      "teacher_review": "NOT_RUN",
+      "visual_observation": "例题与练习、第二节开头可读；页眉已显示第二节，而页首仍为第一节例题。未见公式裁切。",
+      "findings": [
+        "V02"
+      ],
+      "automated_page_issues": [],
+      "pdf_page": {
+        "physical_page": 2,
+        "width_pt": 595.28,
+        "height_pt": 841.89,
+        "extracted_character_count": 856,
+        "annotation_count": 0,
+        "first_text_line": "2 收敛数列的基本性质与极限运算法则 2"
+      }
+    },
+    {
+      "physical_page": 3,
+      "artifact_id": "57b5e66b395d4249a28b23540382a4ac",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\vbfde334fb51c\\pages\\page-0003.png",
+      "sha256": "d1887b5f23d104d8ceff83b430548f200e469aac5b1c3eb52d6a0b30a842fd00",
+      "actual_sha256": "d1887b5f23d104d8ceff83b430548f200e469aac5b1c3eb52d6a0b30a842fd00",
+      "hash_matches": true,
+      "image_size_px": [
+        953,
+        1348
+      ],
+      "visual_method": "tools.view_image(detail=original), individual full-page inspection",
+      "agent_visual_review": "REVIEWED",
+      "teacher_review": "NOT_RUN",
+      "visual_observation": "长证明密度较高但字行可分辨；第三节在页末开始，页眉提前显示第三节。未见重叠或缺字。",
+      "findings": [
+        "V02"
+      ],
+      "automated_page_issues": [],
+      "pdf_page": {
+        "physical_page": 3,
+        "width_pt": 595.28,
+        "height_pt": 841.89,
+        "extracted_character_count": 1452,
+        "annotation_count": 1,
+        "first_text_line": "3 夹逼定理与常见极限 3"
+      }
+    },
+    {
+      "physical_page": 4,
+      "artifact_id": "1a2acde5c2cf4aa586fb9bd3d9882897",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\vbfde334fb51c\\pages\\page-0004.png",
+      "sha256": "9eada64adfbd54dc8f349b24bf954f298670db95014bfc45a2073f9b489b60c3",
+      "actual_sha256": "9eada64adfbd54dc8f349b24bf954f298670db95014bfc45a2073f9b489b60c3",
+      "hash_matches": true,
+      "image_size_px": [
+        953,
+        1348
+      ],
+      "visual_method": "tools.view_image(detail=original), individual full-page inspection",
+      "agent_visual_review": "REVIEWED",
+      "teacher_review": "NOT_RUN",
+      "visual_observation": "夹逼定理与上下界公式完整；定理3.4正文位于页末，证明续至下一页。未见显示公式截断。",
+      "findings": [],
+      "automated_page_issues": [],
+      "pdf_page": {
+        "physical_page": 4,
+        "width_pt": 595.28,
+        "height_pt": 841.89,
+        "extracted_character_count": 703,
+        "annotation_count": 3,
+        "first_text_line": "3 夹逼定理与常见极限 4"
+      }
+    },
+    {
+      "physical_page": 5,
+      "artifact_id": "7dc741df1a4c4457855d612e3ad38fcb",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\vbfde334fb51c\\pages\\page-0005.png",
+      "sha256": "da7add1733e27fe99b52dc451fa05544697c8c8e3d5e663cd7c2a1bb208b7f59",
+      "actual_sha256": "da7add1733e27fe99b52dc451fa05544697c8c8e3d5e663cd7c2a1bb208b7f59",
+      "hash_matches": true,
+      "image_size_px": [
+        953,
+        1348
+      ],
+      "visual_method": "tools.view_image(detail=original), individual full-page inspection",
+      "agent_visual_review": "REVIEWED",
+      "teacher_review": "NOT_RUN",
+      "visual_observation": "根式、分式和交错符号清晰；例题3.7题干位于页末，解答从下一页开始。未见遮挡。",
+      "findings": [],
+      "automated_page_issues": [],
+      "pdf_page": {
+        "physical_page": 5,
+        "width_pt": 595.28,
+        "height_pt": 841.89,
+        "extracted_character_count": 720,
+        "annotation_count": 3,
+        "first_text_line": "3 夹逼定理与常见极限 5"
+      }
+    },
+    {
+      "physical_page": 6,
+      "artifact_id": "d6835076911f4d15ad8444a5b9956288",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\vbfde334fb51c\\pages\\page-0006.png",
+      "sha256": "48fb7ab98e3220bc4cea54b21f98706e689700a716db2c06f3bc79dc6846fdaf",
+      "actual_sha256": "48fb7ab98e3220bc4cea54b21f98706e689700a716db2c06f3bc79dc6846fdaf",
+      "hash_matches": true,
+      "image_size_px": [
+        953,
+        1348
+      ],
+      "visual_method": "tools.view_image(detail=original), individual full-page inspection",
+      "agent_visual_review": "REVIEWED",
+      "teacher_review": "NOT_RUN",
+      "visual_observation": "练习3.8/3.9与第四节定义可读；页眉为第四节，页首先继续第三节例题；单调有界证明跨页。",
+      "findings": [
+        "V02"
+      ],
+      "automated_page_issues": [],
+      "pdf_page": {
+        "physical_page": 6,
+        "width_pt": 595.28,
+        "height_pt": 841.89,
+        "extracted_character_count": 1055,
+        "annotation_count": 2,
+        "first_text_line": "4 单调有界原理与递推数列的极限 6"
+      }
+    },
+    {
+      "physical_page": 7,
+      "artifact_id": "a6349b89e0e24ec3b8c8d05f09108b67",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\vbfde334fb51c\\pages\\page-0007.png",
+      "sha256": "2acc95b98d335f64c557837171ef8844ff59c28198e0ab158b404dcf68424ab1",
+      "actual_sha256": "2acc95b98d335f64c557837171ef8844ff59c28198e0ab158b404dcf68424ab1",
+      "hash_matches": true,
+      "image_size_px": [
+        953,
+        1348
+      ],
+      "visual_method": "tools.view_image(detail=original), individual full-page inspection",
+      "agent_visual_review": "REVIEWED",
+      "teacher_review": "NOT_RUN",
+      "visual_observation": "递推证明与经济价格例题较密但可读；第五节从页末开始，页眉提前显示第五节。未见裁切。",
+      "findings": [
+        "V02"
+      ],
+      "automated_page_issues": [],
+      "pdf_page": {
+        "physical_page": 7,
+        "width_pt": 595.28,
+        "height_pt": 841.89,
+        "extracted_character_count": 1442,
+        "annotation_count": 3,
+        "first_text_line": "5 数列极限综合应用与方法比较 7"
+      }
+    },
+    {
+      "physical_page": 8,
+      "artifact_id": "8beaf7a657de4541a91279944f495d29",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\vbfde334fb51c\\pages\\page-0008.png",
+      "sha256": "c649c87b090ae258d6a238a4441916cbfe6f5f5a75f08cd0954fa8d5f7c0b01a",
+      "actual_sha256": "c649c87b090ae258d6a238a4441916cbfe6f5f5a75f08cd0954fa8d5f7c0b01a",
+      "hash_matches": true,
+      "image_size_px": [
+        953,
+        1348
+      ],
+      "visual_method": "tools.view_image(detail=original), individual full-page inspection",
+      "agent_visual_review": "REVIEWED",
+      "teacher_review": "NOT_RUN",
+      "visual_observation": "方法/条件/结论三列表格完整，列线与文字没有明显冲突；ε–N与上下标正常。比较表可读，后续证明较密。",
+      "findings": [],
+      "automated_page_issues": [],
+      "pdf_page": {
+        "physical_page": 8,
+        "width_pt": 595.28,
+        "height_pt": 841.89,
+        "extracted_character_count": 1181,
+        "annotation_count": 0,
+        "first_text_line": "5 数列极限综合应用与方法比较 8"
+      }
+    },
+    {
+      "physical_page": 9,
+      "artifact_id": "c2a45dbea67747b9882f77c188b4c98f",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\vbfde334fb51c\\pages\\page-0009.png",
+      "sha256": "2300e974eef28039ab3e6c3f178bec93c2c380af9f66e67c0a875bde3bf574c7",
+      "actual_sha256": "2300e974eef28039ab3e6c3f178bec93c2c380af9f66e67c0a875bde3bf574c7",
+      "hash_matches": true,
+      "image_size_px": [
+        953,
+        1348
+      ],
+      "visual_method": "tools.view_image(detail=original), individual full-page inspection",
+      "agent_visual_review": "REVIEWED",
+      "teacher_review": "NOT_RUN",
+      "visual_observation": "分段数列大括号、分式和错误辨析练习完整；页面下部有正常余白，没有空白内容页。",
+      "findings": [],
+      "automated_page_issues": [],
+      "pdf_page": {
+        "physical_page": 9,
+        "width_pt": 595.28,
+        "height_pt": 841.89,
+        "extracted_character_count": 574,
+        "annotation_count": 0,
+        "first_text_line": "5 数列极限综合应用与方法比较 9"
+      }
+    },
+    {
+      "physical_page": 10,
+      "artifact_id": "19ef55bf79b74da3a84f1be5af3491f6",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\vbfde334fb51c\\pages\\page-0010.png",
+      "sha256": "f0796e85dfa4b46a0a4a0212dd8352d651a369af61e9d930d3cb0c6ddd9145b2",
+      "actual_sha256": "f0796e85dfa4b46a0a4a0212dd8352d651a369af61e9d930d3cb0c6ddd9145b2",
+      "hash_matches": true,
+      "image_size_px": [
+        953,
+        1348
+      ],
+      "visual_method": "tools.view_image(detail=original), individual full-page inspection",
+      "agent_visual_review": "REVIEWED",
+      "teacher_review": "NOT_RUN",
+      "visual_observation": "末尾“练习答案”独立标题及蓝色题号1.6/2.8/3.8/3.9可辨认；公式与文字无明显重叠；页眉仍为第五节。",
+      "findings": [
+        "V02"
+      ],
+      "automated_page_issues": [],
+      "pdf_page": {
+        "physical_page": 10,
+        "width_pt": 595.28,
+        "height_pt": 841.89,
+        "extracted_character_count": 849,
+        "annotation_count": 4,
+        "first_text_line": "5 数列极限综合应用与方法比较 10"
+      }
+    },
+    {
+      "physical_page": 11,
+      "artifact_id": "9b0640013c994149abc03b53a30255c8",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\vbfde334fb51c\\pages\\page-0011.png",
+      "sha256": "61775897347fdb7857b41e334155ecaf3d2534ef63fe6812d033103f52f3fff2",
+      "actual_sha256": "61775897347fdb7857b41e334155ecaf3d2534ef63fe6812d033103f52f3fff2",
+      "hash_matches": true,
+      "image_size_px": [
+        953,
+        1348
+      ],
+      "visual_method": "tools.view_image(detail=original), individual full-page inspection",
+      "agent_visual_review": "REVIEWED",
+      "teacher_review": "NOT_RUN",
+      "visual_observation": "续接练习3.9及答案4.6/5.5清晰，最后一页余白正常；页眉仍为第五节，建议答案区单独页眉。",
+      "findings": [
+        "V02"
+      ],
+      "automated_page_issues": [],
+      "pdf_page": {
+        "physical_page": 11,
+        "width_pt": 595.28,
+        "height_pt": 841.89,
+        "extracted_character_count": 702,
+        "annotation_count": 3,
+        "first_text_line": "5 数列极限综合应用与方法比较 11"
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "V01",
+      "severity": "LOW_EDITORIAL",
+      "pages": [
+        1
+      ],
+      "finding": "最终成稿标题仍含“讲义计划”。",
+      "recommendation": "教师/编辑确认是否改为讲义标题；本次不改已批准计划或产物。"
+    },
+    {
+      "id": "V02",
+      "severity": "LOW_NAVIGATION",
+      "pages": [
+        2,
+        3,
+        6,
+        7,
+        10,
+        11
+      ],
+      "finding": "跨节页眉采用本页后出现的章节；答案区页眉继续显示第五节。",
+      "recommendation": "后续排版版本可让跨节页眉与页首内容一致，并给答案区独立页眉；不属于本次发现的裁切/遮挡错误。"
+    }
+  ],
+  "critical_visual_findings": 0,
+  "source_reports": [
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration2\\live-lectures\\CH01\\comparison.json",
+      "sha256": "85abdd7ec9f5e0ec89c2849c61d0190968d8c2488cf4a505ae5e078162cf2d0a"
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration2\\live-lectures\\CH01\\run_snapshot.json",
+      "sha256": "582316a5aa481d49ddffae3f69f3390882acb913f7efa113ecbdcdc692c08574"
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\vbfde334fb51c\\quality_report.json",
+      "sha256": "ae17cad4647f1b2a4281500adcff5ed15790c757d408cbf80c01f50bdcff2779"
+    }
+  ],
+  "operation_limits": {
+    "read_only": true,
+    "database_writes": 0,
+    "api_calls": 0,
+    "recompile": "NOT_RUN",
+    "rerender": "NOT_RUN",
+    "service_start_stop": "NOT_RUN",
+    "teacher_visual_review": "NOT_RUN"
+  },
+  "limitations": [
+    "This is an agent image inspection, not teacher mathematics/visual acceptance, and does not update the application review flags.",
+    "No obvious clipping, overlap or missing glyph was observed in the 11 viewed PNGs; this is not a guarantee that every layout defect is absent.",
+    "The application math and policy dimensions remain NEEDS_REVIEW. S04 has no structured SymPy request; S02 retains an absolute-value application coverage warning.",
+    "Proof correctness, course suitability and all lesson promises were not exhaustively verified by this visual audit.",
+    "The blue answer labels are visually identifiable; this audit did not click PDF internal links.",
+    "No screenshot contact sheet substituted for the individual-page inspection. Existing rendered pages were not modified."
+  ]
+}

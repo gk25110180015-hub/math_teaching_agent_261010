@@ -1,0 +1,17 @@
+{"case": "CH01-default", "archive_verification": "PASS", "member_count": 7}
+{"case": "CH01-fduclassroom", "archive_verification": "PASS", "member_count": 9}
+{"case": "CH02-default", "archive_verification": "PASS", "member_count": 7}
+{"case": "CH02-fduclassroom", "archive_verification": "PASS", "member_count": 9}
+{"case": "CH03-default", "archive_verification": "PASS", "member_count": 7}
+{"case": "CH03-fduclassroom", "archive_verification": "PASS", "member_count": 9}
+Traceback (most recent call last):
+  File "D:\研究生阶段\数学教学agent\math-teaching-agent\reports\iteration2\prepare_deliverables.py", line 220, in main
+    evidence = recompile(case, verification_root, index)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\研究生阶段\数学教学agent\math-teaching-agent\reports\iteration2\prepare_deliverables.py", line 149, in recompile
+    safe_extract_zip(Path(case['bundle']).read_bytes(), extracted)
+  File "D:\研究生阶段\数学教学agent\math-teaching-agent\src\math_agent\parsing.py", line 344, in safe_extract_zip
+    if not member.is_dir() and p.suffix.lower() not in ALLOWED_FILES: raise ValueError(f"Unsupported archive file: {p.name}")
+                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Unsupported archive file: compile_manifest.json
+{"status": "FAIL", "summary": "D:\\\u7814\u7a76\u751f\u9636\u6bb5\\\u6570\u5b66\u6559\u5b66agent\\math-teaching-agent\\workspace\\iteration2-delivery\\delivery-20260920-015918.json", "verification_root": "D:\\\u7814\u7a76\u751f\u9636\u6bb5\\\u6570\u5b66\u6559\u5b66agent\\math-teaching-agent\\workspace\\t\\dfaf105f8"}

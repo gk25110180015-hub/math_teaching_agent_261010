@@ -1,0 +1,523 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-19T19:10:42.564Z",
+  "run_id": "05748ab6260c40989a560a98e1e2065a",
+  "scope": "CH01 S02 repair-1 and repair-2 only",
+  "local_math_repair": "CONFIRMED_NO_NEW_DEFINITE_MATH_ERROR_FOUND",
+  "scope_fidelity": "PASS",
+  "teaching_coverage": "PARTIAL",
+  "whole_chapter_assessment": "PENDING_OUTPUT",
+  "teacher_visual_review": "NOT_RUN",
+  "api_calls": 0,
+  "source_or_code_changes": 0,
+  "approved_plan": {
+    "hash": "60e76cc0b1271ac1b32a9f48c9ae760665bb7180cbdd52df6f5f5958f25db4ac",
+    "section": {
+      "id": "S02",
+      "objectives": [
+        "掌握收敛数列的有界性、保号性和保序性等基本性质",
+        "建立极限的和、差、积、商运算法则及其适用条件",
+        "能够处理含有有理式、绝对值和常数倍的基本数列极限",
+        "例题应包含运算法则的直接应用与一个需要先验证分母极限非零的情形",
+        "练习应要求说明所用定理及关键条件，而不仅给出计算结果"
+      ],
+      "prerequisites": [
+        "S01"
+      ],
+      "reference_labels": [
+        "thm:convergent-bounded",
+        "thm:limit-sign",
+        "thm:limit-order",
+        "thm:limit-sum-product",
+        "thm:limit-quotient"
+      ],
+      "required_kinds": [
+        "definition",
+        "theorem",
+        "example",
+        "solution",
+        "proof",
+        "exercise"
+      ],
+      "title": "收敛数列的基本性质与极限运算法则"
+    }
+  },
+  "repair_audits": [
+    {
+      "repair": 1,
+      "target": "S02.U11",
+      "before_hash": "ba2fa2ecac3b44d708969de8e685026c937bbf21c95c40a75793e127c59dd577",
+      "after_hash": "6a8b02ce84453be82ad732b0343b24903ba70c7b13e121ae594dde538e7c8786",
+      "changed_units": [
+        "S02.U11"
+      ],
+      "non_target_full_objects_unchanged": 14,
+      "metadata_calculations_unchanged": true,
+      "raw_equals_normalized": true,
+      "before_tex": "由 $b_n\\to M$ 且 $M\\neq0$，根据 \\ref{thm:limit-sign}，当 $n$ 足够大时，$|b_n|>|M|/2$。于是 $|1/b_n-1/M|=|b_n-M|/(|M|\\,|b_n|)\\leq2|b_n-M|/|M|^2\\to0$。所以 $1/b_n\\to1/M$。再由乘积法则，$a_n/b_n=a_n(1/b_n)\\to L(1/M)=L/M$。",
+      "after_tex": "由 $b_n\\to M$ 且 $M\\neq0$，取 $\\varepsilon=|M|/2$。根据极限定义，当 $n$ 足够大时，$|b_n-M|<|M|/2$，从而 $|b_n|\\geq|M|-|b_n-M|>|M|/2$。于是 $|1/b_n-1/M|=|b_n-M|/(|M|\\,|b_n|)\\leq2|b_n-M|/|M|^2\\to0$。所以 $1/b_n\\to1/M$。再由乘积法则，$a_n/b_n=a_n(1/b_n)\\to L(1/M)=L/M$。",
+      "diff": "--- \n+++ \n@@ -1 +1 @@\n-由 $b_n\\to M$ 且 $M\\neq0$，根据 \\ref{thm:limit-sign}，当 $n$ 足够大时，$|b_n|>|M|/2$。于是 $|1/b_n-1/M|=|b_n-M|/(|M|\\,|b_n|)\\leq2|b_n-M|/|M|^2\\to0$。所以 $1/b_n\\to1/M$。再由乘积法则，$a_n/b_n=a_n(1/b_n)\\to L(1/M)=L/M$。+由 $b_n\\to M$ 且 $M\\neq0$，取 $\\varepsilon=|M|/2$。根据极限定义，当 $n$ 足够大时，$|b_n-M|<|M|/2$，从而 $|b_n|\\geq|M|-|b_n-M|>|M|/2$。于是 $|1/b_n-1/M|=|b_n-M|/(|M|\\,|b_n|)\\leq2|b_n-M|/|M|^2\\to0$。所以 $1/b_n\\to1/M$。再由乘积法则，$a_n/b_n=a_n(1/b_n)\\to L(1/M)=L/M$。",
+      "unit_hashes": [
+        {
+          "id": "S02.U01",
+          "before": "79308f1022ed7c5e33f54348456c4aa084c4058d0650072399caf7fc8a4109af",
+          "after": "79308f1022ed7c5e33f54348456c4aa084c4058d0650072399caf7fc8a4109af",
+          "same": true
+        },
+        {
+          "id": "S02.U02",
+          "before": "7d5f948135357b0863508ba262890947a9d320c746164a38ab86343e64b3778b",
+          "after": "7d5f948135357b0863508ba262890947a9d320c746164a38ab86343e64b3778b",
+          "same": true
+        },
+        {
+          "id": "S02.U03",
+          "before": "d6b20d13bed0d040ca99979ce65d37fd4531bc554517c0756815c154624b324a",
+          "after": "d6b20d13bed0d040ca99979ce65d37fd4531bc554517c0756815c154624b324a",
+          "same": true
+        },
+        {
+          "id": "S02.U04",
+          "before": "cb914cd596d0ff894daad92e328b6eccb6123de84208bda3db29897b266a8df9",
+          "after": "cb914cd596d0ff894daad92e328b6eccb6123de84208bda3db29897b266a8df9",
+          "same": true
+        },
+        {
+          "id": "S02.U05",
+          "before": "d024a12641d97a1eb83e53db912627bbb93a5e64c2778a674b5d7f5345913bb0",
+          "after": "d024a12641d97a1eb83e53db912627bbb93a5e64c2778a674b5d7f5345913bb0",
+          "same": true
+        },
+        {
+          "id": "S02.U06",
+          "before": "b57e1d41ed1765bc445f7e5c12d4ad89ef2899bcc36675f0439c94256bd2100b",
+          "after": "b57e1d41ed1765bc445f7e5c12d4ad89ef2899bcc36675f0439c94256bd2100b",
+          "same": true
+        },
+        {
+          "id": "S02.U07",
+          "before": "126e6f6a05d9296cb39862da7006c6af6c37533929f38ef13869722efbff6a06",
+          "after": "126e6f6a05d9296cb39862da7006c6af6c37533929f38ef13869722efbff6a06",
+          "same": true
+        },
+        {
+          "id": "S02.U08",
+          "before": "8ee273e9812fd6787c590015ef58bd4d0da0d270d912a3e5545f7078ccba0508",
+          "after": "8ee273e9812fd6787c590015ef58bd4d0da0d270d912a3e5545f7078ccba0508",
+          "same": true
+        },
+        {
+          "id": "S02.U09",
+          "before": "6d7fccfc89ed0e5545c91937ca327054b4e7a9e3ca241527cdead0eb05e50ae2",
+          "after": "6d7fccfc89ed0e5545c91937ca327054b4e7a9e3ca241527cdead0eb05e50ae2",
+          "same": true
+        },
+        {
+          "id": "S02.U10",
+          "before": "71bc4685b2719dc121697cdf90e0551fd64d73e9ecb3fd0a23e22fa52df4738f",
+          "after": "71bc4685b2719dc121697cdf90e0551fd64d73e9ecb3fd0a23e22fa52df4738f",
+          "same": true
+        },
+        {
+          "id": "S02.U11",
+          "before": "17d20b3d29029ea98637a515e967f11ab0ab4b241244503e31f5499fa67d2006",
+          "after": "d2471cb2c9cee2c84fa3387e826092fbc5126ee5232f1b100ecf0f1355ac617f",
+          "same": false
+        },
+        {
+          "id": "S02.U12",
+          "before": "5ae9d8561fd101d6b5c61d35b29842ecec92cddf79b307f62b55c13ea5740e32",
+          "after": "5ae9d8561fd101d6b5c61d35b29842ecec92cddf79b307f62b55c13ea5740e32",
+          "same": true
+        },
+        {
+          "id": "S02.U13",
+          "before": "6ea4d01ad7d4cf0f485e5d2004172368291f5a56c35f4a63896197a077daf628",
+          "after": "6ea4d01ad7d4cf0f485e5d2004172368291f5a56c35f4a63896197a077daf628",
+          "same": true
+        },
+        {
+          "id": "S02.U14",
+          "before": "7c1f1470ed32d6aea6d8386c27f6ad99e776eabe1ab99a35cf1793a3b44dd6e9",
+          "after": "7c1f1470ed32d6aea6d8386c27f6ad99e776eabe1ab99a35cf1793a3b44dd6e9",
+          "same": true
+        },
+        {
+          "id": "S02.U15",
+          "before": "023f6ea6980833f508725410314e5c18bedaded03e41ce434011f49b5b3a61cf",
+          "after": "023f6ea6980833f508725410314e5c18bedaded03e41ce434011f49b5b3a61cf",
+          "same": true
+        }
+      ]
+    },
+    {
+      "repair": 2,
+      "target": "S02.U09",
+      "before_hash": "6a8b02ce84453be82ad732b0343b24903ba70c7b13e121ae594dde538e7c8786",
+      "after_hash": "9cba9315f447cc7312aed6e239ebfb3d0fc73e5e400fad229673f80c6c9f4e17",
+      "changed_units": [
+        "S02.U09"
+      ],
+      "non_target_full_objects_unchanged": 14,
+      "metadata_calculations_unchanged": true,
+      "raw_equals_normalized": true,
+      "before_tex": "常数倍结论由 $|ca_n-cL|=|c|\\,|a_n-L|$ 得到。和式结论由三角不等式得到：当 $n$ 足够大时，$|(a_n+b_n)-(L+M)|\\leq|a_n-L|+|b_n-M|$，右端趋于 $0$，故和式趋于 $L+M$；差式同理。对乘积，先由 \\ref{thm:convergent-bounded} 知道收敛数列有界。设 $|a_n|\\leq K$。利用恒等式 $a_nb_n-LM=a_n(b_n-M)+M(a_n-L)$，有 $|a_nb_n-LM|\\leq K|b_n-M|+|M|\\,|a_n-L|$。右端趋于 $0$，所以 $a_nb_n\\to LM$。",
+      "after_tex": "先证常数倍法则。若 $c=0$，则对任意 $\\varepsilon>0$，取 $N=1$，当 $n\\geq N$ 时有 $|ca_n-cL|=0<\\varepsilon$。若 $c\\neq0$，则对任意 $\\varepsilon>0$，由 $a_n\\to L$ 可取正整数 $N$，使得当 $n\\geq N$ 时 $|a_n-L|<\\varepsilon/|c|$，于是 $|ca_n-cL|=|c|\\,|a_n-L|<\\varepsilon$。所以 $ca_n\\to cL$。\n再证和法则。任给 $\\varepsilon>0$，由两个数列的收敛性，分别取正整数 $N_1,N_2$，使得当 $n\\geq N_1$ 时 $|a_n-L|<\\varepsilon/2$，当 $n\\geq N_2$ 时 $|b_n-M|<\\varepsilon/2$。取 $N=\\max\\{N_1,N_2\\}$，则当 $n\\geq N$ 时，由三角不等式，$|(a_n+b_n)-(L+M)|\\leq|a_n-L|+|b_n-M|<\\varepsilon/2+\\varepsilon/2=\\varepsilon$。故 $a_n+b_n\\to L+M$。由已证的常数倍法则，$-b_n\\to-M$，再用和法则即得 $a_n-b_n\\to L-M$。\n对乘积，先由 \\ref{thm:convergent-bounded} 知道收敛数列有界，取常数 $K>0$，使得对所有 $n$ 都有 $|a_n|\\leq K$。利用恒等式 $a_nb_n-LM=a_n(b_n-M)+M(a_n-L)$，有 $|a_nb_n-LM|\\leq K|b_n-M|+|M|\\,|a_n-L|$。任给 $\\varepsilon>0$，由收敛性可分别取正整数 $N_3,N_4$，使得当 $n\\geq N_3$ 时 $|b_n-M|<\\varepsilon/(2K)$，当 $n\\geq N_4$ 时 $|a_n-L|<\\varepsilon/[2(|M|+1)]$。取 $N=\\max\\{N_3,N_4\\}$，则当 $n\\geq N$ 时，$|a_nb_n-LM|<\\varepsilon/2+|M|\\varepsilon/[2(|M|+1)]<\\varepsilon$。因此由极限定义，$a_nb_n\\to LM$。",
+      "diff": "--- \n+++ \n@@ -1 +1,3 @@\n-常数倍结论由 $|ca_n-cL|=|c|\\,|a_n-L|$ 得到。和式结论由三角不等式得到：当 $n$ 足够大时，$|(a_n+b_n)-(L+M)|\\leq|a_n-L|+|b_n-M|$，右端趋于 $0$，故和式趋于 $L+M$；差式同理。对乘积，先由 \\ref{thm:convergent-bounded} 知道收敛数列有界。设 $|a_n|\\leq K$。利用恒等式 $a_nb_n-LM=a_n(b_n-M)+M(a_n-L)$，有 $|a_nb_n-LM|\\leq K|b_n-M|+|M|\\,|a_n-L|$。右端趋于 $0$，所以 $a_nb_n\\to LM$。+先证常数倍法则。若 $c=0$，则对任意 $\\varepsilon>0$，取 $N=1$，当 $n\\geq N$ 时有 $|ca_n-cL|=0<\\varepsilon$。若 $c\\neq0$，则对任意 $\\varepsilon>0$，由 $a_n\\to L$ 可取正整数 $N$，使得当 $n\\geq N$ 时 $|a_n-L|<\\varepsilon/|c|$，于是 $|ca_n-cL|=|c|\\,|a_n-L|<\\varepsilon$。所以 $ca_n\\to cL$。\n+再证和法则。任给 $\\varepsilon>0$，由两个数列的收敛性，分别取正整数 $N_1,N_2$，使得当 $n\\geq N_1$ 时 $|a_n-L|<\\varepsilon/2$，当 $n\\geq N_2$ 时 $|b_n-M|<\\varepsilon/2$。取 $N=\\max\\{N_1,N_2\\}$，则当 $n\\geq N$ 时，由三角不等式，$|(a_n+b_n)-(L+M)|\\leq|a_n-L|+|b_n-M|<\\varepsilon/2+\\varepsilon/2=\\varepsilon$。故 $a_n+b_n\\to L+M$。由已证的常数倍法则，$-b_n\\to-M$，再用和法则即得 $a_n-b_n\\to L-M$。\n+对乘积，先由 \\ref{thm:convergent-bounded} 知道收敛数列有界，取常数 $K>0$，使得对所有 $n$ 都有 $|a_n|\\leq K$。利用恒等式 $a_nb_n-LM=a_n(b_n-M)+M(a_n-L)$，有 $|a_nb_n-LM|\\leq K|b_n-M|+|M|\\,|a_n-L|$。任给 $\\varepsilon>0$，由收敛性可分别取正整数 $N_3,N_4$，使得当 $n\\geq N_3$ 时 $|b_n-M|<\\varepsilon/(2K)$，当 $n\\geq N_4$ 时 $|a_n-L|<\\varepsilon/[2(|M|+1)]$。取 $N=\\max\\{N_3,N_4\\}$，则当 $n\\geq N$ 时，$|a_nb_n-LM|<\\varepsilon/2+|M|\\varepsilon/[2(|M|+1)]<\\varepsilon$。因此由极限定义，$a_nb_n\\to LM$。",
+      "unit_hashes": [
+        {
+          "id": "S02.U01",
+          "before": "79308f1022ed7c5e33f54348456c4aa084c4058d0650072399caf7fc8a4109af",
+          "after": "79308f1022ed7c5e33f54348456c4aa084c4058d0650072399caf7fc8a4109af",
+          "same": true
+        },
+        {
+          "id": "S02.U02",
+          "before": "7d5f948135357b0863508ba262890947a9d320c746164a38ab86343e64b3778b",
+          "after": "7d5f948135357b0863508ba262890947a9d320c746164a38ab86343e64b3778b",
+          "same": true
+        },
+        {
+          "id": "S02.U03",
+          "before": "d6b20d13bed0d040ca99979ce65d37fd4531bc554517c0756815c154624b324a",
+          "after": "d6b20d13bed0d040ca99979ce65d37fd4531bc554517c0756815c154624b324a",
+          "same": true
+        },
+        {
+          "id": "S02.U04",
+          "before": "cb914cd596d0ff894daad92e328b6eccb6123de84208bda3db29897b266a8df9",
+          "after": "cb914cd596d0ff894daad92e328b6eccb6123de84208bda3db29897b266a8df9",
+          "same": true
+        },
+        {
+          "id": "S02.U05",
+          "before": "d024a12641d97a1eb83e53db912627bbb93a5e64c2778a674b5d7f5345913bb0",
+          "after": "d024a12641d97a1eb83e53db912627bbb93a5e64c2778a674b5d7f5345913bb0",
+          "same": true
+        },
+        {
+          "id": "S02.U06",
+          "before": "b57e1d41ed1765bc445f7e5c12d4ad89ef2899bcc36675f0439c94256bd2100b",
+          "after": "b57e1d41ed1765bc445f7e5c12d4ad89ef2899bcc36675f0439c94256bd2100b",
+          "same": true
+        },
+        {
+          "id": "S02.U07",
+          "before": "126e6f6a05d9296cb39862da7006c6af6c37533929f38ef13869722efbff6a06",
+          "after": "126e6f6a05d9296cb39862da7006c6af6c37533929f38ef13869722efbff6a06",
+          "same": true
+        },
+        {
+          "id": "S02.U08",
+          "before": "8ee273e9812fd6787c590015ef58bd4d0da0d270d912a3e5545f7078ccba0508",
+          "after": "8ee273e9812fd6787c590015ef58bd4d0da0d270d912a3e5545f7078ccba0508",
+          "same": true
+        },
+        {
+          "id": "S02.U09",
+          "before": "6d7fccfc89ed0e5545c91937ca327054b4e7a9e3ca241527cdead0eb05e50ae2",
+          "after": "c77ac929c4515c7afb1f5d54c20753902990e9ef7f419c77edd8f1f8b4a6ed7b",
+          "same": false
+        },
+        {
+          "id": "S02.U10",
+          "before": "71bc4685b2719dc121697cdf90e0551fd64d73e9ecb3fd0a23e22fa52df4738f",
+          "after": "71bc4685b2719dc121697cdf90e0551fd64d73e9ecb3fd0a23e22fa52df4738f",
+          "same": true
+        },
+        {
+          "id": "S02.U11",
+          "before": "d2471cb2c9cee2c84fa3387e826092fbc5126ee5232f1b100ecf0f1355ac617f",
+          "after": "d2471cb2c9cee2c84fa3387e826092fbc5126ee5232f1b100ecf0f1355ac617f",
+          "same": true
+        },
+        {
+          "id": "S02.U12",
+          "before": "5ae9d8561fd101d6b5c61d35b29842ecec92cddf79b307f62b55c13ea5740e32",
+          "after": "5ae9d8561fd101d6b5c61d35b29842ecec92cddf79b307f62b55c13ea5740e32",
+          "same": true
+        },
+        {
+          "id": "S02.U13",
+          "before": "6ea4d01ad7d4cf0f485e5d2004172368291f5a56c35f4a63896197a077daf628",
+          "after": "6ea4d01ad7d4cf0f485e5d2004172368291f5a56c35f4a63896197a077daf628",
+          "same": true
+        },
+        {
+          "id": "S02.U14",
+          "before": "7c1f1470ed32d6aea6d8386c27f6ad99e776eabe1ab99a35cf1793a3b44dd6e9",
+          "after": "7c1f1470ed32d6aea6d8386c27f6ad99e776eabe1ab99a35cf1793a3b44dd6e9",
+          "same": true
+        },
+        {
+          "id": "S02.U15",
+          "before": "023f6ea6980833f508725410314e5c18bedaded03e41ce434011f49b5b3a61cf",
+          "after": "023f6ea6980833f508725410314e5c18bedaded03e41ce434011f49b5b3a61cf",
+          "same": true
+        }
+      ]
+    }
+  ],
+  "overall_changed_units": [
+    "S02.U09",
+    "S02.U11"
+  ],
+  "overall_non_target_full_objects_unchanged": 13,
+  "semantic_reasoning": {
+    "repair_1_U11": {
+      "status": "CONFIRMED",
+      "original_gap": "由仅陈述最终同号的定理直接断言 |b_n|>|M|/2，省去了关键定量估计。",
+      "correction": "因M≠0，|M|/2>0。对b_n→M使用极限定义，得到最终|b_n−M|<|M|/2；反三角不等式给出|b_n|≥|M|−|b_n−M|>|M|/2。",
+      "reciprocal_argument": "于是|1/b_n−1/M|≤2|b_n−M|/|M|²。给定目标误差η>0，再把|b_n−M|控制到η|M|²/2以内，并取两个尾部阈值的最大值，可直接由定义得倒数极限。原文的“→0”在此可由一个误差项的定义展开，不依赖后续夹逼定理。",
+      "quotient_argument": "再用先前已建立的乘积法则，a_n(1/b_n)→L/M；M为负也成立，因为所有界使用绝对值。",
+      "domain_note": "商法则U10明确额外要求每一项b_n非零，比只在尾部有定义更强但合法；并非错误。"
+    },
+    "repair_2_U09": {
+      "status": "CONFIRMED",
+      "scalar": "c=0单独处理；c≠0使用ε/|c|，避免除零。",
+      "sum": "分别控制两列误差<ε/2，在max(N1,N2)后的同一尾部相加，直接得到<ε，不再借用正在证明的和法则。",
+      "difference": "先常数倍证明−b_n→−M，再用已证和法则，顺序无循环。",
+      "product": "从已证有界性选择固定K>0，即使a_n恒零也可选正界。恒等式a_nb_n−LM=a_n(b_n−M)+M(a_n−L)正确。两项分别控制于ε/(2K)和ε/[2(|M|+1)]，得到误差<ε/2+|M|ε/[2(|M|+1)]<ε。",
+      "edge_case": "M=0仍合法：|M|+1避免分母为0，第二项为0；K>0也避免除零。",
+      "prior_repair_preserved": "本次未修改U11；repair-1已补的定量下界完整保留。"
+    },
+    "other_units": "已读取15个最终单元：有界性含N=1空前段处理、保号和保序证明、两个例题及练习11/−2/−3结论均无新确定数学错误。所有练习/例题解答关联保持。"
+  },
+  "coverage_findings": [
+    {
+      "id": "CH01-S02-ABS-APPLICATION",
+      "status": "PARTIAL",
+      "severity": "warning",
+      "unit_ids": [
+        "S02.U12",
+        "S02.U14"
+      ],
+      "plan_objective": "能够处理含有有理式、绝对值和常数倍的基本数列极限",
+      "actual": "U12只有3/n+2与(2n+1)/(n+3)；U14只有线性组合、乘积和商。正文未给出a_n→L⇒|a_n|→|L|的教学依据或含绝对值极限训练。",
+      "distinction": "证明里的|a_n−L|等误差估计不等于学生已学习处理含绝对值的数列极限。",
+      "recommendation": "在符合批准目标的后续修复中，用 ||a_n|−|L||≤|a_n−L| 给出依据并安排相应例/练；当前只记录差异，不代写或改变已确认正文。",
+      "scope": "当前S02明确目标，不能因S03尚未生成而判整章缺失，也不能把当前节标为教学目标完全满足。"
+    }
+  ],
+  "verification": {
+    "offline_diff_and_hash_chain": "PASS",
+    "original_AST_recheck": {
+      "mock": false,
+      "api": false,
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "2",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S02.C01",
+          "unit_id": "S02.U13"
+        }
+      ],
+      "coverage": [
+        "S02.U01",
+        "S02.U02",
+        "S02.U03",
+        "S02.U04",
+        "S02.U05",
+        "S02.U06",
+        "S02.U07",
+        "S02.U08",
+        "S02.U09",
+        "S02.U10",
+        "S02.U11",
+        "S02.U12",
+        "S02.U13",
+        "S02.U14",
+        "S02.U15"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+      ]
+    },
+    "independent_arithmetic_and_limits": {
+      "status": "PASS",
+      "tool": "SymPy",
+      "example1_limit": "2",
+      "example2_limit": "2",
+      "exercise_values": [
+        "11",
+        "-2",
+        "-3"
+      ],
+      "version": "1.14.0",
+      "limitation": "少量表达式复算不是一般性证明。"
+    },
+    "existing_worker_Windows_compile": {
+      "status": "PASS",
+      "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\build\\lecture.pdf",
+      "issues": [],
+      "log_paths": [
+        "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\build\\pass-1.stdout.log",
+        "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\build\\pass-1.tex.log",
+        "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\build\\pass-2.stdout.log",
+        "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\build\\pass-2.tex.log"
+      ],
+      "engine": {
+        "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+        "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+      },
+      "passes": 2,
+      "compile_mode": "trusted_local",
+      "isolation": "NOT_IMPLEMENTED",
+      "limitations": [
+        "原生可信本机编译不是文件系统或网络隔离沙箱。"
+      ],
+      "command": [
+        "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "-no-shell-escape",
+        "-recorder",
+        "-synctex=1",
+        "-jobname=lecture",
+        "-output-directory=.",
+        "lecture.tex"
+      ],
+      "elapsed_seconds": 3.422,
+      "page_count": 4,
+      "pdf_sha256": "422102320662c7aa9c95ce6385cf4ee898908945f261400be4c52c5bdd4416c1",
+      "auxiliary_hashes": {
+        ".aux": "cde5216471995fbf115d9df8c63ad84556da3f4cf4d039a6bf2a831622c67424",
+        ".out": "95739a711e2d34110b45df0bb50da75f20c1b664af3f5027001c3a5b05392119"
+      },
+      "evidence_reused": true,
+      "pdf_hash_independently_verified": true
+    },
+    "new_windows_compile": "NOT_RUN",
+    "new_API_test": "NOT_RUN",
+    "new_mock_test": "NOT_RUN",
+    "new_visual_review": "NOT_RUN",
+    "review_2_remaining_issues": [
+      {
+        "unit_id": "S02.U12",
+        "severity": "warning",
+        "message": "本节例题与练习覆盖了常数倍、和差积及有理式，但未落实当前节目标中“处理含有绝对值的基本数列极限”的应用训练。这是本节教学覆盖的非阻塞限制，不影响已给出计算的正确性。可在本例增加绝对值极限的小题，并通过反三角不等式说明依据。",
+        "evidence": "当前节目标明确包含“能够处理含有有理式、绝对值和常数倍的基本数列极限”。S02.U12 仅给出 3(1/n)+2 与 (2n+1)/(n+3)；S02.U14 的三题也仅涉及线性组合、乘积与商。S02.U01—S02.U11 虽在定义及证明中使用绝对值估计，但未说明 a_n→L 蕴含 |a_n|→|L|，也未安排相应应用。"
+      }
+    ]
+  },
+  "source_anchors": [
+    {
+      "line": 127,
+      "text": "% UNIT S02.U09"
+    },
+    {
+      "line": 137,
+      "text": "% UNIT S02.U11"
+    },
+    {
+      "line": 141,
+      "text": "% UNIT S02.U12"
+    },
+    {
+      "line": 147,
+      "text": "% UNIT S02.U14"
+    }
+  ],
+  "evidence_files": [
+    {
+      "name": "candidate-normalized.json",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\candidate-normalized.json",
+      "sha256": "76b184748f4661fabfc6b37aa54ebb1b814ffa291c0a05093762fd66df994f05",
+      "bytes": 6651
+    },
+    {
+      "name": "repair-1.json",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\repair-1.json",
+      "sha256": "a3db99f661683053d9ad2c602a8488d513284936d120400f28e9de894128189c",
+      "bytes": 7179
+    },
+    {
+      "name": "repair-1-raw.json",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\repair-1-raw.json",
+      "sha256": "70d523b93b1c9eb6800eff19d728ce3fe292a4bf633250ca4bf1efafe35f1c70",
+      "bytes": 6709
+    },
+    {
+      "name": "repair-1-normalization.json",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\repair-1-normalization.json",
+      "sha256": "d0d4c399ab8711cb8b3ad1bab018e57cf9684abca503f9874dae3749f9a5d3b3",
+      "bytes": 10304
+    },
+    {
+      "name": "repair-2.json",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\repair-2.json",
+      "sha256": "50b27489e552bfc9d12accf26c7a83df81fee926da4c8a3e2f901363535f99ac",
+      "bytes": 8135
+    },
+    {
+      "name": "repair-2-raw.json",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\repair-2-raw.json",
+      "sha256": "c483d16ad325069f8d65085c727c65a566fa3d1d3831e73b8c831e5ad9323991",
+      "bytes": 7665
+    },
+    {
+      "name": "repair-2-normalization.json",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\repair-2-normalization.json",
+      "sha256": "1a0f08502aff603f3b37882533c0eac4c4ac62d09c65970e51a067f453a6bd51",
+      "bytes": 10304
+    },
+    {
+      "name": "review-0.json",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\review-0.json",
+      "sha256": "ab66a2d4f663395e503fcc43755a4de584f6a1aa764cd437b7344d6ed8543bd7",
+      "bytes": 3880
+    },
+    {
+      "name": "review-1.json",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\review-1.json",
+      "sha256": "137dba95240a616011dbdd2873ad3c1eb3aaa7670484f946a06fd1fa221ad179",
+      "bytes": 6389
+    },
+    {
+      "name": "review-2.json",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\review-2.json",
+      "sha256": "ed9643ef4580102974bccadbe773adcb0d311051406fc1989a356a600f4b1c91",
+      "bytes": 4292
+    },
+    {
+      "name": "compile.json",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\compile.json",
+      "sha256": "765949227daed41aaa400f399b56de93324855ff178bd68c9c6d77eb115712e1",
+      "bytes": 1822
+    },
+    {
+      "name": "source/lecture.tex",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\source\\lecture.tex",
+      "sha256": "8171c519f902166b99f31301c7e2b57e9e929d3c1bdc593a36e68f2303169ee8",
+      "bytes": 10405
+    },
+    {
+      "name": "build/lecture.pdf",
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\05748ab6260c4098\\sS02_d764aedf5652\\build\\lecture.pdf",
+      "sha256": "422102320662c7aa9c95ce6385cf4ee898908945f261400be4c52c5bdd4416c1",
+      "bytes": 169302
+    }
+  ],
+  "limitations": [
+    "仅S02局部审读，不证明整章数学正确；未生成章节仍PENDING_OUTPUT。",
+    "数学检查和真实Windows编译既有记录不等于教学目标完整兑现。",
+    "教师验收未执行；本次没有重编译、改正文或调用API。"
+  ]
+}
+

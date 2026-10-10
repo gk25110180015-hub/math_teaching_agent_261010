@@ -1,0 +1,129 @@
+{
+  "time": "2026-09-19T21:10:07.061016+00:00",
+  "budget_provenance_addendum": {
+    "basis": "../final-runtime-and-state-20260920-051655-382274-verified.json",
+    "case_numeric_budget_fields_mean": "Effective values observed in the UI/API, not independently asserted persisted baseline fields",
+    "smoke_persisted_baseline": {"requests": 60, "local_repairs_per_unit": "UNRECORDED", "global_repair_rounds": "UNRECORDED"},
+    "smoke_displayed_local_and_global_2": "Current service effective defaults; do not infer or backfill historical baseline",
+    "CH01_CH02_CH03_persisted_baseline": {"requests": 60, "local_repairs_per_unit": 2, "global_repair_rounds": 2},
+    "report_only_correction_no_database_write_no_test_rerun": true
+  },
+  "service": "http://127.0.0.1:8766",
+  "browser": "Microsoft Edge headless Windows",
+  "automated_ui_checks": "PASS",
+  "workflow_acceptance": "PARTIAL",
+  "cases": [
+    {
+      "case": "smoke",
+      "run_id": "426866cf71d2437bb17b54ac801a8c18",
+      "workflow_status": "AWAITING_USER_REVIEW",
+      "automated_ui_checks": "PASS",
+      "request_count": 21,
+      "requests_limit": 60,
+      "local_repairs_per_unit": 2,
+      "global_repair_rounds": 2,
+      "budget_version": 0,
+      "files_get_sha256_pass": 21,
+      "files_total": 21,
+      "physical_pngs": 5,
+      "partial_sections": 0,
+      "teacher_reviews": 0,
+      "only_get_requests": true,
+      "recorded_network_requests": 53,
+      "state_invariance": "PASS",
+      "evidence": "ready-v2/smoke",
+      "full_delivery": "ARTIFACT_RETRIEVAL_VERIFIED_NOT_TEACHER_ACCEPTED"
+    },
+    {
+      "case": "CH01",
+      "run_id": "05748ab6260c40989a560a98e1e2065a",
+      "workflow_status": "AWAITING_USER_REVIEW",
+      "automated_ui_checks": "PASS",
+      "request_count": 37,
+      "requests_limit": 60,
+      "local_repairs_per_unit": 2,
+      "global_repair_rounds": 2,
+      "budget_version": 0,
+      "files_get_sha256_pass": 25,
+      "files_total": 25,
+      "physical_pngs": 11,
+      "partial_sections": 0,
+      "teacher_reviews": 0,
+      "only_get_requests": true,
+      "recorded_network_requests": 57,
+      "state_invariance": "PASS",
+      "evidence": "ready-v2/CH01",
+      "full_delivery": "ARTIFACT_RETRIEVAL_VERIFIED_NOT_TEACHER_ACCEPTED"
+    },
+    {
+      "case": "CH02",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "workflow_status": "BLOCKED",
+      "automated_ui_checks": "PASS",
+      "request_count": 33,
+      "requests_limit": 60,
+      "local_repairs_per_unit": 2,
+      "global_repair_rounds": 2,
+      "budget_version": 0,
+      "files_get_sha256_pass": 9,
+      "files_total": 9,
+      "physical_pngs": 0,
+      "partial_sections": 3,
+      "teacher_reviews": 0,
+      "only_get_requests": true,
+      "recorded_network_requests": 41,
+      "state_invariance": "PASS",
+      "evidence": "blocked/CH02",
+      "full_delivery": "NOT_RUN"
+    },
+    {
+      "case": "CH03",
+      "run_id": "a45be503af594ce8aae0bb1e4c30184b",
+      "workflow_status": "BLOCKED",
+      "automated_ui_checks": "PASS",
+      "request_count": 27,
+      "requests_limit": 60,
+      "local_repairs_per_unit": 2,
+      "global_repair_rounds": 2,
+      "budget_version": 0,
+      "files_get_sha256_pass": 6,
+      "files_total": 6,
+      "physical_pngs": 0,
+      "partial_sections": 2,
+      "teacher_reviews": 0,
+      "only_get_requests": true,
+      "recorded_network_requests": 38,
+      "state_invariance": "PASS",
+      "evidence": "blocked/CH03",
+      "full_delivery": "NOT_RUN"
+    }
+  ],
+  "files_get_sha256_pass_total": 61,
+  "teacher_visual_review": "NOT_RUN",
+  "model_calls": "NOT_PERFORMED",
+  "service_start_stop": "NOT_PERFORMED",
+  "product_changes": "NONE",
+  "initial_ready_attempt": {
+    "status": "FAIL",
+    "path": "ready",
+    "checks_failed": "Closed details inner_text hid the page SHA; all 46 artifact GET/hash checks already passed",
+    "fix": "Verifier opens each page details before reading displayed SHA; only script changed; original evidence preserved"
+  },
+  "agent_ui_visual_review": {
+    "status": "ISSUE_FOUND",
+    "scope": [
+      "ready-v2/CH01/overview.png",
+      "blocked/CH02/budget-panel.png",
+      "blocked/CH03/partial-checkpoints.png"
+    ],
+    "findings": [
+      {
+        "id": "UI-V01",
+        "severity": "medium",
+        "description": "Long recent-task topic buttons overflow the sidebar and cover the main content at 1440px viewport. Budget and partial panels themselves are legible.",
+        "screenshot": "ready-v2/CH01/overview.png",
+        "product_fixed": false
+      }
+    ]
+  }
+}

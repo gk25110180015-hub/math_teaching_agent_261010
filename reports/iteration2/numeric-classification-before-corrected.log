@@ -1,0 +1,103 @@
+F....F.F                                                                 [100%]
+================================== FAILURES ===================================
+_ test_actual_ch02_evidence_remains_numeric_and_review_required_but_not_repair_target _
+
+    def test_actual_ch02_evidence_remains_numeric_and_review_required_but_not_repair_target():
+        fixture = captured()
+        section = fixture['section']
+        original_hash = digest(section)
+        result = check_math(section)
+        assert fixture['previous_math_report']['issues'][0]['severity'] == 'review'
+        assert result['status'] == 'NEEDS_REVIEW'
+        assert result['evidence'][0]['evidence_type'] == 'numeric_spotcheck_passed'
+        assert result['evidence'][0]['point_count'] == 1
+>       assert numeric_issue(result)['severity'] == 'warning'
+E       AssertionError: assert 'review' == 'warning'
+E         
+E         - warning
+E         + review
+
+tests\test_numeric_evidence_classification.py:33: AssertionError
+_ test_explicit_numeric_demo_with_independent_reasoning_never_consumes_repair_quota _
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/t/nmbf92/test_explicit_numeric_demo_wit0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000205D57C3EC0>
+
+    def test_explicit_numeric_demo_with_independent_reasoning_never_consumes_repair_quota(tmp_path, monkeypatch):
+        provider = NumericProvider()
+        service, pipeline, plan, compiled = setup(tmp_path, monkeypatch, provider)
+>       completed, reports = pipeline.lecture(plan)
+                             ^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_numeric_evidence_classification.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\math_agent\pipeline.py:495: in lecture
+    completed,local_reports=self._lecture_sections(plan,forced,preserve_rechecked if forced else None)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\math_agent\pipeline.py:628: in _lecture_sections
+    raw=self.provider.generate('repair_local_patch',{'section':before,'issues':blocking,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <test_numeric_evidence_classification.NumericProvider object at 0x00000205D57C0E30>
+role = 'repair_local_patch'
+context = {'section': {'section_id': 'S01', 'units': [{'id': 'S01.U00', 'kind': 'definition', 'tex': '���������ϵ�ʵֵ������Ϊʵ���С�', 'relate...ifficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}, ...}
+schema = <class 'math_agent.local_patch.LocalPatch'>
+
+    def generate(self, role, context, schema):
+        if role == 'writer_lecture_section':
+            self.writes += 1
+            section = captured()['section']
+            section['section_id'] = 'S01'
+            for unit in section['units']:
+                unit['id'] = unit['id'].replace('S04.', 'S01.')
+                if unit['relates_to']:
+                    unit['relates_to'] = unit['relates_to'].replace('S04.', 'S01.')
+            section['calculations'][0]['unit_id'] = 'S01.U05'
+            section['units'].insert(0, {'id':'S01.U00', 'kind':'definition',
+                'tex':'���������ϵ�ʵֵ������Ϊʵ���С�', 'relates_to':None})
+            if self.misuse:
+                section['units'][1]['tex'] = 'ֻ������������ֵ�����Ѿ�֤�����������������'
+            return section
+        if role == 'repair_local_patch':
+            self.patches += 1
+>           raise AssertionError('A successful point sample must not itself request a content patch')
+E           AssertionError: A successful point sample must not itself request a content patch
+
+tests\test_numeric_evidence_classification.py:98: AssertionError
+_ test_changed_tool_classification_reassesses_old_doubt_without_resetting_history_or_quota _
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/t/nmbf92/test_changed_tool_classificati0')
+
+    def test_changed_tool_classification_reassesses_old_doubt_without_resetting_history_or_quota(tmp_path):
+        section = captured()['section']
+        _, _, recovery = direct_recovery(tmp_path, section)
+        # Reproduce 3 legitimate proposals with only the first changing U05, in isolated state.
+        for number in range(3):
+            recovery.begin_proposal('strict_local_patch', ['unit:S04.U05'], ['S04.U05'])
+            candidate = recovery.candidate()
+            if number == 0:
+                candidate['units'][0]['tex'] += '\n'
+            recovery.accept(candidate)
+        old_math = copy.deepcopy(captured()['previous_math_report'])
+        old_identity, _ = recovery.review_context(candidate, old_math, {'issues':old_math['issues']})
+        recovery.record_review(old_math['issues'], old_identity, {'math':old_math})
+        historical_review = recovery.p.settings.workspace / recovery.state['last_review_key']
+        historical_sha = digest(historical_review.read_bytes())
+        old_counts = copy.deepcopy({k:recovery.state[k] for k in (
+            'proposal_calls', 'applied_rounds', 'unit_applied_counts', 'proposal_counts_by_key')})
+        new_math = check_math(candidate)
+        identity, context = recovery.review_context(candidate, new_math, {'issues':new_math['issues']})
+        assert context['unresolved_issues'] and identity != old_identity
+        retained = recovery.record_review(new_math['issues'], identity, {'math':new_math})
+>       assert retained == []
+E       AssertionError: assert [{'rule_id': ...4.U05'}, ...}] == []
+E         
+E         Left contains one more item: {'rule_id': 'NUMERIC_IS_NOT_PROOF', 'severity': 'review', 'message': 'ֻͨ��ָ������ֵ��飬���ܾݴ���Ϊһ����֤����', 'location': {'calculation_id': 'S04.C01', 'unit_id': 'S04.U05'}, ...}
+E         Use -v to get more diff
+
+tests\test_numeric_evidence_classification.py:157: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_numeric_evidence_classification.py::test_actual_ch02_evidence_remains_numeric_and_review_required_but_not_repair_target
+FAILED tests/test_numeric_evidence_classification.py::test_explicit_numeric_demo_with_independent_reasoning_never_consumes_repair_quota
+FAILED tests/test_numeric_evidence_classification.py::test_changed_tool_classification_reassesses_old_doubt_without_resetting_history_or_quota
+3 failed, 5 passed in 14.52s

@@ -1,0 +1,69 @@
+{
+  "$defs": {
+    "MathIssue": {
+      "additionalProperties": false,
+      "properties": {
+        "unit_id": {
+          "title": "Unit Id",
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "blocking",
+            "review",
+            "warning"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "evidence": {
+          "title": "Evidence",
+          "type": "string"
+        }
+      },
+      "required": [
+        "unit_id",
+        "severity",
+        "message",
+        "evidence"
+      ],
+      "title": "MathIssue",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "issues": {
+      "items": {
+        "$ref": "#/$defs/MathIssue"
+      },
+      "title": "Issues",
+      "type": "array"
+    },
+    "checked_unit_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Checked Unit Ids",
+      "type": "array"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    }
+  },
+  "required": [
+    "issues",
+    "checked_unit_ids",
+    "limitations"
+  ],
+  "title": "MathReview",
+  "type": "object"
+}

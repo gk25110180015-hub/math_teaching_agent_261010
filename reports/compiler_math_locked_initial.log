@@ -1,0 +1,31 @@
+.........F...........                                                    [100%]
+================================== FAILURES ===================================
+_________ test_t47_middle_overlay_is_rendered_and_overflow_is_blocked _________
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/compiler_math_locked_01/test_t47_middle_overlay_is_ren0')
+
+    @pytest.mark.windows_compile
+    def test_t47_middle_overlay_is_rendered_and_overflow_is_blocked(tmp_path):
+        if os.name != 'nt' or not resolve_xelatex():
+            pytest.skip('Actual Windows XeLaTeX unavailable')
+        src = source(tmp_path, r'''\documentclass[10pt,aspectratio=169]{beamer}
+    \begin{document}\begin{frame}{Overlay geometry}
+    Visible on every overlay.
+    \only<2>{\vspace*{25cm}MIDDLE OVERFLOW}
+    \only<3>{Final overlay fits.}
+    \end{frame}\end{document}''')
+        result = TexCompiler().compile(src, 'main.tex', tmp_path / 'middle-build', trusted=True)
+        assert result['status'] == 'FAIL' and result['pdf_path'], result
+        assert any(i['rule_id'] == 'OVERFULL_BOX' for i in result['issues'])
+        pdf = inspect_pdf(Path(result['pdf_path']), tmp_path / 'middle-pages', beamer=True)
+        assert pdf['page_count'] == 3 and len(pdf['pages']) == 3
+        assert pdf['pages'][1]['overlay_index'] == 2
+        assert all(Path(p['image_path']).exists() for p in pdf['pages'])
+>       assert any(i['severity'] == 'blocking' for i in pdf['pages'][1]['issues'])
+E       assert False
+E        +  where False = any(<generator object test_t47_middle_overlay_is_rendered_and_overflow_is_blocked.<locals>.<genexpr> at 0x0000012607C17C60>)
+
+tests\test_compiler_pdf.py:155: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_compiler_pdf.py::test_t47_middle_overlay_is_rendered_and_overflow_is_blocked
+1 failed, 20 passed in 29.61s

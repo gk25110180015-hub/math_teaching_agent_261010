@@ -1,0 +1,128 @@
+...........FFF                                                           [100%]
+================================== FAILURES ===================================
+_ test_pipeline_recovers_labels_then_repeats_checks_and_retains_raw_candidate _
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/t/lab-red/test_pipeline_recovers_labels_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000132CD994C50>
+
+    def test_pipeline_recovers_labels_then_repeats_checks_and_retains_raw_candidate(tmp_path,monkeypatch):
+        service,p,plan,provider,compiles=setup_recovery(tmp_path,monkeypatch)
+        approval=service.store.get_run(p.run['id'])['approval']
+>       completed,reports=p.lecture(plan)
+                          ^^^^^^^^^^^^^^^
+
+tests\test_reference_recovery.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\math_agent\pipeline.py:477: in lecture
+    completed,local_reports=self._lecture_sections(plan,forced,preserve_rechecked if forced else None)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <math_agent.pipeline.Pipeline object at 0x00000132CDC97200>
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'exercises': 'with_answers', 'proof_policy': 'all', 'answers_location': 'end'}, ...}
+forced_sections = {}, on_rechecked = None
+
+    def _lecture_sections(self, plan, forced_sections=None, on_rechecked=None):
+        from .mathcheck import check_math
+        from .calculation_protocol import calculation_protocol
+        from .lecture_fragments import normalize_written_section
+        from .parsing import preflight_tex
+        from .crossrefs import inspect_section_references, local_reference_gate
+        completed, local_reports = [], []
+        forced_sections=forced_sections or {}
+        for spec in plan['sections']:
+            sid = spec['id']
+            self.stage('BUILDING', 'write.section.' + sid)
+            cache_key = digest([plan['hash'], spec, [digest(g) for _,g in completed], 'writer-v4-labeled-eq-global-repair', self.settings.model, self.settings.xelatex_path, 'rules-v1'])
+            cached = self.store.cached_step(self.run['id'], 'section.'+sid, cache_key)
+            if cached and sid not in forced_sections:
+                p = within(self.settings.workspace, cached['source_key'])
+                if p.is_file() and digest(p.read_bytes()) == cached['source_hash']:
+                    completed.append((spec,cached['generated']))
+                    local_reports.append(cached['report'])
+                    continue
+            from .retrieval import style_context
+            context = {'section':spec, 'plan':plan, 'completed_sections':[g for _,g in completed], 'topic':self.run['input']['topic'], 'difficulty':plan['difficulty'],
+                       'style_reference':style_context(self.settings.reference_root,self.run['input']['topic']),
+                       'calculation_protocol':calculation_protocol()}
+            if sid in forced_sections:
+                generated=copy.deepcopy(forced_sections[sid])
+                draft=self.build_root/('s'+sid+'_'+uid()[:12])
+                draft.mkdir(parents=True,exist_ok=False)
+                write_json(draft/'candidate.json',generated)
+                write_json(draft/'global-repair-recheck.json',{'section_id':sid,'status':'UNCHECKED',
+                    'candidate_hash':digest(generated),'reason':'Recheck affected section and all following sections without reauthoring'})
+            else:
+                generated,draft = self.writer_draft(spec,context)
+            generated, normalization = normalize_written_section(generated)
+            write_json(draft/'candidate-normalization.json', normalization)
+            write_json(draft/'candidate-normalized.json', generated)
+            report = None
+            for attempt in range(self.settings.max_local_repair_attempts + 1):
+                self.stage('LOCAL_REVIEW', 'review.section.' + sid)
+                issues = self.validate_written(spec, generated, plan)
+                issues.extend(normalization['issues'])
+                references = inspect_section_references(spec, generated, completed, plan)
+                issues.extend(references['issues'])
+                for unit in generated['units']:
+                    issues.extend({**issue,'unit_id':unit['id']} for issue in preflight_tex(unit['tex']))
+                math = check_math(generated)
+                issues.extend(math.get('issues', []))
+                review = self.review_units(generated['units'], {'plan':plan,'prior_sections':[g for _,g in completed],'tool_checks':math,
+                    'scope':{'kind':'section_local','current_section':spec,'pending_sections':[s['id'] for s in plan['sections'] if s['id'] not in {x['id'] for x,_ in completed} and s['id']!=sid]}},draft,f'local-{attempt}')
+                if set(review['checked_unit_ids']) != {u['id'] for u in generated['units']}:
+                    issues.append({'rule_id':'REVIEW_COVERAGE','severity':'blocking','message':'����δ����ȫ��ʵ�ʵ�Ԫ'})
+                issues.extend(review['issues'])
+                if generated.get('uncertainties'):
+                    issues.extend({'severity':'review','message':i} for i in generated['uncertainties'])
+                report = {'section_id':sid,'math':math,'llm_review':review, 'issues':issues, 'mock':self.run['input']['provider']=='mock'}
+                write_json(draft/f'review-{attempt}.json',report)
+                blocking = [i for i in issues if i.get('severity','blocking') in ('blocking','review')]
+                if not blocking:
+                    break
+                if attempt >= self.settings.max_local_repair_attempts or self.run['input']['provider']=='mock':
+                    raise AgentError('MATH_REVIEW_BLOCKED', '���ڴ�����ѧ/�����ɵ㣬�ѱ����ݸ壺'+canonical(blocking)[:2000])
+                self.stage('REPAIRING','repair.section.'+sid)
+                before = generated
+                target_ids = {i.get('unit_id') or i.get('location',{}).get('unit_id') for i in blocking}
+                target_ids.discard(None)
+                if not target_ids.issubset({u['id'] for u in before['units']}):
+                    raise AgentError('REPAIR_SCOPE_UNCLEAR','���ⶨλ��δ�ṩ�ĵ�Ԫ�����������޸ķ�Χ')
+                if not target_ids:
+>                   raise AgentError('REPAIR_SCOPE_UNCLEAR','���ⲻ�ܶ�λ����Ԫ���豣���ݸ���˹�����������ȫ����д')
+E                   math_agent.util.AgentError: ���ⲻ�ܶ�λ����Ԫ���豣���ݸ���˹�����������ȫ����д
+
+src\math_agent\pipeline.py:566: AgentError
+___ test_valid_mapping_survives_transient_review_failure_without_reproposal ___
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/t/lab-red/test_valid_mapping_survives_tr0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000132CDC977A0>
+
+    def test_valid_mapping_survives_transient_review_failure_without_reproposal(tmp_path,monkeypatch):
+        _,p,plan,provider,compiles=setup_recovery(tmp_path,monkeypatch,fail_after=True)
+>       with pytest.raises(AgentError,match='post-insertion'):p.lecture(plan)
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'post-insertion'
+E         Actual message: '���ⲻ�ܶ�λ����Ԫ���豣���ݸ���˹�����������ȫ����д'
+
+tests\test_reference_recovery.py:107: AssertionError
+_____ test_semantically_bad_grounded_mapping_cannot_bypass_next_reviewer ______
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/t/lab-red/test_semantically_bad_grounded0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000132CDD16D80>
+
+    def test_semantically_bad_grounded_mapping_cannot_bypass_next_reviewer(tmp_path,monkeypatch):
+        _,p,plan,provider,compiles=setup_recovery(tmp_path,monkeypatch,bad_semantics=True)
+        with pytest.raises(AgentError) as error:p.lecture(plan)
+>       assert error.value.code=='MATH_REVIEW_BLOCKED' and not compiles
+E       AssertionError: assert ('REPAIR_SCOPE_UNCLEAR' == 'MATH_REVIEW_BLOCKED'
+E         
+E         - MATH_REVIEW_BLOCKED
+E         + REPAIR_SCOPE_UNCLEAR)
+
+tests\test_reference_recovery.py:117: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_reference_recovery.py::test_pipeline_recovers_labels_then_repeats_checks_and_retains_raw_candidate
+FAILED tests/test_reference_recovery.py::test_valid_mapping_survives_transient_review_failure_without_reproposal
+FAILED tests/test_reference_recovery.py::test_semantically_bad_grounded_mapping_cannot_bypass_next_reviewer
+3 failed, 11 passed, 1 deselected in 5.72s

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="28.998" timestamp="2026-09-20T04:02:46.831713+08:00" hostname="Asuna"><testcase classname="tests.e2e.test_budget_recovery" name="test_explicit_budget_increase_preserves_approval_and_partial_drafts" time="28.665"><failure message="playwright._impl._errors.Error: Locator.get_attribute: Error: strict mode violation: locator(&quot;a.artifact-link&quot;).filter(has_text=&quot;quality_report.json&quot;) resolved to 2 elements:&#10;    1) &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; class=&quot;artifact-link&quot; data-artifact-id=&quot;36dc65fa92b04b6f8d8f16c3576f8d96&quot; href=&quot;/api/artifacts/36dc65fa92b04b6f8d8f16c3576f8d96&quot;&gt;…&lt;/a&gt; aka get_by_role(&quot;link&quot;, name=&quot;quality_report.json 版本 2 · draft · application/json SHA-256 b12bb2d41ba2449c347a7cd147e89b7a98c48438609e179d0c2f258f177ffe04&quot;, exact=True)&#10;    2) &lt;a rel=&quot;noopener&quot; target=&quot;_blank&quot; class=&quot;artifact-link&quot; data-artifact-id=&quot;a0ae2e22e385466b92ea4e4c758e8eaa&quot; href=&quot;/api/artifacts/a0ae2e22e385466b92ea4e4c758e8eaa&quot;&gt;…&lt;/a&gt; aka get_by_role(&quot;link&quot;, name=&quot;quality_report.json 版本 2 · draft · application/json SHA-256 f17e461fcb5ca4cf8a6b532c69750d4bd8eea2f8f1f70542d911a070a7e4b22b&quot;, exact=True)&#10;&#10;Call log:&#10;  - waiting for locator(&quot;a.artifact-link&quot;).filter(has_text=&quot;quality_report.json&quot;)">browser_page = &lt;Page url='http://127.0.0.1:64584/'&gt;
+local_services = ('http://127.0.0.1:64584', WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration2/budget-ui-20260920-02/20260920-040246'))
+
+    def test_explicit_budget_increase_preserves_approval_and_partial_drafts(browser_page, local_services):
+        page = browser_page
+        page.locator('#provider').select_option('mock')
+        page.locator('#topic').fill('数列极限：预算恢复界面测试')
+        page.locator('#trusted-input').check()
+        page.locator('#create-run').click()
+        wait_for_plan(page)
+        submit_recommended(page)
+        confirm_execute_refresh(page)
+        accepted_compile_artifacts(page)
+        rid = page.evaluate("localStorage.getItem('math-agent-run')")
+        assert rid
+        completed = page.request.get(f'/api/runs/{rid}').json()
+        assert completed['input']['provider'] == 'mock' and completed['reviews'] == []
+        runtime = Path(json.loads((local_services[1] / 'context.json').read_text(encoding='utf-8'))['workspace'])
+        store = Store(runtime / 'w' / 'agent.db')
+        limit = completed['budget']['requests']
+        # ONLY this isolated test DB: create an exhausted counter without sending
+        # requests, then use the real Store guard and worker failure transition.
+        with store.transaction() as connection:
+            job = dict(connection.execute("SELECT * FROM jobs WHERE run_id=? AND kind='build' ORDER BY created_at DESC LIMIT 1", (rid,)).fetchone())
+            connection.execute("UPDATE jobs SET status='running',lease_owner=?,lease_deadline=?,fencing_token=fencing_token+1 WHERE id=?",
+                ('synthetic-budget-browser-fixture', time.time() + 300, job['id']))
+            connection.execute('UPDATE runs SET request_count=? WHERE id=?', (limit, rid))
+            job = dict(connection.execute('SELECT * FROM jobs WHERE id=?', (job['id'],)).fetchone())
+        with pytest.raises(AgentError) as error:
+            store.count_request(job, limit, {'fixture': 'SYNTHETIC_COUNTER_NO_API_REQUEST'})
+        assert error.value.code == 'BUDGET_EXHAUSTED'
+        store.finish(job, 'BLOCKED', 'fixture.budget_exhausted', {'code': error.value.code,
+            'message': '界面测试：模拟请求计数耗尽，未发送这些模型请求。'})
+        page.reload()
+        expect(page.locator('[data-testid=run-status]')).to_have_attribute('data-status', 'BLOCKED')
+        expect(page.locator('#budget-summary')).to_contain_text(f'已用 {limit} / 上限 {limit}')
+        expect(page.locator('#retry-run')).to_be_disabled()
+        expect(page.locator('#partial-checkpoints')).to_be_visible()
+        expect(page.locator('#partial-checkpoints')).to_contain_text('全文仍未完成')
+        partials = page.request.get(f'/api/runs/{rid}/partials').json()
+        assert partials and all(part['teacher_review'] == 'NOT_RUN' for part in partials)
+        assert all(part['plan_binding'] == 'UNKNOWN' for part in partials)
+        downloaded = []
+        for part in partials:
+            assert part['status'] == 'PARTIAL'
+            assert {file['kind'] for file in part['downloads']} == {'pdf', 'source', 'checkpoint'}
+            for file in part['downloads']:
+                result = page.request.get(file['url'])
+                assert result.status == 200 and digest(result.body()) == file['sha256']
+                assert result.headers['x-math-agent-status'] == 'PARTIAL'
+                downloaded.append({'name': file['name'], 'sha256': file['sha256'], 'http_status': result.status})
+        page.locator('[data-partial-section]').first.locator('summary').click()
+        expect(page.locator('[data-partial-section]').first).to_contain_text('当前计划关联未核验')
+        page.screenshot(path=str(local_services[1] / 'budget-blocked-partial.png'), full_page=True)
+        before = page.request.get(f'/api/runs/{rid}').json()
+        page.locator('#budget-requests').fill(str(limit + 1))
+        page.locator('#budget-note').fill('测试用户明确增加一次请求；保留既有审批与累计计数。')
+        page.locator('#save-budget').click()
+        expect(page.locator('#budget-summary')).to_contain_text(f'已用 {limit} / 上限 {limit + 1}')
+        expect(page.locator('[data-testid=run-status]')).to_have_attribute('data-status', 'BLOCKED')
+        expect(page.locator('#retry-run')).to_be_enabled()
+        after = page.request.get(f'/api/runs/{rid}').json()
+        assert after['budget']['version'] == 1
+        for key in ('request_count', 'approval', 'error', 'jobs', 'artifacts', 'reviews'):
+            assert after[key] == before[key], key
+        assert after['reviews'] == []
+        page.reload()
+        expect(page.locator('#budget-summary')).to_contain_text(f'已用 {limit} / 上限 {limit + 1}')
+        expect(page.locator('[data-testid=run-status]')).to_have_attribute('data-status', 'BLOCKED')
+        page.screenshot(path=str(local_services[1] / 'budget-increased-no-execution.png'), full_page=True)
+        page.locator('#retry-run').click()
+        expect(page.locator('[data-testid=run-status]')).to_have_attribute('data-status', 'AWAITING_USER_REVIEW', timeout=120_000)
+&gt;       accepted_compile_artifacts(page)
+
+tests\e2e\test_budget_recovery.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\e2e\test_browser_workflows.py:172: in accepted_compile_artifacts
+    report = page.request.get(report_link.get_attribute("href")).json()
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\playwright\sync_api\_generated.py:19470: in get_attribute
+    self._sync(
+.venv\Lib\site-packages\playwright\_impl\_locator.py:469: in get_attribute
+    return await self._frame.get_attribute(
+.venv\Lib\site-packages\playwright\_impl\_frame.py:758: in get_attribute
+    return await self._channel.send(
+.venv\Lib\site-packages\playwright\_impl\_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;playwright._impl._connection.Connection object at 0x000001BD551006E0&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x000001BD55C1B2E0&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: Locator.get_attribute: Error: strict mode violation: locator("a.artifact-link").filter(has_text="quality_report.json") resolved to 2 elements:
+E               1) &lt;a rel="noopener" target="_blank" class="artifact-link" data-artifact-id="36dc65fa92b04b6f8d8f16c3576f8d96" href="/api/artifacts/36dc65fa92b04b6f8d8f16c3576f8d96"&gt;…&lt;/a&gt; aka get_by_role("link", name="quality_report.json 版本 2 · draft · application/json SHA-256 b12bb2d41ba2449c347a7cd147e89b7a98c48438609e179d0c2f258f177ffe04", exact=True)
+E               2) &lt;a rel="noopener" target="_blank" class="artifact-link" data-artifact-id="a0ae2e22e385466b92ea4e4c758e8eaa" href="/api/artifacts/a0ae2e22e385466b92ea4e4c758e8eaa"&gt;…&lt;/a&gt; aka get_by_role("link", name="quality_report.json 版本 2 · draft · application/json SHA-256 f17e461fcb5ca4cf8a6b532c69750d4bd8eea2f8f1f70542d911a070a7e4b22b", exact=True)
+E           
+E           Call log:
+E             - waiting for locator("a.artifact-link").filter(has_text="quality_report.json")
+
+.venv\Lib\site-packages\playwright\_impl\_connection.py:632: Error</failure></testcase></testsuite></testsuites>

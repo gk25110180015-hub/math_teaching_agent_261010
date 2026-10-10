@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="5" time="52.859" timestamp="2026-09-20T01:37:42.917733+08:00" hostname="Asuna"><testcase classname="tests.e2e.test_browser_workflows" name="test_lecture_real_clicks_restore_confirmation" time="17.754" /><testcase classname="tests.e2e.test_browser_workflows" name="test_beamer_exact_deletion_and_addition" time="11.385" /><testcase classname="tests.e2e.test_browser_workflows" name="test_custom_input_is_saved_as_plan_effect" time="3.356" /><testcase classname="tests.e2e.test_browser_workflows" name="test_compile_failure_retry_does_not_return_to_confirmation" time="7.249" /><testcase classname="tests.e2e.test_browser_workflows" name="test_reference_bibliography_opt_in_preserves_sources" time="12.915"><failure message="AssertionError: assert '\\bibitem{BradyWeil} WEIL R R, BRADY N C. \\emph{The Nature and Properties of Soils}（15th ed.）[M]. Harlow: Pearson, 2017.\n' in '\\documentclass[aspectratio=169,10pt,fontset=fandol]{ctexbeamer}\n\\usepackage{amsmath,amssymb,mathtools,bm,mathrsfs}...e{footline}{\\leavevmode\\hbox to\\paperwidth{\\hfill{\\footnotesize\\insertframenumber}\\hspace*{1em}}\\vskip3pt}\r\n'&#10; +  where '\\bibitem{BradyWeil} WEIL R R, BRADY N C. \\emph{The Nature and Properties of Soils}（15th ed.）[M]. Harlow: Pearson, 2017.\n' = &lt;built-in method replace of str object at 0x0000029F38F18160&gt;('\r\n', '\n')&#10; +    where &lt;built-in method replace of str object at 0x0000029F38F18160&gt; = '\\bibitem{BradyWeil} WEIL R R, BRADY N C. \\emph{The Nature and Properties of Soils}（15th ed.）[M]. Harlow: Pearson, 2017.\r\n'.replace">browser_page = &lt;Page url='http://127.0.0.1:53742/'&gt;
+local_services = ('http://127.0.0.1:53742', WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration2/ui-e2e/20260920-013743'))
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/2e9b52b4/test_reference_bibliography_op0')
+
+    def test_reference_bibliography_opt_in_preserves_sources(browser_page, local_services, tmp_path):
+        page = browser_page
+        manuscript = PROJECT.parent / "大学数学（一）(1).tex"
+        if not manuscript.is_file():
+            pytest.skip("The local complete manuscript is required for provenance-backed bibliography E2E")
+        manuscript_bytes = manuscript.read_bytes()
+        manuscript_text = manuscript_bytes.decode("utf-8-sig")
+        manuscript_hash = hashlib.sha256(manuscript_bytes).hexdigest()
+        source = tmp_path / "书目回归.tex"
+        source_bytes = r"""\documentclass{ctexart}
+    \usepackage{amsmath,amssymb,amsthm}
+    \newtheorem{definition}{定义}
+    \begin{document}
+    \section{引用来源核对}
+    \begin{definition}函数是两个集合之间满足唯一对应条件的映射。\end{definition}
+    土壤性质的背景材料见文献\cite{BradyWeil}。
+    \end{document}
+    """.encode("utf-8")
+        source.write_bytes(source_bytes)
+        source_hash = hashlib.sha256(source_bytes).hexdigest()
+        page.locator("#workflow").select_option("beamer.from_tex")
+        bibliography = page.locator("#reference-bibliography")
+        expect(bibliography).to_be_enabled()
+        assert not bibliography.is_checked()
+        bibliography.check()
+        page.locator("#provider").select_option("mock")
+        page.locator("#source-file").set_input_files(str(source))
+        page.locator("#trusted-input").check()
+        with page.expect_response(lambda response: response.url.endswith("/api/runs") and response.request.method == "POST") as created:
+            page.locator("#create-run").click()
+        assert created.value.status == 201
+        run_id = created.value.json()["id"]
+        wait_for_plan(page)
+        run = page.request.get(f"/api/runs/{run_id}").json()
+        payload = run["input"]
+        enrichment = run["plan"]["source_enrichment"]
+        assert payload["provider"] == "mock" and payload["use_reference_bibliography"] is True
+        assert enrichment == payload["source_enrichment"]
+        assert enrichment["added_keys"] == ["BradyWeil"]
+        assert enrichment["unresolved_keys"] == [] and enrichment["conflicting_keys"] == []
+        assert enrichment["original_upload_sha256"] == source_hash
+        assert enrichment["manuscript_bytes_sha256"] == manuscript_hash
+        assert enrichment["manuscript_text_sha256"] == hashlib.sha256(manuscript_text.encode("utf-8")).hexdigest()
+        assert enrichment["authorization"] == "explicit_input_option_pending_plan_confirmation"
+        entry = enrichment["entries"][0]
+        assert entry["key"] == "BradyWeil" and entry["source_file"] == manuscript.name
+        assert entry["raw_tex"] == manuscript_text[entry["start"]:entry["end"]]
+        assert "The Nature and Properties of Soils" in entry["raw_tex"]
+        assert entry["sha256"] == hashlib.sha256(entry["raw_tex"].encode("utf-8")).hexdigest()
+        assert payload["source_key"] != payload["original_source_key"]
+        runtime = Path(json.loads((local_services[1] / "context.json").read_text(encoding="utf-8"))["workspace"]) / "w"
+        original_snapshot = runtime / payload["original_source_key"] / payload["main_file"]
+        original_upload = runtime / payload["original_upload_key"]
+        prepared_source = runtime / payload["source_key"] / payload["main_file"]
+        assert original_snapshot.read_bytes() == source_bytes
+        assert original_upload.read_bytes() == source_bytes
+        # Universal newline reading is appropriate for the generated text; the exact
+        # input and manuscript byte hashes are verified independently above/below.
+        assert entry["raw_tex"].replace("\r\n", "\n") in prepared_source.read_text(encoding="utf-8")
+        provenance = page.locator("details").filter(has=page.locator("summary").filter(has_text="从完整原稿补齐的书目与出处（本次确认范围）"))
+        expect(provenance).to_have_attribute("open", "")
+        for visible_value in ["BradyWeil", manuscript.name, source_hash, manuscript_hash, entry["sha256"], "The Nature and Properties of Soils"]:
+            expect(provenance).to_contain_text(visible_value)
+        page.screenshot(path=str(local_services[1] / "bibliography-plan.png"), full_page=True)
+        previous_plan_hash = run["plan"]["hash"]
+        page.reload()
+        wait_for_plan(page)
+        expect(provenance).to_be_visible()
+        restored = page.request.get(f"/api/runs/{run_id}").json()
+        assert restored["plan"]["hash"] == previous_plan_hash
+        assert restored["input"]["use_reference_bibliography"] is True
+        assert restored["plan"]["source_enrichment"] == enrichment
+        submit_recommended(page)
+        confirm_execute_refresh(page)
+        report, generated = accepted_compile_artifacts(page)
+        assert report["fidelity"]["status"] == "PASS"
+        assert r"\cite{BradyWeil}" in generated
+&gt;       assert entry["raw_tex"].replace("\r\n", "\n") in generated
+E       AssertionError: assert '\\bibitem{BradyWeil} WEIL R R, BRADY N C. \\emph{The Nature and Properties of Soils}（15th ed.）[M]. Harlow: Pearson, 2017.\n' in '\\documentclass[aspectratio=169,10pt,fontset=fandol]{ctexbeamer}\n\\usepackage{amsmath,amssymb,mathtools,bm,mathrsfs}...e{footline}{\\leavevmode\\hbox to\\paperwidth{\\hfill{\\footnotesize\\insertframenumber}\\hspace*{1em}}\\vskip3pt}\r\n'
+E        +  where '\\bibitem{BradyWeil} WEIL R R, BRADY N C. \\emph{The Nature and Properties of Soils}（15th ed.）[M]. Harlow: Pearson, 2017.\n' = &lt;built-in method replace of str object at 0x0000029F38F18160&gt;('\r\n', '\n')
+E        +    where &lt;built-in method replace of str object at 0x0000029F38F18160&gt; = '\\bibitem{BradyWeil} WEIL R R, BRADY N C. \\emph{The Nature and Properties of Soils}（15th ed.）[M]. Harlow: Pearson, 2017.\r\n'.replace
+
+tests\e2e\test_browser_workflows.py:413: AssertionError</failure></testcase></testsuite></testsuites>

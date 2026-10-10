@@ -1,0 +1,74 @@
+................F....................................................... [ 72%]
+...........................                                              [100%]
+================================== FAILURES ===================================
+______ test_actual_captured_table_compiles_as_tex_and_keeps_layout_gate _______
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/t/tm1/test_actual_captured_table_com0')
+
+    @pytest.mark.windows_compile
+    def test_actual_captured_table_compiles_as_tex_and_keeps_layout_gate(tmp_path):
+        from math_agent.compiler import TexCompiler
+        from math_agent.pipeline import render_lecture
+        from math_agent.util import write_json
+        unit=captured_units()['units']['patch']
+        plan={'lecture':{'answers_location':'end'}}
+        spec={'id':'S05','title':'����ѡ��'}
+        section={'section_id':'S05','units':[unit],'calculations':[],'uncertainties':[]}
+        normalized,evidence=normalize_written_section(section)
+        assert normalized==section and evidence['status']=='PASS'
+        source=tmp_path/'source';source.mkdir()
+>       (source/'lecture.tex').write_bytes(render_lecture('ʵ�ʱ����﷨̽��',[(spec,normalized)],plan).encode('utf-8'))
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_text_math_scopes.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+title = 'ʵ�ʱ����﷨̽��'
+sections = [({'id': 'S05', 'title': '����ѡ��'}, {'section_id': 'S05', 'units': [{'id': 'S05.U02', 'kind': 'theorem', 'tex': '\\label...һ�ַ���������ʡ�����еĶ������������ر��ǣ�������Ϊĳ�������н��ֱ�Ӱ���������������ʹ�ó˻����޷���', 'relates_to': None}], 'calculations': [], 'uncertainties': []})]
+plan = {'lecture': {'answers_location': 'end'}}
+
+    def render_lecture(title, sections, plan):
+        from .parsing import _mask_verbatim, uncomment
+        body, tail_answers = [], []
+        exercise_prefix='mathagent:exercise:'
+        for spec, generated in sections:
+            body.append('\\section{' + plain_tex(spec['title']) + '}\\label{sec:'+spec['id']+'}\n')
+            units = generated['units']
+            by_id = {u['id']: u for u in units}
+            exercise_labels={u['id']:exercise_prefix+digest([spec['id'],u['id']])
+                             for u in units if u['kind']=='exercise'}
+            for unit in units:
+                tex, kind = unit['tex'], unit['kind']
+                if re.search(r'\\label\s*\{'+re.escape(exercise_prefix),uncomment(_mask_verbatim(tex))):
+                    raise AgentError('RESERVED_LABEL_BLOCKED','����ʹ���˳���������ϰ��ǩǰ׺������ԭ�岢��ֹ���ó�ͻ')
+                is_exercise_answer = kind == 'solution' and by_id.get(unit.get('relates_to'),{}).get('kind') == 'exercise'
+                relocate_answer=is_exercise_answer and plan.get('lecture',{}).get('answers_location') == 'end'
+                rendered = '% UNIT ' + unit['id'] + '\n'
+                if kind in ('definition','theorem','example','exercise'):
+                    label='\\label{'+exercise_labels[unit['id']]+'}\n' if kind=='exercise' else ''
+                    rendered += f'\\begin{{{kind}}}\n{label}{tex}\n\\end{{{kind}}}\n'
+                elif kind == 'proof':
+                    rendered += '\\begin{proof}\n' + tex + '\n\\end{proof}\n'
+                elif kind == 'solution':
+                    if relocate_answer:
+                        target=exercise_labels[unit['relates_to']]
+                        heading='\\hyperref['+target+']{��ϰ \\ref*{'+target+'} �Ľ��}'
+                    else:
+                        heading='�⣺'
+                    rendered += '\\par\\noindent\\textbf{'+heading+'}' + tex + '\\par\n'
+                else:
+                    rendered += tex + '\\par\n'
+                if relocate_answer:
+                    tail_answers.append(rendered)
+                else:
+                    body.append(rendered)
+        if tail_answers:
+            body += ['\\section*{��ϰ��}\n'] + tail_answers
+>       mock_label = '\\par\\noindent ���ߺϳ���ʾ����������ʵģ�ͶԱ�ר��Ľ�ѧ���ա�\\par\n' if plan['provider'] == 'mock' else ''
+                                                                          ^^^^^^^^^^^^^^^^
+E       KeyError: 'provider'
+
+src\math_agent\pipeline.py:75: KeyError
+=========================== short test summary info ===========================
+FAILED tests/test_text_math_scopes.py::test_actual_captured_table_compiles_as_tex_and_keeps_layout_gate
+1 failed, 98 passed in 32.64s

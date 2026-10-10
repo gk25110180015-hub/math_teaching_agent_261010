@@ -1,0 +1,62 @@
+F........                                                                [100%]
+================================== FAILURES ===================================
+_ test_reviewer_timeout_reuses_unchecked_writer_but_reruns_normalize_math_review_compile _
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/draft_recovery_fixed/test_reviewer_timeout_reuses_u0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000020AD1747590>
+
+    @pytest.mark.unit
+    def test_reviewer_timeout_reuses_unchecked_writer_but_reruns_normalize_math_review_compile(tmp_path,monkeypatch):
+        from math_agent import mathcheck,lecture_fragments
+        provider=OfflineProvider(fail_review=True)
+        service,pipeline,plan=setup_pipeline(tmp_path,provider)
+        calls={'normalize':0,'math':0,'compile':0}
+        original_normalize=lecture_fragments.normalize_written_section
+        original_math=mathcheck.check_math
+        def normalize(data):
+            calls['normalize']+=1
+            return original_normalize(data)
+        def math(data):
+            calls['math']+=1
+            return original_math(data)
+        def compile(self,source,entry,build):
+            calls['compile']+=1
+            build.mkdir()
+            return {'status':'PASS','issues':[],'passes':2,'page_count':1,'pdf_path':None,'fixture':'OFFLINE_FAKE_COMPILER'}
+        monkeypatch.setattr(lecture_fragments,'normalize_written_section',normalize)
+        monkeypatch.setattr(mathcheck,'check_math',math)
+        monkeypatch.setattr(Pipeline,'compile',compile)
+        with pytest.raises(AgentError,match='reviewer timeout'):
+            pipeline.lecture(plan)
+        original_candidate=next(pipeline.build_root.glob('sS01*/candidate.json'))
+        original_hash=digest(original_candidate.read_bytes())
+        with service.store.connect() as c:assert c.execute('SELECT count(*) FROM steps').fetchone()[0]==0
+        service.store.finish(pipeline.job,'FAILED','review.section.S01',{'code':'PROVIDER_TIMEOUT'})
+        service.retry(pipeline.run['id'])
+        job=service.store.claim('offline-resumed')
+        resumed=Pipeline(pipeline.settings,service.store,job)
+        resumed.provider=provider
+        completed,_=resumed.lecture(plan)
+        assert provider.writer_calls==1 and provider.review_calls==2
+        assert calls=={'normalize':2,'math':2,'compile':1}
+        assert len(completed)==1 and digest(original_candidate.read_bytes())==original_hash
+        assert len(list(resumed.build_root.glob('sS01*/candidate.json')))==2
+        assert len(list(resumed.build_root.glob('sS01*/candidate-normalization.json')))==2
+        with service.store.connect() as c:
+            assert c.execute('SELECT count(*) FROM steps').fetchone()[0]==1
+            assert c.execute("SELECT count(*) FROM events WHERE type='writer.draft_reused'").fetchone()[0]==1
+        # Only the ordinary completed section checkpoint may skip subsequent checks.
+        resumed.lecture(plan)
+>       assert calls=={'normalize':2,'math':2,'compile':1}
+E       AssertionError: assert {'normalize':... 'compile': 2} == {'normalize':... 'compile': 1}
+E         
+E         Differing items:
+E         {'normalize': 3} != {'normalize': 2}
+E         {'compile': 2} != {'compile': 1}
+E         {'math': 3} != {'math': 2}
+E         Use -v to get more diff
+
+tests\test_draft_recovery.py:97: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_draft_recovery.py::test_reviewer_timeout_reuses_unchecked_writer_but_reruns_normalize_math_review_compile
+1 failed, 8 passed in 1.45s

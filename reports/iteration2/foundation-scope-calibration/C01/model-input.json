@@ -1,0 +1,37 @@
+{
+  "plan": {
+    "difficulty": "本科一年级微积分",
+    "exclusions": [
+      "本题教学方案明确禁止引用上确界、下确界及等价的完备性性质。单调有界定理在本题只作为已知结论使用，不证明它。"
+    ],
+    "lecture": {
+      "proof_policy": "key"
+    }
+  },
+  "units": [
+    {
+      "id": "U01",
+      "kind": "theorem",
+      "tex": "\\label{thm:monotone-bounded}单调有界原理：若实数数列 $\\{a_n\\}$ 单调递增且有上界，则 $\\{a_n\\}$ 收敛；若 $\\{a_n\\}$ 单调递减且有下界，则 $\\{a_n\\}$ 收敛。",
+      "relates_to": null
+    },
+    {
+      "id": "U02",
+      "kind": "proof",
+      "tex": "本证明采用以下已知实数性质作为基础：非空且有上界的实数集合存在上确界（最小上界），非空且有下界的实数集合存在下确界（最大下界）。这是实数完备性的上确界与下确界性质，本节直接使用，不展开其公理体系。先考虑单调递增且有上界的情形。设数列的所有项组成的集合为 $A=\\{a_n:n\\in\\mathbb{N}^{+}\\}$。由于 $A$ 非空且有上界，令 $L=\\sup A$。任给 $\\varepsilon>0$，由上确界的性质，$L-\\varepsilon$ 不是 $A$ 的上界，因此存在正整数 $N$，使得 $a_N>L-\\varepsilon$。当 $n\\geq N$ 时，由数列单调递增，有 $L-\\varepsilon<a_N\\leq a_n\\leq L$。于是 $|a_n-L|<\\varepsilon$。根据数列收敛的 $\\varepsilon$--$N$ 定义，$a_n\\to L$。再考虑单调递减且有下界的情形。令 $B=\\{a_n:n\\in\\mathbb{N}^{+}\\}$，并令 $L=\\inf B$。任给 $\\varepsilon>0$，由下确界的性质，存在正整数 $N$，使得 $a_N<L+\\varepsilon$。当 $n\\geq N$ 时，由数列单调递减，有 $L\\leq a_n\\leq a_N<L+\\varepsilon$。因此 $|a_n-L|<\\varepsilon$，从而 $a_n\\to L$。",
+      "relates_to": "U01"
+    }
+  ],
+  "actual_unit_ids": [
+    "U01",
+    "U02"
+  ],
+  "scope": {
+    "kind": "section_local",
+    "current_section": {
+      "title": "单调有界原理"
+    },
+    "pending_sections": []
+  },
+  "instruction": "仅审所提供定理与证明及明确课程限制，不要求提供整章。核查数学正确性和是否使用被明确排除的工具；不要臆造教师审批。"
+}

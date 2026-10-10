@@ -1,0 +1,21 @@
+F.                                                                       [100%]
+================================== FAILURES ===================================
+_ test_explicit_bibliography_opt_in_preserves_raw_upload_and_locks_provenance _
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/i2bibred/test_explicit_bibliography_opt0')
+
+    def test_explicit_bibliography_opt_in_preserves_raw_upload_and_locks_provenance(tmp_path):
+        ref=tmp_path/'refs';ref.mkdir();(ref/'��ѧ��ѧ��һ��(1).tex').write_text(BOOK,encoding='utf-8')
+        settings=Settings(workspace=tmp_path/'work',reference_root=ref)
+        service=Service(settings)
+>       run=service.create(NewRun(workflow_id='beamer.from_tex',trusted_input=True,use_reference_bibliography=True))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for NewRun
+E       use_reference_bibliography
+E         Extra inputs are not permitted [type=extra_forbidden, input_value=True, input_type=bool]
+E           For further information visit https://errors.pydantic.dev/2.13/v/extra_forbidden
+
+tests\test_bibliography_integration.py:16: ValidationError
+=========================== short test summary info ===========================
+FAILED tests/test_bibliography_integration.py::test_explicit_bibliography_opt_in_preserves_raw_upload_and_locks_provenance
+1 failed, 1 passed in 0.35s

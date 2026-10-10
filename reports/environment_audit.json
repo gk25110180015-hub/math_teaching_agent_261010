@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "audited_at": "2026-09-19T15:32:42.766Z",
+  "scope": "M0 initial read-only audit before project environment setup",
+  "workspace": "D:\\研究生阶段\\数学教学agent",
+  "checks": {
+    "operating_system": {
+      "status": "PASS",
+      "evidence": {
+        "os_version": "Microsoft Windows NT 10.0.26200.0",
+        "registry_product_name": "Windows 10 Home China",
+        "display_version": "25H2",
+        "build": "26200.9457"
+      },
+      "note": "Windows 11 build family detected; registry retains legacy Windows 10 product name."
+    },
+    "python": {
+      "status": "PASS",
+      "executable": "D:\\anaconda\\python.exe",
+      "version": "3.12.4"
+    },
+    "uv": {
+      "status": "NOT_INSTALLED",
+      "note": "Absent from initial PATH and base Python distribution. Parent agent is preparing project-local uv."
+    },
+    "xelatex": {
+      "status": "PASS",
+      "executable": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)",
+      "test": "absolute executable --version"
+    },
+    "tex_packages": {
+      "status": "PASS",
+      "evidence": {
+        "ctexart.cls": "d:/texlive/2024/texmf-dist/tex/latex/ctex/ctexart.cls",
+        "ctexbeamer.cls": "d:/texlive/2024/texmf-dist/tex/latex/ctex/ctexbeamer.cls",
+        "beamer.cls": "d:/texlive/2024/texmf-dist/tex/latex/beamer/beamer.cls",
+        "amsmath.sty": "d:/texlive/2024/texmf-dist/tex/latex/amsmath/amsmath.sty",
+        "amssymb.sty": "d:/texlive/2024/texmf-dist/tex/latex/amsfonts/amssymb.sty",
+        "fontspec.sty": "d:/texlive/2024/texmf-dist/tex/latex/fontspec/fontspec.sty",
+        "tabularx.sty": "d:/texlive/2024/texmf-dist/tex/latex/tools/tabularx.sty",
+        "tikz.sty": "d:/texlive/2024/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty",
+        "FandolSong-Regular.otf": "d:/texlive/2024/texmf-dist/fonts/opentype/public/fandol/FandolSong-Regular.otf",
+        "FandolHei-Regular.otf": "d:/texlive/2024/texmf-dist/fonts/opentype/public/fandol/FandolHei-Regular.otf"
+      }
+    },
+    "fonts": {
+      "status": "PASS",
+      "evidence": {
+        "simsun.ttc": true,
+        "simhei.ttf": true,
+        "msyh.ttc": true
+      },
+      "note": "Fandol font files located by kpsewhich; font rendering not yet tested."
+    },
+    "disk": {
+      "status": "PASS",
+      "free_bytes": 253826785280
+    },
+    "port": {
+      "status": "PASS",
+      "endpoint": "127.0.0.1:8765",
+      "test": "socket.bind and close"
+    },
+    "provider": {
+      "status": "NOT_RUN",
+      "api_key_present": false,
+      "live_api_enabled": false,
+      "reason": "No MATH_AGENT_API_KEY in environment; live API disabled. Exposed chat key not used."
+    },
+    "compilation": {
+      "status": "NOT_RUN",
+      "reason": "M0 only checks compiler version; actual Windows compile occurs M2."
+    },
+    "human_visual_review": {
+      "status": "NOT_RUN",
+      "reason": "No generated artifact yet."
+    }
+  },
+  "initial_python_packages": {
+    "fastapi": null,
+    "httpx": "0.27.0",
+    "pydantic": "2.5.3",
+    "pydantic-settings": null,
+    "sqlalchemy": "2.0.30",
+    "alembic": null,
+    "sympy": "1.12",
+    "pylatexenc": null,
+    "pypdfium2": null,
+    "pdfplumber": null,
+    "pytest": "7.4.4",
+    "playwright": null,
+    "uv": null,
+    "jinja2": "3.1.4",
+    "python-multipart": null
+  }
+}

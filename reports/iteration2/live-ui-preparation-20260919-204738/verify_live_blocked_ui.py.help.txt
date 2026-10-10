@@ -1,0 +1,19 @@
+usage: verify_live_blocked_ui.py [-h] [--base-url BASE_URL] [--state STATE]
+                                 [--output OUTPUT]
+                                 [--case {smoke,CH01,CH02,CH03}]
+                                 [--timeout-ms TIMEOUT_MS]
+
+Read-only Edge checks for an existing live BLOCKED budget case. Never starts
+services, calls models, changes budgets, retries, or submits teacher reviews.
+UI checks can PASS while workflow_status remains BLOCKED and full_delivery is
+NOT_RUN. Run only after the intended workspace is already served and idle.
+
+options:
+  -h, --help            show this help message and exit
+  --base-url BASE_URL
+  --state STATE
+  --output OUTPUT       New child of reports/iteration2; must not exist
+  --case {smoke,CH01,CH02,CH03}
+                        Blocked case to inspect; repeat if needed; default
+                        CH03
+  --timeout-ms TIMEOUT_MS

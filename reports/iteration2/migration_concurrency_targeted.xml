@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="77" time="6.542" timestamp="2026-09-20T03:03:17.500966+08:00" hostname="Asuna"><testcase classname="tests.test_migration_concurrency" name="test_transient_wal_busy_retries_whole_bootstrap_without_skipping_migration" time="0.063" /><testcase classname="tests.test_migration_concurrency" name="test_bootstrap_lock_timeout_is_bounded_and_retry_after_unlock_recovers" time="0.368" /><testcase classname="tests.test_migration_concurrency" name="test_non_lock_sql_error_is_not_hidden_or_retried" time="0.002" /><testcase classname="tests.test_migration_concurrency" name="test_repeated_simultaneous_threads_keep_wal_and_single_migration" time="1.327" /><testcase classname="tests.test_migration_concurrency" name="test_separate_processes_can_start_against_same_new_database" time="0.183" /><testcase classname="tests.test_state" name="test_T11_double_execute_single_job" time="0.053" /><testcase classname="tests.test_state" name="test_T12_T13_failure_preserves_approval_retry" time="0.063" /><testcase classname="tests.test_state" name="test_T14_stale_revision_conflict" time="0.030" /><testcase classname="tests.test_state" name="test_T15_restart_persists" time="0.032" /><testcase classname="tests.test_state" name="test_T16_expired_worker_cannot_commit" time="0.063" /><testcase classname="tests.test_state" name="test_T58_cancel_blocks_late_commit" time="0.073" /><testcase classname="tests.test_state" name="test_concurrent_database_migration" time="0.020" /><testcase classname="tests.test_state" name="test_all_pages_and_quality_required_before_test_publication" time="0.098" /><testcase classname="tests.test_answer_recovery_pipeline" name="test_completion_pipeline_compiles_answers_at_end_with_numbered_link" time="0.075"><failure message="FileNotFoundError: [Errno 2] No such file or directory: 'D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\migrate-green\\test_completion_pipeline_compi0\\w\\runs\\88a0df41a08c4f0e9e40dd3fcfbe3092\\answer-recovery\\S01\\9d38fa1a0743757bab97cb78a8cf7388080cf88425f6bc5302d1c51040dd68e8\\attempt-34bda1b76bb1\\.6ea1e1d11f24.tmp'">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/migrate-green/test_completion_pipeline_compi0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000021CD1D56C00&gt;
+
+    @pytest.mark.windows_compile
+    def test_completion_pipeline_compiles_answers_at_end_with_numbered_link(tmp_path, monkeypatch):
+        provider = Provider()
+        service, pipeline, plan, _ = setup(tmp_path, monkeypatch, provider, real_compile=True)
+        approval = copy.deepcopy(service.store.get_run(pipeline.run['id'])['approval'])
+&gt;       completed, reports = pipeline.lecture(plan)
+                             ^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_answer_recovery_pipeline.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\math_agent\pipeline.py:488: in lecture
+    completed,local_reports=self._lecture_sections(plan,forced,preserve_rechecked if forced else None)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\math_agent\pipeline.py:586: in _lecture_sections
+    generated,answer_recovery=recover_missing_answers(self,spec,generated,completed,plan,draft,attempt+1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\math_agent\answer_recovery.py:44: in recover_missing_answers
+    write_json(folder/'before.json', section)
+src\math_agent\util.py:43: in write_json
+    temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2), encoding='utf-8')
+D:\anaconda\Lib\pathlib.py:1047: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/migrate-green/test_completion_pipeline_compi0/w/runs/8...-recovery/S01/9d38fa1a0743757bab97cb78a8cf7388080cf88425f6bc5302d1c51040dd68e8/attempt-34bda1b76bb1/.6ea1e1d11f24.tmp')
+mode = 'w', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\migrate-green\\test_completion_pipeline_compi0\\w\\runs\\88a0df41a08c4f0e9e40dd3fcfbe3092\\answer-recovery\\S01\\9d38fa1a0743757bab97cb78a8cf7388080cf88425f6bc5302d1c51040dd68e8\\attempt-34bda1b76bb1\\.6ea1e1d11f24.tmp'
+
+D:\anaconda\Lib\pathlib.py:1013: FileNotFoundError</failure></testcase><testcase classname="tests.test_answer_recovery_pipeline" name="test_cached_answer_after_review_failure_is_rechecked_not_regenerated" time="0.075"><failure message="FileNotFoundError: [Errno 2] No such file or directory: 'D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\migrate-green\\test_cached_answer_after_revie0\\w\\runs\\4bedab1898f94b57b04c33bee4fe3c01\\answer-recovery\\S01\\9d38fa1a0743757bab97cb78a8cf7388080cf88425f6bc5302d1c51040dd68e8\\attempt-d9df2fdcb4cf\\.fa22fd05573d.tmp'">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/migrate-green/test_cached_answer_after_revie0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000021CD248A690&gt;
+
+    def test_cached_answer_after_review_failure_is_rechecked_not_regenerated(tmp_path, monkeypatch):
+        provider = Provider(fail_once=True)
+        _, pipeline, plan, compiles = setup(tmp_path, monkeypatch, provider)
+        with pytest.raises(AgentError, match='interruption'):
+&gt;           pipeline.lecture(plan)
+
+tests\test_answer_recovery_pipeline.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\math_agent\pipeline.py:488: in lecture
+    completed,local_reports=self._lecture_sections(plan,forced,preserve_rechecked if forced else None)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\math_agent\pipeline.py:586: in _lecture_sections
+    generated,answer_recovery=recover_missing_answers(self,spec,generated,completed,plan,draft,attempt+1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\math_agent\answer_recovery.py:44: in recover_missing_answers
+    write_json(folder/'before.json', section)
+src\math_agent\util.py:43: in write_json
+    temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2), encoding='utf-8')
+D:\anaconda\Lib\pathlib.py:1047: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/migrate-green/test_cached_answer_after_revie0/w/runs/4...-recovery/S01/9d38fa1a0743757bab97cb78a8cf7388080cf88425f6bc5302d1c51040dd68e8/attempt-d9df2fdcb4cf/.fa22fd05573d.tmp')
+mode = 'w', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\migrate-green\\test_cached_answer_after_revie0\\w\\runs\\4bedab1898f94b57b04c33bee4fe3c01\\answer-recovery\\S01\\9d38fa1a0743757bab97cb78a8cf7388080cf88425f6bc5302d1c51040dd68e8\\attempt-d9df2fdcb4cf\\.fa22fd05573d.tmp'
+
+D:\anaconda\Lib\pathlib.py:1013: FileNotFoundError</failure></testcase><testcase classname="tests.test_answer_recovery_pipeline" name="test_added_wrong_calculation_cannot_pass_even_if_model_review_is_empty" time="0.075"><failure message="FileNotFoundError: [Errno 2] No such file or directory: 'D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\migrate-green\\test_added_wrong_calculation_c0\\w\\runs\\2f970f0673c74ac29b9eccdaa7f371d4\\answer-recovery\\S01\\9d38fa1a0743757bab97cb78a8cf7388080cf88425f6bc5302d1c51040dd68e8\\attempt-9df4eec844ba\\.5452b31cf3c2.tmp'">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/migrate-green/test_added_wrong_calculation_c0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000021CD248BB90&gt;
+
+    def test_added_wrong_calculation_cannot_pass_even_if_model_review_is_empty(tmp_path, monkeypatch):
+        provider = Provider(wrong=True)
+        _, pipeline, plan, compiles = setup(tmp_path, monkeypatch, provider)
+        with pytest.raises(AgentError) as error:
+&gt;           pipeline.lecture(plan)
+
+tests\test_answer_recovery_pipeline.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\math_agent\pipeline.py:488: in lecture
+    completed,local_reports=self._lecture_sections(plan,forced,preserve_rechecked if forced else None)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\math_agent\pipeline.py:586: in _lecture_sections
+    generated,answer_recovery=recover_missing_answers(self,spec,generated,completed,plan,draft,attempt+1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\math_agent\answer_recovery.py:44: in recover_missing_answers
+    write_json(folder/'before.json', section)
+src\math_agent\util.py:43: in write_json
+    temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2), encoding='utf-8')
+D:\anaconda\Lib\pathlib.py:1047: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/migrate-green/test_added_wrong_calculation_c0/w/runs/2...-recovery/S01/9d38fa1a0743757bab97cb78a8cf7388080cf88425f6bc5302d1c51040dd68e8/attempt-9df4eec844ba/.5452b31cf3c2.tmp')
+mode = 'w', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\migrate-green\\test_added_wrong_calculation_c0\\w\\runs\\2f970f0673c74ac29b9eccdaa7f371d4\\answer-recovery\\S01\\9d38fa1a0743757bab97cb78a8cf7388080cf88425f6bc5302d1c51040dd68e8\\attempt-9df4eec844ba\\.5452b31cf3c2.tmp'
+
+D:\anaconda\Lib\pathlib.py:1013: FileNotFoundError</failure></testcase><testcase classname="tests.test_answer_recovery_pipeline" name="test_capacity_preflight_is_blocked_and_archived_before_model_call" time="0.010" /><testcase classname="tests.test_answer_completion" name="test_real_fixture_is_exact_preserved_candidate" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_multi_target_append_preserves_every_original_field" time="0.003" /><testcase classname="tests.test_answer_completion" name="test_context_is_detached_and_read_only_to_source" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_reply_order_and_explicit_subset_use_original_target_order" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_invalid_requested_targets_fail_before_proposal[targets0]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_invalid_requested_targets_fail_before_proposal[targets1]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_invalid_requested_targets_fail_before_proposal[targets2]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_invalid_requested_targets_fail_before_proposal[targets3]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_invalid_requested_targets_fail_before_proposal[targets4]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_invalid_requested_targets_fail_before_proposal[targets5]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_invalid_requested_targets_fail_before_proposal[targets6]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_invalid_requested_targets_fail_before_proposal[S02.U18]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_response_scope_is_exact[missing]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_response_scope_is_exact[extra]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_response_scope_is_exact[duplicate]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_response_scope_is_exact[wrong_section]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_response_cannot_replace_section_fields[units]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_response_cannot_replace_section_fields[metadata]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_response_cannot_replace_section_fields[status]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_model_cannot_choose_new_identity_or_relation[id]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_model_cannot_choose_new_identity_or_relation[kind]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_model_cannot_choose_new_identity_or_relation[relates_to]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_collision_does_not_overwrite_or_invent_another_id" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_hundred_unit_capacity_boundary[97-True]" time="0.002" /><testcase classname="tests.test_answer_completion" name="test_hundred_unit_capacity_boundary[98-False]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_duplicate_original_ids_block" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_invalid_original_kind_type_blocks_without_typeerror" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_new_calculations_cannot_bind_existing_or_foreign_units[S02.U19]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_new_calculations_cannot_bind_existing_or_foreign_units[FOREIGN.answer]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_new_calculations_cannot_bind_existing_or_foreign_units[None]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_new_calculations_cannot_bind_existing_or_foreign_units[unit_id3]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_new_calculations_cannot_bind_existing_or_foreign_units[unit_id4]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_calculation_id_collisions_block[existing]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_calculation_id_collisions_block[duplicate]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_calculation_id_collisions_block[fallback]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_new_calculation_fields_cannot_claim_results[status]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_new_calculation_fields_cannot_claim_results[evidence]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_new_calculation_fields_cannot_claim_results[python]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_calculation_limits_are_bounded[unsupported]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_calculation_limits_are_bounded[oversized]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_calculation_limits_are_bounded[nonfinite]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_calculation_limits_are_bounded[total_count]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_answer_cannot_introduce_document_or_teaching_structure[\\section{New theory}]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_answer_cannot_introduce_document_or_teaching_structure[\\input{other.tex}]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_answer_cannot_introduce_document_or_teaching_structure[\\newcommand{\\change}{x}]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_answer_cannot_introduce_document_or_teaching_structure[\\begin{exercise}New question\\end{exercise}]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_answer_cannot_introduce_document_or_teaching_structure[\\begin{theorem}New theorem\\end{theorem}]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_answer_cannot_introduce_document_or_teaching_structure[\\documentclass{book}]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_answer_cannot_introduce_document_or_teaching_structure[\\begin{lemma*}New lemma\\end{lemma*}]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_answer_cannot_introduce_document_or_teaching_structure[\\begin{problem}New problem\\end{problem}]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_empty_new_notes_do_not_clear_old_doubts" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_absent_optional_source_fields_stay_absent_without_additions" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_second_apply_does_not_duplicate_answers" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_bounded_nonblank_answers[blank_body]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_bounded_nonblank_answers[blank_target]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_bounded_nonblank_answers[oversized_body]" time="0.001" /><testcase classname="tests.test_answer_completion" name="test_actual_bounded_sympy_checker_runs_new_answer_request" time="1.702" /><testcase classname="tests.test_answer_completion" name="test_invalid_ast_remains_unchecked_until_original_checker_rejects" time="1.621" /><testcase classname="tests.test_review_scope" name="test_local_review_rejects_outside_section_id_then_rechecks_scope" time="0.004" /><testcase classname="tests.test_review_scope" name="test_persistent_out_of_scope_review_is_blocked_not_silently_removed" time="0.004" /></testsuite></testsuites>

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="1" failures="4" skipped="0" tests="5" time="16.567" timestamp="2026-09-19T23:58:50.748630+08:00" hostname="Asuna"><testcase classname="tests.e2e.test_browser_workflows" name="test_lecture_real_clicks_restore_confirmation" time="6.058"><failure message="playwright._impl._errors.Error: Page.wait_for_function: EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: script-src 'self'&quot;.&#10;&#10;    at eval (&lt;anonymous&gt;)&#10;    at predicate (eval at evaluate (:311:30), &lt;anonymous&gt;:4:60)&#10;    at next (eval at evaluate (:311:30), &lt;anonymous&gt;:29:33)">browser_page = &lt;Page url='http://127.0.0.1:50989/'&gt;
+
+    def test_lecture_real_clicks_restore_confirmation(browser_page):
+        page = browser_page
+        page.locator("#topic").fill("数列极限")
+        page.locator("#difficulty").fill("经济学本科一年级微积分")
+        assert not page.locator("#trusted-input").is_checked()
+        page.locator("#trusted-input").check()
+        page.locator("#create-run").click()
+        wait_for_plan(page)
+        assert page.locator("[data-question-id]").count() &gt; 0
+        for question in page.locator("[data-question-id]").all():
+            assert question.locator(".choice input").last.get_attribute("value") == "CUSTOM"
+            assert question.locator(".choice input:checked").count() == 0
+&gt;       submit_recommended(page)
+
+tests\e2e\test_browser_workflows.py:164: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\e2e\test_browser_workflows.py:135: in submit_recommended
+    page.wait_for_function("document.querySelector('#confirm-plan') &amp;&amp; !document.querySelector('#confirm-plan').disabled")
+.venv\Lib\site-packages\playwright\sync_api\_generated.py:12809: in wait_for_function
+    self._sync(
+.venv\Lib\site-packages\playwright\_impl\_page.py:1153: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\playwright\_impl\_frame.py:941: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+.venv\Lib\site-packages\playwright\_impl\_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;playwright._impl._connection.Connection object at 0x0000027CCD201F70&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x0000027CCE448CC0&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: Page.wait_for_function: EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: script-src 'self'".
+E           
+E               at eval (&lt;anonymous&gt;)
+E               at predicate (eval at evaluate (:311:30), &lt;anonymous&gt;:4:60)
+E               at next (eval at evaluate (:311:30), &lt;anonymous&gt;:29:33)
+
+.venv\Lib\site-packages\playwright\_impl\_connection.py:632: Error</failure></testcase><testcase classname="tests.e2e.test_browser_workflows" name="test_beamer_exact_deletion_and_addition" time="3.276"><failure message="playwright._impl._errors.Error: Page.wait_for_function: EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: script-src 'self'&quot;.&#10;&#10;    at eval (&lt;anonymous&gt;)&#10;    at predicate (eval at evaluate (:311:30), &lt;anonymous&gt;:4:60)&#10;    at next (eval at evaluate (:311:30), &lt;anonymous&gt;:29:33)">browser_page = &lt;Page url='http://127.0.0.1:50989/'&gt;
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/e2e-20260919-235850-299/test_beamer_exact_deletion_and0')
+
+    def test_beamer_exact_deletion_and_addition(browser_page, tmp_path):
+        page = browser_page
+        source = tmp_path / "中文 路径(样例).tex"
+        source.write_text(r"""\documentclass{ctexart}
+    \usepackage{amsmath,amssymb,amsthm}
+    \newtheorem{definition}{定义}
+    \newtheorem{example}{例}
+    \begin{document}
+    \section{数列极限}
+    \begin{definition}若对任意 $\varepsilon&gt;0$，存在 $N$，当 $n&gt;N$ 时 $|a_n-a|&lt;\varepsilon$，则称 $a_n$ 收敛于 $a$。\end{definition}
+    \begin{example}例 3：求 $\lim_{n\to\infty} 1/n$。\end{example}
+    \textbf{解：}由数列极限的定义，极限为 $0$。
+    \section{极限运算}
+    若 $a_n\to a$ 且 $b_n\to b$，则 $a_n+b_n\to a+b$。
+    \end{document}
+    """, encoding="utf-8")
+        page.locator("#workflow").select_option("beamer.from_tex")
+        assert page.locator("#theme option[value=fduclassroom]").count() == 1
+        page.locator("#source-file").set_input_files(str(source))
+        page.locator("#trusted-input").check()
+        page.locator("#create-run").click()
+        wait_for_plan(page)
+        if page.locator("#use-recommended").count():
+            page.locator("#use-recommended").click()
+        page.get_by_text("删除或调整原讲义内容", exact=True).click()
+        example = page.locator(".unit").filter(has_text="例 3").first
+        example.locator("input[type=checkbox]").check()
+        deleted_id = example.locator("input").get_attribute("value")
+        page.get_by_text("添加原讲义之外的内容", exact=True).click()
+        page.locator("#add-content").click()
+        page.get_by_label("新增内容", exact=True).fill("补充例题：求常数数列的极限。")
+        page.get_by_label("插入位置", exact=True).select_option("S01")
+        page.locator("#save-decisions").click()
+&gt;       page.wait_for_function("document.querySelector('#confirm-plan') &amp;&amp; !document.querySelector('#confirm-plan').disabled")
+
+tests\e2e\test_browser_workflows.py:207: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\playwright\sync_api\_generated.py:12809: in wait_for_function
+    self._sync(
+.venv\Lib\site-packages\playwright\_impl\_page.py:1153: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\playwright\_impl\_frame.py:941: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+.venv\Lib\site-packages\playwright\_impl\_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;playwright._impl._connection.Connection object at 0x0000027CCD2941A0&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x0000027CCE817880&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: Page.wait_for_function: EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: script-src 'self'".
+E           
+E               at eval (&lt;anonymous&gt;)
+E               at predicate (eval at evaluate (:311:30), &lt;anonymous&gt;:4:60)
+E               at next (eval at evaluate (:311:30), &lt;anonymous&gt;:29:33)
+
+.venv\Lib\site-packages\playwright\_impl\_connection.py:632: Error</failure></testcase><testcase classname="tests.e2e.test_browser_workflows" name="test_custom_input_is_saved_as_plan_effect" time="3.253"><failure message="assert '关键定理提供完整证明，并明确全部先修条件。' in 'TOPIC → LECTURE\n无穷级数（离线演示）\n\n任务 65de7102092043bfbadfb3240ecc3748\n\n等待您的选择MOCK · 合成内容\n输入\n协作计划\n确认\n生成与检查\n复核与交付\n...lan&quot; }\n#16 · 2026-09-19T15:59:01.312864+00:00 · run.created { &quot;provider&quot;: &quot;mock&quot;, &quot;workflow_id&quot;: &quot;lecture.generate&quot; }'&#10; +  where 'TOPIC → LECTURE\n无穷级数（离线演示）\n\n任务 65de7102092043bfbadfb3240ecc3748\n\n等待您的选择MOCK · 合成内容\n输入\n协作计划\n确认\n生成与检查\n复核与交付\n...lan&quot; }\n#16 · 2026-09-19T15:59:01.312864+00:00 · run.created { &quot;provider&quot;: &quot;mock&quot;, &quot;workflow_id&quot;: &quot;lecture.generate&quot; }' = inner_text()&#10; +    where inner_text = &lt;Locator frame=&lt;Frame name= url='http://127.0.0.1:50989/'&gt; selector='main'&gt;.inner_text&#10; +      where &lt;Locator frame=&lt;Frame name= url='http://127.0.0.1:50989/'&gt; selector='main'&gt; = locator('main')&#10; +        where locator = &lt;Page url='http://127.0.0.1:50989/'&gt;.locator">browser_page = &lt;Page url='http://127.0.0.1:50989/'&gt;
+
+    def test_custom_input_is_saved_as_plan_effect(browser_page):
+        page = browser_page
+        page.locator("#topic").fill("无穷级数")
+        page.locator("#trusted-input").check()
+        page.locator("#create-run").click()
+        wait_for_plan(page)
+        page.locator("#use-recommended").click()
+        question = page.locator("[data-question-id]").first
+        question.locator("input[value=CUSTOM]").check()
+        custom_text = "关键定理提供完整证明，并明确全部先修条件。"
+        question.locator("textarea").fill(custom_text)
+        page.locator("#save-decisions").click()
+        page.get_by_text("本次计划变更（diff）", exact=True).wait_for()
+&gt;       assert custom_text in page.locator("main").inner_text()
+E       assert '关键定理提供完整证明，并明确全部先修条件。' in 'TOPIC → LECTURE\n无穷级数（离线演示）\n\n任务 65de7102092043bfbadfb3240ecc3748\n\n等待您的选择MOCK · 合成内容\n输入\n协作计划\n确认\n生成与检查\n复核与交付\n...lan" }\n#16 · 2026-09-19T15:59:01.312864+00:00 · run.created { "provider": "mock", "workflow_id": "lecture.generate" }'
+E        +  where 'TOPIC → LECTURE\n无穷级数（离线演示）\n\n任务 65de7102092043bfbadfb3240ecc3748\n\n等待您的选择MOCK · 合成内容\n输入\n协作计划\n确认\n生成与检查\n复核与交付\n...lan" }\n#16 · 2026-09-19T15:59:01.312864+00:00 · run.created { "provider": "mock", "workflow_id": "lecture.generate" }' = inner_text()
+E        +    where inner_text = &lt;Locator frame=&lt;Frame name= url='http://127.0.0.1:50989/'&gt; selector='main'&gt;.inner_text
+E        +      where &lt;Locator frame=&lt;Frame name= url='http://127.0.0.1:50989/'&gt; selector='main'&gt; = locator('main')
+E        +        where locator = &lt;Page url='http://127.0.0.1:50989/'&gt;.locator
+
+tests\e2e\test_browser_workflows.py:227: AssertionError</failure></testcase><testcase classname="tests.e2e.test_browser_workflows" name="test_compile_failure_retry_does_not_return_to_confirmation" time="2.708"><failure message="playwright._impl._errors.Error: Page.wait_for_function: EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: script-src 'self'&quot;.&#10;&#10;    at eval (&lt;anonymous&gt;)&#10;    at predicate (eval at evaluate (:311:30), &lt;anonymous&gt;:4:60)&#10;    at next (eval at evaluate (:311:30), &lt;anonymous&gt;:29:33)">browser_page = &lt;Page url='http://127.0.0.1:50989/'&gt;
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/e2e-20260919-235850-299/test_compile_failure_retry_doe0')
+
+    def test_compile_failure_retry_does_not_return_to_confirmation(browser_page, tmp_path):
+        page = browser_page
+        source = tmp_path / "失败恢复(合成).tex"
+        source.write_text(r"""\documentclass{ctexart}
+    \usepackage{amsmath,amsthm}
+    \newtheorem{definition}{定义}
+    \begin{document}
+    \section{编译失败回归}
+    \begin{definition}数列是以正整数为定义域的函数。\end{definition}
+    \undefinedMathAgentFailure
+    \end{document}
+    """, encoding="utf-8")
+        page.locator("#workflow").select_option("beamer.from_tex")
+        page.locator("#source-file").set_input_files(str(source))
+        page.locator("#trusted-input").check()
+        page.locator("#create-run").click()
+        wait_for_plan(page)
+&gt;       submit_recommended(page)
+
+tests\e2e\test_browser_workflows.py:250: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\e2e\test_browser_workflows.py:135: in submit_recommended
+    page.wait_for_function("document.querySelector('#confirm-plan') &amp;&amp; !document.querySelector('#confirm-plan').disabled")
+.venv\Lib\site-packages\playwright\sync_api\_generated.py:12809: in wait_for_function
+    self._sync(
+.venv\Lib\site-packages\playwright\_impl\_page.py:1153: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\playwright\_impl\_frame.py:941: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+.venv\Lib\site-packages\playwright\_impl\_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;playwright._impl._connection.Connection object at 0x0000027CCD2AD850&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x0000027CCEA01B20&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: Page.wait_for_function: EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: script-src 'self'".
+E           
+E               at eval (&lt;anonymous&gt;)
+E               at predicate (eval at evaluate (:311:30), &lt;anonymous&gt;:4:60)
+E               at next (eval at evaluate (:311:30), &lt;anonymous&gt;:29:33)
+
+.venv\Lib\site-packages\playwright\_impl\_connection.py:632: Error</failure></testcase><testcase classname="tests.e2e.test_browser_workflows" name="test_compile_failure_retry_does_not_return_to_confirmation" time="0.708"><error message="failed on teardown with &quot;AssertionError: Browser JavaScript errors: ['Evaluating a string as JavaScript violates the following Content Security Policy directive because \'unsafe-eval\' is not an allowed source of script: script-src \'self\'&quot;.\n']&#10;assert not ['Evaluating a string as JavaScript violates the following Content Security Policy directive because \'unsafe-eval\' is not an allowed source of script: script-src \'self\'&quot;.\n']&quot;">local_services = ('http://127.0.0.1:50989', WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/e2e/20260919-235850'))
+request = &lt;SubRequest 'browser_page' for &lt;Function test_compile_failure_retry_does_not_return_to_confirmation&gt;&gt;
+
+    @pytest.fixture
+    def browser_page(local_services, request):
+        playwright = pytest.importorskip("playwright.sync_api")
+        executable = browser_executable()
+        with playwright.sync_playwright() as manager:
+            try:
+                browser = manager.chromium.launch(headless=True, executable_path=executable)
+            except playwright.Error as error:
+                pytest.skip(f"Browser unavailable: {str(error)[:300]}")
+            context = browser.new_context(viewport={"width": 1440, "height": 1100}, locale="zh-CN")
+            context.tracing.start(screenshots=True, snapshots=True, sources=True)
+            page = context.new_page()
+            errors = []
+            page.on("pageerror", lambda error: errors.append(str(error)))
+            page.goto(local_services[0])
+            page.locator("#new-run-form").wait_for()
+            yield page
+            page.screenshot(path=str(local_services[1] / f"{request.node.name}.png"), full_page=True)
+            context.tracing.stop(path=str(local_services[1] / f"{request.node.name}-trace.zip"))
+            (local_services[1] / f"{request.node.name}-console.json").write_text(json.dumps(errors, ensure_ascii=False, indent=2), encoding="utf-8")
+            browser.close()
+&gt;           assert not errors, f"Browser JavaScript errors: {errors}"
+E           AssertionError: Browser JavaScript errors: ['Evaluating a string as JavaScript violates the following Content Security Policy directive because \'unsafe-eval\' is not an allowed source of script: script-src \'self\'".\n']
+E           assert not ['Evaluating a string as JavaScript violates the following Content Security Policy directive because \'unsafe-eval\' is not an allowed source of script: script-src \'self\'".\n']
+
+tests\e2e\test_browser_workflows.py:124: AssertionError</error></testcase></testsuite></testsuites>

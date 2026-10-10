@@ -1,0 +1,233 @@
+FFFFFF                                                                   [100%]
+================================== FAILURES ===================================
+_ test_global_issue_repairs_only_target_and_rechecks_affected_and_following_sections _
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/global_repair_red/test_global_issue_repairs_only0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002BA0AD0F350>
+
+    @pytest.mark.unit
+    def test_global_issue_repairs_only_target_and_rechecks_affected_and_following_sections(tmp_path,monkeypatch):
+        provider=GlobalRepairProvider();service,p,plan,compiles=setup(tmp_path,provider,monkeypatch)
+>       sections,reports=p.lecture(plan)
+                         ^^^^^^^^^^^^^^^
+
+tests\test_global_repair.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <math_agent.pipeline.Pipeline object at 0x000002BA09E5F2C0>
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+
+    def lecture(self, plan):
+        from .mathcheck import check_math
+        from .calculation_protocol import calculation_protocol
+        from .lecture_fragments import normalize_written_section
+        from .parsing import preflight_tex
+        from .crossrefs import inspect_section_references, local_reference_gate
+        completed, local_reports = [], []
+        for spec in plan['sections']:
+            sid = spec['id']
+            self.stage('BUILDING', 'write.section.' + sid)
+            cache_key = digest([plan['hash'], spec, [digest(g) for _,g in completed], 'writer-v3-calculations-fragments-scoped-review', self.settings.model, self.settings.xelatex_path, 'rules-v1'])
+            cached = self.store.cached_step(self.run['id'], 'section.'+sid, cache_key)
+            if cached:
+                p = within(self.settings.workspace, cached['source_key'])
+                if p.is_file() and digest(p.read_bytes()) == cached['source_hash']:
+                    completed.append((spec,cached['generated']))
+                    local_reports.append(cached['report'])
+                    continue
+            from .retrieval import style_context
+            context = {'section':spec, 'plan':plan, 'completed_sections':[g for _,g in completed], 'topic':self.run['input']['topic'], 'difficulty':plan['difficulty'],
+                       'style_reference':style_context(self.settings.reference_root,self.run['input']['topic']),
+                       'calculation_protocol':calculation_protocol()}
+            generated,draft = self.writer_draft(spec,context)
+            generated, normalization = normalize_written_section(generated)
+            write_json(draft/'candidate-normalization.json', normalization)
+            write_json(draft/'candidate-normalized.json', generated)
+            report = None
+            for attempt in range(self.settings.max_local_repair_attempts + 1):
+                self.stage('LOCAL_REVIEW', 'review.section.' + sid)
+                issues = self.validate_written(spec, generated, plan)
+                issues.extend(normalization['issues'])
+                references = inspect_section_references(spec, generated, completed, plan)
+                issues.extend(references['issues'])
+                for unit in generated['units']:
+                    issues.extend({**issue,'unit_id':unit['id']} for issue in preflight_tex(unit['tex']))
+                math = check_math(generated)
+                issues.extend(math.get('issues', []))
+                review = self.review_units(generated['units'], {'plan':plan,'prior_sections':[g for _,g in completed],'tool_checks':math,
+                    'scope':{'kind':'section_local','current_section':spec,'pending_sections':[s['id'] for s in plan['sections'] if s['id'] not in {x['id'] for x,_ in completed} and s['id']!=sid]}},draft,f'local-{attempt}')
+                if set(review['checked_unit_ids']) != {u['id'] for u in generated['units']}:
+                    issues.append({'rule_id':'REVIEW_COVERAGE','severity':'blocking','message':'����δ����ȫ��ʵ�ʵ�Ԫ'})
+                issues.extend(review['issues'])
+                if generated.get('uncertainties'):
+                    issues.extend({'severity':'review','message':i} for i in generated['uncertainties'])
+                report = {'section_id':sid,'math':math,'llm_review':review, 'issues':issues, 'mock':self.run['input']['provider']=='mock'}
+                write_json(draft/f'review-{attempt}.json',report)
+                blocking = [i for i in issues if i.get('severity','blocking') in ('blocking','review')]
+                if not blocking:
+                    break
+                if attempt >= self.settings.max_local_repair_attempts or self.run['input']['provider']=='mock':
+                    raise AgentError('MATH_REVIEW_BLOCKED', '���ڴ�����ѧ/�����ɵ㣬�ѱ����ݸ壺'+canonical(blocking)[:2000])
+                self.stage('REPAIRING','repair.section.'+sid)
+                before = generated
+                target_ids = {i.get('unit_id') or i.get('location',{}).get('unit_id') for i in blocking}
+                target_ids.discard(None)
+                if not target_ids.issubset({u['id'] for u in before['units']}):
+                    raise AgentError('REPAIR_SCOPE_UNCLEAR','���ⶨλ��δ�ṩ�ĵ�Ԫ�����������޸ķ�Χ')
+                if not target_ids:
+                    raise AgentError('REPAIR_SCOPE_UNCLEAR','���ⲻ�ܶ�λ����Ԫ���豣���ݸ���˹�����������ȫ����д')
+                generated = self.provider.generate('repair_content_unit',{'section':before,'issues':blocking,'allowed_unit_ids':sorted(target_ids),'plan':plan,'calculation_protocol':calculation_protocol()},WrittenSection)
+                write_json(draft/f'repair-{attempt+1}-raw.json',generated)
+                generated, normalization = normalize_written_section(generated)
+                write_json(draft/f'repair-{attempt+1}-normalization.json',normalization)
+                if {u['id'] for u in before['units']} != {u['id'] for u in generated['units']}:
+                    raise AgentError('REPAIR_SCOPE_VIOLATION','�޸�������ɾ��Ԫ')
+                after_by_id = {u['id']:u for u in generated['units']}
+                if any(u != after_by_id[u['id']] for u in before['units'] if u['id'] not in target_ids):
+                    raise AgentError('REPAIR_SCOPE_VIOLATION','�޸��޸���δ��Ȩ��Ԫ')
+                write_json(draft/f'repair-{attempt+1}.json',{'before_hash':digest(before),'after_hash':digest(generated),'section':generated})
+            source = draft/'source'
+            source.mkdir()
+            tex = render_lecture(plan['title'],completed+[(spec,generated)],plan)
+            (source/'lecture.tex').write_text(tex,encoding='utf-8')
+            self.stage('LOCAL_REVIEW','compile.section.'+sid)
+            compile_result = self.compile(source,'lecture.tex',draft/'build')
+            write_json(draft/'compile.json',compile_result)
+            reference_check = local_reference_gate(compile_result, references['pending_labels'])
+            if reference_check['status']=='FAIL':
+                self.assert_compile(compile_result)
+            report['compile']=compile_result
+            report['references']=reference_check
+            checkpoint = {'generated':generated,'report':report,'source_key':(source/'lecture.tex').relative_to(self.settings.workspace).as_posix(),'source_hash':digest((source/'lecture.tex').read_bytes())}
+            self.store.checkpoint(self.job,'section.'+sid,cache_key,checkpoint)
+            completed.append((spec,generated))
+            local_reports.append(report)
+        self.stage('GLOBAL_REVIEW','math.global_interfaces')
+        # Check actual complete bodies plus each adjacent dependency interface.
+        seen={}
+        for _,generated in completed:
+            for u in generated['units']:
+                if u['kind'] in ('definition','theorem','example','exercise'):
+                    key=digest(''.join(u['tex'].split()))
+                    if key in seen:
+                        raise AgentError('DUPLICATE_CONTENT_BLOCKED','�ظ���ѧ��Ԫ��'+seen[key]+' �� '+u['id'])
+                    seen[key]=u['id']
+        for i in range(len(completed)-1):
+            units=completed[i][1]['units']+completed[i+1][1]['units']
+            review=self.review_units(units,{'plan':plan,'scope':{'kind':'adjacent_interface','sections':[completed[i][0]['id'],completed[i+1][0]['id']],
+                'instruction':'Check actual adjacent bodies and their dependency interface. Other plan sections are outside this pair; full coverage is checked separately.'}},self.root,'global-'+str(i))
+            if set(review['checked_unit_ids'])!={u['id'] for u in units} or any(issue['severity'] in ('blocking','review') for issue in review['issues']):
+                write_json(self.root/'global_review_failure.json',review)
+>               raise AgentError('GLOBAL_MATH_BLOCKED','�����½�����/��������δ������⣻�ѱ����������˼�¼')
+E               math_agent.util.AgentError: �����½�����/��������δ������⣻�ѱ����������˼�¼
+
+src\math_agent\pipeline.py:350: AgentError
+______ test_global_repair_cannot_change_other_units_or_ids[mutate_other] ______
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/global_repair_red/test_global_repair_cannot_chan0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002BA0AD0F1D0>
+mode = 'mutate_other'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('mode',['mutate_other','add_unit'])
+    def test_global_repair_cannot_change_other_units_or_ids(tmp_path,monkeypatch,mode):
+        provider=GlobalRepairProvider(mode);_,p,plan,compiles=setup(tmp_path,provider,monkeypatch)
+        with pytest.raises(AgentError) as error:p.lecture(plan)
+>       assert error.value.code=='GLOBAL_REPAIR_SCOPE_VIOLATION'
+E       AssertionError: assert 'GLOBAL_MATH_BLOCKED' == 'GLOBAL_REPAI...OPE_VIOLATION'
+E         
+E         - GLOBAL_REPAIR_SCOPE_VIOLATION
+E         + GLOBAL_MATH_BLOCKED
+
+tests\test_global_repair.py:92: AssertionError
+________ test_global_repair_cannot_change_other_units_or_ids[add_unit] ________
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/global_repair_red/test_global_repair_cannot_chan1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002BA0AD8BDD0>
+mode = 'add_unit'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('mode',['mutate_other','add_unit'])
+    def test_global_repair_cannot_change_other_units_or_ids(tmp_path,monkeypatch,mode):
+        provider=GlobalRepairProvider(mode);_,p,plan,compiles=setup(tmp_path,provider,monkeypatch)
+        with pytest.raises(AgentError) as error:p.lecture(plan)
+>       assert error.value.code=='GLOBAL_REPAIR_SCOPE_VIOLATION'
+E       AssertionError: assert 'GLOBAL_MATH_BLOCKED' == 'GLOBAL_REPAI...OPE_VIOLATION'
+E         
+E         - GLOBAL_REPAIR_SCOPE_VIOLATION
+E         + GLOBAL_MATH_BLOCKED
+
+tests\test_global_repair.py:92: AssertionError
+_ test_global_round_budget_blocks_unresolved_issue_without_unbounded_recursion _
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/global_repair_red/test_global_round_budget_block0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002BA0AD8B5F0>
+
+    @pytest.mark.unit
+    def test_global_round_budget_blocks_unresolved_issue_without_unbounded_recursion(tmp_path,monkeypatch):
+        provider=GlobalRepairProvider('no_progress');_,p,plan,_=setup(tmp_path,provider,monkeypatch,limit=2)
+        with pytest.raises(AgentError) as error:p.lecture(plan)
+        assert error.value.code=='GLOBAL_MATH_BLOCKED'
+>       assert len(provider.repairs)==2 and provider.global_calls==3
+E       assert (0 == 2)
+E        +  where 0 = len([])
+E        +    where [] = <test_global_repair.GlobalRepairProvider object at 0x000002BA0AD8A180>.repairs
+
+tests\test_global_repair.py:102: AssertionError
+_ test_repair_is_persisted_before_following_review_timeout_and_resume_reuses_it _
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/global_repair_red/test_repair_is_persisted_befor0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002BA0AEB67E0>
+
+    @pytest.mark.unit
+    def test_repair_is_persisted_before_following_review_timeout_and_resume_reuses_it(tmp_path,monkeypatch):
+        provider=GlobalRepairProvider(fail_following_once=True);service,p,plan,compiles=setup(tmp_path,provider,monkeypatch)
+>       with pytest.raises(AgentError,match='following-section'):p.lecture(plan)
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'following-section'
+E         Actual message: '�����½�����/��������δ������⣻�ѱ����������˼�¼'
+
+tests\test_global_repair.py:109: AssertionError
+_______ test_corrupt_persisted_global_candidate_fails_before_model_call _______
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/global_repair_red/test_corrupt_persisted_global_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002BA0AEB6DB0>
+
+    @pytest.mark.unit
+    def test_corrupt_persisted_global_candidate_fails_before_model_call(tmp_path,monkeypatch):
+        provider=GlobalRepairProvider(fail_following_once=True);_,p,plan,_=setup(tmp_path,provider,monkeypatch)
+        with pytest.raises(AgentError):p.lecture(plan)
+>       state=json.loads((p.root/'global-repair-state.json').read_text(encoding='utf-8'))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_global_repair.py:125: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+D:\anaconda\Lib\pathlib.py:1027: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/global_repair_red/test_corrupt_persisted_global_0/w/runs/d1fda8c9dc8343c6b4613a80b7a06ef8/global-repair-state.json')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'D:\\�о����׶�\\��ѧ��ѧagent\\math-teaching-agent\\workspace\\global_repair_red\\test_corrupt_persisted_global_0\\w\\runs\\d1fda8c9dc8343c6b4613a80b7a06ef8\\global-repair-state.json'
+
+D:\anaconda\Lib\pathlib.py:1013: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED tests/test_global_repair.py::test_global_issue_repairs_only_target_and_rechecks_affected_and_following_sections
+FAILED tests/test_global_repair.py::test_global_repair_cannot_change_other_units_or_ids[mutate_other]
+FAILED tests/test_global_repair.py::test_global_repair_cannot_change_other_units_or_ids[add_unit]
+FAILED tests/test_global_repair.py::test_global_round_budget_blocks_unresolved_issue_without_unbounded_recursion
+FAILED tests/test_global_repair.py::test_repair_is_persisted_before_following_review_timeout_and_resume_reuses_it
+FAILED tests/test_global_repair.py::test_corrupt_persisted_global_candidate_fails_before_model_call
+6 failed in 1.41s

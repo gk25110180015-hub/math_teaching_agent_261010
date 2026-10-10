@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="16" skipped="0" tests="16" time="0.407" timestamp="2026-09-20T04:33:14.008160+08:00" hostname="Asuna"><testcase classname="tests.test_provider_escape_diagnostics" name="test_real_three_archives_report_every_invalid_escape_without_rewriting[1-offsets0]" time="0.008"><failure message="AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'">number = 1, offsets = [3611, 6353, 6419]
+
+    @pytest.mark.parametrize('number,offsets',[(1,[3611,6353,6419]),(2,[6353,6419]),(3,[6353,6419])])
+    def test_real_three_archives_report_every_invalid_escape_without_rewriting(number,offsets):
+        raw=captured(number);before=digest(raw)
+&gt;       details=module.invalid_json_escape_diagnostics(raw)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'
+
+tests\test_provider_escape_diagnostics.py:21: AttributeError</failure></testcase><testcase classname="tests.test_provider_escape_diagnostics" name="test_real_three_archives_report_every_invalid_escape_without_rewriting[2-offsets1]" time="0.012"><failure message="AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'">number = 2, offsets = [6353, 6419]
+
+    @pytest.mark.parametrize('number,offsets',[(1,[3611,6353,6419]),(2,[6353,6419]),(3,[6353,6419])])
+    def test_real_three_archives_report_every_invalid_escape_without_rewriting(number,offsets):
+        raw=captured(number);before=digest(raw)
+&gt;       details=module.invalid_json_escape_diagnostics(raw)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'
+
+tests\test_provider_escape_diagnostics.py:21: AttributeError</failure></testcase><testcase classname="tests.test_provider_escape_diagnostics" name="test_real_three_archives_report_every_invalid_escape_without_rewriting[3-offsets2]" time="0.008"><failure message="AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'">number = 3, offsets = [6353, 6419]
+
+    @pytest.mark.parametrize('number,offsets',[(1,[3611,6353,6419]),(2,[6353,6419]),(3,[6353,6419])])
+    def test_real_three_archives_report_every_invalid_escape_without_rewriting(number,offsets):
+        raw=captured(number);before=digest(raw)
+&gt;       details=module.invalid_json_escape_diagnostics(raw)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'
+
+tests\test_provider_escape_diagnostics.py:21: AttributeError</failure></testcase><testcase classname="tests.test_provider_escape_diagnostics" name="test_valid_escapes_including_quotes_slashes_and_unicode_are_not_flagged[{&quot;tex&quot;: &quot;\\\\leq \\\\qquad \\\\\\\\ \\\\\\&quot; \\\\/&quot;}]" time="0.000"><failure message="AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'">raw = '{"tex": "\\\\leq \\\\qquad \\\\\\\\ \\\\\\" \\\\/"}'
+
+    @pytest.mark.parametrize('raw',[
+        json.dumps({'tex':r'\leq \qquad \\ \" \/'}),
+        r'{"text":"\"quoted\" \\q \/ \b \f \n \r \t \u4e2d \uD83D\uDE00"}',
+        r'{"path":"C:\\new\\test","value":"end\\"}',
+    ])
+    def test_valid_escapes_including_quotes_slashes_and_unicode_are_not_flagged(raw):
+        json.loads(raw)
+&gt;       assert module.invalid_json_escape_diagnostics(raw)['issues']==[]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'
+
+tests\test_provider_escape_diagnostics.py:37: AttributeError</failure></testcase><testcase classname="tests.test_provider_escape_diagnostics" name="test_valid_escapes_including_quotes_slashes_and_unicode_are_not_flagged[{&quot;text&quot;:&quot;\\&quot;quoted\\&quot; \\\\q \\/ \\b \\f \\n \\r \\t \\u4e2d \\uD83D\\uDE00&quot;}]" time="0.001"><failure message="AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'">raw = '{"text":"\\"quoted\\" \\\\q \\/ \\b \\f \\n \\r \\t \\u4e2d \\uD83D\\uDE00"}'
+
+    @pytest.mark.parametrize('raw',[
+        json.dumps({'tex':r'\leq \qquad \\ \" \/'}),
+        r'{"text":"\"quoted\" \\q \/ \b \f \n \r \t \u4e2d \uD83D\uDE00"}',
+        r'{"path":"C:\\new\\test","value":"end\\"}',
+    ])
+    def test_valid_escapes_including_quotes_slashes_and_unicode_are_not_flagged(raw):
+        json.loads(raw)
+&gt;       assert module.invalid_json_escape_diagnostics(raw)['issues']==[]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'
+
+tests\test_provider_escape_diagnostics.py:37: AttributeError</failure></testcase><testcase classname="tests.test_provider_escape_diagnostics" name="test_valid_escapes_including_quotes_slashes_and_unicode_are_not_flagged[{&quot;path&quot;:&quot;C:\\\\new\\\\test&quot;,&quot;value&quot;:&quot;end\\\\&quot;}]" time="0.000"><failure message="AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'">raw = '{"path":"C:\\\\new\\\\test","value":"end\\\\"}'
+
+    @pytest.mark.parametrize('raw',[
+        json.dumps({'tex':r'\leq \qquad \\ \" \/'}),
+        r'{"text":"\"quoted\" \\q \/ \b \f \n \r \t \u4e2d \uD83D\uDE00"}',
+        r'{"path":"C:\\new\\test","value":"end\\"}',
+    ])
+    def test_valid_escapes_including_quotes_slashes_and_unicode_are_not_flagged(raw):
+        json.loads(raw)
+&gt;       assert module.invalid_json_escape_diagnostics(raw)['issues']==[]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'
+
+tests\test_provider_escape_diagnostics.py:37: AttributeError</failure></testcase><testcase classname="tests.test_provider_escape_diagnostics" name="test_error_coordinates_match_standard_json_decoder[{&quot;tex&quot;:&quot;\\u12G4&quot;}]" time="0.001"><failure message="AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'">raw = '{"tex":"\\u12G4"}'
+
+    @pytest.mark.parametrize('raw',[
+        r'{"tex":"\u12G4"}',r'{"tex":"\u12"}',r'{"tex":"\u"}',
+        '{\n"汉字":"前文",\n"tex":"\\q"}',r'{"tex":"\U1234"}',
+    ])
+    def test_error_coordinates_match_standard_json_decoder(raw):
+        with pytest.raises(json.JSONDecodeError) as error:json.loads(raw)
+&gt;       first=module.invalid_json_escape_diagnostics(raw)['issues'][0]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'
+
+tests\test_provider_escape_diagnostics.py:46: AttributeError</failure></testcase><testcase classname="tests.test_provider_escape_diagnostics" name="test_error_coordinates_match_standard_json_decoder[{&quot;tex&quot;:&quot;\\u12&quot;}]" time="0.000"><failure message="AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'">raw = '{"tex":"\\u12"}'
+
+    @pytest.mark.parametrize('raw',[
+        r'{"tex":"\u12G4"}',r'{"tex":"\u12"}',r'{"tex":"\u"}',
+        '{\n"汉字":"前文",\n"tex":"\\q"}',r'{"tex":"\U1234"}',
+    ])
+    def test_error_coordinates_match_standard_json_decoder(raw):
+        with pytest.raises(json.JSONDecodeError) as error:json.loads(raw)
+&gt;       first=module.invalid_json_escape_diagnostics(raw)['issues'][0]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'
+
+tests\test_provider_escape_diagnostics.py:46: AttributeError</failure></testcase><testcase classname="tests.test_provider_escape_diagnostics" name="test_error_coordinates_match_standard_json_decoder[{&quot;tex&quot;:&quot;\\u&quot;}]" time="0.001"><failure message="AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'">raw = '{"tex":"\\u"}'
+
+    @pytest.mark.parametrize('raw',[
+        r'{"tex":"\u12G4"}',r'{"tex":"\u12"}',r'{"tex":"\u"}',
+        '{\n"汉字":"前文",\n"tex":"\\q"}',r'{"tex":"\U1234"}',
+    ])
+    def test_error_coordinates_match_standard_json_decoder(raw):
+        with pytest.raises(json.JSONDecodeError) as error:json.loads(raw)
+&gt;       first=module.invalid_json_escape_diagnostics(raw)['issues'][0]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'
+
+tests\test_provider_escape_diagnostics.py:46: AttributeError</failure></testcase><testcase classname="tests.test_provider_escape_diagnostics" name="test_error_coordinates_match_standard_json_decoder[{\n&quot;\u6c49\u5b57&quot;:&quot;\u524d\u6587&quot;,\n&quot;tex&quot;:&quot;\\q&quot;}]" time="0.000"><failure message="AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'">raw = '{\n"汉字":"前文",\n"tex":"\\q"}'
+
+    @pytest.mark.parametrize('raw',[
+        r'{"tex":"\u12G4"}',r'{"tex":"\u12"}',r'{"tex":"\u"}',
+        '{\n"汉字":"前文",\n"tex":"\\q"}',r'{"tex":"\U1234"}',
+    ])
+    def test_error_coordinates_match_standard_json_decoder(raw):
+        with pytest.raises(json.JSONDecodeError) as error:json.loads(raw)
+&gt;       first=module.invalid_json_escape_diagnostics(raw)['issues'][0]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'
+
+tests\test_provider_escape_diagnostics.py:46: AttributeError</failure></testcase><testcase classname="tests.test_provider_escape_diagnostics" name="test_error_coordinates_match_standard_json_decoder[{&quot;tex&quot;:&quot;\\U1234&quot;}]" time="0.000"><failure message="AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'">raw = '{"tex":"\\U1234"}'
+
+    @pytest.mark.parametrize('raw',[
+        r'{"tex":"\u12G4"}',r'{"tex":"\u12"}',r'{"tex":"\u"}',
+        '{\n"汉字":"前文",\n"tex":"\\q"}',r'{"tex":"\U1234"}',
+    ])
+    def test_error_coordinates_match_standard_json_decoder(raw):
+        with pytest.raises(json.JSONDecodeError) as error:json.loads(raw)
+&gt;       first=module.invalid_json_escape_diagnostics(raw)['issues'][0]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'
+
+tests\test_provider_escape_diagnostics.py:46: AttributeError</failure></testcase><testcase classname="tests.test_provider_escape_diagnostics" name="test_unterminated_string_and_escape_outside_strings_are_not_repaired" time="0.000"><failure message="AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'">def test_unterminated_string_and_escape_outside_strings_are_not_repaired():
+        raw='{"tex":"unfinished'+chr(92)
+&gt;       details=module.invalid_json_escape_diagnostics(raw)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'
+
+tests\test_provider_escape_diagnostics.py:53: AttributeError</failure></testcase><testcase classname="tests.test_provider_escape_diagnostics" name="test_redaction_precedes_excerpt_slicing_and_keeps_coordinates" time="0.000"><failure message="AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002189EF4F9E0&gt;
+
+    def test_redaction_precedes_excerpt_slicing_and_keeps_coordinates(monkeypatch):
+        secret='SYNTHETIC_PRIVATE_'+'x'*100+'\\q_END'
+        monkeypatch.setenv('MATH_AGENT_API_KEY',secret)
+        raw='{"tex":"'+secret+r' \z"}'
+&gt;       details=module.invalid_json_escape_diagnostics(raw,secret=secret)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'
+
+tests\test_provider_escape_diagnostics.py:63: AttributeError</failure></testcase><testcase classname="tests.test_provider_escape_diagnostics" name="test_diagnostic_work_issue_count_and_serialized_length_are_bounded" time="0.001"><failure message="AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'">def test_diagnostic_work_issue_count_and_serialized_length_are_bounded():
+        raw='{"tex":"'+r'\q'*20000+'"}'
+&gt;       details=module.invalid_json_escape_diagnostics(raw)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'math_agent.provider' has no attribute 'invalid_json_escape_diagnostics'
+
+tests\test_provider_escape_diagnostics.py:73: AttributeError</failure></testcase><testcase classname="tests.test_provider_escape_diagnostics" name="test_real_archives_replayed_through_mock_http_remain_three_failed_requests" time="0.013"><failure message="assert '6353' in '请修复这些结构错误后重新返回完整 JSON。若为JSON转义错误，按标示行列检查所有TeX反斜杠：JSON字符串中每个TeX反斜杠须写两次，包括逗号/分号/空格命令，不能只修第一个位置。不要改变数学正文。不得补造通过状态：[{&quot;column&quot;:3612,&quot;line&quot;:1,&quot;message&quot;:&quot;Invalid \\\\escape&quot;,&quot;offset&quot;:3611,&quot;type&quot;:&quot;invalid_json&quot;}]'">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/je0/test_real_archives_replayed_th0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002189EF4CE90&gt;
+
+    def test_real_archives_replayed_through_mock_http_remain_three_failed_requests(tmp_path,monkeypatch):
+        texts=[captured(i) for i in (1,2,3)]
+        provider,sent,records,requests=fake_provider(tmp_path,monkeypatch,texts)
+        with pytest.raises(AgentError) as error:provider.generate('writer_lecture_section',{'fixture':'offline'},WrittenSection)
+        assert error.value.code=='INVALID_MODEL_JSON' and len(sent)==len(requests)==3
+        assert [item['messages'][-2]['content'] for item in sent[1:]]==texts[:2]
+        first_feedback=sent[1]['messages'][-1]['content'];second_feedback=sent[2]['messages'][-1]['content']
+&gt;       for value in ('3611','6353','6419','valid_json_example'):assert value in first_feedback
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert '6353' in '请修复这些结构错误后重新返回完整 JSON。若为JSON转义错误，按标示行列检查所有TeX反斜杠：JSON字符串中每个TeX反斜杠须写两次，包括逗号/分号/空格命令，不能只修第一个位置。不要改变数学正文。不得补造通过状态：[{"column":3612,"line":1,"message":"Invalid \\\\escape","offset":3611,"type":"invalid_json"}]'
+
+tests\test_provider_escape_diagnostics.py:101: AssertionError</failure></testcase><testcase classname="tests.test_provider_escape_diagnostics" name="test_fenced_response_diagnostics_use_json_decoder_document_coordinates" time="0.006"><failure message="assert ('JSON decoder document' in '请修复这些结构错误后重新返回完整 JSON。若为JSON转义错误，按标示行列检查所有TeX反斜杠：JSON字符串中每个TeX反斜杠须写两次，包括逗号/分号/空格命令，不能只修第一个位置。不要改变数学正文。不得补造通过状态：[{&quot;column&quot;:53,&quot;line&quot;:1,&quot;message&quot;:&quot;Invalid \\\\escape&quot;,&quot;offset&quot;:52,&quot;type&quot;:&quot;invalid_json&quot;}]')">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/je0/test_fenced_response_diagnosti0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000002189EEE7A10&gt;
+
+    def test_fenced_response_diagnostics_use_json_decoder_document_coordinates(tmp_path,monkeypatch):
+        raw='  ```json\n'+r'{"issues":[],"checked_unit_ids":[],"limitations":["x\q"]}'+'\n```  '
+        valid=json.dumps({'issues':[],'checked_unit_ids':[],'limitations':[]})
+        provider,sent,records,requests=fake_provider(tmp_path,monkeypatch,[raw,valid])
+        assert provider.generate('reviewer_math',{},MathReview)['issues']==[]
+        assert len(requests)==2
+        record=next(item for item in records if 'validation_errors' in item)
+        assert record['validation_errors'][0]['line']==1
+        feedback=sent[1]['messages'][-1]['content']
+&gt;       assert 'JSON decoder document' in feedback and 'x' in feedback
+E       assert ('JSON decoder document' in '请修复这些结构错误后重新返回完整 JSON。若为JSON转义错误，按标示行列检查所有TeX反斜杠：JSON字符串中每个TeX反斜杠须写两次，包括逗号/分号/空格命令，不能只修第一个位置。不要改变数学正文。不得补造通过状态：[{"column":53,"line":1,"message":"Invalid \\\\escape","offset":52,"type":"invalid_json"}]')
+
+tests\test_provider_escape_diagnostics.py:120: AssertionError</failure></testcase></testsuite></testsuites>

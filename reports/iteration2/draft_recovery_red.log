@@ -1,0 +1,209 @@
+FFFFFFFFF                                                                [100%]
+================================== FAILURES ===================================
+_ test_reviewer_timeout_reuses_unchecked_writer_but_reruns_normalize_math_review_compile _
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/draft_recovery_red/test_reviewer_timeout_reuses_u0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000157831471A0>
+
+    @pytest.mark.unit
+    def test_reviewer_timeout_reuses_unchecked_writer_but_reruns_normalize_math_review_compile(tmp_path,monkeypatch):
+        from math_agent import mathcheck,lecture_fragments
+        provider=OfflineProvider(fail_review=True)
+        service,pipeline,plan=setup_pipeline(tmp_path,provider)
+        calls={'normalize':0,'math':0,'compile':0}
+        original_normalize=lecture_fragments.normalize_written_section
+        original_math=mathcheck.check_math
+        def normalize(data):
+            calls['normalize']+=1
+            return original_normalize(data)
+        def math(data):
+            calls['math']+=1
+            return original_math(data)
+        def compile(self,source,entry,build):
+            calls['compile']+=1
+            build.mkdir()
+            return {'status':'PASS','issues':[],'passes':2,'page_count':1,'pdf_path':None,'fixture':'OFFLINE_FAKE_COMPILER'}
+        monkeypatch.setattr(lecture_fragments,'normalize_written_section',normalize)
+        monkeypatch.setattr(mathcheck,'check_math',math)
+        monkeypatch.setattr(Pipeline,'compile',compile)
+        with pytest.raises(AgentError,match='reviewer timeout'):
+            pipeline.lecture(plan)
+        original_candidate=next(pipeline.build_root.glob('sS01*/candidate.json'))
+        original_hash=digest(original_candidate.read_bytes())
+        with service.store.connect() as c:assert c.execute('SELECT count(*) FROM steps').fetchone()[0]==0
+        service.store.finish(pipeline.job,'FAILED','review.section.S01',{'code':'PROVIDER_TIMEOUT'})
+        service.retry(pipeline.run['id'])
+        job=service.store.claim('offline-resumed')
+        resumed=Pipeline(pipeline.settings,service.store,job)
+        resumed.provider=provider
+        completed,_=resumed.lecture(plan)
+>       assert provider.writer_calls==1 and provider.review_calls==2
+E       assert (2 == 1)
+E        +  where 2 = <test_draft_recovery.OfflineProvider object at 0x00000157FFA95DF0>.writer_calls
+
+tests\test_draft_recovery.py:87: AssertionError
+_____ test_unchecked_cache_invalidates_on_every_relevant_change[context] ______
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/draft_recovery_red/test_unchecked_cache_invalidat0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000015783174980>
+change = 'context'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('change',['context','model','prompt','schema','candidate_hash','schema_payload','path_escape'])
+    def test_unchecked_cache_invalidates_on_every_relevant_change(tmp_path,monkeypatch,change):
+        import math_agent.pipeline as module
+        import math_agent.provider as provider_module
+        provider=OfflineProvider()
+        _,pipeline,plan=setup_pipeline(tmp_path,provider)
+        spec=plan['sections'][0]
+        context={'section':spec,'topic':'first'}
+>       _,first_dir=pipeline.writer_draft(spec,context)
+                    ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Pipeline' object has no attribute 'writer_draft'
+
+tests\test_draft_recovery.py:110: AttributeError
+______ test_unchecked_cache_invalidates_on_every_relevant_change[model] _______
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/draft_recovery_red/test_unchecked_cache_invalidat1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000157831761E0>
+change = 'model'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('change',['context','model','prompt','schema','candidate_hash','schema_payload','path_escape'])
+    def test_unchecked_cache_invalidates_on_every_relevant_change(tmp_path,monkeypatch,change):
+        import math_agent.pipeline as module
+        import math_agent.provider as provider_module
+        provider=OfflineProvider()
+        _,pipeline,plan=setup_pipeline(tmp_path,provider)
+        spec=plan['sections'][0]
+        context={'section':spec,'topic':'first'}
+>       _,first_dir=pipeline.writer_draft(spec,context)
+                    ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Pipeline' object has no attribute 'writer_draft'
+
+tests\test_draft_recovery.py:110: AttributeError
+______ test_unchecked_cache_invalidates_on_every_relevant_change[prompt] ______
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/draft_recovery_red/test_unchecked_cache_invalidat2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000015783177F50>
+change = 'prompt'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('change',['context','model','prompt','schema','candidate_hash','schema_payload','path_escape'])
+    def test_unchecked_cache_invalidates_on_every_relevant_change(tmp_path,monkeypatch,change):
+        import math_agent.pipeline as module
+        import math_agent.provider as provider_module
+        provider=OfflineProvider()
+        _,pipeline,plan=setup_pipeline(tmp_path,provider)
+        spec=plan['sections'][0]
+        context={'section':spec,'topic':'first'}
+>       _,first_dir=pipeline.writer_draft(spec,context)
+                    ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Pipeline' object has no attribute 'writer_draft'
+
+tests\test_draft_recovery.py:110: AttributeError
+______ test_unchecked_cache_invalidates_on_every_relevant_change[schema] ______
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/draft_recovery_red/test_unchecked_cache_invalidat3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000015783186F30>
+change = 'schema'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('change',['context','model','prompt','schema','candidate_hash','schema_payload','path_escape'])
+    def test_unchecked_cache_invalidates_on_every_relevant_change(tmp_path,monkeypatch,change):
+        import math_agent.pipeline as module
+        import math_agent.provider as provider_module
+        provider=OfflineProvider()
+        _,pipeline,plan=setup_pipeline(tmp_path,provider)
+        spec=plan['sections'][0]
+        context={'section':spec,'topic':'first'}
+>       _,first_dir=pipeline.writer_draft(spec,context)
+                    ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Pipeline' object has no attribute 'writer_draft'
+
+tests\test_draft_recovery.py:110: AttributeError
+__ test_unchecked_cache_invalidates_on_every_relevant_change[candidate_hash] __
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/draft_recovery_red/test_unchecked_cache_invalidat4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000015783186690>
+change = 'candidate_hash'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('change',['context','model','prompt','schema','candidate_hash','schema_payload','path_escape'])
+    def test_unchecked_cache_invalidates_on_every_relevant_change(tmp_path,monkeypatch,change):
+        import math_agent.pipeline as module
+        import math_agent.provider as provider_module
+        provider=OfflineProvider()
+        _,pipeline,plan=setup_pipeline(tmp_path,provider)
+        spec=plan['sections'][0]
+        context={'section':spec,'topic':'first'}
+>       _,first_dir=pipeline.writer_draft(spec,context)
+                    ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Pipeline' object has no attribute 'writer_draft'
+
+tests\test_draft_recovery.py:110: AttributeError
+__ test_unchecked_cache_invalidates_on_every_relevant_change[schema_payload] __
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/draft_recovery_red/test_unchecked_cache_invalidat5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000157831879B0>
+change = 'schema_payload'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('change',['context','model','prompt','schema','candidate_hash','schema_payload','path_escape'])
+    def test_unchecked_cache_invalidates_on_every_relevant_change(tmp_path,monkeypatch,change):
+        import math_agent.pipeline as module
+        import math_agent.provider as provider_module
+        provider=OfflineProvider()
+        _,pipeline,plan=setup_pipeline(tmp_path,provider)
+        spec=plan['sections'][0]
+        context={'section':spec,'topic':'first'}
+>       _,first_dir=pipeline.writer_draft(spec,context)
+                    ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Pipeline' object has no attribute 'writer_draft'
+
+tests\test_draft_recovery.py:110: AttributeError
+___ test_unchecked_cache_invalidates_on_every_relevant_change[path_escape] ____
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/draft_recovery_red/test_unchecked_cache_invalidat6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000015783184470>
+change = 'path_escape'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('change',['context','model','prompt','schema','candidate_hash','schema_payload','path_escape'])
+    def test_unchecked_cache_invalidates_on_every_relevant_change(tmp_path,monkeypatch,change):
+        import math_agent.pipeline as module
+        import math_agent.provider as provider_module
+        provider=OfflineProvider()
+        _,pipeline,plan=setup_pipeline(tmp_path,provider)
+        spec=plan['sections'][0]
+        context={'section':spec,'topic':'first'}
+>       _,first_dir=pipeline.writer_draft(spec,context)
+                    ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Pipeline' object has no attribute 'writer_draft'
+
+tests\test_draft_recovery.py:110: AttributeError
+________ test_reuse_keeps_only_unchecked_status_and_new_attempt_files _________
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/draft_recovery_red/test_reuse_keeps_only_unchecke0')
+
+    @pytest.mark.unit
+    def test_reuse_keeps_only_unchecked_status_and_new_attempt_files(tmp_path):
+        provider=OfflineProvider()
+        _,pipeline,plan=setup_pipeline(tmp_path,provider)
+        spec=plan['sections'][0];context={'section':spec}
+>       raw,first=pipeline.writer_draft(spec,context)
+                  ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Pipeline' object has no attribute 'writer_draft'
+
+tests\test_draft_recovery.py:148: AttributeError
+=========================== short test summary info ===========================
+FAILED tests/test_draft_recovery.py::test_reviewer_timeout_reuses_unchecked_writer_but_reruns_normalize_math_review_compile
+FAILED tests/test_draft_recovery.py::test_unchecked_cache_invalidates_on_every_relevant_change[context]
+FAILED tests/test_draft_recovery.py::test_unchecked_cache_invalidates_on_every_relevant_change[model]
+FAILED tests/test_draft_recovery.py::test_unchecked_cache_invalidates_on_every_relevant_change[prompt]
+FAILED tests/test_draft_recovery.py::test_unchecked_cache_invalidates_on_every_relevant_change[schema]
+FAILED tests/test_draft_recovery.py::test_unchecked_cache_invalidates_on_every_relevant_change[candidate_hash]
+FAILED tests/test_draft_recovery.py::test_unchecked_cache_invalidates_on_every_relevant_change[schema_payload]
+FAILED tests/test_draft_recovery.py::test_unchecked_cache_invalidates_on_every_relevant_change[path_escape]
+FAILED tests/test_draft_recovery.py::test_reuse_keeps_only_unchecked_status_and_new_attempt_files
+9 failed in 1.36s

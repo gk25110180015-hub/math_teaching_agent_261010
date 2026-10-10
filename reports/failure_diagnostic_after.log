@@ -1,0 +1,27 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+___________ test_failure_diagnostic_is_downloadable_and_secret_free ___________
+
+tmp_path = WindowsPath('D:/�о����׶�/��ѧ��ѧagent/math-teaching-agent/workspace/tfgreen/test_failure_diagnostic_is_dow0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000023122DDFD70>
+
+    def test_failure_diagnostic_is_downloadable_and_secret_free(tmp_path,monkeypatch):
+        from math_agent.worker import Worker
+        from math_agent.pipeline import Pipeline
+        monkeypatch.setenv('MATH_AGENT_API_KEY','synthetic-runtime-failure-secret')
+        def fail(self):raise RuntimeError('test failure synthetic-runtime-failure-secret')
+        monkeypatch.setattr(Pipeline,'plan',fail)
+        service=Service(Settings(workspace=tmp_path))
+        run=service.create(NewRun(workflow_id='lecture.generate',topic='����'))
+        service.propose(run['id']);Worker(service.settings).tick()
+        run=service.store.get_run(run['id'])
+        assert run['status']=='FAILED'
+        evidence=next(a for a in run['artifacts'] if a['name']=='failure_diagnostic.json')
+>       text=(tmp_path/evidence['storage_key']).read_text(encoding='utf-8')
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'storage_key'
+
+tests\test_regressions.py:70: KeyError
+=========================== short test summary info ===========================
+FAILED tests/test_regressions.py::test_failure_diagnostic_is_downloadable_and_secret_free
+1 failed, 6 deselected in 0.35s

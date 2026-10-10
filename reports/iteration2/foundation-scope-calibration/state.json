@@ -1,0 +1,177 @@
+{
+  "created_at": "2026-09-19T19:26:02.262949+00:00",
+  "request_count": 2,
+  "request_limit": 6,
+  "records": [
+    {
+      "type": "request",
+      "role": "reviewer_math",
+      "model": "gpt-6-astra",
+      "attempt": 1,
+      "input_hash": "4f45e3ade30a9db7a771488b60a632f320976cc674e438dd9be8a0dc9889c35b",
+      "temperature": 0.1,
+      "timestamp": "2026-09-19T19:26:02.457625+00:00",
+      "streaming": true
+    },
+    {
+      "type": "result",
+      "role": "reviewer_math",
+      "model": "gpt-6-astra",
+      "attempt": 1,
+      "input_hash": "4f45e3ade30a9db7a771488b60a632f320976cc674e438dd9be8a0dc9889c35b",
+      "temperature": 0.1,
+      "timestamp": "2026-09-19T19:26:02.457625+00:00",
+      "streaming": true,
+      "usage": null,
+      "price": null,
+      "billing_uncertain": true,
+      "http_status": 200,
+      "request_id": "",
+      "headers_elapsed_seconds": 3.515
+    },
+    {
+      "type": "result",
+      "role": "reviewer_math",
+      "model": "gpt-6-astra",
+      "attempt": 1,
+      "input_hash": "4f45e3ade30a9db7a771488b60a632f320976cc674e438dd9be8a0dc9889c35b",
+      "temperature": 0.1,
+      "timestamp": "2026-09-19T19:26:02.457625+00:00",
+      "streaming": true,
+      "usage": {
+        "prompt_tokens": 1627,
+        "completion_tokens": 391,
+        "total_tokens": 2018
+      },
+      "price": null,
+      "billing_uncertain": false,
+      "http_status": 200,
+      "request_id": "",
+      "stream_complete": true,
+      "finish_reason": "stop",
+      "response_id": "resp_0183f185927e8d9d016aaee1cd1a3c87d0bf2fba052cd505ad",
+      "received_content_chars": 696,
+      "elapsed_seconds": 15.281
+    },
+    {
+      "type": "result",
+      "role": "reviewer_math",
+      "prompt_version": 1,
+      "prompt_hash": "86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc",
+      "schema_attempt": 1,
+      "output_hash": "4fe87e5ed30d28a7a7618e28b041dc3b43e839c573c8cba8ac24426bc9356d56"
+    },
+    {
+      "type": "request",
+      "role": "reviewer_math",
+      "model": "gpt-6-astra",
+      "attempt": 1,
+      "input_hash": "35e5dda7bb43cc817b4a26f67b9123ec46a636e71296b5f08ae7b99284253e59",
+      "temperature": 0.1,
+      "timestamp": "2026-09-19T19:26:17.906894+00:00",
+      "streaming": true
+    },
+    {
+      "type": "result",
+      "role": "reviewer_math",
+      "model": "gpt-6-astra",
+      "attempt": 1,
+      "input_hash": "35e5dda7bb43cc817b4a26f67b9123ec46a636e71296b5f08ae7b99284253e59",
+      "temperature": 0.1,
+      "timestamp": "2026-09-19T19:26:17.906894+00:00",
+      "streaming": true,
+      "usage": null,
+      "price": null,
+      "billing_uncertain": true,
+      "http_status": 200,
+      "request_id": "",
+      "headers_elapsed_seconds": 2.547
+    },
+    {
+      "type": "result",
+      "role": "reviewer_math",
+      "model": "gpt-6-astra",
+      "attempt": 1,
+      "input_hash": "35e5dda7bb43cc817b4a26f67b9123ec46a636e71296b5f08ae7b99284253e59",
+      "temperature": 0.1,
+      "timestamp": "2026-09-19T19:26:17.906894+00:00",
+      "streaming": true,
+      "usage": {
+        "prompt_tokens": 1604,
+        "completion_tokens": 258,
+        "total_tokens": 1862
+      },
+      "price": null,
+      "billing_uncertain": false,
+      "http_status": 200,
+      "request_id": "",
+      "stream_complete": true,
+      "finish_reason": "stop",
+      "response_id": "resp_0d5bfeabbd37469c016aaee1dbe3e887d0b48247ed02c7a313",
+      "received_content_chars": 398,
+      "elapsed_seconds": 10.25
+    },
+    {
+      "type": "result",
+      "role": "reviewer_math",
+      "prompt_version": 1,
+      "prompt_hash": "86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc",
+      "schema_attempt": 1,
+      "output_hash": "7dad91592044fd575209b9bdd96665843e2c0dc61bbbfbae7bedadb17ec95a61"
+    }
+  ],
+  "cases": [
+    {
+      "case": "C01",
+      "status": "PASS",
+      "coverage_complete": true,
+      "proof_flagged": true,
+      "expected_flagged": true,
+      "review": {
+        "issues": [
+          {
+            "unit_id": "U02",
+            "severity": "blocking",
+            "message": "证明直接使用课程明确禁止引用的上确界、下确界性质，并对计划规定只作为已知结论使用的单调有界定理进行了证明。虽然数学推理成立，但违反锁定课程限制；“不展开其公理体系”不能消除这一冲突。应移除该证明，将 U01 作为已知结论使用。",
+            "evidence": "plan.exclusions 明确规定“禁止引用上确界、下确界及等价的完备性性质”，且“单调有界定理……只作为已知结论使用，不证明它”。U02 则明确声明采用上确界与下确界性质，并分别令 L=\\sup A、L=\\inf B，据此选取满足 a_N>L-\\varepsilon 或 a_N<L+\\varepsilon 的 N；这些被禁止的性质是证明的关键依据。"
+          }
+        ],
+        "checked_unit_ids": [
+          "U01",
+          "U02"
+        ],
+        "limitations": [
+          "本次仅审阅所提供的 U01、U02 及明确课程限制，不对其他章节或整份课程作判断。",
+          "U01 的两个定理分支假设与结论正确。U02 中集合非空性、有界性、单调性、任意正 ε 下 N 的存在及后续绝对值估计均符合相应数学条件，公式与解释一致；未发现独立于课程限制冲突的数学错误。",
+          "本次为普通模型文本审阅，不是形式化证明，也未检查最终 PDF 的排版与呈现。"
+        ]
+      },
+      "teacher_visual_review": "NOT_RUN"
+    },
+    {
+      "case": "C02",
+      "status": "PASS",
+      "coverage_complete": true,
+      "proof_flagged": false,
+      "expected_flagged": false,
+      "review": {
+        "issues": [],
+        "checked_unit_ids": [
+          "U01",
+          "U02"
+        ],
+        "limitations": [
+          "本次仅核对所提供的 U01 定理、U02 证明及明确课程限制，不涉及其他正文或最终 PDF。",
+          "U01 的两种情形均具备所需的单调性和相应方向的有界性。U02 对非空项集使用上确界、下确界性质，从任意 ε>0 得到正整数 N，再对所有 n≥N 建立严格误差界；所用不等号、量词及极限结论一致，未发现数学错误。",
+          "U02 明确将正确的上确界、下确界性质作为已知实数基础，并以最小上界、最大下界解释其含义，未展开完备性公理体系。这不违反所提供的排除项；本证明依赖这些已声明基础，并非从算术或归纳法独立推导完备性。",
+          "本次属于普通模型数学审阅，不等同于形式化证明；未发现问题不保证不存在遗漏。"
+        ]
+      },
+      "teacher_visual_review": "NOT_RUN"
+    }
+  ],
+  "model": "gpt-6-astra",
+  "prompt_hash": "86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc",
+  "source_sha256": "70844fb00a22a249d25f6e146a9901f8e85fb4fee06e54cb7d6fd31509cafe11",
+  "teacher_visual_review": "NOT_RUN"
+}

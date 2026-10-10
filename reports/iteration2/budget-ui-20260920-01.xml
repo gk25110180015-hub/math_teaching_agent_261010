@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="20.676" timestamp="2026-09-20T04:01:41.620887+08:00" hostname="Asuna"><testcase classname="tests.e2e.test_budget_recovery" name="test_explicit_budget_increase_preserves_approval_and_partial_drafts" time="20.485"><failure message="TypeError: 'NoneType' object is not iterable">browser_page = &lt;Page url='http://127.0.0.1:64759/'&gt;
+local_services = ('http://127.0.0.1:64759', WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration2/budget-ui-20260920-01/20260920-040141'))
+
+    def test_explicit_budget_increase_preserves_approval_and_partial_drafts(browser_page, local_services):
+        page = browser_page
+        page.locator('#provider').select_option('mock')
+        page.locator('#topic').fill('数列极限：预算恢复界面测试')
+        page.locator('#trusted-input').check()
+        page.locator('#create-run').click()
+        wait_for_plan(page)
+        submit_recommended(page)
+        confirm_execute_refresh(page)
+        accepted_compile_artifacts(page)
+        rid = page.evaluate("localStorage.getItem('math-agent-run')")
+        assert rid
+        completed = page.request.get(f'/api/runs/{rid}').json()
+        assert completed['input']['provider'] == 'mock' and completed['reviews'] == []
+        runtime = Path(json.loads((local_services[1] / 'context.json').read_text(encoding='utf-8'))['workspace'])
+        store = Store(runtime / 'agent.db')
+        limit = completed['budget']['requests']
+        # ONLY this isolated test DB: create an exhausted counter without sending
+        # requests, then use the real Store guard and worker failure transition.
+        with store.transaction() as connection:
+&gt;           job = dict(connection.execute("SELECT * FROM jobs WHERE run_id=? AND kind='build' ORDER BY created_at DESC LIMIT 1", (rid,)).fetchone())
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           TypeError: 'NoneType' object is not iterable
+
+tests\e2e\test_budget_recovery.py:42: TypeError</failure></testcase></testsuite></testsuites>

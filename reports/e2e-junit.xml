@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="4" failures="0" skipped="0" tests="4" time="0.271" timestamp="2026-09-19T23:58:20.629897+08:00" hostname="Asuna"><testcase classname="tests.e2e.test_browser_workflows" name="test_lecture_real_clicks_restore_confirmation" time="0.003"><error message="failed on setup with &quot;PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\kuogai\\AppData\\Local\\Temp\\pytest-of-kuogai'&quot;">tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=&lt;pluggy._tracing.TagTracerSub object at 0x00000208884102F0&gt;, _basetemp=None, _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def local_services(tmp_path_factory):
+        evidence = PROJECT / "reports" / "e2e" / time.strftime("%Y%m%d-%H%M%S")
+        evidence.mkdir(parents=True, exist_ok=True)
+&gt;       runtime = tmp_path_factory.mktemp("browser_runtime")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\e2e\test_browser_workflows.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\_pytest\tmpdir.py:136: in mktemp
+    basename = self._ensure_relative_to_basetemp(basename)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:117: in _ensure_relative_to_basetemp
+    if (self.getbasetemp() / basename).resolve().parent != self.getbasetemp():
+        ^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:213: in getbasetemp
+    basetemp = make_numbered_dir_with_cleanup(
+.venv\Lib\site-packages\_pytest\pathlib.py:420: in make_numbered_dir_with_cleanup
+    raise e
+.venv\Lib\site-packages\_pytest\pathlib.py:401: in make_numbered_dir_with_cleanup
+    p = make_numbered_dir(root, prefix, mode)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\pathlib.py:228: in make_numbered_dir
+    max_existing = max(map(parse_num, find_suffixes(root, prefix)), default=-1)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\pathlib.py:187: in extract_suffixes
+    for entry in iter:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+root = WindowsPath('C:/Users/kuogai/AppData/Local/Temp/pytest-of-kuogai')
+prefix = 'pytest-'
+
+    def find_prefixed(root: Path, prefix: str) -&gt; Iterator[os.DirEntry[str]]:
+        """Find all elements in root that begin with the prefix, case-insensitive."""
+        l_prefix = prefix.lower()
+&gt;       for x in os.scandir(root):
+                 ^^^^^^^^^^^^^^^^
+E       PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\kuogai\\AppData\\Local\\Temp\\pytest-of-kuogai'
+
+.venv\Lib\site-packages\_pytest\pathlib.py:175: PermissionError</error></testcase><testcase classname="tests.e2e.test_browser_workflows" name="test_beamer_exact_deletion_and_addition" time="0.000"><error message="failed on setup with &quot;PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\kuogai\\AppData\\Local\\Temp\\pytest-of-kuogai'&quot;">tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=&lt;pluggy._tracing.TagTracerSub object at 0x00000208884102F0&gt;, _basetemp=None, _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def local_services(tmp_path_factory):
+        evidence = PROJECT / "reports" / "e2e" / time.strftime("%Y%m%d-%H%M%S")
+        evidence.mkdir(parents=True, exist_ok=True)
+&gt;       runtime = tmp_path_factory.mktemp("browser_runtime")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\e2e\test_browser_workflows.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\_pytest\tmpdir.py:136: in mktemp
+    basename = self._ensure_relative_to_basetemp(basename)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:117: in _ensure_relative_to_basetemp
+    if (self.getbasetemp() / basename).resolve().parent != self.getbasetemp():
+        ^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:213: in getbasetemp
+    basetemp = make_numbered_dir_with_cleanup(
+.venv\Lib\site-packages\_pytest\pathlib.py:420: in make_numbered_dir_with_cleanup
+    raise e
+.venv\Lib\site-packages\_pytest\pathlib.py:401: in make_numbered_dir_with_cleanup
+    p = make_numbered_dir(root, prefix, mode)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\pathlib.py:228: in make_numbered_dir
+    max_existing = max(map(parse_num, find_suffixes(root, prefix)), default=-1)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\pathlib.py:187: in extract_suffixes
+    for entry in iter:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+root = WindowsPath('C:/Users/kuogai/AppData/Local/Temp/pytest-of-kuogai')
+prefix = 'pytest-'
+
+    def find_prefixed(root: Path, prefix: str) -&gt; Iterator[os.DirEntry[str]]:
+        """Find all elements in root that begin with the prefix, case-insensitive."""
+        l_prefix = prefix.lower()
+&gt;       for x in os.scandir(root):
+                 ^^^^^^^^^^^^^^^^
+E       PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\kuogai\\AppData\\Local\\Temp\\pytest-of-kuogai'
+
+.venv\Lib\site-packages\_pytest\pathlib.py:175: PermissionError</error></testcase><testcase classname="tests.e2e.test_browser_workflows" name="test_custom_input_is_saved_as_plan_effect" time="0.000"><error message="failed on setup with &quot;PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\kuogai\\AppData\\Local\\Temp\\pytest-of-kuogai'&quot;">tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=&lt;pluggy._tracing.TagTracerSub object at 0x00000208884102F0&gt;, _basetemp=None, _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def local_services(tmp_path_factory):
+        evidence = PROJECT / "reports" / "e2e" / time.strftime("%Y%m%d-%H%M%S")
+        evidence.mkdir(parents=True, exist_ok=True)
+&gt;       runtime = tmp_path_factory.mktemp("browser_runtime")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\e2e\test_browser_workflows.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\_pytest\tmpdir.py:136: in mktemp
+    basename = self._ensure_relative_to_basetemp(basename)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:117: in _ensure_relative_to_basetemp
+    if (self.getbasetemp() / basename).resolve().parent != self.getbasetemp():
+        ^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:213: in getbasetemp
+    basetemp = make_numbered_dir_with_cleanup(
+.venv\Lib\site-packages\_pytest\pathlib.py:420: in make_numbered_dir_with_cleanup
+    raise e
+.venv\Lib\site-packages\_pytest\pathlib.py:401: in make_numbered_dir_with_cleanup
+    p = make_numbered_dir(root, prefix, mode)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\pathlib.py:228: in make_numbered_dir
+    max_existing = max(map(parse_num, find_suffixes(root, prefix)), default=-1)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\pathlib.py:187: in extract_suffixes
+    for entry in iter:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+root = WindowsPath('C:/Users/kuogai/AppData/Local/Temp/pytest-of-kuogai')
+prefix = 'pytest-'
+
+    def find_prefixed(root: Path, prefix: str) -&gt; Iterator[os.DirEntry[str]]:
+        """Find all elements in root that begin with the prefix, case-insensitive."""
+        l_prefix = prefix.lower()
+&gt;       for x in os.scandir(root):
+                 ^^^^^^^^^^^^^^^^
+E       PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\kuogai\\AppData\\Local\\Temp\\pytest-of-kuogai'
+
+.venv\Lib\site-packages\_pytest\pathlib.py:175: PermissionError</error></testcase><testcase classname="tests.e2e.test_browser_workflows" name="test_compile_failure_retry_does_not_return_to_confirmation" time="0.000"><error message="failed on setup with &quot;PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\kuogai\\AppData\\Local\\Temp\\pytest-of-kuogai'&quot;">tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=&lt;pluggy._tracing.TagTracerSub object at 0x00000208884102F0&gt;, _basetemp=None, _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="module")
+    def local_services(tmp_path_factory):
+        evidence = PROJECT / "reports" / "e2e" / time.strftime("%Y%m%d-%H%M%S")
+        evidence.mkdir(parents=True, exist_ok=True)
+&gt;       runtime = tmp_path_factory.mktemp("browser_runtime")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\e2e\test_browser_workflows.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\_pytest\tmpdir.py:136: in mktemp
+    basename = self._ensure_relative_to_basetemp(basename)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:117: in _ensure_relative_to_basetemp
+    if (self.getbasetemp() / basename).resolve().parent != self.getbasetemp():
+        ^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:213: in getbasetemp
+    basetemp = make_numbered_dir_with_cleanup(
+.venv\Lib\site-packages\_pytest\pathlib.py:420: in make_numbered_dir_with_cleanup
+    raise e
+.venv\Lib\site-packages\_pytest\pathlib.py:401: in make_numbered_dir_with_cleanup
+    p = make_numbered_dir(root, prefix, mode)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\pathlib.py:228: in make_numbered_dir
+    max_existing = max(map(parse_num, find_suffixes(root, prefix)), default=-1)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\pathlib.py:187: in extract_suffixes
+    for entry in iter:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+root = WindowsPath('C:/Users/kuogai/AppData/Local/Temp/pytest-of-kuogai')
+prefix = 'pytest-'
+
+    def find_prefixed(root: Path, prefix: str) -&gt; Iterator[os.DirEntry[str]]:
+        """Find all elements in root that begin with the prefix, case-insensitive."""
+        l_prefix = prefix.lower()
+&gt;       for x in os.scandir(root):
+                 ^^^^^^^^^^^^^^^^
+E       PermissionError: [WinError 5] 拒绝访问。: 'C:\\Users\\kuogai\\AppData\\Local\\Temp\\pytest-of-kuogai'
+
+.venv\Lib\site-packages\_pytest\pathlib.py:175: PermissionError</error></testcase></testsuite></testsuites>

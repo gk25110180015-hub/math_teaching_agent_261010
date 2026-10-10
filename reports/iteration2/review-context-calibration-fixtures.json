@@ -1,0 +1,271 @@
+{
+  "schema_version": 1,
+  "title": "中性上下文阅读与先修应用校准",
+  "status": "AUTHORED_NOT_EXECUTED",
+  "live_api_execution": "NOT_RUN",
+  "teacher_review": "NOT_RUN",
+  "leakage_policy": "Only each case.input is sent. case.id/group/expectation and this metadata are local-only. No current benchmark unit text or IDs copied.",
+  "cases": [
+    {
+      "id": "R01",
+      "group": "definition_context",
+      "input": {
+        "plan": {
+          "difficulty": "本科一年级微积分",
+          "prerequisites": [
+            "实数与绝对值、函数极限定义；下列prior_sections为可用的已陈述先修内容。"
+          ],
+          "exclusions": [],
+          "lecture": {
+            "proof_policy": "key"
+          }
+        },
+        "scope": {
+          "kind": "section_local",
+          "current_section": {
+            "id": "S21",
+            "title": "函数等价关系",
+            "prerequisites": []
+          },
+          "pending_sections": []
+        },
+        "prior_sections": [],
+        "units": [
+          {
+            "id": "S21.U01",
+            "kind": "definition",
+            "tex": "设 $p(t),q(t)$ 在 $c$ 的某个去心邻域有定义，且 $q(t)\\ne0$。若 $\\lim_{t\\to c}p(t)/q(t)=1$，称二者在该过程中等价，记作 $p(t)\\sim q(t)$。当且仅当二者还都是该过程中的无穷小，即 $p(t)\\to0$ 且 $q(t)\\to0$ 时，称它们为等价无穷小。",
+            "relates_to": null
+          }
+        ],
+        "actual_unit_ids": [
+          "S21.U01"
+        ],
+        "instruction": "逐项审查所给当前单元的数学陈述、定义条件和证明。可使用已提供的先修正文，只将问题定位到当前实际单元；不要求独立片段包含整章。"
+      },
+      "expectation": {
+        "kind": "CORRECT_CONTROL",
+        "expected_flagged_unit_ids": [],
+        "expected_blocking_unit_ids": [],
+        "rationale": "同一单元明确区分一般等价与等价无穷小。零极限条件在紧邻后句，数学前提完整。",
+        "counterexample": null
+      }
+    },
+    {
+      "id": "R02",
+      "group": "definition_context",
+      "input": {
+        "plan": {
+          "difficulty": "本科一年级微积分",
+          "prerequisites": [
+            "实数与绝对值、函数极限定义；下列prior_sections为可用的已陈述先修内容。"
+          ],
+          "exclusions": [],
+          "lecture": {
+            "proof_policy": "key"
+          }
+        },
+        "scope": {
+          "kind": "section_local",
+          "current_section": {
+            "id": "S21",
+            "title": "函数等价关系",
+            "prerequisites": []
+          },
+          "pending_sections": []
+        },
+        "prior_sections": [],
+        "units": [
+          {
+            "id": "S21.U01",
+            "kind": "definition",
+            "tex": "设 $p(t),q(t)$ 在 $c$ 的某个去心邻域有定义，且 $q(t)\\ne0$。若 $\\lim_{t\\to c}p(t)/q(t)=1$，就称 $p(t),q(t)$ 为该过程中的等价无穷小；这里无需另要求任一函数趋于零。",
+            "relates_to": null
+          }
+        ],
+        "actual_unit_ids": [
+          "S21.U01"
+        ],
+        "instruction": "逐项审查所给当前单元的数学陈述、定义条件和证明。可使用已提供的先修正文，只将问题定位到当前实际单元；不要求独立片段包含整章。"
+      },
+      "expectation": {
+        "kind": "DEFINITE_ERROR_CONTROL",
+        "expected_flagged_unit_ids": [
+          "S21.U01"
+        ],
+        "expected_blocking_unit_ids": [
+          "S21.U01"
+        ],
+        "rationale": "明确删除趋零必要条件却直接命名为无穷小，数学定义错误。",
+        "counterexample": "p(t)=q(t)=1，商恒为1，但两者不趋零。"
+      }
+    },
+    {
+      "id": "R03",
+      "group": "available_prerequisite",
+      "input": {
+        "plan": {
+          "difficulty": "本科一年级微积分",
+          "prerequisites": [
+            "实数与绝对值、函数极限定义；下列prior_sections为可用的已陈述先修内容。"
+          ],
+          "exclusions": [],
+          "lecture": {
+            "proof_policy": "key"
+          }
+        },
+        "scope": {
+          "kind": "section_local",
+          "current_section": {
+            "id": "S12",
+            "title": "倒数与函数极限",
+            "prerequisites": [
+              "S11"
+            ]
+          },
+          "pending_sections": []
+        },
+        "prior_sections": [
+          {
+            "section_id": "S11",
+            "units": [
+              {
+                "id": "S11.U01",
+                "kind": "theorem",
+                "tex": "设函数 $h(t)$ 在点 $c$ 的某个去心邻域内有定义，且 $\\lim_{t\\to c}h(t)=A\\ne0$。则在充分小的去心邻域内 $h(t)\\ne0$，并且 $\\lim_{t\\to c}1/h(t)=1/A$。",
+                "relates_to": null
+              },
+              {
+                "id": "S11.U02",
+                "kind": "proof",
+                "tex": "取邻域使 $|h(t)-A|<|A|/2$，则 $|h(t)|>|A|/2>0$。于是 $\\left|1/h(t)-1/A\\right|\\le2|h(t)-A|/|A|^2$，由极限定义右端趋于零，结论成立。",
+                "relates_to": "S11.U01"
+              }
+            ],
+            "calculations": [],
+            "uncertainties": []
+          }
+        ],
+        "units": [
+          {
+            "id": "S12.U01",
+            "kind": "theorem",
+            "tex": "设 $h(t)$ 在 $0$ 的某个去心邻域有定义且处处非零，$\\lim_{t\\to0}h(t)=A$，其中 $A$ 是任意实数。则 $1/h(t)$ 总有有限极限，且该极限等于 $1/A$。",
+            "relates_to": null
+          },
+          {
+            "id": "S12.U02",
+            "kind": "proof",
+            "tex": "因为 $h(t)$ 在所讨论邻域中非零，所以可以直接对任意有限极限 $A$ 使用先前的倒数法则，得到所述有限极限。",
+            "relates_to": "S12.U01"
+          }
+        ],
+        "actual_unit_ids": [
+          "S12.U01",
+          "S12.U02"
+        ],
+        "instruction": "逐项审查所给当前单元的数学陈述、定义条件和证明。可使用已提供的先修正文，只将问题定位到当前实际单元；不要求独立片段包含整章。"
+      },
+      "expectation": {
+        "kind": "DEFINITE_ERROR_CONTROL",
+        "expected_flagged_any_of": [
+          "S12.U01",
+          "S12.U02"
+        ],
+        "expected_blocking_any_of": [
+          "S12.U01",
+          "S12.U02"
+        ],
+        "rationale": "点态非零不能替代倒数法则要求的极限值A非零；已提供的先修定理不适用于A=0。",
+        "counterexample": "h(t)=t（t≠0），h→0且处处非零，1/t无有限双侧极限，1/A也未定义。"
+      }
+    },
+    {
+      "id": "R04",
+      "group": "available_prerequisite",
+      "input": {
+        "plan": {
+          "difficulty": "本科一年级微积分",
+          "prerequisites": [
+            "实数与绝对值、函数极限定义；下列prior_sections为可用的已陈述先修内容。"
+          ],
+          "exclusions": [],
+          "lecture": {
+            "proof_policy": "key"
+          }
+        },
+        "scope": {
+          "kind": "section_local",
+          "current_section": {
+            "id": "S12",
+            "title": "倒数与函数极限",
+            "prerequisites": [
+              "S11"
+            ]
+          },
+          "pending_sections": []
+        },
+        "prior_sections": [
+          {
+            "section_id": "S11",
+            "units": [
+              {
+                "id": "S11.U01",
+                "kind": "theorem",
+                "tex": "设函数 $h(t)$ 在点 $c$ 的某个去心邻域内有定义，且 $\\lim_{t\\to c}h(t)=A\\ne0$。则在充分小的去心邻域内 $h(t)\\ne0$，并且 $\\lim_{t\\to c}1/h(t)=1/A$。",
+                "relates_to": null
+              },
+              {
+                "id": "S11.U02",
+                "kind": "proof",
+                "tex": "取邻域使 $|h(t)-A|<|A|/2$，则 $|h(t)|>|A|/2>0$。于是 $\\left|1/h(t)-1/A\\right|\\le2|h(t)-A|/|A|^2$，由极限定义右端趋于零，结论成立。",
+                "relates_to": "S11.U01"
+              }
+            ],
+            "calculations": [],
+            "uncertainties": []
+          }
+        ],
+        "units": [
+          {
+            "id": "S12.U01",
+            "kind": "theorem",
+            "tex": "设 $p(t),q(t)$ 在 $c$ 的同一个去心邻域内有定义且都不为零，并且 $\\lim_{t\\to c}p(t)/q(t)=1$。则 $\\lim_{t\\to c}q(t)/p(t)=1$。",
+            "relates_to": null
+          },
+          {
+            "id": "S12.U02",
+            "kind": "proof",
+            "tex": "令 $r(t)=p(t)/q(t)$。由上节已证的倒数法则，对 $r(t)\\to1$ 取倒数，得到 $q(t)/p(t)=1/r(t)\\to1$。",
+            "relates_to": "S12.U01"
+          }
+        ],
+        "actual_unit_ids": [
+          "S12.U01",
+          "S12.U02"
+        ],
+        "instruction": "逐项审查所给当前单元的数学陈述、定义条件和证明。可使用已提供的先修正文，只将问题定位到当前实际单元；不要求独立片段包含整章。"
+      },
+      "expectation": {
+        "kind": "CORRECT_CONTROL",
+        "expected_flagged_unit_ids": [],
+        "expected_blocking_unit_ids": [],
+        "rationale": "定义域及两函数非零已提供，r的极限1非零；这是对已给出并证明的法则直接代入，不需重证完整ε论证。",
+        "counterexample": null
+      }
+    }
+  ],
+  "limitations": [
+    "4个手工编写的错误/正确对照，不是随机盲测或独立数学准确率；跨prompt版本重复属于回归校准。",
+    "第二组负例缺的是不可省略的非零极限值A≠0；不是把比值趋1可推出的最终非零故意当错误。",
+    "格式完整与数学正确性分开统计；缺输出或预算停止保持NOT_RUN/FAIL，不把未完成计作误判。"
+  ],
+  "generic_rule_suggestions": [
+    "按完整单元及紧邻解释句确定术语范围；不要把一般定义后限定子类的零极限条件当完全缺失。",
+    "区分真缺失的不可推出前提，与已明确或可由已知极限立即推出的条件。",
+    "允许直接应用已提供的先修定理；要求检查实际条件匹配，不要求每次引用都重证先修定理。",
+    "section_local限制问题输出目标，不应禁止使用已提供的prior_sections；若确实未提供必要先修，清楚记录上下文缺失而不是声称正文错误。",
+    "能写出满足全部实际假设且反驳结论的反例才说明数学错误；不能丢掉相邻句或定理假设制造反例。",
+    "可读性和教学展开建议可单列warning，不能自动升级成真实数学错误或要求未经授权追加修复预算。"
+  ]
+}

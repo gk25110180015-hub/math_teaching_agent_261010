@@ -1,0 +1,469 @@
+{
+  "created_at": "2026-09-19T20:58:41.783063+00:00",
+  "audit_mode": "read_only; no API; no product/state/budget changes",
+  "run": {
+    "id": "fd6736af6ef14be3839e019e86ca1e5c",
+    "status": "BLOCKED",
+    "stage": "review.section.S04",
+    "request_count": 33,
+    "error": {
+      "attempt": 4,
+      "budget_version": 0,
+      "code": "BUDGET_EXHAUSTED",
+      "job_id": "89ed98cbdc344a00956f73456c8654a0",
+      "message": "kind=local_repairs_per_unit; units=['S04.U05', 'S04.U07']; used={'S04.U01': 1, 'S04.U05': 1, 'S04.U06': 1, 'S04.U02': 1, 'S04.U04': 1, 'S04.U03': 1}; limit=2; proposal_keys=['unit:S04.U05', 'unit:S04.U07']; calls={'unit:S04.U01': 1, 'unit:S04.U05': 3, 'unit:S04.U02': 1, 'unit:S04.U06': 1, 'unit:S04.U03': 1, 'unit:S04.U04': 1}; rejected={}。合法稿、原审批和未决问题均保留；显式增加预算后才可继续。",
+      "recovery": "原审批和已通过章节保留；修复条件后点击重试。崩溃边界的外部调用可能重复计费。",
+      "timestamp": "2026-09-19T20:49:36.709199+00:00"
+    }
+  },
+  "plan_hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227",
+  "approved_section": {
+    "id": "S04",
+    "objectives": [
+      "定义交错级数并识别其符号交替结构",
+      "掌握交错级数判别法及其余项估计",
+      "区分交错级数的收敛性与绝对收敛性",
+      "通过例题估计截断误差并判断条件收敛"
+    ],
+    "prerequisites": [
+      "S02",
+      "S03"
+    ],
+    "reference_labels": [
+      "def:alternating-series",
+      "thm:alternating-test",
+      "thm:alternating-remainder"
+    ],
+    "required_kinds": [
+      "definition",
+      "theorem",
+      "example",
+      "solution",
+      "proof",
+      "exercise"
+    ],
+    "title": "交错级数与条件收敛"
+  },
+  "local_state": {
+    "phase": "BUDGET_EXHAUSTED",
+    "applied_rounds": 3,
+    "proposal_calls": 3,
+    "rejected_proposals": 0,
+    "unit_applied_counts": {
+      "S04.U01": 1,
+      "S04.U05": 1,
+      "S04.U06": 1,
+      "S04.U02": 1,
+      "S04.U04": 1,
+      "S04.U03": 1
+    },
+    "proposal_counts_by_key": {
+      "unit:S04.U01": 1,
+      "unit:S04.U05": 3,
+      "unit:S04.U02": 1,
+      "unit:S04.U06": 1,
+      "unit:S04.U03": 1,
+      "unit:S04.U04": 1
+    },
+    "pending_issues": [
+      {
+        "rule_id": "NUMERIC_IS_NOT_PROOF",
+        "severity": "review",
+        "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+        "location": {
+          "calculation_id": "S04.C01",
+          "unit_id": "S04.U05"
+        },
+        "resolution_status": "open"
+      },
+      {
+        "unit_id": "S04.U07",
+        "severity": "blocking",
+        "message": "余项估计证明及多个后续单元仍存在确定的 TeX 转义层级错误：JSON 解码后，公式命令前保留两个反斜杠，而不是一个。这会破坏数学环境、运算符或交叉引用，必须修复实际正文，不能仅按猜测出的公式阅读。",
+        "evidence": "S04.U07 的 tex 在 JSON 解码后含有两个反斜杠后接 [、geq、ref、leq 等形式。相同问题仍出现在 S04.U08、S04.U09、S04.U10、S04.U11、S04.U12、S04.U13；例如 S04.U11 的平方根命令、S04.U12 的余项不等式及定理引用均受影响。rendering_contract 仅规定独立解答的组装与搬移，没有规定再次解码或修复 TeX。与保留问题中的旧证据不同，当前 S04.U03、S04.U04 已使用正常的单反斜杠命令，不再属于该错误。"
+      }
+    ],
+    "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S04/candidate-1f19b7a36820.json",
+    "candidate_hash": "450cfef26fc136001da77831e8b0d7eb77a7ae3b1e510ddc42c8dad27b7cbc46"
+  },
+  "chain": [
+    {
+      "proposal": 1,
+      "allowed_targets": [
+        "S04.U01",
+        "S04.U05"
+      ],
+      "changed_unit_ids": [
+        "S04.U01",
+        "S04.U05"
+      ],
+      "calculations_unchanged": true,
+      "U05_tex_unchanged": false,
+      "before_hash_matches": true,
+      "after_hash_matches": true
+    },
+    {
+      "proposal": 2,
+      "allowed_targets": [
+        "S04.U02",
+        "S04.U05",
+        "S04.U06"
+      ],
+      "changed_unit_ids": [
+        "S04.U02",
+        "S04.U06"
+      ],
+      "calculations_unchanged": true,
+      "U05_tex_unchanged": true,
+      "before_hash_matches": true,
+      "after_hash_matches": true
+    },
+    {
+      "proposal": 3,
+      "allowed_targets": [
+        "S04.U03",
+        "S04.U04",
+        "S04.U05"
+      ],
+      "changed_unit_ids": [
+        "S04.U03",
+        "S04.U04"
+      ],
+      "calculations_unchanged": true,
+      "U05_tex_unchanged": true,
+      "before_hash_matches": true,
+      "after_hash_matches": true
+    }
+  ],
+  "latest_hash_valid": true,
+  "remaining_double_slash_before_commands": {
+    "S04.U01": 0,
+    "S04.U02": 0,
+    "S04.U03": 0,
+    "S04.U04": 0,
+    "S04.U05": 0,
+    "S04.U06": 0,
+    "S04.U07": 23,
+    "S04.U08": 4,
+    "S04.U09": 20,
+    "S04.U10": 5,
+    "S04.U11": 11,
+    "S04.U12": 15,
+    "S04.U13": 11
+  },
+  "last_review": {
+    "section_id": "S04",
+    "math": {
+      "schema_version": 1,
+      "status": "NEEDS_REVIEW",
+      "issues": [
+        {
+          "rule_id": "NUMERIC_IS_NOT_PROOF",
+          "severity": "review",
+          "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+          "location": {
+            "calculation_id": "S04.C01",
+            "unit_id": "S04.U05"
+          },
+          "resolution_status": "open"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "numeric_spotcheck",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "numeric_spotcheck_passed",
+          "point_count": 1,
+          "message": "仅在指定点数值一致，不是一般性证明。",
+          "calculation_id": "S04.C01",
+          "unit_id": "S04.U05"
+        }
+      ],
+      "coverage": [
+        "S04.U01",
+        "S04.U02",
+        "S04.U03",
+        "S04.U04",
+        "S04.U05",
+        "S04.U06",
+        "S04.U07",
+        "S04.U08",
+        "S04.U09",
+        "S04.U10",
+        "S04.U11",
+        "S04.U12",
+        "S04.U13"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "协议的数值核算只能抽查交错项在指定整数处的取值，不能表达对所有正整数的单调性、极限或余项不等式；交错级数判别法及余项估计仍由正文证明。",
+        "既有核算 S04.C01 仅比较 n=3 时的通项值与 1/3，覆盖范围限于该单点等式；不提供对所有正整数的结论，也不构成交错调和级数收敛性或截断误差界的证明。这些结论依赖正文中的判别条件核实与定理证明。"
+      ]
+    },
+    "llm_review": {
+      "issues": [
+        {
+          "unit_id": "S04.U07",
+          "severity": "blocking",
+          "message": "余项估计证明及多个后续单元仍存在确定的 TeX 转义层级错误：JSON 解码后，公式命令前保留两个反斜杠，而不是一个。这会破坏数学环境、运算符或交叉引用，必须修复实际正文，不能仅按猜测出的公式阅读。",
+          "evidence": "S04.U07 的 tex 在 JSON 解码后含有两个反斜杠后接 [、geq、ref、leq 等形式。相同问题仍出现在 S04.U08、S04.U09、S04.U10、S04.U11、S04.U12、S04.U13；例如 S04.U11 的平方根命令、S04.U12 的余项不等式及定理引用均受影响。rendering_contract 仅规定独立解答的组装与搬移，没有规定再次解码或修复 TeX。与保留问题中的旧证据不同，当前 S04.U03、S04.U04 已使用正常的单反斜杠命令，不再属于该错误。"
+        },
+        {
+          "unit_id": "S04.U07",
+          "severity": "warning",
+          "message": "证明在下标端点使用了未定义的 S_0。补充约定 S_0=0，或将相邻偶数部分和的差式限定为 m≥2，即可消除这一局部记号缺口；不影响余项估计的实质推理。",
+          "evidence": "正文写“对任意正整数 m”有 S_{2m}-S_{2m-2}=b_{2m-1}-b_{2m}≥0。取 m=1 时出现 S_0，而当前部分和定义及所引用的基础定义均从正整数下标开始。证明偶数部分和序列单调不减只需 m≥2 时的差式。"
+        }
+      ],
+      "checked_unit_ids": [
+        "S04.U01",
+        "S04.U02",
+        "S04.U03",
+        "S04.U04",
+        "S04.U05",
+        "S04.U06",
+        "S04.U07",
+        "S04.U08",
+        "S04.U09",
+        "S04.U10",
+        "S04.U11",
+        "S04.U12",
+        "S04.U13"
+      ],
+      "limitations": [
+        "本次为 section_local 审阅，已逐一阅读列出的十三个当前单元，并检查其数学陈述、证明、题解对应关系及所用先修依据；未对其他章节作完整复审，也未将尚未生成的 S05 视为本节遗漏。",
+        "在辨认出预期公式的前提下，交错级数判别法的充分条件、奇偶部分和证明、允许零项时的余项符号与上界、条件收敛分类均未发现其他实质数学错误。S04.U10—S04.U12 求的是满足所给充分条件的最小 n=999，而非实际误差达标的最小截断位置。",
+        "已重新核对保留的单点抽查问题：S04.U05 明确说明 n=3 的数值核对不能证明收敛性或一般余项估计；S04.U06 则对所有正整数核实正性、单调性与趋零条件，并引用相应定理。因此不再将单点抽查本身列为未解决的正文问题，但它仍不提供一般性证明或形式化验证。",
+        "S04.U11、S04.U12 是分别关联实际练习 S04.U09、S04.U10 的独立 solution 单元。按 rendering_contract，它们会被搬移到讲义末尾，不能根据 JSON 排列位置认定答案位置违规。",
+        "本次未运行 TeX 编译或检查最终 PDF；转义错误依据实际源文本识别，修复后的显示效果、交叉引用和最终答案组装仍需另行检查。普通模型逐单元审阅不等于形式化证明，也不能保证发现所有错误。"
+      ]
+    },
+    "issues": [
+      {
+        "rule_id": "NUMERIC_IS_NOT_PROOF",
+        "severity": "review",
+        "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+        "location": {
+          "calculation_id": "S04.C01",
+          "unit_id": "S04.U05"
+        },
+        "resolution_status": "open"
+      },
+      {
+        "unit_id": "S04.U07",
+        "severity": "blocking",
+        "message": "余项估计证明及多个后续单元仍存在确定的 TeX 转义层级错误：JSON 解码后，公式命令前保留两个反斜杠，而不是一个。这会破坏数学环境、运算符或交叉引用，必须修复实际正文，不能仅按猜测出的公式阅读。",
+        "evidence": "S04.U07 的 tex 在 JSON 解码后含有两个反斜杠后接 [、geq、ref、leq 等形式。相同问题仍出现在 S04.U08、S04.U09、S04.U10、S04.U11、S04.U12、S04.U13；例如 S04.U11 的平方根命令、S04.U12 的余项不等式及定理引用均受影响。rendering_contract 仅规定独立解答的组装与搬移，没有规定再次解码或修复 TeX。与保留问题中的旧证据不同，当前 S04.U03、S04.U04 已使用正常的单反斜杠命令，不再属于该错误。"
+      },
+      {
+        "unit_id": "S04.U07",
+        "severity": "warning",
+        "message": "证明在下标端点使用了未定义的 S_0。补充约定 S_0=0，或将相邻偶数部分和的差式限定为 m≥2，即可消除这一局部记号缺口；不影响余项估计的实质推理。",
+        "evidence": "正文写“对任意正整数 m”有 S_{2m}-S_{2m-2}=b_{2m-1}-b_{2m}≥0。取 m=1 时出现 S_0，而当前部分和定义及所引用的基础定义均从正整数下标开始。证明偶数部分和序列单调不减只需 m≥2 时的差式。"
+      }
+    ],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false,
+    "local_recovery": {
+      "applied_rounds": 3,
+      "proposal_calls": 3,
+      "rejected_proposals": 0,
+      "preserved_issues": [
+        {
+          "rule_id": "NUMERIC_IS_NOT_PROOF",
+          "severity": "review",
+          "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+          "location": {
+            "calculation_id": "S04.C01",
+            "unit_id": "S04.U05"
+          },
+          "resolution_status": "open"
+        },
+        {
+          "unit_id": "S04.U03",
+          "severity": "blocking",
+          "message": "实际正文中出现成批的双反斜杠 TeX 命令，解析 JSON 后仍为两个反斜杠，不能按正常 LaTeX 命令可靠解释。应修复转义层级。",
+          "evidence": "S04.U03 的正文使用 `\\\\[`、`\\\\]`、`\\\\sum` 等形式；同类问题还出现在 S04.U07、S04.U08、S04.U09、S04.U11、S04.U12、S04.U13。对照 S04.U01、S04.U02 和 S04.U05，正常 JSON 转义后的正文命令只保留一层反斜杠。rendering_contract 只说明单元组装和答案搬移，没有声明会再次解码或归一化 TeX 命令，因此这些证明、练习和解答可能无法正常排版。"
+        },
+        {
+          "unit_id": "S04.U04",
+          "severity": "blocking",
+          "message": "余项估计定理本身的实际 TeX 命令也存在双反斜杠转义问题，导致本节核心定理及其引用不能可靠呈现。",
+          "evidence": "S04.U04 中 `\\\\ref`、`\\\\[`、`\\\\]` 和 `\\\\label` 在解析 JSON 后仍是双反斜杠；该单元是 S04.U07、S04.U13 所依赖的核心定理。即使数学陈述本身看起来成立，实际正文的公式和交叉引用仍可能被渲染为错误文本。"
+        },
+        {
+          "unit_id": "S04.U05",
+          "severity": "review",
+          "message": "单点数值抽查不能替代对交错级数判别条件和余项估计的普遍证明；本例是否成立必须依赖 S04.U06 及相关定理的正文核对。",
+          "evidence": "S04.C01 只核对了 n=3 时 `(-1)^{n-1}/n=1/3`。工具证据明确说明该抽查不覆盖对所有正整数的单调性、极限、收敛性或余项不等式；因此不能据此宣称本例的一般性结论已经形式化验证。"
+        }
+      ],
+      "review_identity": {
+        "candidate_hash": "5a8184a19f6e133970fe8ec4700d2e7c1fd67eb1dc31d4f0e7dbb1e8f09ad356",
+        "tool_checks_hash": "b5a296565d92fd9e223d680cef45aff6499d364d669430bc344c8acca6337060",
+        "reviewer_prompt_hash": "86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc",
+        "plan_context_hash": "d594d5962e767f3be7499bfbe76faf41c48d7586841588100516b510408d6af5",
+        "deterministic_checks_hash": "9d57beebee55828fd1211d726f03c6409fab55901b82735524888c0782b9812e"
+      }
+    }
+  },
+  "checkpoints": [
+    {
+      "step_key": "section.S01",
+      "output_hash": "fc5da81980d11630e73c1c358e0c98a902cbc6de4199bd3dff87a427dbc98e79",
+      "hash_valid": true,
+      "source_key": "b/fd6736af6ef14be3/sS01_50bf5afed2d2/source/lecture.tex",
+      "source_hash": "82c2f5be416656f0ebcea2bf801b80ced3ee9fd27ec9eae9619a7d39d693911d",
+      "source_hash_valid": true,
+      "math_status": "PASS",
+      "compile_status": "PASS"
+    },
+    {
+      "step_key": "section.S02",
+      "output_hash": "2af2bc64cd5bb2e928c25d521f62f94ffc0d4656e64acec1b2735a13f111a43c",
+      "hash_valid": true,
+      "source_key": "b/fd6736af6ef14be3/sS02_535f6e66022e/source/lecture.tex",
+      "source_hash": "d7af57b7fddd57d20bfae5df5c9198f2a396ecbca33a43dbc7c6a738ff968a81",
+      "source_hash_valid": true,
+      "math_status": "PASS",
+      "compile_status": "PASS"
+    },
+    {
+      "step_key": "section.S03",
+      "output_hash": "d0fbc157009a052355f0ae0d9ba83dda69fe7b7f5934545441abb2d9ce2add5c",
+      "hash_valid": true,
+      "source_key": "b/fd6736af6ef14be3/sS03_4728b49f0563/source/lecture.tex",
+      "source_hash": "1a478fcda591958be13efa618cbcef1b821b1dbb0a364645005904634353dda3",
+      "source_hash_valid": true,
+      "math_status": "PASS",
+      "compile_status": "PASS"
+    }
+  ],
+  "source_evidence": [
+    {
+      "path": "workspace/iteration2-live/runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S04.json",
+      "sha256": "b9e8637ddc5be078e4e6a9b23a8132a80ed37d83f40ba78bcb801fdc60e8e3a1"
+    },
+    {
+      "path": "workspace/iteration2-live/runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S04/candidate-1f19b7a36820.json",
+      "sha256": "450cfef26fc136001da77831e8b0d7eb77a7ae3b1e510ddc42c8dad27b7cbc46"
+    },
+    {
+      "path": "workspace/iteration2-live/b/fd6736af6ef14be3/sS04_45a7cc16c944/candidate-normalization.json",
+      "sha256": "3babf17b17e1540e6474f43ee73d7ddcfd9bbce24e0e98db65d47d37b913e3f8"
+    },
+    {
+      "path": "workspace/iteration2-live/b/fd6736af6ef14be3/sS04_45a7cc16c944/candidate-normalized.json",
+      "sha256": "4a252659799ae4fc0103b08beccdb9ab74bbb4fac1605aaed19240f0b05bc840"
+    },
+    {
+      "path": "workspace/iteration2-live/b/fd6736af6ef14be3/sS04_45a7cc16c944/candidate.json",
+      "sha256": "4a252659799ae4fc0103b08beccdb9ab74bbb4fac1605aaed19240f0b05bc840"
+    },
+    {
+      "path": "workspace/iteration2-live/b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-1-evidence.json",
+      "sha256": "d763fdb48831ca54fd05ea881c35fef21253e310ec3631f7a3a7358d99619e9c"
+    },
+    {
+      "path": "workspace/iteration2-live/b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-1-normalization.json",
+      "sha256": "20670e62b626eb837e13665dd345b982b192a1438bf7d9e670207355843721c3"
+    },
+    {
+      "path": "workspace/iteration2-live/b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-1-patch.json",
+      "sha256": "fc4b1fe4fdb05f9c0d41cabde751d13c07047849b6c61ae6fc3bdc4805fe052c"
+    },
+    {
+      "path": "workspace/iteration2-live/b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-1.json",
+      "sha256": "a9da18fe75d2e1c62e8e2770ef9a9b224873d6eb8200622f976cf7b228645ff6"
+    },
+    {
+      "path": "workspace/iteration2-live/b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-2-evidence.json",
+      "sha256": "fd1c15aadc2d6978c0a1d2b309a80e395f666de3ad87e3c7354df53dd063ab3f"
+    },
+    {
+      "path": "workspace/iteration2-live/b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-2-normalization.json",
+      "sha256": "3b231b4289af1c7dfcb14a1a3aad96dd42179fffb48ec373afa8c17ace2a37e5"
+    },
+    {
+      "path": "workspace/iteration2-live/b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-2-patch.json",
+      "sha256": "9c0eaad9696aecfba9429f6141c5623db0eca1b617d2a1491b65d32906615a0a"
+    },
+    {
+      "path": "workspace/iteration2-live/b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-2.json",
+      "sha256": "bd55cec478737a4aa653a947c86e06b1679d8717722a10df350d5acd7755b6fd"
+    },
+    {
+      "path": "workspace/iteration2-live/b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-3-evidence.json",
+      "sha256": "0581da49aca68fb51f2b48fc104e73921d2a4b6fa5c318c62d57e1ed6f550459"
+    },
+    {
+      "path": "workspace/iteration2-live/b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-3-normalization.json",
+      "sha256": "40aecfb381cb0b699e0db3f7efe47d41965c6e5fe84b0b2c87aef3c57c61b08a"
+    },
+    {
+      "path": "workspace/iteration2-live/b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-3-patch.json",
+      "sha256": "98d54dbc8b547e7d2de8f640d3802cf8b136b0fa2befe52c44ef41870690d538"
+    },
+    {
+      "path": "workspace/iteration2-live/b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-3.json",
+      "sha256": "0d912ae84d84a216cdad2ffc376ad172be5d794d7f7b0fd63db6616da87bc7bf"
+    },
+    {
+      "path": "workspace/iteration2-live/b/fd6736af6ef14be3/sS04_45a7cc16c944/review-0.json",
+      "sha256": "d3661aa99f10e8e1974bdf545884773e03d81e8e7c4efee978ded23f5d6390e0"
+    },
+    {
+      "path": "workspace/iteration2-live/b/fd6736af6ef14be3/sS04_45a7cc16c944/review-1.json",
+      "sha256": "9ec900336b6baf959e1f25dfb833c1dfdfc23f15061c70d7c1d7501da83c41bd"
+    },
+    {
+      "path": "workspace/iteration2-live/b/fd6736af6ef14be3/sS04_45a7cc16c944/review-2.json",
+      "sha256": "2db5dca603adf154bd791cca7be50941443d2e0baadddb4b9c086dfebe00df5a"
+    },
+    {
+      "path": "workspace/iteration2-live/b/fd6736af6ef14be3/sS04_45a7cc16c944/review-3.json",
+      "sha256": "1d9442a0f246bef64e7770f87cd63bee4df283d92272bdfdafba92d8106120fb"
+    }
+  ],
+  "findings": [
+    {
+      "code": "TOOL_LIMITATION_REPAIR_LOOP",
+      "classification": "product classification defect",
+      "unit_id": "S04.U05",
+      "calculation_id": "S04.C01",
+      "details": "A successful point sample remains non-proof evidence. Its unconditional severity=review repeatedly targets unchanged, explicitly limited example despite independent general reasoning in U06."
+    },
+    {
+      "code": "REAL_TEX_OVERESCAPING",
+      "classification": "unresolved content/rendering blocker",
+      "unit_ids": [
+        "S04.U07",
+        "S04.U08",
+        "S04.U09",
+        "S04.U10",
+        "S04.U11",
+        "S04.U12",
+        "S04.U13"
+      ],
+      "details": "Decoded TeX still contains two backslashes before math delimiters and commands. No blind replacement is justified."
+    },
+    {
+      "code": "S0_NOT_DEFINED",
+      "classification": "retained local notation warning",
+      "unit_id": "S04.U07",
+      "details": "Difference at m=1 uses S0 without a convention; define S0=0 or start the monotonicity comparison at m>=2."
+    }
+  ],
+  "teacher_visual_review": "NOT_RUN",
+  "S04_windows_compile": "NOT_RUN"
+}

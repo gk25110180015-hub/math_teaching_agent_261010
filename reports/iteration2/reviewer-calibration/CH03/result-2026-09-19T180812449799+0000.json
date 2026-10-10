@@ -1,0 +1,28 @@
+{
+  "execution": "PASS",
+  "model": "gpt-6-astra",
+  "review": {
+    "issues": [
+      {
+        "unit_id": "CH03.bad",
+        "severity": "blocking",
+        "message": "由极限存在不能推出在该点连续；连续性还要求极限等于函数在该点的函数值。该函数在0处不连续。",
+        "evidence": "对x≠0有f(x)=x^2，因此lim_{x→0}f(x)=0；但f(0)=1，所以lim_{x→0}f(x)≠f(0)。这是可去间断点，原文“所以f在0处连续”及“无需核对该极限是否等于f(0)”均错误。"
+      }
+    ],
+    "checked_unit_ids": [
+      "CH03.bad",
+      "CH03.good"
+    ],
+    "limitations": [
+      "仅核对了实际提供的单元CH03.bad与CH03.good；未审查pending_sections或未提供的其他单元。",
+      "本审阅依据逐单元数学正文进行普通模型检查，不等同于形式化证明；未对外部引用的完整定理证明及整章依赖进行验证。"
+    ]
+  },
+  "true_positive": 1,
+  "false_negative": 0,
+  "true_negative": 1,
+  "false_positive": 0,
+  "known_error_classified_blocking": true,
+  "teacher_review": "NOT_RUN"
+}

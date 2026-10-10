@@ -1,0 +1,559 @@
+\documentclass[UTF8,fontset=fandol,11pt]{ctexart}
+\usepackage[a4paper,margin=24mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,graphicx,tabularx,booktabs,hyperref}
+\newtheorem{definition}{定义}[section]
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{example}[definition]{例题}
+\newtheorem{exercise}[definition]{练习}
+\hypersetup{unicode=true,colorlinks=true,linkcolor=blue}
+\title{无穷级数：收敛性与基本判别法}
+\date{}
+\begin{document}
+\maketitle
+\section{级数与部分和的基本概念}\label{sec:S01}
+% UNIT S01.U01
+\begin{definition}
+给定一个数列 $\{a_n\}_{n=1}^{\infty}$，形式表达式
+\[
+\sum_{n=1}^{\infty}a_n=a_1+a_2+a_3+\cdots
+\]
+称为无穷级数，简称级数；其中 $a_n$ 称为该级数的通项。记号 $\sum_{n=1}^{\infty}a_n$ 表示按照下标 $n=1,2,3,\ldots$ 依次相加的过程，而不是有限项的和。\label{def:series}
+\end{definition}
+% UNIT S01.U02
+\begin{definition}
+对于级数 $\sum_{n=1}^{\infty}a_n$，定义其第 $n$ 个部分和为
+\[
+S_n=\sum_{k=1}^{n}a_k=a_1+a_2+\cdots+a_n,\qquad n=1,2,3,\ldots.
+\]
+由此得到数列 $\{S_n\}_{n=1}^{\infty}$，称为该级数的部分和数列。\label{def:partial-sum}
+\end{definition}
+% UNIT S01.U03
+\begin{definition}
+若部分和数列 $\{S_n\}_{n=1}^{\infty}$ 收敛，即存在有限实数 $S$ 使得
+\[
+\lim_{n\to\infty}S_n=S,
+\]
+则称级数 $\sum_{n=1}^{\infty}a_n$ 收敛，并称 $S$ 为该级数的和，记作
+\[
+\sum_{n=1}^{\infty}a_n=S.
+\]
+若部分和数列不收敛，则称级数 $\sum_{n=1}^{\infty}a_n$ 发散。\label{def:convergence}
+\end{definition}
+% UNIT S01.U04
+\begin{theorem}
+级数 $\sum_{n=1}^{\infty}a_n$ 收敛，当且仅当其部分和数列 $\{S_n\}_{n=1}^{\infty}$ 收敛。若
+\[
+\lim_{n\to\infty}S_n=S,
+\]
+则
+\[
+\sum_{n=1}^{\infty}a_n=S.
+\]
+\label{thm:series-limit}
+\end{theorem}
+% UNIT S01.U05
+\begin{proof}
+由定义，级数 $\sum_{n=1}^{\infty}a_n$ 的第 $n$ 个部分和就是 $S_n=\sum_{k=1}^{n}a_k$。因此，级数收敛的定义正是部分和数列 $\{S_n\}$ 收敛，即存在有限实数 $S$ 满足
+\[
+\lim_{n\to\infty}S_n=S.
+\]
+所以，级数收敛当且仅当其部分和数列收敛；在这种情况下，级数的和按定义就是部分和数列的极限 $S$。证毕。
+\end{proof}
+% UNIT S01.U06
+\begin{example}
+考虑级数
+\[
+\sum_{n=1}^{\infty}\frac{1}{2^n}.
+\]
+求其前 $3$ 项部分和，并说明如何根据部分和数列判断该级数是否收敛。
+\end{example}
+% UNIT S01.U07
+\par\noindent\textbf{解：}该级数的前 $3$ 项部分和为
+\[
+S_3=\frac12+\frac14+\frac18=\frac78.
+\]
+一般地，对任意正整数 $n$，其部分和为
+\[
+S_n=\sum_{k=1}^{n}\frac{1}{2^k}.
+\]
+若能够证明 $\{S_n\}$ 有有限极限 $S$，则由定理 \ref{thm:series-limit} 可知原级数收敛且其和为 $S$。本例的部分和可写为
+\[
+S_n=1-\frac{1}{2^n},
+\]
+因此
+\[
+\lim_{n\to\infty}S_n=1,
+\]
+从而
+\[
+\sum_{n=1}^{\infty}\frac{1}{2^n}=1.
+\]\par
+% UNIT S01.U08
+\begin{exercise}
+\label{mathagent:exercise:88f1e3edc535eea58e2b1acdc6aefe1b2b782af1c244960542c7c18b26231ebf}
+设级数
+\[
+\sum_{n=1}^{\infty}a_n,
+\qquad a_n=\frac{1}{n(n+1)}.
+\]
+写出其第 $3$ 个部分和 $S_3$，并根据级数收敛的定义说明判断该级数收敛性时需要考察哪个数列的极限。
+\end{exercise}
+\section{收敛的必要条件与级数的基本性质}\label{sec:S02}
+% UNIT S02.U01
+本节中的级数均为实数项级数，下标从 $1$ 开始。根据定义 \ref{def:convergence}，判断级数收敛必须考察部分和，而不能只考察通项。以下先从部分和的极限推出通项必须满足的条件，再讨论已经收敛的级数可以进行哪些运算。\par
+% UNIT S02.U02
+\begin{theorem}
+\label{thm:term-test}若实数项级数 $\sum_{n=1}^{\infty}a_n$ 收敛，则 $\lim_{n\to\infty}a_n=0$。因此，若通项的极限不存在或不等于零，则该级数发散。通项趋于零只是级数收敛的必要条件，不是充分条件。
+\end{theorem}
+% UNIT S02.U03
+\begin{proof}
+设 $S_n=\sum_{k=1}^{n}a_k$，且级数收敛于 $S\in\mathbb{R}$。对每个整数 $n\geq2$，有
+\[
+a_n=S_n-S_{n-1}.
+\]
+由 $S_n\to S$ 可知 $S_{n-1}\to S$，故由数列极限的运算法则，
+\[
+\lim_{n\to\infty}a_n=S-S=0.
+\]
+其逆否命题给出上述发散判断。下面的调和级数例题将证明，通项趋于零不足以保证级数收敛。
+\end{proof}
+% UNIT S02.U04
+\begin{example}
+判断下列级数的敛散性，并说明必要条件在判断中起什么作用：
+\[
+\text{(1)}\quad\sum_{n=1}^{\infty}c\quad(c\in\mathbb{R});\qquad
+\text{(2)}\quad\sum_{n=1}^{\infty}\frac{n}{n+1};\qquad
+\text{(3)}\quad\sum_{n=1}^{\infty}(-1)^{n-1}.
+\]
+\end{example}
+% UNIT S02.U05
+\par\noindent\textbf{解：}(1) 部分和为 $S_n=nc$。当 $c=0$ 时，所有部分和都为零，级数收敛且和为零；当 $c\neq0$ 时，通项极限为 $c\neq0$，由定理 \ref{thm:term-test}，级数发散。此时部分和在 $c>0$ 时趋于 $+\infty$，在 $c<0$ 时趋于 $-\infty$。
+
+(2) 对正整数 $n$，有
+\[
+\frac{n}{n+1}=1-\frac{1}{n+1}\longrightarrow1.
+\]
+通项不趋于零，所以级数发散。
+
+(3) 通项在 $1$ 与 $-1$ 之间交替，极限不存在，所以级数发散。也可直接观察：$S_{2m}=0$，$S_{2m-1}=1$，其中 $m$ 为任意正整数，故部分和没有极限。可见，级数发散并不一定表现为部分和趋于无穷。\par
+% UNIT S02.U06
+\begin{example}
+调和级数 $\sum_{n=1}^{\infty}1/n$ 的通项趋于零。仅利用部分和和有限项不等式，证明它仍然发散。
+\end{example}
+% UNIT S02.U07
+\par\noindent\textbf{解：}记 $H_n=\sum_{k=1}^{n}1/k$。对任意正整数 $j$，从 $k=2^{j-1}+1$ 到 $k=2^j$ 共含 $2^{j-1}$ 项，每项至少为 $1/2^j$，所以
+\[
+\sum_{k=2^{j-1}+1}^{2^j}\frac1k\geq\frac{2^{j-1}}{2^j}=\frac12.
+\]
+因此，对每个正整数 $m$，
+\[
+H_{2^m}=1+\sum_{j=1}^{m}\sum_{k=2^{j-1}+1}^{2^j}\frac1k
+\geq1+\frac m2.
+\]
+右端随 $m$ 增大而无界，故部分和数列无界，不可能收敛于有限实数。调和级数发散。这里分组的对象始终是有限部分和，并未对尚未确定收敛的无穷和进行运算。
+
+另一方面，$\lim_{n\to\infty}1/n=0$。这就给出了“通项趋于零但级数发散”的反例。实际解题时，通项趋于零意味着必要条件未能排除收敛，而不是已经证明收敛。\par
+% UNIT S02.U08
+\begin{theorem}
+\label{thm:linearity}设实数项级数 $\sum_{n=1}^{\infty}a_n=A$ 和 $\sum_{n=1}^{\infty}b_n=B$ 均收敛。对任意实常数 $\alpha,\beta$，级数 $\sum_{n=1}^{\infty}(\alpha a_n+\beta b_n)$ 收敛，且
+\[
+\sum_{n=1}^{\infty}(\alpha a_n+\beta b_n)=\alpha A+\beta B.
+\]
+\end{theorem}
+% UNIT S02.U09
+\begin{proof}
+令 $A_n=\sum_{k=1}^{n}a_k$，$B_n=\sum_{k=1}^{n}b_k$。由有限和的运算法则，组合级数的第 $n$ 个部分和为
+\[
+C_n=\sum_{k=1}^{n}(\alpha a_k+\beta b_k)=\alpha A_n+\beta B_n.
+\]
+已知 $A_n\to A$、$B_n\to B$，所以 $C_n\to\alpha A+\beta B$。由定理 \ref{thm:series-limit} 得到结论。
+\end{proof}
+% UNIT S02.U10
+线性运算定理的前提是两个级数都收敛。不能把发散级数当作实数相减。例如，$\sum_{n=1}^{\infty}1$ 与 $\sum_{n=1}^{\infty}(-1)$ 都发散，但逐项相加后得到的零级数收敛；这并不是两个级数的和相加，因为原来两个级数都没有有限的和。
+
+若一个级数收敛、另一个发散，则它们逐项相加的级数必发散。否则，假设相加后收敛，再减去原来收敛的级数，由定理 \ref{thm:linearity} 将推出另一个级数也收敛，产生矛盾。\par
+% UNIT S02.U11
+\begin{definition}
+\label{def:remainder}设 $\sum_{k=1}^{\infty}a_k$ 收敛且和为 $S$，部分和为 $S_n$。对每个正整数 $n$，定义第 $n$ 个余项为
+\[
+R_n=S-S_n=\sum_{k=n+1}^{\infty}a_k.
+\]
+这里尾级数的含义是 $\lim_{m\to\infty}\sum_{k=n+1}^{m}a_k$，其中 $n$ 固定。用 $S_n$ 近似 $S$ 时，带符号的误差为 $R_n$，绝对误差为 $|R_n|$。
+\end{definition}
+% UNIT S02.U12
+余项定义中的尾级数确实收敛：固定正整数 $n$，对整数 $m>n$ 有
+\[
+\sum_{k=n+1}^{m}a_k=S_m-S_n\longrightarrow S-S_n.
+\]
+又因为 $S_n\to S$，所以 $R_n\to0$。前一个极限固定 $n$ 而令 $m$ 增大，后一个极限才是令截断位置 $n$ 增大。若原级数发散，则不能把 $S-S_n$ 当作余项，因为此时不存在有限的级数和 $S$。\par
+% UNIT S02.U13
+\begin{theorem}
+\label{thm:finite-change}设 $\{a_n\}$、$\{b_n\}$ 为两个实数列，存在正整数 $N$，使得对所有整数 $n>N$ 都有 $a_n=b_n$。则 $\sum_{n=1}^{\infty}a_n$ 与 $\sum_{n=1}^{\infty}b_n$ 同敛散。若前者收敛于 $A$，则后者的和为
+\[
+B=A+\sum_{k=1}^{N}(b_k-a_k).
+\]
+因此，改变有限项不改变级数的敛散性，但可能改变级数的和。添加或删去有限项，并保持其余项的相对次序，也不改变敛散性。
+\end{theorem}
+% UNIT S02.U14
+\begin{proof}
+令 $A_n=\sum_{k=1}^{n}a_k$、$B_n=\sum_{k=1}^{n}b_k$。对所有整数 $n\geq N$，
+\[
+B_n-A_n=\sum_{k=1}^{N}(b_k-a_k)=C,
+\]
+其中 $C$ 是与 $n$ 无关的有限实数。因此 $B_n=A_n+C$，两部分和数列同时收敛或同时发散；收敛时极限相差 $C$。
+
+对于删去前 $N$ 项所得的尾级数，其第 $m$ 个部分和为 $A_{N+m}-A_N$，其中 $m$ 为正整数，故它与原级数同敛散。一般地，添加或删去有限项后，在经过最后一个改动位置时，新旧部分和之间只相差一个固定常数和一个固定的下标平移，仍由数列极限性质得到同样结论。这里不涉及无限多项的重新排列。
+\end{proof}
+% UNIT S02.U15
+\begin{example}
+设实数列 $\{b_n\}$ 满足
+\[
+b_1=3,\qquad b_n=\frac{2}{2^n}\quad(n\geq2).
+\]
+求级数 $\sum_{n=1}^{\infty}b_n$ 的和及第 $n$ 个余项，并确定使绝对误差小于 $1/100$ 的最小正整数截断位置 $n$。
+\end{example}
+% UNIT S02.U16
+\par\noindent\textbf{解：}前节已由部分和求得 $\sum_{k=1}^{\infty}2^{-k}=1$，且对每个正整数 $n$，有 $\sum_{k=1}^{n}2^{-k}=1-2^{-n}$。由定理 \ref{thm:linearity}，$\sum_{k=1}^{\infty}2\cdot2^{-k}=2$。本题将其第一项从 $1$ 改成 $3$，增加了 $2$，故由定理 \ref{thm:finite-change}，所求级数的和为 $4$。
+
+对每个正整数 $n$，其部分和及余项分别为
+\[
+S_n=2(1-2^{-n})+2=4-2^{1-n},\qquad
+R_n=4-S_n=2^{1-n}.
+\]
+所以 $|R_n|=2^{1-n}$。当 $n=7$ 时，误差为 $1/64>1/100$；当 $n=8$ 时，误差为 $1/128<1/100$。误差随正整数 $n$ 增大严格减小，故满足要求的最小截断位置是 $n=8$。\par
+% UNIT S02.U17
+本节的判断顺序是：先检查通项是否趋于零；若不趋于零，立即判为发散；若趋于零，还需研究部分和或使用其他适用的判别法。线性运算要求有关级数已经收敛；余项用于描述收敛级数的截断误差；有限项改变只保持敛散性，不保证和保持不变。
+
+以下为本节练习，答案统一安排在讲义末尾。\par
+% UNIT S02.U18
+\begin{exercise}
+\label{mathagent:exercise:e69b7a0304c206dceae958714ab74feb67aaa37cb599d9dda82205d9e3e9f289}
+分别判断下列级数能否仅用收敛的必要条件判为发散，并对不能据此判定的情形说明原因：
+\[
+\text{(1)}\quad\sum_{n=1}^{\infty}\frac{2n+1}{3n+2};\qquad
+\text{(2)}\quad\sum_{n=1}^{\infty}\frac1{n+2};\qquad
+\text{(3)}\quad\sum_{n=1}^{\infty}\frac{(-1)^n n}{n+1}.
+\]
+再利用本节已知结论确定第 (2) 个级数的敛散性。
+\end{exercise}
+% UNIT S02.U19
+\begin{exercise}
+\label{mathagent:exercise:fae67726e3f6b1d71e0285711b2976ac356374939815f4c70d1ae93b03238b0b}
+设实数项级数 $\sum_{n=1}^{\infty}a_n=2$、$\sum_{n=1}^{\infty}b_n=-1$ 均收敛。求 $\sum_{n=1}^{\infty}(3a_n-2b_n)$ 的和。若将组合级数的第一项增加 $5$，其敛散性与和各有何变化？另说明：仅知道 $\sum_{n=1}^{\infty}(a_n+b_n)$ 收敛，能否推出两个原级数都收敛？请给出理由或反例。
+\end{exercise}
+% UNIT S02.U20
+\begin{exercise}
+\label{mathagent:exercise:da9ebfc8f5e631cba145a91d6f8cb2ebfd5769c096981b72d3d911dc8b435e5d}
+对于级数 $\sum_{n=1}^{\infty}2^{-n}$，写出第 $n$ 个余项，求使绝对误差小于 $1/1000$ 的最小正整数 $n$。若只将该级数第一项改成 $10$，求新级数的和，并说明对每个正整数 $n$，新旧级数的第 $n$ 个余项是否相同。
+\end{exercise}
+\section{正项级数及其判别法}\label{sec:S03}
+% UNIT S03.U01
+\begin{definition}
+若级数 $\sum_{n=1}^{\infty}a_n$ 满足 $a_n\geq 0$ 对每个正整数 $n$ 都成立，则称其为正项级数。记部分和为
+\[
+S_n=\sum_{k=1}^{n}a_k.
+\]
+由于 $a_{n+1}\geq0$，有
+\[
+S_{n+1}=S_n+a_{n+1}\geq S_n,
+\]
+所以正项级数的部分和数列是单调不减数列。\label{def:positive-series}
+\end{definition}
+% UNIT S03.U02
+\begin{definition}
+对实数 $p$，称
+\[
+\sum_{n=1}^{\infty}\frac{1}{n^p}
+\]
+为 $p$-级数。其中对正整数 $n$，当 $p\leq0$ 时，通项 $1/n^p$ 不趋于零；当 $p>0$ 时，通项趋于零，但这还不能单独说明级数收敛。\label{def:p-series}
+\end{definition}
+% UNIT S03.U03
+\begin{theorem}
+设 $\sum_{n=1}^{\infty}a_n$ 为正项级数，部分和为 $S_n$。则该级数收敛，当且仅当数列 $\{S_n\}$ 有上界。\label{thm:monotone-partial-sums}
+\end{theorem}
+% UNIT S03.U04
+\begin{proof}
+由定义，正项级数的部分和数列满足 $S_{n+1}\geq S_n$，因此它是单调不减数列。
+
+若级数收敛，则 $S_n$ 收敛于某个有限实数 $S$。收敛数列有界，所以存在常数 $M$，使得 $S_n\leq M$ 对所有正整数 $n$ 成立。
+
+反过来，若 $\{S_n\}$ 有上界，则它是有上界的单调不减数列。由单调有界数列收敛定理，存在有限实数 $S$，使得
+\[
+\lim_{n\to\infty}S_n=S.
+\]
+根据级数收敛的定义，$\sum_{n=1}^{\infty}a_n$ 收敛。故结论成立。
+\end{proof}
+% UNIT S03.U05
+\begin{theorem}
+设 $\sum_{n=1}^{\infty}a_n$ 和 $\sum_{n=1}^{\infty}b_n$ 为正项级数，且对某个正整数 $N$ 以及所有整数 $n\geq N$，有
+\[
+0\leq a_n\leq b_n.
+\]
+则：
+\begin{enumerate}
+\item 若 $\sum_{n=1}^{\infty}b_n$ 收敛，则 $\sum_{n=1}^{\infty}a_n$ 收敛；
+\item 若 $\sum_{n=1}^{\infty}a_n$ 发散，则 $\sum_{n=1}^{\infty}b_n$ 发散。
+\end{enumerate}
+这称为正项级数的比较判别法。\label{thm:comparison}
+\end{theorem}
+% UNIT S03.U06
+\begin{proof}
+设
+\[
+A_n=\sum_{k=1}^{n}a_k,\qquad B_n=\sum_{k=1}^{n}b_k.
+\]
+对 $n\geq N$，由 $0\leq a_k\leq b_k$ 得
+\[
+A_n=\sum_{k=1}^{N-1}a_k+\sum_{k=N}^{n}a_k
+\leq \sum_{k=1}^{N-1}a_k+\sum_{k=N}^{n}b_k.
+\]
+若 $\sum b_n$ 收敛，则 $B_n$ 有上界，因此右端有上界，从而 $A_n$ 有上界。由定理 \ref{thm:monotone-partial-sums}，$\sum a_n$ 收敛。
+
+第二个结论是第一个结论的逆否命题。若 $\sum b_n$ 收敛，则由第一部分 $\sum a_n$ 也收敛；因此若 $\sum a_n$ 发散，就不可能有 $\sum b_n$ 收敛，故 $\sum b_n$ 发散。
+\end{proof}
+% UNIT S03.U07
+\begin{theorem}
+设 $a_n>0$、$b_n>0$ 对所有正整数 $n$ 成立，并且
+\[
+\lim_{n\to\infty}\frac{a_n}{b_n}=L,
+\qquad 0<L<\infty.
+\]
+则正项级数 $\sum_{n=1}^{\infty}a_n$ 与 $\sum_{n=1}^{\infty}b_n$ 同时收敛或同时发散。这称为极限比较判别法。\label{thm:limit-comparison}
+\end{theorem}
+% UNIT S03.U08
+\begin{proof}
+由 $a_n/b_n\to L$ 且 $L>0$，取 $\varepsilon=L/2$。存在正整数 $N$，使得当 $n\geq N$ 时，
+\[
+\left|\frac{a_n}{b_n}-L\right|<\frac{L}{2}.
+\]
+因为 $a_n$ 与 $b_n$ 均为正数，所以
+\[
+\frac{L}{2}<\frac{a_n}{b_n}<\frac{3L}{2},
+\]
+从而
+\[
+\frac{L}{2}b_n<a_n<\frac{3L}{2}b_n.
+\]
+若 $\sum b_n$ 收敛，则比较判别法说明 $\sum a_n$ 收敛；若 $\sum b_n$ 发散，则由
+\[
+\frac{L}{2}b_n\leq a_n
+\]
+以及比较判别法的第二部分，知 $\sum a_n$ 发散。交换 $a_n$ 与 $b_n$ 的位置可得反向结论，故两级数同敛散。
+\end{proof}
+% UNIT S03.U09
+\begin{theorem}
+对 $p$-级数
+\[
+\sum_{n=1}^{\infty}\frac{1}{n^p},
+\]
+有
+\[
+\sum_{n=1}^{\infty}\frac{1}{n^p}
+\begin{cases}
+\text{收敛},&p>1,\\
+\text{发散},&p\leq1.
+\end{cases}
+\]
+\label{thm:p-series}
+\end{theorem}
+% UNIT S03.U10
+\begin{proof}
+当 $p\leq0$ 时，通项 $1/n^p=n^{-p}$ 不趋于零，所以级数发散。
+
+设 $0<p\leq1$。对每个正整数 $j$，考虑区间 $2^{j-1}<n\leq2^j$。其中共有 $2^{j-1}$ 个整数，并且 $n\leq2^j$，所以
+\[
+\frac{1}{n^p}\geq\frac{1}{(2^j)^p}=2^{-jp}.
+\]
+因此
+\[
+\sum_{n=2^{j-1}+1}^{2^j}\frac{1}{n^p}
+\geq 2^{j-1}2^{-jp}=\frac12\,2^{j(1-p)}.
+\]
+当 $p=1$ 时，每组和至少为 $1/2$；当 $0<p<1$ 时，每组和随 $j$ 增大而不减且不趋于零。于是部分和数列无界，级数发散。
+
+最后设 $p>1$。取 $q=p-1>0$。对每个正整数 $n\geq2$，函数 $x^{-p}$ 在区间 $[n-1,n]$ 上递减，所以
+\[
+\frac{1}{n^p}\leq\int_{n-1}^{n}x^{-p}\,dx.
+\]
+于是对任意正整数 $m$，
+\[
+\sum_{n=2}^{m}\frac{1}{n^p}
+\leq\int_{1}^{m}x^{-p}\,dx
+=\frac{1-m^{1-p}}{p-1}
+\leq\frac{1}{p-1}.
+\]
+部分和有上界，故由定理 \ref{thm:monotone-partial-sums}，级数收敛。
+\end{proof}
+% UNIT S03.U11
+\begin{theorem}
+设函数 $f$ 在区间 $[1,\infty)$ 上连续、正值且单调递减，并满足
+\[
+f(n)=a_n\qquad(n=1,2,3,\ldots).
+\]
+则正项级数 $\sum_{n=1}^{\infty}a_n$ 收敛，当且仅当反常积分
+\[
+\int_{1}^{\infty}f(x)\,dx
+=\lim_{t\to\infty}\int_{1}^{t}f(x)\,dx
+\]
+收敛。这称为积分判别法。\label{thm:integral-test}
+\end{theorem}
+% UNIT S03.U12
+\begin{proof}
+由于 $f$ 单调递减，对每个正整数 $n\geq1$ 以及 $x\in[n,n+1]$，有
+\[
+f(n+1)\leq f(x)\leq f(n).
+\]
+对区间积分可得
+\[
+f(n+1)\leq\int_n^{n+1}f(x)\,dx\leq f(n).
+\]
+对 $n=1,2,\ldots,m$ 求和，得到
+\[
+\sum_{n=2}^{m+1}f(n)\leq\int_1^{m+1}f(x)\,dx\leq\sum_{n=1}^{m}f(n).
+\]
+若积分收敛，记其值为 $I$，则由左侧不等式及 $f(x)>0$，有
+\[
+\sum_{n=1}^{m+1}f(n)\leq f(1)+\int_1^{m+1}f(x)\,dx\leq f(1)+I.
+\]
+所以正项级数的部分和有上界，因此级数收敛。若级数收敛，记其和为 $S$，则右侧不等式说明 $\int_1^{m+1}f(x)\,dx\leq S$。对任意实数 $t\geq1$，取正整数 $m$ 使 $t\leq m+1$，由 $f(x)>0$ 得
+\[
+0\leq\int_1^t f(x)\,dx\leq\int_1^{m+1}f(x)\,dx\leq S.
+\]
+截断积分随上限增加而单调不减且有上界，所以其有有限极限，积分收敛。
+\end{proof}
+% UNIT S03.U13
+\begin{example}
+判断下列正项级数的敛散性，并说明所使用的判别法：
+\[
+\text{(1)}\quad\sum_{n=1}^{\infty}\frac{3n+1}{n^3+2};
+\qquad
+\text{(2)}\quad\sum_{n=1}^{\infty}\frac{1}{n^2+1};
+\qquad
+\text{(3)}\quad\sum_{n=1}^{\infty}\frac{1}{n\ln n}.
+\]
+其中第 (3) 个级数从 $n=2$ 开始。
+\end{example}
+% UNIT S03.U14
+\par\noindent\textbf{解：}(1) 对正整数 $n$，有
+\[
+0<\frac{3n+1}{n^3+2}\leq\frac{4n}{n^3}=\frac{4}{n^2},
+\]
+因为 $n\geq1$ 时 $3n+1\leq4n$ 且 $n^3+2\geq n^3$。由 $p$-级数 $\sum 1/n^2$ 收敛以及比较判别法，原级数收敛。
+
+(2) 有
+\[
+0<\frac{1}{n^2+1}\leq\frac{1}{n^2}.
+\]
+右侧的 $p$-级数收敛，所以原级数收敛。
+
+(3) 令 $f(x)=1/(x\ln x)$，其中 $x\geq2$。函数为正且连续，并且在 $[2,\infty)$ 上单调递减。由换元 $u=\ln x$，得到
+\[
+\int_2^t\frac{1}{x\ln x}\,dx
+=\int_{\ln2}^{\ln t}\frac{1}{u}\,du
+=\ln(\ln t)-\ln(\ln2).
+\]
+当 $t\to\infty$ 时，右端趋于 $+\infty$，所以积分发散。由积分判别法，级数
+\[
+\sum_{n=2}^{\infty}\frac{1}{n\ln n}
+\]
+发散。\par
+% UNIT S03.U15
+\begin{exercise}
+\label{mathagent:exercise:0f13776c11d825df9fdf2c3c249691355909a96d5e874285ceb15e0c4116d477}
+判断下列正项级数的敛散性，并写出主要理由：
+\[
+\text{(1)}\quad\sum_{n=1}^{\infty}\frac{1}{n^{3/2}};
+\qquad
+\text{(2)}\quad\sum_{n=1}^{\infty}\frac{n+1}{n^2+3};
+\qquad
+\text{(3)}\quad\sum_{n=1}^{\infty}\frac{1}{\sqrt{n^2+n}}.
+\]
+
+\end{exercise}
+\section*{练习答案}
+% UNIT S01.U09
+\par\noindent\textbf{\hyperref[mathagent:exercise:88f1e3edc535eea58e2b1acdc6aefe1b2b782af1c244960542c7c18b26231ebf]{练习 \ref*{mathagent:exercise:88f1e3edc535eea58e2b1acdc6aefe1b2b782af1c244960542c7c18b26231ebf} 的解答：}}由部分和的定义，
+\[
+S_3=a_1+a_2+a_3
+=\frac{1}{1\cdot2}+\frac{1}{2\cdot3}+\frac{1}{3\cdot4}
+=\frac12+\frac16+\frac1{12}
+=\frac34.
+\]
+判断该级数是否收敛时，需要考察部分和数列
+\[
+S_n=\sum_{k=1}^{n}\frac{1}{k(k+1)}
+\]
+是否存在有限极限。若 $\lim_{n\to\infty}S_n$ 存在，则级数收敛；否则级数发散。\par
+% UNIT S02.U18.answer
+\par\noindent\textbf{\hyperref[mathagent:exercise:e69b7a0304c206dceae958714ab74feb67aaa37cb599d9dda82205d9e3e9f289]{练习 \ref*{mathagent:exercise:e69b7a0304c206dceae958714ab74feb67aaa37cb599d9dda82205d9e3e9f289} 的解答：}}(1) 通项满足
+\[
+\lim_{n\to\infty}\frac{2n+1}{3n+2}
+=\lim_{n\to\infty}\frac{2+1/n}{3+2/n}=\frac23\ne0.
+\]
+因此仅用收敛的必要条件即可判定该级数发散。
+
+(2) 因为 $1/(n+2)\to0$，收敛的必要条件得到满足，但这不能保证级数收敛，也不能据此判为发散。进一步，令 $H_m=\sum_{k=1}^{m}1/k$，则本题的部分和为
+\[
+S_n=\sum_{k=1}^{n}\frac1{k+2}=H_{n+2}-\frac32.
+\]
+该级数是调和级数删去前两项所得的尾级数，由调和级数发散及有限项改变性质，知它发散。
+
+(3) 记 $a_n=(-1)^n n/(n+1)$。其偶数项与奇数项分别满足
+\[
+a_{2m}=\frac{2m}{2m+1}\longrightarrow1,\qquad
+a_{2m-1}=-\frac{2m-1}{2m}\longrightarrow-1.
+\]
+两个子数列的极限不同，故通项极限不存在，尤其不趋于零。因此仅用收敛的必要条件即可判定该级数发散。\par
+% UNIT S02.U19.answer
+\par\noindent\textbf{\hyperref[mathagent:exercise:fae67726e3f6b1d71e0285711b2976ac356374939815f4c70d1ae93b03238b0b]{练习 \ref*{mathagent:exercise:fae67726e3f6b1d71e0285711b2976ac356374939815f4c70d1ae93b03238b0b} 的解答：}}由于两个原级数均收敛，由线性运算定理，组合级数收敛且
+\[
+\sum_{n=1}^{\infty}(3a_n-2b_n)=3\cdot2-2\cdot(-1)=8.
+\]
+若将组合级数第一项增加 $5$，则每个正整数下标的部分和均增加 $5$，故新级数仍收敛，其和为 $8+5=13$。
+
+最后一问仅以逐项相加的级数收敛为条件，不再假定两个原级数分别收敛；此时不能推出两个原级数都收敛。反例为 $a_n=1$、$b_n=-1$：逐项相加后各项均为零，所以 $\sum_{n=1}^{\infty}(a_n+b_n)$ 收敛于 $0$，而两个原级数的部分和分别为 $n$ 和 $-n$，均无有限极限，因而均发散。\par
+% UNIT S02.U20.answer
+\par\noindent\textbf{\hyperref[mathagent:exercise:da9ebfc8f5e631cba145a91d6f8cb2ebfd5769c096981b72d3d911dc8b435e5d]{练习 \ref*{mathagent:exercise:da9ebfc8f5e631cba145a91d6f8cb2ebfd5769c096981b72d3d911dc8b435e5d} 的解答：}}由有限等比数列求和公式，对每个正整数 $n$，
+\[
+S_n=\sum_{k=1}^{n}2^{-k}=1-2^{-n}.
+\]
+所以级数的和为 $S=1$，第 $n$ 个余项为
+\[
+R_n=S-S_n=2^{-n}.
+\]
+绝对误差小于 $1/1000$ 等价于 $2^n>1000$。因为
+\[
+2^9=512<1000<1024=2^{10},
+\]
+且 $2^n$ 随正整数 $n$ 严格递增，满足要求的最小正整数为 $n=10$。
+
+原第一项为 $1/2$，改为 $10$ 后增加了 $10-1/2=19/2$。由有限项改变性质，新级数仍收敛，其和为
+\[
+\widetilde S=1+\frac{19}{2}=\frac{21}{2}.
+\]
+对每个正整数 $n$，新部分和为 $\widetilde S_n=S_n+19/2$，因此
+\[
+\widetilde R_n=\widetilde S-\widetilde S_n
+=\left(S+\frac{19}{2}\right)-\left(S_n+\frac{19}{2}\right)
+=S-S_n=2^{-n}.
+\]
+故新旧级数的第 $n$ 个余项相同。\par
+% UNIT S03.U16
+\par\noindent\textbf{\hyperref[mathagent:exercise:0f13776c11d825df9fdf2c3c249691355909a96d5e874285ceb15e0c4116d477]{练习 \ref*{mathagent:exercise:0f13776c11d825df9fdf2c3c249691355909a96d5e874285ceb15e0c4116d477} 的解答：}}(1) 这是 $p=3/2>1$ 的 $p$-级数，因此收敛。
+
+(2) 对正整数 $n$，有
+\[
+\frac{n+1}{n^2+3}\geq\frac{n}{n^2+3}\geq\frac{n}{4n^2}=\frac{1}{4n},
+\]
+其中 $n^2+3\leq4n^2$。由于调和级数发散，由比较判别法知原级数发散。
+
+(3) 对正整数 $n$，有
+\[
+\sqrt{n^2+n}\leq\sqrt{2n^2}=\sqrt{2}\,n,
+\]
+所以
+\[
+\frac{1}{\sqrt{n^2+n}}\geq\frac{1}{\sqrt{2}}\frac{1}{n}.
+\]
+由调和级数发散及比较判别法，原级数发散。\par
+\end{document}
