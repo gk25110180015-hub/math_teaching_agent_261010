@@ -1,0 +1,1 @@
+\openin1=../outside.txt

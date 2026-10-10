@@ -1,0 +1,344 @@
+{
+  "additions": [],
+  "decision_ids": [
+    "90d8ebbaf3a04fdcac602a7d48e865f2",
+    "42e892ed95484e609fa01043d2acac49",
+    "07c82c05d9274b129de040500e2b9281",
+    "e0222b37d2fd471e92170e86b4626ee5"
+  ],
+  "decisions": [
+    {
+      "actor": "local_user",
+      "affected_fields": [
+        "lecture.proof_policy"
+      ],
+      "custom_input": "",
+      "id": "90d8ebbaf3a04fdcac602a7d48e865f2",
+      "question_id": "Q-PROOF",
+      "question_revision": 1,
+      "resolved_effects": {
+        "value": "key"
+      },
+      "selected_option_ids": [
+        "KEY"
+      ],
+      "timestamp": "2026-09-19T16:41:55.698296+00:00"
+    },
+    {
+      "actor": "local_user",
+      "affected_fields": [
+        "lecture.example_focus"
+      ],
+      "custom_input": "",
+      "id": "42e892ed95484e609fa01043d2acac49",
+      "question_id": "Q-EXAMPLE",
+      "question_revision": 1,
+      "resolved_effects": {
+        "value": "balanced"
+      },
+      "selected_option_ids": [
+        "BALANCED"
+      ],
+      "timestamp": "2026-09-19T16:41:55.698296+00:00"
+    },
+    {
+      "actor": "local_user",
+      "affected_fields": [
+        "lecture.exercises"
+      ],
+      "custom_input": "",
+      "id": "07c82c05d9274b129de040500e2b9281",
+      "question_id": "Q-EXERCISE",
+      "question_revision": 1,
+      "resolved_effects": {
+        "value": "with_answers"
+      },
+      "selected_option_ids": [
+        "WITH"
+      ],
+      "timestamp": "2026-09-19T16:41:55.698296+00:00"
+    },
+    {
+      "actor": "local_user",
+      "affected_fields": [
+        "lecture.answers_location"
+      ],
+      "custom_input": "",
+      "id": "e0222b37d2fd471e92170e86b4626ee5",
+      "question_id": "Q-ANSWERS",
+      "question_revision": 1,
+      "resolved_effects": {
+        "value": "section"
+      },
+      "selected_option_ids": [
+        "SECTION"
+      ],
+      "timestamp": "2026-09-19T16:41:55.698296+00:00"
+    }
+  ],
+  "diff": [
+    {
+      "after": {
+        "answers_location": "section",
+        "example_focus": "balanced",
+        "exercises": "with_answers",
+        "proof_policy": "key"
+      },
+      "before": {
+        "answers_location": null,
+        "example_focus": null,
+        "exercises": null,
+        "proof_policy": null
+      },
+      "field": "lecture"
+    }
+  ],
+  "difficulty": "经济学本科一年级微积分",
+  "exclusions": [
+    "未指定专题的真实教学验收"
+  ],
+  "input_snapshot_hash": "f10613455d3c043c299b621610a1bf1960fb717a836a0238d05cd160327e4ece",
+  "lecture": {
+    "answers_location": "section",
+    "example_focus": "balanced",
+    "exercises": "with_answers",
+    "proof_policy": "key"
+  },
+  "objectives": [
+    "演示可恢复的讲义生成流程"
+  ],
+  "omissions": [],
+  "prerequisites": [
+    "实数与不等式"
+  ],
+  "provider": "mock",
+  "questions": [
+    {
+      "affected_fields": [
+        "lecture.proof_policy"
+      ],
+      "blocking": true,
+      "custom_input": "",
+      "id": "Q-PROOF",
+      "options": [
+        {
+          "effects": {
+            "value": "key"
+          },
+          "id": "KEY",
+          "label": "关键定理完整证明，其余说明",
+          "recommended": true
+        },
+        {
+          "effects": {
+            "value": "all"
+          },
+          "id": "ALL",
+          "label": "所有定理完整证明",
+          "recommended": false
+        },
+        {
+          "id": "CUSTOM",
+          "label": "自定义输入",
+          "recommended": false
+        }
+      ],
+      "prompt": "定理证明采用哪种深度？",
+      "reason": "此项影响写作内容，需由用户选择。",
+      "revision": 1,
+      "selected_option_ids": [
+        "KEY"
+      ],
+      "selection_mode": "single"
+    },
+    {
+      "affected_fields": [
+        "lecture.example_focus"
+      ],
+      "blocking": true,
+      "custom_input": "",
+      "id": "Q-EXAMPLE",
+      "options": [
+        {
+          "effects": {
+            "value": "balanced"
+          },
+          "id": "BALANCED",
+          "label": "概念与计算均衡",
+          "recommended": true
+        },
+        {
+          "effects": {
+            "value": "economics"
+          },
+          "id": "ECONOMICS",
+          "label": "更多经济应用",
+          "recommended": false
+        },
+        {
+          "id": "CUSTOM",
+          "label": "自定义输入",
+          "recommended": false
+        }
+      ],
+      "prompt": "例题侧重什么？",
+      "reason": "此项影响写作内容，需由用户选择。",
+      "revision": 1,
+      "selected_option_ids": [
+        "BALANCED"
+      ],
+      "selection_mode": "single"
+    },
+    {
+      "affected_fields": [
+        "lecture.exercises"
+      ],
+      "blocking": true,
+      "custom_input": "",
+      "id": "Q-EXERCISE",
+      "options": [
+        {
+          "effects": {
+            "value": "with_answers"
+          },
+          "id": "WITH",
+          "label": "安排练习并附答案",
+          "recommended": true
+        },
+        {
+          "effects": {
+            "value": "none"
+          },
+          "id": "NONE",
+          "label": "不安排额外练习",
+          "recommended": false
+        },
+        {
+          "id": "CUSTOM",
+          "label": "自定义输入",
+          "recommended": false
+        }
+      ],
+      "prompt": "是否安排练习与答案？",
+      "reason": "此项影响写作内容，需由用户选择。",
+      "revision": 1,
+      "selected_option_ids": [
+        "WITH"
+      ],
+      "selection_mode": "single"
+    },
+    {
+      "affected_fields": [
+        "lecture.answers_location"
+      ],
+      "blocking": true,
+      "custom_input": "",
+      "id": "Q-ANSWERS",
+      "options": [
+        {
+          "effects": {
+            "value": "section"
+          },
+          "id": "SECTION",
+          "label": "各节之后",
+          "recommended": true
+        },
+        {
+          "effects": {
+            "value": "end"
+          },
+          "id": "END",
+          "label": "讲义末尾",
+          "recommended": false
+        },
+        {
+          "id": "CUSTOM",
+          "label": "自定义输入",
+          "recommended": false
+        }
+      ],
+      "prompt": "练习答案放在哪里？",
+      "reason": "此项影响写作内容，需由用户选择。",
+      "revision": 1,
+      "selected_option_ids": [
+        "SECTION"
+      ],
+      "selection_mode": "single"
+    }
+  ],
+  "reference_context": {
+    "dataset": "第一章",
+    "instruction": "Only observe structure, proof depth and notation. Do not copy these examples into a different topic.",
+    "label": "UNTRUSTED_STYLE_REFERENCE_ONLY",
+    "section_titles": [
+      "数列的一般定义",
+      "拓展阅读：数列的应用",
+      "差分及其应用",
+      "数列极限",
+      "收敛数列的基本性质",
+      "极限存在性定理"
+    ],
+    "source_hash": "49a18ae541e03d6f60b99782fa5c1413a1f1c9e93a3614f865b4b263acb0045d",
+    "status": "RETRIEVED",
+    "weight_training": false
+  },
+  "reference_registry": {
+    "sec:S01": "S01",
+    "sec:S02": "S02"
+  },
+  "revision": 2,
+  "rules": {
+    "allowed_text_sizes": [
+      "footnotesize",
+      "small",
+      "normalsize",
+      "large"
+    ],
+    "rule_version": 1,
+    "summary_frames": false
+  },
+  "schema_version": 1,
+  "sections": [
+    {
+      "id": "S01",
+      "objectives": [
+        "理解 epsilon 定义"
+      ],
+      "prerequisites": [],
+      "reference_labels": [],
+      "required_kinds": [
+        "definition",
+        "theorem",
+        "example",
+        "solution"
+      ],
+      "title": "数列极限的定义"
+    },
+    {
+      "id": "S02",
+      "objectives": [
+        "验证极限运算"
+      ],
+      "prerequisites": [
+        "S01"
+      ],
+      "reference_labels": [],
+      "required_kinds": [
+        "definition",
+        "theorem",
+        "example",
+        "solution"
+      ],
+      "title": "极限的运算"
+    }
+  ],
+  "symbols": {
+    "a_n": "实数列",
+    "epsilon": "正实数"
+  },
+  "theme": "default",
+  "title": "数列极限（离线演示）",
+  "unresolved_blocking_questions": [],
+  "workflow_id": "lecture.generate",
+  "hash": "28c8b24a945d68e46a7144d5d6b7fab22b938998c118d87091692898dbb64f12"
+}

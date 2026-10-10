@@ -1,0 +1,130 @@
+{
+  "content": {
+    "status": "PASS",
+    "evidence": [
+      "实际 TeX 与保留源单元对照"
+    ],
+    "limitations": []
+  },
+  "math": {
+    "status": "NEEDS_REVIEW",
+    "evidence": [
+      "原文保真；未自动修正源讲义数学结论"
+    ],
+    "limitations": [
+      "教师须复核原文的具体数学疑点"
+    ]
+  },
+  "fidelity": {
+    "status": "PASS",
+    "issues": [],
+    "evidence": "Independent comparison of actual source payload strings and exact contiguous original intervals; scaffold fingerprint checked when supplied",
+    "checked_units": 2,
+    "limitations": [
+      "Whitespace/comments ignored; no claim of semantic equivalence for rewritten mathematics"
+    ]
+  },
+  "compile": {
+    "status": "FAIL",
+    "pdf_path": null,
+    "issues": [
+      {
+        "rule_id": "UNDEFINED_CONTROL_SEQUENCE",
+        "severity": "blocking",
+        "message": "./slides.vrb:6: Undefined control sequence.",
+        "location": {
+          "log_line": 1265,
+          "file": "./slides.vrb",
+          "source_line": 6
+        },
+        "resolution_status": "open"
+      }
+    ],
+    "log_paths": [
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\u6f01\\r0\\w\\b\\536d16a0c78640d3\\ve65d3fa405e9\\build-1\\pass-1.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\u6f01\\r0\\w\\b\\536d16a0c78640d3\\ve65d3fa405e9\\build-1\\pass-1.tex.log"
+    ],
+    "engine": {
+      "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+    },
+    "passes": 1,
+    "compile_mode": "trusted_local",
+    "isolation": "NOT_IMPLEMENTED",
+    "limitations": [
+      "原生可信本机编译不是文件系统或网络隔离沙箱。"
+    ],
+    "command": [
+      "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "-no-shell-escape",
+      "-recorder",
+      "-synctex=1",
+      "-jobname=slides",
+      "-output-directory=.",
+      "slides.tex"
+    ],
+    "elapsed_seconds": 2.39
+  },
+  "layout": {
+    "status": "NOT_RUN",
+    "evidence": [],
+    "limitations": []
+  },
+  "policy": {
+    "status": "PASS",
+    "evidence": {
+      "schema_version": 1,
+      "decisions": [
+        {
+          "decision_id": "6cb09a6d341547c581cdaad0ad45834a",
+          "resolved_effects": [],
+          "status": "PASS",
+          "artifact": "slides.tex",
+          "artifact_hash": "591a3ddcfc4269160b0a0b6247a3e09f6dd25b49a80e5b3dcc4bbd26a849e8ef",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        },
+        {
+          "decision_id": "6a5cdbfdf3664bf88832d13a0ca31665",
+          "resolved_effects": [],
+          "status": "PASS",
+          "artifact": "slides.tex",
+          "artifact_hash": "591a3ddcfc4269160b0a0b6247a3e09f6dd25b49a80e5b3dcc4bbd26a849e8ef",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        }
+      ],
+      "limitations": [
+        "语义自定义不能仅凭模型自评当作落实；发布前须人工审阅质量报告。"
+      ]
+    },
+    "limitations": []
+  },
+  "security": {
+    "status": "NOT_RUN",
+    "evidence": [
+      "回环服务、受控源码、编译参数及白名单子进程环境"
+    ],
+    "limitations": [
+      "trusted_local 不是文件系统/网络隔离沙箱"
+    ]
+  },
+  "schema_version": 1,
+  "provider": "mock",
+  "human_visual_review": "NOT_RUN",
+  "model_visual_review": "NOT_RUN",
+  "issues": [
+    {
+      "rule_id": "UNDEFINED_CONTROL_SEQUENCE",
+      "severity": "blocking",
+      "message": "./slides.vrb:6: Undefined control sequence.",
+      "location": {
+        "log_line": 1265,
+        "file": "./slides.vrb",
+        "source_line": 6
+      },
+      "resolution_status": "open"
+    }
+  ]
+}

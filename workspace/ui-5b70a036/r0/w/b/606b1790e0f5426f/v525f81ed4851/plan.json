@@ -1,0 +1,442 @@
+{
+  "additions": [],
+  "decision_ids": [
+    "9f6eca7606e247f2bffc1f793a9786b3",
+    "a07850df4c2d490d974c61b1a2cf97bf",
+    "de62627f1c324985a720fb63ec6f7143",
+    "73950bd972f341d9bc8c70e9799aaa42"
+  ],
+  "decisions": [
+    {
+      "actor": "local_user",
+      "affected_fields": [
+        "lecture.proof_policy"
+      ],
+      "custom_input": "",
+      "id": "9f6eca7606e247f2bffc1f793a9786b3",
+      "question_id": "Q-PROOF",
+      "question_revision": 1,
+      "resolved_effects": {
+        "value": "key"
+      },
+      "selected_option_ids": [
+        "KEY"
+      ],
+      "timestamp": "2026-10-07T08:40:18.318410+00:00"
+    },
+    {
+      "actor": "local_user",
+      "affected_fields": [
+        "lecture.example_focus"
+      ],
+      "custom_input": "",
+      "id": "a07850df4c2d490d974c61b1a2cf97bf",
+      "question_id": "Q-EXAMPLE",
+      "question_revision": 1,
+      "resolved_effects": {
+        "value": "balanced"
+      },
+      "selected_option_ids": [
+        "BALANCED"
+      ],
+      "timestamp": "2026-10-07T08:40:18.318410+00:00"
+    },
+    {
+      "actor": "local_user",
+      "affected_fields": [
+        "lecture.exercises"
+      ],
+      "custom_input": "",
+      "derived_section_requirements": [
+        {
+          "after": [
+            "definition",
+            "theorem",
+            "example",
+            "solution",
+            "exercise"
+          ],
+          "before": [
+            "definition",
+            "theorem",
+            "example",
+            "solution"
+          ],
+          "section_id": "S01"
+        },
+        {
+          "after": [
+            "definition",
+            "theorem",
+            "example",
+            "solution",
+            "exercise"
+          ],
+          "before": [
+            "definition",
+            "theorem",
+            "example",
+            "solution"
+          ],
+          "section_id": "S02"
+        }
+      ],
+      "id": "de62627f1c324985a720fb63ec6f7143",
+      "question_id": "Q-EXERCISE",
+      "question_revision": 1,
+      "resolved_effects": {
+        "value": "with_answers"
+      },
+      "selected_option_ids": [
+        "WITH"
+      ],
+      "timestamp": "2026-10-07T08:40:18.318410+00:00"
+    },
+    {
+      "actor": "local_user",
+      "affected_fields": [
+        "lecture.answers_location"
+      ],
+      "custom_input": "",
+      "id": "73950bd972f341d9bc8c70e9799aaa42",
+      "question_id": "Q-ANSWERS",
+      "question_revision": 1,
+      "resolved_effects": {
+        "value": "section"
+      },
+      "selected_option_ids": [
+        "SECTION"
+      ],
+      "timestamp": "2026-10-07T08:40:18.318410+00:00"
+    }
+  ],
+  "diff": [
+    {
+      "after": {
+        "answers_location": "section",
+        "example_focus": "balanced",
+        "exercises": "with_answers",
+        "proof_policy": "key"
+      },
+      "before": {
+        "answers_location": null,
+        "example_focus": null,
+        "exercises": null,
+        "proof_policy": null
+      },
+      "field": "lecture"
+    },
+    {
+      "after": [
+        {
+          "id": "S01",
+          "objectives": [
+            "理解 epsilon 定义"
+          ],
+          "prerequisites": [],
+          "reference_labels": [],
+          "required_kinds": [
+            "definition",
+            "theorem",
+            "example",
+            "solution",
+            "exercise"
+          ],
+          "title": "数列极限的定义"
+        },
+        {
+          "id": "S02",
+          "objectives": [
+            "验证极限运算"
+          ],
+          "prerequisites": [
+            "S01"
+          ],
+          "reference_labels": [],
+          "required_kinds": [
+            "definition",
+            "theorem",
+            "example",
+            "solution",
+            "exercise"
+          ],
+          "title": "极限的运算"
+        }
+      ],
+      "before": [
+        {
+          "id": "S01",
+          "objectives": [
+            "理解 epsilon 定义"
+          ],
+          "prerequisites": [],
+          "reference_labels": [],
+          "required_kinds": [
+            "definition",
+            "theorem",
+            "example",
+            "solution"
+          ],
+          "title": "数列极限的定义"
+        },
+        {
+          "id": "S02",
+          "objectives": [
+            "验证极限运算"
+          ],
+          "prerequisites": [
+            "S01"
+          ],
+          "reference_labels": [],
+          "required_kinds": [
+            "definition",
+            "theorem",
+            "example",
+            "solution"
+          ],
+          "title": "极限的运算"
+        }
+      ],
+      "field": "sections"
+    }
+  ],
+  "difficulty": "经济学本科一年级微积分",
+  "exclusions": [
+    "未指定专题的真实教学验收"
+  ],
+  "input_snapshot_hash": "ebeb76404193a2d4f6f52dc1d4eb63dddf8ccbc741b6ff558f2ff92ae33639ac",
+  "lecture": {
+    "answers_location": "section",
+    "example_focus": "balanced",
+    "exercises": "with_answers",
+    "proof_policy": "key"
+  },
+  "model_id": "gpt6",
+  "objectives": [
+    "演示可恢复的讲义生成流程"
+  ],
+  "omissions": [],
+  "prerequisites": [
+    "实数与不等式"
+  ],
+  "provider": "mock",
+  "questions": [
+    {
+      "affected_fields": [
+        "lecture.proof_policy"
+      ],
+      "blocking": true,
+      "custom_input": "",
+      "id": "Q-PROOF",
+      "options": [
+        {
+          "effects": {
+            "value": "key"
+          },
+          "id": "KEY",
+          "label": "关键定理完整证明，其余说明",
+          "recommended": true
+        },
+        {
+          "effects": {
+            "value": "all"
+          },
+          "id": "ALL",
+          "label": "所有定理完整证明",
+          "recommended": false
+        },
+        {
+          "id": "CUSTOM",
+          "label": "自定义输入",
+          "recommended": false
+        }
+      ],
+      "prompt": "定理证明采用哪种深度？",
+      "reason": "此项影响写作内容，需由用户选择。",
+      "revision": 1,
+      "selected_option_ids": [
+        "KEY"
+      ],
+      "selection_mode": "single"
+    },
+    {
+      "affected_fields": [
+        "lecture.example_focus"
+      ],
+      "blocking": true,
+      "custom_input": "",
+      "id": "Q-EXAMPLE",
+      "options": [
+        {
+          "effects": {
+            "value": "balanced"
+          },
+          "id": "BALANCED",
+          "label": "概念与计算均衡",
+          "recommended": true
+        },
+        {
+          "effects": {
+            "value": "economics"
+          },
+          "id": "ECONOMICS",
+          "label": "更多经济应用",
+          "recommended": false
+        },
+        {
+          "id": "CUSTOM",
+          "label": "自定义输入",
+          "recommended": false
+        }
+      ],
+      "prompt": "例题侧重什么？",
+      "reason": "此项影响写作内容，需由用户选择。",
+      "revision": 1,
+      "selected_option_ids": [
+        "BALANCED"
+      ],
+      "selection_mode": "single"
+    },
+    {
+      "affected_fields": [
+        "lecture.exercises"
+      ],
+      "blocking": true,
+      "custom_input": "",
+      "id": "Q-EXERCISE",
+      "options": [
+        {
+          "effects": {
+            "value": "with_answers"
+          },
+          "id": "WITH",
+          "label": "安排练习并附答案",
+          "recommended": true
+        },
+        {
+          "effects": {
+            "value": "none"
+          },
+          "id": "NONE",
+          "label": "不安排额外练习",
+          "recommended": false
+        },
+        {
+          "id": "CUSTOM",
+          "label": "自定义输入",
+          "recommended": false
+        }
+      ],
+      "prompt": "是否安排练习与答案？",
+      "reason": "此项影响写作内容，需由用户选择。",
+      "revision": 1,
+      "selected_option_ids": [
+        "WITH"
+      ],
+      "selection_mode": "single"
+    },
+    {
+      "affected_fields": [
+        "lecture.answers_location"
+      ],
+      "blocking": true,
+      "custom_input": "",
+      "id": "Q-ANSWERS",
+      "options": [
+        {
+          "effects": {
+            "value": "section"
+          },
+          "id": "SECTION",
+          "label": "各节之后",
+          "recommended": true
+        },
+        {
+          "effects": {
+            "value": "end"
+          },
+          "id": "END",
+          "label": "讲义末尾",
+          "recommended": false
+        },
+        {
+          "id": "CUSTOM",
+          "label": "自定义输入",
+          "recommended": false
+        }
+      ],
+      "prompt": "练习答案放在哪里？",
+      "reason": "此项影响写作内容，需由用户选择。",
+      "revision": 1,
+      "selected_option_ids": [
+        "SECTION"
+      ],
+      "selection_mode": "single"
+    }
+  ],
+  "reference_context": {
+    "reason": "No matching chapter; no unrelated example injected.",
+    "status": "NOT_APPLICABLE"
+  },
+  "reference_registry": {
+    "sec:S01": "S01",
+    "sec:S02": "S02"
+  },
+  "revision": 2,
+  "rules": {
+    "allowed_text_sizes": [
+      "footnotesize",
+      "small",
+      "normalsize",
+      "large"
+    ],
+    "rule_version": 1,
+    "summary_frames": false
+  },
+  "schema_version": 1,
+  "sections": [
+    {
+      "id": "S01",
+      "objectives": [
+        "理解 epsilon 定义"
+      ],
+      "prerequisites": [],
+      "reference_labels": [],
+      "required_kinds": [
+        "definition",
+        "theorem",
+        "example",
+        "solution",
+        "exercise"
+      ],
+      "title": "数列极限的定义"
+    },
+    {
+      "id": "S02",
+      "objectives": [
+        "验证极限运算"
+      ],
+      "prerequisites": [
+        "S01"
+      ],
+      "reference_labels": [],
+      "required_kinds": [
+        "definition",
+        "theorem",
+        "example",
+        "solution",
+        "exercise"
+      ],
+      "title": "极限的运算"
+    }
+  ],
+  "symbols": {
+    "a_n": "实数列",
+    "epsilon": "正实数"
+  },
+  "theme": "default",
+  "title": "最小二乘法：执行前预算与源码下载测试（离线演示）",
+  "unresolved_blocking_questions": [],
+  "workflow_id": "lecture.generate",
+  "hash": "7608fc6127013037d81e3fbf4081a51c85350bfa7fd8b0b3e323ff44a6553dac"
+}

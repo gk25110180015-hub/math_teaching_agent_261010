@@ -1,0 +1,74 @@
+"""Conservative review hints for explicit real logarithmic series first terms.
+
+This is a bounded notation scanner, not a TeX-to-algebra parser or theorem prover.
+Unsupported expressions and unrecognized prose are outside its coverage.
+"""
+from __future__ import annotations
+
+import re
+
+from .parsing import _group, _inactive_regions, _mask_verbatim, _masked_intervals, uncomment
+
+
+_MATH = re.compile(
+    r'(?<!\\)\$\$.*?(?<!\\)\$\$|(?<!\\)\$(?!\$).*?(?<!\\)\$'
+    r'|\\\[.*?\\\]|\\\(.*?\\\)'
+    r'|\\begin\{(?:equation\*?|align\*?|gather\*?)\}.*?'
+    r'\\end\{(?:equation\*?|align\*?|gather\*?)\}', re.S)
+_SUM_FRACTION = re.compile(
+    r'\\sum(?:\\limits)?\s*_\{\s*([A-Za-z])\s*=\s*([+-]?\d{1,8})\s*\}'
+    r'\s*\^\{\s*\\infty\s*\}\s*\\(?:frac|dfrac|tfrac)\s*'
+    r'\{\s*[+-]?\d{1,8}\s*\}')
+_ERROR_BEFORE = re.compile(
+    r'(?:错误辨析|错误示例|错误写法|错误表达式|误写(?:为|成)?|错式|不应写成|不能写为|'
+    r'incorrect\s+(?:formula|example)|wrong\s+(?:formula|example))', re.I)
+_ERROR_AFTER = re.compile(
+    r'^\s*(?:[，,:：。]?\s*)?(?:该式|此式|上式|这个式子)?\s*'
+    r'(?:是错误的|有错误|错误在|没有定义|无意义|的首项无定义|首项无定义|不合法)')
+
+
+def series_first_term_review(units: list[dict]) -> list[dict]:
+    """Locate a supported formula and ask review; never issue a blocking verdict."""
+    issues = []
+    for unit in units:
+        tex = unit.get('tex', unit.get('raw_tex', ''))
+        if not isinstance(tex, str) or len(tex) > 200_000:
+            continue
+        clean = uncomment(_mask_verbatim(tex))
+        clean = _masked_intervals(clean, _inactive_regions(clean))
+        for math_span in _MATH.finditer(clean):
+            # Explicitly taught mistakes are not asserted series definitions.
+            before = clean[max(0, math_span.start() - 120):math_span.start()]
+            after = clean[math_span.end():math_span.end() + 120]
+            if _ERROR_BEFORE.search(before) or _ERROR_AFTER.search(after):
+                continue
+            for match in _SUM_FRACTION.finditer(clean, math_span.start(), math_span.end()):
+                variable, start_text = match.group(1, 2)
+                start = int(start_text)
+                if start > 1:
+                    continue
+                try:
+                    denominator, end = _group(clean, match.end())
+                except ValueError:
+                    continue
+                if end > math_span.end():
+                    continue
+                if not re.search(r'\\(?:ln|log)(?=[\s{(])', denominator):
+                    continue
+                compact = re.sub(r'\s+|\\[,;!]|\\(?:cdot|times)(?![A-Za-z])', '', denominator)
+                symbol = re.escape(variable)
+                positive_power = r'(?:\^\{[1-9]\d?\}|\^[1-9])?'
+                logarithm = r'\\(?:ln|log)(?:' + symbol + r'|\{' + symbol + r'\}|\(' + symbol + r'\))'
+                # Complete denominator only: optional index power times a log power.
+                supported = r'(?:' + symbol + positive_power + r')?' + logarithm + positive_power
+                if not re.fullmatch(supported, compact):
+                    continue
+                reason = '对数因子为零，分母为零' if start == 1 else '实对数自变量不为正'
+                issues.append({
+                    'rule_id': 'SERIES_FIRST_TERM_DOMAIN_REVIEW', 'severity': 'review',
+                    'message': f'所列级数起点 {variable}={start} 时{reason}；请核对公式、起点说明和教学语境是否一致。此扫描不自动修改正文。',
+                    'location': {'unit_id': unit.get('id'), 'start': match.start(), 'end': end,
+                                 'index_variable': variable, 'at_index': start},
+                    'resolution_status': 'open', 'evidence_type': 'bounded_notation_review',
+                })
+    return issues
