@@ -1,0 +1,156 @@
+.............FFF                                                         [100%]
+================================== FAILURES ===================================
+_ test_layout_fix_reuses_strict_patch_rechecks_math_and_preserves_both_builds _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/clr91/test_layout_fix_reuses_strict_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000013C8DB923F0>
+
+    @pytest.mark.unit
+    def test_layout_fix_reuses_strict_patch_rechecks_math_and_preserves_both_builds(tmp_path, monkeypatch):
+        from math_agent import mathcheck
+        provider = Provider()
+        _, pipeline, plan = setup_pipeline(tmp_path, provider)
+        pipeline.run['input']['provider'] = 'live'  # Injected fake provider only; zero API calls.
+        calls = []
+        monkeypatch.setattr(Pipeline, 'compile', fake_compiler(calls))
+        math_calls = []
+        original = mathcheck.check_math
+        monkeypatch.setattr(mathcheck, 'check_math', lambda section: (math_calls.append(copy.deepcopy(section)), original(section))[1])
+>       completed, reports = pipeline.lecture(plan)
+                             ^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_compile_layout_recovery.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\待合并\pipeline-compile-recovery.py:494: in lecture
+    state=self._load_global_repair_state(plan)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+reports\iteration4\待合并\pipeline-compile-recovery.py:333: in _load_global_repair_state
+    identity=self._global_repair_identity(plan)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+reports\iteration4\待合并\pipeline-compile-recovery.py:299: in _global_repair_identity
+    'normalizer_hash':digest(Path(__file__).with_name('lecture_fragments.py').read_bytes())}
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\anaconda\Lib\pathlib.py:1019: in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/待合并/lecture_fragments.py')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration4\\待合并\\lecture_fragments.py'
+
+D:\anaconda\Lib\pathlib.py:1013: FileNotFoundError
+______ test_noop_or_out_of_scope_layout_proposal_retains_failure[False] _______
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/clr91/test_noop_or_out_of_scope_layo0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000013C8DC4DBB0>
+escape_scope = False
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('escape_scope', [False, True])
+    def test_noop_or_out_of_scope_layout_proposal_retains_failure(tmp_path, monkeypatch, escape_scope):
+        provider = Provider(no_change=not escape_scope, escape_scope=escape_scope)
+        _, pipeline, plan = setup_pipeline(tmp_path, provider)
+        pipeline.run['input']['provider'] = 'live'
+        calls = []
+        monkeypatch.setattr(Pipeline, 'compile', fake_compiler(calls))
+        with pytest.raises(AgentError) as error:
+>           pipeline.lecture(plan)
+
+tests\test_compile_layout_recovery.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\待合并\pipeline-compile-recovery.py:494: in lecture
+    state=self._load_global_repair_state(plan)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+reports\iteration4\待合并\pipeline-compile-recovery.py:333: in _load_global_repair_state
+    identity=self._global_repair_identity(plan)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+reports\iteration4\待合并\pipeline-compile-recovery.py:299: in _global_repair_identity
+    'normalizer_hash':digest(Path(__file__).with_name('lecture_fragments.py').read_bytes())}
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\anaconda\Lib\pathlib.py:1019: in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/待合并/lecture_fragments.py')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration4\\待合并\\lecture_fragments.py'
+
+D:\anaconda\Lib\pathlib.py:1013: FileNotFoundError
+_______ test_noop_or_out_of_scope_layout_proposal_retains_failure[True] _______
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/clr91/test_noop_or_out_of_scope_layo1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000013C8DB93A40>
+escape_scope = True
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('escape_scope', [False, True])
+    def test_noop_or_out_of_scope_layout_proposal_retains_failure(tmp_path, monkeypatch, escape_scope):
+        provider = Provider(no_change=not escape_scope, escape_scope=escape_scope)
+        _, pipeline, plan = setup_pipeline(tmp_path, provider)
+        pipeline.run['input']['provider'] = 'live'
+        calls = []
+        monkeypatch.setattr(Pipeline, 'compile', fake_compiler(calls))
+        with pytest.raises(AgentError) as error:
+>           pipeline.lecture(plan)
+
+tests\test_compile_layout_recovery.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\待合并\pipeline-compile-recovery.py:494: in lecture
+    state=self._load_global_repair_state(plan)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+reports\iteration4\待合并\pipeline-compile-recovery.py:333: in _load_global_repair_state
+    identity=self._global_repair_identity(plan)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+reports\iteration4\待合并\pipeline-compile-recovery.py:299: in _global_repair_identity
+    'normalizer_hash':digest(Path(__file__).with_name('lecture_fragments.py').read_bytes())}
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\anaconda\Lib\pathlib.py:1019: in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/待合并/lecture_fragments.py')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration4\\待合并\\lecture_fragments.py'
+
+D:\anaconda\Lib\pathlib.py:1013: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED tests/test_compile_layout_recovery.py::test_layout_fix_reuses_strict_patch_rechecks_math_and_preserves_both_builds
+FAILED tests/test_compile_layout_recovery.py::test_noop_or_out_of_scope_layout_proposal_retains_failure[False]
+FAILED tests/test_compile_layout_recovery.py::test_noop_or_out_of_scope_layout_proposal_retains_failure[True]
+3 failed, 13 passed, 1 deselected in 0.53s

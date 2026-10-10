@@ -1,0 +1,343 @@
+--- a/src/math_agent/pipeline.py
++++ b/src/math_agent/pipeline.py
+@@ -74,6 +74,28 @@
+         body += ['\\section*{练习答案}\n'] + tail_answers
+     mock_label = '\\par\\noindent 离线合成演示：不代表真实模型对本专题的教学验收。\\par\n' if plan['provider'] == 'mock' else ''
+     return LECTURE_HEADER + '\\title{' + plain_tex(title) + '}\n\\date{}\n\\begin{document}\n\\maketitle\n' + mock_label + ''.join(body) + '\\end{document}\n'
++
++
++def visible_internal_unit_ids(tex):
++    """Find unambiguous workflow IDs in displayed prose, without rewriting TeX."""
++    from .parsing import uncomment, _mask_verbatim, _inactive_regions, _masked_intervals, _group
++    clean=uncomment(_mask_verbatim(tex))
++    clean=_masked_intervals(clean,_inactive_regions(clean))
++    hidden=[]
++    for token in re.finditer(r'\\(?:label|ref|eqref|pageref|autoref|nameref|cref|Cref|vref|href|hyperlink|hypertarget)\*?(?![A-Za-z@])',clean):
++        try:
++            _,end=_group(clean,token.end())
++            hidden.append((token.end(),end))
++        except ValueError:
++            pass  # Malformed commands remain visible and are checked separately.
++    for token in re.finditer(r'\\hyperref\*?(?![A-Za-z@])\s*\[',clean):
++        try:
++            _,end=_group(clean,token.end()-1,'[',']')
++            hidden.append((token.end()-1,end))
++        except ValueError:
++            pass
++    clean=_masked_intervals(clean,hidden)
++    return sorted(set(re.findall(r'(?<![A-Za-z0-9_])S[0-9]{2,}[.-]U[0-9]{2,}(?![A-Za-z0-9_])',clean)))
+ 
+ 
+ class Pipeline:
+@@ -528,6 +550,162 @@
+             self._start_global_repair(completed,issues,state)
+             self._continue_global_repairs(plan,state)
+ 
++    def _section_check_contract(self):
++        """Pin the checks that justify reuse; writer authorship is not a check."""
++        from .provider import PROMPTS
++        modules=('pipeline.py','mathcheck.py','lecture_fragments.py','crossrefs.py',
++                 'parsing.py','compiler.py','calculation_protocol.py','local_recovery.py')
++        domain_checker=Path(__file__).with_name('series_domain_text.py')
++        return {'schema_version':1,
++            'source_hashes':{**{name:digest(Path(__file__).with_name(name).read_bytes()) for name in modules},
++                'series_domain_text.py':digest(domain_checker.read_bytes()) if domain_checker.is_file() else 'MISSING'},
++            'reviewer_prompt_hash':digest((PROMPTS/'reviewer_math.md').read_bytes()),
++            'review_schema_hash':digest(MathReview.model_json_schema()),
++            'written_schema_hash':digest(WrittenSection.model_json_schema()),
++            'checker_dependencies':{name:importlib.metadata.version(name) for name in ('sympy','pylatexenc')},
++            'compile_mode':self.settings.compile_mode,'xelatex_path':self.settings.xelatex_path}
++
++    def _section_input_hash(self, plan, spec, completed):
++        # Keep the original key formula so legacy checkpoints can be verified
++        # against their original complete prefix before any recheck changes it.
++        return digest([plan['hash'],spec,[digest(g) for _,g in completed],
++            'writer-v4-labeled-eq-global-repair',self.preferred_model_name,self.settings.xelatex_path,'rules-v1'])
++
++    def _section_check_identity(self, plan, spec):
++        return {'plan_hash':plan['hash'],'section_hash':digest(spec),
++                'model':self.preferred_model_name,'provider':self.run['input']['provider']}
++
++    def _validate_section_checkpoint(self, row, spec, plan):
++        try:
++            saved=json.loads(row['output_json'])
++            if digest(saved)!=row['output_hash']:raise ValueError('Checkpoint SHA mismatch')
++            identity=saved.get('check_identity')
++            if identity is not None and identity!=self._section_check_identity(plan,spec):
++                raise ValueError('Checkpoint plan/spec identity mismatch')
++            path=within(self.settings.workspace,saved['source_key'])
++            if not path.is_relative_to(self.build_root.resolve()) or not path.is_file():
++                raise ValueError('Checkpoint source is outside controlled build directory')
++            if digest(path.read_bytes())!=saved['source_hash']:raise ValueError('Source SHA mismatch')
++            generated=WrittenSection.model_validate(saved['generated']).model_dump()
++            if generated['section_id']!=spec['id']:raise ValueError('Checkpoint section ID mismatch')
++            return saved
++        except (OSError,ValueError,KeyError,TypeError):
++            raise AgentError('SECTION_CHECKPOINT_INVALID',
++                '已检查章节的正文/源文件/审批身份或SHA不一致；保留证据，不能改用新writer绕过') from None
++
++    def _legacy_checkpoint_proven(self, target, plan):
++        """Recompute historical prefix keys, never trust a recorded plan label alone."""
++        for path in (self.root/'section-checkpoint-snapshots').glob('*.json'):
++            try:
++                proof=json.loads(path.read_bytes())
++                if digest(proof)!=path.stem:raise ValueError('Prefix proof SHA mismatch')
++                if proof['plan_hash']!=plan['hash']:continue
++                prefix=[]
++                for spec,row in zip(plan['sections'],proof['rows']):
++                    if row['step_key']!='section.'+spec['id']:raise ValueError('Prefix order mismatch')
++                    if row['input_hash']!=self._section_input_hash(plan,spec,prefix):
++                        raise ValueError('Historical prefix identity mismatch')
++                    saved=self._validate_section_checkpoint(row,spec,plan)
++                    if row['step_key']==target['step_key']:
++                        if (row['input_hash'],row['output_hash'])==(target['input_hash'],target['output_hash']):
++                            return True
++                        break
++                    prefix.append((spec,saved['generated']))
++            except (OSError,ValueError,KeyError,TypeError):
++                raise AgentError('SECTION_CHECKPOINT_INVALID',
++                    '旧章节的持久前缀证明损坏，不能忽略身份哈希后继续') from None
++        return False
++
++    def _verified_section_checkpoints(self, plan):
++        """Select the latest verified approved version, preserving legacy prefix proof."""
++        snapshots={};prefix=[];proof_rows=[];intact_prefix=True;has_legacy=False;rows={}
++        with self.store.connect() as connection:
++            for row in connection.execute('SELECT rowid AS checkpoint_rowid,* FROM steps WHERE run_id=? '
++                    'ORDER BY created_at DESC,rowid DESC',(self.run['id'],)).fetchall():
++                rows.setdefault(row['step_key'],[]).append(dict(row))
++        for spec in plan['sections']:
++            selected=None
++            expected_identity=self._section_check_identity(plan,spec)
++            expected_input=self._section_input_hash(plan,spec,prefix)
++            for row in rows.get('section.'+spec['id'],[]):
++                try:
++                    declared_output=json.loads(row['output_json'])
++                    if not isinstance(declared_output,dict) or digest(declared_output)!=row['output_hash']:
++                        raise ValueError('Checkpoint SHA mismatch')
++                    declared=declared_output.get('check_identity')
++                except (ValueError,TypeError):
++                    raise AgentError('SECTION_CHECKPOINT_INVALID','最近章节checkpoint输出损坏，不能回退更早PASS绕过') from None
++                matches_prefix=row['input_hash']==expected_input
++                if declared is not None:
++                    if declared!=expected_identity:continue
++                elif not matches_prefix and not self._legacy_checkpoint_proven(row,plan):
++                    continue
++                # This is the latest eligible row. A bad source must block;
++                # never continue to an older version after verification fails.
++                saved=self._validate_section_checkpoint(row,spec,plan)
++                selected=(row,saved,matches_prefix,declared)
++                break
++            if selected is None:break
++            row,saved,matches_prefix,declared=selected
++            snapshots[spec['id']]={'input_hash':row['input_hash'],'output':saved}
++            intact_prefix=intact_prefix and matches_prefix
++            if intact_prefix:
++                proof_rows.append(row)
++                has_legacy=has_legacy or declared is None
++            prefix.append((spec,saved['generated']))
++        if proof_rows and has_legacy:
++            proof={'schema_version':1,'plan_hash':plan['hash'],'rows':proof_rows}
++            path=self.root/'section-checkpoint-snapshots'/(digest(proof)+'.json')
++            if not path.exists():
++                with self.store.transaction() as connection:
++                    self.store.assert_fence(connection,self.job)
++                    write_json(path,proof)
++                    self.store.event(connection,self.run['id'],'section.checkpoint_prefix_preserved',
++                        {'proof_key':path.relative_to(self.settings.workspace).as_posix(),
++                         'proof_hash':digest(proof),'section_ids':[row['step_key'] for row in proof_rows]})
++        return snapshots
++
++    def _section_recheck_seed(self, spec, saved, plan):
++        """Prefer any later accepted local repair; never roll back to old PASS."""
++        state_path=self.root/'local-repair'/(spec['id']+'.json')
++        if not state_path.exists():return copy.deepcopy(saved['generated']) if saved is not None else None
++        try:
++            state=json.loads(state_path.read_bytes());identity=state['identity']
++            expected={'plan_hash':plan['hash'],'section_id':spec['id'],
++                'model':self.preferred_model_name,'provider':self.run['input']['provider']}
++            if any(identity.get(key)!=value for key,value in expected.items()):
++                raise ValueError('Local repair belongs to different approved content')
++            path=within(self.settings.workspace,state['candidate_key'])
++            if not path.is_relative_to((self.root/'local-repair'/spec['id']).resolve()):
++                raise ValueError('Local repair candidate path mismatch')
++            raw=path.read_bytes()
++            if digest(raw)!=state['candidate_hash']:raise ValueError('Local repair candidate SHA mismatch')
++            generated=WrittenSection.model_validate(json.loads(raw)).model_dump()
++            if generated['section_id']!=spec['id']:raise ValueError('Local repair section ID mismatch')
++            # LocalRecovery verifies every evidence dependency before adopting
++            # this seed and retains counters/pending issues under forced rebasing.
++            return generated
++        except (OSError,ValueError,KeyError,TypeError):
++            raise AgentError('LOCAL_REPAIR_CACHE_INVALID',
++                '重检所需的最近合法局部稿身份、路径或SHA不一致；不能回退旧PASS或重置计数') from None
++
++    def _unchecked_section_recheck_seed(self, spec, context, plan):
++        """Always retain valid accepted uncheckpointed repairs, including repeated retries."""
++        path=self.root/'local-repair'/(spec['id']+'.json')
++        if not path.exists():
++            folder=self.root/'local-repair'/spec['id']
++            if folder.exists() and any(folder.glob('candidate-*.json')):
++                raise AgentError('LOCAL_REPAIR_CACHE_INVALID','局部状态指针缺失而历史候选存在，不能先重调writer或重置预算')
++            return None
++        try:
++            state=json.loads(path.read_bytes());identity=state['identity']
++            if identity['plan_hash']!=plan['hash']:return None
++            approved=next((section for section in plan['sections'] if section['id']==spec['id']),None)
++            if approved!=spec:raise ValueError('Current section differs from approved specification')
++        except (OSError,ValueError,KeyError,TypeError):
++            raise AgentError('LOCAL_REPAIR_CACHE_INVALID','未检查稿的审批/上下文身份不可核实；保留稿件与计数') from None
++        return self._section_recheck_seed(spec,None,plan)
++
+     def _lecture_sections(self, plan, forced_sections=None, on_rechecked=None):
+         from .mathcheck import check_math
+         from .calculation_protocol import calculation_protocol
+@@ -536,21 +714,25 @@
+         from .crossrefs import inspect_section_references, local_reference_gate
+         completed, local_reports = [], []
+         forced_sections=forced_sections or {}
++        check_contract=self._section_check_contract()
++        checkpoints=self._verified_section_checkpoints(plan)
+         for spec in plan['sections']:
+             sid = spec['id']
+             self.stage('BUILDING', 'write.section.' + sid)
+-            cache_key = digest([plan['hash'], spec, [digest(g) for _,g in completed], 'writer-v4-labeled-eq-global-repair', self.preferred_model_name, self.settings.xelatex_path, 'rules-v1'])
+-            cached = self.store.cached_step(self.run['id'], 'section.'+sid, cache_key)
+-            if cached and sid not in forced_sections:
+-                p = within(self.settings.workspace, cached['source_key'])
+-                if p.is_file() and digest(p.read_bytes()) == cached['source_hash']:
+-                    completed.append((spec,cached['generated']))
+-                    local_reports.append(cached['report'])
+-                    continue
++            cache_key=self._section_input_hash(plan,spec,completed)
++            snapshot=checkpoints.get(sid)
++            cached=snapshot['output'] if snapshot else None
++            if (cached and sid not in forced_sections and snapshot['input_hash']==cache_key
++                    and cached.get('check_contract')==check_contract):
++                completed.append((spec,cached['generated']))
++                local_reports.append(cached['report'])
++                continue
+             from .retrieval import style_context
+             context = {'section':spec, 'plan':plan, 'completed_sections':[g for _,g in completed], 'topic':self.run['input']['topic'], 'difficulty':plan['difficulty'],
+                        'style_reference':style_context(self.settings.reference_root,self.run['input']['topic']),
+                        'calculation_protocol':calculation_protocol()}
++            unchecked_seed=(self._unchecked_section_recheck_seed(spec,context,plan)
++                if sid not in forced_sections and not cached else None)
+             if sid in forced_sections:
+                 generated=copy.deepcopy(forced_sections[sid])
+                 draft=self.build_root/('s'+sid+'_'+uid()[:12])
+@@ -558,13 +740,33 @@
+                 write_json(draft/'candidate.json',generated)
+                 write_json(draft/'global-repair-recheck.json',{'section_id':sid,'status':'UNCHECKED',
+                     'candidate_hash':digest(generated),'reason':'Recheck affected section and all following sections without reauthoring'})
++            elif cached:
++                generated=self._section_recheck_seed(spec,cached,plan)
++                draft=self.build_root/('s'+sid+'_'+uid()[:12])
++                draft.mkdir(parents=True,exist_ok=False)
++                write_json(draft/'candidate.json',generated)
++                write_json(draft/'checkpoint-recheck.json',{'section_id':sid,'status':'UNCHECKED',
++                    'candidate_hash':digest(generated),'checkpoint_generated_hash':digest(cached['generated']),
++                    'source_key':cached['source_key'],'source_hash':cached['source_hash'],
++                    'previous_contract':cached.get('check_contract'),'current_contract':check_contract,
++                    'dependency_changed':snapshot['input_hash']!=cache_key,
++                    'reason':'Recheck preserved accepted body after check-contract/dependency changes; retain approval and repair counters'})
++            elif unchecked_seed is not None:
++                generated=unchecked_seed
++                draft=self.build_root/('s'+sid+'_'+uid()[:12])
++                draft.mkdir(parents=True,exist_ok=False)
++                write_json(draft/'candidate.json',generated)
++                write_json(draft/'unchecked-local-recheck.json',{'section_id':sid,'status':'UNCHECKED',
++                    'candidate_hash':digest(generated),
++                    'state_key':(self.root/'local-repair'/(sid+'.json')).relative_to(self.settings.workspace).as_posix(),
++                    'reason':'Approved accepted local candidate without a checkpoint; recheck changed prior context without reauthoring or resetting counters'})
+             else:
+                 generated,draft = self.writer_draft(spec,context)
+             generated, normalization = normalize_written_section(generated)
+             write_json(draft/'candidate-normalization.json', normalization)
+             write_json(draft/'candidate-normalized.json', generated)
+             from .local_recovery import LocalRecovery,issue_targets
+-            recovery=LocalRecovery(self,spec,context,generated,plan,draft,forced=sid in forced_sections)
++            recovery=LocalRecovery(self,spec,context,generated,plan,draft,forced=sid in forced_sections or bool(cached) or unchecked_seed is not None)
+             resumed=recovery.candidate()
+             if resumed['units']!=generated['units']:
+                 generated,normalization=normalize_written_section(resumed)
+@@ -679,7 +881,10 @@
+                 self.assert_compile(compile_result)
+             report['compile']=compile_result
+             report['references']=reference_check
+-            checkpoint = {'generated':generated,'report':report,'source_key':(source/'lecture.tex').relative_to(self.settings.workspace).as_posix(),'source_hash':digest((source/'lecture.tex').read_bytes())}
++            checkpoint = {'generated':generated,'report':report,
++                'check_contract':check_contract,'check_identity':self._section_check_identity(plan,spec),
++                'source_key':(source/'lecture.tex').relative_to(self.settings.workspace).as_posix(),
++                'source_hash':digest((source/'lecture.tex').read_bytes())}
+             self.store.checkpoint(self.job,'section.'+sid,cache_key,checkpoint)
+             recovery.checked()
+             if on_rechecked and sid in forced_sections:
+@@ -692,6 +897,8 @@
+         self.stage('GLOBAL_REVIEW','math.global_interfaces')
+         global_reports=[];issues=[]
+         review_cycle=uid()[:8]
++        if [spec['id'] for spec,_ in completed]!=[spec['id'] for spec in plan['sections']]:
++            raise AgentError('INCOMPLETE_CHAPTER_REVIEW','全章语义检查需要全部批准章节的实际正文，不能以部分稿认定目标覆盖')
+         # Check actual complete bodies plus each adjacent dependency interface.
+         seen={}
+         for _,generated in completed:
+@@ -703,10 +910,25 @@
+                     seen[key]=u['id']
+         for i in range(len(completed)-1):
+             units=completed[i][1]['units']+completed[i+1][1]['units']
+-            review=self.review_units(units,{'plan':plan,'scope':{'kind':'adjacent_interface','sections':[completed[i][0]['id'],completed[i+1][0]['id']],
++            review=self.review_units(units,{'plan':plan,'prior_sections':[g for _,g in completed[:i]],
++                'scope':{'kind':'adjacent_interface','sections':[completed[i][0]['id'],completed[i+1][0]['id']],
+                 'instruction':'Check actual adjacent bodies and their dependency interface. Other plan sections are outside this pair; full coverage is checked separately.'}},self.root,'global-'+review_cycle+'-'+str(i))
+             issues.extend(issue for issue in review['issues'] if issue['severity'] in ('blocking','review'))
+             global_reports.append({'global_interface':[completed[i][0]['id'],completed[i+1][0]['id']],'review':review})
++        if not issues and completed:
++            self.stage('GLOBAL_REVIEW','teaching.chapter_coverage')
++            section_unit_map=[{'section_id':spec['id'],'title':spec['title'],
++                'objectives':spec.get('objectives',[]),'unit_ids':[u['id'] for u in generated['units']]}
++                for spec,generated in completed]
++            units=[u for _,generated in completed for u in generated['units']]
++            review=self.review_units(units,{'plan':plan,'section_unit_map':section_unit_map,
++                'scope':{'kind':'chapter_coverage','sections':[spec['id'] for spec,_ in completed],
++                    'pending_sections':[],
++                    'instruction':'Review the full actual chapter against approved chapter and section objectives. Check general claims versus isolated examples, domain and index boundaries, and student-readable references. Use actual prior definitions; do not demand unrelated extensions or repeat complete prior proofs. Identify unresolved approved objectives against existing affected unit IDs, without changing plan or approval.'}},
++                self.root,'chapter-coverage-'+review_cycle)
++            issues.extend(issue for issue in review['issues'] if issue['severity'] in ('blocking','review'))
++            global_reports.append({'chapter_coverage':{'sections':section_unit_map,
++                'objectives':plan.get('objectives',[]),'teacher_acceptance':'NOT_RUN'},'review':review})
+         return global_reports,issues
+ 
+     def validate_written(self, spec, data, plan):
+@@ -718,6 +940,11 @@
+             if k not in kinds:
+                 issues.append({'severity':'blocking','message':'未生成计划要求的 '+k})
+         for u in units:
++            leaked_ids=visible_internal_unit_ids(u['tex'])
++            if leaked_ids:
++                issues.append({'rule_id':'INTERNAL_UNIT_ID_VISIBLE','severity':'blocking','unit_id':u['id'],
++                    'message':'学生正文出现内部单元ID '+', '.join(leaked_ids)+'；保留数学内容，改为自然名称或已存在且语义正确的编号引用，不得编造标签。',
++                    'evidence':leaked_ids})
+             if re.search(r'\\(?:documentclass|usepackage|RequirePackage|newcommand|renewcommand|def|gdef|global|section|subsection|input|include)(?![A-Za-z@])|\\(?:begin|end)\{document\}',u['tex']):
+                 issues.append({'severity':'blocking','unit_id':u['id'],'message':'内容单元越过片段边界，尝试修改全局模板/宏/章节或读取文件'})
+             if u['kind'] in ('example','exercise') and not any(v['kind']=='solution' and v.get('relates_to')==u['id'] for v in units):
+--- a/src/math_agent/prompts/reviewer_math.md
++++ b/src/math_agent/prompts/reviewer_math.md
+@@ -1,4 +1,4 @@
+-版本 4。检查实际逐单元数学正文与锁定课程条件，不采用作者自评。逐项核对定义域、量词、正负号、端点、级数必要/充分条件、定理假设与先修依赖。报告具体单元和证据：确定错误用 blocking、重大不确定用 review、非阻塞限制用 warning。checked_unit_ids 必须确实覆盖已读单元；未核对不能说通过。不输出授权或审批。普通模型审阅不等于形式化证明；即使无问题也说明局限。
++版本 5。检查实际逐单元数学正文与锁定课程条件，不采用作者自评。逐项核对定义域、量词、正负号、端点、级数必要/充分条件、定理假设与先修依赖。报告具体单元和证据：确定错误用 blocking、重大不确定用 review、非阻塞限制用 warning。checked_unit_ids 必须确实覆盖已读单元；未核对不能说通过。不输出授权或审批。普通模型审阅不等于形式化证明；即使无问题也说明局限。
+ 
+ 严格遵守context.scope。section_local只审当前提供的units；整份plan是蓝图，pending_sections尚未生成不构成本节遗漏，不得要求一次提供全文。adjacent_interface只核对所提供相邻两节的正文与依赖，其他节不属于该次范围。每个issue.unit_id必须是actual_unit_ids中的实际单元ID，不能填S02这样的章节ID或凭空生成ID。缺少当前节必要知识/假设时，定位到实际受影响单元并给证据；将来章节覆盖由全文门禁处理。不得为迎合范围要求掩盖已发现的真实数学错误。
+ 
+@@ -9,3 +9,11 @@
+ 课程范围判断须依据排除项的精确措辞，区分“引用已声明的基础性质”和“展开该基础的严格公理体系”。例如计划包含单调有界原理，而排除项仅禁止超出本科一年级范围的实数完备性公理体系时，证明明确说明采用正确的上确界/下确界性质作为已知实数基础、解释其含义且不展开公理构造，并不自动违反该排除项；不能要求由算术或归纳法独立证明实数完备性。仍须核查基础性质是否真实、已明示、使用条件正确、后续推理成立。若锁定计划明确禁止某个具体基础性质或证明工具，则不得用本说明绕过；正文未交代所用基础、循环论证或将引用基础伪称已从先修推导，也仍须报告。该范围解释不是用户或教师额外批准，不给出教师验收结论。
+ 
+ 审阅须阅读完整定义及同一单元的后续限定，区分一般关系与附加条件下的子类；不能只截取前一句，忽略紧随其后的必要前提。提出反例时，反例必须满足正文的全部实际假设。检查是否缺少条件，应同时核对已明示的条件、由现有条件直接推出的事实，以及实际提供的 prior_sections 中已证结论。section_local 限制本次问题定位与覆盖范围，不禁止使用已提供的先修正文作为当前推理依据；不要为引用先前已证法则而要求在每个应用中重复其完整证明。必须区分必要的新假设或关键推理确实缺失，与一次直接代入、常规推论或教学性展开未逐步写出。前者按实际错误或重大不确定报告；后者在结论与条件确实成立时至多给具体教学建议，不臆造数学错误。不能借此放过不可推出的必要前提、循环论证、错误推广，或把计划标题当成已提供的证明；相关依据未实际提供时，如实说明上下文限制。
++
++通用教学覆盖检查：逐项读取本次实际覆盖章节的锁定 objectives，而不是只核对 required_kinds 或关键词。目标承诺的一般定义、参数族结论、判别条件、证明依据或应用步骤，不能由一个固定参数的例题代替。若目标要求一般结论，核对陈述是否说明其合法参数范围、起点、例外及相关边界；只要求具体特例的目标不应被擅自扩展为完整理论。必须区分核心目标尚未落实（review，或结论已确定错误时 blocking）与非必需的教学展开建议（warning）。定位到该目标应由其承载或实际受影响的已存在单元，引用批准目标和实际正文作为证据，不凭空创建单元 ID，不把目标标题或作者声称“已覆盖”当作完成证据。
++
++索引与初值检查：对求和、部分和、递推、奇偶子列、差分和余项的论证，代入正文声称适用范围内最小的合法指标，核对所引用的每个项、前一项或移位指标都已定义，并检查首项/端点处公式是否成立。先查当前单元、当前节其他实际正文以及提供的先修正文中的定义、约定与可直接推出的条件；明确的空和约定、已定义的初值、或排除该边界的合法适用域可以解决问题，不要求每次重复定义。不应仅因出现零下标便判错；也不能把未声明的额外约定当作已经给出。范围内确实引用未定义项，且该项参与论证或结论时，至少给 review，并说明触发的最小合法指标、需要的项及已核对的上下文；已知公式无意义或结论错误用 blocking。不得把这种缺口降成纯排版 warning。
++
++学生可读引用：unit.id、section_id 等工作流标识只属于数据结构，正文不能直接用内部单元编号代替定理名、自然语言说明或真实编号引用。遇到正文可见的内部 ID，应指出具体引用的目标与受影响单元，要求保留数学内容并改成自然表述，或使用已有且语义正确的 label/ref/eqref。合法 TeX 标签键本身不是学生可见编号；不要因为 label/ref 的目标键含内部格式就误报。不能编造不存在的定理编号、标签或删掉引用所依赖的必要假设。
++
++chapter_coverage 是所有计划章节均实际生成并完成局部检查之后的完整教学覆盖复核。context.section_unit_map 明确各章节目标题、锁定目标及正文单元归属；全部实际 units 已提供。此时逐项目标检查整份正文及教学衔接，包括一般结论是否被特例替代、跨节符号/首项约定是否足够、目标要求的例练是否支持对应方法。覆盖可使用实际前文的定义和已证结论，不要求在每个应用重复证明；单元顺序与最终答案位置仍服从 rendering_contract。此轮不是重新发明课程范围或无限扩展证明细节，只报告明确未落实的已批准要求、具体的重大语义缺口或学生不可读的引用。此 scope 下没有尚未生成的计划章节；section_local 与 adjacent_interface 的原有范围限制仍然有效。涉及修复时仍只定位到 actual_unit_ids 中的实际单元，程序另行控制修复范围和审批。

@@ -1,0 +1,143 @@
+--- a/src/math_agent/service.py
++++ b/src/math_agent/service.py
+@@ -359,6 +359,47 @@
+             key = digest([run_id, run['workflow_id'], 1, run['input_hash'], p['hash'], p.get('theme_hash'), 'rules-v1'])
+             return self._enqueue(c, run, 'build', key)
+ 
++    def recheck(self, run_id, req: ExecuteRequest):
++        if self.actor != 'local_user':
++            raise AgentError('EXPLICIT_USER_RECHECK_REQUIRED', '重新运行自动检查需要明确用户动作', 403)
++        payload_hash = digest(req.model_dump())
++        with self.store.transaction() as c:
++            run = self.store.row(c, run_id)
++            if run['status'] in ('CANCELLED', 'COMPLETED', 'COMPLETED_WITH_WARNINGS'):
++                raise AgentError('NOT_RECHECKABLE', '仅等待人工复核的未发布任务可重新运行自动检查', 409)
++            for row in c.execute("SELECT payload_json FROM events WHERE run_id=? AND type='checks.rerun_requested' ORDER BY sequence DESC", (run_id,)):
++                action = json.loads(row['payload_json'])
++                if action.get('idempotency_key') == req.idempotency_key:
++                    if action.get('payload_hash') != payload_hash:
++                        raise AgentError('ACTION_CONFLICT', '自动复检动作 ID 已用于不同内容', 409)
++                    self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
++                    job = c.execute('SELECT * FROM jobs WHERE id=? AND run_id=?', (action['job_id'], run_id)).fetchone()
++                    if job is None:
++                        raise AgentError('RECHECK_STATE_INVALID', '自动复检记录对应的任务缺失；已保留原证据', 409)
++                    return dict(job)
++            run, plan = self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
++            if run['status'] != 'AWAITING_USER_REVIEW':
++                raise AgentError('NOT_RECHECKABLE', '仅等待人工复核的未发布任务可重新运行自动检查', 409)
++            if c.execute("SELECT 1 FROM jobs WHERE run_id=? AND status IN ('queued','running')", (run_id,)).fetchone():
++                raise AgentError('RECHECK_JOB_ACTIVE', '任务仍在执行，不能并发启动自动复检', 409)
++            approval = c.execute('SELECT * FROM approvals WHERE run_id=? AND revision=?', (run_id, plan['revision'])).fetchone()
++            if not approval or approval['hash'] != plan['hash'] or approval['input_hash'] != run['input_hash']:
++                raise AgentError('APPROVAL_REQUIRED', '当前计划仍须保有原用户确认，自动复检不会代替审批', 409)
++            from .budget import view, defaults_from_settings
++            budget = view(self.store, c, run, defaults_from_settings(self.settings))
++            if budget['baseline_unknown']:
++                raise AgentError('BUDGET_BASELINE_UNKNOWN', '请先核验历史请求预算；自动复检不重置或推断预算', 409)
++            superseded = [row['artifact_id'] for row in c.execute("SELECT artifact_id FROM artifacts WHERE run_id=? AND status!='superseded'", (run_id,))]
++            c.execute("UPDATE artifacts SET status='superseded' WHERE run_id=? AND status!='superseded'", (run_id,))
++            job = self._enqueue(c, run, 'build', digest([run_id, 'automatic-recheck', req.idempotency_key]))
++            self.store.event(c, run_id, 'checks.rerun_requested', {
++                'actor': self.actor, 'idempotency_key': req.idempotency_key, 'payload_hash': payload_hash,
++                'job_id': job['id'], 'plan_revision': plan['revision'], 'plan_hash': plan['hash'],
++                'superseded_artifact_ids': superseded, 'request_count_preserved': run['request_count'],
++                'budget_version': budget['version'], 'approval_preserved': True,
++                'checkpoints_preserved': True, 'teacher_review': 'NOT_PERFORMED'})
++            return job
++
+     def retry(self, run_id):
+         with self.store.transaction() as c:
+             run = self.store.row(c, run_id)
+@@ -398,29 +439,31 @@
+             a = c.execute('SELECT * FROM artifacts WHERE artifact_id=? AND run_id=?', (req.artifact_id, run_id)).fetchone()
+             if not a or a['sha256'] != req.sha256 or a['revision'] != run['active_plan_revision']:
+                 raise AgentError('ARTIFACT_CONFLICT', '复核页已更新或不属于此任务', 409)
++            if a['status'] == 'superseded':
++                raise AgentError('ARTIFACT_SUPERSEDED', '该文件属于历史交付，请复核本次自动检查生成的新文件', 409)
+             if a['media_type']!='image/png' and a['name']!='quality_report.json':
+                 raise AgentError('NOT_REVIEW_TARGET','请审核页面图片或质量报告',400)
+             if run['status'] != 'AWAITING_USER_REVIEW':
+                 raise AgentError('NOT_REVIEWABLE', '当前产物仍有阻塞，不能用复核跳过错误', 409)
+             c.execute('INSERT OR REPLACE INTO reviews VALUES(?,?,?,?,?,?,?)', (run_id, req.artifact_id, req.sha256, req.verdict, req.note, 'local_user', now()))
+             self.store.event(c, run_id, 'human.review', {'artifact_id': req.artifact_id, 'sha256': req.sha256, 'verdict': req.verdict})
+-            pages = c.execute("SELECT * FROM artifacts WHERE run_id=? AND revision=? AND media_type='image/png'", (run_id, run['active_plan_revision'])).fetchall()
++            pages = c.execute("SELECT * FROM artifacts WHERE run_id=? AND revision=? AND media_type='image/png' AND status!='superseded'", (run_id, run['active_plan_revision'])).fetchall()
+             reviewed = c.execute("SELECT artifact_id,sha256 FROM reviews WHERE run_id=? AND verdict='pass'", (run_id,)).fetchall()
+             covered = {(r['artifact_id'], r['sha256']) for r in reviewed}
+             # The quality report itself also requires explicit content/decision review.
+-            reports = c.execute("SELECT * FROM artifacts WHERE run_id=? AND revision=? AND name='quality_report.json'", (run_id, run['active_plan_revision'])).fetchall()
++            reports = c.execute("SELECT * FROM artifacts WHERE run_id=? AND revision=? AND name='quality_report.json' AND status!='superseded'", (run_id, run['active_plan_revision'])).fetchall()
+             required = list(pages) + list(reports)
+-            unresolved=c.execute("SELECT 1 FROM reviews rv JOIN artifacts a ON a.artifact_id=rv.artifact_id WHERE rv.run_id=? AND a.revision=? AND rv.verdict='issue' LIMIT 1",(run_id,run['active_plan_revision'])).fetchone()
++            unresolved=c.execute("SELECT 1 FROM reviews rv JOIN artifacts a ON a.artifact_id=rv.artifact_id WHERE rv.run_id=? AND a.revision=? AND a.status!='superseded' AND rv.verdict='issue' LIMIT 1",(run_id,run['active_plan_revision'])).fetchone()
+             if pages and reports and not unresolved and all((p['artifact_id'], p['sha256']) in covered for p in required):
+                 final = 'COMPLETED_WITH_WARNINGS' if json.loads(run['input_json'])['provider'] == 'mock' else 'COMPLETED'
+                 receipt={'schema_version':1,'run_id':run_id,'plan_revision':run['active_plan_revision'],
+                          'status':final,'actor':'local_user','submitted_at':now(),
+-                         'reviews':[dict(r) for r in c.execute('SELECT * FROM reviews WHERE run_id=?',(run_id,))],
++                         'reviews':[dict(r) for r in c.execute("SELECT rv.* FROM reviews rv JOIN artifacts a ON a.artifact_id=rv.artifact_id WHERE rv.run_id=? AND a.revision=? AND a.status!='superseded'",(run_id,run['active_plan_revision']))],
+                          'limitations':['人工按钮记录不等于形式化证明；mock 保持演示身份。']}
+                 receipt_path=self.settings.workspace/'runs'/run_id/('review-'+uid()[:12]+'.json')
+                 write_json(receipt_path,receipt)
+                 c.execute('INSERT INTO artifacts VALUES(?,?,?,?,?,?,?,?,?,?)',(uid(),run_id,run['active_plan_revision'],receipt_path.relative_to(self.settings.workspace).as_posix(),'human_review_receipt.json',digest(receipt_path.read_bytes()),'application/json','accepted',canonical({'kind':'human_review_receipt'}),now()))
+                 c.execute('UPDATE runs SET status=?,stage=?,updated_at=? WHERE id=?', (final, 'published', now(), run_id))
+-                c.execute("UPDATE artifacts SET status='accepted' WHERE run_id=? AND revision=?", (run_id, run['active_plan_revision']))
++                c.execute("UPDATE artifacts SET status='accepted' WHERE run_id=? AND revision=? AND status!='superseded'", (run_id, run['active_plan_revision']))
+                 self.store.event(c, run_id, 'run.published', {'human_reviewed_artifacts': len(required), 'mock': json.loads(run['input_json'])['provider'] == 'mock'})
+         return self.store.get_run(run_id)
+--- a/src/math_agent/web/app.py
++++ b/src/math_agent/web/app.py
+@@ -156,6 +156,9 @@
+     @app.post('/api/runs/{run_id}/execute',status_code=202)
+     def execute(run_id:str,data:ExecuteRequest): return service.execute(run_id,data)
+ 
++    @app.post('/api/runs/{run_id}/recheck',status_code=202)
++    def recheck(run_id:str,data:ExecuteRequest): return service.recheck(run_id,data)
++
+     @app.post('/api/runs/{run_id}/retry',status_code=202)
+     def retry(run_id:str): return service.retry(run_id)
+ 
+--- a/src/math_agent/web/static/app.js
++++ b/src/math_agent/web/static/app.js
+@@ -394,13 +394,23 @@
+   for (const job of run.jobs || []) c.append(append(el("div", null, { class: "progress-row" }), el("span", `${job.kind || job.step_key || "任务"} · ${job.id || job.job_id || ""}`), el("span", job.status || "等待")));
+   const actions = el("div", null, { class: "actions" });
+   if (run.status === "PLAN_CONFIRMED" && !state.editing) actions.append(button("执行已确认计划", async () => { await api(`/api/runs/${run.id}/execute`, { expected_plan_revision: run.plan.revision, expected_plan_hash: run.plan.hash, idempotency_key: `${run.id}:${run.plan.hash}` }); await refreshRun(true); await refreshList(); }, "primary", { id: "execute-plan" }));
++  if (run.status === "AWAITING_USER_REVIEW") {
++    const previousBuild = (run.jobs || []).filter(job => job.kind === "build").at(-1);
++    actions.append(button("重新运行自动检查", async () => {
++      await api(`/api/runs/${run.id}/recheck`, { expected_plan_revision: run.plan.revision, expected_plan_hash: run.plan.hash, idempotency_key: `${run.id}:recheck:${previousBuild?.id || run.plan.hash}` });
++      await refreshRun(true); await refreshList();
++    }, "", { id: "recheck-run", disabled: run.budget?.baseline_unknown || (run.jobs || []).some(job => ["queued", "running"].includes(job.status)) }));
++    c.append(el("p", "自动复检会重新检查已保存内容并生成本次交付；沿用原计划和累计预算，历史文件保留。此操作不提交人工审核。", { class: "hint" }));
++  }
+   if (["FAILED", "BLOCKED"].includes(run.status)) actions.append(button("从失败节点重试", async () => { await api(`/api/runs/${run.id}/retry`, {}); await refreshRun(true); }, "primary", { id: "retry-run", disabled: run.budget?.baseline_unknown || run.error?.code === "BUDGET_EXHAUSTED" && (run.budget?.version || 0) <= (run.error.budget_version || 0) }));
+   if (activeStatuses.includes(run.status)) actions.append(button("取消任务", async () => { await api(`/api/runs/${run.id}/cancel`, {}); await refreshRun(true); }, "danger", { id: "cancel-run" }));
+   if (activeStatuses.includes(run.status)) c.append(el("p", "由独立 worker 处理。可以刷新或关闭页面，稍后从任务列表恢复。", { class: "hint" }));
+   c.append(actions); main.append(c);
+ }
+ function renderArtifacts(run) {
+-  const artifacts = run.artifacts || []; if (!artifacts.length) return;
++  const allArtifacts = run.artifacts || []; if (!allArtifacts.length) return;
++  const artifacts = allArtifacts.filter(artifact => artifact.status !== "superseded");
++  const historicalArtifacts = allArtifacts.filter(artifact => artifact.status === "superseded");
+   const pages = artifacts.filter(a => a.media_type === "image/png" && a.metadata?.physical_page);
+   const reports = artifacts.filter(a => /quality_report|decision_coverage|source_map|build_manifest/.test(a.name || ""));
+   const c = card("文件与检查证据");
+@@ -411,6 +421,16 @@
+     append(a, el("strong", artifact.name || artifact.artifact_id), el("small", `版本 ${artifact.revision ?? "待记录"} · ${artifact.status || "草稿"} · ${artifact.media_type || "文件"}`), el("small", `SHA-256 ${artifact.sha256 || "待记录"}`, { class: "hash" })); links.append(a);
+   }
+   c.append(links);
++  if (historicalArtifacts.length) {
++    const history = append(el("details", null, { id: "artifact-history" }), el("summary", `历史交付 · ${historicalArtifacts.length} 个文件`), el("p", "以下文件已由后续自动检查替代，保留供比较和下载。本次预览及人工复核使用当前文件。", { class: "hint" }));
++    const historyLinks = el("div", null, { class: "artifact-list" });
++    for (const artifact of historicalArtifacts) {
++      const link = el("a", null, { href: artifactUrl(artifact), class: "artifact-link", target: "_blank", rel: "noopener", "data-historical-artifact-id": artifact.artifact_id });
++      append(link, el("strong", artifact.name || artifact.artifact_id), el("small", `历史交付 · 计划版本 ${artifact.revision ?? "待记录"} · ${artifact.created_at || "时间未记录"}`), el("small", `SHA-256 ${artifact.sha256 || "待记录"}`, { class: "hash" }));
++      historyLinks.append(link);
++    }
++    history.append(historyLinks); c.append(history);
++  }
+   if (run.workflow_id === "beamer.from_tex" && inputOf(run).units?.length) {
+     const original = append(el("details"), el("summary", "原讲义内容对照（不可变输入）"), el("p", "结合 source_map.json 与物理页定位核对源内容。这里展示本次输入快照，不是风格参考讲义。", { class: "hint" }));
+     for (const unit of inputOf(run).units) original.append(detail(`${unit.id} · ${unit.kind} · ${unit.section_title || ""}`, unit.raw_tex || ""));

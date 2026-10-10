@@ -1,0 +1,87 @@
+{
+  "mode": "CANDIDATE",
+  "package": "D:\\\u7814\u7a76\u751f\u9636\u6bb5\\\u6570\u5b66\u6559\u5b66agent\\math-teaching-agent\\workspace\\t\\fbr-bb82c5",
+  "manifest": {
+    "created_at": "2026-09-20T18:08:12.608203+00:00",
+    "status": "API_MOCK_PASS_EDGE_AND_PIPELINE_INTEGRATION_NOT_RUN",
+    "production_modified": false,
+    "files": [
+      {
+        "source": "src/math_agent/service.py",
+        "baseline_sha256": "2708619931007474fe1974aa4843db9c37447a6f41394a6ddd19bd2ec43bf5dc",
+        "candidate": "feedback-receipts-service.candidate.py",
+        "candidate_sha256": "92aa61e87faf6e5cb2d01ea4f7d4b2a797984cca9b647e853b8b81e666042bd1"
+      },
+      {
+        "source": "src/math_agent/web/static/app.js",
+        "baseline_sha256": "4fe53f4b373095cdc0735e347b80c6cc60e53f61d37c52c3409305622a7462ef",
+        "candidate": "feedback-receipts-ui.candidate.js",
+        "candidate_sha256": "b011f70b9d29c2d094f75331a26d1c38a6921a9f7a7cd33eb015754a6f70b6ee"
+      }
+    ],
+    "shared_schema_module": "math_agent.feedback_review",
+    "shared_schema_sha256_tested": "ecb2005aac1018f274d06cec2315c78c3ec68a344e1e1ba03c5d37f048154a52",
+    "api_validation": {
+      "status": "PASS",
+      "tests": 68,
+      "new_receipt_tests": 34,
+      "evidence": "feedback-receipts-validation/20260920-180928-39ca78"
+    },
+    "browser_test": {
+      "path": "tests/e2e/test_feedback_receipts.py",
+      "status": "NOT_RUN",
+      "sha256": "acc3e7979cdf88e6f9943c6afc367e4d083446a344ca42992923322a0719cf3e"
+    },
+    "real_api": "NOT_RUN",
+    "windows_compile": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "pipeline_manifest": {
+      "status": "CANDIDATE_UNDER_TEST",
+      "files": [
+        {
+          "source": "src/math_agent/pipeline.py",
+          "candidate": "feedback-assessment-pipeline.candidate.py",
+          "baseline_sha256": "96d0f9e042836bf88fb1609159066d7b20113be41a193bbfa6e57f4f4086a683",
+          "candidate_sha256": "c79aef282e90f6274f0ff41c69f40db6dac44ad5cf22ab01d936b50e1037f3c3"
+        },
+        {
+          "source": "src/math_agent/provider.py",
+          "candidate": "feedback-assessment-provider.candidate.py",
+          "baseline_sha256": "ccdc7b2f3ff58bab30193e3c1db809b8a203a2986f6096a8bfa5d30426daf5d6",
+          "candidate_sha256": "a291ea01f8a8024504aebf4df154353394cf86652405e487caf4b1fed03bdb96"
+        },
+        {
+          "source": "src/math_agent/feedback_review.py",
+          "candidate": "feedback_review.candidate.py",
+          "baseline_sha256": null,
+          "candidate_sha256": "021ca341a903d516d1c270c38c5806d4386adca89e08528c36353f529d26b965"
+        },
+        {
+          "source": "src/math_agent/prompts/reviewer_feedback.md",
+          "candidate": "reviewer_feedback.candidate.md",
+          "baseline_sha256": null,
+          "candidate_sha256": "7a33796275fd68cf28108cfe896039080cc8b6c69fd4789c6352ef194450d736"
+        }
+      ],
+      "production_modified": false,
+      "test_classification": "MOCK_ONLY_PENDING",
+      "teacher_review": "NOT_RUN"
+    }
+  },
+  "tests": {
+    "tests/test_feedback_assessment.py": "1175a4aee8fb3a9280e83a9e5ac95c491c76e59ecfa13587f1df2407658c6d2d",
+    "tests/test_feedback_assessment_pipeline.py": "be0b0ef630d7710635523dab6b1112c077c28056b08fb65189e4b25bc657c553",
+    "tests/test_recheck_feedback_pipeline.py": "74b27918c74b15a9a1178182db2ba54e53532f7a6dad4a3aa719c9daf3b10149",
+    "tests/test_teaching_quality_gate.py": "0c45b07a597e225686d83ef2008d5f8af6e5510d57af5a3918e238b2dcd6700e",
+    "tests/test_global_budget_resume.py": "9d017760c5b51942cbd5273a81f589d5d12b75ef3e5fdafe5b97520cec309290"
+  },
+  "production_source_before": {
+    "src/math_agent/service.py": "2708619931007474fe1974aa4843db9c37447a6f41394a6ddd19bd2ec43bf5dc",
+    "src/math_agent/web/static/app.js": "4fe53f4b373095cdc0735e347b80c6cc60e53f61d37c52c3409305622a7462ef",
+    "src/math_agent/pipeline.py": "96d0f9e042836bf88fb1609159066d7b20113be41a193bbfa6e57f4f4086a683",
+    "src/math_agent/provider.py": "ccdc7b2f3ff58bab30193e3c1db809b8a203a2986f6096a8bfa5d30426daf5d6",
+    "src/math_agent/feedback_review.py": null,
+    "src/math_agent/prompts/reviewer_feedback.md": null
+  },
+  "feedback_schema_candidate_sha256": "021ca341a903d516d1c270c38c5806d4386adca89e08528c36353f529d26b965"
+}

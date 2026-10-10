@@ -1,0 +1,75 @@
+{
+  "status": "READY_FOR_REVIEWED_DEPLOYMENT",
+  "files": [
+    {
+      "source": "src/math_agent/pipeline.py",
+      "candidate": "feedback-assessment-pipeline.candidate.py",
+      "baseline_sha256": "96d0f9e042836bf88fb1609159066d7b20113be41a193bbfa6e57f4f4086a683",
+      "candidate_sha256": "c79aef282e90f6274f0ff41c69f40db6dac44ad5cf22ab01d936b50e1037f3c3"
+    },
+    {
+      "source": "src/math_agent/provider.py",
+      "candidate": "provider-transport-recovery.candidate.py",
+      "baseline_sha256": "ccdc7b2f3ff58bab30193e3c1db809b8a203a2986f6096a8bfa5d30426daf5d6",
+      "candidate_sha256": "7ffd9ac5783bf062b5c62aaa364a846180c1bb2a567280a347a97bdf39dfa944"
+    },
+    {
+      "source": "src/math_agent/feedback_review.py",
+      "candidate": "feedback_review.candidate.py",
+      "baseline_sha256": null,
+      "candidate_sha256": "021ca341a903d516d1c270c38c5806d4386adca89e08528c36353f529d26b965"
+    },
+    {
+      "source": "src/math_agent/prompts/reviewer_feedback.md",
+      "candidate": "reviewer_feedback.candidate.md",
+      "baseline_sha256": null,
+      "candidate_sha256": "7a33796275fd68cf28108cfe896039080cc8b6c69fd4789c6352ef194450d736"
+    },
+    {
+      "source": "src/math_agent/model_routing.py",
+      "candidate": "model-routing-transport-recovery.candidate.py",
+      "baseline_sha256": "81ea797f095f6ace62f999d3391db2a55e9fc2ce5e40db38d132409eb099530a",
+      "candidate_sha256": "a8040a14f659112920d4ea9848e3e38839c17d316a6ca4117ef2aec7f551dffe"
+    }
+  ],
+  "production_modified": false,
+  "test_classification": "PRIOR_FEEDBACK_118_PASS_PLUS_FINAL_TRANSPORT_117_PASS",
+  "teacher_review": "NOT_RUN",
+  "mock_test_evidence": "feedback-receipts-validation/20260920-183027-64c540",
+  "tests": {
+    "tests/test_provider_transport_recovery.py": "08b000697a29a35d17bf8b5b02a5bc0a042d2d21455353e9acf50ab4a03b7c73",
+    "tests/test_provider_stream.py": "765dc932b0f5d51a5a857a70f4f71c58946f069a2403e0cfdf4bcbfb420fcc8b",
+    "tests/test_model_routing.py": "8b62609b6f0bed5e085ac3fcd2ff9c3531e5fe90b4a9cb7e32f4d77bc7a1c889",
+    "tests/test_feedback_assessment.py": "d05f606b7426cfef2702d349f55f2d840d41d38ae51e4a1e52263cc599bf08ea",
+    "tests/test_provider_failure_artifacts.py": "663ccbac19b9ed78ca049cc645fea91095c30102b82c94f6dcc1cac2f0fe334b",
+    "tests/test_provider_prompt_identity.py": "a29fc6887bb5ef4040803a848627b49bb3b1191abdfe96acef1edea80ba3321b"
+  },
+  "independent_review": {
+    "path": "feedback-assessment-independent-audit.md",
+    "sha256": "464e4ba4493d9ab4e181fea42e7937407f6a1d9b2eb5dfe481cedbb93c1f8f63"
+  },
+  "final_saved_real_response_replay": {
+    "path": "feedback-assessment-final-saved-replay.json",
+    "sha256": "dbf9eb5ee58cb92fe1b604f247da27dfab5fb658e11a3970a93b567635ca8ffa",
+    "protocol_evidence_pass": 2,
+    "strict_expected_match": "1/2",
+    "new_api_calls": 0
+  },
+  "windows_compile": "NOT_RUN_IN_THIS_CANDIDATE_BATCH",
+  "real_browser": "NOT_RUN_IN_THIS_CANDIDATE_BATCH",
+  "report": "FEEDBACK_ASSESSMENT_CANDIDATE.md",
+  "prior_feedback_manifest": "feedback-assessment-manifest-before-transport.json",
+  "prior_feedback_manifest_sha256": "98a706f448fdf786f4f8f73bd0e67a3d068f04be74944b269ea8a338905ba6c1",
+  "transport_delta_manifest": "provider-transport-recovery-manifest.json",
+  "transport_independent_review": {
+    "path": "provider-transport-recovery-independent-audit.md",
+    "sha256": "7ac5b984a585de88edbd581605c7b1555a0a02466b4c138a96c308c0a0c4a3d3"
+  },
+  "transport_report": "PROVIDER_TRANSPORT_RECOVERY.md",
+  "real_failure_evidence": {
+    "path": "CH02-request101-existing-events.json",
+    "sha256": "ba9c4d7da6e9632a5f78f220923ad0300df4fecdd47215bb518d57d64b53ec67"
+  },
+  "real_api": "NOT_RUN_FOR_TRANSPORT_DELTA",
+  "deployed_full_suite": "NOT_RUN"
+}

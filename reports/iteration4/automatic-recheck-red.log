@@ -1,0 +1,257 @@
+FFFFFFFFFFF.F                                                            [100%]
+================================== FAILURES ===================================
+_ test_recheck_is_idempotent_and_preserves_approval_budget_checkpoints_and_history _
+
+case = (<starlette.testclient.TestClient object at 0x000002E5D28A2540>, <math_agent.service.Service object at 0x000002E5D27A6...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def test_recheck_is_idempotent_and_preserves_approval_budget_checkpoints_and_history(case):
+        client, service, pipeline, plan = case
+        rid = pipeline.run['id']
+        before = service.get(rid)
+        response = request_recheck(client, pipeline, plan)
+>       assert response.status_code == 202, response.text
+E       AssertionError: {"detail":"Not Found"}
+E       assert 404 == 202
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests\test_automatic_recheck_api.py:62: AssertionError
+__________ test_recheck_key_reuse_with_different_payload_is_conflict __________
+
+case = (<starlette.testclient.TestClient object at 0x000002E5D3A5A060>, <math_agent.service.Service object at 0x000002E5D3A58...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def test_recheck_key_reuse_with_different_payload_is_conflict(case):
+        client, _, pipeline, plan = case
+>       assert request_recheck(client, pipeline, plan).status_code == 202
+E       AssertionError: assert 404 == 202
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = request_recheck(<starlette.testclient.TestClient object at 0x000002E5D3A5A060>, <math_agent.pipeline.Pipeline object at 0x000002E5D3A58050>, {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+tests\test_automatic_recheck_api.py:89: AssertionError
+__ test_recheck_rejects_ineligible_task_states_without_archiving[CANCELLED] ___
+
+case = (<starlette.testclient.TestClient object at 0x000002E5D3AF3470>, <math_agent.service.Service object at 0x000002E5D3A5A...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+status = 'CANCELLED'
+
+    @pytest.mark.parametrize('status', ['CANCELLED', 'COMPLETED', 'COMPLETED_WITH_WARNINGS', 'PLAN_READY', 'BUILDING'])
+    def test_recheck_rejects_ineligible_task_states_without_archiving(case, status):
+        client, service, pipeline, plan = case
+        with service.store.transaction() as connection:
+            connection.execute('UPDATE runs SET status=? WHERE id=?', (status, pipeline.run['id']))
+        before = service.store.get_run(pipeline.run['id'])
+>       assert request_recheck(client, pipeline, plan).status_code == 409
+E       AssertionError: assert 404 == 409
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = request_recheck(<starlette.testclient.TestClient object at 0x000002E5D3AF3470>, <math_agent.pipeline.Pipeline object at 0x000002E5D3AF22D0>, {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+tests\test_automatic_recheck_api.py:100: AssertionError
+__ test_recheck_rejects_ineligible_task_states_without_archiving[COMPLETED] ___
+
+case = (<starlette.testclient.TestClient object at 0x000002E5D3B3A150>, <math_agent.service.Service object at 0x000002E5D3B2A...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+status = 'COMPLETED'
+
+    @pytest.mark.parametrize('status', ['CANCELLED', 'COMPLETED', 'COMPLETED_WITH_WARNINGS', 'PLAN_READY', 'BUILDING'])
+    def test_recheck_rejects_ineligible_task_states_without_archiving(case, status):
+        client, service, pipeline, plan = case
+        with service.store.transaction() as connection:
+            connection.execute('UPDATE runs SET status=? WHERE id=?', (status, pipeline.run['id']))
+        before = service.store.get_run(pipeline.run['id'])
+>       assert request_recheck(client, pipeline, plan).status_code == 409
+E       AssertionError: assert 404 == 409
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = request_recheck(<starlette.testclient.TestClient object at 0x000002E5D3B3A150>, <math_agent.pipeline.Pipeline object at 0x000002E5D3B2A660>, {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+tests\test_automatic_recheck_api.py:100: AssertionError
+_ test_recheck_rejects_ineligible_task_states_without_archiving[COMPLETED_WITH_WARNINGS] _
+
+case = (<starlette.testclient.TestClient object at 0x000002E5D3B38DA0>, <math_agent.service.Service object at 0x000002E5D3B7D...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+status = 'COMPLETED_WITH_WARNINGS'
+
+    @pytest.mark.parametrize('status', ['CANCELLED', 'COMPLETED', 'COMPLETED_WITH_WARNINGS', 'PLAN_READY', 'BUILDING'])
+    def test_recheck_rejects_ineligible_task_states_without_archiving(case, status):
+        client, service, pipeline, plan = case
+        with service.store.transaction() as connection:
+            connection.execute('UPDATE runs SET status=? WHERE id=?', (status, pipeline.run['id']))
+        before = service.store.get_run(pipeline.run['id'])
+>       assert request_recheck(client, pipeline, plan).status_code == 409
+E       AssertionError: assert 404 == 409
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = request_recheck(<starlette.testclient.TestClient object at 0x000002E5D3B38DA0>, <math_agent.pipeline.Pipeline object at 0x000002E5D3B7D8E0>, {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+tests\test_automatic_recheck_api.py:100: AssertionError
+__ test_recheck_rejects_ineligible_task_states_without_archiving[PLAN_READY] __
+
+case = (<starlette.testclient.TestClient object at 0x000002E5D3B98D10>, <math_agent.service.Service object at 0x000002E5D3AF3...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+status = 'PLAN_READY'
+
+    @pytest.mark.parametrize('status', ['CANCELLED', 'COMPLETED', 'COMPLETED_WITH_WARNINGS', 'PLAN_READY', 'BUILDING'])
+    def test_recheck_rejects_ineligible_task_states_without_archiving(case, status):
+        client, service, pipeline, plan = case
+        with service.store.transaction() as connection:
+            connection.execute('UPDATE runs SET status=? WHERE id=?', (status, pipeline.run['id']))
+        before = service.store.get_run(pipeline.run['id'])
+>       assert request_recheck(client, pipeline, plan).status_code == 409
+E       AssertionError: assert 404 == 409
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = request_recheck(<starlette.testclient.TestClient object at 0x000002E5D3B98D10>, <math_agent.pipeline.Pipeline object at 0x000002E5D3AF38F0>, {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+tests\test_automatic_recheck_api.py:100: AssertionError
+___ test_recheck_rejects_ineligible_task_states_without_archiving[BUILDING] ___
+
+case = (<starlette.testclient.TestClient object at 0x000002E5D3BD15E0>, <math_agent.service.Service object at 0x000002E5D3BD3...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+status = 'BUILDING'
+
+    @pytest.mark.parametrize('status', ['CANCELLED', 'COMPLETED', 'COMPLETED_WITH_WARNINGS', 'PLAN_READY', 'BUILDING'])
+    def test_recheck_rejects_ineligible_task_states_without_archiving(case, status):
+        client, service, pipeline, plan = case
+        with service.store.transaction() as connection:
+            connection.execute('UPDATE runs SET status=? WHERE id=?', (status, pipeline.run['id']))
+        before = service.store.get_run(pipeline.run['id'])
+>       assert request_recheck(client, pipeline, plan).status_code == 409
+E       AssertionError: assert 404 == 409
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = request_recheck(<starlette.testclient.TestClient object at 0x000002E5D3BD15E0>, <math_agent.pipeline.Pipeline object at 0x000002E5D3BD1610>, {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+tests\test_automatic_recheck_api.py:100: AssertionError
+_ test_recheck_checks_plan_approval_and_active_job_before_mutation[stale_hash] _
+
+case = (<starlette.testclient.TestClient object at 0x000002E5D3AF0B30>, <math_agent.service.Service object at 0x000002E5D3AF7...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'stale_hash'
+
+    @pytest.mark.parametrize('fault', ['stale_hash', 'stale_revision', 'unconfirmed', 'active_job'])
+    def test_recheck_checks_plan_approval_and_active_job_before_mutation(case, fault):
+        client, service, pipeline, plan = case
+        changes = {}
+        if fault == 'stale_hash': changes['expected_plan_hash'] = 'stale'
+        elif fault == 'stale_revision': changes['expected_plan_revision'] = 99
+        else:
+            with service.store.transaction() as connection:
+                if fault == 'unconfirmed':
+                    connection.execute('DELETE FROM approvals WHERE run_id=?', (pipeline.run['id'],))
+                else:
+                    connection.execute("INSERT INTO jobs(id,run_id,kind,build_key,status,created_at) VALUES(?,?,?,?,?,?)",
+                                       (uid(), pipeline.run['id'], 'build', uid(), 'queued', now()))
+        before = service.store.get_run(pipeline.run['id'])
+>       assert request_recheck(client, pipeline, plan, **changes).status_code == 409
+E       AssertionError: assert 404 == 409
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = request_recheck(<starlette.testclient.TestClient object at 0x000002E5D3AF0B30>, <math_agent.pipeline.Pipeline object at 0x000002E5D3AF7050>, {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}, **{'expected_plan_hash': 'stale'})
+
+tests\test_automatic_recheck_api.py:118: AssertionError
+_ test_recheck_checks_plan_approval_and_active_job_before_mutation[stale_revision] _
+
+case = (<starlette.testclient.TestClient object at 0x000002E5D3C610A0>, <math_agent.service.Service object at 0x000002E5D3AF0...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'stale_revision'
+
+    @pytest.mark.parametrize('fault', ['stale_hash', 'stale_revision', 'unconfirmed', 'active_job'])
+    def test_recheck_checks_plan_approval_and_active_job_before_mutation(case, fault):
+        client, service, pipeline, plan = case
+        changes = {}
+        if fault == 'stale_hash': changes['expected_plan_hash'] = 'stale'
+        elif fault == 'stale_revision': changes['expected_plan_revision'] = 99
+        else:
+            with service.store.transaction() as connection:
+                if fault == 'unconfirmed':
+                    connection.execute('DELETE FROM approvals WHERE run_id=?', (pipeline.run['id'],))
+                else:
+                    connection.execute("INSERT INTO jobs(id,run_id,kind,build_key,status,created_at) VALUES(?,?,?,?,?,?)",
+                                       (uid(), pipeline.run['id'], 'build', uid(), 'queued', now()))
+        before = service.store.get_run(pipeline.run['id'])
+>       assert request_recheck(client, pipeline, plan, **changes).status_code == 409
+E       AssertionError: assert 404 == 409
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = request_recheck(<starlette.testclient.TestClient object at 0x000002E5D3C610A0>, <math_agent.pipeline.Pipeline object at 0x000002E5D3C4FF80>, {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}, **{'expected_plan_revision': 99})
+
+tests\test_automatic_recheck_api.py:118: AssertionError
+_ test_recheck_checks_plan_approval_and_active_job_before_mutation[unconfirmed] _
+
+case = (<starlette.testclient.TestClient object at 0x000002E5D3C956A0>, <math_agent.service.Service object at 0x000002E5D3C93...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'unconfirmed'
+
+    @pytest.mark.parametrize('fault', ['stale_hash', 'stale_revision', 'unconfirmed', 'active_job'])
+    def test_recheck_checks_plan_approval_and_active_job_before_mutation(case, fault):
+        client, service, pipeline, plan = case
+        changes = {}
+        if fault == 'stale_hash': changes['expected_plan_hash'] = 'stale'
+        elif fault == 'stale_revision': changes['expected_plan_revision'] = 99
+        else:
+            with service.store.transaction() as connection:
+                if fault == 'unconfirmed':
+                    connection.execute('DELETE FROM approvals WHERE run_id=?', (pipeline.run['id'],))
+                else:
+                    connection.execute("INSERT INTO jobs(id,run_id,kind,build_key,status,created_at) VALUES(?,?,?,?,?,?)",
+                                       (uid(), pipeline.run['id'], 'build', uid(), 'queued', now()))
+        before = service.store.get_run(pipeline.run['id'])
+>       assert request_recheck(client, pipeline, plan, **changes).status_code == 409
+E       AssertionError: assert 404 == 409
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = request_recheck(<starlette.testclient.TestClient object at 0x000002E5D3C956A0>, <math_agent.pipeline.Pipeline object at 0x000002E5D3C93770>, {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}, **{})
+
+tests\test_automatic_recheck_api.py:118: AssertionError
+_ test_recheck_checks_plan_approval_and_active_job_before_mutation[active_job] _
+
+case = (<starlette.testclient.TestClient object at 0x000002E5D3AF55B0>, <math_agent.service.Service object at 0x000002E5D3C4F...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'active_job'
+
+    @pytest.mark.parametrize('fault', ['stale_hash', 'stale_revision', 'unconfirmed', 'active_job'])
+    def test_recheck_checks_plan_approval_and_active_job_before_mutation(case, fault):
+        client, service, pipeline, plan = case
+        changes = {}
+        if fault == 'stale_hash': changes['expected_plan_hash'] = 'stale'
+        elif fault == 'stale_revision': changes['expected_plan_revision'] = 99
+        else:
+            with service.store.transaction() as connection:
+                if fault == 'unconfirmed':
+                    connection.execute('DELETE FROM approvals WHERE run_id=?', (pipeline.run['id'],))
+                else:
+                    connection.execute("INSERT INTO jobs(id,run_id,kind,build_key,status,created_at) VALUES(?,?,?,?,?,?)",
+                                       (uid(), pipeline.run['id'], 'build', uid(), 'queued', now()))
+        before = service.store.get_run(pipeline.run['id'])
+>       assert request_recheck(client, pipeline, plan, **changes).status_code == 409
+E       AssertionError: assert 404 == 409
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = request_recheck(<starlette.testclient.TestClient object at 0x000002E5D3AF55B0>, <math_agent.pipeline.Pipeline object at 0x000002E5D2468140>, {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}, **{})
+
+tests\test_automatic_recheck_api.py:118: AssertionError
+_ test_worker_rebuild_and_review_exclude_superseded_artifacts_and_old_issues __
+
+case = (<starlette.testclient.TestClient object at 0x000002E5D3CF41A0>, <math_agent.service.Service object at 0x000002E5D3CEA...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002E5D3CEA4B0>
+
+    def test_worker_rebuild_and_review_exclude_superseded_artifacts_and_old_issues(case, monkeypatch):
+        client, service, pipeline, plan = case
+        rid = pipeline.run['id']
+        old = service.store.get_run(rid)['artifacts']
+        old_page = next(a for a in old if a['media_type'] == 'image/png')
+        review_url = f'/api/runs/{rid}/reviews'
+        assert client.post(review_url, json={'artifact_id': old_page['artifact_id'], 'sha256': old_page['sha256'],
+                                            'verdict': 'issue', 'note': 'OFFLINE historical issue fixture'}).status_code == 200
+>       assert request_recheck(client, pipeline, plan).status_code == 202
+E       AssertionError: assert 404 == 202
+E        +  where 404 = <Response [404 Not Found]>.status_code
+E        +    where <Response [404 Not Found]> = request_recheck(<starlette.testclient.TestClient object at 0x000002E5D3CF41A0>, <math_agent.pipeline.Pipeline object at 0x000002E5D3CE8920>, {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+tests\test_automatic_recheck_api.py:137: AssertionError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\研究生阶段\数学教学agent\math-teaching-agent\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv\Lib\site-packages\starlette\testclient.py:53
+  D:\研究生阶段\数学教学agent\math-teaching-agent\.venv\Lib\site-packages\starlette\testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_automatic_recheck_api.py::test_recheck_is_idempotent_and_preserves_approval_budget_checkpoints_and_history
+FAILED tests/test_automatic_recheck_api.py::test_recheck_key_reuse_with_different_payload_is_conflict
+FAILED tests/test_automatic_recheck_api.py::test_recheck_rejects_ineligible_task_states_without_archiving[CANCELLED]
+FAILED tests/test_automatic_recheck_api.py::test_recheck_rejects_ineligible_task_states_without_archiving[COMPLETED]
+FAILED tests/test_automatic_recheck_api.py::test_recheck_rejects_ineligible_task_states_without_archiving[COMPLETED_WITH_WARNINGS]
+FAILED tests/test_automatic_recheck_api.py::test_recheck_rejects_ineligible_task_states_without_archiving[PLAN_READY]
+FAILED tests/test_automatic_recheck_api.py::test_recheck_rejects_ineligible_task_states_without_archiving[BUILDING]
+FAILED tests/test_automatic_recheck_api.py::test_recheck_checks_plan_approval_and_active_job_before_mutation[stale_hash]
+FAILED tests/test_automatic_recheck_api.py::test_recheck_checks_plan_approval_and_active_job_before_mutation[stale_revision]
+FAILED tests/test_automatic_recheck_api.py::test_recheck_checks_plan_approval_and_active_job_before_mutation[unconfirmed]
+FAILED tests/test_automatic_recheck_api.py::test_recheck_checks_plan_approval_and_active_job_before_mutation[active_job]
+FAILED tests/test_automatic_recheck_api.py::test_worker_rebuild_and_review_exclude_superseded_artifacts_and_old_issues
+12 failed, 1 passed, 2 warnings in 1.98s

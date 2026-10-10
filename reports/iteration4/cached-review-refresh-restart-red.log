@@ -1,0 +1,93 @@
+..........FFF                                                            [100%]
+================================== FAILURES ===================================
+_ test_changed_upstream_checkpoint_then_downstream_timeout_resumes_without_reauthoring[False] _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/crfred02/test_changed_upstream_checkpoi0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001E9565435C0>
+legacy = False
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('legacy', [False, True])
+    def test_changed_upstream_checkpoint_then_downstream_timeout_resumes_without_reauthoring(tmp_path, monkeypatch, legacy):
+        provider = GlobalRepairProvider()
+        service, pipeline, plan, compiles = setup(tmp_path, provider, monkeypatch)
+        original, _ = pipeline._lecture_sections(plan)
+        if legacy:
+            strip_contracts(pipeline)
+        forced = copy.deepcopy(original[0][1])
+        forced['units'][0]['tex'] += ' 这是已接受的新前置假设。'
+        provider.fail_following_once = True
+        with pytest.raises(AgentError, match='following-section'):
+            pipeline._lecture_sections(plan, {'S01': forced})
+        service.store.finish(pipeline.job, 'FAILED', 'review.section.S02', {'code': 'PROVIDER_TIMEOUT'})
+        service.retry(pipeline.run['id'])
+        resumed = Pipeline(pipeline.settings, pipeline.store, pipeline.store.claim('offline-resumed-check'))
+        resumed.provider = provider
+        completed, _ = resumed._lecture_sections(plan)
+        assert completed[0][1] == forced and completed[1][1] == original[1][1]
+>       assert provider.writes == ['S01', 'S02']
+E       AssertionError: assert ['S01', 'S02', 'S02'] == ['S01', 'S02']
+E         
+E         Left contains one more item: 'S02'
+E         Use -v to get more diff
+
+tests\test_cached_review_refresh.py:210: AssertionError
+_ test_changed_upstream_checkpoint_then_downstream_timeout_resumes_without_reauthoring[True] _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/crfred02/test_changed_upstream_checkpoi1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001E956504E90>
+legacy = True
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('legacy', [False, True])
+    def test_changed_upstream_checkpoint_then_downstream_timeout_resumes_without_reauthoring(tmp_path, monkeypatch, legacy):
+        provider = GlobalRepairProvider()
+        service, pipeline, plan, compiles = setup(tmp_path, provider, monkeypatch)
+        original, _ = pipeline._lecture_sections(plan)
+        if legacy:
+            strip_contracts(pipeline)
+        forced = copy.deepcopy(original[0][1])
+        forced['units'][0]['tex'] += ' 这是已接受的新前置假设。'
+        provider.fail_following_once = True
+        with pytest.raises(AgentError, match='following-section'):
+            pipeline._lecture_sections(plan, {'S01': forced})
+        service.store.finish(pipeline.job, 'FAILED', 'review.section.S02', {'code': 'PROVIDER_TIMEOUT'})
+        service.retry(pipeline.run['id'])
+        resumed = Pipeline(pipeline.settings, pipeline.store, pipeline.store.claim('offline-resumed-check'))
+        resumed.provider = provider
+        completed, _ = resumed._lecture_sections(plan)
+        assert completed[0][1] == forced and completed[1][1] == original[1][1]
+>       assert provider.writes == ['S01', 'S02']
+E       AssertionError: assert ['S01', 'S02', 'S02'] == ['S01', 'S02']
+E         
+E         Left contains one more item: 'S02'
+E         Use -v to get more diff
+
+tests\test_cached_review_refresh.py:210: AssertionError
+____ test_corrupt_legacy_prefix_proof_cannot_authorize_seed_after_restart _____
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/crfred02/test_corrupt_legacy_prefix_pro0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001E95654ADB0>
+
+    @pytest.mark.unit
+    def test_corrupt_legacy_prefix_proof_cannot_authorize_seed_after_restart(tmp_path, monkeypatch):
+        provider = GlobalRepairProvider()
+        service, pipeline, plan, _ = setup(tmp_path, provider, monkeypatch)
+        original, _ = pipeline._lecture_sections(plan)
+        strip_contracts(pipeline)
+        forced = copy.deepcopy(original[0][1])
+        forced['units'][0]['tex'] += ' 修改前置假设。'
+        provider.fail_following_once = True
+        with pytest.raises(AgentError):
+            pipeline._lecture_sections(plan, {'S01': forced})
+>       proof = next((pipeline.root / 'section-checkpoint-snapshots').glob('*.json'))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       StopIteration
+
+tests\test_cached_review_refresh.py:228: StopIteration
+=========================== short test summary info ===========================
+FAILED tests/test_cached_review_refresh.py::test_changed_upstream_checkpoint_then_downstream_timeout_resumes_without_reauthoring[False]
+FAILED tests/test_cached_review_refresh.py::test_changed_upstream_checkpoint_then_downstream_timeout_resumes_without_reauthoring[True]
+FAILED tests/test_cached_review_refresh.py::test_corrupt_legacy_prefix_proof_cannot_authorize_seed_after_restart
+3 failed, 10 passed in 4.77s
+Production pipeline SHA unchanged: True; 350f9eff0d4a8f24937e4c0dfc605f7f2bb928fc603b313d99219553ea628a1c

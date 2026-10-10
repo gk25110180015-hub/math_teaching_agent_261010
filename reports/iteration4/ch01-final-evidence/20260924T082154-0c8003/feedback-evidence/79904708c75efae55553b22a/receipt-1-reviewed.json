@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "job_id": "1d92b4807ecc474ebb4c33a1c58ebde6",
+  "plan_hash": "60e76cc0b1271ac1b32a9f48c9ae760665bb7180cbdd52df6f5f5958f25db4ac",
+  "plan_revision": 2,
+  "feedback_hash": "6eaf8f1358f8762bd49e0c6a35c6581bdb387f640628fa6b592f55ace0ebe8df",
+  "identity_hash": "79904708c75efae55553b22a3903b6dc29a64cba66cc437989cfa6d97b359dfc",
+  "status": "reviewed",
+  "items": [
+    {
+      "id": "F1",
+      "status": "satisfied",
+      "reason": "现稿已落实该项教学改进，而非仅在证明中出现绝对值符号。S02.U12 保留原有常数倍与有理式小问，并增加了要求实际计算含绝对值数列极限的第 (3) 问，明确正整数下标条件。其唯一关联解答 S02.U13（relates_to=S02.U12）保留前两问解答，并对第 (3) 问给出实数数列收敛这一适用条件、反三角不等式和极限定义的完整依据，再计算内部数列趋于 -2、绝对值数列趋于 2。此处理没有援引后续函数连续性或新增先修，符合原批准 S02 目标和反馈限定的小范围补充要求。反馈关于现稿只有两个例题小问的观察已不符合所提供的实际正文，无需重复扩写。此履约结论不表示普通数学检查、计算核验或其他交付审查已被替代或通过。",
+      "unit_ids": [
+        "S02.U12",
+        "S02.U13"
+      ],
+      "repair_unit_ids": [],
+      "unit_evidence": [
+        {
+          "unit_id": "S02.U12",
+          "quote": "计算下列数列的极限，并说明所使用的运算法则，其中各小问均取 $n\\in\\mathbb{N}^{+}$：\n\\[\n(1)\\quad a_n=3(1/n)+2;\\qquad\n(2)\\quad b_n=\\frac{2n+1}{n+3};\\qquad\n(3)\\quad c_n=\\left|\\frac3n-2\\right|.\n\\]",
+          "kind": "statement"
+        },
+        {
+          "unit_id": "S02.U13",
+          "quote": "(3) 所用的绝对值极限法则是：若实数数列 $x_n\\to L$，其中 $L\\in\\mathbb{R}$，则 $|x_n|\\to|L|$。其依据是反三角不等式\n\\[\n\\bigl||x_n|-|L|\\bigr|\\leq|x_n-L|.\n\\]\n事实上，任给 $\\varepsilon>0$，由 $x_n\\to L$，存在正整数 $N$，使得当 $n\\geq N$ 时 $|x_n-L|<\\varepsilon$，于是 $\\bigl||x_n|-|L|\\bigr|<\\varepsilon$，由极限定义即得上述法则。\n\n应用时，先由 $1/n\\to0$ 及常数倍、差法则得到 $3/n-2\\to-2$，再用绝对值极限法则得到\n\\[\n\\lim_{n\\to\\infty}c_n=\\lim_{n\\to\\infty}|3/n-2|=|-2|=2.\n\\]\n这说明处理含绝对值的数列极限时，可以先求绝对值内部数列的极限，再对所得极限取绝对值。",
+          "kind": "worked_example"
+        }
+      ],
+      "objective_evidence": [
+        {
+          "section_id": "S02",
+          "field": "objectives",
+          "quote": "能够处理含有有理式、绝对值和常数倍的基本数列极限"
+        },
+        {
+          "section_id": null,
+          "field": "prerequisites",
+          "quote": "绝对值、不等式和自然数归纳法的基础知识"
+        },
+        {
+          "section_id": null,
+          "field": "exclusions",
+          "quote": "不展开函数极限、连续性和导数理论"
+        }
+      ],
+      "repair_instruction": null
+    }
+  ],
+  "limitations": [
+    "本结论是依据所提供完整正文、批准计划及全部原反馈作出的模型逐项评估，不是形式化证明或教师验收。",
+    "未访问反馈中提到的外部审计文件；结论直接依据输入中的实际题面、关联解答与计划，不以文件路径或审计声明作为已核实证据。",
+    "未执行真实 TeX 编译或 PDF 全页视觉检查。本反馈回执不替代独立的普通数学审阅、计算核验、全文及反馈复评，也不撤销其他审阅已有的疑点。"
+  ],
+  "teacher_review": "NOT_RUN",
+  "mock": false
+}

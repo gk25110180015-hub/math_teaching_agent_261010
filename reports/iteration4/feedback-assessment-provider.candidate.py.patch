@@ -1,0 +1,22 @@
+--- src/math_agent/provider.py
++++ src/math_agent/provider.py
+@@ -411,7 +411,8 @@
+                     {'role': 'user', 'content': 'UNTRUSTED_SOURCE_DATA\n' + canonical(context) + '\nEND_UNTRUSTED_SOURCE_DATA'}]
+         last_errors = []
+         repair_model = None
+-        for attempt in range(self.settings.max_schema_repair_attempts + 1):
++        schema_attempts = 1 if role == 'reviewer_feedback' else self.settings.max_schema_repair_attempts + 1
++        for attempt in range(schema_attempts):
+             text = asyncio.run(self._request(messages, role, prompt_metadata=prompt_metadata,
+                 model_id=repair_model, allow_fallback=self.allow_fallback if repair_model is None else False))
+             identity = {key: self.last_response_metadata[key] for key in (
+@@ -481,6 +482,9 @@
+                 units.append({'id':sid+'.E01','kind':'exercise','tex':r'按定义证明 $'+constant+r'/n\to0$。','relates_to':None})
+                 units.append({'id':sid+'.A01','kind':'solution','tex':r'取正整数 $N>'+constant+r'/\varepsilon$，则 $n>N$ 时 $'+constant+r'/n<\varepsilon$。','relates_to':sid+'.E01'})
+             value = {'section_id':sid,'units':units,'calculations':[], 'uncertainties':[]}
++        elif role == 'reviewer_feedback':
++            from .feedback_review import mock_feedback_assessment
++            value = mock_feedback_assessment(context)
+         elif role == 'reviewer_math':
+             value = {'issues':[], 'checked_unit_ids':[u['id'] for u in context['units']], 'limitations':['Mock reviewer only; no real model review performed.']}
+         else:

@@ -1,0 +1,737 @@
+{
+  "id": "43e10e59423140888255cf9deaf829d3",
+  "workflow_id": "lecture.generate",
+  "version": 1,
+  "owner_id": "local",
+  "status": "AWAITING_USER_REVIEW",
+  "stage": "review.pages_and_quality",
+  "input_hash": "01032189b6e02d2d9932e74757479eac8e0bc513c6a16bf4e850c32d3fd07656",
+  "active_plan_revision": 2,
+  "created_at": "2026-09-20T17:34:51.532059+00:00",
+  "updated_at": "2026-09-20T17:35:07.891570+00:00",
+  "request_count": 0,
+  "schema_version": 1,
+  "input": {
+    "attachments": [],
+    "difficulty": "经济学本科一年级微积分",
+    "model_id": "gpt6",
+    "provider": "mock",
+    "schema_version": 1,
+    "theme": "default",
+    "topic": "数列极限 · 自动复检与历史交付浏览器回归",
+    "trusted_input": true,
+    "units": [],
+    "use_reference_bibliography": false,
+    "workflow_id": "lecture.generate"
+  },
+  "error": null,
+  "plan": {
+    "additions": [],
+    "decision_ids": [
+      "ed5b877aa0134b70a6cacc984793517c",
+      "d69a8792c83d4fdfaac112faae0a0183",
+      "0b18004bcf59440cb99a4703cd5bdb2a",
+      "633ef7eea1a04dfdb95f611b53c99ce5"
+    ],
+    "decisions": [
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "custom_input": "",
+        "id": "ed5b877aa0134b70a6cacc984793517c",
+        "question_id": "Q-PROOF",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "key"
+        },
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "timestamp": "2026-09-20T17:34:53.416211+00:00"
+      },
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "custom_input": "",
+        "id": "d69a8792c83d4fdfaac112faae0a0183",
+        "question_id": "Q-EXAMPLE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "balanced"
+        },
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "timestamp": "2026-09-20T17:34:53.417212+00:00"
+      },
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "custom_input": "",
+        "derived_section_requirements": [
+          {
+            "after": [
+              "definition",
+              "theorem",
+              "example",
+              "solution",
+              "exercise"
+            ],
+            "before": [
+              "definition",
+              "theorem",
+              "example",
+              "solution"
+            ],
+            "section_id": "S01"
+          },
+          {
+            "after": [
+              "definition",
+              "theorem",
+              "example",
+              "solution",
+              "exercise"
+            ],
+            "before": [
+              "definition",
+              "theorem",
+              "example",
+              "solution"
+            ],
+            "section_id": "S02"
+          }
+        ],
+        "id": "0b18004bcf59440cb99a4703cd5bdb2a",
+        "question_id": "Q-EXERCISE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "with_answers"
+        },
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "timestamp": "2026-09-20T17:34:53.417212+00:00"
+      },
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "custom_input": "",
+        "id": "633ef7eea1a04dfdb95f611b53c99ce5",
+        "question_id": "Q-ANSWERS",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "section"
+        },
+        "selected_option_ids": [
+          "SECTION"
+        ],
+        "timestamp": "2026-09-20T17:34:53.417212+00:00"
+      }
+    ],
+    "diff": [
+      {
+        "after": {
+          "answers_location": "section",
+          "example_focus": "balanced",
+          "exercises": "with_answers",
+          "proof_policy": "key"
+        },
+        "before": {
+          "answers_location": null,
+          "example_focus": null,
+          "exercises": null,
+          "proof_policy": null
+        },
+        "field": "lecture"
+      },
+      {
+        "after": [
+          {
+            "id": "S01",
+            "objectives": [
+              "理解 epsilon 定义"
+            ],
+            "prerequisites": [],
+            "reference_labels": [],
+            "required_kinds": [
+              "definition",
+              "theorem",
+              "example",
+              "solution",
+              "exercise"
+            ],
+            "title": "数列极限的定义"
+          },
+          {
+            "id": "S02",
+            "objectives": [
+              "验证极限运算"
+            ],
+            "prerequisites": [
+              "S01"
+            ],
+            "reference_labels": [],
+            "required_kinds": [
+              "definition",
+              "theorem",
+              "example",
+              "solution",
+              "exercise"
+            ],
+            "title": "极限的运算"
+          }
+        ],
+        "before": [
+          {
+            "id": "S01",
+            "objectives": [
+              "理解 epsilon 定义"
+            ],
+            "prerequisites": [],
+            "reference_labels": [],
+            "required_kinds": [
+              "definition",
+              "theorem",
+              "example",
+              "solution"
+            ],
+            "title": "数列极限的定义"
+          },
+          {
+            "id": "S02",
+            "objectives": [
+              "验证极限运算"
+            ],
+            "prerequisites": [
+              "S01"
+            ],
+            "reference_labels": [],
+            "required_kinds": [
+              "definition",
+              "theorem",
+              "example",
+              "solution"
+            ],
+            "title": "极限的运算"
+          }
+        ],
+        "field": "sections"
+      }
+    ],
+    "difficulty": "经济学本科一年级微积分",
+    "exclusions": [
+      "未指定专题的真实教学验收"
+    ],
+    "input_snapshot_hash": "01032189b6e02d2d9932e74757479eac8e0bc513c6a16bf4e850c32d3fd07656",
+    "lecture": {
+      "answers_location": "section",
+      "example_focus": "balanced",
+      "exercises": "with_answers",
+      "proof_policy": "key"
+    },
+    "model_id": "gpt6",
+    "objectives": [
+      "演示可恢复的讲义生成流程"
+    ],
+    "omissions": [],
+    "prerequisites": [
+      "实数与不等式"
+    ],
+    "provider": "mock",
+    "questions": [
+      {
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-PROOF",
+        "options": [
+          {
+            "effects": {
+              "value": "key"
+            },
+            "id": "KEY",
+            "label": "关键定理完整证明，其余说明",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "all"
+            },
+            "id": "ALL",
+            "label": "所有定理完整证明",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "定理证明采用哪种深度？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXAMPLE",
+        "options": [
+          {
+            "effects": {
+              "value": "balanced"
+            },
+            "id": "BALANCED",
+            "label": "概念与计算均衡",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "economics"
+            },
+            "id": "ECONOMICS",
+            "label": "更多经济应用",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "例题侧重什么？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXERCISE",
+        "options": [
+          {
+            "effects": {
+              "value": "with_answers"
+            },
+            "id": "WITH",
+            "label": "安排练习并附答案",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "none"
+            },
+            "id": "NONE",
+            "label": "不安排额外练习",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "是否安排练习与答案？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-ANSWERS",
+        "options": [
+          {
+            "effects": {
+              "value": "section"
+            },
+            "id": "SECTION",
+            "label": "各节之后",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "end"
+            },
+            "id": "END",
+            "label": "讲义末尾",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "练习答案放在哪里？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "SECTION"
+        ],
+        "selection_mode": "single"
+      }
+    ],
+    "reference_context": {
+      "dataset": "第一章",
+      "instruction": "Only observe structure, proof depth and notation. Do not copy these examples into a different topic.",
+      "label": "UNTRUSTED_STYLE_REFERENCE_ONLY",
+      "section_titles": [
+        "数列的一般定义",
+        "拓展阅读：数列的应用",
+        "差分及其应用",
+        "数列极限",
+        "收敛数列的基本性质",
+        "极限存在性定理"
+      ],
+      "source_hash": "49a18ae541e03d6f60b99782fa5c1413a1f1c9e93a3614f865b4b263acb0045d",
+      "status": "RETRIEVED",
+      "weight_training": false
+    },
+    "reference_registry": {
+      "sec:S01": "S01",
+      "sec:S02": "S02"
+    },
+    "revision": 2,
+    "rules": {
+      "allowed_text_sizes": [
+        "footnotesize",
+        "small",
+        "normalsize",
+        "large"
+      ],
+      "rule_version": 1,
+      "summary_frames": false
+    },
+    "schema_version": 1,
+    "sections": [
+      {
+        "id": "S01",
+        "objectives": [
+          "理解 epsilon 定义"
+        ],
+        "prerequisites": [],
+        "reference_labels": [],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "exercise"
+        ],
+        "title": "数列极限的定义"
+      },
+      {
+        "id": "S02",
+        "objectives": [
+          "验证极限运算"
+        ],
+        "prerequisites": [
+          "S01"
+        ],
+        "reference_labels": [],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "exercise"
+        ],
+        "title": "极限的运算"
+      }
+    ],
+    "symbols": {
+      "a_n": "实数列",
+      "epsilon": "正实数"
+    },
+    "theme": "default",
+    "title": "数列极限 · 自动复检与历史交付浏览器回归（离线演示）",
+    "unresolved_blocking_questions": [],
+    "workflow_id": "lecture.generate",
+    "hash": "555dcbaf5f736d2a4a0eaf098039f55f7109db7c46ae2c29b4156a47fbd75ac7"
+  },
+  "approval": {
+    "run_id": "43e10e59423140888255cf9deaf829d3",
+    "revision": 2,
+    "hash": "555dcbaf5f736d2a4a0eaf098039f55f7109db7c46ae2c29b4156a47fbd75ac7",
+    "input_hash": "01032189b6e02d2d9932e74757479eac8e0bc513c6a16bf4e850c32d3fd07656",
+    "action_id": "59bb696f-a4d0-4b8b-a218-8e65c54fa55b",
+    "confirmed_at": "2026-09-20T17:34:53.472211+00:00"
+  },
+  "jobs": [
+    {
+      "id": "ccd07b0859834b0b8ec2493bf4dfc450",
+      "kind": "plan",
+      "status": "done",
+      "attempt": 1,
+      "fencing_token": 1
+    },
+    {
+      "id": "67f61238e73e49c687072088b9247bec",
+      "kind": "build",
+      "status": "done",
+      "attempt": 1,
+      "fencing_token": 1
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "1ecf9d8771184771866ea49c10eaf4c7",
+      "run_id": "43e10e59423140888255cf9deaf829d3",
+      "revision": 2,
+      "name": "build_manifest.json",
+      "sha256": "833f7e0fc2f3ba9169a46914378cc0a111bdf96a9c1b262829dc1cb80a282a84",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-20T17:35:07.881572+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "53020a7000714f20942cb013de5a9e65",
+      "run_id": "43e10e59423140888255cf9deaf829d3",
+      "revision": 2,
+      "name": "decision_coverage.json",
+      "sha256": "b707fbdb48cb680ca583e6d2420a2d0a5ea93777641a1827348f4be2a45be220",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-20T17:35:07.881572+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "f3128be0120b4e4ebd116b5fefef2848",
+      "run_id": "43e10e59423140888255cf9deaf829d3",
+      "revision": 2,
+      "name": "pdf_inspection.json",
+      "sha256": "2e792a8f90b63aee79327f7ac1eeddf24093081ed3e962fbc9f901205eee6e16",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-20T17:35:07.881572+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "cb8812d5567c413dacb4e702413e7ae9",
+      "run_id": "43e10e59423140888255cf9deaf829d3",
+      "revision": 2,
+      "name": "plan.json",
+      "sha256": "1249595cdbf7521f2e80ce4fc7c5af1d8c1f7f248fcbcb237ce83ef2e811e81b",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-20T17:35:07.881572+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "7793ad5393124dfbb45f618f78fd8920",
+      "run_id": "43e10e59423140888255cf9deaf829d3",
+      "revision": 2,
+      "name": "quality_report.json",
+      "sha256": "4c20471d9eb7a5edcd36084cdc47c1644ed6536cf6a727897cdb9e0d7663fdcb",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-20T17:35:07.881572+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "c3d7b58565b44d8aa7ae934b16880f03",
+      "run_id": "43e10e59423140888255cf9deaf829d3",
+      "revision": 2,
+      "name": "quality_report.md",
+      "sha256": "37fb42899275a98ee4f151f76e1b8ce9289cf2da976772589643cfbed4139bcf",
+      "media_type": "text/markdown",
+      "status": "draft",
+      "created_at": "2026-09-20T17:35:07.881572+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "b0add94e5d1f4e80bbb498f7dc4b31c4",
+      "run_id": "43e10e59423140888255cf9deaf829d3",
+      "revision": 2,
+      "name": "source_bundle.zip",
+      "sha256": "ae78e121aafa58601cd4a8ac8f07bd190ebb216cf29fb088b768a0a412499669",
+      "media_type": "application/x-zip-compressed",
+      "status": "draft",
+      "created_at": "2026-09-20T17:35:07.881572+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "cacae5111011420c9b67b1a827679f5c",
+      "run_id": "43e10e59423140888255cf9deaf829d3",
+      "revision": 2,
+      "name": "SOURCE_README.md",
+      "sha256": "8ef3fb0e300df7cd8cd7346566ae83bf968c345d930242dc62785676b975cbae",
+      "media_type": "text/markdown",
+      "status": "draft",
+      "created_at": "2026-09-20T17:35:07.882571+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "c198bd9516874644be9a5057f8075b2b",
+      "run_id": "43e10e59423140888255cf9deaf829d3",
+      "revision": 2,
+      "name": "lecture.pdf",
+      "sha256": "ee649fcd2a1de5f48ab17fcf55a14d878c0f0de1949345eaefa4468ac19a982d",
+      "media_type": "application/pdf",
+      "status": "draft",
+      "created_at": "2026-09-20T17:35:07.882571+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "e863b42076ad42caaa91164af41b842f",
+      "run_id": "43e10e59423140888255cf9deaf829d3",
+      "revision": 2,
+      "name": "lecture.tex",
+      "sha256": "cdec6dd603e22aa6ebeac0ffecf0fc353fe31c18f8ab4f6d3781e3216c1521e0",
+      "media_type": "application/x-tex",
+      "status": "draft",
+      "created_at": "2026-09-20T17:35:07.882571+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "52592d7f622b45cf9eba363996612e08",
+      "run_id": "43e10e59423140888255cf9deaf829d3",
+      "revision": 2,
+      "name": "page-0001.png",
+      "sha256": "e998e67ca57fb8d26918413b7724edeb0a9a6d47a4850a02f31f44c51e6472e6",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-20T17:35:07.882571+00:00",
+      "metadata": {
+        "frame_id": null,
+        "geometry": {
+          "body_region": {
+            "bbox_pt": null,
+            "calibration_status": "uncalibrated",
+            "profile_fingerprint": null
+          },
+          "character_count": 545,
+          "font_names": [
+            "DBVHPR+LMRoman10-Italic",
+            "EKDTNT+CMMI10",
+            "GPSTBC+LMRoman12-Bold",
+            "IUSRQR+FandolSong-Regular",
+            "QKLZKH+CMMI8",
+            "WZABNA+LMRoman10-Bold",
+            "XJTAZW+LMRoman10-Regular",
+            "XOBIWQ+FandolSong-Bold",
+            "XWXFFL+FandolKai-Regular",
+            "XWYGAQ+CMR10",
+            "YKZAWG+CMSY8",
+            "ZQMZYN+CMSY10"
+          ],
+          "font_sizes_pt": [
+            7.97,
+            10.909,
+            14.346,
+            17.215
+          ],
+          "image_count": 0,
+          "image_outside_page_count": 0,
+          "line_count": 8,
+          "page_height_pt": 841.89,
+          "page_width_pt": 595.28,
+          "pgf_hidden_character_count": 0,
+          "raw_character_count": 545,
+          "rectangle_count": 0,
+          "text_bbox_pt": [
+            68.031,
+            115.53,
+            534.27,
+            805.862
+          ],
+          "text_outside_page_count": 0
+        },
+        "issues": [],
+        "overlay_hidden_objects": [],
+        "overlay_index": null,
+        "physical_page": 1,
+        "review_status": "NOT_RUN",
+        "sha256": "e998e67ca57fb8d26918413b7724edeb0a9a6d47a4850a02f31f44c51e6472e6"
+      }
+    },
+    {
+      "artifact_id": "9fdc8247263c4ead8025f406fe71bae5",
+      "run_id": "43e10e59423140888255cf9deaf829d3",
+      "revision": 2,
+      "name": "source_map.json",
+      "sha256": "9d16ad10776e55d9577e6ab971b01ecc95271e87d145b6e1508b091fa18fe30f",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-20T17:35:07.882571+00:00",
+      "metadata": {}
+    }
+  ],
+  "reviews": [],
+  "model_routing": {
+    "preferred_model_id": "gpt6",
+    "fallback_order": [
+      "gpt6",
+      "deepseek-flash",
+      "deepseek-v4-pro"
+    ],
+    "last_model_id": null,
+    "last_successful_model_id": null,
+    "used_models": [],
+    "successful_models": [],
+    "fallback_count": 0,
+    "request_counts": {},
+    "actual_models": [],
+    "last_fallback": null,
+    "selection_source": "input"
+  },
+  "budget": {
+    "requests": 120,
+    "local_repairs_per_unit": 2,
+    "global_repair_rounds": 2,
+    "version": 0,
+    "initialized": true,
+    "initialized_fields": [
+      "global_repair_rounds",
+      "local_repairs_per_unit",
+      "requests"
+    ],
+    "source": "ACTUAL_EXECUTION_SETTINGS",
+    "baseline_unknown": false,
+    "request_count": 0,
+    "defaults": {
+      "global_repair_rounds": 2,
+      "local_repairs_per_unit": 2,
+      "requests": 120
+    },
+    "overrides": {},
+    "maximums": {
+      "requests": 1000,
+      "local_repairs_per_unit": 20,
+      "global_repair_rounds": 20
+    },
+    "limitations": [],
+    "can_increase": false
+  }
+}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="8" skipped="0" tests="8" time="1.329" timestamp="2026-09-21T00:00:45.892649+08:00" hostname="Asuna"><testcase classname="tests.test_benchmark_recheck_versions" name="test_actual_recheck_supersedes_all_old_artifacts_without_reusing_their_passes" time="0.126"><failure message="AssertionError: assert 'MEASURED' == 'NOT_RUN'&#10;  &#10;  - NOT_RUN&#10;  + MEASURED">tests\test_benchmark_recheck_versions.py:78: in test_actual_recheck_supersedes_all_old_artifacts_without_reusing_their_passes
+    assert after['generated']['pdf']['status']=='NOT_RUN'
+E   AssertionError: assert 'MEASURED' == 'NOT_RUN'
+E     
+E     - NOT_RUN
+E     + MEASURED</failure></testcase><testcase classname="tests.test_benchmark_recheck_versions" name="test_completed_recheck_selects_new_current_artifacts_and_retains_other_revision_history" time="0.177"><failure message="AssertionError: assert (6 == 9)&#10; +  where 6 = len([{'artifact_id': '1f92fb653a8b4aad8b193e988ca2b5fe', 'name': 'lecture.pdf', 'path': 'D:\\研究生阶段\\数学教学agent\\math-teachi...\new-version\\pdf_inspection.json', 'sha256': 'f82ff4fbc1ae1731023e319a41eb3da12b5062ead51140d433bd9fa52825b47e', ...}])">tests\test_benchmark_recheck_versions.py:103: in test_completed_recheck_selects_new_current_artifacts_and_retains_other_revision_history
+    assert len(history)==9 and {a['revision'] for a in history}=={0,plan['revision']}
+E   AssertionError: assert (6 == 9)
+E    +  where 6 = len([{'artifact_id': '1f92fb653a8b4aad8b193e988ca2b5fe', 'name': 'lecture.pdf', 'path': 'D:\\研究生阶段\\数学教学agent\\math-teachi...\new-version\\pdf_inspection.json', 'sha256': 'f82ff4fbc1ae1731023e319a41eb3da12b5062ead51140d433bd9fa52825b47e', ...}])</failure></testcase><testcase classname="tests.test_benchmark_recheck_versions" name="test_latest_same_timestamp_checkpoint_uses_rowid_skips_other_plan_and_outputs_plan_order" time="0.122"><failure message="KeyError: 'checkpoint_selection'">tests\test_benchmark_recheck_versions.py:116: in test_latest_same_timestamp_checkpoint_uses_rowid_skips_other_plan_and_outputs_plan_order
+    selected=result['checkpoint_selection']['selected']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'checkpoint_selection'</failure></testcase><testcase classname="tests.test_benchmark_recheck_versions" name="test_latest_eligible_corruption_never_falls_back_to_old_checked_body[source]" time="0.108"><failure message="assert 1 == 0">tests\test_benchmark_recheck_versions.py:135: in test_latest_eligible_corruption_never_falls_back_to_old_checked_body
+    assert result['checked_section_count']==0
+E   assert 1 == 0</failure></testcase><testcase classname="tests.test_benchmark_recheck_versions" name="test_latest_eligible_corruption_never_falls_back_to_old_checked_body[output_hash]" time="0.100"><failure message="assert 1 == 0">tests\test_benchmark_recheck_versions.py:135: in test_latest_eligible_corruption_never_falls_back_to_old_checked_body
+    assert result['checked_section_count']==0
+E   assert 1 == 0</failure></testcase><testcase classname="tests.test_benchmark_recheck_versions" name="test_legacy_prefix_verification_is_read_only_and_does_not_create_pipeline_side_effects" time="0.077"><failure message="KeyError: 'checkpoint_selection'">tests\test_benchmark_recheck_versions.py:151: in test_legacy_prefix_verification_is_read_only_and_does_not_create_pipeline_side_effects
+    assert result['checkpoint_selection']['selected'][0]['input_matches_current_prefix']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'checkpoint_selection'</failure></testcase><testcase classname="tests.test_benchmark_recheck_versions" name="test_missing_current_approval_never_counts_matching_old_bodies_or_artifacts" time="0.112"><failure message="assert (1 == 0)">tests\test_benchmark_recheck_versions.py:165: in test_missing_current_approval_never_counts_matching_old_bodies_or_artifacts
+    assert result['checked_section_count']==0 and result['pdf']['status']=='NOT_RUN'
+E   assert (1 == 0)</failure></testcase><testcase classname="tests.test_benchmark_recheck_versions" name="test_bad_new_current_document_does_not_fall_back_to_older_valid_document" time="0.103"><failure message="AssertionError: assert 'MEASURED' == 'NOT_RUN'&#10;  &#10;  - NOT_RUN&#10;  + MEASURED">tests\test_benchmark_recheck_versions.py:177: in test_bad_new_current_document_does_not_fall_back_to_older_valid_document
+    assert result['pdf']['status']=='NOT_RUN'
+E   AssertionError: assert 'MEASURED' == 'NOT_RUN'
+E     
+E     - NOT_RUN
+E     + MEASURED</failure></testcase></testsuite></testsuites>

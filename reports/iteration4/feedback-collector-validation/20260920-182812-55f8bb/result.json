@@ -1,0 +1,222 @@
+{
+  "status": "PASS",
+  "checks": {
+    "last_receipt_not_first_response": true,
+    "closed_current_feedback": true,
+    "historical_receipts_archived": true,
+    "old_body_not_current": true,
+    "empty_feedback_withdraws_old_result": true,
+    "new_job_does_not_inherit_old_receipt": true,
+    "malformed_latest_never_falls_back": true,
+    "pending_is_not_closed_even_when_body_matches": true,
+    "changed_delivery_sha_rejected": true,
+    "corrupt_latest_receipt_never_falls_back": true
+  },
+  "results": {
+    "latest": {
+      "all_receipt_files_verified": true,
+      "recorded_receipts": 2,
+      "current": {
+        "status": "CURRENT_DELIVERY_VERIFIED",
+        "latest_build_job_id": "job-current",
+        "latest_feedback_action_sequence": 1,
+        "nonempty_feedback": true,
+        "teacher_review": "NOT_RUN",
+        "expected_feedback_sha256": "f33b489fad3b0b17b1e0cef35deea64c39f9def94db572dd3b79fbbf577df2b6",
+        "event_sequence": 3,
+        "receipt_status": "reviewed",
+        "receipt_identity_hash": "3e62eb9aef6f3d946e609ac67e4860f33e7561085babf68858b4e0cdd301ef3c",
+        "delivery_match": {
+          "status": "PASS",
+          "unit_payload_sha256": "804547b2e452ad69ed12369ee54b0a2b1374ced490d6c86b937182ca41e0d8dc",
+          "unit_sha256": {
+            "S01.U01": "625b8e76d0d3fbec318f223a21c3f08163176040e668d1f4e1574b2898b97e74",
+            "S02.U01": "0d124d8e88f08a93a125565e9308a46f058efd619d717ca5a93f2ef6be8f0713"
+          },
+          "renderer": {
+            "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\src\\math_agent\\pipeline.py",
+            "sha256": "96d0f9e042836bf88fb1609159066d7b20113be41a193bbfa6e57f4f4086a683"
+          },
+          "note": "Pure in-memory rendering only; no compiler or model is invoked.",
+          "current_tex_artifact_id": "tex-current",
+          "current_tex_sha256": "6efd4e739fdfca9ca730e7813977fc55aa930ebeccaea8148529e5a4ff7d57e2",
+          "rendered_receipt_body_sha256": "6efd4e739fdfca9ca730e7813977fc55aa930ebeccaea8148529e5a4ff7d57e2",
+          "source_map_artifact_id": "map-current",
+          "source_map_sha256": "07b072edf5f50da7e25e2755f052246c2b4edef28f0f4711b5c2a9513e93122b"
+        },
+        "item_status_counts": {
+          "satisfied": 1
+        },
+        "no_pending_improvements": true
+      },
+      "selection_rule": "Latest current job/approved plan receipt after the latest nonempty feedback action; never the first response or a fallback across invalid/latest records."
+    },
+    "earlier-only": {
+      "all_receipt_files_verified": true,
+      "recorded_receipts": 1,
+      "current": {
+        "status": "NOT_CURRENT_DELIVERY",
+        "latest_build_job_id": "job-current",
+        "latest_feedback_action_sequence": 1,
+        "nonempty_feedback": true,
+        "teacher_review": "NOT_RUN",
+        "expected_feedback_sha256": "f33b489fad3b0b17b1e0cef35deea64c39f9def94db572dd3b79fbbf577df2b6",
+        "event_sequence": 2,
+        "receipt_status": "reviewed",
+        "receipt_identity_hash": "e5b4fb94731f43d22a2b72663f9fca066fab867be1d5277b7e366b7d951297e9",
+        "delivery_match": {
+          "status": "BODY_DIFFERS",
+          "unit_payload_sha256": "552abadec3c035637501adf1e9301e3d0c0aaef61310cfef1cd3ff6917630d0a",
+          "unit_sha256": {
+            "S01.U01": "625b8e76d0d3fbec318f223a21c3f08163176040e668d1f4e1574b2898b97e74",
+            "S02.U01": "3e3651e5317d538de38007dafa340845dee8cd23c8d1b542239ae075532d4df7"
+          },
+          "renderer": {
+            "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\src\\math_agent\\pipeline.py",
+            "sha256": "96d0f9e042836bf88fb1609159066d7b20113be41a193bbfa6e57f4f4086a683"
+          },
+          "note": "Pure in-memory rendering only; no compiler or model is invoked.",
+          "current_tex_artifact_id": "tex-current",
+          "current_tex_sha256": "6efd4e739fdfca9ca730e7813977fc55aa930ebeccaea8148529e5a4ff7d57e2",
+          "rendered_receipt_body_sha256": "954db866fdc09d8c54b73b7976938e83713971b3a393ec6b00d97fa21cf99748",
+          "source_map_artifact_id": "map-current",
+          "source_map_sha256": "07b072edf5f50da7e25e2755f052246c2b4edef28f0f4711b5c2a9513e93122b"
+        },
+        "item_status_counts": {
+          "supported_improvement": 1
+        },
+        "no_pending_improvements": false
+      },
+      "selection_rule": "Latest current job/approved plan receipt after the latest nonempty feedback action; never the first response or a fallback across invalid/latest records."
+    },
+    "empty-feedback": {
+      "all_receipt_files_verified": true,
+      "recorded_receipts": 2,
+      "current": {
+        "status": "NOT_APPLICABLE",
+        "latest_build_job_id": "job-current",
+        "latest_feedback_action_sequence": 4,
+        "nonempty_feedback": false,
+        "teacher_review": "NOT_RUN"
+      },
+      "selection_rule": "Latest current job/approved plan receipt after the latest nonempty feedback action; never the first response or a fallback across invalid/latest records."
+    },
+    "new-job": {
+      "all_receipt_files_verified": true,
+      "recorded_receipts": 2,
+      "current": {
+        "status": "LATEST_FEEDBACK_NOT_BOUND_TO_CURRENT_JOB_AND_APPROVAL",
+        "latest_build_job_id": "new-job",
+        "latest_feedback_action_sequence": 1,
+        "nonempty_feedback": true,
+        "teacher_review": "NOT_RUN"
+      },
+      "selection_rule": "Latest current job/approved plan receipt after the latest nonempty feedback action; never the first response or a fallback across invalid/latest records."
+    },
+    "malformed-latest": {
+      "all_receipt_files_verified": false,
+      "recorded_receipts": 3,
+      "current": {
+        "status": "INVALID_CURRENT_RECEIPT",
+        "latest_build_job_id": "job-current",
+        "latest_feedback_action_sequence": 1,
+        "nonempty_feedback": true,
+        "teacher_review": "NOT_RUN",
+        "expected_feedback_sha256": "f33b489fad3b0b17b1e0cef35deea64c39f9def94db572dd3b79fbbf577df2b6",
+        "event_sequence": 4,
+        "receipt_status": null,
+        "receipt_identity_hash": null
+      },
+      "selection_rule": "Latest current job/approved plan receipt after the latest nonempty feedback action; never the first response or a fallback across invalid/latest records."
+    },
+    "pending": {
+      "all_receipt_files_verified": true,
+      "recorded_receipts": 3,
+      "current": {
+        "status": "CURRENT_DELIVERY_VERIFIED",
+        "latest_build_job_id": "job-current",
+        "latest_feedback_action_sequence": 1,
+        "nonempty_feedback": true,
+        "teacher_review": "NOT_RUN",
+        "expected_feedback_sha256": "f33b489fad3b0b17b1e0cef35deea64c39f9def94db572dd3b79fbbf577df2b6",
+        "event_sequence": 4,
+        "receipt_status": "transport_pending",
+        "receipt_identity_hash": "04250e90fe094114eabea4793ffba83cf765859a48380974040583f41000b199",
+        "delivery_match": {
+          "status": "PASS",
+          "unit_payload_sha256": "804547b2e452ad69ed12369ee54b0a2b1374ced490d6c86b937182ca41e0d8dc",
+          "unit_sha256": {
+            "S01.U01": "625b8e76d0d3fbec318f223a21c3f08163176040e668d1f4e1574b2898b97e74",
+            "S02.U01": "0d124d8e88f08a93a125565e9308a46f058efd619d717ca5a93f2ef6be8f0713"
+          },
+          "renderer": {
+            "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\src\\math_agent\\pipeline.py",
+            "sha256": "96d0f9e042836bf88fb1609159066d7b20113be41a193bbfa6e57f4f4086a683"
+          },
+          "note": "Pure in-memory rendering only; no compiler or model is invoked.",
+          "current_tex_artifact_id": "tex-current",
+          "current_tex_sha256": "6efd4e739fdfca9ca730e7813977fc55aa930ebeccaea8148529e5a4ff7d57e2",
+          "rendered_receipt_body_sha256": "6efd4e739fdfca9ca730e7813977fc55aa930ebeccaea8148529e5a4ff7d57e2",
+          "source_map_artifact_id": "map-current",
+          "source_map_sha256": "07b072edf5f50da7e25e2755f052246c2b4edef28f0f4711b5c2a9513e93122b"
+        },
+        "item_status_counts": {
+          "unresolved": 1
+        },
+        "no_pending_improvements": false
+      },
+      "selection_rule": "Latest current job/approved plan receipt after the latest nonempty feedback action; never the first response or a fallback across invalid/latest records."
+    },
+    "changed-tex": {
+      "all_receipt_files_verified": true,
+      "recorded_receipts": 2,
+      "current": {
+        "status": "NOT_CURRENT_DELIVERY",
+        "latest_build_job_id": "job-current",
+        "latest_feedback_action_sequence": 1,
+        "nonempty_feedback": true,
+        "teacher_review": "NOT_RUN",
+        "expected_feedback_sha256": "f33b489fad3b0b17b1e0cef35deea64c39f9def94db572dd3b79fbbf577df2b6",
+        "event_sequence": 3,
+        "receipt_status": "reviewed",
+        "receipt_identity_hash": "3e62eb9aef6f3d946e609ac67e4860f33e7561085babf68858b4e0cdd301ef3c",
+        "delivery_match": {
+          "status": "UNREADABLE_OR_INVALID",
+          "error": {
+            "type": "ValueError",
+            "message": "Current delivery SHA mismatch: lecture.tex"
+          }
+        },
+        "item_status_counts": {
+          "satisfied": 1
+        },
+        "no_pending_improvements": true
+      },
+      "selection_rule": "Latest current job/approved plan receipt after the latest nonempty feedback action; never the first response or a fallback across invalid/latest records."
+    },
+    "corrupt-receipt": {
+      "all_receipt_files_verified": false,
+      "recorded_receipts": 2,
+      "current": {
+        "status": "INVALID_CURRENT_RECEIPT",
+        "latest_build_job_id": "job-current",
+        "latest_feedback_action_sequence": 1,
+        "nonempty_feedback": true,
+        "teacher_review": "NOT_RUN",
+        "expected_feedback_sha256": "f33b489fad3b0b17b1e0cef35deea64c39f9def94db572dd3b79fbbf577df2b6",
+        "event_sequence": 3,
+        "receipt_status": "reviewed",
+        "receipt_identity_hash": "3e62eb9aef6f3d946e609ac67e4860f33e7561085babf68858b4e0cdd301ef3c"
+      },
+      "selection_rule": "Latest current job/approved plan receipt after the latest nonempty feedback action; never the first response or a fallback across invalid/latest records."
+    }
+  },
+  "collector_sha256": "8dac19db0bb75f398ef50291378f48aa51970904f7266f5b60a1b19163680023",
+  "helper_candidate_sha256": "021ca341a903d516d1c270c38c5806d4386adca89e08528c36353f529d26b965",
+  "workspace": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\fbc-55f8bb",
+  "real_api": "NOT_RUN",
+  "live_database_read": "NOT_RUN",
+  "windows_compile": "NOT_RUN",
+  "teacher_review": "NOT_RUN",
+  "final_collection": "NOT_RUN"
+}

@@ -1,0 +1,914 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="29" skipped="0" tests="29" time="4.255" timestamp="2026-09-21T02:02:07.842854+08:00" hostname="Asuna"><testcase classname="tests.test_feedback_receipts_api" name="test_no_feedback_preserves_legacy_detail_with_additive_null_field" time="0.171"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F3D6D5E0&gt;, &lt;math_agent.service.Service object at 0x00000253F3C9C...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def test_no_feedback_preserves_legacy_detail_with_additive_null_field(case):
+&gt;       assert get_receipt(case) is None
+               ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F3D6D5E0&gt;, &lt;math_agent.service.Service object at 0x00000253F3C9C...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_current_feedback_without_receipt_is_explicitly_pending" time="0.121"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F4E75850&gt;, &lt;math_agent.service.Service object at 0x00000253F4DD6...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def test_current_feedback_without_receipt_is_explicitly_pending(case):
+        job, feedback = start(case)
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F4E75850&gt;, &lt;math_agent.service.Service object at 0x00000253F4DD6...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_valid_current_receipt_states_are_readable_without_approval_or_budget_mutation[satisfied]" time="0.117"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F4E89730&gt;, &lt;math_agent.service.Service object at 0x00000253F4E87...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+status = 'satisfied'
+
+    @pytest.mark.parametrize('status', ['satisfied', 'supported_improvement', 'rejected_not_supported', 'out_of_scope', 'unresolved'])
+    def test_valid_current_receipt_states_are_readable_without_approval_or_budget_mutation(case, status):
+        _, service, pipeline, _ = case
+        job, feedback = start(case)
+        data = receipt(case, job, feedback)
+        data['items'][0]['status'] = status
+        data['status'] = 'unresolved' if status == 'unresolved' else 'reviewed'
+        add_event(case, data)
+        before = service.store.get_run(pipeline.run['id'])
+        with service.store.connect() as connection:
+            events_before = [dict(row) for row in connection.execute('SELECT * FROM events ORDER BY sequence')]
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F4E89730&gt;, &lt;math_agent.service.Service object at 0x00000253F4E87...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_valid_current_receipt_states_are_readable_without_approval_or_budget_mutation[supported_improvement]" time="0.113"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F501ACC0&gt;, &lt;math_agent.service.Service object at 0x00000253F4E86...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+status = 'supported_improvement'
+
+    @pytest.mark.parametrize('status', ['satisfied', 'supported_improvement', 'rejected_not_supported', 'out_of_scope', 'unresolved'])
+    def test_valid_current_receipt_states_are_readable_without_approval_or_budget_mutation(case, status):
+        _, service, pipeline, _ = case
+        job, feedback = start(case)
+        data = receipt(case, job, feedback)
+        data['items'][0]['status'] = status
+        data['status'] = 'unresolved' if status == 'unresolved' else 'reviewed'
+        add_event(case, data)
+        before = service.store.get_run(pipeline.run['id'])
+        with service.store.connect() as connection:
+            events_before = [dict(row) for row in connection.execute('SELECT * FROM events ORDER BY sequence')]
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F501ACC0&gt;, &lt;math_agent.service.Service object at 0x00000253F4E86...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_valid_current_receipt_states_are_readable_without_approval_or_budget_mutation[rejected_not_supported]" time="0.126"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F505A900&gt;, &lt;math_agent.service.Service object at 0x00000253F5058...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+status = 'rejected_not_supported'
+
+    @pytest.mark.parametrize('status', ['satisfied', 'supported_improvement', 'rejected_not_supported', 'out_of_scope', 'unresolved'])
+    def test_valid_current_receipt_states_are_readable_without_approval_or_budget_mutation(case, status):
+        _, service, pipeline, _ = case
+        job, feedback = start(case)
+        data = receipt(case, job, feedback)
+        data['items'][0]['status'] = status
+        data['status'] = 'unresolved' if status == 'unresolved' else 'reviewed'
+        add_event(case, data)
+        before = service.store.get_run(pipeline.run['id'])
+        with service.store.connect() as connection:
+            events_before = [dict(row) for row in connection.execute('SELECT * FROM events ORDER BY sequence')]
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F505A900&gt;, &lt;math_agent.service.Service object at 0x00000253F5058...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_valid_current_receipt_states_are_readable_without_approval_or_budget_mutation[out_of_scope]" time="0.131"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F50FB0B0&gt;, &lt;math_agent.service.Service object at 0x00000253F50F8...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+status = 'out_of_scope'
+
+    @pytest.mark.parametrize('status', ['satisfied', 'supported_improvement', 'rejected_not_supported', 'out_of_scope', 'unresolved'])
+    def test_valid_current_receipt_states_are_readable_without_approval_or_budget_mutation(case, status):
+        _, service, pipeline, _ = case
+        job, feedback = start(case)
+        data = receipt(case, job, feedback)
+        data['items'][0]['status'] = status
+        data['status'] = 'unresolved' if status == 'unresolved' else 'reviewed'
+        add_event(case, data)
+        before = service.store.get_run(pipeline.run['id'])
+        with service.store.connect() as connection:
+            events_before = [dict(row) for row in connection.execute('SELECT * FROM events ORDER BY sequence')]
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F50FB0B0&gt;, &lt;math_agent.service.Service object at 0x00000253F50F8...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_valid_current_receipt_states_are_readable_without_approval_or_budget_mutation[unresolved]" time="0.111"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F5019BB0&gt;, &lt;math_agent.service.Service object at 0x00000253F5059...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+status = 'unresolved'
+
+    @pytest.mark.parametrize('status', ['satisfied', 'supported_improvement', 'rejected_not_supported', 'out_of_scope', 'unresolved'])
+    def test_valid_current_receipt_states_are_readable_without_approval_or_budget_mutation(case, status):
+        _, service, pipeline, _ = case
+        job, feedback = start(case)
+        data = receipt(case, job, feedback)
+        data['items'][0]['status'] = status
+        data['status'] = 'unresolved' if status == 'unresolved' else 'reviewed'
+        add_event(case, data)
+        before = service.store.get_run(pipeline.run['id'])
+        with service.store.connect() as connection:
+            events_before = [dict(row) for row in connection.execute('SELECT * FROM events ORDER BY sequence')]
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F5019BB0&gt;, &lt;math_agent.service.Service object at 0x00000253F5059...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_receipt_for_other_job_or_plan_is_not_current[job_id]" time="0.129"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F5129D00&gt;, &lt;math_agent.service.Service object at 0x00000253F512A...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'job_id'
+
+    @pytest.mark.parametrize('fault', ['job_id', 'plan_hash', 'plan_revision'])
+    def test_receipt_for_other_job_or_plan_is_not_current(case, fault):
+        job, feedback = start(case)
+        data = receipt(case, job, feedback)
+        data[fault] = 999 if fault == 'plan_revision' else 'other'
+        add_event(case, data)
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F5129D00&gt;, &lt;math_agent.service.Service object at 0x00000253F512A...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_receipt_for_other_job_or_plan_is_not_current[plan_hash]" time="0.116"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F507DD60&gt;, &lt;math_agent.service.Service object at 0x00000253F50AB...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'plan_hash'
+
+    @pytest.mark.parametrize('fault', ['job_id', 'plan_hash', 'plan_revision'])
+    def test_receipt_for_other_job_or_plan_is_not_current(case, fault):
+        job, feedback = start(case)
+        data = receipt(case, job, feedback)
+        data[fault] = 999 if fault == 'plan_revision' else 'other'
+        add_event(case, data)
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F507DD60&gt;, &lt;math_agent.service.Service object at 0x00000253F50AB...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_receipt_for_other_job_or_plan_is_not_current[plan_revision]" time="0.116"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F51AAC90&gt;, &lt;math_agent.service.Service object at 0x00000253F507D...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'plan_revision'
+
+    @pytest.mark.parametrize('fault', ['job_id', 'plan_hash', 'plan_revision'])
+    def test_receipt_for_other_job_or_plan_is_not_current(case, fault):
+        job, feedback = start(case)
+        data = receipt(case, job, feedback)
+        data[fault] = 999 if fault == 'plan_revision' else 'other'
+        add_event(case, data)
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F51AAC90&gt;, &lt;math_agent.service.Service object at 0x00000253F507D...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_latest_invalid_receipt_never_falls_back_to_old_success[feedback_hash]" time="0.119"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F5058FB0&gt;, &lt;math_agent.service.Service object at 0x00000253F51D3...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'feedback_hash'
+
+    @pytest.mark.parametrize('fault', ['feedback_hash', 'schema_version', 'teacher_review', 'item_status',
+        'duplicate_id', 'unit_type', 'objective_scope', 'objective_type', 'items_type', 'empty_reviewed', 'mock_type', 'unknown_field'])
+    def test_latest_invalid_receipt_never_falls_back_to_old_success(case, fault):
+        job, feedback = start(case)
+        valid = receipt(case, job, feedback)
+        valid['items'][0]['status'] = 'satisfied'
+        add_event(case, valid)
+        data = copy.deepcopy(valid)
+        if fault == 'feedback_hash': data['feedback_hash'] = '0'*64
+        elif fault == 'schema_version': data['schema_version'] = 2
+        elif fault == 'teacher_review': data['teacher_review'] = 'APPROVED'
+        elif fault == 'item_status': data['items'][0]['status'] = 'teacher_pass'
+        elif fault == 'duplicate_id': data['items'].append(copy.deepcopy(data['items'][0]))
+        elif fault == 'unit_type': data['items'][0]['unit_ids'] = [None]
+        elif fault == 'objective_scope': data['items'][0]['objective_evidence'][0]['section_id'] = 'S99'
+        elif fault == 'objective_type': data['items'][0]['objective_evidence'][0]['section_id'] = []
+        elif fault == 'items_type': data['items'] = {'F1': 'satisfied'}
+        elif fault == 'empty_reviewed': data['items'] = []
+        elif fault == 'mock_type': data['mock'] = 'false'
+        elif fault == 'unknown_field': data['teacher_approved'] = True
+        add_event(case, data)
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F5058FB0&gt;, &lt;math_agent.service.Service object at 0x00000253F51D3...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_latest_invalid_receipt_never_falls_back_to_old_success[schema_version]" time="0.110"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F51FFE60&gt;, &lt;math_agent.service.Service object at 0x00000253F507D...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'schema_version'
+
+    @pytest.mark.parametrize('fault', ['feedback_hash', 'schema_version', 'teacher_review', 'item_status',
+        'duplicate_id', 'unit_type', 'objective_scope', 'objective_type', 'items_type', 'empty_reviewed', 'mock_type', 'unknown_field'])
+    def test_latest_invalid_receipt_never_falls_back_to_old_success(case, fault):
+        job, feedback = start(case)
+        valid = receipt(case, job, feedback)
+        valid['items'][0]['status'] = 'satisfied'
+        add_event(case, valid)
+        data = copy.deepcopy(valid)
+        if fault == 'feedback_hash': data['feedback_hash'] = '0'*64
+        elif fault == 'schema_version': data['schema_version'] = 2
+        elif fault == 'teacher_review': data['teacher_review'] = 'APPROVED'
+        elif fault == 'item_status': data['items'][0]['status'] = 'teacher_pass'
+        elif fault == 'duplicate_id': data['items'].append(copy.deepcopy(data['items'][0]))
+        elif fault == 'unit_type': data['items'][0]['unit_ids'] = [None]
+        elif fault == 'objective_scope': data['items'][0]['objective_evidence'][0]['section_id'] = 'S99'
+        elif fault == 'objective_type': data['items'][0]['objective_evidence'][0]['section_id'] = []
+        elif fault == 'items_type': data['items'] = {'F1': 'satisfied'}
+        elif fault == 'empty_reviewed': data['items'] = []
+        elif fault == 'mock_type': data['mock'] = 'false'
+        elif fault == 'unknown_field': data['teacher_approved'] = True
+        add_event(case, data)
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F51FFE60&gt;, &lt;math_agent.service.Service object at 0x00000253F507D...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_latest_invalid_receipt_never_falls_back_to_old_success[teacher_review]" time="0.115"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F525E540&gt;, &lt;math_agent.service.Service object at 0x00000253F5153...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'teacher_review'
+
+    @pytest.mark.parametrize('fault', ['feedback_hash', 'schema_version', 'teacher_review', 'item_status',
+        'duplicate_id', 'unit_type', 'objective_scope', 'objective_type', 'items_type', 'empty_reviewed', 'mock_type', 'unknown_field'])
+    def test_latest_invalid_receipt_never_falls_back_to_old_success(case, fault):
+        job, feedback = start(case)
+        valid = receipt(case, job, feedback)
+        valid['items'][0]['status'] = 'satisfied'
+        add_event(case, valid)
+        data = copy.deepcopy(valid)
+        if fault == 'feedback_hash': data['feedback_hash'] = '0'*64
+        elif fault == 'schema_version': data['schema_version'] = 2
+        elif fault == 'teacher_review': data['teacher_review'] = 'APPROVED'
+        elif fault == 'item_status': data['items'][0]['status'] = 'teacher_pass'
+        elif fault == 'duplicate_id': data['items'].append(copy.deepcopy(data['items'][0]))
+        elif fault == 'unit_type': data['items'][0]['unit_ids'] = [None]
+        elif fault == 'objective_scope': data['items'][0]['objective_evidence'][0]['section_id'] = 'S99'
+        elif fault == 'objective_type': data['items'][0]['objective_evidence'][0]['section_id'] = []
+        elif fault == 'items_type': data['items'] = {'F1': 'satisfied'}
+        elif fault == 'empty_reviewed': data['items'] = []
+        elif fault == 'mock_type': data['mock'] = 'false'
+        elif fault == 'unknown_field': data['teacher_approved'] = True
+        add_event(case, data)
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F525E540&gt;, &lt;math_agent.service.Service object at 0x00000253F5153...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_latest_invalid_receipt_never_falls_back_to_old_success[item_status]" time="0.119"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F51AA450&gt;, &lt;math_agent.service.Service object at 0x00000253F5183...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'item_status'
+
+    @pytest.mark.parametrize('fault', ['feedback_hash', 'schema_version', 'teacher_review', 'item_status',
+        'duplicate_id', 'unit_type', 'objective_scope', 'objective_type', 'items_type', 'empty_reviewed', 'mock_type', 'unknown_field'])
+    def test_latest_invalid_receipt_never_falls_back_to_old_success(case, fault):
+        job, feedback = start(case)
+        valid = receipt(case, job, feedback)
+        valid['items'][0]['status'] = 'satisfied'
+        add_event(case, valid)
+        data = copy.deepcopy(valid)
+        if fault == 'feedback_hash': data['feedback_hash'] = '0'*64
+        elif fault == 'schema_version': data['schema_version'] = 2
+        elif fault == 'teacher_review': data['teacher_review'] = 'APPROVED'
+        elif fault == 'item_status': data['items'][0]['status'] = 'teacher_pass'
+        elif fault == 'duplicate_id': data['items'].append(copy.deepcopy(data['items'][0]))
+        elif fault == 'unit_type': data['items'][0]['unit_ids'] = [None]
+        elif fault == 'objective_scope': data['items'][0]['objective_evidence'][0]['section_id'] = 'S99'
+        elif fault == 'objective_type': data['items'][0]['objective_evidence'][0]['section_id'] = []
+        elif fault == 'items_type': data['items'] = {'F1': 'satisfied'}
+        elif fault == 'empty_reviewed': data['items'] = []
+        elif fault == 'mock_type': data['mock'] = 'false'
+        elif fault == 'unknown_field': data['teacher_approved'] = True
+        add_event(case, data)
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F51AA450&gt;, &lt;math_agent.service.Service object at 0x00000253F5183...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_latest_invalid_receipt_never_falls_back_to_old_success[duplicate_id]" time="0.118"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F52AA900&gt;, &lt;math_agent.service.Service object at 0x00000253F52AB...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'duplicate_id'
+
+    @pytest.mark.parametrize('fault', ['feedback_hash', 'schema_version', 'teacher_review', 'item_status',
+        'duplicate_id', 'unit_type', 'objective_scope', 'objective_type', 'items_type', 'empty_reviewed', 'mock_type', 'unknown_field'])
+    def test_latest_invalid_receipt_never_falls_back_to_old_success(case, fault):
+        job, feedback = start(case)
+        valid = receipt(case, job, feedback)
+        valid['items'][0]['status'] = 'satisfied'
+        add_event(case, valid)
+        data = copy.deepcopy(valid)
+        if fault == 'feedback_hash': data['feedback_hash'] = '0'*64
+        elif fault == 'schema_version': data['schema_version'] = 2
+        elif fault == 'teacher_review': data['teacher_review'] = 'APPROVED'
+        elif fault == 'item_status': data['items'][0]['status'] = 'teacher_pass'
+        elif fault == 'duplicate_id': data['items'].append(copy.deepcopy(data['items'][0]))
+        elif fault == 'unit_type': data['items'][0]['unit_ids'] = [None]
+        elif fault == 'objective_scope': data['items'][0]['objective_evidence'][0]['section_id'] = 'S99'
+        elif fault == 'objective_type': data['items'][0]['objective_evidence'][0]['section_id'] = []
+        elif fault == 'items_type': data['items'] = {'F1': 'satisfied'}
+        elif fault == 'empty_reviewed': data['items'] = []
+        elif fault == 'mock_type': data['mock'] = 'false'
+        elif fault == 'unknown_field': data['teacher_approved'] = True
+        add_event(case, data)
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F52AA900&gt;, &lt;math_agent.service.Service object at 0x00000253F52AB...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_latest_invalid_receipt_never_falls_back_to_old_success[unit_type]" time="0.137"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F51D4A40&gt;, &lt;math_agent.service.Service object at 0x00000253F5307...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'unit_type'
+
+    @pytest.mark.parametrize('fault', ['feedback_hash', 'schema_version', 'teacher_review', 'item_status',
+        'duplicate_id', 'unit_type', 'objective_scope', 'objective_type', 'items_type', 'empty_reviewed', 'mock_type', 'unknown_field'])
+    def test_latest_invalid_receipt_never_falls_back_to_old_success(case, fault):
+        job, feedback = start(case)
+        valid = receipt(case, job, feedback)
+        valid['items'][0]['status'] = 'satisfied'
+        add_event(case, valid)
+        data = copy.deepcopy(valid)
+        if fault == 'feedback_hash': data['feedback_hash'] = '0'*64
+        elif fault == 'schema_version': data['schema_version'] = 2
+        elif fault == 'teacher_review': data['teacher_review'] = 'APPROVED'
+        elif fault == 'item_status': data['items'][0]['status'] = 'teacher_pass'
+        elif fault == 'duplicate_id': data['items'].append(copy.deepcopy(data['items'][0]))
+        elif fault == 'unit_type': data['items'][0]['unit_ids'] = [None]
+        elif fault == 'objective_scope': data['items'][0]['objective_evidence'][0]['section_id'] = 'S99'
+        elif fault == 'objective_type': data['items'][0]['objective_evidence'][0]['section_id'] = []
+        elif fault == 'items_type': data['items'] = {'F1': 'satisfied'}
+        elif fault == 'empty_reviewed': data['items'] = []
+        elif fault == 'mock_type': data['mock'] = 'false'
+        elif fault == 'unknown_field': data['teacher_approved'] = True
+        add_event(case, data)
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F51D4A40&gt;, &lt;math_agent.service.Service object at 0x00000253F5307...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_latest_invalid_receipt_never_falls_back_to_old_success[objective_scope]" time="0.109"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F52F1D00&gt;, &lt;math_agent.service.Service object at 0x00000253F5306...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'objective_scope'
+
+    @pytest.mark.parametrize('fault', ['feedback_hash', 'schema_version', 'teacher_review', 'item_status',
+        'duplicate_id', 'unit_type', 'objective_scope', 'objective_type', 'items_type', 'empty_reviewed', 'mock_type', 'unknown_field'])
+    def test_latest_invalid_receipt_never_falls_back_to_old_success(case, fault):
+        job, feedback = start(case)
+        valid = receipt(case, job, feedback)
+        valid['items'][0]['status'] = 'satisfied'
+        add_event(case, valid)
+        data = copy.deepcopy(valid)
+        if fault == 'feedback_hash': data['feedback_hash'] = '0'*64
+        elif fault == 'schema_version': data['schema_version'] = 2
+        elif fault == 'teacher_review': data['teacher_review'] = 'APPROVED'
+        elif fault == 'item_status': data['items'][0]['status'] = 'teacher_pass'
+        elif fault == 'duplicate_id': data['items'].append(copy.deepcopy(data['items'][0]))
+        elif fault == 'unit_type': data['items'][0]['unit_ids'] = [None]
+        elif fault == 'objective_scope': data['items'][0]['objective_evidence'][0]['section_id'] = 'S99'
+        elif fault == 'objective_type': data['items'][0]['objective_evidence'][0]['section_id'] = []
+        elif fault == 'items_type': data['items'] = {'F1': 'satisfied'}
+        elif fault == 'empty_reviewed': data['items'] = []
+        elif fault == 'mock_type': data['mock'] = 'false'
+        elif fault == 'unknown_field': data['teacher_approved'] = True
+        add_event(case, data)
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F52F1D00&gt;, &lt;math_agent.service.Service object at 0x00000253F5306...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_latest_invalid_receipt_never_falls_back_to_old_success[objective_type]" time="0.142"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F5319910&gt;, &lt;math_agent.service.Service object at 0x00000253F535F...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'objective_type'
+
+    @pytest.mark.parametrize('fault', ['feedback_hash', 'schema_version', 'teacher_review', 'item_status',
+        'duplicate_id', 'unit_type', 'objective_scope', 'objective_type', 'items_type', 'empty_reviewed', 'mock_type', 'unknown_field'])
+    def test_latest_invalid_receipt_never_falls_back_to_old_success(case, fault):
+        job, feedback = start(case)
+        valid = receipt(case, job, feedback)
+        valid['items'][0]['status'] = 'satisfied'
+        add_event(case, valid)
+        data = copy.deepcopy(valid)
+        if fault == 'feedback_hash': data['feedback_hash'] = '0'*64
+        elif fault == 'schema_version': data['schema_version'] = 2
+        elif fault == 'teacher_review': data['teacher_review'] = 'APPROVED'
+        elif fault == 'item_status': data['items'][0]['status'] = 'teacher_pass'
+        elif fault == 'duplicate_id': data['items'].append(copy.deepcopy(data['items'][0]))
+        elif fault == 'unit_type': data['items'][0]['unit_ids'] = [None]
+        elif fault == 'objective_scope': data['items'][0]['objective_evidence'][0]['section_id'] = 'S99'
+        elif fault == 'objective_type': data['items'][0]['objective_evidence'][0]['section_id'] = []
+        elif fault == 'items_type': data['items'] = {'F1': 'satisfied'}
+        elif fault == 'empty_reviewed': data['items'] = []
+        elif fault == 'mock_type': data['mock'] = 'false'
+        elif fault == 'unknown_field': data['teacher_approved'] = True
+        add_event(case, data)
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F5319910&gt;, &lt;math_agent.service.Service object at 0x00000253F535F...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_latest_invalid_receipt_never_falls_back_to_old_success[items_type]" time="0.122"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F5292B70&gt;, &lt;math_agent.service.Service object at 0x00000253F5330...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'items_type'
+
+    @pytest.mark.parametrize('fault', ['feedback_hash', 'schema_version', 'teacher_review', 'item_status',
+        'duplicate_id', 'unit_type', 'objective_scope', 'objective_type', 'items_type', 'empty_reviewed', 'mock_type', 'unknown_field'])
+    def test_latest_invalid_receipt_never_falls_back_to_old_success(case, fault):
+        job, feedback = start(case)
+        valid = receipt(case, job, feedback)
+        valid['items'][0]['status'] = 'satisfied'
+        add_event(case, valid)
+        data = copy.deepcopy(valid)
+        if fault == 'feedback_hash': data['feedback_hash'] = '0'*64
+        elif fault == 'schema_version': data['schema_version'] = 2
+        elif fault == 'teacher_review': data['teacher_review'] = 'APPROVED'
+        elif fault == 'item_status': data['items'][0]['status'] = 'teacher_pass'
+        elif fault == 'duplicate_id': data['items'].append(copy.deepcopy(data['items'][0]))
+        elif fault == 'unit_type': data['items'][0]['unit_ids'] = [None]
+        elif fault == 'objective_scope': data['items'][0]['objective_evidence'][0]['section_id'] = 'S99'
+        elif fault == 'objective_type': data['items'][0]['objective_evidence'][0]['section_id'] = []
+        elif fault == 'items_type': data['items'] = {'F1': 'satisfied'}
+        elif fault == 'empty_reviewed': data['items'] = []
+        elif fault == 'mock_type': data['mock'] = 'false'
+        elif fault == 'unknown_field': data['teacher_approved'] = True
+        add_event(case, data)
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F5292B70&gt;, &lt;math_agent.service.Service object at 0x00000253F5330...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_latest_invalid_receipt_never_falls_back_to_old_success[empty_reviewed]" time="0.186"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F51D0050&gt;, &lt;math_agent.service.Service object at 0x00000253F52CD...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'empty_reviewed'
+
+    @pytest.mark.parametrize('fault', ['feedback_hash', 'schema_version', 'teacher_review', 'item_status',
+        'duplicate_id', 'unit_type', 'objective_scope', 'objective_type', 'items_type', 'empty_reviewed', 'mock_type', 'unknown_field'])
+    def test_latest_invalid_receipt_never_falls_back_to_old_success(case, fault):
+        job, feedback = start(case)
+        valid = receipt(case, job, feedback)
+        valid['items'][0]['status'] = 'satisfied'
+        add_event(case, valid)
+        data = copy.deepcopy(valid)
+        if fault == 'feedback_hash': data['feedback_hash'] = '0'*64
+        elif fault == 'schema_version': data['schema_version'] = 2
+        elif fault == 'teacher_review': data['teacher_review'] = 'APPROVED'
+        elif fault == 'item_status': data['items'][0]['status'] = 'teacher_pass'
+        elif fault == 'duplicate_id': data['items'].append(copy.deepcopy(data['items'][0]))
+        elif fault == 'unit_type': data['items'][0]['unit_ids'] = [None]
+        elif fault == 'objective_scope': data['items'][0]['objective_evidence'][0]['section_id'] = 'S99'
+        elif fault == 'objective_type': data['items'][0]['objective_evidence'][0]['section_id'] = []
+        elif fault == 'items_type': data['items'] = {'F1': 'satisfied'}
+        elif fault == 'empty_reviewed': data['items'] = []
+        elif fault == 'mock_type': data['mock'] = 'false'
+        elif fault == 'unknown_field': data['teacher_approved'] = True
+        add_event(case, data)
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F51D0050&gt;, &lt;math_agent.service.Service object at 0x00000253F52CD...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_latest_invalid_receipt_never_falls_back_to_old_success[mock_type]" time="0.106"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F52CE3C0&gt;, &lt;math_agent.service.Service object at 0x00000253F51D0...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'mock_type'
+
+    @pytest.mark.parametrize('fault', ['feedback_hash', 'schema_version', 'teacher_review', 'item_status',
+        'duplicate_id', 'unit_type', 'objective_scope', 'objective_type', 'items_type', 'empty_reviewed', 'mock_type', 'unknown_field'])
+    def test_latest_invalid_receipt_never_falls_back_to_old_success(case, fault):
+        job, feedback = start(case)
+        valid = receipt(case, job, feedback)
+        valid['items'][0]['status'] = 'satisfied'
+        add_event(case, valid)
+        data = copy.deepcopy(valid)
+        if fault == 'feedback_hash': data['feedback_hash'] = '0'*64
+        elif fault == 'schema_version': data['schema_version'] = 2
+        elif fault == 'teacher_review': data['teacher_review'] = 'APPROVED'
+        elif fault == 'item_status': data['items'][0]['status'] = 'teacher_pass'
+        elif fault == 'duplicate_id': data['items'].append(copy.deepcopy(data['items'][0]))
+        elif fault == 'unit_type': data['items'][0]['unit_ids'] = [None]
+        elif fault == 'objective_scope': data['items'][0]['objective_evidence'][0]['section_id'] = 'S99'
+        elif fault == 'objective_type': data['items'][0]['objective_evidence'][0]['section_id'] = []
+        elif fault == 'items_type': data['items'] = {'F1': 'satisfied'}
+        elif fault == 'empty_reviewed': data['items'] = []
+        elif fault == 'mock_type': data['mock'] = 'false'
+        elif fault == 'unknown_field': data['teacher_approved'] = True
+        add_event(case, data)
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F52CE3C0&gt;, &lt;math_agent.service.Service object at 0x00000253F51D0...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_latest_invalid_receipt_never_falls_back_to_old_success[unknown_field]" time="0.124"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F535F800&gt;, &lt;math_agent.service.Service object at 0x00000253F52CD...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'unknown_field'
+
+    @pytest.mark.parametrize('fault', ['feedback_hash', 'schema_version', 'teacher_review', 'item_status',
+        'duplicate_id', 'unit_type', 'objective_scope', 'objective_type', 'items_type', 'empty_reviewed', 'mock_type', 'unknown_field'])
+    def test_latest_invalid_receipt_never_falls_back_to_old_success(case, fault):
+        job, feedback = start(case)
+        valid = receipt(case, job, feedback)
+        valid['items'][0]['status'] = 'satisfied'
+        add_event(case, valid)
+        data = copy.deepcopy(valid)
+        if fault == 'feedback_hash': data['feedback_hash'] = '0'*64
+        elif fault == 'schema_version': data['schema_version'] = 2
+        elif fault == 'teacher_review': data['teacher_review'] = 'APPROVED'
+        elif fault == 'item_status': data['items'][0]['status'] = 'teacher_pass'
+        elif fault == 'duplicate_id': data['items'].append(copy.deepcopy(data['items'][0]))
+        elif fault == 'unit_type': data['items'][0]['unit_ids'] = [None]
+        elif fault == 'objective_scope': data['items'][0]['objective_evidence'][0]['section_id'] = 'S99'
+        elif fault == 'objective_type': data['items'][0]['objective_evidence'][0]['section_id'] = []
+        elif fault == 'items_type': data['items'] = {'F1': 'satisfied'}
+        elif fault == 'empty_reviewed': data['items'] = []
+        elif fault == 'mock_type': data['mock'] = 'false'
+        elif fault == 'unknown_field': data['teacher_approved'] = True
+        add_event(case, data)
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F535F800&gt;, &lt;math_agent.service.Service object at 0x00000253F52CD...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_latest_malformed_json_receipt_is_invalid_without_api_500_or_old_success" time="0.138"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F4E83260&gt;, &lt;math_agent.service.Service object at 0x00000253F5110...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def test_latest_malformed_json_receipt_is_invalid_without_api_500_or_old_success(case):
+        _, service, pipeline, _ = case
+        job, feedback = start(case)
+        add_event(case, receipt(case, job, feedback))
+        with service.store.transaction() as connection:
+            service.store.event(connection, pipeline.run['id'], 'feedback.reviewed', {})
+            connection.execute("UPDATE events SET payload_json='{' WHERE sequence=(SELECT MAX(sequence) FROM events)")
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:123: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F4E83260&gt;, &lt;math_agent.service.Service object at 0x00000253F5110...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_recovered_answer_unit_id_is_a_valid_receipt_target" time="0.120"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F5292C60&gt;, &lt;math_agent.service.Service object at 0x00000253F5276...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def test_recovered_answer_unit_id_is_a_valid_receipt_target(case):
+        job, feedback = start(case)
+        data = receipt(case, job, feedback)
+        data['items'][0]['unit_ids'] = ['S02.U18.answer']
+        data['items'][0]['unit_evidence'][0]['unit_id'] = 'S02.U18.answer'
+        add_event(case, data)
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F5292C60&gt;, &lt;math_agent.service.Service object at 0x00000253F5276...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_later_empty_feedback_retracts_old_receipt_and_keeps_history" time="0.115"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F5291940&gt;, &lt;math_agent.service.Service object at 0x00000253F4E67...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def test_later_empty_feedback_retracts_old_receipt_and_keeps_history(case):
+        client, service, pipeline, plan = case
+        job, feedback = start(case)
+        add_event(case, receipt(case, job, feedback))
+&gt;       assert get_receipt(case)['status'] == 'reviewed'
+               ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F5291940&gt;, &lt;math_agent.service.Service object at 0x00000253F4E67...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_newer_build_with_same_timestamp_does_not_use_previous_job_receipt" time="0.117"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F52CF650&gt;, &lt;math_agent.service.Service object at 0x00000253F52BA...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def test_newer_build_with_same_timestamp_does_not_use_previous_job_receipt(case):
+        _, service, pipeline, _ = case
+        job, feedback = start(case)
+        add_event(case, receipt(case, job, feedback))
+        with service.store.transaction() as connection:
+            stamp = connection.execute('SELECT created_at FROM jobs WHERE id=?', (job['id'],)).fetchone()[0]
+            connection.execute("INSERT INTO jobs(id,run_id,kind,build_key,status,created_at) VALUES(?,?,?,?,?,?)",
+                               (uid(), pipeline.run['id'], 'build', uid(), 'queued', stamp))
+&gt;       assert get_receipt(case) is None
+               ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F52CF650&gt;, &lt;math_agent.service.Service object at 0x00000253F52BA...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_beamer_does_not_display_lecture_feedback_receipts" time="0.110"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F50F3BC0&gt;, &lt;math_agent.service.Service object at 0x00000253F52BA...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def test_beamer_does_not_display_lecture_feedback_receipts(case):
+        _, service, pipeline, _ = case
+        job, feedback = start(case)
+        add_event(case, receipt(case, job, feedback))
+        with service.store.transaction() as connection:
+            connection.execute("UPDATE runs SET workflow_id='beamer.from_tex' WHERE id=?", (pipeline.run['id'],))
+&gt;       assert get_receipt(case) is None
+               ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:170: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F50F3BC0&gt;, &lt;math_agent.service.Service object at 0x00000253F52BA...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_unfinished_receipts_do_not_advertise_successful_items[invalid]" time="0.114"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F4E892E0&gt;, &lt;math_agent.service.Service object at 0x00000253F529C...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+status = 'invalid'
+
+    @pytest.mark.parametrize('status', ['invalid', 'transport_pending'])
+    def test_unfinished_receipts_do_not_advertise_successful_items(case, status):
+        job, feedback = start(case)
+        data = receipt(case, job, feedback, status=status, items=[])
+        add_event(case, data)
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:178: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F4E892E0&gt;, &lt;math_agent.service.Service object at 0x00000253F529C...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase><testcase classname="tests.test_feedback_receipts_api" name="test_unfinished_receipts_do_not_advertise_successful_items[transport_pending]" time="0.115"><failure message="KeyError: 'feedback_review'">case = (&lt;starlette.testclient.TestClient object at 0x00000253F4E682C0&gt;, &lt;math_agent.service.Service object at 0x00000253F4E8B...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+status = 'transport_pending'
+
+    @pytest.mark.parametrize('status', ['invalid', 'transport_pending'])
+    def test_unfinished_receipts_do_not_advertise_successful_items(case, status):
+        job, feedback = start(case)
+        data = receipt(case, job, feedback, status=status, items=[])
+        add_event(case, data)
+&gt;       result = get_receipt(case)
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_feedback_receipts_api.py:178: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = (&lt;starlette.testclient.TestClient object at 0x00000253F4E682C0&gt;, &lt;math_agent.service.Service object at 0x00000253F4E8B...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def get_receipt(case):
+        client, _, pipeline, _ = case
+        response = client.get('/api/runs/' + pipeline.run['id'])
+        assert response.status_code == 200, response.text
+&gt;       return response.json()['feedback_review']
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback_review'
+
+tests\test_feedback_receipts_api.py:45: KeyError</failure></testcase></testsuite></testsuites>

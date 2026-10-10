@@ -1,0 +1,53 @@
+{
+  "schema_version": 2,
+  "identity": {
+    "plan_hash": "60e76cc0b1271ac1b32a9f48c9ae760665bb7180cbdd52df6f5f5958f25db4ac",
+    "model": "gpt-6-astra",
+    "provider": "live",
+    "repair_contract_version": 2,
+    "repair_prompt_hash": "362fb34b2529572af9620c5433dbb223290c519889e89192c1d52c5d65e60943",
+    "written_schema_hash": "4e9b07e27f359212c0460381e3cbd6e548d18a48490e553e60b0c56d30d9ada7",
+    "patch_schema_hash": "0d86c8d71317f64b5b07f16f49a50ad4dd13c072cbf83dcaa1babdd53d1510dd",
+    "patch_validator_hash": "78427756213a06179f7d1f6c496f22871cc3abd333330c09635fc0cf0b6d55e3",
+    "calculation_protocol_hash": "d0e00874991f1762e72dcf4845ff8417ca54d1a399d3ec3f2f8ea0153b99d1aa",
+    "normalizer_hash": "25d2fff448b21fcad71b5e7aae512cf6ab27f66bdeefd9e459ca57652a1fd74c",
+    "migration_contract_hash": "8c1167ba608adbc1b74d9fe4d5852152eba74069606c466a4c2db606c8df2186"
+  },
+  "rounds_used": 1,
+  "phase": "validated",
+  "sections": {
+    "S02": {
+      "candidate_key": "runs/05748ab6260c40989a560a98e1e2065a/global-repairs/r1-b72ae851/S02-locally-checked-d4e7d83a.json",
+      "candidate_hash": "b88a309aa1f5ed253eac685c524ee5c77dfb73a914fa176fc242251317c0f79c"
+    },
+    "S03": {
+      "candidate_key": "runs/05748ab6260c40989a560a98e1e2065a/global-repairs/r1-b72ae851/S03-locally-checked-bd964626.json",
+      "candidate_hash": "59d642d22afbd0a4271c59df4295529c68b665b98f04ce93a4c27c0e9eef23ab"
+    },
+    "S04": {
+      "candidate_key": "runs/05748ab6260c40989a560a98e1e2065a/global-repairs/r1-b72ae851/S04-locally-checked-768947d6.json",
+      "candidate_hash": "c816081e12d6dab091112d8c1422f7e6e7917ff99363756dfb3e8f48883b2eca"
+    },
+    "S05": {
+      "candidate_key": "runs/05748ab6260c40989a560a98e1e2065a/global-repairs/r1-b72ae851/S05-locally-checked-1911a46e.json",
+      "candidate_hash": "86b7addce1f2b864c91ce6c5b88657f13975d0cf4f335e710a12c8ef0f0bf4e5"
+    }
+  },
+  "pending": [],
+  "teacher_visual_review": "NOT_RUN",
+  "round_directory": "runs/05748ab6260c40989a560a98e1e2065a/global-repairs/r1-b72ae851",
+  "issues": [
+    {
+      "unit_id": "S02.U12",
+      "severity": "review",
+      "message": "反馈教学改进（不等于数学错误）[F1]：现稿已部分落实反馈：S02.U12 不再只有常数倍和有理式，已加入 c_n=|3/n-2| 的实际求极限示范，并以反三角不等式和极限定义证明所用法则，计算结果为 2。因此不能沿用原反馈中“没有绝对值训练”的全部观察，也不应重复增加同类题目。但反馈明确要求在题目唯一关联的解答中给出计算、条件和依据；目前这些内容全部写在例题单元 S02.U12 内，关联解答 S02.U13（relates_to 为 S02.U12）仍仅解答 a_n、b_n，没有承接 c_n。剩余缺口是题面与关联解答的组织和覆盖，而非数学错误或绝对值法则证明缺失。应保留已经完成的正确示范，仅在这两个现有单元内作小范围归位，不能判为整项已满足。\n限定修订：仅调整 S02.U12 与 S02.U13：在 S02.U12 保留原有 a_n、b_n 题面，将已经存在的 c_n 作为同一例题的明确小问，继承正整数下标条件；把现有绝对值法则的条件、反三角不等式及定义证明、c_n 的计算与解释完整归入唯一关联解答 S02.U13，并相应整理衔接语。保留 S02.U13 原有两问的计算和商法则条件检查。此为现有正确内容的归位，不删除正确证明，不另加绝对值题目、不新增单元、不修改其他正文，不援引函数连续性。修后核对三个小问与该唯一解答逐一对应。",
+      "evidence": "S02.U12:「计算下列数列的极限，并说明所使用的运算法则：$a_n=3(1/n)+2$，$b_n=(2n+1)/(n+3)$，其中 $n\\in\\mathbb{N}^{+}$。\n\n先补充一个含绝对值的示范：求 $c_n=|3/n-2|$ 的极限。所用的绝对值极限法则是：若 $x_n\\to L$，则 $|x_n|\\to|L|$。其依据是反三角不等式\n\\[\n\\bigl||x_n|-|L|\\bigr|\\leq|x_n-L|.\n\\]\n事实上，任给 $\\varepsilon>0$，由 $x_n\\to L$，存在正整数 $N$，使得当 $n\\geq N$ 时 $|x_n-L|<\\varepsilon$，于是 $\\bigl||x_n|-|L|\\bigr|<\\varepsilon$，由极限定义即得上述法则。应用时，先由 $1/n\\to0$ 及常数倍、差法则得到 $3/n-2\\to-2$，再用绝对值极限法则得到\n\\[\n\\lim_{n\\to\\infty}|3/n-2|=|-2|=2.\n\\]\n这说明处理含绝对值的数列极限时，可以先求绝对值内部数列的极限，再对所得极限取绝对值。原题中 $a_n,b_n$ 的计算如下。」\nS02.U13:「由前一节的基本极限 $1/n\\to0$，利用常数倍法则与和法则，$\\lim_{n\\to\\infty}a_n=3\\cdot0+2=2$。对于 $b_n$，由于 $n\\in\\mathbb{N}^{+}$，可将分子、分母同除以 $n$，得到 $b_n=(2+1/n)/(1+3/n)$。由 $1/n\\to0$，有 $2+1/n\\to2$，且 $1+3/n\\to1\\neq0$。另外，$1+3/n>0$，所以商式有定义。由商法则，$\\lim_{n\\to\\infty}b_n=2/1=2$。使用商法则前必须确认分母极限非零。」\n批准目标依据：[{\"section_id\": \"S02\", \"field\": \"objectives\", \"quote\": \"能够处理含有有理式、绝对值和常数倍的基本数列极限\"}, {\"section_id\": \"S02\", \"field\": \"objectives\", \"quote\": \"例题应包含运算法则的直接应用与一个需要先验证分母极限非零的情形\"}]"
+    },
+    {
+      "unit_id": "S02.U13",
+      "severity": "review",
+      "message": "反馈教学改进（不等于数学错误）[F1]：现稿已部分落实反馈：S02.U12 不再只有常数倍和有理式，已加入 c_n=|3/n-2| 的实际求极限示范，并以反三角不等式和极限定义证明所用法则，计算结果为 2。因此不能沿用原反馈中“没有绝对值训练”的全部观察，也不应重复增加同类题目。但反馈明确要求在题目唯一关联的解答中给出计算、条件和依据；目前这些内容全部写在例题单元 S02.U12 内，关联解答 S02.U13（relates_to 为 S02.U12）仍仅解答 a_n、b_n，没有承接 c_n。剩余缺口是题面与关联解答的组织和覆盖，而非数学错误或绝对值法则证明缺失。应保留已经完成的正确示范，仅在这两个现有单元内作小范围归位，不能判为整项已满足。\n限定修订：仅调整 S02.U12 与 S02.U13：在 S02.U12 保留原有 a_n、b_n 题面，将已经存在的 c_n 作为同一例题的明确小问，继承正整数下标条件；把现有绝对值法则的条件、反三角不等式及定义证明、c_n 的计算与解释完整归入唯一关联解答 S02.U13，并相应整理衔接语。保留 S02.U13 原有两问的计算和商法则条件检查。此为现有正确内容的归位，不删除正确证明，不另加绝对值题目、不新增单元、不修改其他正文，不援引函数连续性。修后核对三个小问与该唯一解答逐一对应。",
+      "evidence": "S02.U12:「计算下列数列的极限，并说明所使用的运算法则：$a_n=3(1/n)+2$，$b_n=(2n+1)/(n+3)$，其中 $n\\in\\mathbb{N}^{+}$。\n\n先补充一个含绝对值的示范：求 $c_n=|3/n-2|$ 的极限。所用的绝对值极限法则是：若 $x_n\\to L$，则 $|x_n|\\to|L|$。其依据是反三角不等式\n\\[\n\\bigl||x_n|-|L|\\bigr|\\leq|x_n-L|.\n\\]\n事实上，任给 $\\varepsilon>0$，由 $x_n\\to L$，存在正整数 $N$，使得当 $n\\geq N$ 时 $|x_n-L|<\\varepsilon$，于是 $\\bigl||x_n|-|L|\\bigr|<\\varepsilon$，由极限定义即得上述法则。应用时，先由 $1/n\\to0$ 及常数倍、差法则得到 $3/n-2\\to-2$，再用绝对值极限法则得到\n\\[\n\\lim_{n\\to\\infty}|3/n-2|=|-2|=2.\n\\]\n这说明处理含绝对值的数列极限时，可以先求绝对值内部数列的极限，再对所得极限取绝对值。原题中 $a_n,b_n$ 的计算如下。」\nS02.U13:「由前一节的基本极限 $1/n\\to0$，利用常数倍法则与和法则，$\\lim_{n\\to\\infty}a_n=3\\cdot0+2=2$。对于 $b_n$，由于 $n\\in\\mathbb{N}^{+}$，可将分子、分母同除以 $n$，得到 $b_n=(2+1/n)/(1+3/n)$。由 $1/n\\to0$，有 $2+1/n\\to2$，且 $1+3/n\\to1\\neq0$。另外，$1+3/n>0$，所以商式有定义。由商法则，$\\lim_{n\\to\\infty}b_n=2/1=2$。使用商法则前必须确认分母极限非零。」\n批准目标依据：[{\"section_id\": \"S02\", \"field\": \"objectives\", \"quote\": \"能够处理含有有理式、绝对值和常数倍的基本数列极限\"}, {\"section_id\": \"S02\", \"field\": \"objectives\", \"quote\": \"例题应包含运算法则的直接应用与一个需要先验证分母极限非零的情形\"}]"
+    }
+  ]
+}

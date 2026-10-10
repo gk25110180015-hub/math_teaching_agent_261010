@@ -1,0 +1,1035 @@
+{
+  "recorded_at": "2026-09-20T19:28:36.989414+00:00",
+  "status": "INTERIM_BLOCKED_NOT_FINAL_ACCEPTANCE",
+  "cases": {
+    "CH02": {
+      "status": "BLOCKED",
+      "stage": "repair.global.S02",
+      "request_count": 118,
+      "request_summary": {
+        "by_model": {
+          "gpt6": {
+            "attempts": 100,
+            "validated_successes": 73,
+            "recorded_failures": 26,
+            "completion_uncertain": 1,
+            "billing_uncertain": 21,
+            "statuses": {
+              "SCHEMA_VALIDATED": 73,
+              "HTTP_504": 20,
+              "SCHEMA_INVALID": 6,
+              "HTTP_200": 1
+            }
+          },
+          "deepseek-flash": {
+            "attempts": 17,
+            "validated_successes": 16,
+            "recorded_failures": 1,
+            "completion_uncertain": 0,
+            "billing_uncertain": 1,
+            "statuses": {
+              "TIMEOUT": 1,
+              "SCHEMA_VALIDATED": 16
+            }
+          },
+          "deepseek-v4-pro": {
+            "attempts": 1,
+            "validated_successes": 0,
+            "recorded_failures": 1,
+            "completion_uncertain": 0,
+            "billing_uncertain": 1,
+            "statuses": {
+              "TOTAL_TIMEOUT": 1
+            }
+          }
+        },
+        "totals": {
+          "attempts": 118,
+          "validated_successes": 89,
+          "recorded_failures": 28,
+          "completion_uncertain": 1,
+          "billing_uncertain": 23
+        },
+        "success_definition": "SCHEMA_VALIDATED only; not mathematical correctness or teacher acceptance.",
+        "uncertainty_definition": "No definitive success/failure recorded; HTTP 200 headers alone are uncertain. Timeouts are recorded client failures and may still have been handled/billed by the server.",
+        "known_usage_sum": {
+          "prompt_tokens": 1488481,
+          "completion_tokens": 649601,
+          "total_tokens": 2138082
+        },
+        "usage_reporting_complete": false,
+        "price_status": "NOT_PROVIDED"
+      },
+      "fallback_count": 18,
+      "fallback_events": [
+        {
+          "sequence": 844,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T14:40:58.070729+00:00",
+          "payload": {
+            "call_id": "bb91c4b577b449f2ab1439c0d99c6335",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "f15a475cf71f7dd053b901db69d36ab7234274348a5b8538421c90f943209a02",
+            "prompt_version": 4,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 847,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T14:41:14.459754+00:00",
+          "payload": {
+            "call_id": "568e937d09504295b11d4f54f8a4e61e",
+            "code": "PROVIDER_TIMEOUT",
+            "event": "model_fallback",
+            "from_model_id": "deepseek-flash",
+            "http_status": null,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "f15a475cf71f7dd053b901db69d36ab7234274348a5b8538421c90f943209a02",
+            "prompt_version": 4,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "API 超时；服务端可能已处理并计费，保留此记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-v4-pro"
+          }
+        },
+        {
+          "sequence": 975,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T15:31:14.707756+00:00",
+          "payload": {
+            "call_id": "b7079db6470a49fa9bf6dc81b5605f3d",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1055,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T15:37:15.002942+00:00",
+          "payload": {
+            "call_id": "ff966c9b1e6b4591ad2e68e04234ea31",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1085,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T15:40:12.159786+00:00",
+          "payload": {
+            "call_id": "b7fb7b99529249a08ceeb002b81b0055",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1156,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T15:47:57.316743+00:00",
+          "payload": {
+            "call_id": "6866a0650e784853a9d495f25821d6b4",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1177,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T15:52:13.955665+00:00",
+          "payload": {
+            "call_id": "32152af5cdcb470e8f3df1423a3aa576",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1708,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T17:47:41.383912+00:00",
+          "payload": {
+            "call_id": "6fc80b7b82ff41b1949d3b91caa44185",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1736,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T17:52:22.582330+00:00",
+          "payload": {
+            "call_id": "420fbed7080a41dd9b4ebe8176f03d42",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1774,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T18:01:52.082881+00:00",
+          "payload": {
+            "call_id": "35e5534fd5b943f0a2ccd6fc9621c93a",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1790,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T18:04:49.223045+00:00",
+          "payload": {
+            "call_id": "07af7c4628f64d618fa7192f8261165a",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1820,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T18:09:01.600696+00:00",
+          "payload": {
+            "call_id": "710644cce1a44f0593786f0603ed3e59",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1837,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T18:13:03.137172+00:00",
+          "payload": {
+            "call_id": "c6c83f592acf4537be19f0733003116f",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1860,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T18:19:08.305122+00:00",
+          "payload": {
+            "call_id": "8d6dc3c3d1fd4f2f81c04ba605c5861c",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1887,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T18:21:57.135003+00:00",
+          "payload": {
+            "call_id": "4fa640bf0fd548189723dbe721f0218f",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1955,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T18:40:22.094697+00:00",
+          "payload": {
+            "call_id": "90dc280cff544c2a8c3134e29ebb5bd3",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 2101,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T18:48:34.667499+00:00",
+          "payload": {
+            "call_id": "db81113a91a945559e2b87240da1ebf5",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 2118,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T18:52:36.052789+00:00",
+          "payload": {
+            "call_id": "22510d4ef9924802aa248baa5a20a3ca",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        }
+      ],
+      "error": {
+        "attempt": 2,
+        "code": "GLOBAL_REPAIR_SCOPE_VIOLATION",
+        "job_id": "4678ed20f5c44ad89b289ffcee4d8143",
+        "message": "全局修复改动了非目标单元核算或无关不确定性元数据",
+        "recovery": "原审批和已通过章节保留；修复条件后点击重试。崩溃边界的外部调用可能重复计费。",
+        "timestamp": "2026-09-20T18:57:22.368625+00:00"
+      }
+    },
+    "CH03": {
+      "status": "BLOCKED",
+      "stage": "review.section.S03",
+      "request_count": 146,
+      "request_summary": {
+        "by_model": {
+          "gpt6": {
+            "attempts": 117,
+            "validated_successes": 88,
+            "recorded_failures": 29,
+            "completion_uncertain": 0,
+            "billing_uncertain": 27,
+            "statuses": {
+              "SCHEMA_VALIDATED": 88,
+              "SCHEMA_INVALID": 2,
+              "HTTP_504": 27
+            }
+          },
+          "deepseek-flash": {
+            "attempts": 29,
+            "validated_successes": 27,
+            "recorded_failures": 2,
+            "completion_uncertain": 0,
+            "billing_uncertain": 0,
+            "statuses": {
+              "SCHEMA_VALIDATED": 27,
+              "SCHEMA_INVALID": 2
+            }
+          }
+        },
+        "totals": {
+          "attempts": 146,
+          "validated_successes": 115,
+          "recorded_failures": 31,
+          "completion_uncertain": 0,
+          "billing_uncertain": 27
+        },
+        "success_definition": "SCHEMA_VALIDATED only; not mathematical correctness or teacher acceptance.",
+        "uncertainty_definition": "No definitive success/failure recorded; HTTP 200 headers alone are uncertain. Timeouts are recorded client failures and may still have been handled/billed by the server.",
+        "known_usage_sum": {
+          "prompt_tokens": 1814469,
+          "completion_tokens": 1097954,
+          "total_tokens": 2912423
+        },
+        "usage_reporting_complete": false,
+        "price_status": "NOT_PROVIDED"
+      },
+      "fallback_count": 27,
+      "fallback_events": [
+        {
+          "sequence": 892,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T14:50:15.782789+00:00",
+          "payload": {
+            "call_id": "50f74b4478154f62b11d7d1300d84091",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "f15a475cf71f7dd053b901db69d36ab7234274348a5b8538421c90f943209a02",
+            "prompt_version": 4,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1060,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T15:38:00.399161+00:00",
+          "payload": {
+            "call_id": "b81e79b3d7d6427c9a1292efe9bd79c7",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1137,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T15:45:09.529666+00:00",
+          "payload": {
+            "call_id": "f482980f08f2498d8bf7b70ca0050c12",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1161,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T15:48:12.438808+00:00",
+          "payload": {
+            "call_id": "29d5d06bb0a94ceaa9bae2fff9bafb11",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1182,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T15:52:20.044270+00:00",
+          "payload": {
+            "call_id": "85a3a608b6a84d289e0e0d046436e05a",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1190,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T15:55:36.605069+00:00",
+          "payload": {
+            "call_id": "3e83f485feca432cabb89ede4ccdddbb",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1222,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T16:04:13.489885+00:00",
+          "payload": {
+            "call_id": "23d17b1f5b5e426784fe5fbbd4cd9ccf",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1260,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T16:09:09.326927+00:00",
+          "payload": {
+            "call_id": "e088f264b4384b499d75c5932b330406",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1268,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T16:12:20.345810+00:00",
+          "payload": {
+            "call_id": "a43dee391a9e4fd59afff5eafbd0e6b4",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1276,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T16:15:58.006927+00:00",
+          "payload": {
+            "call_id": "69c40c4be95c476984847b0366aa84de",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1305,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T16:22:49.634139+00:00",
+          "payload": {
+            "call_id": "a41e4aebb2fe44d08797176ebb249c94",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1346,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T16:28:40.893940+00:00",
+          "payload": {
+            "call_id": "32e760f21bbf412697a10c1340555202",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1360,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T16:32:02.605699+00:00",
+          "payload": {
+            "call_id": "50803fc404da4d098da4f32c93214fa5",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1372,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T16:35:24.282249+00:00",
+          "payload": {
+            "call_id": "a7e57a9ef88949b2a029a6cad1edaea4",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1380,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T16:39:29.995191+00:00",
+          "payload": {
+            "call_id": "de5677b53bcf4961ae15d829cce3f6db",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1389,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T16:43:27.117065+00:00",
+          "payload": {
+            "call_id": "0023aefbef0b4959a6964ffddfea0ee4",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1416,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T16:51:56.269912+00:00",
+          "payload": {
+            "call_id": "28ba639e16c6442d9971728b7101d143",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1432,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T16:55:33.747934+00:00",
+          "payload": {
+            "call_id": "b2992a7f39354945ac77cae9ccad9702",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1449,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T16:59:05.527811+00:00",
+          "payload": {
+            "call_id": "488a9409dead4bb68ab20c82bf19634e",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1478,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T17:04:32.441677+00:00",
+          "payload": {
+            "call_id": "5db13c1dc8d74e309ccf95b24e4be251",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1496,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T17:08:37.653193+00:00",
+          "payload": {
+            "call_id": "c9ad2a10c80b4bd9ba859d0b981423ea",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1508,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T17:12:47.622293+00:00",
+          "payload": {
+            "call_id": "b177121efb784ce087a2be2322c1e499",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1517,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T17:16:48.991743+00:00",
+          "payload": {
+            "call_id": "dfdb8afd52cd41948a9e144cde70f3b1",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1674,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T17:44:33.064301+00:00",
+          "payload": {
+            "call_id": "dd328f7f720f48a59c5d64d4ebf6e05f",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 1713,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T17:47:55.724276+00:00",
+          "payload": {
+            "call_id": "b9d370347b2148faa5366742ab99ff87",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 2049,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T18:45:03.774936+00:00",
+          "payload": {
+            "call_id": "2244bf03c855412b93e7f2577aa49b94",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 2110,
+          "type": "provider.routing",
+          "timestamp": "2026-09-20T18:49:59.749058+00:00",
+          "payload": {
+            "call_id": "a76550a9678f4a26a87b5e32bb4f68bb",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        }
+      ],
+      "error": {
+        "attempt": 1,
+        "code": "REPAIR_SCOPE_UNCLEAR",
+        "job_id": "89467291c05a478b9b525da3ce65b50f",
+        "message": "未定位的疑点必须保留，不能借局部修复清除或扩大范围",
+        "recovery": "原审批和已通过章节保留；修复条件后点击重试。崩溃边界的外部调用可能重复计费。",
+        "timestamp": "2026-09-20T19:00:01.906112+00:00"
+      }
+    }
+  }
+}

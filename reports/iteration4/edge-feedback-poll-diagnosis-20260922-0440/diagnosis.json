@@ -1,0 +1,31 @@
+{
+  "created_at": "2026-09-22T04:39:22.626909+00:00",
+  "original_suite": "13 PASS / 1 FAIL",
+  "original_result": "reports\\iteration4\\final-deployed-e2e\\20260922-043328-aa8704\\result.json",
+  "test_before_sha256": "acc3e7979cdf88e6f9943c6afc367e4d083446a344ca42992923322a0719cf3e",
+  "trace_sha256": "923fb58283c1c80e1ae119f8bbdcf785a5e410ba229ce5d0fbd4d17cd7ff6d21",
+  "final_network_events": [
+    {
+      "url": "http://127.0.0.1:56938/api/runs/e49a539fe43c4c25a6310eaa81ec7b02",
+      "monotonic_ms": 25604.142,
+      "at": "2026-09-22T04:35:42.504Z",
+      "duration_ms": 21.540999999999997,
+      "response_status": 200,
+      "was_fulfilled": true,
+      "receipt_reason": "离线展示测试：新回执到达，任务的阶段和产物没有变化。"
+    },
+    {
+      "url": "http://127.0.0.1:56938/api/runs/e49a539fe43c4c25a6310eaa81ec7b02/events?after=46",
+      "monotonic_ms": 25625.435,
+      "at": "2026-09-22T04:35:42.526Z",
+      "duration_ms": -1,
+      "response_status": -1,
+      "was_fulfilled": false,
+      "receipt_reason": null
+    }
+  ],
+  "finding": "The timer GET was fulfilled with the changed receipt. Its immediately following events fetch was unfinished through the 10 second assertion. No later GET replaced the receipt. Root cause of the unfinished routed fetch is not established.",
+  "proposed_change": "Keep a stable intercepted GET response until receipt and draft assertions pass, record handler hits and browser state, explicitly unroute before reload. Same timer path, 10 second assertion, no production change.",
+  "real_api": "NOT_RUN",
+  "teacher_review": "NOT_RUN"
+}

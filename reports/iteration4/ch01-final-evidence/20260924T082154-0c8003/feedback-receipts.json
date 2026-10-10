@@ -1,0 +1,346 @@
+[
+  {
+    "sequence": 2924,
+    "timestamp": "2026-09-24T08:11:44.879822+00:00",
+    "integrity": "PASS",
+    "payload": {
+      "evidence_key": "runs/05748ab6260c40989a560a98e1e2065a/feedback-reviews/a3569b7eec3de1675adc8b34/receipt-1-reviewed.json",
+      "evidence_sha256": "10325f599a8c79aa2e6b8702a7e800fe6db2123c312f8b87f78e1c6c60b03c0c",
+      "feedback_hash": "6eaf8f1358f8762bd49e0c6a35c6581bdb387f640628fa6b592f55ace0ebe8df",
+      "identity_hash": "a3569b7eec3de1675adc8b34522abfac42c91fddb4a2fbb873eca811546efef7",
+      "items": [
+        {
+          "id": "F1",
+          "objective_evidence": [
+            {
+              "field": "objectives",
+              "quote": "能够处理含有有理式、绝对值和常数倍的基本数列极限",
+              "section_id": "S02"
+            },
+            {
+              "field": "objectives",
+              "quote": "例题应包含运算法则的直接应用与一个需要先验证分母极限非零的情形",
+              "section_id": "S02"
+            }
+          ],
+          "reason": "现稿已部分落实反馈：S02.U12 不再只有常数倍和有理式，已加入 c_n=|3/n-2| 的实际求极限示范，并以反三角不等式和极限定义证明所用法则，计算结果为 2。因此不能沿用原反馈中“没有绝对值训练”的全部观察，也不应重复增加同类题目。但反馈明确要求在题目唯一关联的解答中给出计算、条件和依据；目前这些内容全部写在例题单元 S02.U12 内，关联解答 S02.U13（relates_to 为 S02.U12）仍仅解答 a_n、b_n，没有承接 c_n。剩余缺口是题面与关联解答的组织和覆盖，而非数学错误或绝对值法则证明缺失。应保留已经完成的正确示范，仅在这两个现有单元内作小范围归位，不能判为整项已满足。",
+          "repair_instruction": "仅调整 S02.U12 与 S02.U13：在 S02.U12 保留原有 a_n、b_n 题面，将已经存在的 c_n 作为同一例题的明确小问，继承正整数下标条件；把现有绝对值法则的条件、反三角不等式及定义证明、c_n 的计算与解释完整归入唯一关联解答 S02.U13，并相应整理衔接语。保留 S02.U13 原有两问的计算和商法则条件检查。此为现有正确内容的归位，不删除正确证明，不另加绝对值题目、不新增单元、不修改其他正文，不援引函数连续性。修后核对三个小问与该唯一解答逐一对应。",
+          "repair_unit_ids": [
+            "S02.U12",
+            "S02.U13"
+          ],
+          "status": "supported_improvement",
+          "unit_evidence": [
+            {
+              "kind": "worked_example",
+              "quote": "计算下列数列的极限，并说明所使用的运算法则：$a_n=3(1/n)+2$，$b_n=(2n+1)/(n+3)$，其中 $n\\in\\mathbb{N}^{+}$。\n\n先补充一个含绝对值的示范：求 $c_n=|3/n-2|$ 的极限。所用的绝对值极限法则是：若 $x_n\\to L$，则 $|x_n|\\to|L|$。其依据是反三角不等式\n\\[\n\\bigl||x_n|-|L|\\bigr|\\leq|x_n-L|.\n\\]\n事实上，任给 $\\varepsilon>0$，由 $x_n\\to L$，存在正整数 $N$，使得当 $n\\geq N$ 时 $|x_n-L|<\\varepsilon$，于是 $\\bigl||x_n|-|L|\\bigr|<\\varepsilon$，由极限定义即得上述法则。应用时，先由 $1/n\\to0$ 及常数倍、差法则得到 $3/n-2\\to-2$，再用绝对值极限法则得到\n\\[\n\\lim_{n\\to\\infty}|3/n-2|=|-2|=2.\n\\]\n这说明处理含绝对值的数列极限时，可以先求绝对值内部数列的极限，再对所得极限取绝对值。原题中 $a_n,b_n$ 的计算如下。",
+              "unit_id": "S02.U12"
+            },
+            {
+              "kind": "worked_example",
+              "quote": "由前一节的基本极限 $1/n\\to0$，利用常数倍法则与和法则，$\\lim_{n\\to\\infty}a_n=3\\cdot0+2=2$。对于 $b_n$，由于 $n\\in\\mathbb{N}^{+}$，可将分子、分母同除以 $n$，得到 $b_n=(2+1/n)/(1+3/n)$。由 $1/n\\to0$，有 $2+1/n\\to2$，且 $1+3/n\\to1\\neq0$。另外，$1+3/n>0$，所以商式有定义。由商法则，$\\lim_{n\\to\\infty}b_n=2/1=2$。使用商法则前必须确认分母极限非零。",
+              "unit_id": "S02.U13"
+            }
+          ],
+          "unit_ids": [
+            "S02.U12",
+            "S02.U13"
+          ]
+        }
+      ],
+      "job_id": "1d92b4807ecc474ebb4c33a1c58ebde6",
+      "limitations": [
+        "本结论依据所提供的完整单元文本、关联信息和批准计划作模型评估；未读取反馈中提及的外部审计路径，也未将其作为独立证据。",
+        "本反馈回执不代替普通数学审阅、计算核验及修后全文与反馈复评，不撤销其他审阅中已有的疑点。",
+        "本评估不是形式化证明、真实 TeX 编译、PDF 全页视觉检查或教师审核，不构成教师验收。"
+      ],
+      "mock": false,
+      "plan_hash": "60e76cc0b1271ac1b32a9f48c9ae760665bb7180cbdd52df6f5f5958f25db4ac",
+      "plan_revision": 2,
+      "schema_version": 1,
+      "status": "reviewed",
+      "teacher_review": "NOT_RUN"
+    },
+    "matches_current_job_and_plan": true,
+    "observed_at": "2026-09-24T08:21:54.775603+00:00",
+    "receipt_file_sha256": "10325f599a8c79aa2e6b8702a7e800fe6db2123c312f8b87f78e1c6c60b03c0c",
+    "state_file_sha256": "32d985ab688ecb82ea1790597e003ca48284c80d4ff367c379fcca4a53ddc70a",
+    "state_status": "REVIEWED",
+    "identity": {
+      "job_id": "1d92b4807ecc474ebb4c33a1c58ebde6",
+      "plan_hash": "60e76cc0b1271ac1b32a9f48c9ae760665bb7180cbdd52df6f5f5958f25db4ac",
+      "plan_revision": 2,
+      "feedback_hash": "6eaf8f1358f8762bd49e0c6a35c6581bdb387f640628fa6b592f55ace0ebe8df",
+      "context_hash": "13d7bc147de5822d18daf5fe1e257e3f213f5ed50a01a76e15cc3fd1df109633",
+      "contract": {
+        "version": 1,
+        "helper_sha256": "021ca341a903d516d1c270c38c5806d4386adca89e08528c36353f529d26b965",
+        "provider_sha256": "529a8c3baf3f660d503757302534caa0f89a3cdb18b7bd31b0ddf7a5dc124c79",
+        "prompt_sha256": "7a33796275fd68cf28108cfe896039080cc8b6c69fd4789c6352ef194450d736",
+        "schema_sha256": "c41c7e8f5b4a564445660e9d3ffaae7c48b3a6f5bf82da7d7d46045bbca8e419"
+      },
+      "model_id": "gpt6",
+      "configured_gpt_model": "gpt-6-astra"
+    },
+    "dependencies": [
+      {
+        "name": "input.json",
+        "sha256": "f97c26fcf697ddcd524b8073e929de0cd9384fcfbaf742cb5e51c0c55596e1ed",
+        "archive": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration4\\ch01-final-evidence\\20260924T082154-0c8003\\feedback-evidence\\a3569b7eec3de1675adc8b34\\input.json"
+      },
+      {
+        "name": "response-1.json",
+        "sha256": "9dc4672278eacd3f72f0226bafda6e064a97893208ebd039e9c5677b5d6f1c4e",
+        "archive": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration4\\ch01-final-evidence\\20260924T082154-0c8003\\feedback-evidence\\a3569b7eec3de1675adc8b34\\response-1.json"
+      },
+      {
+        "name": "receipt-1-reviewed.json",
+        "sha256": "10325f599a8c79aa2e6b8702a7e800fe6db2123c312f8b87f78e1c6c60b03c0c",
+        "archive": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration4\\ch01-final-evidence\\20260924T082154-0c8003\\feedback-evidence\\a3569b7eec3de1675adc8b34\\receipt-1-reviewed.json"
+      }
+    ],
+    "saved_response_revalidation": "PASS_PURE_VALIDATION_NO_MODEL_CALL",
+    "body_unit_payload_sha256": "5a0edd05501117e5e4e2dfadce049edde24a4601f8e6d009c76f3abea396f998",
+    "body_unit_sha256": {
+      "S01.U01": "05a0c80a033a88cde57f648b1235e257acd34ecd492e0ee74231a9db644f5e49",
+      "S01.U02": "c9ed4181eb1d4619f2c67cc302a4bf0df789dcd8487635aefedb58bdb2624c41",
+      "S01.U03": "25c1488b3c6da836b0ec756a49fe5c0a44be403f857e55e9ce31d643c6888d6c",
+      "S01.U04": "219c50698b95b6b3c2deedf12c012e11f6ecae7fcb97033c52d0524ae72a0f5b",
+      "S01.U05": "447425be0ae2f7b6ca260bde0e1a4d3ef6cadbfb5f9ecf51af8ae3d54b207772",
+      "S01.U06": "d28a3cf10fc04da21efa2d81d26f27c9174b4d57a517e1a026136aad39ec7109",
+      "S01.U07": "debeafeb5e3678613b8bbd41ee5e8a4a11e82fcedfbc08897f311969b3dd887a",
+      "S01.U08": "cb7c7253684156803e0ca4684aee311628590b7771da0b38d1326e1188f3d896",
+      "S01.U09": "09ca0a57650d8e67fd52f9416e1b6da0199241c9ce82f20670dfde478622f4e8",
+      "S01.U10": "a521109c5cc78a12042a169396ebd40abc7e132892f2b81f243d417cf27a77b3",
+      "S02.U01": "79308f1022ed7c5e33f54348456c4aa084c4058d0650072399caf7fc8a4109af",
+      "S02.U02": "7d5f948135357b0863508ba262890947a9d320c746164a38ab86343e64b3778b",
+      "S02.U03": "d6b20d13bed0d040ca99979ce65d37fd4531bc554517c0756815c154624b324a",
+      "S02.U04": "cb914cd596d0ff894daad92e328b6eccb6123de84208bda3db29897b266a8df9",
+      "S02.U05": "d024a12641d97a1eb83e53db912627bbb93a5e64c2778a674b5d7f5345913bb0",
+      "S02.U06": "b57e1d41ed1765bc445f7e5c12d4ad89ef2899bcc36675f0439c94256bd2100b",
+      "S02.U07": "126e6f6a05d9296cb39862da7006c6af6c37533929f38ef13869722efbff6a06",
+      "S02.U08": "8ee273e9812fd6787c590015ef58bd4d0da0d270d912a3e5545f7078ccba0508",
+      "S02.U09": "c77ac929c4515c7afb1f5d54c20753902990e9ef7f419c77edd8f1f8b4a6ed7b",
+      "S02.U10": "71bc4685b2719dc121697cdf90e0551fd64d73e9ecb3fd0a23e22fa52df4738f",
+      "S02.U11": "d2471cb2c9cee2c84fa3387e826092fbc5126ee5232f1b100ecf0f1355ac617f",
+      "S02.U12": "7d097dd9bd7bf9c9b2a12c4008c0c16e32c5c0fcd94acbd8174c4e1d1762ef1c",
+      "S02.U13": "6ea4d01ad7d4cf0f485e5d2004172368291f5a56c35f4a63896197a077daf628",
+      "S02.U14": "7c1f1470ed32d6aea6d8386c27f6ad99e776eabe1ab99a35cf1793a3b44dd6e9",
+      "S02.U15": "023f6ea6980833f508725410314e5c18bedaded03e41ce434011f49b5b3a61cf",
+      "S03.U01": "c2c2fc5191f0488a36bc65f74ebf96ae556bd097d0162e8bae76058397dca4c9",
+      "S03.U02": "3cf777537795f4e2ab21eca54a39c20f0b038d8cf232613122b70e13f81f6e02",
+      "S03.U03": "7bb422ecda573978aa7e27648be4a02dd8aaee18879f1a3712d2b4029b47b5f1",
+      "S03.U04": "dccdd3f87ddaba77e7bbbc07750d4949d296a61ee45f1eb3523235435ed8b9e1",
+      "S03.U05": "a12641403193f864e9a017fd107e79fba1d20a1031658b27cbc046e11eac9db2",
+      "S03.U06": "d03271c7154a6d14761dd01e28708566ad03991c4b81903bc7fd875f092c5a22",
+      "S03.U07": "df56353a7d668c8b12ad760cb49d13832578c98564e3de0bad83712c0f1c34cb",
+      "S03.U08": "c1b763b284689120fa180ad042a56236b0d0952be3f3e5d1903efe4bda723f51",
+      "S03.U09": "9e58adef7168d6e05f2366c1bd3755990f8d596c5974bf2bd587e7e508250695",
+      "S03.U10": "c5c5335951d08bfa62692c7433731d1d479d96106fba7a434ba4f996d4803d80",
+      "S03.U11": "a73452917fba18945ccb375e2c1dd7912da7dbf8e8953247c5e649a7e3e35fa4",
+      "S03.U12": "53f3c0b09daf259bbe9c46cd35419bad3ebc612550f3b6d65a8062cdb387db3c",
+      "S03.U13": "4007d77ceff617ab701c43567a24eb6fb09ff3c1620c3af36f8c6a64c3392b54",
+      "S03.U14": "e8093acf8cc0cbbf4f11fd653608e9522cfe10fc3397c8ed0027e61c1eb1cb9f",
+      "S03.U15": "6d8a568d0683f671c6630594c77d9cc4c4d627a02f62a0ea7f8ecc95484e122f",
+      "S03.U16": "593736af0294a0e878eed90ef79288f34de3295113a854be4d92dd69447ac2f1",
+      "S03.U17": "01efbc7f3f4714357ce7ad0795c3bc3c0b359a0435cfb2ecc04a82c009165b76",
+      "S03.U16.answer": "299f6b6dee0b9ead22828ce7bced6f6e7ee21261b8060b9df7e1223a981f0e11",
+      "S03.U17.answer": "7680c5ee8144058125f1514b161646f787bab723a37313338b47e7919a330ed2",
+      "S04.U01": "e9456299072bac7b6b37655cabb735fa3fb74342bb78630b3392ac96172dca3c",
+      "S04.U02": "1292468b3606ea0cdbbfef733bee8d85e16bc5281afca2b7934a6f5a5be157ef",
+      "S04.U03": "1e6a90951165f230b5b61e2a6d005fcd1fb30cfe6775ad74e524311412ed670f",
+      "S04.U04": "6c8a9e06b6cb63984aaeb8ac75d0074de2ec2be6084d285ebe1e4b7790d3e6b6",
+      "S04.U05": "494355b81fc119943331d52dbf7d7439f750e74ece662cf2718f33870311aa52",
+      "S04.U06": "cbd9796aa8118ef4693e273ca97cec0daf2e03a668108754f8362a04f2e5ee0d",
+      "S04.U07": "610b6392c82e6eb8fafee3dfa7a1492181e58554809857fa050f122b103d32b2",
+      "S04.U08": "4c68628ccbf29d9caf8c4228818ada41ca05b73a00ce4cf5359e72e3d29252ca",
+      "S04.U09": "51d38f90f6fe27b064f773abc91d4453fa18dfff6e7afbf90fa67da49905fd8d",
+      "S04.U10": "dbb5ded5d4e9691ad7df3297169fa647d78c187f9ebbf92e62a57c364d83dd9e",
+      "S05.U01": "d63a08862993bf14072df43e0dd289a3bf05a078e0fb32f62d018e624d3f278f",
+      "S05.U02": "9b93b0b047592e8cb7520dfcea8bff3abed223794615e9eed13673aa58d8307b",
+      "S05.U03": "55b09fe96d69416ae0703cab81693621017476487b7475ad0cdbc4d20b0b149d",
+      "S05.U04": "3f7bc789ab86c382a1dff9ad9059ceed3abeebfa6f3fe403d93e55f9c4399da7",
+      "S05.U05": "ca3323b85cbf9c0195b639c21848c14ff20dc640a078d4657a3e47149f7e180e",
+      "S05.U06": "41996b5538925e21018656a8c81b8b90a32fe284f7429ae4945273dc9f72575a",
+      "S05.U07": "2d02f872af2c3df61ccc62467ccd8d1520abfb8816936c5a7c4901d1673a6dfd",
+      "S05.U08": "c9b68c9dcbd0976ca26d2d32b330d741cb91f2a8e3a03a29ead4246812c922fd",
+      "S05.U09": "653ed5cd3b256a2223a84829e08df5c1ee0cd2dc19c3e243a2800824a2aa0a92"
+    },
+    "input_plan_hash": "60e76cc0b1271ac1b32a9f48c9ae760665bb7180cbdd52df6f5f5958f25db4ac",
+    "input_plan_revision": 2,
+    "is_selected_current_receipt": false
+  },
+  {
+    "sequence": 3049,
+    "timestamp": "2026-09-24T08:20:54.950967+00:00",
+    "integrity": "PASS",
+    "payload": {
+      "evidence_key": "runs/05748ab6260c40989a560a98e1e2065a/feedback-reviews/79904708c75efae55553b22a/receipt-1-reviewed.json",
+      "evidence_sha256": "72268ba3131df920bf26830a69e603edb814cdfc07d0b1d93ca165a156dc7e34",
+      "feedback_hash": "6eaf8f1358f8762bd49e0c6a35c6581bdb387f640628fa6b592f55ace0ebe8df",
+      "identity_hash": "79904708c75efae55553b22a3903b6dc29a64cba66cc437989cfa6d97b359dfc",
+      "items": [
+        {
+          "id": "F1",
+          "objective_evidence": [
+            {
+              "field": "objectives",
+              "quote": "能够处理含有有理式、绝对值和常数倍的基本数列极限",
+              "section_id": "S02"
+            },
+            {
+              "field": "prerequisites",
+              "quote": "绝对值、不等式和自然数归纳法的基础知识",
+              "section_id": null
+            },
+            {
+              "field": "exclusions",
+              "quote": "不展开函数极限、连续性和导数理论",
+              "section_id": null
+            }
+          ],
+          "reason": "现稿已落实该项教学改进，而非仅在证明中出现绝对值符号。S02.U12 保留原有常数倍与有理式小问，并增加了要求实际计算含绝对值数列极限的第 (3) 问，明确正整数下标条件。其唯一关联解答 S02.U13（relates_to=S02.U12）保留前两问解答，并对第 (3) 问给出实数数列收敛这一适用条件、反三角不等式和极限定义的完整依据，再计算内部数列趋于 -2、绝对值数列趋于 2。此处理没有援引后续函数连续性或新增先修，符合原批准 S02 目标和反馈限定的小范围补充要求。反馈关于现稿只有两个例题小问的观察已不符合所提供的实际正文，无需重复扩写。此履约结论不表示普通数学检查、计算核验或其他交付审查已被替代或通过。",
+          "repair_instruction": null,
+          "repair_unit_ids": [],
+          "status": "satisfied",
+          "unit_evidence": [
+            {
+              "kind": "statement",
+              "quote": "计算下列数列的极限，并说明所使用的运算法则，其中各小问均取 $n\\in\\mathbb{N}^{+}$：\n\\[\n(1)\\quad a_n=3(1/n)+2;\\qquad\n(2)\\quad b_n=\\frac{2n+1}{n+3};\\qquad\n(3)\\quad c_n=\\left|\\frac3n-2\\right|.\n\\]",
+              "unit_id": "S02.U12"
+            },
+            {
+              "kind": "worked_example",
+              "quote": "(3) 所用的绝对值极限法则是：若实数数列 $x_n\\to L$，其中 $L\\in\\mathbb{R}$，则 $|x_n|\\to|L|$。其依据是反三角不等式\n\\[\n\\bigl||x_n|-|L|\\bigr|\\leq|x_n-L|.\n\\]\n事实上，任给 $\\varepsilon>0$，由 $x_n\\to L$，存在正整数 $N$，使得当 $n\\geq N$ 时 $|x_n-L|<\\varepsilon$，于是 $\\bigl||x_n|-|L|\\bigr|<\\varepsilon$，由极限定义即得上述法则。\n\n应用时，先由 $1/n\\to0$ 及常数倍、差法则得到 $3/n-2\\to-2$，再用绝对值极限法则得到\n\\[\n\\lim_{n\\to\\infty}c_n=\\lim_{n\\to\\infty}|3/n-2|=|-2|=2.\n\\]\n这说明处理含绝对值的数列极限时，可以先求绝对值内部数列的极限，再对所得极限取绝对值。",
+              "unit_id": "S02.U13"
+            }
+          ],
+          "unit_ids": [
+            "S02.U12",
+            "S02.U13"
+          ]
+        }
+      ],
+      "job_id": "1d92b4807ecc474ebb4c33a1c58ebde6",
+      "limitations": [
+        "本结论是依据所提供完整正文、批准计划及全部原反馈作出的模型逐项评估，不是形式化证明或教师验收。",
+        "未访问反馈中提到的外部审计文件；结论直接依据输入中的实际题面、关联解答与计划，不以文件路径或审计声明作为已核实证据。",
+        "未执行真实 TeX 编译或 PDF 全页视觉检查。本反馈回执不替代独立的普通数学审阅、计算核验、全文及反馈复评，也不撤销其他审阅已有的疑点。"
+      ],
+      "mock": false,
+      "plan_hash": "60e76cc0b1271ac1b32a9f48c9ae760665bb7180cbdd52df6f5f5958f25db4ac",
+      "plan_revision": 2,
+      "schema_version": 1,
+      "status": "reviewed",
+      "teacher_review": "NOT_RUN"
+    },
+    "matches_current_job_and_plan": true,
+    "observed_at": "2026-09-24T08:21:54.788629+00:00",
+    "receipt_file_sha256": "72268ba3131df920bf26830a69e603edb814cdfc07d0b1d93ca165a156dc7e34",
+    "state_file_sha256": "f2e2f5709b6781d7ef6815e7b288b7fde9bc2fe7d1c0ab6ba28aef1b796907b8",
+    "state_status": "REVIEWED",
+    "identity": {
+      "job_id": "1d92b4807ecc474ebb4c33a1c58ebde6",
+      "plan_hash": "60e76cc0b1271ac1b32a9f48c9ae760665bb7180cbdd52df6f5f5958f25db4ac",
+      "plan_revision": 2,
+      "feedback_hash": "6eaf8f1358f8762bd49e0c6a35c6581bdb387f640628fa6b592f55ace0ebe8df",
+      "context_hash": "c367f26eeea66e512ada2787a2c4d8b349d64faaa53aaa3fff38629586093349",
+      "contract": {
+        "version": 1,
+        "helper_sha256": "021ca341a903d516d1c270c38c5806d4386adca89e08528c36353f529d26b965",
+        "provider_sha256": "529a8c3baf3f660d503757302534caa0f89a3cdb18b7bd31b0ddf7a5dc124c79",
+        "prompt_sha256": "7a33796275fd68cf28108cfe896039080cc8b6c69fd4789c6352ef194450d736",
+        "schema_sha256": "c41c7e8f5b4a564445660e9d3ffaae7c48b3a6f5bf82da7d7d46045bbca8e419"
+      },
+      "model_id": "gpt6",
+      "configured_gpt_model": "gpt-6-astra"
+    },
+    "dependencies": [
+      {
+        "name": "input.json",
+        "sha256": "b22fecf835b59a34250a73b2e3c8d779d60a5a42eeefb686d2bd1053aa9d7cbc",
+        "archive": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration4\\ch01-final-evidence\\20260924T082154-0c8003\\feedback-evidence\\79904708c75efae55553b22a\\input.json"
+      },
+      {
+        "name": "response-1.json",
+        "sha256": "db220c5724b3553028dff035b159fc437741cd4b5b9ae15ce1e1d5bfaea1596c",
+        "archive": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration4\\ch01-final-evidence\\20260924T082154-0c8003\\feedback-evidence\\79904708c75efae55553b22a\\response-1.json"
+      },
+      {
+        "name": "receipt-1-reviewed.json",
+        "sha256": "72268ba3131df920bf26830a69e603edb814cdfc07d0b1d93ca165a156dc7e34",
+        "archive": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration4\\ch01-final-evidence\\20260924T082154-0c8003\\feedback-evidence\\79904708c75efae55553b22a\\receipt-1-reviewed.json"
+      }
+    ],
+    "saved_response_revalidation": "PASS_PURE_VALIDATION_NO_MODEL_CALL",
+    "body_unit_payload_sha256": "3bfe585be9187ec9f0c9dc2dbb50d2804d26c134b1406ca1d357c6e0bc4037e7",
+    "body_unit_sha256": {
+      "S01.U01": "05a0c80a033a88cde57f648b1235e257acd34ecd492e0ee74231a9db644f5e49",
+      "S01.U02": "c9ed4181eb1d4619f2c67cc302a4bf0df789dcd8487635aefedb58bdb2624c41",
+      "S01.U03": "25c1488b3c6da836b0ec756a49fe5c0a44be403f857e55e9ce31d643c6888d6c",
+      "S01.U04": "219c50698b95b6b3c2deedf12c012e11f6ecae7fcb97033c52d0524ae72a0f5b",
+      "S01.U05": "447425be0ae2f7b6ca260bde0e1a4d3ef6cadbfb5f9ecf51af8ae3d54b207772",
+      "S01.U06": "d28a3cf10fc04da21efa2d81d26f27c9174b4d57a517e1a026136aad39ec7109",
+      "S01.U07": "debeafeb5e3678613b8bbd41ee5e8a4a11e82fcedfbc08897f311969b3dd887a",
+      "S01.U08": "cb7c7253684156803e0ca4684aee311628590b7771da0b38d1326e1188f3d896",
+      "S01.U09": "09ca0a57650d8e67fd52f9416e1b6da0199241c9ce82f20670dfde478622f4e8",
+      "S01.U10": "a521109c5cc78a12042a169396ebd40abc7e132892f2b81f243d417cf27a77b3",
+      "S02.U01": "79308f1022ed7c5e33f54348456c4aa084c4058d0650072399caf7fc8a4109af",
+      "S02.U02": "7d5f948135357b0863508ba262890947a9d320c746164a38ab86343e64b3778b",
+      "S02.U03": "d6b20d13bed0d040ca99979ce65d37fd4531bc554517c0756815c154624b324a",
+      "S02.U04": "cb914cd596d0ff894daad92e328b6eccb6123de84208bda3db29897b266a8df9",
+      "S02.U05": "d024a12641d97a1eb83e53db912627bbb93a5e64c2778a674b5d7f5345913bb0",
+      "S02.U06": "b57e1d41ed1765bc445f7e5c12d4ad89ef2899bcc36675f0439c94256bd2100b",
+      "S02.U07": "126e6f6a05d9296cb39862da7006c6af6c37533929f38ef13869722efbff6a06",
+      "S02.U08": "8ee273e9812fd6787c590015ef58bd4d0da0d270d912a3e5545f7078ccba0508",
+      "S02.U09": "c77ac929c4515c7afb1f5d54c20753902990e9ef7f419c77edd8f1f8b4a6ed7b",
+      "S02.U10": "71bc4685b2719dc121697cdf90e0551fd64d73e9ecb3fd0a23e22fa52df4738f",
+      "S02.U11": "d2471cb2c9cee2c84fa3387e826092fbc5126ee5232f1b100ecf0f1355ac617f",
+      "S02.U12": "25f5d02d72bc84ece02f04c66db96b91af6d88a9d1a9174116e30a798237ed36",
+      "S02.U13": "bd5770ca9953fb9ff33c1d602f09a7ce03e1101a8376e390d55c9366e3112c9e",
+      "S02.U14": "7c1f1470ed32d6aea6d8386c27f6ad99e776eabe1ab99a35cf1793a3b44dd6e9",
+      "S02.U15": "023f6ea6980833f508725410314e5c18bedaded03e41ce434011f49b5b3a61cf",
+      "S03.U01": "c2c2fc5191f0488a36bc65f74ebf96ae556bd097d0162e8bae76058397dca4c9",
+      "S03.U02": "3cf777537795f4e2ab21eca54a39c20f0b038d8cf232613122b70e13f81f6e02",
+      "S03.U03": "7bb422ecda573978aa7e27648be4a02dd8aaee18879f1a3712d2b4029b47b5f1",
+      "S03.U04": "dccdd3f87ddaba77e7bbbc07750d4949d296a61ee45f1eb3523235435ed8b9e1",
+      "S03.U05": "a12641403193f864e9a017fd107e79fba1d20a1031658b27cbc046e11eac9db2",
+      "S03.U06": "d03271c7154a6d14761dd01e28708566ad03991c4b81903bc7fd875f092c5a22",
+      "S03.U07": "df56353a7d668c8b12ad760cb49d13832578c98564e3de0bad83712c0f1c34cb",
+      "S03.U08": "c1b763b284689120fa180ad042a56236b0d0952be3f3e5d1903efe4bda723f51",
+      "S03.U09": "9e58adef7168d6e05f2366c1bd3755990f8d596c5974bf2bd587e7e508250695",
+      "S03.U10": "c5c5335951d08bfa62692c7433731d1d479d96106fba7a434ba4f996d4803d80",
+      "S03.U11": "a73452917fba18945ccb375e2c1dd7912da7dbf8e8953247c5e649a7e3e35fa4",
+      "S03.U12": "53f3c0b09daf259bbe9c46cd35419bad3ebc612550f3b6d65a8062cdb387db3c",
+      "S03.U13": "4007d77ceff617ab701c43567a24eb6fb09ff3c1620c3af36f8c6a64c3392b54",
+      "S03.U14": "e8093acf8cc0cbbf4f11fd653608e9522cfe10fc3397c8ed0027e61c1eb1cb9f",
+      "S03.U15": "6d8a568d0683f671c6630594c77d9cc4c4d627a02f62a0ea7f8ecc95484e122f",
+      "S03.U16": "593736af0294a0e878eed90ef79288f34de3295113a854be4d92dd69447ac2f1",
+      "S03.U17": "01efbc7f3f4714357ce7ad0795c3bc3c0b359a0435cfb2ecc04a82c009165b76",
+      "S03.U16.answer": "299f6b6dee0b9ead22828ce7bced6f6e7ee21261b8060b9df7e1223a981f0e11",
+      "S03.U17.answer": "7680c5ee8144058125f1514b161646f787bab723a37313338b47e7919a330ed2",
+      "S04.U01": "e9456299072bac7b6b37655cabb735fa3fb74342bb78630b3392ac96172dca3c",
+      "S04.U02": "1292468b3606ea0cdbbfef733bee8d85e16bc5281afca2b7934a6f5a5be157ef",
+      "S04.U03": "1e6a90951165f230b5b61e2a6d005fcd1fb30cfe6775ad74e524311412ed670f",
+      "S04.U04": "6c8a9e06b6cb63984aaeb8ac75d0074de2ec2be6084d285ebe1e4b7790d3e6b6",
+      "S04.U05": "494355b81fc119943331d52dbf7d7439f750e74ece662cf2718f33870311aa52",
+      "S04.U06": "cbd9796aa8118ef4693e273ca97cec0daf2e03a668108754f8362a04f2e5ee0d",
+      "S04.U07": "610b6392c82e6eb8fafee3dfa7a1492181e58554809857fa050f122b103d32b2",
+      "S04.U08": "4c68628ccbf29d9caf8c4228818ada41ca05b73a00ce4cf5359e72e3d29252ca",
+      "S04.U09": "51d38f90f6fe27b064f773abc91d4453fa18dfff6e7afbf90fa67da49905fd8d",
+      "S04.U10": "dbb5ded5d4e9691ad7df3297169fa647d78c187f9ebbf92e62a57c364d83dd9e",
+      "S05.U01": "d63a08862993bf14072df43e0dd289a3bf05a078e0fb32f62d018e624d3f278f",
+      "S05.U02": "9b93b0b047592e8cb7520dfcea8bff3abed223794615e9eed13673aa58d8307b",
+      "S05.U03": "55b09fe96d69416ae0703cab81693621017476487b7475ad0cdbc4d20b0b149d",
+      "S05.U04": "3f7bc789ab86c382a1dff9ad9059ceed3abeebfa6f3fe403d93e55f9c4399da7",
+      "S05.U05": "ca3323b85cbf9c0195b639c21848c14ff20dc640a078d4657a3e47149f7e180e",
+      "S05.U06": "41996b5538925e21018656a8c81b8b90a32fe284f7429ae4945273dc9f72575a",
+      "S05.U07": "2d02f872af2c3df61ccc62467ccd8d1520abfb8816936c5a7c4901d1673a6dfd",
+      "S05.U08": "c9b68c9dcbd0976ca26d2d32b330d741cb91f2a8e3a03a29ead4246812c922fd",
+      "S05.U09": "653ed5cd3b256a2223a84829e08df5c1ee0cd2dc19c3e243a2800824a2aa0a92"
+    },
+    "input_plan_hash": "60e76cc0b1271ac1b32a9f48c9ae760665bb7180cbdd52df6f5f5958f25db4ac",
+    "input_plan_revision": 2,
+    "is_selected_current_receipt": true
+  }
+]

@@ -1,0 +1,30 @@
+function renderFeedbackReview(run) {
+  const receipt = run.workflow_id === "lecture.generate" ? run.feedback_review : null;
+  if (!receipt) return;
+  const c = card("本轮最近一次反馈核查"); c.id = "feedback-review";
+  c.append(el("p", receipt.message || "以下为本轮最近一次自动核查结果。", { id: "feedback-review-message" }));
+  if (receipt.timestamp) c.append(el("small", `核查时间：${receipt.timestamp}`));
+  const stages = { pending: "等待逐项核查", reviewed: "已形成逐项说明", unresolved: "仍有无法确认的项目", invalid: "回执核对未通过", transport_pending: "模型调用尚未完成" };
+  c.append(el("p", `回执阶段：${stages[receipt.status] || "无法确认"}`, { id: "feedback-review-stage", class: "hint" }));
+  if (receipt.mock) c.append(el("p", "MOCK 演示回执：不代表真实模型已核实建议。", { class: "notice-inline" }));
+  const labels = { satisfied: "已满足", supported_improvement: "待改进", rejected_not_supported: "不适用", out_of_scope: "不适用", unresolved: "无法确认" };
+  if (["reviewed", "unresolved", "invalid", "transport_pending"].includes(receipt.status)) {
+    const list = el("ol", null, { id: "feedback-review-items" });
+    for (const item of receipt.items || []) {
+      const row = el("li", null, { "data-feedback-id": item.id, "data-feedback-status": item.status });
+      append(row, el("strong", `${item.id} · ${labels[item.status] || "无法确认"}`), el("p", item.reason));
+      if (item.unit_ids?.length) row.append(el("p", `相关单元：${item.unit_ids.join("、")}`, { class: "hint" }));
+      if (item.repair_unit_ids?.length) row.append(el("p", `建议修改单元：${item.repair_unit_ids.join("、")}`, { class: "hint" }));
+      list.append(row);
+    }
+    c.append(list);
+  }
+  if (receipt.limitations?.length) {
+    c.append(el("p", "自动核查限制：", { class: "hint" }));
+    const limitations = el("ul");
+    for (const value of receipt.limitations) limitations.append(el("li", value));
+    c.append(limitations);
+  }
+  c.append(el("p", "这是自动核查记录，不代替教师的数学审核与逐页视觉复核。", { class: "hint" }));
+  main.append(c);
+}

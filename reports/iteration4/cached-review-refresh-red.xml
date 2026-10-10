@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="7" skipped="0" tests="9" time="3.256" timestamp="2026-09-20T22:43:56.169926+08:00" hostname="Asuna"><testcase classname="tests.test_cached_review_refresh" name="test_same_contract_reuses_checkpoint_without_review_or_compile" time="0.283" /><testcase classname="tests.test_cached_review_refresh" name="test_changed_contract_rechecks_preserved_content_without_reauthoring[reviewer_prompt]" time="0.275"><failure message="AssertionError: assert (['S01', 'S02'] == ['S01', 'S02', 'S01', 'S02']&#10;  &#10;  Right contains 2 more items, first extra item: 'S01'&#10;  Use -v to get more diff)">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/crfred01/test_changed_contract_rechecks0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000014D305E4140&gt;
+change = 'reviewer_prompt'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('change', ['reviewer_prompt', 'legacy_contract'])
+    def test_changed_contract_rechecks_preserved_content_without_reauthoring(tmp_path, monkeypatch, change):
+        provider = GlobalRepairProvider()
+        service, pipeline, plan, compiles = setup(tmp_path, provider, monkeypatch)
+        first, _ = pipeline._lecture_sections(plan)
+        approved = copy.deepcopy(service.store.get_run(pipeline.run['id'])['approval'])
+        state_path = pipeline.root / 'local-repair/S01.json'
+        state = json.loads(state_path.read_bytes())
+        state.update(applied_rounds=2, proposal_calls=3, rejected_proposals=1,
+                     unit_applied_counts={'S01.U01': 2}, proposal_counts_by_key={'unit:S01.U01': 3},
+                     rejected_counts_by_key={'unit:S01.U01': 1})
+        write_json(state_path, state)
+        if change == 'reviewer_prompt':
+            change_reviewer_prompt(tmp_path, monkeypatch)
+        else:
+            strip_contracts(pipeline)
+        second, _ = pipeline._lecture_sections(plan)
+        assert second == first and provider.writes == ['S01', 'S02']
+&gt;       assert provider.locals == ['S01', 'S02', 'S01', 'S02'] and len(compiles) == 4
+E       AssertionError: assert (['S01', 'S02'] == ['S01', 'S02', 'S01', 'S02']
+E         
+E         Right contains 2 more items, first extra item: 'S01'
+E         Use -v to get more diff)
+
+tests\test_cached_review_refresh.py:66: AssertionError</failure></testcase><testcase classname="tests.test_cached_review_refresh" name="test_changed_contract_rechecks_preserved_content_without_reauthoring[legacy_contract]" time="0.273"><failure message="AssertionError: assert (['S01', 'S02'] == ['S01', 'S02', 'S01', 'S02']&#10;  &#10;  Right contains 2 more items, first extra item: 'S01'&#10;  Use -v to get more diff)">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/crfred01/test_changed_contract_rechecks1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000014D3061C4D0&gt;
+change = 'legacy_contract'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('change', ['reviewer_prompt', 'legacy_contract'])
+    def test_changed_contract_rechecks_preserved_content_without_reauthoring(tmp_path, monkeypatch, change):
+        provider = GlobalRepairProvider()
+        service, pipeline, plan, compiles = setup(tmp_path, provider, monkeypatch)
+        first, _ = pipeline._lecture_sections(plan)
+        approved = copy.deepcopy(service.store.get_run(pipeline.run['id'])['approval'])
+        state_path = pipeline.root / 'local-repair/S01.json'
+        state = json.loads(state_path.read_bytes())
+        state.update(applied_rounds=2, proposal_calls=3, rejected_proposals=1,
+                     unit_applied_counts={'S01.U01': 2}, proposal_counts_by_key={'unit:S01.U01': 3},
+                     rejected_counts_by_key={'unit:S01.U01': 1})
+        write_json(state_path, state)
+        if change == 'reviewer_prompt':
+            change_reviewer_prompt(tmp_path, monkeypatch)
+        else:
+            strip_contracts(pipeline)
+        second, _ = pipeline._lecture_sections(plan)
+        assert second == first and provider.writes == ['S01', 'S02']
+&gt;       assert provider.locals == ['S01', 'S02', 'S01', 'S02'] and len(compiles) == 4
+E       AssertionError: assert (['S01', 'S02'] == ['S01', 'S02', 'S01', 'S02']
+E         
+E         Right contains 2 more items, first extra item: 'S01'
+E         Use -v to get more diff)
+
+tests\test_cached_review_refresh.py:66: AssertionError</failure></testcase><testcase classname="tests.test_cached_review_refresh" name="test_legacy_verified_prefix_rechecks_downstream_after_upstream_changes" time="0.370"><failure message="math_agent.util.AgentError: 局部恢复上下文改变；旧计数和未决疑点保留，不能静默重置">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/crfred01/test_legacy_verified_prefix_re0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000014D30660980&gt;
+
+    @pytest.mark.unit
+    def test_legacy_verified_prefix_rechecks_downstream_after_upstream_changes(tmp_path, monkeypatch):
+        provider = GlobalRepairProvider()
+        _, pipeline, plan, compiles = setup(tmp_path, provider, monkeypatch)
+        original, _ = pipeline._lecture_sections(plan)
+        strip_contracts(pipeline)
+        forced = copy.deepcopy(original[0][1])
+        forced['units'][0]['tex'] += ' 这一已接受的前置假设必须保留。'
+        rechecked = []
+&gt;       completed, _ = pipeline._lecture_sections(plan, {'S01': forced},
+            lambda sid, generated: rechecked.append((sid, copy.deepcopy(generated))))
+
+tests\test_cached_review_refresh.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\math_agent\pipeline.py:567: in _lecture_sections
+    recovery=LocalRecovery(self,spec,context,generated,plan,draft,forced=sid in forced_sections)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.local_recovery.LocalRecovery object at 0x0000014D3059BAA0&gt;
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000014D30662E10&gt;
+spec = {'id': 'S02', 'objectives': [], 'prerequisites': ['S01'], 'reference_labels': [], ...}
+context = {'section': {'id': 'S02', 'objectives': [], 'prerequisites': ['S01'], 'reference_labels': [], ...}, 'plan': {'decision...有内容。', 'relates_to': None}], 'calculations': [], 'calculation_limitations': [], ...}], 'topic': 'Offline fixture', ...}
+base = {'section_id': 'S02', 'units': [{'id': 'S02.U01', 'kind': 'explanation', 'tex': '取足够大的正整数 N。', 'relates_to': None}, {'...ind': 'explanation', 'tex': '保留本单元所有内容。', 'relates_to': None}], 'calculations': [], 'calculation_limitations': [], ...}
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+draft = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/crfred01/test_legacy_verified_prefix_re0/w/b/3745abbdc09c40f1/sS02_67689e89c3de')
+forced = False
+
+    def __init__(self,pipeline,spec,context,base,plan,draft,forced=False):
+        self.p=pipeline;self.spec=spec;self.draft=draft
+        self.path=pipeline.root/'local-repair'/(spec['id']+'.json')
+        self.folder=pipeline.root/'local-repair'/spec['id']
+        self.identity={'plan_hash':plan['hash'],'section_id':spec['id'],'context_hash':digest(context),
+            'base_hash':digest(base),'model':getattr(pipeline,'preferred_model_name',pipeline.settings.model),'provider':pipeline.run['input']['provider']}
+        self.state=None
+        if not self.path.exists() and self.folder.exists() and any(self.folder.glob('candidate-*.json')):
+            raise AgentError('LOCAL_REPAIR_CACHE_INVALID','局部状态指针缺失而历史候选仍存在，不能重置预算或按时间猜选稿件')
+        if self.path.exists():
+            try:
+                old=json.loads(self.path.read_bytes())
+                if old['identity']['plan_hash']==plan['hash']:
+                    self.state=old;self._candidate()
+                    if old['phase']=='LEGACY_IMPORT_BLOCKED':
+                        raise AgentError('LOCAL_REPAIR_LEGACY_UNVERIFIED','旧局部修复链仍未验证，不能在重试时绕过原阻塞')
+                    if old['identity']!=self.identity:
+                        if not forced:
+&gt;                           raise AgentError('LOCAL_REPAIR_IDENTITY_CHANGED','局部恢复上下文改变；旧计数和未决疑点保留，不能静默重置')
+E                           math_agent.util.AgentError: 局部恢复上下文改变；旧计数和未决疑点保留，不能静默重置
+
+src\math_agent\local_recovery.py:40: AgentError</failure></testcase><testcase classname="tests.test_cached_review_refresh" name="test_refresh_restart_keeps_newest_accepted_local_candidate" time="0.250"><failure message="AssertionError: assert ({'calculation...ies': [], ...} == {'section_id'...ons': [], ...}&#10;  &#10;  Omitting 4 identical items, use -vv to show&#10;  Differing items:&#10;  {'units': [{'id': 'S01.U01', 'kind': 'explanation', 'relates_to': None, 'tex': '取足够大的正整数 N。'}, {'id': 'S01.U02', 'kind': 'explanation', 'relates_to': None, 'tex': '保留本单元所有内容。'}]} != {'units': [{'id': 'S01.U01', 'kind': 'explanation', 'tex': '取足够大的正整数 N。 已接受的局部修复必须保留。', 'relates_to': None}, {'id': 'S01.U02', 'kind': 'explanation', 'tex': '保留本单元所有内容。', 'relates_to': None}]}&#10;  Use -v to get more diff)">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/crfred01/test_refresh_restart_keeps_new0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000014D305E4320&gt;
+
+    @pytest.mark.unit
+    def test_refresh_restart_keeps_newest_accepted_local_candidate(tmp_path, monkeypatch):
+        provider = GlobalRepairProvider()
+        _, pipeline, plan, _ = setup(tmp_path, provider, monkeypatch)
+        original, _ = pipeline._lecture_sections(plan)
+        state_path = pipeline.root / 'local-repair/S01.json'
+        state = json.loads(state_path.read_bytes())
+        accepted = copy.deepcopy(original[0][1])
+        accepted['units'][0]['tex'] += ' 已接受的局部修复必须保留。'
+        candidate = pipeline.root / 'local-repair/S01/fixture-accepted.json'
+        write_json(candidate, accepted)
+        state.update(candidate_key=candidate.relative_to(pipeline.settings.workspace).as_posix(),
+                     candidate_hash=digest(candidate.read_bytes()), phase='UNCHECKED_REPAIRED',
+                     applied_rounds=1, proposal_calls=1, unit_applied_counts={'S01.U01': 1})
+        write_json(state_path, state)
+        change_reviewer_prompt(tmp_path, monkeypatch)
+        completed, _ = pipeline._lecture_sections(plan)
+&gt;       assert completed[0][1] == accepted and completed[1][1] == original[1][1]
+E       AssertionError: assert ({'calculation...ies': [], ...} == {'section_id'...ons': [], ...}
+E         
+E         Omitting 4 identical items, use -vv to show
+E         Differing items:
+E         {'units': [{'id': 'S01.U01', 'kind': 'explanation', 'relates_to': None, 'tex': '取足够大的正整数 N。'}, {'id': 'S01.U02', 'kind': 'explanation', 'relates_to': None, 'tex': '保留本单元所有内容。'}]} != {'units': [{'id': 'S01.U01', 'kind': 'explanation', 'tex': '取足够大的正整数 N。 已接受的局部修复必须保留。', 'relates_to': None}, {'id': 'S01.U02', 'kind': 'explanation', 'tex': '保留本单元所有内容。', 'relates_to': None}]}
+E         Use -v to get more diff)
+
+tests\test_cached_review_refresh.py:112: AssertionError</failure></testcase><testcase classname="tests.test_cached_review_refresh" name="test_refresh_does_not_accept_corrupt_or_uncontrolled_checkpoint[checkpoint_hash]" time="0.331"><failure message="Failed: DID NOT RAISE AgentError">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/crfred01/test_refresh_does_not_accept_c0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000014D3059ADE0&gt;
+corruption = 'checkpoint_hash'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('corruption', ['checkpoint_hash', 'source_hash', 'source_outside_build'])
+    def test_refresh_does_not_accept_corrupt_or_uncontrolled_checkpoint(tmp_path, monkeypatch, corruption):
+        provider = GlobalRepairProvider()
+        _, pipeline, plan, _ = setup(tmp_path, provider, monkeypatch)
+        pipeline._lecture_sections(plan)
+        change_reviewer_prompt(tmp_path, monkeypatch)
+        with pipeline.store.transaction() as connection:
+            row = connection.execute('SELECT * FROM steps WHERE run_id=? AND step_key=?',
+                (pipeline.run['id'], 'section.S01')).fetchone()
+            output = json.loads(row['output_json'])
+            if corruption == 'checkpoint_hash':
+                connection.execute('UPDATE steps SET output_hash=? WHERE run_id=? AND step_key=?',
+                    ('corrupted', pipeline.run['id'], 'section.S01'))
+            elif corruption == 'source_hash':
+                (pipeline.settings.workspace / output['source_key']).write_bytes(b'corrupted')
+            else:
+                escaped = pipeline.settings.workspace / 'uncontrolled.tex'
+                escaped.write_bytes((pipeline.settings.workspace / output['source_key']).read_bytes())
+                output['source_key'] = escaped.relative_to(pipeline.settings.workspace).as_posix()
+                connection.execute('UPDATE steps SET output_json=?,output_hash=? WHERE run_id=? AND step_key=?',
+                    (json.dumps(output), digest(output), pipeline.run['id'], 'section.S01'))
+&gt;       with pytest.raises(AgentError) as error:
+E       Failed: DID NOT RAISE AgentError
+
+tests\test_cached_review_refresh.py:140: Failed</failure></testcase><testcase classname="tests.test_cached_review_refresh" name="test_refresh_does_not_accept_corrupt_or_uncontrolled_checkpoint[source_hash]" time="0.344"><failure message="Failed: DID NOT RAISE AgentError">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/crfred01/test_refresh_does_not_accept_c1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000014D3064D490&gt;
+corruption = 'source_hash'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('corruption', ['checkpoint_hash', 'source_hash', 'source_outside_build'])
+    def test_refresh_does_not_accept_corrupt_or_uncontrolled_checkpoint(tmp_path, monkeypatch, corruption):
+        provider = GlobalRepairProvider()
+        _, pipeline, plan, _ = setup(tmp_path, provider, monkeypatch)
+        pipeline._lecture_sections(plan)
+        change_reviewer_prompt(tmp_path, monkeypatch)
+        with pipeline.store.transaction() as connection:
+            row = connection.execute('SELECT * FROM steps WHERE run_id=? AND step_key=?',
+                (pipeline.run['id'], 'section.S01')).fetchone()
+            output = json.loads(row['output_json'])
+            if corruption == 'checkpoint_hash':
+                connection.execute('UPDATE steps SET output_hash=? WHERE run_id=? AND step_key=?',
+                    ('corrupted', pipeline.run['id'], 'section.S01'))
+            elif corruption == 'source_hash':
+                (pipeline.settings.workspace / output['source_key']).write_bytes(b'corrupted')
+            else:
+                escaped = pipeline.settings.workspace / 'uncontrolled.tex'
+                escaped.write_bytes((pipeline.settings.workspace / output['source_key']).read_bytes())
+                output['source_key'] = escaped.relative_to(pipeline.settings.workspace).as_posix()
+                connection.execute('UPDATE steps SET output_json=?,output_hash=? WHERE run_id=? AND step_key=?',
+                    (json.dumps(output), digest(output), pipeline.run['id'], 'section.S01'))
+&gt;       with pytest.raises(AgentError) as error:
+E       Failed: DID NOT RAISE AgentError
+
+tests\test_cached_review_refresh.py:140: Failed</failure></testcase><testcase classname="tests.test_cached_review_refresh" name="test_refresh_does_not_accept_corrupt_or_uncontrolled_checkpoint[source_outside_build]" time="0.256"><failure message="Failed: DID NOT RAISE AgentError">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/crfred01/test_refresh_does_not_accept_c2')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000014D3064CA10&gt;
+corruption = 'source_outside_build'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('corruption', ['checkpoint_hash', 'source_hash', 'source_outside_build'])
+    def test_refresh_does_not_accept_corrupt_or_uncontrolled_checkpoint(tmp_path, monkeypatch, corruption):
+        provider = GlobalRepairProvider()
+        _, pipeline, plan, _ = setup(tmp_path, provider, monkeypatch)
+        pipeline._lecture_sections(plan)
+        change_reviewer_prompt(tmp_path, monkeypatch)
+        with pipeline.store.transaction() as connection:
+            row = connection.execute('SELECT * FROM steps WHERE run_id=? AND step_key=?',
+                (pipeline.run['id'], 'section.S01')).fetchone()
+            output = json.loads(row['output_json'])
+            if corruption == 'checkpoint_hash':
+                connection.execute('UPDATE steps SET output_hash=? WHERE run_id=? AND step_key=?',
+                    ('corrupted', pipeline.run['id'], 'section.S01'))
+            elif corruption == 'source_hash':
+                (pipeline.settings.workspace / output['source_key']).write_bytes(b'corrupted')
+            else:
+                escaped = pipeline.settings.workspace / 'uncontrolled.tex'
+                escaped.write_bytes((pipeline.settings.workspace / output['source_key']).read_bytes())
+                output['source_key'] = escaped.relative_to(pipeline.settings.workspace).as_posix()
+                connection.execute('UPDATE steps SET output_json=?,output_hash=? WHERE run_id=? AND step_key=?',
+                    (json.dumps(output), digest(output), pipeline.run['id'], 'section.S01'))
+&gt;       with pytest.raises(AgentError) as error:
+E       Failed: DID NOT RAISE AgentError
+
+tests\test_cached_review_refresh.py:140: Failed</failure></testcase><testcase classname="tests.test_cached_review_refresh" name="test_legacy_checkpoint_cannot_be_claimed_by_different_approved_plan" time="0.508" /></testsuite></testsuites>

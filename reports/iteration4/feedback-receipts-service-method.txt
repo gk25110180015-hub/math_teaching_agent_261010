@@ -1,0 +1,96 @@
+    def feedback_review(self, run):
+        """Read only the latest receipt for this approved build and feedback action."""
+        plan, approval = run.get('plan'), run.get('approval')
+        if run['workflow_id'] != 'lecture.generate' or not plan or not approval:
+            return None
+        if (plan.get('hash'), plan.get('revision')) != (approval.get('hash'), approval.get('revision')):
+            return None
+        with self.store.connect() as connection:
+            connection.execute('BEGIN')
+            job = connection.execute("SELECT id FROM jobs WHERE run_id=? AND kind='build' ORDER BY created_at DESC,rowid DESC LIMIT 1", (run['id'],)).fetchone()
+            action_row = connection.execute("SELECT sequence,payload_json FROM events WHERE run_id=? AND type='checks.rerun_requested' ORDER BY sequence DESC LIMIT 1", (run['id'],)).fetchone()
+            if not job or not action_row or job['id'] not in {value['id'] for value in run['jobs']}:
+                return None
+            try:
+                action = json.loads(action_row['payload_json'])
+            except (TypeError, ValueError):
+                return None
+            if (not isinstance(action, dict) or action.get('job_id') != job['id']
+                    or action.get('plan_hash') != plan['hash'] or type(action.get('plan_revision')) is not int
+                    or action['plan_revision'] != plan['revision']):
+                return None
+            feedback = action.get('feedback', '')
+            if not isinstance(feedback, str) or not feedback.strip():
+                return None
+            summary = {'status': 'pending', 'job_id': job['id'], 'plan_hash': plan['hash'],
+                'plan_revision': plan['revision'], 'feedback_hash': digest(feedback),
+                'feedback_source': action.get('feedback_source', 'user'),
+                'items': [], 'teacher_review': 'NOT_RUN',
+                'message': '本轮反馈尚未完成逐项自动核查。'}
+            rows = connection.execute("SELECT sequence,timestamp,payload_json FROM events WHERE run_id=? AND type='feedback.reviewed' AND sequence>? ORDER BY sequence DESC", (run['id'], action_row['sequence']))
+            for row in rows:
+                try:
+                    data = json.loads(row['payload_json'])
+                except (TypeError, ValueError):
+                    return {**summary, 'status': 'invalid', 'message': '本轮反馈回执无法读取，尚不能确认处理结果。'}
+                if not isinstance(data, dict):
+                    return {**summary, 'status': 'invalid', 'message': '本轮反馈回执格式无效，尚不能确认处理结果。'}
+                if (data.get('job_id') != job['id'] or data.get('plan_hash') != plan['hash']
+                        or data.get('plan_revision') != plan['revision']):
+                    continue
+                valid = self._valid_feedback_receipt(data, summary, plan, feedback)
+                if not valid:
+                    return {**summary, 'status': 'invalid', 'event_sequence': row['sequence'],
+                        'message': '本轮反馈回执未通过格式或归属核对，尚不能确认处理结果。'}
+                return {**summary, **data, 'event_sequence': row['sequence'], 'timestamp': row['timestamp'],
+                    'message': '回执对应核查时的正文快照；若任务仍在修订，后续需再次核查。待改进项尚未闭环。'}
+        return summary
+
+    @staticmethod
+    def _valid_feedback_receipt(data, expected, plan, feedback):
+        import re
+        from pydantic import ValidationError
+        from .feedback_review import FeedbackAssessment, extract_feedback_items
+        keys = {'schema_version', 'job_id', 'plan_hash', 'plan_revision', 'feedback_hash',
+            'identity_hash', 'status', 'items', 'limitations', 'evidence_key', 'evidence_sha256', 'teacher_review', 'mock'}
+        if set(data) != keys or type(data.get('schema_version')) is not int or data['schema_version'] != 1:
+            return False
+        if any(data.get(key) != expected[key] for key in ('job_id', 'plan_hash', 'plan_revision', 'feedback_hash')):
+            return False
+        if type(data['plan_revision']) is not int or data['teacher_review'] != 'NOT_RUN' or type(data['mock']) is not bool:
+            return False
+        if data['status'] not in ('reviewed', 'unresolved', 'invalid', 'transport_pending'):
+            return False
+        if any(not isinstance(data[key], str) or not re.fullmatch(r'[0-9a-f]{64}', data[key])
+               for key in ('identity_hash', 'evidence_sha256')):
+            return False
+        if not isinstance(data['evidence_key'], str) or not 1 <= len(data['evidence_key']) <= 1000:
+            return False
+        try:
+            assessment = FeedbackAssessment.model_validate({'items': data['items'], 'limitations': data['limitations']}).model_dump()
+            expected_ids = [item['id'] for item in extract_feedback_items(feedback)]
+        except (ValidationError, ValueError, TypeError):
+            return False
+        items = assessment['items']
+        if [item['id'] for item in items] != expected_ids:
+            return False
+        sections = {section['id'] for section in plan['sections']}
+        for item in items:
+            if len(set(item['unit_ids'])) != len(item['unit_ids']):
+                return False
+            repair_ids = item['repair_unit_ids']
+            if len(set(repair_ids)) != len(repair_ids) or not set(repair_ids).issubset(item['unit_ids']):
+                return False
+            if bool(repair_ids) != (item['status'] == 'supported_improvement'):
+                return False
+            for value in item['unit_evidence']:
+                if value['unit_id'] not in item['unit_ids']:
+                    return False
+            for value in item['objective_evidence']:
+                if value['section_id'] is not None and value['section_id'] not in sections:
+                    return False
+        # Invalid/unfinished transport may carry unresolved explanations, never
+        # a previous satisfaction or a supported content modification.
+        if data['status'] in ('invalid', 'transport_pending') and any(item['status'] != 'unresolved' for item in items):
+            return False
+        return True

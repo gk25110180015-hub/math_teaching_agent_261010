@@ -1,0 +1,1879 @@
+{
+  "id": "fd6736af6ef14be3839e019e86ca1e5c",
+  "workflow_id": "lecture.generate",
+  "version": 1,
+  "owner_id": "local",
+  "status": "AWAITING_USER_REVIEW",
+  "stage": "review.pages_and_quality",
+  "input_hash": "a166b0d13bb18f8d1a66fdc2b8d90338d52d4f70e752ae1ba56eb1895cd8f1f0",
+  "active_plan_revision": 2,
+  "created_at": "2026-09-19T18:33:59.863267+00:00",
+  "updated_at": "2026-09-20T15:55:46.801636+00:00",
+  "request_count": 61,
+  "schema_version": 1,
+  "input": {
+    "attachments": [],
+    "difficulty": "经济学本科一年级微积分",
+    "provider": "live",
+    "schema_version": 1,
+    "theme": "default",
+    "topic": "无穷级数。覆盖级数与部分和、收敛的必要条件、正项级数判别、交错级数、绝对与条件收敛，规划4至6节完整的本科入门讲义，每节至少一个例题和一个练习。",
+    "trusted_input": true,
+    "units": [],
+    "use_reference_bibliography": false,
+    "workflow_id": "lecture.generate"
+  },
+  "error": null,
+  "plan": {
+    "additions": [],
+    "decision_ids": [
+      "dbde55a67c6144ce89263342b374f0ec",
+      "b2dfa936727f45eaa04d3693772c83d4",
+      "53b60707cba94067953a43625e4ee791",
+      "3a0b619387ce425ab35e31d9aa0faaf1"
+    ],
+    "decisions": [
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "custom_input": "",
+        "id": "dbde55a67c6144ce89263342b374f0ec",
+        "question_id": "Q-PROOF",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "key"
+        },
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "timestamp": "2026-09-19T18:34:31.207163+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "custom_input": "",
+        "id": "b2dfa936727f45eaa04d3693772c83d4",
+        "question_id": "Q-EXAMPLE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "balanced"
+        },
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "timestamp": "2026-09-19T18:34:31.207163+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "custom_input": "",
+        "id": "53b60707cba94067953a43625e4ee791",
+        "question_id": "Q-EXERCISE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "with_answers"
+        },
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "timestamp": "2026-09-19T18:34:31.207163+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "custom_input": "",
+        "id": "3a0b619387ce425ab35e31d9aa0faaf1",
+        "question_id": "Q-ANSWERS",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "end"
+        },
+        "selected_option_ids": [
+          "END"
+        ],
+        "timestamp": "2026-09-19T18:34:31.207163+00:00"
+      }
+    ],
+    "diff": [
+      {
+        "after": {
+          "answers_location": "end",
+          "example_focus": "balanced",
+          "exercises": "with_answers",
+          "proof_policy": "key"
+        },
+        "before": {
+          "answers_location": null,
+          "example_focus": null,
+          "exercises": null,
+          "proof_policy": null
+        },
+        "field": "lecture"
+      }
+    ],
+    "difficulty": "经济学本科一年级微积分",
+    "exclusions": [
+      "不讨论幂级数、函数项级数和傅里叶级数",
+      "不讨论一致收敛、逐项积分与逐项求导",
+      "不系统展开高等数学中的积分判别法证明细节",
+      "不涉及复数项级数"
+    ],
+    "input_snapshot_hash": "a166b0d13bb18f8d1a66fdc2b8d90338d52d4f70e752ae1ba56eb1895cd8f1f0",
+    "lecture": {
+      "answers_location": "end",
+      "example_focus": "balanced",
+      "exercises": "with_answers",
+      "proof_policy": "key"
+    },
+    "objectives": [
+      "建立无穷级数、部分和与收敛的基本概念",
+      "掌握级数收敛的必要条件及基本运算性质",
+      "能够使用正项级数、交错级数和绝对收敛判别法分析级数",
+      "区分绝对收敛、条件收敛与发散，并完成基础证明与计算题"
+    ],
+    "omissions": [],
+    "prerequisites": [
+      "实数运算与不等式",
+      "数列极限的定义与基本性质",
+      "函数极限和连续性的初步知识",
+      "有限等比数列求和与基本积分估计"
+    ],
+    "provider": "live",
+    "questions": [
+      {
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-PROOF",
+        "options": [
+          {
+            "effects": {
+              "value": "key"
+            },
+            "id": "KEY",
+            "label": "关键定理完整证明，其余说明",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "all"
+            },
+            "id": "ALL",
+            "label": "所有定理完整证明",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "定理证明采用哪种深度？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXAMPLE",
+        "options": [
+          {
+            "effects": {
+              "value": "balanced"
+            },
+            "id": "BALANCED",
+            "label": "概念与计算均衡",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "economics"
+            },
+            "id": "ECONOMICS",
+            "label": "更多经济应用",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "例题侧重什么？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXERCISE",
+        "options": [
+          {
+            "effects": {
+              "value": "with_answers"
+            },
+            "id": "WITH",
+            "label": "安排练习并附答案",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "none"
+            },
+            "id": "NONE",
+            "label": "不安排额外练习",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "是否安排练习与答案？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-ANSWERS",
+        "options": [
+          {
+            "effects": {
+              "value": "section"
+            },
+            "id": "SECTION",
+            "label": "各节之后",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "end"
+            },
+            "id": "END",
+            "label": "讲义末尾",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "练习答案放在哪里？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "END"
+        ],
+        "selection_mode": "single"
+      }
+    ],
+    "reference_context": {
+      "dataset": "第二章",
+      "instruction": "Only observe structure, proof depth and notation. Do not copy these examples into a different topic.",
+      "label": "UNTRUSTED_STYLE_REFERENCE_ONLY",
+      "section_titles": [
+        "级数概念的引入",
+        "级数的基本概念",
+        "几何级数",
+        "级数的基本性质",
+        "正项级数及其判别法",
+        "任意项级数的敛散性及其判别法",
+        "判别法小结"
+      ],
+      "source_hash": "5b4e70a9538eae85392ea4d0773ff9d07595ff0d40c6518641396ae938502b0b",
+      "status": "RETRIEVED",
+      "weight_training": false
+    },
+    "reference_registry": {
+      "def:absolute-convergence": "S05",
+      "def:alternating-series": "S04",
+      "def:conditional-convergence": "S05",
+      "def:convergence": "S01",
+      "def:p-series": "S03",
+      "def:partial-sum": "S01",
+      "def:positive-series": "S03",
+      "def:remainder": "S02",
+      "def:series": "S01",
+      "sec:S01": "S01",
+      "sec:S02": "S02",
+      "sec:S03": "S03",
+      "sec:S04": "S04",
+      "sec:S05": "S05",
+      "thm:absolute-implies-convergence": "S05",
+      "thm:alternating-remainder": "S04",
+      "thm:alternating-test": "S04",
+      "thm:comparison": "S03",
+      "thm:comparison-summary": "S05",
+      "thm:convergence-classification": "S05",
+      "thm:finite-change": "S02",
+      "thm:integral-test": "S03",
+      "thm:limit-comparison": "S03",
+      "thm:linearity": "S02",
+      "thm:monotone-partial-sums": "S03",
+      "thm:series-limit": "S01",
+      "thm:term-test": "S02"
+    },
+    "revision": 2,
+    "rules": {
+      "allowed_text_sizes": [
+        "footnotesize",
+        "small",
+        "normalsize",
+        "large"
+      ],
+      "rule_version": 1,
+      "summary_frames": false
+    },
+    "schema_version": 1,
+    "sections": [
+      {
+        "id": "S01",
+        "objectives": [
+          "定义无穷级数及其部分和数列",
+          "说明级数收敛与部分和数列极限之间的关系",
+          "掌握级数收敛、发散和级数和的基本表述",
+          "通过基础例题计算部分和或判断简单级数的收敛性"
+        ],
+        "prerequisites": [],
+        "reference_labels": [
+          "def:series",
+          "def:partial-sum",
+          "def:convergence",
+          "thm:series-limit"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "级数与部分和的基本概念"
+      },
+      {
+        "id": "S02",
+        "objectives": [
+          "证明级数收敛时通项必须趋于零",
+          "掌握级数的线性运算、余项和有限项改变性质",
+          "利用必要条件快速判断典型发散级数",
+          "通过例题分析调和型和常数项级数的基本行为"
+        ],
+        "prerequisites": [
+          "S01"
+        ],
+        "reference_labels": [
+          "def:remainder",
+          "thm:term-test",
+          "thm:linearity",
+          "thm:finite-change"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "收敛的必要条件与级数的基本性质"
+      },
+      {
+        "id": "S03",
+        "objectives": [
+          "理解正项级数部分和单调性的作用",
+          "掌握比较判别法、极限比较判别法和积分判别法的使用条件",
+          "掌握几何级数和p级数等基本参照级数",
+          "能够选择合适判别法判断正项级数的收敛性"
+        ],
+        "prerequisites": [
+          "S01",
+          "S02"
+        ],
+        "reference_labels": [
+          "def:positive-series",
+          "def:p-series",
+          "thm:monotone-partial-sums",
+          "thm:comparison",
+          "thm:limit-comparison",
+          "thm:integral-test"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "正项级数及其判别法"
+      },
+      {
+        "id": "S04",
+        "objectives": [
+          "定义交错级数并识别其符号交替结构",
+          "掌握交错级数判别法及其余项估计",
+          "区分交错级数的收敛性与绝对收敛性",
+          "通过例题估计截断误差并判断条件收敛"
+        ],
+        "prerequisites": [
+          "S02",
+          "S03"
+        ],
+        "reference_labels": [
+          "def:alternating-series",
+          "thm:alternating-test",
+          "thm:alternating-remainder"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "交错级数与条件收敛"
+      },
+      {
+        "id": "S05",
+        "objectives": [
+          "定义绝对收敛和条件收敛",
+          "证明绝对收敛蕴含收敛",
+          "综合使用必要条件、比较判别法、交错级数判别法和绝对收敛判别法",
+          "建立面向本科入门题目的判别法选择流程并完成综合练习"
+        ],
+        "prerequisites": [
+          "S03",
+          "S04"
+        ],
+        "reference_labels": [
+          "def:absolute-convergence",
+          "def:conditional-convergence",
+          "thm:absolute-implies-convergence",
+          "thm:comparison-summary",
+          "thm:convergence-classification"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "绝对收敛、条件收敛与判别法综合"
+      }
+    ],
+    "symbols": {
+      "N": "正整数集合",
+      "S_n": "级数的第n个部分和",
+      "a_n": "级数的第n项或通项",
+      "epsilon": "任意给定的正数",
+      "r": "几何级数的公比",
+      "sum_a_n": "级数Σ_{n=1}^∞ a_n"
+    },
+    "theme": "default",
+    "title": "无穷级数：收敛性与基本判别法",
+    "unresolved_blocking_questions": [],
+    "workflow_id": "lecture.generate",
+    "hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227"
+  },
+  "approval": {
+    "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+    "revision": 2,
+    "hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227",
+    "input_hash": "a166b0d13bb18f8d1a66fdc2b8d90338d52d4f70e752ae1ba56eb1895cd8f1f0",
+    "action_id": "benchmark_driver:CH02:7e9b8e62373d9861",
+    "confirmed_at": "2026-09-19T18:34:31.219285+00:00"
+  },
+  "jobs": [
+    {
+      "id": "9e3c239b501540f18b48a53c7aacde95",
+      "kind": "plan",
+      "status": "done",
+      "attempt": 1,
+      "fencing_token": 1
+    },
+    {
+      "id": "89ed98cbdc344a00956f73456c8654a0",
+      "kind": "build",
+      "status": "done",
+      "attempt": 6,
+      "fencing_token": 6
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "14491fd90b1d478785feec90a6736900",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "failure_diagnostic.json",
+      "sha256": "d2c4cbd359954c3e922d7ecc0a96e3dc122a6c6fb4faac1e4e6495296d4e34fc",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-19T18:43:45.570715+00:00",
+      "metadata": {
+        "attempt": 1,
+        "kind": "failure_diagnostic"
+      }
+    },
+    {
+      "artifact_id": "e7973f151e0c4f47bf1d3e1ddb081c1e",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "failure_diagnostic.json",
+      "sha256": "ff2dd72a73ccb61bd0e31ef6f0493d3cc000abc18933a4729ba5e87a4c269d6e",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-19T19:20:24.527339+00:00",
+      "metadata": {
+        "attempt": 2,
+        "kind": "failure_diagnostic"
+      }
+    },
+    {
+      "artifact_id": "88ff13afbb2d4bebb121d2e3c4b8e36f",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "failure_diagnostic.json",
+      "sha256": "d8436cc2d35d9059f7abf7ef6346bd8887838f256535c9387e2825fce591636b",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-19T20:18:02.169452+00:00",
+      "metadata": {
+        "attempt": 3,
+        "kind": "failure_diagnostic"
+      }
+    },
+    {
+      "artifact_id": "8ecf121f64b24872ac5e902967e45867",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "failure_diagnostic.json",
+      "sha256": "a33a3b378f03e14c36017bc79c86df252c0317ceb41ec84eaf223645b2d4a245",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-19T20:49:36.715198+00:00",
+      "metadata": {
+        "attempt": 4,
+        "kind": "failure_diagnostic"
+      }
+    },
+    {
+      "artifact_id": "e943aeee76024451a32e234aaf86e207",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "failure_diagnostic.json",
+      "sha256": "6c0b2534a47a41d5f28f7d58d43817ec5a9186c6ed65a1ffdfe55963d8ed2e26",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-20T14:45:14.526080+00:00",
+      "metadata": {
+        "attempt": 5,
+        "kind": "failure_diagnostic"
+      }
+    },
+    {
+      "artifact_id": "6d1bd66f22ec45d2935a788f9f8b2978",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "SOURCE_README.md",
+      "sha256": "8ef3fb0e300df7cd8cd7346566ae83bf968c345d930242dc62785676b975cbae",
+      "media_type": "text/markdown",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "32c3436712674386a8b46a86d13d997c",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "build_manifest.json",
+      "sha256": "37cfd1df80a557bafa09e9759c7fb199678f1bcd0bf76ccf443989799ef6080a",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "abcd97c99a7444c2975024163bf618c0",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "decision_coverage.json",
+      "sha256": "7aaf6f655119a47ef3c21b6f33a0fb76d9735f0e9d110f59e84373a754cac3e0",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "12e006216ce3467ba012627c3e433721",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "lecture.pdf",
+      "sha256": "694d3b6783a984a65164ff3217fd19037c0333a25dac8603e70850b201115382",
+      "media_type": "application/pdf",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "ef406cae343d4645b18f5fb7e9aa584b",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "lecture.tex",
+      "sha256": "0eeff02f2258d9b398ff7a1a8c7a63316cab863c955f6f8ad97fd7bf61431496",
+      "media_type": "application/x-tex",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "c0ea6d48f47f41b4939cae6543350cf2",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "page-0001.png",
+      "sha256": "3f91713f145f40bcbb9ba7519f990299337aef154e6aacb9189a67b53fb88f0d",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {
+        "frame_id": null,
+        "geometry": {
+          "body_region": {
+            "bbox_pt": null,
+            "calibration_status": "uncalibrated",
+            "profile_fingerprint": null
+          },
+          "character_count": 528,
+          "font_names": [
+            "AGTWZE+CMMI8",
+            "CBPAZI+CMSY10",
+            "CMYCNH+CMSY8",
+            "EAGELK+LMRoman10-Bold",
+            "FFVHMY+CMMI10",
+            "GPQJQG+FandolSong-Bold",
+            "IOFFGU+CMR8",
+            "JPIIWO+CMR10",
+            "SFQKZE+CMEX10",
+            "SXSHQG+LMRoman10-Italic",
+            "WTTIHH+FandolSong-Regular",
+            "YIZIFL+LMRoman10-Regular",
+            "ZGDIXK+LMRoman12-Bold",
+            "ZZLBTH+FandolKai-Regular"
+          ],
+          "font_sizes_pt": [
+            7.97,
+            10.909,
+            14.346,
+            17.215
+          ],
+          "image_count": 0,
+          "image_outside_page_count": 0,
+          "line_count": 4,
+          "page_height_pt": 841.89,
+          "page_width_pt": 595.28,
+          "pgf_hidden_character_count": 0,
+          "raw_character_count": 528,
+          "rectangle_count": 0,
+          "text_bbox_pt": [
+            68.031,
+            115.53,
+            527.239,
+            805.862
+          ],
+          "text_outside_page_count": 0
+        },
+        "issues": [],
+        "overlay_hidden_objects": [],
+        "overlay_index": null,
+        "physical_page": 1,
+        "review_status": "NOT_RUN",
+        "sha256": "3f91713f145f40bcbb9ba7519f990299337aef154e6aacb9189a67b53fb88f0d"
+      }
+    },
+    {
+      "artifact_id": "ca81fee4de834c1b9367d5433f837f55",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "page-0002.png",
+      "sha256": "d49ce63ac39a4b1b0e184bd20b34190cb314d315c909bb6e0a555782f1f322f3",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {
+        "frame_id": null,
+        "geometry": {
+          "body_region": {
+            "bbox_pt": null,
+            "calibration_status": "uncalibrated",
+            "profile_fingerprint": null
+          },
+          "character_count": 598,
+          "font_names": [
+            "AGTWZE+CMMI8",
+            "CBPAZI+CMSY10",
+            "CMYCNH+CMSY8",
+            "EAGELK+LMRoman10-Bold",
+            "FFVHMY+CMMI10",
+            "GPQJQG+FandolSong-Bold",
+            "IOFFGU+CMR8",
+            "JPIIWO+CMR10",
+            "LXZIQK+MSBM10",
+            "SFQKZE+CMEX10",
+            "SXSHQG+LMRoman10-Italic",
+            "WTTIHH+FandolSong-Regular",
+            "YIZIFL+LMRoman10-Regular",
+            "ZGDIXK+LMRoman12-Bold",
+            "ZOQWTY+LMRomanSlant10-Regular",
+            "ZZLBTH+FandolKai-Regular"
+          ],
+          "font_sizes_pt": [
+            7.97,
+            10.909,
+            14.346
+          ],
+          "image_count": 0,
+          "image_outside_page_count": 0,
+          "line_count": 13,
+          "page_height_pt": 841.89,
+          "page_width_pt": 595.28,
+          "pgf_hidden_character_count": 0,
+          "raw_character_count": 598,
+          "rectangle_count": 0,
+          "text_bbox_pt": [
+            68.031,
+            33.525,
+            534.264,
+            758.426
+          ],
+          "text_outside_page_count": 0
+        },
+        "issues": [],
+        "overlay_hidden_objects": [],
+        "overlay_index": null,
+        "physical_page": 2,
+        "review_status": "NOT_RUN",
+        "sha256": "d49ce63ac39a4b1b0e184bd20b34190cb314d315c909bb6e0a555782f1f322f3"
+      }
+    },
+    {
+      "artifact_id": "859faeee3b5f417c831ff9f634b4a534",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "page-0003.png",
+      "sha256": "d38b6b3a279eeb1a0c8561c78d58eb3cc4459ad849eb9050bd82267c30ef8a0b",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {
+        "frame_id": null,
+        "geometry": {
+          "body_region": {
+            "bbox_pt": null,
+            "calibration_status": "uncalibrated",
+            "profile_fingerprint": null
+          },
+          "character_count": 996,
+          "font_names": [
+            "ACPCAX+CMR6",
+            "AGTWZE+CMMI8",
+            "CBPAZI+CMSY10",
+            "CMYCNH+CMSY8",
+            "EAGELK+LMRoman10-Bold",
+            "FFVHMY+CMMI10",
+            "GPQJQG+FandolSong-Bold",
+            "IOFFGU+CMR8",
+            "JPIIWO+CMR10",
+            "JVKMPT+CMMI6",
+            "LXZIQK+MSBM10",
+            "NOJZNX+CMSY6",
+            "SFQKZE+CMEX10",
+            "SXSHQG+LMRoman10-Italic",
+            "WTTIHH+FandolSong-Regular",
+            "YIZIFL+LMRoman10-Regular",
+            "ZOQWTY+LMRomanSlant10-Regular",
+            "ZZLBTH+FandolKai-Regular"
+          ],
+          "font_sizes_pt": [
+            5.978,
+            7.97,
+            10.909
+          ],
+          "image_count": 0,
+          "image_outside_page_count": 0,
+          "line_count": 12,
+          "page_height_pt": 841.89,
+          "page_width_pt": 595.28,
+          "pgf_hidden_character_count": 0,
+          "raw_character_count": 996,
+          "rectangle_count": 0,
+          "text_bbox_pt": [
+            68.031,
+            33.525,
+            534.273,
+            761.911
+          ],
+          "text_outside_page_count": 0
+        },
+        "issues": [],
+        "overlay_hidden_objects": [],
+        "overlay_index": null,
+        "physical_page": 3,
+        "review_status": "NOT_RUN",
+        "sha256": "d38b6b3a279eeb1a0c8561c78d58eb3cc4459ad849eb9050bd82267c30ef8a0b"
+      }
+    },
+    {
+      "artifact_id": "20749a9926fe4ccd977c7a7450227fc3",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "page-0004.png",
+      "sha256": "bc39aa4af8b1a6e24743faf968128b5427743812d091e839f7f30299d0254bd2",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {
+        "frame_id": null,
+        "geometry": {
+          "body_region": {
+            "bbox_pt": null,
+            "calibration_status": "uncalibrated",
+            "profile_fingerprint": null
+          },
+          "character_count": 894,
+          "font_names": [
+            "AGTWZE+CMMI8",
+            "CBPAZI+CMSY10",
+            "CMYCNH+CMSY8",
+            "EAGELK+LMRoman10-Bold",
+            "FFVHMY+CMMI10",
+            "GPQJQG+FandolSong-Bold",
+            "IOFFGU+CMR8",
+            "JPIIWO+CMR10",
+            "SFQKZE+CMEX10",
+            "SXSHQG+LMRoman10-Italic",
+            "WTTIHH+FandolSong-Regular",
+            "YIZIFL+LMRoman10-Regular",
+            "ZOQWTY+LMRomanSlant10-Regular",
+            "ZZLBTH+FandolKai-Regular"
+          ],
+          "font_sizes_pt": [
+            7.97,
+            10.909
+          ],
+          "image_count": 0,
+          "image_outside_page_count": 0,
+          "line_count": 5,
+          "page_height_pt": 841.89,
+          "page_width_pt": 595.28,
+          "pgf_hidden_character_count": 0,
+          "raw_character_count": 894,
+          "rectangle_count": 0,
+          "text_bbox_pt": [
+            68.031,
+            33.525,
+            534.793,
+            772.195
+          ],
+          "text_outside_page_count": 0
+        },
+        "issues": [],
+        "overlay_hidden_objects": [],
+        "overlay_index": null,
+        "physical_page": 4,
+        "review_status": "NOT_RUN",
+        "sha256": "bc39aa4af8b1a6e24743faf968128b5427743812d091e839f7f30299d0254bd2"
+      }
+    },
+    {
+      "artifact_id": "a071bb554b1e4bd4ac06e4e97885c089",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "page-0005.png",
+      "sha256": "41c1d3adf481156c818b10c15f5e02bc4cacf2afb2d301c9a7ee4e52331e5bcd",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {
+        "frame_id": null,
+        "geometry": {
+          "body_region": {
+            "bbox_pt": null,
+            "calibration_status": "uncalibrated",
+            "profile_fingerprint": null
+          },
+          "character_count": 890,
+          "font_names": [
+            "AGTWZE+CMMI8",
+            "CBPAZI+CMSY10",
+            "CMYCNH+CMSY8",
+            "EAGELK+LMRoman10-Bold",
+            "FFVHMY+CMMI10",
+            "GPQJQG+FandolSong-Bold",
+            "IOFFGU+CMR8",
+            "JPIIWO+CMR10",
+            "SFQKZE+CMEX10",
+            "SXSHQG+LMRoman10-Italic",
+            "WTTIHH+FandolSong-Regular",
+            "YIZIFL+LMRoman10-Regular",
+            "ZGDIXK+LMRoman12-Bold",
+            "ZOQWTY+LMRomanSlant10-Regular",
+            "ZZLBTH+FandolKai-Regular"
+          ],
+          "font_sizes_pt": [
+            7.97,
+            10.909,
+            14.346
+          ],
+          "image_count": 0,
+          "image_outside_page_count": 0,
+          "line_count": 4,
+          "page_height_pt": 841.89,
+          "page_width_pt": 595.28,
+          "pgf_hidden_character_count": 0,
+          "raw_character_count": 890,
+          "rectangle_count": 0,
+          "text_bbox_pt": [
+            68.031,
+            33.525,
+            534.27,
+            750.227
+          ],
+          "text_outside_page_count": 0
+        },
+        "issues": [],
+        "overlay_hidden_objects": [],
+        "overlay_index": null,
+        "physical_page": 5,
+        "review_status": "NOT_RUN",
+        "sha256": "41c1d3adf481156c818b10c15f5e02bc4cacf2afb2d301c9a7ee4e52331e5bcd"
+      }
+    },
+    {
+      "artifact_id": "5528e3a94d204909b4483dc47346a657",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "page-0006.png",
+      "sha256": "c98fe0df09fbb6c5a0c26285f81fc3bbe03567e6923844664a931475d9293eb2",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {
+        "frame_id": null,
+        "geometry": {
+          "body_region": {
+            "bbox_pt": null,
+            "calibration_status": "uncalibrated",
+            "profile_fingerprint": null
+          },
+          "character_count": 690,
+          "font_names": [
+            "AGTWZE+CMMI8",
+            "CBPAZI+CMSY10",
+            "CMYCNH+CMSY8",
+            "EAGELK+LMRoman10-Bold",
+            "FFVHMY+CMMI10",
+            "GPQJQG+FandolSong-Bold",
+            "IOFFGU+CMR8",
+            "JPIIWO+CMR10",
+            "SFQKZE+CMEX10",
+            "SXSHQG+LMRoman10-Italic",
+            "WTTIHH+FandolSong-Regular",
+            "YIZIFL+LMRoman10-Regular",
+            "ZOQWTY+LMRomanSlant10-Regular",
+            "ZZLBTH+FandolKai-Regular"
+          ],
+          "font_sizes_pt": [
+            7.97,
+            10.909
+          ],
+          "image_count": 0,
+          "image_outside_page_count": 0,
+          "line_count": 16,
+          "page_height_pt": 841.89,
+          "page_width_pt": 595.28,
+          "pgf_hidden_character_count": 0,
+          "raw_character_count": 690,
+          "rectangle_count": 0,
+          "text_bbox_pt": [
+            68.031,
+            33.525,
+            527.247,
+            761.697
+          ],
+          "text_outside_page_count": 0
+        },
+        "issues": [],
+        "overlay_hidden_objects": [],
+        "overlay_index": null,
+        "physical_page": 6,
+        "review_status": "NOT_RUN",
+        "sha256": "c98fe0df09fbb6c5a0c26285f81fc3bbe03567e6923844664a931475d9293eb2"
+      }
+    },
+    {
+      "artifact_id": "e2552f8e1dc04042a7cacf133c27f54c",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "page-0007.png",
+      "sha256": "d80170b72dbf8b68cd38c1a956328c7da76a209e41363252eea9f5c5471bc5bb",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {
+        "frame_id": null,
+        "geometry": {
+          "body_region": {
+            "bbox_pt": null,
+            "calibration_status": "uncalibrated",
+            "profile_fingerprint": null
+          },
+          "character_count": 678,
+          "font_names": [
+            "ACPCAX+CMR6",
+            "AGTWZE+CMMI8",
+            "CBPAZI+CMSY10",
+            "CMYCNH+CMSY8",
+            "EAGELK+LMRoman10-Bold",
+            "FFVHMY+CMMI10",
+            "GPQJQG+FandolSong-Bold",
+            "IOFFGU+CMR8",
+            "JPIIWO+CMR10",
+            "JVKMPT+CMMI6",
+            "NOJZNX+CMSY6",
+            "SFQKZE+CMEX10",
+            "SXSHQG+LMRoman10-Italic",
+            "WTTIHH+FandolSong-Regular",
+            "YIZIFL+LMRoman10-Regular",
+            "ZOQWTY+LMRomanSlant10-Regular",
+            "ZZLBTH+FandolKai-Regular"
+          ],
+          "font_sizes_pt": [
+            5.978,
+            7.97,
+            10.909
+          ],
+          "image_count": 0,
+          "image_outside_page_count": 0,
+          "line_count": 15,
+          "page_height_pt": 841.89,
+          "page_width_pt": 595.28,
+          "pgf_hidden_character_count": 0,
+          "raw_character_count": 678,
+          "rectangle_count": 0,
+          "text_bbox_pt": [
+            68.031,
+            33.525,
+            534.787,
+            749.357
+          ],
+          "text_outside_page_count": 0
+        },
+        "issues": [],
+        "overlay_hidden_objects": [],
+        "overlay_index": null,
+        "physical_page": 7,
+        "review_status": "NOT_RUN",
+        "sha256": "d80170b72dbf8b68cd38c1a956328c7da76a209e41363252eea9f5c5471bc5bb"
+      }
+    },
+    {
+      "artifact_id": "2252d4e8f4d44fc3a3ec42c5066cbae8",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "page-0008.png",
+      "sha256": "62cf5400026dce5550dbca0e890ae9d165cbeb779d8cbde982d0ebb6c5d819d6",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {
+        "frame_id": null,
+        "geometry": {
+          "body_region": {
+            "bbox_pt": null,
+            "calibration_status": "uncalibrated",
+            "profile_fingerprint": null
+          },
+          "character_count": 753,
+          "font_names": [
+            "AGTWZE+CMMI8",
+            "CBPAZI+CMSY10",
+            "CMYCNH+CMSY8",
+            "EAGELK+LMRoman10-Bold",
+            "FFVHMY+CMMI10",
+            "GPQJQG+FandolSong-Bold",
+            "IOFFGU+CMR8",
+            "JPIIWO+CMR10",
+            "SFQKZE+CMEX10",
+            "SXSHQG+LMRoman10-Italic",
+            "WTTIHH+FandolSong-Regular",
+            "YIZIFL+LMRoman10-Regular",
+            "ZOQWTY+LMRomanSlant10-Regular",
+            "ZZLBTH+FandolKai-Regular"
+          ],
+          "font_sizes_pt": [
+            7.97,
+            10.909
+          ],
+          "image_count": 0,
+          "image_outside_page_count": 0,
+          "line_count": 12,
+          "page_height_pt": 841.89,
+          "page_width_pt": 595.28,
+          "pgf_hidden_character_count": 0,
+          "raw_character_count": 753,
+          "rectangle_count": 0,
+          "text_bbox_pt": [
+            68.031,
+            33.525,
+            527.245,
+            769.392
+          ],
+          "text_outside_page_count": 0
+        },
+        "issues": [],
+        "overlay_hidden_objects": [],
+        "overlay_index": null,
+        "physical_page": 8,
+        "review_status": "NOT_RUN",
+        "sha256": "62cf5400026dce5550dbca0e890ae9d165cbeb779d8cbde982d0ebb6c5d819d6"
+      }
+    },
+    {
+      "artifact_id": "40b00b7f56a64cb99480c1278a35d4aa",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "page-0009.png",
+      "sha256": "827d8c5be6fe703372340f20aa1b76a183a8c9d124eead6285dad1afe9d0f837",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {
+        "frame_id": null,
+        "geometry": {
+          "body_region": {
+            "bbox_pt": null,
+            "calibration_status": "uncalibrated",
+            "profile_fingerprint": null
+          },
+          "character_count": 661,
+          "font_names": [
+            "AGTWZE+CMMI8",
+            "CBPAZI+CMSY10",
+            "CMYCNH+CMSY8",
+            "EAGELK+LMRoman10-Bold",
+            "FFVHMY+CMMI10",
+            "GPQJQG+FandolSong-Bold",
+            "IOFFGU+CMR8",
+            "JPIIWO+CMR10",
+            "OPDCNM+LMRoman8-Regular",
+            "SFQKZE+CMEX10",
+            "SXSHQG+LMRoman10-Italic",
+            "WTTIHH+FandolSong-Regular",
+            "YIZIFL+LMRoman10-Regular",
+            "ZGDIXK+LMRoman12-Bold",
+            "ZOQWTY+LMRomanSlant10-Regular",
+            "ZZLBTH+FandolKai-Regular"
+          ],
+          "font_sizes_pt": [
+            7.97,
+            10.909,
+            14.346
+          ],
+          "image_count": 0,
+          "image_outside_page_count": 0,
+          "line_count": 12,
+          "page_height_pt": 841.89,
+          "page_width_pt": 595.28,
+          "pgf_hidden_character_count": 0,
+          "raw_character_count": 661,
+          "rectangle_count": 0,
+          "text_bbox_pt": [
+            68.031,
+            33.525,
+            534.277,
+            730.657
+          ],
+          "text_outside_page_count": 0
+        },
+        "issues": [],
+        "overlay_hidden_objects": [],
+        "overlay_index": null,
+        "physical_page": 9,
+        "review_status": "NOT_RUN",
+        "sha256": "827d8c5be6fe703372340f20aa1b76a183a8c9d124eead6285dad1afe9d0f837"
+      }
+    },
+    {
+      "artifact_id": "3a9757ece50249ae98e72f324e9dfd0b",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "page-0010.png",
+      "sha256": "fb3ffad289b4ebb8510dea9ecaaf0029be26187857863e7272370bf09f48184c",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {
+        "frame_id": null,
+        "geometry": {
+          "body_region": {
+            "bbox_pt": null,
+            "calibration_status": "uncalibrated",
+            "profile_fingerprint": null
+          },
+          "character_count": 645,
+          "font_names": [
+            "AGTWZE+CMMI8",
+            "CBPAZI+CMSY10",
+            "CMYCNH+CMSY8",
+            "EAGELK+LMRoman10-Bold",
+            "FFVHMY+CMMI10",
+            "GPQJQG+FandolSong-Bold",
+            "IOFFGU+CMR8",
+            "JPIIWO+CMR10",
+            "SFQKZE+CMEX10",
+            "SXSHQG+LMRoman10-Italic",
+            "WTTIHH+FandolSong-Regular",
+            "YIZIFL+LMRoman10-Regular",
+            "ZOQWTY+LMRomanSlant10-Regular",
+            "ZZLBTH+FandolKai-Regular"
+          ],
+          "font_sizes_pt": [
+            7.97,
+            10.909
+          ],
+          "image_count": 0,
+          "image_outside_page_count": 0,
+          "line_count": 11,
+          "page_height_pt": 841.89,
+          "page_width_pt": 595.28,
+          "pgf_hidden_character_count": 0,
+          "raw_character_count": 645,
+          "rectangle_count": 0,
+          "text_bbox_pt": [
+            68.031,
+            33.525,
+            527.246,
+            779.764
+          ],
+          "text_outside_page_count": 0
+        },
+        "issues": [],
+        "overlay_hidden_objects": [],
+        "overlay_index": null,
+        "physical_page": 10,
+        "review_status": "NOT_RUN",
+        "sha256": "fb3ffad289b4ebb8510dea9ecaaf0029be26187857863e7272370bf09f48184c"
+      }
+    },
+    {
+      "artifact_id": "b598c25a5bee4ee9b403d0c2fd6c0b51",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "page-0011.png",
+      "sha256": "b73a0b0753d8e61c36e0615c3a76ab4d5623e4d6fb93eadef13d65a04153fb45",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {
+        "frame_id": null,
+        "geometry": {
+          "body_region": {
+            "bbox_pt": null,
+            "calibration_status": "uncalibrated",
+            "profile_fingerprint": null
+          },
+          "character_count": 719,
+          "font_names": [
+            "AGTWZE+CMMI8",
+            "CBPAZI+CMSY10",
+            "CMYCNH+CMSY8",
+            "EAGELK+LMRoman10-Bold",
+            "FFVHMY+CMMI10",
+            "GPQJQG+FandolSong-Bold",
+            "IOFFGU+CMR8",
+            "JPIIWO+CMR10",
+            "SFQKZE+CMEX10",
+            "SXSHQG+LMRoman10-Italic",
+            "WTTIHH+FandolSong-Regular",
+            "YIZIFL+LMRoman10-Regular",
+            "ZOQWTY+LMRomanSlant10-Regular",
+            "ZZLBTH+FandolKai-Regular"
+          ],
+          "font_sizes_pt": [
+            7.97,
+            10.909
+          ],
+          "image_count": 0,
+          "image_outside_page_count": 0,
+          "line_count": 10,
+          "page_height_pt": 841.89,
+          "page_width_pt": 595.28,
+          "pgf_hidden_character_count": 0,
+          "raw_character_count": 719,
+          "rectangle_count": 0,
+          "text_bbox_pt": [
+            68.031,
+            33.525,
+            534.794,
+            743.205
+          ],
+          "text_outside_page_count": 0
+        },
+        "issues": [],
+        "overlay_hidden_objects": [],
+        "overlay_index": null,
+        "physical_page": 11,
+        "review_status": "NOT_RUN",
+        "sha256": "b73a0b0753d8e61c36e0615c3a76ab4d5623e4d6fb93eadef13d65a04153fb45"
+      }
+    },
+    {
+      "artifact_id": "71ccb8c422b149c8b2ed6a3837fa2385",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "page-0012.png",
+      "sha256": "ac19311fd17c4201825eca0e6b4db40e313786675cd02eac67b2d60766fa0017",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {
+        "frame_id": null,
+        "geometry": {
+          "body_region": {
+            "bbox_pt": null,
+            "calibration_status": "uncalibrated",
+            "profile_fingerprint": null
+          },
+          "character_count": 731,
+          "font_names": [
+            "AGTWZE+CMMI8",
+            "CBPAZI+CMSY10",
+            "CMYCNH+CMSY8",
+            "EAGELK+LMRoman10-Bold",
+            "FFVHMY+CMMI10",
+            "GPQJQG+FandolSong-Bold",
+            "IOFFGU+CMR8",
+            "JPIIWO+CMR10",
+            "LXZIQK+MSBM10",
+            "SFQKZE+CMEX10",
+            "SXSHQG+LMRoman10-Italic",
+            "WTTIHH+FandolSong-Regular",
+            "YIZIFL+LMRoman10-Regular",
+            "ZGDIXK+LMRoman12-Bold",
+            "ZOQWTY+LMRomanSlant10-Regular",
+            "ZZLBTH+FandolKai-Regular"
+          ],
+          "font_sizes_pt": [
+            7.97,
+            10.909,
+            14.346
+          ],
+          "image_count": 0,
+          "image_outside_page_count": 0,
+          "line_count": 5,
+          "page_height_pt": 841.89,
+          "page_width_pt": 595.28,
+          "pgf_hidden_character_count": 0,
+          "raw_character_count": 731,
+          "rectangle_count": 0,
+          "text_bbox_pt": [
+            68.031,
+            33.525,
+            527.252,
+            748.758
+          ],
+          "text_outside_page_count": 0
+        },
+        "issues": [],
+        "overlay_hidden_objects": [],
+        "overlay_index": null,
+        "physical_page": 12,
+        "review_status": "NOT_RUN",
+        "sha256": "ac19311fd17c4201825eca0e6b4db40e313786675cd02eac67b2d60766fa0017"
+      }
+    },
+    {
+      "artifact_id": "2b15207fb42140cba9fd366500ecd600",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "page-0013.png",
+      "sha256": "c4de994e4b595083134a7699c552eebb73fdeacf3380008eb894d85ac8c1190d",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {
+        "frame_id": null,
+        "geometry": {
+          "body_region": {
+            "bbox_pt": null,
+            "calibration_status": "uncalibrated",
+            "profile_fingerprint": null
+          },
+          "character_count": 999,
+          "font_names": [
+            "AGTWZE+CMMI8",
+            "CBPAZI+CMSY10",
+            "CMYCNH+CMSY8",
+            "EAGELK+LMRoman10-Bold",
+            "FFVHMY+CMMI10",
+            "GPQJQG+FandolSong-Bold",
+            "IOFFGU+CMR8",
+            "JPIIWO+CMR10",
+            "LXZIQK+MSBM10",
+            "SFQKZE+CMEX10",
+            "SXSHQG+LMRoman10-Italic",
+            "WTTIHH+FandolSong-Regular",
+            "YIZIFL+LMRoman10-Regular",
+            "ZOQWTY+LMRomanSlant10-Regular",
+            "ZZLBTH+FandolKai-Regular"
+          ],
+          "font_sizes_pt": [
+            7.97,
+            10.909
+          ],
+          "image_count": 0,
+          "image_outside_page_count": 0,
+          "line_count": 22,
+          "page_height_pt": 841.89,
+          "page_width_pt": 595.28,
+          "pgf_hidden_character_count": 0,
+          "raw_character_count": 999,
+          "rectangle_count": 0,
+          "text_bbox_pt": [
+            68.031,
+            33.525,
+            533.061,
+            776.04
+          ],
+          "text_outside_page_count": 0
+        },
+        "issues": [],
+        "overlay_hidden_objects": [],
+        "overlay_index": null,
+        "physical_page": 13,
+        "review_status": "NOT_RUN",
+        "sha256": "c4de994e4b595083134a7699c552eebb73fdeacf3380008eb894d85ac8c1190d"
+      }
+    },
+    {
+      "artifact_id": "2dd3a4c67e2b4c38a14eff0e8454ea54",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "page-0014.png",
+      "sha256": "2b75b540d528466115deaaac7703c7f4c27bd3e9b4f4e0c1400f1c60707f8482",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {
+        "frame_id": null,
+        "geometry": {
+          "body_region": {
+            "bbox_pt": null,
+            "calibration_status": "uncalibrated",
+            "profile_fingerprint": null
+          },
+          "character_count": 1011,
+          "font_names": [
+            "AGTWZE+CMMI8",
+            "CBPAZI+CMSY10",
+            "CMYCNH+CMSY8",
+            "EAGELK+LMRoman10-Bold",
+            "FFVHMY+CMMI10",
+            "GPQJQG+FandolSong-Bold",
+            "IOFFGU+CMR8",
+            "JPIIWO+CMR10",
+            "SFQKZE+CMEX10",
+            "SXSHQG+LMRoman10-Italic",
+            "WTTIHH+FandolSong-Regular",
+            "YIZIFL+LMRoman10-Regular",
+            "ZOQWTY+LMRomanSlant10-Regular",
+            "ZZLBTH+FandolKai-Regular"
+          ],
+          "font_sizes_pt": [
+            7.97,
+            10.909
+          ],
+          "image_count": 0,
+          "image_outside_page_count": 0,
+          "line_count": 7,
+          "page_height_pt": 841.89,
+          "page_width_pt": 595.28,
+          "pgf_hidden_character_count": 0,
+          "raw_character_count": 1011,
+          "rectangle_count": 0,
+          "text_bbox_pt": [
+            68.031,
+            33.525,
+            534.793,
+            764.32
+          ],
+          "text_outside_page_count": 0
+        },
+        "issues": [],
+        "overlay_hidden_objects": [],
+        "overlay_index": null,
+        "physical_page": 14,
+        "review_status": "NOT_RUN",
+        "sha256": "2b75b540d528466115deaaac7703c7f4c27bd3e9b4f4e0c1400f1c60707f8482"
+      }
+    },
+    {
+      "artifact_id": "acdec5cb1f494f03a29f75d684578564",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "page-0015.png",
+      "sha256": "7b0c233dc239d5f8307bb987dfb854b97be24b6e9b9a291b61abec96f4cd5c67",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {
+        "frame_id": null,
+        "geometry": {
+          "body_region": {
+            "bbox_pt": null,
+            "calibration_status": "uncalibrated",
+            "profile_fingerprint": null
+          },
+          "character_count": 789,
+          "font_names": [
+            "AGTWZE+CMMI8",
+            "CBPAZI+CMSY10",
+            "CMYCNH+CMSY8",
+            "EAGELK+LMRoman10-Bold",
+            "FFVHMY+CMMI10",
+            "GPQJQG+FandolSong-Bold",
+            "IOFFGU+CMR8",
+            "JPIIWO+CMR10",
+            "SFQKZE+CMEX10",
+            "SXSHQG+LMRoman10-Italic",
+            "WTTIHH+FandolSong-Regular",
+            "YIZIFL+LMRoman10-Regular",
+            "ZOQWTY+LMRomanSlant10-Regular",
+            "ZZLBTH+FandolKai-Regular"
+          ],
+          "font_sizes_pt": [
+            7.97,
+            10.909,
+            14.346
+          ],
+          "image_count": 0,
+          "image_outside_page_count": 0,
+          "line_count": 15,
+          "page_height_pt": 841.89,
+          "page_width_pt": 595.28,
+          "pgf_hidden_character_count": 0,
+          "raw_character_count": 789,
+          "rectangle_count": 0,
+          "text_bbox_pt": [
+            68.031,
+            33.525,
+            527.251,
+            773.676
+          ],
+          "text_outside_page_count": 0
+        },
+        "issues": [],
+        "overlay_hidden_objects": [],
+        "overlay_index": null,
+        "physical_page": 15,
+        "review_status": "NOT_RUN",
+        "sha256": "7b0c233dc239d5f8307bb987dfb854b97be24b6e9b9a291b61abec96f4cd5c67"
+      }
+    },
+    {
+      "artifact_id": "7258d6db153d4968a6f2817bb61732a5",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "page-0016.png",
+      "sha256": "d208f957f4e58781a0cb378ba5bcca162f01ce16dcf695dbafc9a8f7f8956261",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {
+        "frame_id": null,
+        "geometry": {
+          "body_region": {
+            "bbox_pt": null,
+            "calibration_status": "uncalibrated",
+            "profile_fingerprint": null
+          },
+          "character_count": 722,
+          "font_names": [
+            "AGTWZE+CMMI8",
+            "CBPAZI+CMSY10",
+            "CMYCNH+CMSY8",
+            "EAGELK+LMRoman10-Bold",
+            "FFVHMY+CMMI10",
+            "GPQJQG+FandolSong-Bold",
+            "IOFFGU+CMR8",
+            "JPIIWO+CMR10",
+            "SFQKZE+CMEX10",
+            "WTTIHH+FandolSong-Regular",
+            "YIZIFL+LMRoman10-Regular",
+            "ZOQWTY+LMRomanSlant10-Regular",
+            "ZZLBTH+FandolKai-Regular"
+          ],
+          "font_sizes_pt": [
+            7.97,
+            10.909
+          ],
+          "image_count": 0,
+          "image_outside_page_count": 0,
+          "line_count": 20,
+          "page_height_pt": 841.89,
+          "page_width_pt": 595.28,
+          "pgf_hidden_character_count": 0,
+          "raw_character_count": 722,
+          "rectangle_count": 0,
+          "text_bbox_pt": [
+            68.031,
+            33.525,
+            534.279,
+            780.545
+          ],
+          "text_outside_page_count": 0
+        },
+        "issues": [],
+        "overlay_hidden_objects": [],
+        "overlay_index": null,
+        "physical_page": 16,
+        "review_status": "NOT_RUN",
+        "sha256": "d208f957f4e58781a0cb378ba5bcca162f01ce16dcf695dbafc9a8f7f8956261"
+      }
+    },
+    {
+      "artifact_id": "bab80b4ad7d54f9f848c020e5513f1e4",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "page-0017.png",
+      "sha256": "a2e248d0a04587b5100657aad255678f50afdefc6ef2075798de4bb8004b5de9",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {
+        "frame_id": null,
+        "geometry": {
+          "body_region": {
+            "bbox_pt": null,
+            "calibration_status": "uncalibrated",
+            "profile_fingerprint": null
+          },
+          "character_count": 926,
+          "font_names": [
+            "AGTWZE+CMMI8",
+            "CBPAZI+CMSY10",
+            "CMYCNH+CMSY8",
+            "EAGELK+LMRoman10-Bold",
+            "FFVHMY+CMMI10",
+            "GPQJQG+FandolSong-Bold",
+            "IOFFGU+CMR8",
+            "JPIIWO+CMR10",
+            "SFQKZE+CMEX10",
+            "WTTIHH+FandolSong-Regular",
+            "YIZIFL+LMRoman10-Regular",
+            "ZOQWTY+LMRomanSlant10-Regular",
+            "ZZLBTH+FandolKai-Regular"
+          ],
+          "font_sizes_pt": [
+            7.97,
+            10.909
+          ],
+          "image_count": 0,
+          "image_outside_page_count": 0,
+          "line_count": 13,
+          "page_height_pt": 841.89,
+          "page_width_pt": 595.28,
+          "pgf_hidden_character_count": 0,
+          "raw_character_count": 926,
+          "rectangle_count": 0,
+          "text_bbox_pt": [
+            68.031,
+            33.525,
+            527.253,
+            776.04
+          ],
+          "text_outside_page_count": 0
+        },
+        "issues": [],
+        "overlay_hidden_objects": [],
+        "overlay_index": null,
+        "physical_page": 17,
+        "review_status": "NOT_RUN",
+        "sha256": "a2e248d0a04587b5100657aad255678f50afdefc6ef2075798de4bb8004b5de9"
+      }
+    },
+    {
+      "artifact_id": "5b20f827f3934d8dab948350c0dc0b33",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "pdf_inspection.json",
+      "sha256": "beec19aa2dfbc1dafc20b7a8121965fad2994ac446797e853d2d68934f665bad",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "fb7cc850ee954e2a84dd7730377a0a22",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "plan.json",
+      "sha256": "84d8bac2205352ff07212ab1b42f5bc2646bf43d50f6c60c25e7f1aa1696ee5c",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "06f0a317c9124a94a3fc93c71753be0a",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "quality_report.json",
+      "sha256": "aaa435c431ede766cdb2ab4c5c2a237d4b3778baa41db5d8ac30284b7acc1c08",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "517f98ffcc0248dab0762a2be9314d93",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "quality_report.md",
+      "sha256": "37fb42899275a98ee4f151f76e1b8ce9289cf2da976772589643cfbed4139bcf",
+      "media_type": "text/markdown",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "e7f5283d484241eab93f86fbb34ed7b7",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "source_bundle.zip",
+      "sha256": "84668863f4d9b7e320340c168a4c6c3091c8e71d3e89d49ae160586fe51c4909",
+      "media_type": "application/x-zip-compressed",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {}
+    },
+    {
+      "artifact_id": "09cc6a41f43a4df2a515abb7e910ce8d",
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "revision": 2,
+      "name": "source_map.json",
+      "sha256": "0e24d61fd7dc16b5de1b84c0b2ef71ed48b9f9cf9271eb55e69ef8d159771995",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-20T15:55:46.794292+00:00",
+      "metadata": {}
+    }
+  ],
+  "reviews": [],
+  "model_routing": {
+    "preferred_model_id": "gpt6",
+    "fallback_order": [
+      "gpt6",
+      "deepseek-flash",
+      "deepseek-v4-pro"
+    ],
+    "last_model_id": "deepseek-flash",
+    "last_successful_model_id": "deepseek-flash",
+    "used_models": [
+      "gpt6",
+      "deepseek-flash",
+      "deepseek-v4-pro"
+    ],
+    "successful_models": [
+      "gpt6",
+      "deepseek-flash"
+    ],
+    "fallback_count": 7,
+    "request_counts": {
+      "gpt6": 54,
+      "deepseek-flash": 6,
+      "deepseek-v4-pro": 1
+    },
+    "actual_models": [
+      "gpt-6-astra",
+      "deepseek-flash",
+      "deepseek-v4-pro"
+    ],
+    "last_fallback": {
+      "from_model_id": "gpt6",
+      "to_model_id": "deepseek-flash",
+      "reason": "供应商暂时无法处理请求；本次失败已记录",
+      "code": "PROVIDER_UNAVAILABLE"
+    },
+    "selection_source": "legacy_default"
+  },
+  "budget": {
+    "requests": 240,
+    "local_repairs_per_unit": 6,
+    "global_repair_rounds": 6,
+    "version": 1,
+    "initialized": true,
+    "initialized_fields": [
+      "global_repair_rounds",
+      "local_repairs_per_unit",
+      "requests"
+    ],
+    "source": "VERIFIED_BENCHMARK_STATE",
+    "baseline_unknown": false,
+    "request_count": 61,
+    "defaults": {
+      "global_repair_rounds": 2,
+      "local_repairs_per_unit": 2,
+      "requests": 60
+    },
+    "overrides": {
+      "global_repair_rounds": 6,
+      "local_repairs_per_unit": 6,
+      "requests": 240
+    },
+    "maximums": {
+      "requests": 1000,
+      "local_repairs_per_unit": 20,
+      "global_repair_rounds": 20
+    },
+    "limitations": [],
+    "can_increase": false
+  }
+}
