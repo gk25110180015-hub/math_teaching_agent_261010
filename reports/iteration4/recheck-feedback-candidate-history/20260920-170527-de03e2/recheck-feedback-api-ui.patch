@@ -1,0 +1,104 @@
+--- a/src/math_agent/domain.py
++++ b/src/math_agent/domain.py
+@@ -54,6 +54,11 @@
+     expected_plan_revision: int
+     expected_plan_hash: str
+     idempotency_key: str = Field(min_length=1, max_length=128)
++
++
++class RecheckRequest(ExecuteRequest):
++    feedback: str = Field(default='', max_length=10000)
++    feedback_source: Literal['user', 'agent_audit'] = 'user'
+ 
+ 
+ class ReviewRequest(StrictModel):
+--- a/src/math_agent/service.py
++++ b/src/math_agent/service.py
+@@ -4,7 +4,7 @@
+ import shutil
+ import time
+ from pathlib import Path
+-from .domain import NewRun, ConfirmRequest, ExecuteRequest, DecisionsRequest, ReviewRequest, RevisePlanRequest
++from .domain import NewRun, ConfirmRequest, ExecuteRequest, RecheckRequest, DecisionsRequest, ReviewRequest, RevisePlanRequest
+ from .settings import Settings
+ from .store import Store
+ from .util import AgentError, canonical, digest, now, uid, within, write_json
+@@ -359,10 +359,12 @@
+             key = digest([run_id, run['workflow_id'], 1, run['input_hash'], p['hash'], p.get('theme_hash'), 'rules-v1'])
+             return self._enqueue(c, run, 'build', key)
+ 
+-    def recheck(self, run_id, req: ExecuteRequest):
++    def recheck(self, run_id, req: RecheckRequest):
+         if self.actor != 'local_user':
+             raise AgentError('EXPLICIT_USER_RECHECK_REQUIRED', '重新运行自动检查需要明确用户动作', 403)
++        req = RecheckRequest.model_validate(req.model_dump())
+         payload_hash = digest(req.model_dump())
++        legacy_payload_hash = digest(req.model_dump(exclude={'feedback', 'feedback_source'}))
+         with self.store.transaction() as c:
+             run = self.store.row(c, run_id)
+             if run['status'] in ('CANCELLED', 'COMPLETED', 'COMPLETED_WITH_WARNINGS'):
+@@ -370,7 +372,10 @@
+             for row in c.execute("SELECT payload_json FROM events WHERE run_id=? AND type='checks.rerun_requested' ORDER BY sequence DESC", (run_id,)):
+                 action = json.loads(row['payload_json'])
+                 if action.get('idempotency_key') == req.idempotency_key:
+-                    if action.get('payload_hash') != payload_hash:
++                    legacy_empty_feedback = ('feedback' not in action and 'feedback_source' not in action
++                        and req.feedback == '' and req.feedback_source == 'user'
++                        and action.get('payload_hash') == legacy_payload_hash)
++                    if action.get('payload_hash') != payload_hash and not legacy_empty_feedback:
+                         raise AgentError('ACTION_CONFLICT', '自动复检动作 ID 已用于不同内容', 409)
+                     self._check_expected(c, run_id, req.expected_plan_revision, req.expected_plan_hash)
+                     job = c.execute('SELECT * FROM jobs WHERE id=? AND run_id=?', (action['job_id'], run_id)).fetchone()
+@@ -395,6 +400,7 @@
+             self.store.event(c, run_id, 'checks.rerun_requested', {
+                 'actor': self.actor, 'idempotency_key': req.idempotency_key, 'payload_hash': payload_hash,
+                 'job_id': job['id'], 'plan_revision': plan['revision'], 'plan_hash': plan['hash'],
++                'feedback': req.feedback, 'feedback_source': req.feedback_source,
+                 'superseded_artifact_ids': superseded, 'request_count_preserved': run['request_count'],
+                 'budget_version': budget['version'], 'approval_preserved': True,
+                 'checkpoints_preserved': True, 'teacher_review': 'NOT_PERFORMED'})
+--- a/src/math_agent/web/app.py
++++ b/src/math_agent/web/app.py
+@@ -8,7 +8,7 @@
+ from fastapi.exceptions import RequestValidationError
+ from fastapi.responses import FileResponse, JSONResponse, Response
+ from fastapi.staticfiles import StaticFiles
+-from ..domain import NewRun, DecisionsRequest, ConfirmRequest, ExecuteRequest, ReviewRequest, RevisePlanRequest
++from ..domain import NewRun, DecisionsRequest, ConfirmRequest, ExecuteRequest, RecheckRequest, ReviewRequest, RevisePlanRequest
+ from ..budget import BudgetIncrease
+ from ..service import Service
+ from ..settings import Settings, PROJECT_ROOT
+@@ -157,7 +157,7 @@
+     def execute(run_id:str,data:ExecuteRequest): return service.execute(run_id,data)
+ 
+     @app.post('/api/runs/{run_id}/recheck',status_code=202)
+-    def recheck(run_id:str,data:ExecuteRequest): return service.recheck(run_id,data)
++    def recheck(run_id:str,data:RecheckRequest): return service.recheck(run_id,data)
+ 
+     @app.post('/api/runs/{run_id}/retry',status_code=202)
+     def retry(run_id:str): return service.retry(run_id)
+--- a/src/math_agent/web/static/app.js
++++ b/src/math_agent/web/static/app.js
+@@ -1,6 +1,6 @@
+ "use strict";
+ 
+-const state = { csrf: "", run: null, runs: [], caps: {}, events: [], selected: localStorage.getItem("math-agent-run"), fingerprint: "", busy: false, polling: false, editing: false, epoch: 0, healthCheckedAt: 0 };
++const state = { csrf: "", run: null, runs: [], caps: {}, events: [], recheckFeedback: {}, selected: localStorage.getItem("math-agent-run"), fingerprint: "", busy: false, polling: false, editing: false, epoch: 0, healthCheckedAt: 0 };
+ const main = document.querySelector("#main");
+ const statuses = { CREATED: "等待输入", INPUT_VALIDATING: "检查输入", PLANNING: "生成计划", AWAITING_PLAN_INPUT: "等待您的选择", PLAN_READY: "计划可确认", PLAN_CONFIRMED: "计划已确认", QUEUED: "已加入队列", BUILDING: "正在生成与编译", LOCAL_REVIEW: "逐节检查", REPAIRING: "修复中", GLOBAL_REVIEW: "全文检查", AWAITING_USER_REVIEW: "等待逐页复核", COMPLETED: "已完成", COMPLETED_WITH_WARNINGS: "已完成（有限制）", BLOCKED: "条件阻塞", FAILED: "执行失败", CANCELLED: "已取消" };
+ const activeStatuses = ["PLANNING", "INPUT_VALIDATING", "QUEUED", "BUILDING", "LOCAL_REVIEW", "REPAIRING", "GLOBAL_REVIEW"];
+@@ -396,8 +396,13 @@
+   if (run.status === "PLAN_CONFIRMED" && !state.editing) actions.append(button("执行已确认计划", async () => { await api(`/api/runs/${run.id}/execute`, { expected_plan_revision: run.plan.revision, expected_plan_hash: run.plan.hash, idempotency_key: `${run.id}:${run.plan.hash}` }); await refreshRun(true); await refreshList(); }, "primary", { id: "execute-plan" }));
+   if (run.status === "AWAITING_USER_REVIEW") {
+     const previousBuild = (run.jobs || []).filter(job => job.kind === "build").at(-1);
++    const feedback = el("textarea", null, { id: "recheck-feedback", rows: "3", maxlength: "10000", placeholder: "例如：增加夹逼法练习，核对两个重要极限的条件" });
++    feedback.value = state.recheckFeedback[run.id] || "";
++    feedback.oninput = () => { state.recheckFeedback[run.id] = feedback.value; };
++    c.append(field("本轮希望改进的内容（可选）", feedback, "按已批准的教学计划提出建议；系统会核查并修订适用内容。留空则执行常规自动检查。"));
+     actions.append(button("重新运行自动检查", async () => {
+-      await api(`/api/runs/${run.id}/recheck`, { expected_plan_revision: run.plan.revision, expected_plan_hash: run.plan.hash, idempotency_key: `${run.id}:recheck:${previousBuild?.id || run.plan.hash}` });
++      await api(`/api/runs/${run.id}/recheck`, { expected_plan_revision: run.plan.revision, expected_plan_hash: run.plan.hash, idempotency_key: `${run.id}:recheck:${previousBuild?.id || run.plan.hash}`, feedback: feedback.value, feedback_source: "user" });
++      delete state.recheckFeedback[run.id];
+       await refreshRun(true); await refreshList();
+     }, "", { id: "recheck-run", disabled: run.budget?.baseline_unknown || (run.jobs || []).some(job => ["queued", "running"].includes(job.status)) }));
+     c.append(el("p", "自动复检会重新检查已保存内容并生成本次交付；沿用原计划和累计预算，历史文件保留。此操作不提交人工审核。", { class: "hint" }));

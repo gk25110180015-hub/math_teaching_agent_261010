@@ -1,0 +1,21 @@
+{
+  "baseline_sha256": "34e11b6cfc90d101affd5d7d13058233f3cd2813ddfcd5a1a0b6916652bd8553",
+  "edits": [
+    {
+      "old": "        state=self._load_global_repair_state(plan)\n",
+      "new": "        state=self._load_global_repair_state(plan)\n        from .repair_guidance import prepare_guidance_resume\n        prepare_guidance_resume(self,plan,state)\n"
+    },
+    {
+      "old": "'review_evidence_attribution.py','global_repair_contract.py')",
+      "new": "'review_evidence_attribution.py','global_repair_contract.py','repair_guidance.py')"
+    },
+    {
+      "old": "            if (cached and sid not in forced_sections and snapshot['input_hash']==cache_key\n",
+      "new": "            from .repair_guidance import has_requested_guidance\n            pending_guidance=has_requested_guidance(self,plan,sid)\n            if (cached and not pending_guidance and sid not in forced_sections and snapshot['input_hash']==cache_key\n"
+    },
+    {
+      "old": "            else:generated=resumed\n            report = None\n",
+      "new": "            else:generated=resumed\n            from .repair_guidance import apply_requested_guidance\n            guided=apply_requested_guidance(self,plan,spec,generated,recovery,draft,[g for _,g in completed])\n            if guided is not None:generated,normalization=guided\n            report = None\n"
+    }
+  ]
+}

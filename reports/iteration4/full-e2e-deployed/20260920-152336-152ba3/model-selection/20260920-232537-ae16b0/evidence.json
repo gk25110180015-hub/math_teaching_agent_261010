@@ -1,0 +1,54 @@
+{
+  "test_name": "test_http_504_then_503_automatically_reaches_third_model",
+  "checks": [
+    {
+      "synthetic_http_statuses": [
+        504,
+        503,
+        200
+      ],
+      "automatic_fallback_count": 2,
+      "preferred_model_preserved": true,
+      "failed_attempts_counted": true,
+      "refresh_restored_events": true
+    }
+  ],
+  "requests": [
+    {
+      "model": "gpt-6-astra",
+      "http_status": 504,
+      "url": "https://oneapi.advancedsolver.com/v1/chat/completions",
+      "stream": false,
+      "thinking": null,
+      "reasoning_effort": null
+    },
+    {
+      "model": "deepseek-flash",
+      "http_status": 503,
+      "url": "https://api.deepseek.com/chat/completions",
+      "stream": false,
+      "thinking": {
+        "type": "enabled"
+      },
+      "reasoning_effort": "high"
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "http_status": 200,
+      "url": "https://api.deepseek.com/chat/completions",
+      "stream": false,
+      "thinking": {
+        "type": "enabled"
+      },
+      "reasoning_effort": "high"
+    }
+  ],
+  "model_http_transport": "MOCK_TRANSPORT",
+  "browser": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+  "local_api_sqlite_worker": "ACTUAL",
+  "real_api": "NOT_RUN",
+  "windows_compile": "NOT_RUN",
+  "teacher_review": "NOT_RUN",
+  "javascript_errors": [],
+  "external_browser_requests_blocked": []
+}

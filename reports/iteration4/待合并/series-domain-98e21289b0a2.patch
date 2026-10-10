@@ -1,0 +1,79 @@
+--- a/src/math_agent/mathcheck.py
++++ b/src/math_agent/mathcheck.py
+@@ -166,6 +166,7 @@
+         symbols[name] = sp.Symbol(name, **flags)
+     nodes = 0
+     unresolved_domains = []
++    series_domain_guards = []
+     functions = {'sin': sp.sin, 'cos': sp.cos, 'tan': sp.tan, 'exp': sp.exp, 'log': sp.log, 'sqrt': sp.sqrt, 'Abs': sp.Abs}
+ 
+     def integer(value):
+@@ -206,12 +207,22 @@
+                 unresolved_domains.append(f'实对数参数须为正：{args[0]} > 0')
+             if op == 'sqrt' and request.get('kind') == 'derivative' and args[0].is_positive is not True:
+                 unresolved_domains.append(f'平方根求导需单独核对零点/定义域边界：{args[0]} > 0')
++            if kind == 'series':
++                if op == 'log':
++                    series_domain_guards.append(('positive', args[0], 'log'))
++                elif op == 'sqrt':
++                    series_domain_guards.append(('nonnegative', args[0], 'sqrt'))
++                elif op == 'tan':
++                    series_domain_guards.append(('nonzero', sp.cos(args[0]), 'tan'))
+             return functions[op](*args)
+         if op == 'Pow':
+             if len(args) != 2 or (args[1].is_number and (abs(args[1]) > 100) is sp.S.true):
+                 raise ValueError('幂指数超出受限预算。')
+             if args[1].is_negative is True and args[0].is_nonzero is not True:
+                 unresolved_domains.append(f'负指数底数须非零：{args[0]} != 0')
++            if kind == 'series' and args[1].is_negative is True:
++                # Keep the original denominator even when SymPy later cancels it.
++                series_domain_guards.append(('nonzero', args[0], 'negative_power'))
+             return sp.Pow(*args)
+         if not args:
+             raise ValueError('加法/乘法至少需要一个参数。')
+@@ -289,7 +300,44 @@
+         expected = request.get('expected_convergent')
+         if type(expected) is not bool:
+             raise ValueError('级数 expected_convergent 必须是布尔值。')
+-        actual = sp.Sum(expression(request['term']), (variable, expression(request['start']), expression(request['end']))).is_convergent()
++        term = expression(request['term'])
++        term_guards = list(series_domain_guards)
++        start, end = expression(request['start']), expression(request['end'])
++        scope = {'domain_scope': 'start_term_only',
++                 'limitations': ['仅检查指定整数起点项；未证明所有后续项均在定义域内。']}
++        base.update(scope)
++        if start.is_integer is not True or start.is_finite is not True or start.free_symbols:
++            return {**base, 'status': 'UNKNOWN', 'evidence_type': 'not_checked',
++                    'message': '级数首项定义域检查需要确定的有限整数起点。'}
++        if end.is_finite is True and (end < start) is sp.S.true:
++            return {**base, 'status': 'UNKNOWN', 'evidence_type': 'not_checked',
++                    'message': '终点小于起点，未按非空递增级数检查首项。'}
++        unknown_guards = []
++        for property_name, guard, operation in term_guards:
++            value = guard.subs(variable, start)
++            property_value = getattr(value, 'is_' + property_name)
++            location = {'at_index': str(start), 'variable': str(variable),
++                        'expression': str(guard)[:500], 'operation': operation,
++                        'required_property': property_name}
++            if property_value is False or value.has(sp.nan, sp.zoo, sp.oo, -sp.oo):
++                return {**base, **location, 'status': 'FAIL',
++                        'evidence_type': 'series_term_undefined',
++                        'message': '指定求和起点项不在原表达式定义域内；尾部收敛性不能使该级数合法。'}
++            if property_value is not True:
++                unknown_guards.append(location)
++        if unknown_guards:
++            return {**base, 'status': 'UNKNOWN', 'evidence_type': 'not_checked',
++                    'domain_requirements': unknown_guards,
++                    'message': '指定求和起点项仍有未决定的定义域条件，不能仅凭尾部收敛性通过。'}
++        first_term = term.subs(variable, start)
++        if first_term.has(sp.nan, sp.zoo, sp.oo, -sp.oo) or first_term.is_finite is False or first_term.is_real is False:
++            return {**base, 'at_index': str(start), 'variable': str(variable),
++                    'status': 'FAIL', 'evidence_type': 'series_term_undefined',
++                    'message': '指定求和起点项不是有定义的有限实数；不能只核对尾部收敛性。'}
++        if first_term.is_finite is not True or first_term.is_real is not True:
++            return {**base, 'status': 'UNKNOWN', 'evidence_type': 'not_checked',
++                    'message': '无法确认指定求和起点项为有定义的有限实数。'}
++        actual = sp.Sum(term, (variable, start, end)).is_convergent()
+         if actual not in (sp.S.true, sp.S.false, True, False):
+             return {**base,'status':'UNKNOWN','evidence_type':'not_checked','message':'SymPy 无法决定此级数收敛性。'}
+         passed = bool(actual) == expected

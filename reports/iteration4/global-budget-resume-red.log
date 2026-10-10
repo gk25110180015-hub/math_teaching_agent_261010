@@ -1,0 +1,168 @@
+FFFFFF                                                                   [100%]
+================================== FAILURES ===================================
+_ test_unchanged_global_budget_still_blocks_without_model_calls_or_state_reset _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/global-budget-red/test_unchanged_global_budget_s0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002A886024200>
+
+    def test_unchanged_global_budget_still_blocks_without_model_calls_or_state_reset(tmp_path, monkeypatch):
+        _, pipeline, plan, _, _, _, calls = exhausted_fixture(tmp_path, monkeypatch)
+        state_path = pipeline.root / 'global-repair-state.json'
+        before = state_path.read_bytes()
+        requests = pipeline.store.get_run(pipeline.run['id'])['request_count']
+        call_count = len(calls)
+        with pytest.raises(AgentError) as error:
+            pipeline.lecture(plan)
+>       assert error.value.code == 'BUDGET_EXHAUSTED'
+E       AssertionError: assert 'GLOBAL_MATH_BLOCKED' == 'BUDGET_EXHAUSTED'
+E         
+E         - BUDGET_EXHAUSTED
+E         + GLOBAL_MATH_BLOCKED
+
+tests\test_global_budget_resume.py:64: AssertionError
+_ test_explicit_global_increase_repairs_preserved_concern_before_fresh_checks _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/global-budget-red/test_explicit_global_increase_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002A886091A90>
+
+    def test_explicit_global_increase_repairs_preserved_concern_before_fresh_checks(tmp_path, monkeypatch):
+        service, pipeline, plan, provider, compiles, active, calls = exhausted_fixture(tmp_path, monkeypatch)
+        state_before = json.loads((pipeline.root / 'global-repair-state.json').read_bytes())
+        failure_path = pipeline.root / 'global_review_failure.json'
+        failure_before = failure_path.read_bytes()
+        old_candidates = {path: digest(path.read_bytes()) for path in (pipeline.root / 'global-repairs').rglob('*-candidate.json')}
+        old_compiles = list(compiles)
+        old_locals = list(provider.locals)
+        provider.mode = 'fix'
+        resumed, before = increase_resume(service, pipeline, plan, provider, active, global_repair_rounds=6)
+        call_count = len(calls)
+>       completed, _ = resumed.lecture(plan)
+                       ^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_global_budget_resume.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <math_agent.pipeline.Pipeline object at 0x000002A886092990>
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+
+    def lecture(self, plan):
+        state=self._load_global_repair_state(plan)
+        if state['phase']=='budget_exhausted':
+>           raise AgentError('GLOBAL_MATH_BLOCKED','全局修复预算已耗尽；已保留实际疑点、所有修复与原审批')
+E           math_agent.util.AgentError: 全局修复预算已耗尽；已保留实际疑点、所有修复与原审批
+
+src\math_agent\pipeline.py:496: AgentError
+__________ test_request_only_increase_does_not_unlock_global_rounds ___________
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/global-budget-red/test_request_only_increase_doe0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002A886064F80>
+
+    def test_request_only_increase_does_not_unlock_global_rounds(tmp_path, monkeypatch):
+        service, pipeline, plan, provider, _, active, calls = exhausted_fixture(tmp_path, monkeypatch)
+        resumed, before = increase_resume(service, pipeline, plan, provider, active, requests=240)
+        raw = (pipeline.root / 'global-repair-state.json').read_bytes()
+        count = len(calls)
+        with pytest.raises(AgentError) as error:
+            resumed.lecture(plan)
+>       assert error.value.code == 'BUDGET_EXHAUSTED'
+E       AssertionError: assert 'GLOBAL_MATH_BLOCKED' == 'BUDGET_EXHAUSTED'
+E         
+E         - BUDGET_EXHAUSTED
+E         + GLOBAL_MATH_BLOCKED
+
+tests\test_global_budget_resume.py:115: AssertionError
+_ test_increased_global_budget_cannot_skip_unverified_failure_evidence[missing_failure] _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/global-budget-red/test_increased_global_budget_c0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002A8860F0050>
+corruption = 'missing_failure'
+
+    @pytest.mark.parametrize('corruption', ['missing_failure', 'round_mismatch', 'body_hash'])
+    def test_increased_global_budget_cannot_skip_unverified_failure_evidence(tmp_path, monkeypatch, corruption):
+        service, pipeline, plan, provider, _, active, calls = exhausted_fixture(tmp_path, monkeypatch)
+        resumed, before = increase_resume(service, pipeline, plan, provider, active, global_repair_rounds=6)
+        path = pipeline.root / 'global_review_failure.json'
+        if corruption == 'missing_failure':
+            path.rename(path.with_name('preserved-but-missing-pointer.json'))
+        else:
+            data = json.loads(path.read_bytes())
+            if corruption == 'round_mismatch': data['rounds_used'] = 1
+            else: data['unit_hashes']['S01.U01'] = 'changed'
+            write_json(path, data)
+        raw = (pipeline.root / 'global-repair-state.json').read_bytes()
+        count = len(calls)
+        with pytest.raises(AgentError) as error:
+            resumed.lecture(plan)
+>       assert error.value.code == 'GLOBAL_REPAIR_LEGACY_UNVERIFIED'
+E       AssertionError: assert 'GLOBAL_MATH_BLOCKED' == 'GLOBAL_REPAI...CY_UNVERIFIED'
+E         
+E         - GLOBAL_REPAIR_LEGACY_UNVERIFIED
+E         + GLOBAL_MATH_BLOCKED
+
+tests\test_global_budget_resume.py:138: AssertionError
+_ test_increased_global_budget_cannot_skip_unverified_failure_evidence[round_mismatch] _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/global-budget-red/test_increased_global_budget_c1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002A886064F80>
+corruption = 'round_mismatch'
+
+    @pytest.mark.parametrize('corruption', ['missing_failure', 'round_mismatch', 'body_hash'])
+    def test_increased_global_budget_cannot_skip_unverified_failure_evidence(tmp_path, monkeypatch, corruption):
+        service, pipeline, plan, provider, _, active, calls = exhausted_fixture(tmp_path, monkeypatch)
+        resumed, before = increase_resume(service, pipeline, plan, provider, active, global_repair_rounds=6)
+        path = pipeline.root / 'global_review_failure.json'
+        if corruption == 'missing_failure':
+            path.rename(path.with_name('preserved-but-missing-pointer.json'))
+        else:
+            data = json.loads(path.read_bytes())
+            if corruption == 'round_mismatch': data['rounds_used'] = 1
+            else: data['unit_hashes']['S01.U01'] = 'changed'
+            write_json(path, data)
+        raw = (pipeline.root / 'global-repair-state.json').read_bytes()
+        count = len(calls)
+        with pytest.raises(AgentError) as error:
+            resumed.lecture(plan)
+>       assert error.value.code == 'GLOBAL_REPAIR_LEGACY_UNVERIFIED'
+E       AssertionError: assert 'GLOBAL_MATH_BLOCKED' == 'GLOBAL_REPAI...CY_UNVERIFIED'
+E         
+E         - GLOBAL_REPAIR_LEGACY_UNVERIFIED
+E         + GLOBAL_MATH_BLOCKED
+
+tests\test_global_budget_resume.py:138: AssertionError
+_ test_increased_global_budget_cannot_skip_unverified_failure_evidence[body_hash] _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/global-budget-red/test_increased_global_budget_c2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002A886090B60>
+corruption = 'body_hash'
+
+    @pytest.mark.parametrize('corruption', ['missing_failure', 'round_mismatch', 'body_hash'])
+    def test_increased_global_budget_cannot_skip_unverified_failure_evidence(tmp_path, monkeypatch, corruption):
+        service, pipeline, plan, provider, _, active, calls = exhausted_fixture(tmp_path, monkeypatch)
+        resumed, before = increase_resume(service, pipeline, plan, provider, active, global_repair_rounds=6)
+        path = pipeline.root / 'global_review_failure.json'
+        if corruption == 'missing_failure':
+            path.rename(path.with_name('preserved-but-missing-pointer.json'))
+        else:
+            data = json.loads(path.read_bytes())
+            if corruption == 'round_mismatch': data['rounds_used'] = 1
+            else: data['unit_hashes']['S01.U01'] = 'changed'
+            write_json(path, data)
+        raw = (pipeline.root / 'global-repair-state.json').read_bytes()
+        count = len(calls)
+        with pytest.raises(AgentError) as error:
+            resumed.lecture(plan)
+>       assert error.value.code == 'GLOBAL_REPAIR_LEGACY_UNVERIFIED'
+E       AssertionError: assert 'GLOBAL_MATH_BLOCKED' == 'GLOBAL_REPAI...CY_UNVERIFIED'
+E         
+E         - GLOBAL_REPAIR_LEGACY_UNVERIFIED
+E         + GLOBAL_MATH_BLOCKED
+
+tests\test_global_budget_resume.py:138: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_global_budget_resume.py::test_unchanged_global_budget_still_blocks_without_model_calls_or_state_reset
+FAILED tests/test_global_budget_resume.py::test_explicit_global_increase_repairs_preserved_concern_before_fresh_checks
+FAILED tests/test_global_budget_resume.py::test_request_only_increase_does_not_unlock_global_rounds
+FAILED tests/test_global_budget_resume.py::test_increased_global_budget_cannot_skip_unverified_failure_evidence[missing_failure]
+FAILED tests/test_global_budget_resume.py::test_increased_global_budget_cannot_skip_unverified_failure_evidence[round_mismatch]
+FAILED tests/test_global_budget_resume.py::test_increased_global_budget_cannot_skip_unverified_failure_evidence[body_hash]
+6 failed in 5.44s

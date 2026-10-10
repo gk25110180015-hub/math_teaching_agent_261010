@@ -1,0 +1,728 @@
+{
+  "at": "2026-09-23T09:15:16.543581+00:00",
+  "read_only": true,
+  "cases": {
+    "CH02": {
+      "id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "status": "FAILED",
+      "stage": "math.global_interfaces",
+      "request_count": 128,
+      "error": {
+        "attempt": 4,
+        "code": "PROVIDER_RESPONSE",
+        "job_id": "4678ed20f5c44ad89b289ffcee4d8143",
+        "message": "供应商流式事件明确返回错误状态",
+        "recovery": "原审批和已通过章节保留；修复条件后点击重试。崩溃边界的外部调用可能重复计费。",
+        "timestamp": "2026-09-23T09:14:22.970559+00:00"
+      },
+      "events": [
+        {
+          "sequence": 2344,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:11:50.619029+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "billing_uncertain": true,
+            "call_id": "4a18768ea9e14abf958253295108da0a",
+            "elapsed_seconds": 60.828,
+            "error_code": "PROVIDER_UNAVAILABLE",
+            "http_status": 504,
+            "input_hash": "e77a2d3f573885c94435efe54c0679373b259a310aef669fef6bd88d411181bd",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "price": null,
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "request_id": "",
+            "requested_model": "gpt-6-astra",
+            "retry_after_seconds": 1.0,
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": true,
+            "temperature": 0.1,
+            "timestamp": "2026-09-23T09:10:49.770396+00:00",
+            "transport_status": "FAILED",
+            "usage": null
+          }
+        },
+        {
+          "sequence": 2345,
+          "type": "provider.routing",
+          "timestamp": "2026-09-23T09:11:50.629024+00:00",
+          "payload": {
+            "call_id": "4a18768ea9e14abf958253295108da0a",
+            "code": "PROVIDER_UNAVAILABLE",
+            "event": "model_fallback",
+            "from_model_id": "gpt6",
+            "http_status": 504,
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reason": "供应商暂时无法处理请求；本次失败已记录",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "to_model_id": "deepseek-flash"
+          }
+        },
+        {
+          "sequence": 2346,
+          "type": "provider.request",
+          "timestamp": "2026-09-23T09:11:50.638398+00:00",
+          "payload": {
+            "attempt": 2,
+            "base_url": "https://api.deepseek.com",
+            "call_id": "2e314aa278d74e8da8ad0674d4790bd1",
+            "input_hash": "e77a2d3f573885c94435efe54c0679373b259a310aef669fef6bd88d411181bd",
+            "model": "deepseek-flash",
+            "model_id": "deepseek-flash",
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reasoning_effort": "high",
+            "requested_model": "deepseek-flash",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": false,
+            "thinking": {
+              "type": "enabled"
+            },
+            "timestamp": "2026-09-23T09:11:50.632326+00:00"
+          }
+        },
+        {
+          "sequence": 2347,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:11:55.363117+00:00",
+          "payload": {
+            "attempt": 2,
+            "base_url": "https://api.deepseek.com",
+            "billing_uncertain": true,
+            "call_id": "2e314aa278d74e8da8ad0674d4790bd1",
+            "headers_elapsed_seconds": 4.719,
+            "http_status": 200,
+            "input_hash": "e77a2d3f573885c94435efe54c0679373b259a310aef669fef6bd88d411181bd",
+            "model": "deepseek-flash",
+            "model_id": "deepseek-flash",
+            "preferred_model_id": "gpt6",
+            "price": null,
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reasoning_effort": "high",
+            "request_id": "",
+            "requested_model": "deepseek-flash",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": false,
+            "thinking": {
+              "type": "enabled"
+            },
+            "timestamp": "2026-09-23T09:11:50.632326+00:00",
+            "usage": null
+          }
+        },
+        {
+          "sequence": 2357,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:13:47.623094+00:00",
+          "payload": {
+            "attempt": 2,
+            "base_url": "https://api.deepseek.com",
+            "billing_uncertain": false,
+            "call_id": "2e314aa278d74e8da8ad0674d4790bd1",
+            "elapsed_seconds": 116.985,
+            "http_status": 200,
+            "input_hash": "e77a2d3f573885c94435efe54c0679373b259a310aef669fef6bd88d411181bd",
+            "model": "deepseek-flash",
+            "model_id": "deepseek-flash",
+            "preferred_model_id": "gpt6",
+            "price": null,
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reasoning_effort": "high",
+            "reported_model": "deepseek-flash",
+            "request_id": "",
+            "requested_model": "deepseek-flash",
+            "response_id": "a463a1a1-c127-4791-9586-849c391e27ed",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": false,
+            "thinking": {
+              "type": "enabled"
+            },
+            "timestamp": "2026-09-23T09:11:50.632326+00:00",
+            "transport_status": "SUCCESS",
+            "usage": {
+              "completion_tokens": 26230,
+              "prompt_tokens": 24935,
+              "total_tokens": 51165
+            }
+          }
+        },
+        {
+          "sequence": 2358,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:13:47.631245+00:00",
+          "payload": {
+            "base_url": "https://api.deepseek.com",
+            "call_id": "2e314aa278d74e8da8ad0674d4790bd1",
+            "model": "deepseek-flash",
+            "model_id": "deepseek-flash",
+            "output_hash": "fadbafe6bbae264796ee365cdb96908372578a23ee5d34edf8cac2fefcf05bed",
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reasoning_effort": "high",
+            "reported_model": "deepseek-flash",
+            "requested_model": "deepseek-flash",
+            "role": "reviewer_math",
+            "schema_attempt": 1,
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": false,
+            "thinking": {
+              "type": "enabled"
+            }
+          }
+        },
+        {
+          "sequence": 2359,
+          "type": "local.repair_state",
+          "timestamp": "2026-09-23T09:13:47.655997+00:00",
+          "payload": {
+            "applied_rounds": 1,
+            "phase": "LOCAL_CHECKS_PENDING_COMPILE",
+            "proposal_calls": 1,
+            "rejected_proposals": 0,
+            "section_id": "S05"
+          }
+        },
+        {
+          "sequence": 2360,
+          "type": "stage",
+          "timestamp": "2026-09-23T09:13:47.668003+00:00",
+          "payload": {
+            "stage": "compile.section.S05",
+            "status": "LOCAL_REVIEW"
+          }
+        },
+        {
+          "sequence": 2361,
+          "type": "step.checkpoint",
+          "timestamp": "2026-09-23T09:13:51.657732+00:00",
+          "payload": {
+            "output_hash": "7789537826066296837a8f316cf7e90d0ed52b9c7f0e7ac8ce1663ed9364ac71",
+            "step_key": "section.S05"
+          }
+        },
+        {
+          "sequence": 2362,
+          "type": "local.repair_state",
+          "timestamp": "2026-09-23T09:13:51.678020+00:00",
+          "payload": {
+            "applied_rounds": 1,
+            "phase": "CHECKED",
+            "proposal_calls": 1,
+            "rejected_proposals": 0,
+            "section_id": "S05"
+          }
+        },
+        {
+          "sequence": 2363,
+          "type": "global.repair_state",
+          "timestamp": "2026-09-23T09:13:51.706494+00:00",
+          "payload": {
+            "pending_sections": [],
+            "phase": "checking",
+            "rounds_used": 3
+          }
+        },
+        {
+          "sequence": 2364,
+          "type": "stage",
+          "timestamp": "2026-09-23T09:13:51.720937+00:00",
+          "payload": {
+            "stage": "math.global_interfaces",
+            "status": "GLOBAL_REVIEW"
+          }
+        },
+        {
+          "sequence": 2365,
+          "type": "provider.request",
+          "timestamp": "2026-09-23T09:13:51.878200+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "call_id": "b0064500481b4d2d8de789f772003418",
+            "input_hash": "aea0660a720a8fe1d1141fe492ef844ebd5b6a7c31472baf8a28bf77ef8e1413",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "requested_model": "gpt-6-astra",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": true,
+            "temperature": 0.1,
+            "timestamp": "2026-09-23T09:13:51.876149+00:00"
+          }
+        },
+        {
+          "sequence": 2369,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:14:22.942090+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "billing_uncertain": true,
+            "call_id": "b0064500481b4d2d8de789f772003418",
+            "headers_elapsed_seconds": 31.063,
+            "http_status": 200,
+            "input_hash": "aea0660a720a8fe1d1141fe492ef844ebd5b6a7c31472baf8a28bf77ef8e1413",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "price": null,
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "request_id": "",
+            "requested_model": "gpt-6-astra",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": true,
+            "temperature": 0.1,
+            "timestamp": "2026-09-23T09:13:51.876149+00:00",
+            "usage": null
+          }
+        },
+        {
+          "sequence": 2370,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:14:22.960316+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "billing_uncertain": true,
+            "call_id": "b0064500481b4d2d8de789f772003418",
+            "elapsed_seconds": 31.079,
+            "error_code": "PROVIDER_RESPONSE",
+            "finish_reason": null,
+            "http_status": 200,
+            "input_hash": "aea0660a720a8fe1d1141fe492ef844ebd5b6a7c31472baf8a28bf77ef8e1413",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "price": null,
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "received_content_chars": 0,
+            "received_response_bytes": 361,
+            "reported_model": "gpt-6-astra",
+            "request_id": "",
+            "requested_model": "gpt-6-astra",
+            "response_bytes_sha256": "449f4387586862b7f19b42a662d256564f4ddabec27419bc64eef13e8c41c4e6",
+            "response_id": "resp_0f82b0ad748bce95016ab398599b5c87d090d3f755661fa6ec",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "stream_complete": false,
+            "streaming": true,
+            "temperature": 0.1,
+            "timestamp": "2026-09-23T09:13:51.876149+00:00",
+            "transport_status": "FAILED",
+            "usage": null
+          }
+        },
+        {
+          "sequence": 2371,
+          "type": "job.finished",
+          "timestamp": "2026-09-23T09:14:22.989831+00:00",
+          "payload": {
+            "error": {
+              "attempt": 4,
+              "code": "PROVIDER_RESPONSE",
+              "job_id": "4678ed20f5c44ad89b289ffcee4d8143",
+              "message": "供应商流式事件明确返回错误状态",
+              "recovery": "原审批和已通过章节保留；修复条件后点击重试。崩溃边界的外部调用可能重复计费。",
+              "timestamp": "2026-09-23T09:14:22.970559+00:00"
+            },
+            "stage": "math.global_interfaces",
+            "status": "FAILED"
+          }
+        }
+      ]
+    },
+    "CH03": {
+      "id": "a45be503af594ce8aae0bb1e4c30184b",
+      "status": "LOCAL_REVIEW",
+      "stage": "review.section.S03",
+      "request_count": 158,
+      "error": null,
+      "events": [
+        {
+          "sequence": 2340,
+          "type": "local.repair_state",
+          "timestamp": "2026-09-23T09:11:43.477588+00:00",
+          "payload": {
+            "applied_rounds": 7,
+            "phase": "PROPOSAL_PENDING",
+            "proposal_calls": 9,
+            "rejected_proposals": 1,
+            "section_id": "S03"
+          }
+        },
+        {
+          "sequence": 2341,
+          "type": "stage",
+          "timestamp": "2026-09-23T09:11:43.485592+00:00",
+          "payload": {
+            "stage": "repair.section.S03",
+            "status": "REPAIRING"
+          }
+        },
+        {
+          "sequence": 2342,
+          "type": "provider.request",
+          "timestamp": "2026-09-23T09:11:43.669173+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "call_id": "754326a574d345a7978211687016165a",
+            "input_hash": "9c2ac4a84f6cb7fd5d3a3631530dbfb5deea09962850f7f42632b5a581329fad",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "362fb34b2529572af9620c5433dbb223290c519889e89192c1d52c5d65e60943",
+            "prompt_version": 1,
+            "prompt_version_source": "declared_prompt_header",
+            "requested_model": "gpt-6-astra",
+            "role": "repair_local_patch",
+            "schema_hash": "0d86c8d71317f64b5b07f16f49a50ad4dd13c072cbf83dcaa1babdd53d1510dd",
+            "streaming": true,
+            "temperature": 0.4,
+            "timestamp": "2026-09-23T09:11:43.668172+00:00"
+          }
+        },
+        {
+          "sequence": 2348,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:12:21.377522+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "billing_uncertain": true,
+            "call_id": "754326a574d345a7978211687016165a",
+            "headers_elapsed_seconds": 37.688,
+            "http_status": 200,
+            "input_hash": "9c2ac4a84f6cb7fd5d3a3631530dbfb5deea09962850f7f42632b5a581329fad",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "price": null,
+            "prompt_hash": "362fb34b2529572af9620c5433dbb223290c519889e89192c1d52c5d65e60943",
+            "prompt_version": 1,
+            "prompt_version_source": "declared_prompt_header",
+            "request_id": "",
+            "requested_model": "gpt-6-astra",
+            "role": "repair_local_patch",
+            "schema_hash": "0d86c8d71317f64b5b07f16f49a50ad4dd13c072cbf83dcaa1babdd53d1510dd",
+            "streaming": true,
+            "temperature": 0.4,
+            "timestamp": "2026-09-23T09:11:43.668172+00:00",
+            "usage": null
+          }
+        },
+        {
+          "sequence": 2349,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:13:35.773316+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "billing_uncertain": false,
+            "call_id": "754326a574d345a7978211687016165a",
+            "elapsed_seconds": 112.094,
+            "finish_reason": "stop",
+            "http_status": 200,
+            "input_hash": "9c2ac4a84f6cb7fd5d3a3631530dbfb5deea09962850f7f42632b5a581329fad",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "price": null,
+            "prompt_hash": "362fb34b2529572af9620c5433dbb223290c519889e89192c1d52c5d65e60943",
+            "prompt_version": 1,
+            "prompt_version_source": "declared_prompt_header",
+            "received_content_chars": 3030,
+            "received_response_bytes": 464865,
+            "reported_model": "gpt-6-astra",
+            "request_id": "",
+            "requested_model": "gpt-6-astra",
+            "response_bytes_sha256": "18b8fec4381572f7f785fd3bb2d26d78ed17352a374ceb5ead395a12d232dc5b",
+            "response_id": "resp_06b34ae177c9dd1a016ab397d4a6a487d092fe429ec5b2a300",
+            "role": "repair_local_patch",
+            "schema_hash": "0d86c8d71317f64b5b07f16f49a50ad4dd13c072cbf83dcaa1babdd53d1510dd",
+            "stream_complete": true,
+            "streaming": true,
+            "temperature": 0.4,
+            "timestamp": "2026-09-23T09:11:43.668172+00:00",
+            "transport_status": "SUCCESS",
+            "usage": {
+              "completion_tokens": 2428,
+              "prompt_tokens": 19569,
+              "total_tokens": 21997
+            }
+          }
+        },
+        {
+          "sequence": 2350,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:13:35.785347+00:00",
+          "payload": {
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "call_id": "754326a574d345a7978211687016165a",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "output_hash": "c0bf6813b64589ae5e002a8172590b9c7f721fcc3ad90fcaf25247c5ad00039d",
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "362fb34b2529572af9620c5433dbb223290c519889e89192c1d52c5d65e60943",
+            "prompt_version": 1,
+            "prompt_version_source": "declared_prompt_header",
+            "reported_model": "gpt-6-astra",
+            "requested_model": "gpt-6-astra",
+            "role": "repair_local_patch",
+            "schema_attempt": 1,
+            "schema_hash": "0d86c8d71317f64b5b07f16f49a50ad4dd13c072cbf83dcaa1babdd53d1510dd",
+            "streaming": true,
+            "temperature": 0.4
+          }
+        },
+        {
+          "sequence": 2351,
+          "type": "local.repair_state",
+          "timestamp": "2026-09-23T09:13:35.883055+00:00",
+          "payload": {
+            "applied_rounds": 8,
+            "phase": "UNCHECKED_REPAIRED",
+            "proposal_calls": 9,
+            "rejected_proposals": 1,
+            "section_id": "S03"
+          }
+        },
+        {
+          "sequence": 2352,
+          "type": "global.repair_state",
+          "timestamp": "2026-09-23T09:13:35.908871+00:00",
+          "payload": {
+            "pending_sections": [],
+            "phase": "checking",
+            "rounds_used": 4
+          }
+        },
+        {
+          "sequence": 2353,
+          "type": "repair.guidance_applied",
+          "timestamp": "2026-09-23T09:13:35.919904+00:00",
+          "payload": {
+            "action_id": "authorized-CH03-U04-20260923T090838-b64292",
+            "after_hash": "abc8d017418ea8bbfb1fa47dc7b74263d454ba7d2ba38f25c62226079b5260e2",
+            "before_hash": "893c09404ad95da192bc6a553dadea48e6b96275c3ce03431a4cfde00b0c644a",
+            "job_id": "89467291c05a478b9b525da3ce65b50f",
+            "section_id": "S03",
+            "source": "agent_audit",
+            "status": "UNCHECKED_REPAIRED",
+            "teacher_review": "NOT_RUN",
+            "unit_ids": [
+              "S03.U04"
+            ]
+          }
+        },
+        {
+          "sequence": 2354,
+          "type": "stage",
+          "timestamp": "2026-09-23T09:13:35.933076+00:00",
+          "payload": {
+            "stage": "review.section.S03",
+            "status": "LOCAL_REVIEW"
+          }
+        },
+        {
+          "sequence": 2355,
+          "type": "provider.request",
+          "timestamp": "2026-09-23T09:13:36.659201+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "call_id": "3109f7f1743c47ed8b1968d5849dc85c",
+            "input_hash": "b575b5a1f4cc352d0726047e6858c2e51f4efc14cd4632eb5509e34da4f7c874",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "requested_model": "gpt-6-astra",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": true,
+            "temperature": 0.1,
+            "timestamp": "2026-09-23T09:13:36.656689+00:00"
+          }
+        },
+        {
+          "sequence": 2356,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:13:47.157499+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "billing_uncertain": true,
+            "call_id": "3109f7f1743c47ed8b1968d5849dc85c",
+            "headers_elapsed_seconds": 10.484,
+            "http_status": 200,
+            "input_hash": "b575b5a1f4cc352d0726047e6858c2e51f4efc14cd4632eb5509e34da4f7c874",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "price": null,
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "request_id": "",
+            "requested_model": "gpt-6-astra",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": true,
+            "temperature": 0.1,
+            "timestamp": "2026-09-23T09:13:36.656689+00:00",
+            "usage": null
+          }
+        },
+        {
+          "sequence": 2366,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:14:11.451010+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "billing_uncertain": false,
+            "call_id": "3109f7f1743c47ed8b1968d5849dc85c",
+            "elapsed_seconds": 34.781,
+            "finish_reason": "stop",
+            "http_status": 200,
+            "input_hash": "b575b5a1f4cc352d0726047e6858c2e51f4efc14cd4632eb5509e34da4f7c874",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "price": null,
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "received_content_chars": 1180,
+            "received_response_bytes": 175219,
+            "reported_model": "gpt-6-astra",
+            "request_id": "",
+            "requested_model": "gpt-6-astra",
+            "response_bytes_sha256": "a0ca627bb206c8477ad021f0273b4127bf758f7f258bccbac88880690a2ece25",
+            "response_id": "resp_0a5eb5deb875a01a016ab398460fe087d0be97e13139b6f16d",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "stream_complete": true,
+            "streaming": true,
+            "temperature": 0.1,
+            "timestamp": "2026-09-23T09:13:36.656689+00:00",
+            "transport_status": "SUCCESS",
+            "usage": {
+              "completion_tokens": 826,
+              "prompt_tokens": 20076,
+              "total_tokens": 20902
+            }
+          }
+        },
+        {
+          "sequence": 2367,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:14:11.467034+00:00",
+          "payload": {
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "call_id": "3109f7f1743c47ed8b1968d5849dc85c",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "output_hash": "140ba9e6cbcfdfca1541cfa49dcfbed58266f00868b6f1b56158fa651577af88",
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reported_model": "gpt-6-astra",
+            "requested_model": "gpt-6-astra",
+            "role": "reviewer_math",
+            "schema_attempt": 1,
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": true,
+            "temperature": 0.1
+          }
+        },
+        {
+          "sequence": 2368,
+          "type": "provider.request",
+          "timestamp": "2026-09-23T09:14:11.686718+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "call_id": "a4c80f45877148d69d173b2ed80a4de3",
+            "input_hash": "7b4cf43b357395c5eea964e9126722fea1e61fa524f2000f589766f8664d8b07",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "5c0f40881c0ef1be2c5c26d1e67865280ee0b7ddd3bcb2b2bc6ebfab77a28c39",
+            "prompt_version": 1,
+            "prompt_version_source": "declared_prompt_header",
+            "requested_model": "gpt-6-astra",
+            "role": "reviewer_uncertainty",
+            "schema_hash": "17483c3498be1c224aa33dee7db98ac074bc8c0cb8b2ff22c7545c03d1135b40",
+            "streaming": true,
+            "temperature": 0.1,
+            "timestamp": "2026-09-23T09:14:11.685716+00:00"
+          }
+        },
+        {
+          "sequence": 2372,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:14:32.353563+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "billing_uncertain": true,
+            "call_id": "a4c80f45877148d69d173b2ed80a4de3",
+            "headers_elapsed_seconds": 20.656,
+            "http_status": 200,
+            "input_hash": "7b4cf43b357395c5eea964e9126722fea1e61fa524f2000f589766f8664d8b07",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "price": null,
+            "prompt_hash": "5c0f40881c0ef1be2c5c26d1e67865280ee0b7ddd3bcb2b2bc6ebfab77a28c39",
+            "prompt_version": 1,
+            "prompt_version_source": "declared_prompt_header",
+            "request_id": "",
+            "requested_model": "gpt-6-astra",
+            "role": "reviewer_uncertainty",
+            "schema_hash": "17483c3498be1c224aa33dee7db98ac074bc8c0cb8b2ff22c7545c03d1135b40",
+            "streaming": true,
+            "temperature": 0.1,
+            "timestamp": "2026-09-23T09:14:11.685716+00:00",
+            "usage": null
+          }
+        }
+      ]
+    }
+  }
+}

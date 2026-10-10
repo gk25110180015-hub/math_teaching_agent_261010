@@ -1,0 +1,826 @@
+{
+  "id": "a45be503af594ce8aae0bb1e4c30184b",
+  "workflow_id": "lecture.generate",
+  "version": 1,
+  "owner_id": "local",
+  "status": "FAILED",
+  "stage": "compile.section.S05",
+  "input_hash": "3b4e20cb757d221f1c974ffadb5918b392f9092cd5d1a8d9e5847c07c37930b7",
+  "active_plan_revision": 2,
+  "created_at": "2026-09-19T18:43:46.907219+00:00",
+  "updated_at": "2026-09-20T14:57:19.749331+00:00",
+  "request_count": 37,
+  "schema_version": 1,
+  "input": {
+    "attachments": [],
+    "difficulty": "经济学本科一年级微积分",
+    "provider": "live",
+    "schema_version": 1,
+    "theme": "default",
+    "topic": "函数极限与连续。覆盖函数极限定义、左右极限与无穷远极限、极限性质与运算、无穷小和连续性，规划4至6节完整的本科入门讲义，每节至少一个例题和一个练习。",
+    "trusted_input": true,
+    "units": [],
+    "use_reference_bibliography": false,
+    "workflow_id": "lecture.generate"
+  },
+  "error": {
+    "attempt": 4,
+    "code": "COMPILE_FAILED",
+    "job_id": "27979f9a88114ed1a41b9d3c3c5facd8",
+    "message": "本次编译未通过；日志、源码和原审批已保留：[{\"location\":{\"log_line\":635},\"message\":\"Overfull \\\\hbox (0.5104pt too wide) in paragraph at lines 932--933\",\"resolution_status\":\"open\",\"rule_id\":\"OVERFULL_BOX\",\"severity\":\"blocking\"}]",
+    "recovery": "原审批和已通过章节保留；修复条件后点击重试。崩溃边界的外部调用可能重复计费。",
+    "timestamp": "2026-09-20T14:57:19.732802+00:00"
+  },
+  "plan": {
+    "additions": [],
+    "decision_ids": [
+      "f5391dff983a4c9abb85da431cb31909",
+      "7ca7cf70f16741558e7c2f5f52b15a8a",
+      "9e01f2db34b441de925b672b5caa32e7",
+      "9d39de0f38b149659cfdd61fc2be8cf2"
+    ],
+    "decisions": [
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "custom_input": "",
+        "id": "f5391dff983a4c9abb85da431cb31909",
+        "question_id": "Q-PROOF",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "key"
+        },
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "timestamp": "2026-09-19T18:44:39.074420+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "custom_input": "",
+        "id": "7ca7cf70f16741558e7c2f5f52b15a8a",
+        "question_id": "Q-EXAMPLE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "balanced"
+        },
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "timestamp": "2026-09-19T18:44:39.074420+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "custom_input": "",
+        "id": "9e01f2db34b441de925b672b5caa32e7",
+        "question_id": "Q-EXERCISE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "with_answers"
+        },
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "timestamp": "2026-09-19T18:44:39.074420+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "custom_input": "",
+        "id": "9d39de0f38b149659cfdd61fc2be8cf2",
+        "question_id": "Q-ANSWERS",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "end"
+        },
+        "selected_option_ids": [
+          "END"
+        ],
+        "timestamp": "2026-09-19T18:44:39.074420+00:00"
+      }
+    ],
+    "diff": [
+      {
+        "after": {
+          "answers_location": "end",
+          "example_focus": "balanced",
+          "exercises": "with_answers",
+          "proof_policy": "key"
+        },
+        "before": {
+          "answers_location": null,
+          "example_focus": null,
+          "exercises": null,
+          "proof_policy": null
+        },
+        "field": "lecture"
+      }
+    ],
+    "difficulty": "经济学本科一年级微积分",
+    "exclusions": [
+      "不系统讲授导数、微分及其几何应用。",
+      "不展开多元函数极限与连续性。",
+      "不讨论严格的拓扑空间定义、度量空间完备性和序列完备性证明。",
+      "不系统讲授渐近展开、泰勒公式及高阶无穷小理论。",
+      "不涉及测度论、勒贝格积分或高级实分析中的连续性定理证明。"
+    ],
+    "input_snapshot_hash": "3b4e20cb757d221f1c974ffadb5918b392f9092cd5d1a8d9e5847c07c37930b7",
+    "lecture": {
+      "answers_location": "end",
+      "example_focus": "balanced",
+      "exercises": "with_answers",
+      "proof_policy": "key"
+    },
+    "objectives": [
+      "建立一元函数极限的直观与严格认识，掌握点极限、左右极限和无穷远极限的表达方式。",
+      "掌握极限的唯一性、保号性、四则运算等基本性质，并能处理常见极限计算。",
+      "理解无穷小及其阶的基本思想，掌握等价无穷小在极限计算中的使用条件。",
+      "掌握函数连续性的定义、间断点分类及连续函数的基本运算性质。",
+      "理解闭区间上连续函数的有界性、最值性和介值性，并能解决基础经济学模型中的连续性问题。"
+    ],
+    "omissions": [],
+    "prerequisites": [
+      "实数运算与绝对值不等式",
+      "集合、区间与邻域的基本概念",
+      "初等函数及其图像",
+      "代数式变形与因式分解",
+      "指数函数、对数函数和三角函数的基本性质"
+    ],
+    "provider": "live",
+    "questions": [
+      {
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-PROOF",
+        "options": [
+          {
+            "effects": {
+              "value": "key"
+            },
+            "id": "KEY",
+            "label": "关键定理完整证明，其余说明",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "all"
+            },
+            "id": "ALL",
+            "label": "所有定理完整证明",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "定理证明采用哪种深度？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXAMPLE",
+        "options": [
+          {
+            "effects": {
+              "value": "balanced"
+            },
+            "id": "BALANCED",
+            "label": "概念与计算均衡",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "economics"
+            },
+            "id": "ECONOMICS",
+            "label": "更多经济应用",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "例题侧重什么？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXERCISE",
+        "options": [
+          {
+            "effects": {
+              "value": "with_answers"
+            },
+            "id": "WITH",
+            "label": "安排练习并附答案",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "none"
+            },
+            "id": "NONE",
+            "label": "不安排额外练习",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "是否安排练习与答案？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-ANSWERS",
+        "options": [
+          {
+            "effects": {
+              "value": "section"
+            },
+            "id": "SECTION",
+            "label": "各节之后",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "end"
+            },
+            "id": "END",
+            "label": "讲义末尾",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "练习答案放在哪里？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "END"
+        ],
+        "selection_mode": "single"
+      }
+    ],
+    "reference_context": {
+      "dataset": "第三章",
+      "instruction": "Only observe structure, proof depth and notation. Do not copy these examples into a different topic.",
+      "label": "UNTRUSTED_STYLE_REFERENCE_ONLY",
+      "section_titles": [
+        "一元函数极限",
+        "函数极限的基本性质",
+        "两个重要极限",
+        "等价无穷小",
+        "一元函数的连续性",
+        "闭区间连续函数的两个基本定理",
+        "二元函数的极限与连续"
+      ],
+      "source_hash": "73f3c32c19af46bf3c9b3e2881b18327a1aa8970ad2ff8bc2610d979ef655f3f",
+      "status": "RETRIEVED",
+      "weight_training": false
+    },
+    "reference_registry": {
+      "def:bounded-on-closed-interval": "S05",
+      "def:discontinuity-types": "S04",
+      "def:equivalent-infinitesimal": "S03",
+      "def:infinite-limit": "S01",
+      "def:infinitesimal": "S03",
+      "def:interval-continuity": "S04",
+      "def:one-sided-limit": "S01",
+      "def:point-continuity": "S04",
+      "def:point-limit": "S01",
+      "def:squeeze-principle": "S02",
+      "sec:S01": "S01",
+      "sec:S02": "S02",
+      "sec:S03": "S03",
+      "sec:S04": "S04",
+      "sec:S05": "S05",
+      "thm:composition-continuity": "S04",
+      "thm:continuity-algebra": "S04",
+      "thm:equivalent-substitution": "S03",
+      "thm:extreme-value-theorem": "S05",
+      "thm:fundamental-limits": "S03",
+      "thm:intermediate-value-theorem": "S05",
+      "thm:limit-algebra": "S02",
+      "thm:limit-sign-preservation": "S02",
+      "thm:limit-uniqueness": "S01",
+      "thm:squeeze-theorem": "S02",
+      "thm:two-sided-limit-criterion": "S01",
+      "thm:zero-existence-theorem": "S05"
+    },
+    "revision": 2,
+    "rules": {
+      "allowed_text_sizes": [
+        "footnotesize",
+        "small",
+        "normalsize",
+        "large"
+      ],
+      "rule_version": 1,
+      "summary_frames": false
+    },
+    "schema_version": 1,
+    "sections": [
+      {
+        "id": "S01",
+        "objectives": [
+          "理解函数在一点处趋近时的局部行为。",
+          "掌握点极限、左极限、右极限及无穷远极限的定义。",
+          "能够使用极限定义判断简单函数的极限，并用左右极限分析极限存在性。"
+        ],
+        "prerequisites": [],
+        "reference_labels": [
+          "def:point-limit",
+          "def:one-sided-limit",
+          "def:infinite-limit",
+          "thm:two-sided-limit-criterion",
+          "thm:limit-uniqueness"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "一元函数极限：定义、左右极限与无穷远极限"
+      },
+      {
+        "id": "S02",
+        "objectives": [
+          "掌握极限的唯一性、局部有界性和保号性。",
+          "掌握极限的和、差、积、商运算法则及复合函数的基础结论。",
+          "能够运用代数变形、夹逼思想和基本极限完成初等计算。"
+        ],
+        "prerequisites": [
+          "S01"
+        ],
+        "reference_labels": [
+          "def:squeeze-principle",
+          "thm:limit-algebra",
+          "thm:squeeze-theorem",
+          "thm:limit-sign-preservation"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "极限的基本性质与运算"
+      },
+      {
+        "id": "S03",
+        "objectives": [
+          "理解无穷小与无穷大的相对概念。",
+          "掌握常用基本极限及其适用条件。",
+          "理解等价无穷小的定义，并能在乘积和商的极限中进行规范替换。"
+        ],
+        "prerequisites": [
+          "S02"
+        ],
+        "reference_labels": [
+          "def:infinitesimal",
+          "def:equivalent-infinitesimal",
+          "thm:fundamental-limits",
+          "thm:equivalent-substitution"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "无穷小、基本极限与等价无穷小"
+      },
+      {
+        "id": "S04",
+        "objectives": [
+          "掌握函数在一点、区间内连续的定义。",
+          "理解连续性与极限、函数值之间的关系。",
+          "能够判断可去间断点、跳跃间断点和无穷间断点，并掌握连续函数的四则运算与复合性质。"
+        ],
+        "prerequisites": [
+          "S03"
+        ],
+        "reference_labels": [
+          "def:point-continuity",
+          "def:interval-continuity",
+          "def:discontinuity-types",
+          "thm:continuity-algebra",
+          "thm:composition-continuity"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "函数连续性与间断点"
+      },
+      {
+        "id": "S05",
+        "objectives": [
+          "掌握闭区间连续函数有界定理和最值定理。",
+          "理解介值定理与零点存在性定理。",
+          "能够将连续性定理用于判断方程根的存在性及简单经济学模型的可行性。"
+        ],
+        "prerequisites": [
+          "S04"
+        ],
+        "reference_labels": [
+          "def:bounded-on-closed-interval",
+          "thm:extreme-value-theorem",
+          "thm:intermediate-value-theorem",
+          "thm:zero-existence-theorem"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "闭区间连续函数的基本定理及应用"
+      }
+    ],
+    "symbols": {
+      "A": "函数极限值或常数",
+      "[a,b]": "由a与b确定的闭区间，其中a≤b",
+      "\\delta": "依赖于\\varepsilon的正数",
+      "\\lim_{x\\to x_0^+}f(x)": "函数在x从右侧趋近于x_0时的右极限",
+      "\\lim_{x\\to x_0^-}f(x)": "函数在x从左侧趋近于x_0时的左极限",
+      "\\lim_{x\\to x_0}f(x)": "函数在x趋近于x_0时的极限",
+      "\\varepsilon": "任意给定的正数",
+      "f(x)": "定义在相应区间或邻域上的函数",
+      "o(1)": "当自变量趋近相应极限位置时趋于零的量",
+      "x": "自变量",
+      "x_0": "考察的有限点"
+    },
+    "theme": "default",
+    "title": "函数极限与连续：本科一年级微积分讲义计划",
+    "unresolved_blocking_questions": [],
+    "workflow_id": "lecture.generate",
+    "hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7"
+  },
+  "approval": {
+    "run_id": "a45be503af594ce8aae0bb1e4c30184b",
+    "revision": 2,
+    "hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+    "input_hash": "3b4e20cb757d221f1c974ffadb5918b392f9092cd5d1a8d9e5847c07c37930b7",
+    "action_id": "benchmark_driver:CH03:fbd172c8df0c12fc",
+    "confirmed_at": "2026-09-19T18:44:39.087182+00:00"
+  },
+  "jobs": [
+    {
+      "id": "cd46a095dfbe4810a7bb81f061b5a63d",
+      "kind": "plan",
+      "status": "done",
+      "attempt": 1,
+      "fencing_token": 1
+    },
+    {
+      "id": "27979f9a88114ed1a41b9d3c3c5facd8",
+      "kind": "build",
+      "status": "failed",
+      "attempt": 4,
+      "fencing_token": 4
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "e17df383464543919cc1e8fa45e0247f",
+      "run_id": "a45be503af594ce8aae0bb1e4c30184b",
+      "revision": 2,
+      "name": "failure_diagnostic.json",
+      "sha256": "4b2bb6c13441fe44e4aaeaea638d6767635eb950f416843b2d728380e0b7633c",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-19T18:49:36.866195+00:00",
+      "metadata": {
+        "attempt": 1,
+        "kind": "failure_diagnostic"
+      }
+    },
+    {
+      "artifact_id": "2f6c305adde549b3885b198b0e3e8089",
+      "run_id": "a45be503af594ce8aae0bb1e4c30184b",
+      "revision": 2,
+      "name": "failure_diagnostic.json",
+      "sha256": "311ab01bcad15a2f4c337141c715bf2ea375f55d1e940b534b39226c3feb53cb",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-19T19:34:29.518701+00:00",
+      "metadata": {
+        "attempt": 2,
+        "kind": "failure_diagnostic"
+      }
+    },
+    {
+      "artifact_id": "1166a71bc0dd4f469b1cac0fae552ce8",
+      "run_id": "a45be503af594ce8aae0bb1e4c30184b",
+      "revision": 2,
+      "name": "failure_diagnostic.json",
+      "sha256": "3ea6e1350e451041e7c315aaaf4cc00690e9646cea5afcec084898d61dfd7311",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-19T20:22:07.144680+00:00",
+      "metadata": {
+        "attempt": 3,
+        "kind": "failure_diagnostic"
+      }
+    },
+    {
+      "artifact_id": "66686352056e4482a3ef82644fc7436b",
+      "run_id": "a45be503af594ce8aae0bb1e4c30184b",
+      "revision": 2,
+      "name": "failure_diagnostic.json",
+      "sha256": "e480e062876222c9ab3b15ea75fb1ba4ac3b3f66ba8f2c12876fbc5b6a75e9f4",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-20T14:57:19.742803+00:00",
+      "metadata": {
+        "attempt": 4,
+        "kind": "failure_diagnostic"
+      }
+    }
+  ],
+  "reviews": [],
+  "model_routing": {
+    "preferred_model_id": "gpt6",
+    "fallback_order": [
+      "gpt6",
+      "deepseek-flash",
+      "deepseek-v4-pro"
+    ],
+    "last_model_id": "gpt6",
+    "last_successful_model_id": "gpt6",
+    "used_models": [
+      "gpt6",
+      "deepseek-flash"
+    ],
+    "successful_models": [
+      "gpt6",
+      "deepseek-flash"
+    ],
+    "fallback_count": 1,
+    "request_counts": {
+      "gpt6": 36,
+      "deepseek-flash": 1
+    },
+    "actual_models": [
+      "gpt-6-astra",
+      "deepseek-flash"
+    ],
+    "last_fallback": {
+      "from_model_id": "gpt6",
+      "to_model_id": "deepseek-flash",
+      "reason": "供应商暂时无法处理请求；本次失败已记录",
+      "code": "PROVIDER_UNAVAILABLE"
+    },
+    "selection_source": "legacy_default"
+  },
+  "budget": {
+    "requests": 240,
+    "local_repairs_per_unit": 6,
+    "global_repair_rounds": 6,
+    "version": 1,
+    "initialized": true,
+    "initialized_fields": [
+      "global_repair_rounds",
+      "local_repairs_per_unit",
+      "requests"
+    ],
+    "source": "VERIFIED_BENCHMARK_STATE",
+    "baseline_unknown": false,
+    "request_count": 37,
+    "defaults": {
+      "global_repair_rounds": 2,
+      "local_repairs_per_unit": 2,
+      "requests": 60
+    },
+    "overrides": {
+      "global_repair_rounds": 6,
+      "local_repairs_per_unit": 6,
+      "requests": 240
+    },
+    "maximums": {
+      "requests": 1000,
+      "local_repairs_per_unit": 20,
+      "global_repair_rounds": 20
+    },
+    "limitations": [],
+    "can_increase": false
+  },
+  "partial_checkpoints": [
+    {
+      "step_key": "section.S01",
+      "section_id": "S01",
+      "status": "PARTIAL",
+      "created_at": "2026-09-19T19:22:33.783696+00:00",
+      "checkpoint_hash": "40f7f12c2119ecd8299721b0e16a5165a7366bb63372c8afd37be41f90d5d387",
+      "teacher_review": "NOT_RUN",
+      "downloads": [
+        {
+          "id": "c3f5eb74f0bbc8f0fb4a1fbafa30b1e1a932143cb43b71732ea37d72d6883ec0",
+          "kind": "source",
+          "name": "S01-partial.tex",
+          "media_type": "application/x-tex",
+          "sha256": "1506e876c4d4d64c76736db4cbdbe55df2bdbf5fc6ac8e974f6ce8c9230c5f0f",
+          "url": "/api/runs/a45be503af594ce8aae0bb1e4c30184b/partials/c3f5eb74f0bbc8f0fb4a1fbafa30b1e1a932143cb43b71732ea37d72d6883ec0"
+        },
+        {
+          "id": "7c12907038adf98ca50a7252073d9cc72d0052b382283ee68bdf847f64a3a0d1",
+          "kind": "checkpoint",
+          "name": "S01-checkpoint.json",
+          "media_type": "application/json",
+          "sha256": "40f7f12c2119ecd8299721b0e16a5165a7366bb63372c8afd37be41f90d5d387",
+          "url": "/api/runs/a45be503af594ce8aae0bb1e4c30184b/partials/7c12907038adf98ca50a7252073d9cc72d0052b382283ee68bdf847f64a3a0d1"
+        },
+        {
+          "id": "81083b95692dacbd1e0e5acaa75eb8efb4a4abaafda4775c52d300406d1e6be8",
+          "kind": "pdf",
+          "name": "S01-partial.pdf",
+          "media_type": "application/pdf",
+          "sha256": "692b8835d721a4bcbc750955f72335bfd764f96ed3327b4a198a2c721feb4bf0",
+          "url": "/api/runs/a45be503af594ce8aae0bb1e4c30184b/partials/81083b95692dacbd1e0e5acaa75eb8efb4a4abaafda4775c52d300406d1e6be8"
+        }
+      ],
+      "plan_binding": "UNKNOWN",
+      "plan_binding_notice": "当前计划关联未核验；可能为历史部分结果，不能据此认定当前计划已完成。",
+      "notice": "仅为已保存章节的部分结果，全文及教师复核尚未完成。",
+      "compile_status": "PASS"
+    },
+    {
+      "step_key": "section.S02",
+      "section_id": "S02",
+      "status": "PARTIAL",
+      "created_at": "2026-09-19T19:29:32.464677+00:00",
+      "checkpoint_hash": "2584772cefafb730199dd2a3516512e312c08f0a2495b7a35ff7a3720ba60a11",
+      "teacher_review": "NOT_RUN",
+      "downloads": [
+        {
+          "id": "8c6d47a2b7b82f5ea376e6bc86e06586e7f6de88836ddd83e94cdc803912b388",
+          "kind": "source",
+          "name": "S02-partial.tex",
+          "media_type": "application/x-tex",
+          "sha256": "9c83a54709353973de2b9925cf14c1ba9d626d15955a057e6bf737b107331bb3",
+          "url": "/api/runs/a45be503af594ce8aae0bb1e4c30184b/partials/8c6d47a2b7b82f5ea376e6bc86e06586e7f6de88836ddd83e94cdc803912b388"
+        },
+        {
+          "id": "36286bce340c15f852ea69d299b03e744ad1ba4ce89eea4345509bbb7cf74de3",
+          "kind": "checkpoint",
+          "name": "S02-checkpoint.json",
+          "media_type": "application/json",
+          "sha256": "2584772cefafb730199dd2a3516512e312c08f0a2495b7a35ff7a3720ba60a11",
+          "url": "/api/runs/a45be503af594ce8aae0bb1e4c30184b/partials/36286bce340c15f852ea69d299b03e744ad1ba4ce89eea4345509bbb7cf74de3"
+        },
+        {
+          "id": "e7085676d40c0855122e0d658ca739d9acb666c0d4bcf793227feff7c32b9fa7",
+          "kind": "pdf",
+          "name": "S02-partial.pdf",
+          "media_type": "application/pdf",
+          "sha256": "fa090a372a81aac343526c284aba32c777dfe4c45b1250e70bf83b3a47439e0e",
+          "url": "/api/runs/a45be503af594ce8aae0bb1e4c30184b/partials/e7085676d40c0855122e0d658ca739d9acb666c0d4bcf793227feff7c32b9fa7"
+        }
+      ],
+      "plan_binding": "UNKNOWN",
+      "plan_binding_notice": "当前计划关联未核验；可能为历史部分结果，不能据此认定当前计划已完成。",
+      "notice": "仅为已保存章节的部分结果，全文及教师复核尚未完成。",
+      "compile_status": "PASS"
+    },
+    {
+      "step_key": "section.S03",
+      "section_id": "S03",
+      "status": "PARTIAL",
+      "created_at": "2026-09-20T14:47:39.280393+00:00",
+      "checkpoint_hash": "3905f63b67dffdb225dbcbfa35afe089f477be0eb7bc27f05d76ca57328f1d9a",
+      "teacher_review": "NOT_RUN",
+      "downloads": [
+        {
+          "id": "818755f42aa14beed5e0b226294bdeab1f70963569bfdd8c1d5f87dc0372ba1c",
+          "kind": "source",
+          "name": "S03-partial.tex",
+          "media_type": "application/x-tex",
+          "sha256": "6cee6f53d425a102ea95098e0244547684a7d1e40ab6c1ee709c1ac14129d93b",
+          "url": "/api/runs/a45be503af594ce8aae0bb1e4c30184b/partials/818755f42aa14beed5e0b226294bdeab1f70963569bfdd8c1d5f87dc0372ba1c"
+        },
+        {
+          "id": "ef12c50234a8336c672a99a55dc0b9cea6935ce199d8adb5a4b4f30d8dfe97f4",
+          "kind": "checkpoint",
+          "name": "S03-checkpoint.json",
+          "media_type": "application/json",
+          "sha256": "3905f63b67dffdb225dbcbfa35afe089f477be0eb7bc27f05d76ca57328f1d9a",
+          "url": "/api/runs/a45be503af594ce8aae0bb1e4c30184b/partials/ef12c50234a8336c672a99a55dc0b9cea6935ce199d8adb5a4b4f30d8dfe97f4"
+        },
+        {
+          "id": "1360ef2fe5ac16ee5e9431d49d8752c54c9ed5e6931b2425f636cbc442fd0973",
+          "kind": "pdf",
+          "name": "S03-partial.pdf",
+          "media_type": "application/pdf",
+          "sha256": "8b41e763d2423ee69a11de38402aeff76a7cd9f2ee6bc5090d4ecdf17a5f5590",
+          "url": "/api/runs/a45be503af594ce8aae0bb1e4c30184b/partials/1360ef2fe5ac16ee5e9431d49d8752c54c9ed5e6931b2425f636cbc442fd0973"
+        }
+      ],
+      "plan_binding": "UNKNOWN",
+      "plan_binding_notice": "当前计划关联未核验；可能为历史部分结果，不能据此认定当前计划已完成。",
+      "notice": "仅为已保存章节的部分结果，全文及教师复核尚未完成。",
+      "compile_status": "PASS"
+    },
+    {
+      "step_key": "section.S04",
+      "section_id": "S04",
+      "status": "PARTIAL",
+      "created_at": "2026-09-20T14:53:51.679406+00:00",
+      "checkpoint_hash": "bdd1626a9eae7f245cdbc1f8f60f2097bd2dba765fb3eaeb404c6d0e2876c927",
+      "teacher_review": "NOT_RUN",
+      "downloads": [
+        {
+          "id": "3e3ceda7dc63afc322662712b370d7568a59b31daad74dd3397ca32d3c1c1689",
+          "kind": "source",
+          "name": "S04-partial.tex",
+          "media_type": "application/x-tex",
+          "sha256": "f0fdc1822841f6ba07efaecae06948770318555319ee35e78d73ec3b3d0ca5d5",
+          "url": "/api/runs/a45be503af594ce8aae0bb1e4c30184b/partials/3e3ceda7dc63afc322662712b370d7568a59b31daad74dd3397ca32d3c1c1689"
+        },
+        {
+          "id": "62dae1ded6b0a22814b7b40c7de870df253edecce8228e082780a0f7e0f461e1",
+          "kind": "checkpoint",
+          "name": "S04-checkpoint.json",
+          "media_type": "application/json",
+          "sha256": "bdd1626a9eae7f245cdbc1f8f60f2097bd2dba765fb3eaeb404c6d0e2876c927",
+          "url": "/api/runs/a45be503af594ce8aae0bb1e4c30184b/partials/62dae1ded6b0a22814b7b40c7de870df253edecce8228e082780a0f7e0f461e1"
+        },
+        {
+          "id": "7409d1d408ffc79d05d085b2be97788f6b35144bf165dc740e72d033589b7ec1",
+          "kind": "pdf",
+          "name": "S04-partial.pdf",
+          "media_type": "application/pdf",
+          "sha256": "79b98f85b61cd2bfb480ca398ffefe200045d19afcc9dbcb1e3590b8086d3fbe",
+          "url": "/api/runs/a45be503af594ce8aae0bb1e4c30184b/partials/7409d1d408ffc79d05d085b2be97788f6b35144bf165dc740e72d033589b7ec1"
+        }
+      ],
+      "plan_binding": "UNKNOWN",
+      "plan_binding_notice": "当前计划关联未核验；可能为历史部分结果，不能据此认定当前计划已完成。",
+      "notice": "仅为已保存章节的部分结果，全文及教师复核尚未完成。",
+      "compile_status": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="15" skipped="0" tests="15" time="2.581" timestamp="2026-09-20T22:40:43.036722+08:00" hostname="Asuna"><testcase classname="tests.test_series_start_domain" name="test_undefined_first_term_never_passes_tail_convergence[term0-1]" time="2.234"><failure message="AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}&#10;assert 'PASS' == 'FAIL'&#10;  &#10;  - FAIL&#10;  + PASS">term = {'op': 'Pow', 'args': [{'op': 'Mul', 'args': [{'op': 'Symbol', 'name': 'n'}, {'op': 'log', 'args': [{...}]}]}, {'op': 'Integer', 'value': -1}]}
+start = 1
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('term,start', [
+        (reciprocal(op('Mul', N, LOG_N)), 1),
+        (reciprocal(op('Add', N, integer(-1))), 1),
+        (LOG_N, 0),
+        (op('Mul', LOG_N, reciprocal(LOG_N)), 1),
+        (op('Mul', op('Add', N, integer(-1)), reciprocal(op('Add', N, integer(-1)))), 1),
+        (op('sqrt', op('Add', N, integer(-2))), 1),
+    ])
+    def test_undefined_first_term_never_passes_tail_convergence(term, start):
+        result = _calculate(request(term, start))
+&gt;       assert result['status'] == 'FAIL', result
+E       AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}
+E       assert 'PASS' == 'FAIL'
+E         
+E         - FAIL
+E         + PASS
+
+tests\test_series_start_domain.py:40: AssertionError</failure></testcase><testcase classname="tests.test_series_start_domain" name="test_undefined_first_term_never_passes_tail_convergence[term1-1]" time="0.011"><failure message="AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}&#10;assert 'PASS' == 'FAIL'&#10;  &#10;  - FAIL&#10;  + PASS">term = {'op': 'Pow', 'args': [{'op': 'Add', 'args': [{'op': 'Symbol', 'name': 'n'}, {'op': 'Integer', 'value': -1}]}, {'op': 'Integer', 'value': -1}]}
+start = 1
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('term,start', [
+        (reciprocal(op('Mul', N, LOG_N)), 1),
+        (reciprocal(op('Add', N, integer(-1))), 1),
+        (LOG_N, 0),
+        (op('Mul', LOG_N, reciprocal(LOG_N)), 1),
+        (op('Mul', op('Add', N, integer(-1)), reciprocal(op('Add', N, integer(-1)))), 1),
+        (op('sqrt', op('Add', N, integer(-2))), 1),
+    ])
+    def test_undefined_first_term_never_passes_tail_convergence(term, start):
+        result = _calculate(request(term, start))
+&gt;       assert result['status'] == 'FAIL', result
+E       AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}
+E       assert 'PASS' == 'FAIL'
+E         
+E         - FAIL
+E         + PASS
+
+tests\test_series_start_domain.py:40: AssertionError</failure></testcase><testcase classname="tests.test_series_start_domain" name="test_undefined_first_term_never_passes_tail_convergence[term2-0]" time="0.005"><failure message="AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}&#10;assert 'PASS' == 'FAIL'&#10;  &#10;  - FAIL&#10;  + PASS">term = {'op': 'log', 'args': [{'op': 'Symbol', 'name': 'n'}]}, start = 0
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('term,start', [
+        (reciprocal(op('Mul', N, LOG_N)), 1),
+        (reciprocal(op('Add', N, integer(-1))), 1),
+        (LOG_N, 0),
+        (op('Mul', LOG_N, reciprocal(LOG_N)), 1),
+        (op('Mul', op('Add', N, integer(-1)), reciprocal(op('Add', N, integer(-1)))), 1),
+        (op('sqrt', op('Add', N, integer(-2))), 1),
+    ])
+    def test_undefined_first_term_never_passes_tail_convergence(term, start):
+        result = _calculate(request(term, start))
+&gt;       assert result['status'] == 'FAIL', result
+E       AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}
+E       assert 'PASS' == 'FAIL'
+E         
+E         - FAIL
+E         + PASS
+
+tests\test_series_start_domain.py:40: AssertionError</failure></testcase><testcase classname="tests.test_series_start_domain" name="test_undefined_first_term_never_passes_tail_convergence[term3-1]" time="0.001"><failure message="AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}&#10;assert 'PASS' == 'FAIL'&#10;  &#10;  - FAIL&#10;  + PASS">term = {'op': 'Mul', 'args': [{'op': 'log', 'args': [{'op': 'Symbol', 'name': 'n'}]}, {'op': 'Pow', 'args': [{'op': 'log', 'args': [{...}]}, {'op': 'Integer', 'value': -1}]}]}
+start = 1
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('term,start', [
+        (reciprocal(op('Mul', N, LOG_N)), 1),
+        (reciprocal(op('Add', N, integer(-1))), 1),
+        (LOG_N, 0),
+        (op('Mul', LOG_N, reciprocal(LOG_N)), 1),
+        (op('Mul', op('Add', N, integer(-1)), reciprocal(op('Add', N, integer(-1)))), 1),
+        (op('sqrt', op('Add', N, integer(-2))), 1),
+    ])
+    def test_undefined_first_term_never_passes_tail_convergence(term, start):
+        result = _calculate(request(term, start))
+&gt;       assert result['status'] == 'FAIL', result
+E       AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}
+E       assert 'PASS' == 'FAIL'
+E         
+E         - FAIL
+E         + PASS
+
+tests\test_series_start_domain.py:40: AssertionError</failure></testcase><testcase classname="tests.test_series_start_domain" name="test_undefined_first_term_never_passes_tail_convergence[term4-1]" time="0.001"><failure message="AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}&#10;assert 'PASS' == 'FAIL'&#10;  &#10;  - FAIL&#10;  + PASS">term = {'op': 'Mul', 'args': [{'op': 'Add', 'args': [{'op': 'Symbol', 'name': 'n'}, {'op': 'Integer', 'value': -1}]}, {'op': 'Pow', 'args': [{'op': 'Add', 'args': [{...}, {...}]}, {'op': 'Integer', 'value': -1}]}]}
+start = 1
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('term,start', [
+        (reciprocal(op('Mul', N, LOG_N)), 1),
+        (reciprocal(op('Add', N, integer(-1))), 1),
+        (LOG_N, 0),
+        (op('Mul', LOG_N, reciprocal(LOG_N)), 1),
+        (op('Mul', op('Add', N, integer(-1)), reciprocal(op('Add', N, integer(-1)))), 1),
+        (op('sqrt', op('Add', N, integer(-2))), 1),
+    ])
+    def test_undefined_first_term_never_passes_tail_convergence(term, start):
+        result = _calculate(request(term, start))
+&gt;       assert result['status'] == 'FAIL', result
+E       AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}
+E       assert 'PASS' == 'FAIL'
+E         
+E         - FAIL
+E         + PASS
+
+tests\test_series_start_domain.py:40: AssertionError</failure></testcase><testcase classname="tests.test_series_start_domain" name="test_undefined_first_term_never_passes_tail_convergence[term5-1]" time="0.009"><failure message="AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}&#10;assert 'PASS' == 'FAIL'&#10;  &#10;  - FAIL&#10;  + PASS">term = {'op': 'sqrt', 'args': [{'op': 'Add', 'args': [{'op': 'Symbol', 'name': 'n'}, {'op': 'Integer', 'value': -2}]}]}
+start = 1
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('term,start', [
+        (reciprocal(op('Mul', N, LOG_N)), 1),
+        (reciprocal(op('Add', N, integer(-1))), 1),
+        (LOG_N, 0),
+        (op('Mul', LOG_N, reciprocal(LOG_N)), 1),
+        (op('Mul', op('Add', N, integer(-1)), reciprocal(op('Add', N, integer(-1)))), 1),
+        (op('sqrt', op('Add', N, integer(-2))), 1),
+    ])
+    def test_undefined_first_term_never_passes_tail_convergence(term, start):
+        result = _calculate(request(term, start))
+&gt;       assert result['status'] == 'FAIL', result
+E       AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}
+E       assert 'PASS' == 'FAIL'
+E         
+E         - FAIL
+E         + PASS
+
+tests\test_series_start_domain.py:40: AssertionError</failure></testcase><testcase classname="tests.test_series_start_domain" name="test_defined_start_retains_the_convergence_result[term0-2-False]" time="0.032"><failure message="KeyError: 'domain_scope'">term = {'op': 'Pow', 'args': [{'op': 'Mul', 'args': [{'op': 'Symbol', 'name': 'n'}, {'op': 'log', 'args': [{...}]}]}, {'op': 'Integer', 'value': -1}]}
+start = 2, expected = False
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('term,start,expected', [
+        (reciprocal(op('Mul', N, LOG_N)), 2, False),
+        (reciprocal(op('Add', N, integer(-1))), 2, False),
+        (reciprocal(N), 1, False),
+        (op('Pow', N, integer(-2)), 1, True),
+        (op('Mul', LOG_N, reciprocal(LOG_N)), 2, False),
+        (op('sqrt', N), 1, False),
+    ])
+    def test_defined_start_retains_the_convergence_result(term, start, expected):
+        result = _calculate(request(term, start, expected=expected))
+        assert result['status'] == 'PASS', result
+&gt;       assert result['domain_scope'] == 'start_term_only'
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'domain_scope'
+
+tests\test_series_start_domain.py:57: KeyError</failure></testcase><testcase classname="tests.test_series_start_domain" name="test_defined_start_retains_the_convergence_result[term1-2-False]" time="0.010"><failure message="KeyError: 'domain_scope'">term = {'op': 'Pow', 'args': [{'op': 'Add', 'args': [{'op': 'Symbol', 'name': 'n'}, {'op': 'Integer', 'value': -1}]}, {'op': 'Integer', 'value': -1}]}
+start = 2, expected = False
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('term,start,expected', [
+        (reciprocal(op('Mul', N, LOG_N)), 2, False),
+        (reciprocal(op('Add', N, integer(-1))), 2, False),
+        (reciprocal(N), 1, False),
+        (op('Pow', N, integer(-2)), 1, True),
+        (op('Mul', LOG_N, reciprocal(LOG_N)), 2, False),
+        (op('sqrt', N), 1, False),
+    ])
+    def test_defined_start_retains_the_convergence_result(term, start, expected):
+        result = _calculate(request(term, start, expected=expected))
+        assert result['status'] == 'PASS', result
+&gt;       assert result['domain_scope'] == 'start_term_only'
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'domain_scope'
+
+tests\test_series_start_domain.py:57: KeyError</failure></testcase><testcase classname="tests.test_series_start_domain" name="test_defined_start_retains_the_convergence_result[term2-1-False]" time="0.003"><failure message="KeyError: 'domain_scope'">term = {'op': 'Pow', 'args': [{'op': 'Symbol', 'name': 'n'}, {'op': 'Integer', 'value': -1}]}
+start = 1, expected = False
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('term,start,expected', [
+        (reciprocal(op('Mul', N, LOG_N)), 2, False),
+        (reciprocal(op('Add', N, integer(-1))), 2, False),
+        (reciprocal(N), 1, False),
+        (op('Pow', N, integer(-2)), 1, True),
+        (op('Mul', LOG_N, reciprocal(LOG_N)), 2, False),
+        (op('sqrt', N), 1, False),
+    ])
+    def test_defined_start_retains_the_convergence_result(term, start, expected):
+        result = _calculate(request(term, start, expected=expected))
+        assert result['status'] == 'PASS', result
+&gt;       assert result['domain_scope'] == 'start_term_only'
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'domain_scope'
+
+tests\test_series_start_domain.py:57: KeyError</failure></testcase><testcase classname="tests.test_series_start_domain" name="test_defined_start_retains_the_convergence_result[term3-1-True]" time="0.004"><failure message="KeyError: 'domain_scope'">term = {'op': 'Pow', 'args': [{'op': 'Symbol', 'name': 'n'}, {'op': 'Integer', 'value': -2}]}
+start = 1, expected = True
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('term,start,expected', [
+        (reciprocal(op('Mul', N, LOG_N)), 2, False),
+        (reciprocal(op('Add', N, integer(-1))), 2, False),
+        (reciprocal(N), 1, False),
+        (op('Pow', N, integer(-2)), 1, True),
+        (op('Mul', LOG_N, reciprocal(LOG_N)), 2, False),
+        (op('sqrt', N), 1, False),
+    ])
+    def test_defined_start_retains_the_convergence_result(term, start, expected):
+        result = _calculate(request(term, start, expected=expected))
+        assert result['status'] == 'PASS', result
+&gt;       assert result['domain_scope'] == 'start_term_only'
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'domain_scope'
+
+tests\test_series_start_domain.py:57: KeyError</failure></testcase><testcase classname="tests.test_series_start_domain" name="test_defined_start_retains_the_convergence_result[term4-2-False]" time="0.001"><failure message="KeyError: 'domain_scope'">term = {'op': 'Mul', 'args': [{'op': 'log', 'args': [{'op': 'Symbol', 'name': 'n'}]}, {'op': 'Pow', 'args': [{'op': 'log', 'args': [{...}]}, {'op': 'Integer', 'value': -1}]}]}
+start = 2, expected = False
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('term,start,expected', [
+        (reciprocal(op('Mul', N, LOG_N)), 2, False),
+        (reciprocal(op('Add', N, integer(-1))), 2, False),
+        (reciprocal(N), 1, False),
+        (op('Pow', N, integer(-2)), 1, True),
+        (op('Mul', LOG_N, reciprocal(LOG_N)), 2, False),
+        (op('sqrt', N), 1, False),
+    ])
+    def test_defined_start_retains_the_convergence_result(term, start, expected):
+        result = _calculate(request(term, start, expected=expected))
+        assert result['status'] == 'PASS', result
+&gt;       assert result['domain_scope'] == 'start_term_only'
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'domain_scope'
+
+tests\test_series_start_domain.py:57: KeyError</failure></testcase><testcase classname="tests.test_series_start_domain" name="test_defined_start_retains_the_convergence_result[term5-1-False]" time="0.003"><failure message="KeyError: 'domain_scope'">term = {'op': 'sqrt', 'args': [{'op': 'Symbol', 'name': 'n'}]}, start = 1
+expected = False
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('term,start,expected', [
+        (reciprocal(op('Mul', N, LOG_N)), 2, False),
+        (reciprocal(op('Add', N, integer(-1))), 2, False),
+        (reciprocal(N), 1, False),
+        (op('Pow', N, integer(-2)), 1, True),
+        (op('Mul', LOG_N, reciprocal(LOG_N)), 2, False),
+        (op('sqrt', N), 1, False),
+    ])
+    def test_defined_start_retains_the_convergence_result(term, start, expected):
+        result = _calculate(request(term, start, expected=expected))
+        assert result['status'] == 'PASS', result
+&gt;       assert result['domain_scope'] == 'start_term_only'
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'domain_scope'
+
+tests\test_series_start_domain.py:57: KeyError</failure></testcase><testcase classname="tests.test_series_start_domain" name="test_symbolic_unresolved_first_term_is_unknown" time="0.003"><failure message="NotImplementedError: convergence checking for more than one symbol containing series is not handled">@pytest.mark.unit
+    def test_symbolic_unresolved_first_term_is_unknown():
+        parameter = {'op': 'Symbol', 'name': 'a'}
+&gt;       result = _calculate(request(reciprocal(op('Add', N, parameter)),
+            assumptions={'n': {'integer': True, 'positive': True}, 'a': {'real': True}}))
+
+tests\test_series_start_domain.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\math_agent\mathcheck.py:292: in _calculate
+    actual = sp.Sum(expression(request['term']), (variable, expression(request['start']), expression(request['end']))).is_convergent()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = Sum(1/(a + n), (n, 1, oo))
+
+    def is_convergent(self):
+        r"""
+        Checks for the convergence of a Sum.
+    
+        Explanation
+        ===========
+    
+        We divide the study of convergence of infinite sums and products in
+        two parts.
+    
+        First Part:
+        One part is the question whether all the terms are well defined, i.e.,
+        they are finite in a sum and also non-zero in a product. Zero
+        is the analogy of (minus) infinity in products as
+        :math:`e^{-\infty} = 0`.
+    
+        Second Part:
+        The second part is the question of convergence after infinities,
+        and zeros in products, have been omitted assuming that their number
+        is finite. This means that we only consider the tail of the sum or
+        product, starting from some point after which all terms are well
+        defined.
+    
+        For example, in a sum of the form:
+    
+        .. math::
+    
+            \sum_{1 \leq i &lt; \infty} \frac{1}{n^2 + an + b}
+    
+        where a and b are numbers. The routine will return true, even if there
+        are infinities in the term sequence (at most two). An analogous
+        product would be:
+    
+        .. math::
+    
+            \prod_{1 \leq i &lt; \infty} e^{\frac{1}{n^2 + an + b}}
+    
+        This is how convergence is interpreted. It is concerned with what
+        happens at the limit. Finding the bad terms is another independent
+        matter.
+    
+        Note: It is responsibility of user to see that the sum or product
+        is well defined.
+    
+        There are various tests employed to check the convergence like
+        divergence test, root test, integral test, alternating series test,
+        comparison tests, Dirichlet tests. It returns true if Sum is convergent
+        and false if divergent and NotImplementedError if it cannot be checked.
+    
+        References
+        ==========
+    
+        .. [1] https://en.wikipedia.org/wiki/Convergence_tests
+    
+        Examples
+        ========
+    
+        &gt;&gt;&gt; from sympy import factorial, S, Sum, Symbol, oo
+        &gt;&gt;&gt; n = Symbol('n', integer=True)
+        &gt;&gt;&gt; Sum(n/(n - 1), (n, 4, 7)).is_convergent()
+        True
+        &gt;&gt;&gt; Sum(n/(2*n + 1), (n, 1, oo)).is_convergent()
+        False
+        &gt;&gt;&gt; Sum(factorial(n)/5**n, (n, 1, oo)).is_convergent()
+        False
+        &gt;&gt;&gt; Sum(1/n**(S(6)/5), (n, 1, oo)).is_convergent()
+        True
+    
+        See Also
+        ========
+    
+        Sum.is_absolutely_convergent
+        sympy.concrete.products.Product.is_convergent
+        """
+        p, q, r = symbols('p q r', cls=Wild)
+    
+        sym = self.limits[0][0]
+        lower_limit = self.limits[0][1]
+        upper_limit = self.limits[0][2]
+        sequence_term = self.function.simplify()
+    
+        if len(sequence_term.free_symbols) &gt; 1:
+&gt;           raise NotImplementedError("convergence checking for more than one symbol "
+                                      "containing series is not handled")
+E           NotImplementedError: convergence checking for more than one symbol containing series is not handled
+
+.venv\Lib\site-packages\sympy\concrete\summations.py:462: NotImplementedError</failure></testcase><testcase classname="tests.test_series_start_domain" name="test_first_term_check_does_not_claim_all_terms_defined" time="0.012"><failure message="KeyError: 'domain_scope'">@pytest.mark.unit
+    def test_first_term_check_does_not_claim_all_terms_defined():
+        result = _calculate(request(reciprocal(op('Add', N, integer(-2)))))
+        # This fixture has a later pole at n=2; a first-term check must state its scope.
+&gt;       assert result['domain_scope'] == 'start_term_only'
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'domain_scope'
+
+tests\test_series_start_domain.py:74: KeyError</failure></testcase><testcase classname="tests.test_series_start_domain" name="test_noninteger_series_start_is_not_silently_checked" time="0.002"><failure message="AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}&#10;assert 'PASS' == 'UNKNOWN'&#10;  &#10;  - UNKNOWN&#10;  + PASS">@pytest.mark.unit
+    def test_noninteger_series_start_is_not_silently_checked():
+        payload = request(reciprocal(N))
+        payload['start'] = {'op': 'Rational', 'p': 1, 'q': 2}
+        result = _calculate(payload)
+&gt;       assert result['status'] == 'UNKNOWN', result
+E       AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}
+E       assert 'PASS' == 'UNKNOWN'
+E         
+E         - UNKNOWN
+E         + PASS
+
+tests\test_series_start_domain.py:83: AssertionError</failure></testcase></testsuite></testsuites>

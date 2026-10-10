@@ -1,0 +1,103 @@
+{
+  "section_id": "S01",
+  "math": {
+    "schema_version": 1,
+    "status": "NEEDS_REVIEW",
+    "issues": [
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "S01.U1 该单元对正整数索引和定义范围的说明仍需核对。",
+        "location": {},
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_type": "not_checked",
+        "status": "NOT_RUN",
+        "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+      }
+    ],
+    "coverage": [
+      "S01.U1",
+      "S01.U2"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+    ]
+  },
+  "llm_review": {
+    "issues": [
+      {
+        "unit_id": "S01.U1",
+        "severity": "blocking",
+        "message": "仍存在独立数学错误。",
+        "evidence": "受控 mock 普通审阅原结论。"
+      }
+    ],
+    "checked_unit_ids": [
+      "S01.U1",
+      "S01.U2"
+    ],
+    "limitations": [
+      "Mock ordinary review."
+    ]
+  },
+  "issues": [
+    {
+      "unit_id": "S01.U1",
+      "severity": "blocking",
+      "message": "仍存在独立数学错误。",
+      "evidence": "受控 mock 普通审阅原结论。"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "uncertainty_review": {
+    "identity_hash": "c2285dbafdc366a2d4fab0e1be8f2bf99c630436055c6355addf52fb48717b36",
+    "assessment": {
+      "items": [
+        {
+          "uncertainty_id": "D001-96dd97d5295fe300",
+          "unit_id": "S01.U1",
+          "disposition": "resolved_by_current_body",
+          "reason": "已核对该实际单元的完整定义和索引条件，这是受控 mock 判断，不代表真实数学验收。",
+          "evidence": [
+            {
+              "source_key": "current:S01.U1",
+              "source_sha256": "840ea35ba26e7174747646c2e1d5d96b968cb5dee4c0e1d26ed7a37bf13e926e",
+              "quote": "数列是正整数集上的实值函数。"
+            }
+          ],
+          "remaining_dependency": false,
+          "repair_instruction": null
+        }
+      ],
+      "limitations": [
+        "Injected mock assessment, no teacher review."
+      ]
+    },
+    "evidence_key": "runs/95f7dee697ec47d4ac60656dda9d6374/uncertainty-reviews/c2285dbafdc366a2d4fab0e1/state.json",
+    "evidence_sha256": "973a93a0b7044e7ea6b537a07ac7c59d45ed6cc3b8492c42011a4a0f58cdcf85",
+    "teacher_review": "NOT_RUN"
+  },
+  "uncertainty_legacy_mapping": [],
+  "local_recovery": {
+    "applied_rounds": 0,
+    "proposal_calls": 0,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "23a43569c0ee7b7585f3540ac21ec36cb347ef2f5ee92513c8830e69229768b9",
+      "tool_checks_hash": "2dbb88bc9eac47172772f1f37a17c262551686a8659b6eb7d52e5ad4a27d3737",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "21f4e4014c3124f10f141f23477b9f2943dde6a7e8f281581e83e8d86633361a",
+      "deterministic_checks_hash": "ac09337aa0b0b76b1730af4b66596f08e6746a50ab0d42abe51a9fe0bce401d1",
+      "uncertainty_identity": "c2285dbafdc366a2d4fab0e1be8f2bf99c630436055c6355addf52fb48717b36",
+      "uncertainty_assessment_hash": "8b81fa723855d99f250735f1782c897afa5eac4bbb4c96604a9a71422dd94d9e"
+    }
+  }
+}

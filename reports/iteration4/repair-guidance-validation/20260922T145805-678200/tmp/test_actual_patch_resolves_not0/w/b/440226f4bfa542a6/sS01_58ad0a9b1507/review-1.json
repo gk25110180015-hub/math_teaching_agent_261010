@@ -1,0 +1,109 @@
+{
+  "section_id": "S01",
+  "math": {
+    "schema_version": 1,
+    "status": "NEEDS_REVIEW",
+    "issues": [
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "S01.U1 该单元对正整数索引和定义范围的说明仍需核对。",
+        "location": {},
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_type": "not_checked",
+        "status": "NOT_RUN",
+        "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+      }
+    ],
+    "coverage": [
+      "S01.U1",
+      "S01.U2"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S01.U1",
+      "S01.U2"
+    ],
+    "limitations": [
+      "Mock ordinary review."
+    ]
+  },
+  "issues": [],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "uncertainty_review": {
+    "identity_hash": "98571b5e2db55c76e3741434627f41a903f9803f751b9be0983388a903ddc625",
+    "assessment": {
+      "items": [
+        {
+          "uncertainty_id": "D001-96dd97d5295fe300",
+          "unit_id": "S01.U1",
+          "disposition": "resolved_by_current_body",
+          "reason": "已核对该实际单元的完整定义和索引条件，这是受控 mock 判断，不代表真实数学验收。",
+          "evidence": [
+            {
+              "source_key": "current:S01.U1",
+              "source_sha256": "525289b9397c9247875f0a109d45c41914c658c67f6572816a9038abe0c3a879",
+              "quote": "数列是正整数集上的实值函数。 已明示前提。"
+            }
+          ],
+          "remaining_dependency": false,
+          "repair_instruction": null
+        }
+      ],
+      "limitations": [
+        "Injected mock assessment, no teacher review."
+      ]
+    },
+    "evidence_key": "runs/440226f4bfa542a6a758bb305e0e56a4/uncertainty-reviews/98571b5e2db55c76e3741434/state.json",
+    "evidence_sha256": "30d692c8cf14b180a3836a261796b6caeda53df46a85717373cbdcd4d18ee8df",
+    "teacher_review": "NOT_RUN"
+  },
+  "uncertainty_legacy_mapping": [],
+  "local_recovery": {
+    "applied_rounds": 1,
+    "proposal_calls": 1,
+    "rejected_proposals": 0,
+    "preserved_issues": [
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "S01.U1 该单元对正整数索引和定义范围的说明仍需核对。\n显式裁定：已核对该实际单元的完整定义和索引条件，这是受控 mock 判断，不代表真实数学验收。\n限定修复：只在该已存在的目标单元明确原本欠缺的定义前提。",
+        "location": {
+          "unit_id": "S01.U1"
+        },
+        "uncertainty_id": "D001-96dd97d5295fe300",
+        "original_sha256": "96dd97d5295fe300175983ddf9b59b0c34b75ee76bcfcddd459d62b52a0e7af7",
+        "resolution_status": "open",
+        "disposition": "open_actionable",
+        "disposition_evidence": [
+          {
+            "source_key": "current:S01.U1",
+            "source_sha256": "840ea35ba26e7174747646c2e1d5d96b968cb5dee4c0e1d26ed7a37bf13e926e",
+            "quote": "数列是正整数集上的实值函数。"
+          }
+        ]
+      }
+    ],
+    "review_identity": {
+      "candidate_hash": "f41a6777bb2aef43d0e1f625c6d2336610830a37cc2a7d422333b10db47390bf",
+      "tool_checks_hash": "2dbb88bc9eac47172772f1f37a17c262551686a8659b6eb7d52e5ad4a27d3737",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "21f4e4014c3124f10f141f23477b9f2943dde6a7e8f281581e83e8d86633361a",
+      "deterministic_checks_hash": "ac09337aa0b0b76b1730af4b66596f08e6746a50ab0d42abe51a9fe0bce401d1",
+      "uncertainty_identity": "98571b5e2db55c76e3741434627f41a903f9803f751b9be0983388a903ddc625",
+      "uncertainty_assessment_hash": "aa7c5e0ffd1725ca8917d645ee715499f8534f65746872c86ae58e6d1f0d131e"
+    }
+  }
+}

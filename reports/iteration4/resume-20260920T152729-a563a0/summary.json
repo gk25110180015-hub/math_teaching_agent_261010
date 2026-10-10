@@ -1,0 +1,172 @@
+{
+  "created_at": "2026-09-20T15:27:29.585804+00:00",
+  "base_url": "http://127.0.0.1:8766",
+  "mode": "retry",
+  "authorization": "用户已授权提高修复与请求上限并持续完善效果；本次已部署检查契约、目标覆盖、数学定义域、编译局部修复、增额恢复，且延长每模型30/600/600秒等待，继续原审批任务。",
+  "cases": {
+    "CH02": {
+      "run_id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "status": "QUEUED",
+      "stage": "review.section.S05",
+      "request_count": 40,
+      "budget": {
+        "requests": 240,
+        "local_repairs_per_unit": 6,
+        "global_repair_rounds": 6,
+        "version": 1,
+        "initialized": true,
+        "initialized_fields": [
+          "global_repair_rounds",
+          "local_repairs_per_unit",
+          "requests"
+        ],
+        "source": "VERIFIED_BENCHMARK_STATE",
+        "baseline_unknown": false,
+        "request_count": 40,
+        "defaults": {
+          "global_repair_rounds": 2,
+          "local_repairs_per_unit": 2,
+          "requests": 60
+        },
+        "overrides": {
+          "global_repair_rounds": 6,
+          "local_repairs_per_unit": 6,
+          "requests": 240
+        },
+        "maximums": {
+          "requests": 1000,
+          "local_repairs_per_unit": 20,
+          "global_repair_rounds": 20
+        },
+        "limitations": [],
+        "can_increase": false
+      },
+      "error": null,
+      "preferred_model": "gpt6",
+      "model_routing": {
+        "preferred_model_id": "gpt6",
+        "fallback_order": [
+          "gpt6",
+          "deepseek-flash",
+          "deepseek-v4-pro"
+        ],
+        "last_model_id": "deepseek-v4-pro",
+        "last_successful_model_id": "gpt6",
+        "used_models": [
+          "gpt6",
+          "deepseek-flash",
+          "deepseek-v4-pro"
+        ],
+        "successful_models": [
+          "gpt6"
+        ],
+        "fallback_count": 2,
+        "request_counts": {
+          "gpt6": 38,
+          "deepseek-flash": 1,
+          "deepseek-v4-pro": 1
+        },
+        "actual_models": [
+          "gpt-6-astra",
+          "deepseek-flash",
+          "deepseek-v4-pro"
+        ],
+        "last_fallback": {
+          "from_model_id": "deepseek-flash",
+          "to_model_id": "deepseek-v4-pro",
+          "reason": "API 超时；服务端可能已处理并计费，保留此记录",
+          "code": "PROVIDER_TIMEOUT"
+        },
+        "selection_source": "legacy_default"
+      },
+      "approval_unchanged": true
+    },
+    "CH03": {
+      "run_id": "a45be503af594ce8aae0bb1e4c30184b",
+      "status": "QUEUED",
+      "stage": "compile.section.S05",
+      "request_count": 37,
+      "budget": {
+        "requests": 240,
+        "local_repairs_per_unit": 6,
+        "global_repair_rounds": 6,
+        "version": 1,
+        "initialized": true,
+        "initialized_fields": [
+          "global_repair_rounds",
+          "local_repairs_per_unit",
+          "requests"
+        ],
+        "source": "VERIFIED_BENCHMARK_STATE",
+        "baseline_unknown": false,
+        "request_count": 37,
+        "defaults": {
+          "global_repair_rounds": 2,
+          "local_repairs_per_unit": 2,
+          "requests": 60
+        },
+        "overrides": {
+          "global_repair_rounds": 6,
+          "local_repairs_per_unit": 6,
+          "requests": 240
+        },
+        "maximums": {
+          "requests": 1000,
+          "local_repairs_per_unit": 20,
+          "global_repair_rounds": 20
+        },
+        "limitations": [],
+        "can_increase": false
+      },
+      "error": null,
+      "preferred_model": "gpt6",
+      "model_routing": {
+        "preferred_model_id": "gpt6",
+        "fallback_order": [
+          "gpt6",
+          "deepseek-flash",
+          "deepseek-v4-pro"
+        ],
+        "last_model_id": "gpt6",
+        "last_successful_model_id": "gpt6",
+        "used_models": [
+          "gpt6",
+          "deepseek-flash"
+        ],
+        "successful_models": [
+          "gpt6",
+          "deepseek-flash"
+        ],
+        "fallback_count": 1,
+        "request_counts": {
+          "gpt6": 36,
+          "deepseek-flash": 1
+        },
+        "actual_models": [
+          "gpt-6-astra",
+          "deepseek-flash"
+        ],
+        "last_fallback": {
+          "from_model_id": "gpt6",
+          "to_model_id": "deepseek-flash",
+          "reason": "供应商暂时无法处理请求；本次失败已记录",
+          "code": "PROVIDER_UNAVAILABLE"
+        },
+        "selection_source": "legacy_default"
+      },
+      "approval_unchanged": true
+    }
+  },
+  "teacher_math_review": "NOT_RUN",
+  "teacher_visual_review": "NOT_RUN",
+  "health": {
+    "status": "ok",
+    "worker": {
+      "alive": true,
+      "last_heartbeat": 1789918049.0593808
+    },
+    "schema_version": 1
+  },
+  "consistent_database_backup": "before-agent.db",
+  "status": "RECORDED"
+}

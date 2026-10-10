@@ -1,0 +1,27 @@
+{
+  "status": "UNCHECKED_REPAIRED",
+  "state_key": "runs/8f7adbcc51224da8978b29c13da44e51/local-repair/S03.json",
+  "candidate_key": "runs/8f7adbcc51224da8978b29c13da44e51/local-repair/S03/candidate-fe050b801fe8.json",
+  "candidate_hash": "f83fb0ad488a76716c1035b4227e264228a769263ed65df8cb1c2e64bcf5fc31",
+  "applied_rounds": 1,
+  "proposal_calls": 2,
+  "rejected_proposals": 1,
+  "pending_issues": [
+    {
+      "rule_id": "MATH_CHECK_UNKNOWN",
+      "severity": "review",
+      "message": "ValueError: 只接受受限表达式 JSON 树；不解析字符串代码。",
+      "location": {
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U03"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S03.U06",
+      "severity": "review",
+      "message": "证明后的替换规则说明与前面的正确恒等式不一致，容易把“乘以修正比值”误读为“用比值替换原因子”。应改为：在整体 F(x)α(x) 中将因子 α(x) 替换为 β(x)，等价于将整体乘以 β(x)/α(x)，从而得到 F(x)β(x)。前面的证明本身成立，但作为操作规则的解释文字需要修正。",
+      "evidence": "正文先正确写出 F(x)β(x)=F(x)α(x)·β(x)/α(x)，随后却说“以 β(x)/α(x) 替换该因子后，所得 F(x)β(x)”。若“该因子”指 α(x)，替换结果是 F(x)β(x)/α(x)；若指 F(x)α(x)，替换结果是 β(x)/α(x)，均不是所称的 F(x)β(x)。"
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="7" skipped="0" tests="22" time="0.119" timestamp="2026-09-20T22:46:36.937608+08:00" hostname="Asuna"><testcase classname="tests.test_series_text_domain" name="test_supported_undefined_formula_has_precise_nonblocking_location[\u5224\u65ad\u7ea7\u6570 $\\sum_{n=1}^{\\infty}\\frac{1}{n\\ln n}$ \u7684\u655b\u6563\u6027\u3002-1]" time="0.001"><failure message="AssertionError: []&#10;assert 0 == 1&#10; +  where 0 = len([])">tex = '判断级数 $\\sum_{n=1}^{\\infty}\\frac{1}{n\\ln n}$ 的敛散性。', index = 1
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('tex,index', [
+        (r'判断级数 $\sum_{n=1}^{\infty}\frac{1}{n\ln n}$ 的敛散性。', 1),
+        (r'判断级数 \[\sum_{k=1}^{\infty}\frac{2}{k\log(k)}.\]', 1),
+        (r'\[\sum\limits_{j=0}^{\infty}\dfrac{1}{j\,\ln{j}}\]', 0),
+        (r'\[\sum_{m=1}^{\infty}\tfrac{3}{m^{2}\cdot\ln m}\]', 1),
+        (r'\[\sum_{n=1}^{\infty}\frac{0}{n\ln n}\]', 1),
+        (r'\[\sum_{n=1}^{\infty}\frac{1}{n\ln n}\]其中该级数从 $n=2$ 开始。', 1),
+        (r'\begin{equation}\sum_{n=1}^{\infty}\frac{1}{n\ln n}\end{equation}', 1),
+    ])
+    def test_supported_undefined_formula_has_precise_nonblocking_location(tex, index):
+        result = issues(tex)
+&gt;       assert len(result) == 1, result
+E       AssertionError: []
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+tests\test_series_text_domain.py:24: AssertionError</failure></testcase><testcase classname="tests.test_series_text_domain" name="test_supported_undefined_formula_has_precise_nonblocking_location[\u5224\u65ad\u7ea7\u6570 \\[\\sum_{k=1}^{\\infty}\\frac{2}{k\\log(k)}.\\]-1]" time="0.001"><failure message="AssertionError: []&#10;assert 0 == 1&#10; +  where 0 = len([])">tex = '判断级数 \\[\\sum_{k=1}^{\\infty}\\frac{2}{k\\log(k)}.\\]', index = 1
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('tex,index', [
+        (r'判断级数 $\sum_{n=1}^{\infty}\frac{1}{n\ln n}$ 的敛散性。', 1),
+        (r'判断级数 \[\sum_{k=1}^{\infty}\frac{2}{k\log(k)}.\]', 1),
+        (r'\[\sum\limits_{j=0}^{\infty}\dfrac{1}{j\,\ln{j}}\]', 0),
+        (r'\[\sum_{m=1}^{\infty}\tfrac{3}{m^{2}\cdot\ln m}\]', 1),
+        (r'\[\sum_{n=1}^{\infty}\frac{0}{n\ln n}\]', 1),
+        (r'\[\sum_{n=1}^{\infty}\frac{1}{n\ln n}\]其中该级数从 $n=2$ 开始。', 1),
+        (r'\begin{equation}\sum_{n=1}^{\infty}\frac{1}{n\ln n}\end{equation}', 1),
+    ])
+    def test_supported_undefined_formula_has_precise_nonblocking_location(tex, index):
+        result = issues(tex)
+&gt;       assert len(result) == 1, result
+E       AssertionError: []
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+tests\test_series_text_domain.py:24: AssertionError</failure></testcase><testcase classname="tests.test_series_text_domain" name="test_supported_undefined_formula_has_precise_nonblocking_location[\\[\\sum\\limits_{j=0}^{\\infty}\\dfrac{1}{j\\,\\ln{j}}\\]-0]" time="0.001"><failure message="AssertionError: []&#10;assert 0 == 1&#10; +  where 0 = len([])">tex = '\\[\\sum\\limits_{j=0}^{\\infty}\\dfrac{1}{j\\,\\ln{j}}\\]', index = 0
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('tex,index', [
+        (r'判断级数 $\sum_{n=1}^{\infty}\frac{1}{n\ln n}$ 的敛散性。', 1),
+        (r'判断级数 \[\sum_{k=1}^{\infty}\frac{2}{k\log(k)}.\]', 1),
+        (r'\[\sum\limits_{j=0}^{\infty}\dfrac{1}{j\,\ln{j}}\]', 0),
+        (r'\[\sum_{m=1}^{\infty}\tfrac{3}{m^{2}\cdot\ln m}\]', 1),
+        (r'\[\sum_{n=1}^{\infty}\frac{0}{n\ln n}\]', 1),
+        (r'\[\sum_{n=1}^{\infty}\frac{1}{n\ln n}\]其中该级数从 $n=2$ 开始。', 1),
+        (r'\begin{equation}\sum_{n=1}^{\infty}\frac{1}{n\ln n}\end{equation}', 1),
+    ])
+    def test_supported_undefined_formula_has_precise_nonblocking_location(tex, index):
+        result = issues(tex)
+&gt;       assert len(result) == 1, result
+E       AssertionError: []
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+tests\test_series_text_domain.py:24: AssertionError</failure></testcase><testcase classname="tests.test_series_text_domain" name="test_supported_undefined_formula_has_precise_nonblocking_location[\\[\\sum_{m=1}^{\\infty}\\tfrac{3}{m^{2}\\cdot\\ln m}\\]-1]" time="0.000"><failure message="AssertionError: []&#10;assert 0 == 1&#10; +  where 0 = len([])">tex = '\\[\\sum_{m=1}^{\\infty}\\tfrac{3}{m^{2}\\cdot\\ln m}\\]', index = 1
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('tex,index', [
+        (r'判断级数 $\sum_{n=1}^{\infty}\frac{1}{n\ln n}$ 的敛散性。', 1),
+        (r'判断级数 \[\sum_{k=1}^{\infty}\frac{2}{k\log(k)}.\]', 1),
+        (r'\[\sum\limits_{j=0}^{\infty}\dfrac{1}{j\,\ln{j}}\]', 0),
+        (r'\[\sum_{m=1}^{\infty}\tfrac{3}{m^{2}\cdot\ln m}\]', 1),
+        (r'\[\sum_{n=1}^{\infty}\frac{0}{n\ln n}\]', 1),
+        (r'\[\sum_{n=1}^{\infty}\frac{1}{n\ln n}\]其中该级数从 $n=2$ 开始。', 1),
+        (r'\begin{equation}\sum_{n=1}^{\infty}\frac{1}{n\ln n}\end{equation}', 1),
+    ])
+    def test_supported_undefined_formula_has_precise_nonblocking_location(tex, index):
+        result = issues(tex)
+&gt;       assert len(result) == 1, result
+E       AssertionError: []
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+tests\test_series_text_domain.py:24: AssertionError</failure></testcase><testcase classname="tests.test_series_text_domain" name="test_supported_undefined_formula_has_precise_nonblocking_location[\\[\\sum_{n=1}^{\\infty}\\frac{0}{n\\ln n}\\]-1]" time="0.000"><failure message="AssertionError: []&#10;assert 0 == 1&#10; +  where 0 = len([])">tex = '\\[\\sum_{n=1}^{\\infty}\\frac{0}{n\\ln n}\\]', index = 1
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('tex,index', [
+        (r'判断级数 $\sum_{n=1}^{\infty}\frac{1}{n\ln n}$ 的敛散性。', 1),
+        (r'判断级数 \[\sum_{k=1}^{\infty}\frac{2}{k\log(k)}.\]', 1),
+        (r'\[\sum\limits_{j=0}^{\infty}\dfrac{1}{j\,\ln{j}}\]', 0),
+        (r'\[\sum_{m=1}^{\infty}\tfrac{3}{m^{2}\cdot\ln m}\]', 1),
+        (r'\[\sum_{n=1}^{\infty}\frac{0}{n\ln n}\]', 1),
+        (r'\[\sum_{n=1}^{\infty}\frac{1}{n\ln n}\]其中该级数从 $n=2$ 开始。', 1),
+        (r'\begin{equation}\sum_{n=1}^{\infty}\frac{1}{n\ln n}\end{equation}', 1),
+    ])
+    def test_supported_undefined_formula_has_precise_nonblocking_location(tex, index):
+        result = issues(tex)
+&gt;       assert len(result) == 1, result
+E       AssertionError: []
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+tests\test_series_text_domain.py:24: AssertionError</failure></testcase><testcase classname="tests.test_series_text_domain" name="test_supported_undefined_formula_has_precise_nonblocking_location[\\[\\sum_{n=1}^{\\infty}\\frac{1}{n\\ln n}\\]\u5176\u4e2d\u8be5\u7ea7\u6570\u4ece $n=2$ \u5f00\u59cb\u3002-1]" time="0.000"><failure message="AssertionError: []&#10;assert 0 == 1&#10; +  where 0 = len([])">tex = '\\[\\sum_{n=1}^{\\infty}\\frac{1}{n\\ln n}\\]其中该级数从 $n=2$ 开始。', index = 1
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('tex,index', [
+        (r'判断级数 $\sum_{n=1}^{\infty}\frac{1}{n\ln n}$ 的敛散性。', 1),
+        (r'判断级数 \[\sum_{k=1}^{\infty}\frac{2}{k\log(k)}.\]', 1),
+        (r'\[\sum\limits_{j=0}^{\infty}\dfrac{1}{j\,\ln{j}}\]', 0),
+        (r'\[\sum_{m=1}^{\infty}\tfrac{3}{m^{2}\cdot\ln m}\]', 1),
+        (r'\[\sum_{n=1}^{\infty}\frac{0}{n\ln n}\]', 1),
+        (r'\[\sum_{n=1}^{\infty}\frac{1}{n\ln n}\]其中该级数从 $n=2$ 开始。', 1),
+        (r'\begin{equation}\sum_{n=1}^{\infty}\frac{1}{n\ln n}\end{equation}', 1),
+    ])
+    def test_supported_undefined_formula_has_precise_nonblocking_location(tex, index):
+        result = issues(tex)
+&gt;       assert len(result) == 1, result
+E       AssertionError: []
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+tests\test_series_text_domain.py:24: AssertionError</failure></testcase><testcase classname="tests.test_series_text_domain" name="test_supported_undefined_formula_has_precise_nonblocking_location[\\begin{equation}\\sum_{n=1}^{\\infty}\\frac{1}{n\\ln n}\\end{equation}-1]" time="0.000"><failure message="AssertionError: []&#10;assert 0 == 1&#10; +  where 0 = len([])">tex = '\\begin{equation}\\sum_{n=1}^{\\infty}\\frac{1}{n\\ln n}\\end{equation}'
+index = 1
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('tex,index', [
+        (r'判断级数 $\sum_{n=1}^{\infty}\frac{1}{n\ln n}$ 的敛散性。', 1),
+        (r'判断级数 \[\sum_{k=1}^{\infty}\frac{2}{k\log(k)}.\]', 1),
+        (r'\[\sum\limits_{j=0}^{\infty}\dfrac{1}{j\,\ln{j}}\]', 0),
+        (r'\[\sum_{m=1}^{\infty}\tfrac{3}{m^{2}\cdot\ln m}\]', 1),
+        (r'\[\sum_{n=1}^{\infty}\frac{0}{n\ln n}\]', 1),
+        (r'\[\sum_{n=1}^{\infty}\frac{1}{n\ln n}\]其中该级数从 $n=2$ 开始。', 1),
+        (r'\begin{equation}\sum_{n=1}^{\infty}\frac{1}{n\ln n}\end{equation}', 1),
+    ])
+    def test_supported_undefined_formula_has_precise_nonblocking_location(tex, index):
+        result = issues(tex)
+&gt;       assert len(result) == 1, result
+E       AssertionError: []
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+tests\test_series_text_domain.py:24: AssertionError</failure></testcase><testcase classname="tests.test_series_text_domain" name="test_valid_quoted_or_unsupported_notation_is_not_flagged[\u5224\u65ad $\\sum_{n=2}^{\\infty}\\frac{1}{n\\ln n}$\u3002]" time="0.000" /><testcase classname="tests.test_series_text_domain" name="test_valid_quoted_or_unsupported_notation_is_not_flagged[\u6b63\u786e\u516c\u5f0f $\\sum_{n=2}^{\\infty}\\frac{1}{n\\ln n}$\u3002\u9519\u8bef\u505a\u6cd5\u662f\u628a\u8d77\u70b9\u5199\u62101\u3002]" time="0.001" /><testcase classname="tests.test_series_text_domain" name="test_valid_quoted_or_unsupported_notation_is_not_flagged[\u9519\u8bef\u793a\u4f8b\uff1a$\\sum_{n=1}^{\\infty}\\frac{1}{n\\ln n}$\uff0c\u5e94\u5c06\u8d77\u70b9\u6539\u4e3a2\u3002]" time="0.000" /><testcase classname="tests.test_series_text_domain" name="test_valid_quoted_or_unsupported_notation_is_not_flagged[\u9519\u8bef\u8fa8\u6790\uff1a\u4e0b\u5217\u5199\u6cd5\u54ea\u91cc\u6709\u9519\uff1f\\[\\sum_{n=1}^{\\infty}\\frac{1}{n\\ln n}\\]]" time="0.000" /><testcase classname="tests.test_series_text_domain" name="test_valid_quoted_or_unsupported_notation_is_not_flagged[$\\sum_{n=1}^{\\infty}\\frac{1}{n\\ln n}$ \u7684\u9996\u9879\u65e0\u5b9a\u4e49\uff0c\u4e0d\u80fd\u8fd9\u6837\u4e66\u5199\u3002]" time="0.000" /><testcase classname="tests.test_series_text_domain" name="test_valid_quoted_or_unsupported_notation_is_not_flagged[\\verb|$\\sum_{n=1}^{\\infty}\\frac{1}{n\\ln n}$|]" time="0.000" /><testcase classname="tests.test_series_text_domain" name="test_valid_quoted_or_unsupported_notation_is_not_flagged[\\begin{verbatim}$\\sum_{n=1}^{\\infty}\\frac{1}{n\\ln n}$\\end{verbatim}]" time="0.000" /><testcase classname="tests.test_series_text_domain" name="test_valid_quoted_or_unsupported_notation_is_not_flagged[\\iffalse $\\sum_{n=1}^{\\infty}\\frac{1}{n\\ln n}$ \\fi]" time="0.000" /><testcase classname="tests.test_series_text_domain" name="test_valid_quoted_or_unsupported_notation_is_not_flagged[% $\\sum_{n=1}^{\\infty}\\frac{1}{n\\ln n}$\n\u6587\u5b57\u3002]" time="0.000" /><testcase classname="tests.test_series_text_domain" name="test_valid_quoted_or_unsupported_notation_is_not_flagged[$\\sum_{n=1}^{\\infty}\\frac{1}{n^2}$]" time="0.000" /><testcase classname="tests.test_series_text_domain" name="test_valid_quoted_or_unsupported_notation_is_not_flagged[$\\frac{1}{n\\ln n}$ \u5728n&gt;1\u6709\u5b9a\u4e49\u3002]" time="0.000" /><testcase classname="tests.test_series_text_domain" name="test_valid_quoted_or_unsupported_notation_is_not_flagged[$\\sum_{k=1}^{\\infty}\\frac{1}{n\\ln n}$]" time="0.000" /><testcase classname="tests.test_series_text_domain" name="test_valid_quoted_or_unsupported_notation_is_not_flagged[$\\sum_{n=N}^{\\infty}\\frac{1}{n\\ln n}$]" time="0.000" /><testcase classname="tests.test_series_text_domain" name="test_valid_quoted_or_unsupported_notation_is_not_flagged[$\\sum_{n=1}^{\\infty}\\frac{1}{n\\lnn}$]" time="0.000" /><testcase classname="tests.test_series_text_domain" name="test_valid_quoted_or_unsupported_notation_is_not_flagged[$\\sum_{n=1}^{\\infty}\\frac{1}{n\\log_{2}n}$]" time="0.000" /></testsuite></testsuites>

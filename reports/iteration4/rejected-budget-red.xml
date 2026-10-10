@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="5" time="1.809" timestamp="2026-09-20T22:37:20.848158+08:00" hostname="Asuna"><testcase classname="tests.test_rejected_budget_recovery" name="test_default_two_rejections_stop_and_preserve_original_candidate" time="0.214" /><testcase classname="tests.test_rejected_budget_recovery" name="test_explicit_increase_resumes_rejected_key_without_erasing_counts_or_doubts" time="0.293"><failure message="math_agent.util.AgentError: kind=local_repairs_per_unit; units=['S01.U1']; used={}; limit=6; proposal_keys=['unit:S01.U1']; calls={'unit:S01.U1': 2}; rejected={'unit:S01.U1': 2}。合法稿、原审批和未决问题均保留；显式增加预算后才可继续。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/rejected-budget-red/test_explicit_increase_resumes0')
+
+    def test_explicit_increase_resumes_rejected_key_without_erasing_counts_or_doubts(tmp_path):
+        service, pipeline, plan, recovery, base = fixture(tmp_path)
+        evidence = exhaust_two_rejections(pipeline, recovery)
+        pending = copy.deepcopy(recovery.state['pending_issues'])
+        resumed, recovery = increase_and_resume(
+            service, pipeline, plan, base, local_repairs_per_unit=6)
+&gt;       assert recovery.begin_proposal('strict_local_patch', [KEY], [UNIT]) == 3
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_rejected_budget_recovery.py:120: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.local_recovery.LocalRecovery object at 0x000001F629174170&gt;
+kind = 'strict_local_patch', keys = ['unit:S01.U1'], unit_ids = ['S01.U1']
+
+    def begin_proposal(self,kind,keys,unit_ids=()):
+        maximum=self.p.effective_budget()['local_repairs_per_unit']
+        keys=sorted(set(keys))
+        if (maximum==0 or any(self.state['unit_applied_counts'].get(i,0)&gt;=maximum for i in unit_ids)
+            or any(self.state['proposal_counts_by_key'].get(k,0)&gt;=maximum+1 or self.state['rejected_counts_by_key'].get(k,0)&gt;1 for k in keys)):
+            self.state['phase']='BUDGET_EXHAUSTED';self.save()
+&gt;           raise AgentError('BUDGET_EXHAUSTED','kind=local_repairs_per_unit; units='+str(sorted(unit_ids))+'; used='+str(self.state['unit_applied_counts'])+'; limit='+str(maximum)+'; proposal_keys='+str(keys)+'; calls='+str(self.state['proposal_counts_by_key'])+'; rejected='+str(self.state['rejected_counts_by_key'])+'。合法稿、原审批和未决问题均保留；显式增加预算后才可继续。')
+E           math_agent.util.AgentError: kind=local_repairs_per_unit; units=['S01.U1']; used={}; limit=6; proposal_keys=['unit:S01.U1']; calls={'unit:S01.U1': 2}; rejected={'unit:S01.U1': 2}。合法稿、原审批和未决问题均保留；显式增加预算后才可继续。
+
+src\math_agent\local_recovery.py:130: AgentError</failure></testcase><testcase classname="tests.test_rejected_budget_recovery" name="test_increased_rejection_budget_is_still_finite_and_explains_its_limit" time="0.253"><failure message="math_agent.util.AgentError: kind=local_repairs_per_unit; units=['S01.U1']; used={}; limit=6; proposal_keys=['unit:S01.U1']; calls={'unit:S01.U1': 2}; rejected={'unit:S01.U1': 2}。合法稿、原审批和未决问题均保留；显式增加预算后才可继续。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/rejected-budget-red/test_increased_rejection_budge0')
+
+    def test_increased_rejection_budget_is_still_finite_and_explains_its_limit(tmp_path):
+        service, pipeline, plan, recovery, base = fixture(tmp_path)
+        evidence = exhaust_two_rejections(pipeline, recovery)
+        resumed, recovery = increase_and_resume(
+            service, pipeline, plan, base, local_repairs_per_unit=6)
+&gt;       evidence.extend(reject_foreign_patch(resumed, recovery) for _ in range(4))
+
+tests\test_rejected_budget_recovery.py:144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_rejected_budget_recovery.py:144: in &lt;genexpr&gt;
+    evidence.extend(reject_foreign_patch(resumed, recovery) for _ in range(4))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_rejected_budget_recovery.py:43: in reject_foreign_patch
+    number = recovery.begin_proposal('strict_local_patch', [KEY], [UNIT])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.local_recovery.LocalRecovery object at 0x000001F6291442F0&gt;
+kind = 'strict_local_patch', keys = ['unit:S01.U1'], unit_ids = ['S01.U1']
+
+    def begin_proposal(self,kind,keys,unit_ids=()):
+        maximum=self.p.effective_budget()['local_repairs_per_unit']
+        keys=sorted(set(keys))
+        if (maximum==0 or any(self.state['unit_applied_counts'].get(i,0)&gt;=maximum for i in unit_ids)
+            or any(self.state['proposal_counts_by_key'].get(k,0)&gt;=maximum+1 or self.state['rejected_counts_by_key'].get(k,0)&gt;1 for k in keys)):
+            self.state['phase']='BUDGET_EXHAUSTED';self.save()
+&gt;           raise AgentError('BUDGET_EXHAUSTED','kind=local_repairs_per_unit; units='+str(sorted(unit_ids))+'; used='+str(self.state['unit_applied_counts'])+'; limit='+str(maximum)+'; proposal_keys='+str(keys)+'; calls='+str(self.state['proposal_counts_by_key'])+'; rejected='+str(self.state['rejected_counts_by_key'])+'。合法稿、原审批和未决问题均保留；显式增加预算后才可继续。')
+E           math_agent.util.AgentError: kind=local_repairs_per_unit; units=['S01.U1']; used={}; limit=6; proposal_keys=['unit:S01.U1']; calls={'unit:S01.U1': 2}; rejected={'unit:S01.U1': 2}。合法稿、原审批和未决问题均保留；显式增加预算后才可继续。
+
+src\math_agent\local_recovery.py:130: AgentError</failure></testcase><testcase classname="tests.test_rejected_budget_recovery" name="test_request_only_increase_does_not_reset_local_rejection_budget" time="0.244" /><testcase classname="tests.test_rejected_budget_recovery" name="test_local_increase_cannot_bypass_independent_request_ceiling" time="0.265"><failure message="math_agent.util.AgentError: kind=local_repairs_per_unit; units=['S01.U1']; used={}; limit=6; proposal_keys=['unit:S01.U1']; calls={'unit:S01.U1': 2}; rejected={'unit:S01.U1': 2}。合法稿、原审批和未决问题均保留；显式增加预算后才可继续。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/rejected-budget-red/test_local_increase_cannot_byp0')
+
+    def test_local_increase_cannot_bypass_independent_request_ceiling(tmp_path):
+        service, pipeline, plan, recovery, base = fixture(tmp_path, request_limit=2)
+        exhaust_two_rejections(pipeline, recovery)
+        resumed, recovery = increase_and_resume(
+            service, pipeline, plan, base, local_repairs_per_unit=6)
+&gt;       assert recovery.begin_proposal('strict_local_patch', [KEY], [UNIT]) == 3
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_rejected_budget_recovery.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;math_agent.local_recovery.LocalRecovery object at 0x000001F629203620&gt;
+kind = 'strict_local_patch', keys = ['unit:S01.U1'], unit_ids = ['S01.U1']
+
+    def begin_proposal(self,kind,keys,unit_ids=()):
+        maximum=self.p.effective_budget()['local_repairs_per_unit']
+        keys=sorted(set(keys))
+        if (maximum==0 or any(self.state['unit_applied_counts'].get(i,0)&gt;=maximum for i in unit_ids)
+            or any(self.state['proposal_counts_by_key'].get(k,0)&gt;=maximum+1 or self.state['rejected_counts_by_key'].get(k,0)&gt;1 for k in keys)):
+            self.state['phase']='BUDGET_EXHAUSTED';self.save()
+&gt;           raise AgentError('BUDGET_EXHAUSTED','kind=local_repairs_per_unit; units='+str(sorted(unit_ids))+'; used='+str(self.state['unit_applied_counts'])+'; limit='+str(maximum)+'; proposal_keys='+str(keys)+'; calls='+str(self.state['proposal_counts_by_key'])+'; rejected='+str(self.state['rejected_counts_by_key'])+'。合法稿、原审批和未决问题均保留；显式增加预算后才可继续。')
+E           math_agent.util.AgentError: kind=local_repairs_per_unit; units=['S01.U1']; used={}; limit=6; proposal_keys=['unit:S01.U1']; calls={'unit:S01.U1': 2}; rejected={'unit:S01.U1': 2}。合法稿、原审批和未决问题均保留；显式增加预算后才可继续。
+
+src\math_agent\local_recovery.py:130: AgentError</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,84 @@
+--- a/src/math_agent/pipeline.py
++++ b/src/math_agent/pipeline.py
+@@ -590,6 +590,7 @@
+                  'review_evidence_attribution.py')
+         from .review_evidence_attribution import attribution_contract
+         from .feedback_review import feedback_contract
++        from .uncertainty_review import uncertainty_contract
+         domain_checker=Path(__file__).with_name('series_domain_text.py')
+         return {'schema_version':1,
+             'source_hashes':{**{name:digest(Path(__file__).with_name(name).read_bytes()) for name in modules},
+@@ -598,6 +599,7 @@
+             'review_schema_hash':digest(MathReview.model_json_schema()),
+             'review_attribution_contract':attribution_contract(),
+             'feedback_review_contract':feedback_contract(),
++            'uncertainty_review_contract':uncertainty_contract(),
+             'written_schema_hash':digest(WrittenSection.model_json_schema()),
+             'checker_dependencies':{name:importlib.metadata.version(name) for name in ('sympy','pylatexenc')},
+             'compile_mode':self.settings.compile_mode,'xelatex_path':self.settings.xelatex_path}
+@@ -824,30 +826,60 @@
+                 for unit in generated['units']:
+                     issues.extend({**issue,'unit_id':unit['id']} for issue in preflight_tex(unit['tex']))
+                 math = check_math(generated)
+-                issues.extend(math.get('issues', []))
++                uncertainty_guard=None
++                declared_issue_objects=[]
++                prior_uncertainty_issues=[]
++                uncertainty_migration=[]
++                if generated.get('uncertainties'):
++                    from .uncertainty_review import (UncertaintyReview, build_uncertainty_context,
++                        located_math_issues, prior_same_body_issues)
++                    located=located_math_issues(generated,math)
++                    declared_issue_objects=[i for i in located if i.get('rule_id')=='DECLARED_MATH_UNCERTAINTY']
++                    issues.extend(located)
++                    prior_uncertainty_issues,uncertainty_migration=prior_same_body_issues(recovery,generated)
++                    uncertainty_guard=UncertaintyReview(self,build_uncertainty_context(plan,generated,
++                        [g for _,g in completed],math,issues,self.run['input']['provider']=='mock'))
++                else:
++                    issues.extend(math.get('issues', []))
+                 review_identity,recovery_context=recovery.review_context(generated,math,
+                     {'issues':copy.deepcopy(issues),
+                      # Transformation history/raw spans differ after cache restoration;
+                      # only the checker version and actual outcome justify re-review.
+                      'normalization':{k:normalization[k] for k in ('schema_version','status','issues')},
+                      'references':references})
+-                review = self.review_units(generated['units'], {'plan':plan,'prior_sections':[g for _,g in completed],'tool_checks':math,
++                ordinary_context={'plan':plan,'prior_sections':[g for _,g in completed],'tool_checks':math,
+                     'reference_recovery':label_recovery,'local_recovery':recovery_context,
+-                    'scope':{'kind':'section_local','current_section':spec,'pending_sections':[s['id'] for s in plan['sections'] if s['id'] not in {x['id'] for x,_ in completed} and s['id']!=sid]}},draft,f'local-{attempt}')
++                    'scope':{'kind':'section_local','current_section':spec,'pending_sections':[s['id'] for s in plan['sections'] if s['id'] not in {x['id'] for x,_ in completed} and s['id']!=sid]}}
++                if uncertainty_guard:
++                    review=uncertainty_guard.ordinary_review(
++                        lambda frozen: self.review_units(generated['units'],frozen,draft,f'local-{attempt}'),ordinary_context)
++                else:
++                    review=self.review_units(generated['units'],ordinary_context,draft,f'local-{attempt}')
+                 if set(review['checked_unit_ids']) != {u['id'] for u in generated['units']}:
+                     issues.append({'rule_id':'REVIEW_COVERAGE','severity':'blocking','message':'审阅未覆盖全部实际单元'})
+                 issues.extend(review['issues'])
+-                if generated.get('uncertainties'):
+-                    issues.extend({'severity':'review','message':i} for i in generated['uncertainties'])
++                uncertainty_report=None
++                if uncertainty_guard:
++                    uncertainty_report,declared=uncertainty_guard.evaluate()
++                    issues=[i for i in issues if not any(i is original for original in declared_issue_objects)]+declared
++                    seen={digest(i) for i in issues}
++                    issues.extend(i for i in prior_uncertainty_issues if digest(i) not in seen)
++                    review_identity={**review_identity,'uncertainty_identity':uncertainty_report['identity_hash'],
++                        'uncertainty_assessment_hash':digest(uncertainty_report['assessment'])}
+                 report = {'section_id':sid,'math':math,'llm_review':review, 'issues':issues,
+                     'reference_recovery':label_recovery,'answer_recovery':answer_recovery,
+                     'mock':self.run['input']['provider']=='mock'}
++                if uncertainty_report:
++                    report['uncertainty_review']=uncertainty_report
++                    report['uncertainty_legacy_mapping']=uncertainty_migration
+                 blocking=recovery.record_review(issues,review_identity,report)
+                 report['issues']=issues+[i for i in blocking if i not in issues]
+                 report['local_recovery']={'applied_rounds':recovery.state['applied_rounds'],
+                     'proposal_calls':recovery.state['proposal_calls'],'rejected_proposals':recovery.state['rejected_proposals'],
+                     'preserved_issues':recovery_context['unresolved_issues'],'review_identity':review_identity}
+                 write_json(draft/f'review-{attempt}.json',report)
++                if uncertainty_report and any(i['disposition']=='open_dependency' for i in uncertainty_report['assessment']['items']):
++                    raise AgentError('UNCERTAINTY_DEPENDENCY_BLOCKED','声明数学疑点仍缺可核实依据；原疑点、当前正文和显式裁定已保留，普通重试不重新抽取通过')
+                 if not blocking:
+                     from .compile_recovery import compile_section_attempt, persist_compile_doubt
+                     compiled_attempt=compile_section_attempt(self,spec,generated,completed,plan,draft,attempt,references)

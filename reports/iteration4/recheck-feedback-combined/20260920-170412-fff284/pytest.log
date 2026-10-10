@@ -1,0 +1,54 @@
+FF.                                                                      [100%]
+================================== FAILURES ===================================
+_ test_beamer_nonempty_feedback_is_rejected_without_archiving_or_enqueueing[user] _
+
+beamer_case = (<starlette.testclient.TestClient object at 0x00000211EDFAEDE0>, <math_agent.service.Service object at 0x00000211EDA44500>, '7e2c5faab69347c0bd7e4e8199f0798d', {'decision_ids': [], 'decisions': [], 'provider': 'mock', 'questions': [], ...})
+source = 'user'
+
+    @pytest.mark.parametrize('source', ['user', 'agent_audit'])
+    def test_beamer_nonempty_feedback_is_rejected_without_archiving_or_enqueueing(beamer_case, source):
+        client, service, rid, plan = beamer_case
+        before = service.get(rid)
+        response = client.post(f'/api/runs/{rid}/recheck', json={**payload(plan),
+            'feedback': '请增加夹逼训练并修订原讲义数学内容。', 'feedback_source': source})
+>       assert response.status_code == 409, response.text
+E       AssertionError: {"id":"71621d7cdc424ae0a5d6bd1033e4dbe6","run_id":"7e2c5faab69347c0bd7e4e8199f0798d","kind":"build","build_key":"81c64b5e23db4bbeeab711ee724e7f6658cfb225c5bceaa477d2b6eca5513473","status":"queued","lease_owner":null,"lease_deadline":null,"fencing_token":0,"attempt":0,"created_at":"2026-09-20T17:04:13.799090+00:00","error_json":null}
+E       assert 202 == 409
+E        +  where 202 = <Response [202 Accepted]>.status_code
+
+tests\test_recheck_feedback_workflow.py:47: AssertionError
+_ test_beamer_nonempty_feedback_is_rejected_without_archiving_or_enqueueing[agent_audit] _
+
+beamer_case = (<starlette.testclient.TestClient object at 0x00000211EE196CF0>, <math_agent.service.Service object at 0x00000211EE0829C0>, 'e8f05564e90f4cb1999e20b6bf8b7747', {'decision_ids': [], 'decisions': [], 'provider': 'mock', 'questions': [], ...})
+source = 'agent_audit'
+
+    @pytest.mark.parametrize('source', ['user', 'agent_audit'])
+    def test_beamer_nonempty_feedback_is_rejected_without_archiving_or_enqueueing(beamer_case, source):
+        client, service, rid, plan = beamer_case
+        before = service.get(rid)
+        response = client.post(f'/api/runs/{rid}/recheck', json={**payload(plan),
+            'feedback': '请增加夹逼训练并修订原讲义数学内容。', 'feedback_source': source})
+>       assert response.status_code == 409, response.text
+E       AssertionError: {"id":"b8c5b62bdd6e4a1a926eeb84657e57d4","run_id":"e8f05564e90f4cb1999e20b6bf8b7747","kind":"build","build_key":"5b0570abefabda5ae165e68eb33a1545d18800782044f3805714791f1e922191","status":"queued","lease_owner":null,"lease_deadline":null,"fencing_token":0,"attempt":0,"created_at":"2026-09-20T17:04:14.004673+00:00","error_json":null}
+E       assert 202 == 409
+E        +  where 202 = <Response [202 Accepted]>.status_code
+
+tests\test_recheck_feedback_workflow.py:47: AssertionError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\_pytest\config\__init__.py:1345
+  D:\研究生阶段\数学教学agent\math-teaching-agent\.venv\Lib\site-packages\_pytest\config\__init__.py:1345: PytestAssertRewriteWarning: Module already imported so cannot be rewritten; anyio
+    self._mark_plugins_for_rewrite(hook, disable_autoload)
+
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\研究生阶段\数学教学agent\math-teaching-agent\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv\Lib\site-packages\starlette\testclient.py:53
+  D:\研究生阶段\数学教学agent\math-teaching-agent\.venv\Lib\site-packages\starlette\testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_recheck_feedback_workflow.py::test_beamer_nonempty_feedback_is_rejected_without_archiving_or_enqueueing[user]
+FAILED tests/test_recheck_feedback_workflow.py::test_beamer_nonempty_feedback_is_rejected_without_archiving_or_enqueueing[agent_audit]
+2 failed, 1 passed, 3 warnings in 0.58s

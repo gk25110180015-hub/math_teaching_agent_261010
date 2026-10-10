@@ -1,0 +1,93 @@
+{
+  "created_at": "2026-09-24T08:08:27.316535+00:00",
+  "base_url": "http://127.0.0.1:8766",
+  "mode": "retry",
+  "authorization": "用户恢复额度后要求继续原三章测试任务；本次仅CH01全供应商超时后恢复同一job，不重建审批或清零计数。",
+  "cases": {
+    "CH01": {
+      "run_id": "05748ab6260c40989a560a98e1e2065a",
+      "status": "QUEUED",
+      "stage": "math.global_interfaces",
+      "request_count": 50,
+      "budget": {
+        "requests": 60,
+        "local_repairs_per_unit": 2,
+        "global_repair_rounds": 2,
+        "version": 0,
+        "initialized": true,
+        "initialized_fields": [
+          "global_repair_rounds",
+          "local_repairs_per_unit",
+          "requests"
+        ],
+        "source": "VERIFIED_BENCHMARK_STATE",
+        "baseline_unknown": false,
+        "request_count": 50,
+        "defaults": {
+          "global_repair_rounds": 2,
+          "local_repairs_per_unit": 2,
+          "requests": 60
+        },
+        "overrides": {},
+        "maximums": {
+          "requests": 1000,
+          "local_repairs_per_unit": 20,
+          "global_repair_rounds": 20
+        },
+        "limitations": [],
+        "can_increase": false
+      },
+      "error": null,
+      "preferred_model": "gpt6",
+      "model_routing": {
+        "preferred_model_id": "gpt6",
+        "fallback_order": [
+          "gpt6",
+          "deepseek-flash",
+          "deepseek-v4-pro"
+        ],
+        "last_model_id": "deepseek-v4-pro",
+        "last_successful_model_id": "gpt6",
+        "used_models": [
+          "gpt6",
+          "deepseek-flash",
+          "deepseek-v4-pro"
+        ],
+        "successful_models": [
+          "gpt6"
+        ],
+        "fallback_count": 2,
+        "request_counts": {
+          "gpt6": 48,
+          "deepseek-flash": 1,
+          "deepseek-v4-pro": 1
+        },
+        "actual_models": [
+          "gpt-6-astra",
+          "deepseek-flash",
+          "deepseek-v4-pro"
+        ],
+        "last_fallback": {
+          "from_model_id": "deepseek-flash",
+          "to_model_id": "deepseek-v4-pro",
+          "reason": "API 单次请求总截止时间已到；调用可能已计费",
+          "code": "PROVIDER_TOTAL_TIMEOUT"
+        },
+        "selection_source": "legacy_default"
+      },
+      "approval_unchanged": true
+    }
+  },
+  "teacher_math_review": "NOT_RUN",
+  "teacher_visual_review": "NOT_RUN",
+  "health": {
+    "status": "ok",
+    "worker": {
+      "alive": true,
+      "last_heartbeat": 1790237307.0229666
+    },
+    "schema_version": 1
+  },
+  "consistent_database_backup": "before-agent.db",
+  "status": "RECORDED"
+}

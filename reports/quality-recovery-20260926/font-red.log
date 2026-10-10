@@ -1,0 +1,98 @@
+FFFFFFFFFFF                                                              [100%]
+================================== FAILURES ===================================
+_ test_source_font_adaptation_preserves_math_and_original[scriptsize-footnotesize] _
+tests\test_presentation_font_recovery.py:29: in test_source_font_adaptation_preserves_math_and_original
+    assert not any(i['severity'] == 'blocking' for i in result['issues'])
+E   assert not True
+E    +  where True = any(<generator object test_source_font_adaptation_preserves_math_and_original.<locals>.<genexpr> at 0x000001FCD059D3C0>)
+_ test_source_font_adaptation_preserves_math_and_original[tiny-footnotesize] __
+tests\test_presentation_font_recovery.py:29: in test_source_font_adaptation_preserves_math_and_original
+    assert not any(i['severity'] == 'blocking' for i in result['issues'])
+E   assert not True
+E    +  where True = any(<generator object test_source_font_adaptation_preserves_math_and_original.<locals>.<genexpr> at 0x000001FCD059E8E0>)
+____ test_source_font_adaptation_preserves_math_and_original[Large-large] _____
+tests\test_presentation_font_recovery.py:30: in test_source_font_adaptation_preserves_math_and_original
+    assert '\\' + command + ' ' not in tex
+E   AssertionError: assert '\\Large ' not in '\\documentc...{document}\n'
+E     
+E     '\\Large ' is contained here:
+E       at (0,0) {\Large $\Delta y-\mathrm{d}y$};\end{tikzpicture}\end{center}
+E     ?           +++++++
+E       % SOURCE-END U0001
+E       }
+E       \end{frame}
+E       \end{document}
+____ test_source_font_adaptation_preserves_math_and_original[LARGE-large] _____
+tests\test_presentation_font_recovery.py:30: in test_source_font_adaptation_preserves_math_and_original
+    assert '\\' + command + ' ' not in tex
+E   AssertionError: assert '\\LARGE ' not in '\\documentc...{document}\n'
+E     
+E     '\\LARGE ' is contained here:
+E       at (0,0) {\LARGE $\Delta y-\mathrm{d}y$};\end{tikzpicture}\end{center}
+E     ?           +++++++
+E       % SOURCE-END U0001
+E       }
+E       \end{frame}
+E       \end{document}
+_____ test_source_font_adaptation_preserves_math_and_original[huge-large] _____
+tests\test_presentation_font_recovery.py:30: in test_source_font_adaptation_preserves_math_and_original
+    assert '\\' + command + ' ' not in tex
+E   AssertionError: assert '\\huge ' not in '\\documentc...{document}\n'
+E     
+E     '\\huge ' is contained here:
+E       at (0,0) {\huge $\Delta y-\mathrm{d}y$};\end{tikzpicture}\end{center}
+E     ?           ++++++
+E       % SOURCE-END U0001
+E       }
+E       \end{frame}
+E       \end{document}
+_____ test_source_font_adaptation_preserves_math_and_original[Huge-large] _____
+tests\test_presentation_font_recovery.py:30: in test_source_font_adaptation_preserves_math_and_original
+    assert '\\' + command + ' ' not in tex
+E   AssertionError: assert '\\Huge ' not in '\\documentc...{document}\n'
+E     
+E     '\\Huge ' is contained here:
+E       at (0,0) {\Huge $\Delta y-\mathrm{d}y$};\end{tikzpicture}\end{center}
+E     ?           ++++++
+E       % SOURCE-END U0001
+E       }
+E       \end{frame}
+E       \end{document}
+__________ test_literal_font_examples_and_comments_are_not_rewritten __________
+tests\test_presentation_font_recovery.py:45: in test_literal_font_examples_and_comments_are_not_rewritten
+    assert not any(i['rule_id'] == 'B-16' for i in result['issues'])
+E   assert not True
+E    +  where True = any(<generator object test_literal_font_examples_and_comments_are_not_rewritten.<locals>.<genexpr> at 0x000001FCD060E5A0>)
+_ test_arbitrary_scaling_still_blocks_with_actionable_location[\\resizebox{1cm}{!}{$a<b$}] _
+tests\test_presentation_font_recovery.py:57: in test_arbitrary_scaling_still_blocks_with_actionable_location
+    assert issue['location']['source_line'] >= 1
+           ^^^^^^^^^^^^^^^^^
+E   KeyError: 'location'
+_ test_arbitrary_scaling_still_blocks_with_actionable_location[\\scalebox{0.2}{$a<b$}] _
+tests\test_presentation_font_recovery.py:57: in test_arbitrary_scaling_still_blocks_with_actionable_location
+    assert issue['location']['source_line'] >= 1
+           ^^^^^^^^^^^^^^^^^
+E   KeyError: 'location'
+_ test_arbitrary_scaling_still_blocks_with_actionable_location[{\\fontsize{4}{5}\\selectfont $a<b$}] _
+tests\test_presentation_font_recovery.py:57: in test_arbitrary_scaling_still_blocks_with_actionable_location
+    assert issue['location']['source_line'] >= 1
+           ^^^^^^^^^^^^^^^^^
+E   KeyError: 'location'
+______________ test_inactive_forbidden_typography_does_not_block ______________
+tests\test_presentation_font_recovery.py:64: in test_inactive_forbidden_typography_does_not_block
+    assert not any(i['rule_id'] == 'B-16' for i in result['issues'])
+E   assert not True
+E    +  where True = any(<generator object test_inactive_forbidden_typography_does_not_block.<locals>.<genexpr> at 0x000001FCD0644790>)
+=========================== short test summary info ===========================
+FAILED tests/test_presentation_font_recovery.py::test_source_font_adaptation_preserves_math_and_original[scriptsize-footnotesize]
+FAILED tests/test_presentation_font_recovery.py::test_source_font_adaptation_preserves_math_and_original[tiny-footnotesize]
+FAILED tests/test_presentation_font_recovery.py::test_source_font_adaptation_preserves_math_and_original[Large-large]
+FAILED tests/test_presentation_font_recovery.py::test_source_font_adaptation_preserves_math_and_original[LARGE-large]
+FAILED tests/test_presentation_font_recovery.py::test_source_font_adaptation_preserves_math_and_original[huge-large]
+FAILED tests/test_presentation_font_recovery.py::test_source_font_adaptation_preserves_math_and_original[Huge-large]
+FAILED tests/test_presentation_font_recovery.py::test_literal_font_examples_and_comments_are_not_rewritten
+FAILED tests/test_presentation_font_recovery.py::test_arbitrary_scaling_still_blocks_with_actionable_location[\\resizebox{1cm}{!}{$a<b$}]
+FAILED tests/test_presentation_font_recovery.py::test_arbitrary_scaling_still_blocks_with_actionable_location[\\scalebox{0.2}{$a<b$}]
+FAILED tests/test_presentation_font_recovery.py::test_arbitrary_scaling_still_blocks_with_actionable_location[{\\fontsize{4}{5}\\selectfont $a<b$}]
+FAILED tests/test_presentation_font_recovery.py::test_inactive_forbidden_typography_does_not_block
+11 failed in 0.40s

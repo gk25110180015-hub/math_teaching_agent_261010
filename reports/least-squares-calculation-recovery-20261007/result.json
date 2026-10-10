@@ -1,0 +1,169 @@
+{
+  "run_id": "63380f6a1ebf40dfb4de606687953ab5",
+  "finding": "AGENT_BUG_PREVIOUS_BODY_ONLY_RECOVERY_GATE_TOO_STRICT",
+  "section": "S03",
+  "cause": "The body correctly used subtraction for R squared, while S03.C01 encoded addition. A correct expression-only patch was wrongly rejected by the body-change gate.",
+  "original_failure": "REPAIR_SCOPE_VIOLATION",
+  "fix": "Allow only independently located existing failed/unknown calculation expressions to be corrected without body changes; preserve expected results, assumptions and all other content; require fresh symbolic PASS, full subsequent review, and pinned recovery evidence.",
+  "validation": {
+    "unique_tests": 340,
+    "passed": 340,
+    "failed": 0,
+    "junit": [
+      "context-core.xml",
+      "final-calculation-context.xml",
+      "calculation-provenance-review.xml"
+    ],
+    "original_uncertainty_evidence_unchanged": true,
+    "teacher_review": "NOT_RUN",
+    "original_approval_preserved": true,
+    "original_budgets_preserved": true,
+    "live_task": {
+      "id": "63380f6a1ebf40dfb4de606687953ab5",
+      "status": "AWAITING_USER_REVIEW",
+      "stage": "review.pages_and_quality",
+      "request_count": 61,
+      "error_json": null,
+      "active_plan_revision": 5
+    },
+    "live_s03_tool_checks": {
+      "input_key": "runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/070479dfd8488adce65a251a/input.json",
+      "input_sha256": "41bbd576663b481ef4e4cfc2553cccd151b9e14d4b15537f5d1e9ca1af39455a",
+      "results": [
+        {
+          "kind": "equivalence",
+          "assumptions": {},
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "27/28",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S03.C01",
+          "unit_id": "S03.U07"
+        },
+        {
+          "kind": "equivalence",
+          "assumptions": {},
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "9/2",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S03.C02",
+          "unit_id": "S03.U07"
+        }
+      ]
+    },
+    "source_registration_missing_in_actual_call_verified": {
+      "identity": "6361f38ea513a8f6b86fdb08",
+      "call_id": "ac4d771e48914f74b97ed96b341ea92b",
+      "provider_message_hash": "108472df217b46e0a2f92ddbbf09127ca1512b85c6f0f3be86dfd1657cfcc29a",
+      "http_status": 200,
+      "stream_complete": true,
+      "events": [
+        1036,
+        1037,
+        1038
+      ]
+    },
+    "original_task_s03_ordinary_review_passed": {
+      "guard": "403b620130afd7f915408fed",
+      "issues": [],
+      "historical_wrong_plus_expression_recognized": true
+    },
+    "plans_unchanged_from_backup": true,
+    "run_budgets_unchanged_from_backup": true,
+    "live_provenance_adjudication": {
+      "identity_hash": "35aca0b4aaa93d38192daa6000f24e0ea233dd0a1064ef49600be6b345933aea",
+      "status": "COMPLETE",
+      "evidence_key": "workspace/runs/63380f6a1ebf40dfb4de606687953ab5/calculation-provenance-reviews/95bb2ce781f528fb5f4bbf9b/result.json",
+      "evidence_sha256": "0e47a709ed902b3e910cbe2d6f2dcfbb74fc54da6feba2bcd929057e0072bca1",
+      "original_guard_state_unchanged": true,
+      "decisions": [
+        {
+          "issue_id": "I001",
+          "disposition": "withdraw_provenance_only",
+          "reason": "I001 原为普通审阅保留的“历史 29/28 记录来源未统一”问题。当前 calculation 来源给出完整旧请求 AST，其 lhs 在 1 - (1/6)*(14/3)^{-1} 中缺少乘以 -1，独立重放为 FAIL=29/28；当前请求 AST 含该 -1 因子且 PASS=27/28。origin_declarations 和 patch、父审阅输入/输出 SHA 表明该声明正是补丁追加的历史疑点，当前正文 S03.U07 与当前请求一致。原问题唯一剩余的来源缺口已由完整来源链解释，未发现剩余数学问题，故仅撤回来源疑点。"
+        },
+        {
+          "issue_id": "I005",
+          "disposition": "withdraw_provenance_only",
+          "reason": "I005 原为重复保留的同一 S03.U07 历史核算来源未定位问题。calculation 来源现给出完整旧请求 AST、独立重现的旧 FAIL=29/28、当前请求 AST 与 PASS=27/28；origin_declarations 与补丁、父审阅输入/输出 SHA 证明该声明由该补丁追加，且父审阅正是围绕同一 S03.C01 历史冲突提出。当前正文 S03.U07 已给出 TSS=14/3、RSS=1/6、R^2=27/28，并与当前请求一致。原问题唯一剩余的 provenance 缺口已消除，没有剩余数学问题，故仅撤回来源疑点。"
+        },
+        {
+          "issue_id": "I006",
+          "disposition": "withdraw_provenance_only",
+          "reason": "I006 原为同一 S03.U07/S03.C01 历史 29/28 记录的来源与预期值未确认问题。calculation 来源显示旧请求完整 AST 缺少乘以 -1，故旧 FAIL=29/28 可复现；当前请求 AST 含 -1 且当前 PASS=27/28。origin_declarations、补丁 SHA、父审阅输入 SHA 与父审阅输出 SHA 构成完整生成链，当前正文 S03.U07 与当前请求一致。原问题唯一剩余的来源缺口已被解释，没有剩余数学问题，故仅撤回来源疑点。"
+        }
+      ],
+      "teacher_review": "NOT_RUN"
+    },
+    "all_registered_artifacts_sha_verified": 36,
+    "pdf": {
+      "artifact_id": "5a68780772114927a1d6af957691039a",
+      "name": "lecture.pdf",
+      "storage_key": "b/63380f6a1ebf40df/v156c1e38250c/build/lecture.pdf",
+      "sha256": "3cee4c93bf00954c54e3813ec35d4985165b40043ea70adb59017be2263840d1",
+      "page_count": 12,
+      "compile": "PASS",
+      "automated_page_inspection": "PASS",
+      "web_download_http_status": 200,
+      "web_download_sha_verified": true,
+      "teacher_review": "NOT_RUN"
+    },
+    "original_frozen_evidence_files_unchanged": 34,
+    "human_reviews_submitted": 0
+  },
+  "changed_files": {
+    "src/math_agent/pipeline.py": "cdc08355db0b1618e26e9fa95a6a2c6e7b0b6db775bbf839db6b79018f71dd98",
+    "src/math_agent/local_recovery.py": "63dbc15f4b85fa9dfd87d39ad894d81990e4ffc6a1ad6ae45bdd16d82d5d700c",
+    "src/math_agent/independent_calculation_repair.py": "cb90cc0baf7a6b855dfa949c113b295760466b5be5151403056e0409dd98ce3f",
+    "tests/test_independent_calculation_repair.py": "b9cac4d895a2c04b8c426587d1860382b3445d3603778c05466f54a89872a6ca",
+    "README.md": "fcea4142d4200cca6744f1ef4692e0aa135091db5e90efcdfffcbf3afe21baf6",
+    "tests/fixtures/independent_calculation_least_squares/candidate.json": "602e7e0e82085c800ae36097aa39e754ca9d4f27b7b2ebf3992cbb01ff344f85",
+    "tests/fixtures/independent_calculation_least_squares/patch.json": "5aee200c73d0ee96ca6c23717bee67d63f6a81901bfaa884b115107e5f39f68d",
+    "tests/fixtures/independent_calculation_least_squares/review.json": "9854d0ae7a47d640b6873963c4bdd7473db65076028c9f85533655145b2253ff",
+    "src/math_agent/calculation_review_context.py": "933b2be9bffcb0fd9ff1de4d1ab4fb47c0f678079167a8d2bfe22d01857ade33",
+    "tests/test_calculation_review_context.py": "6b46e10f20886c487f6b9b5c5a807516f018f311ae74ce0c8f46bb5f61b46ba7",
+    "tests/fixtures/calculation_review_context/current-candidate.json": "2266a8415ad8d785710e2b1c61ffa5040e38f70a5b12a898632b6d47ff4e5277",
+    "tests/fixtures/calculation_review_context/6cf90e694a11780fdcf7e11b/input.json": "d87d05b456786ad2a2ec0d9148f82905dfb60c70e588951038c8dfd95a19158c",
+    "tests/fixtures/calculation_review_context/6cf90e694a11780fdcf7e11b/state.json": "c43691f5cd74d6622282600db31d4e87ff3fb3817e317d06d1a519132a56be00",
+    "tests/fixtures/calculation_review_context/cf1e230123a5d63e68ee10bb/input.json": "261126a9d704fe963503110faef23d6745b9920a8edf5c5353650af5dd75cf29",
+    "tests/fixtures/calculation_review_context/cf1e230123a5d63e68ee10bb/state.json": "954e0e516c44f0b48923fc8923d6a4ad789e03fa1ecb593ac36471961fbbc4e4",
+    "tests/test_calculation_review_sources.py": "a8e947a783d0ae372cc8a94545d31e186eeb3f58558770139f1973414b61ccee",
+    "tests/test_calculation_declaration_history.py": "c3ac26fb834a635a237f243523dc673b241fc896a8b6f974cd096c6852bf11e8",
+    "tests/fixtures/calculation_declaration_history/current-candidate.json": "bafc4e831c6253c0eb7e9c822516bc4ad417efc06848c41dc981013e48bc23c7",
+    "tests/fixtures/calculation_declaration_history/repair-5-patch.json": "83a8aebbb0b8c21167c60bbba596039e5f2e53cc95bba9a2043bc13f630a8245",
+    "tests/fixtures/calculation_declaration_history/070479dfd8488adce65a251a/input.json": "41bbd576663b481ef4e4cfc2553cccd151b9e14d4b15537f5d1e9ca1af39455a",
+    "tests/fixtures/calculation_declaration_history/070479dfd8488adce65a251a/ordinary-context.json": "5dbafe5b751dfee69cd643de5293c9f8fc17f9047ceef8a745c115ad4f1b88ba",
+    "tests/fixtures/calculation_declaration_history/070479dfd8488adce65a251a/ordinary-review.json": "a79200791bd7522f5a39027e1af41317882947983af758cc8d97c71998b832a3",
+    "tests/fixtures/calculation_declaration_history/070479dfd8488adce65a251a/state.json": "289a5eb08aaf5af0a14c395608bb5a7df02f0861ea182af0389359561b007084",
+    "tests/fixtures/calculation_declaration_history/dc62587a164569aef546752b/input.json": "c420a353ea6fc5b3f904ce4a99bc66bc567f806e502d28ba3f2abd35d4b47b1a",
+    "tests/fixtures/calculation_declaration_history/dc62587a164569aef546752b/state.json": "6c77925e9a02d65cd6dfb2daf54fb9385aec9170aae2f3629282a27d49299635",
+    "src/math_agent/calculation_provenance_review.py": "d16e63a522231bb1b0700205391b4dac2a622b24bc269157094da3aafcc54579",
+    "src/math_agent/prompts/review_calculation_provenance.md": "10a61934ab5141ff49f8173d874426073b60947b40c095673ebb7a4e0a6d9ad7",
+    "tests/test_calculation_provenance_review.py": "9b5e236b0ce2726176e3c97847676794136737e211eb745d845802f88dcfc985",
+    "tests/fixtures/calculation_provenance_review/assessment.json": "87ca3e3f95784c7888f3a9ed70752ba929281e3a6a19d57294291358e4e2615c",
+    "tests/fixtures/calculation_provenance_review/input.json": "6ba28395f63583e9dcba38261ab93c188b0f89507d02a2e2704ad10c5eb15a25",
+    "tests/fixtures/calculation_provenance_review/ordinary-context.json": "e32e0b55042a8d4b146b223acf3f4d271656e50cd68e4e1dfa33fccc2b89bc31",
+    "tests/fixtures/calculation_provenance_review/ordinary-review.json": "7fd51bc39c8c03135e45347d56856927a11c7a1bf2055a1d5a7422226cb151f0",
+    "tests/fixtures/calculation_provenance_review/response-1.json": "87ca3e3f95784c7888f3a9ed70752ba929281e3a6a19d57294291358e4e2615c"
+  },
+  "updated_at": "2026-10-07T08:02:35.318005+00:00",
+  "additional_cause": "The mathematical reviewer received historical unresolved issue text without the old calculation AST, and mistook the archived 29/28 failure for a contradictory current result.",
+  "additional_fix": "Supply current requests and SHA-verified, reproduced historical failed requests to both review contexts. Reconsider only exact old review items against genuinely new facts, preserve all archives and independent current blockers, and freeze identical-context retries. Register the verified comparison as a separate literal-quote evidence source in both review contexts; current-body citation remains mandatory. Recover exact declaration origin by replaying a pinned original patch between two registered frozen section inputs; include original pending/ordinary issues and all source hashes. This is new evidence for an explicit assessment, not automatic clearance.",
+  "remaining_live_blocker_before_origin_fix": "Resolved; original task is now AWAITING_USER_REVIEW with a verified 12-page PDF. Human approval has not been submitted.",
+  "note_origin_audit": {
+    "proposal_key": "b/63380f6a1ebf40df/sS03_37e6e60e592e/repair-5-patch.json",
+    "proposal_sha256": "83a8aebbb0b8c21167c60bbba596039e5f2e53cc95bba9a2043bc13f630a8245",
+    "before_guard": "070479dfd8488adce65a251a",
+    "after_guard": "dc62587a164569aef546752b",
+    "exact_patch_replay_matches": true,
+    "original_doubt_text_sha256": "2490c62126ff2c269735a9861caadc8b95c0defa23f979fccf6fd41e6069f933",
+    "body_and_calculations_unchanged_by_original_patch": true
+  },
+  "final_recovery": "One immutable independent adjudication of exact provenance-only issues, requiring current-body, full old AST, declaration and original patch/review SHA citations; preserve mathematical and unrelated issues, original verdicts and null owners. Identical retries reuse the verdict; only explicit response-free transport/budget failures may resume the same slot. Pin the immutable audited result in candidate dependencies.",
+  "outcome": "ORIGINAL_RUN_RESTORED_AND_GENERATED_AWAITING_USER_REVIEW"
+}

@@ -1,0 +1,331 @@
+TESTED_PACKAGE D:\研究生阶段\数学教学agent\math-teaching-agent\reports\iteration4\uncertainty-protocol-candidate\validation\package\math_agent\__init__.py
+........................................................................ [ 53%]
+....................................................FFFFFF.F..           [100%]
+================================== FAILURES ===================================
+________________________ test_T18_invalid_json_bounded ________________________
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/upr-cec69e/test_T18_invalid_json_bounded0')
+
+    def test_T18_invalid_json_bounded(tmp_path):
+        p,records,calls=provider(tmp_path,lambda request:response('{"issues":'))
+>       with pytest.raises(AgentError,match='结构修复预算'):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: '结构修复预算'
+E         Actual message: '供应商未返回请求的 SSE 格式；保留失败，不推断未读取响应可切换模型'
+
+tests\test_provider.py:24: AssertionError
+_________________ test_T18_truncated_not_repaired_as_success __________________
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/upr-cec69e/test_T18_truncated_not_repaire0')
+
+    def test_T18_truncated_not_repaired_as_success(tmp_path):
+        p,_,calls=provider(tmp_path,lambda request:response('{"issues":[]}',finish='length'))
+        with pytest.raises(AgentError) as exc:p.generate('reviewer_math',{},MathReview)
+>       assert exc.value.code=='OUTPUT_TRUNCATED'
+E       AssertionError: assert 'PROVIDER_RESPONSE' == 'OUTPUT_TRUNCATED'
+E         
+E         - OUTPUT_TRUNCATED
+E         + PROVIDER_RESPONSE
+
+tests\test_provider.py:33: AssertionError
+_____________________ test_T19_auth_no_retry_or_body_leak _____________________
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/upr-cec69e/test_T19_auth_no_retry_or_body0')
+
+    def test_T19_auth_no_retry_or_body_leak(tmp_path):
+        p,records,calls=provider(tmp_path,lambda request:httpx.Response(401,text='Bearer sk-SYNTHETIC_TEST_ONLY_123456'))
+        with pytest.raises(AgentError) as exc:p.check()
+>       assert exc.value.code=='PROVIDER_AUTH'
+E       AssertionError: assert 'PROVIDER_ALL_UNAVAILABLE' == 'PROVIDER_AUTH'
+E         
+E         - PROVIDER_AUTH
+E         + PROVIDER_ALL_UNAVAILABLE
+
+tests\test_provider.py:40: AssertionError
+_________________________ test_T19_429_budget_retries _________________________
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/upr-cec69e/test_T19_429_budget_retries0')
+
+    def test_T19_429_budget_retries(tmp_path):
+        p,records,calls=provider(tmp_path,lambda request:httpx.Response(429,headers={'Retry-After':'0'}))
+        with pytest.raises(AgentError) as exc:p.check()
+>       assert exc.value.code=='PROVIDER_RATE_LIMIT'
+E       AssertionError: assert 'PROVIDER_ALL_UNAVAILABLE' == 'PROVIDER_RATE_LIMIT'
+E         
+E         - PROVIDER_RATE_LIMIT
+E         + PROVIDER_ALL_UNAVAILABLE
+
+tests\test_provider.py:48: AssertionError
+_________________________ test_T19_timeout_classified _________________________
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/upr-cec69e/test_T19_timeout_classified0')
+
+    def test_T19_timeout_classified(tmp_path):
+        def handler(request): raise httpx.ReadTimeout('sensitive server text',request=request)
+        p,records,calls=provider(tmp_path,handler)
+        with pytest.raises(AgentError) as exc:p.check()
+>       assert exc.value.code=='PROVIDER_TIMEOUT'
+E       AssertionError: assert 'PROVIDER_ALL_UNAVAILABLE' == 'PROVIDER_TIMEOUT'
+E         
+E         - PROVIDER_TIMEOUT
+E         + PROVIDER_ALL_UNAVAILABLE
+
+tests\test_provider.py:56: AssertionError
+___________________ test_T20_minimal_protocol_and_exact_url ___________________
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/upr-cec69e/test_T20_minimal_protocol_and_0')
+
+    def test_T20_minimal_protocol_and_exact_url(tmp_path):
+        seen=[]
+        def handler(request):
+            seen.append(request)
+            return response('{"issues":[],"checked_unit_ids":[],"limitations":[]}')
+        p,records,calls=provider(tmp_path,handler)
+>       p.generate('reviewer_math',{},MathReview)
+
+tests\test_provider.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\uncertainty-protocol-candidate\validation\package\math_agent\provider.py:438: in generate
+    text = asyncio.run(self._request(messages, role, prompt_metadata=prompt_metadata,
+D:\anaconda\Lib\asyncio\runners.py:194: in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+D:\anaconda\Lib\asyncio\runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\anaconda\Lib\asyncio\base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+reports\iteration4\uncertainty-protocol-candidate\validation\package\math_agent\provider.py:397: in _request
+    return await self._request_once(client, messages, role, candidate, index + 1, prompt_metadata)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+reports\iteration4\uncertainty-protocol-candidate\validation\package\math_agent\provider.py:323: in _request_once
+    text = await self._read_sse(response, outcome)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <math_agent.provider.CompatibleChatProvider object at 0x000001B39DC2C440>
+response = <Response [200 OK]>
+outcome = {'usage': None, 'price': None, 'billing_uncertain': True, 'http_status': 200, ...}
+
+    async def _read_sse(self, response, outcome):
+        content_parts = []
+        usage = None
+        response_id = ''
+        finish_reason = None
+        complete = False
+        pending = b''
+        data_lines = []
+        wire_hash = hashlib.sha256()
+        wire_bytes = 0
+    
+        def protocol_failure(reason):
+            outcome['response_protocol_error'] = reason
+            raise AgentError('PROVIDER_STREAM_PROTOCOL', '供应商流式传输协议不完整或无法解析；部分内容不发布，允许临时切换备用模型')
+    
+        def consume_event(data):
+            nonlocal usage, response_id, finish_reason, complete
+            if data == '[DONE]':
+                if finish_reason != 'stop':
+                    protocol_failure('done_without_stop')
+                if not ''.join(content_parts).strip():
+                    raise AgentError('PROVIDER_EMPTY_RESPONSE', '供应商完成信号未包含正文；保留记录并尝试备用模型')
+                if not self.active():
+                    raise AgentError('CANCELLED', '取消后的 API 响应已丢弃，不发布')
+                complete = True
+                return
+            body = json.loads(data)
+            if not isinstance(body, dict):
+                raise ValueError('invalid stream event')
+            if body.get('error'):
+                # An explicit error may represent a business/refusal decision;
+                # do not infer that switching models is permitted.
+                raise AgentError('PROVIDER_RESPONSE', '供应商流式事件明确返回错误状态')
+            if isinstance(body.get('id'), str):
+                response_id = self._scrub(body['id'])[:200]
+            if isinstance(body.get('model'), str):
+                outcome['reported_model'] = self._scrub(body['model'])[:200]
+            if body.get('usage') is not None:
+                usage = _reported_usage(body['usage'])
+            choices = body.get('choices')
+            if not isinstance(choices, list) or len(choices) > 1:
+                raise ValueError('invalid stream choices')
+            for choice in choices:
+                if not isinstance(choice, dict) or choice.get('index', 0) != 0:
+                    raise ValueError('invalid stream choice')
+                delta = choice.get('delta', {})
+                if not isinstance(delta, dict):
+                    raise ValueError('invalid delta')
+                reason = choice.get('finish_reason')
+                if delta.get('refusal') or reason == 'content_filter':
+                    if reason == 'content_filter':
+                        finish_reason = reason
+                    raise AgentError('PROVIDER_REFUSAL', '供应商拒绝本次内容')
+                if reason == 'length':
+                    finish_reason = reason
+                    raise AgentError('OUTPUT_TRUNCATED', '输出被截断；请缩小计划单元后重试，不自动补成成功')
+                if reason not in (None, 'stop') or delta.get('tool_calls') or delta.get('function_call'):
+                    if reason in ('tool_calls', 'function_call'):
+                        finish_reason = reason
+                    raise AgentError('PROVIDER_RESPONSE', '供应商返回未支持的完成类型；未修改业务参数')
+                fragment = delta.get('content')
+                if fragment is not None and not isinstance(fragment, str):
+                    raise ValueError('invalid stream content')
+                if finish_reason is not None and (fragment or reason is not None):
+                    raise ValueError('content after finish')
+                if fragment:
+                    content_parts.append(fragment)
+                if reason is not None:
+                    finish_reason = reason
+    
+        try:
+            if response.headers.get('content-type', '').split(';')[0].strip().lower() != 'text/event-stream':
+                # A non-SSE body could hold an explicit business/refusal
+                # decision. Do not infer permission to switch without reading it.
+>               raise AgentError('PROVIDER_RESPONSE', '供应商未返回请求的 SSE 格式；保留失败，不推断未读取响应可切换模型')
+E               math_agent.util.AgentError: 供应商未返回请求的 SSE 格式；保留失败，不推断未读取响应可切换模型
+
+reports\iteration4\uncertainty-protocol-candidate\validation\package\math_agent\provider.py:247: AgentError
+______________ test_supplier_usage_cannot_echo_secret_into_logs _______________
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/upr-cec69e/test_supplier_usage_cannot_ech0')
+
+    def test_supplier_usage_cannot_echo_secret_into_logs(tmp_path):
+        def handler(request):
+            return httpx.Response(200,json={'choices':[{'message':{'content':'OK'},'finish_reason':'stop'}],
+                'usage':{'prompt_tokens':2,'total_tokens':'sk-DO_NOT_LOG_SENTINEL','api_key':'sk-DO_NOT_LOG_SENTINEL'}})
+        p,records,_=provider(tmp_path,handler)
+>       assert p.check()=='OK'
+               ^^^^^^^^^
+
+tests\test_provider.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\uncertainty-protocol-candidate\validation\package\math_agent\provider.py:422: in check
+    return asyncio.run(self._request([{'role': 'user', 'content': '只回复 OK。'}], 'check'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\anaconda\Lib\asyncio\runners.py:194: in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+D:\anaconda\Lib\asyncio\runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\anaconda\Lib\asyncio\base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+reports\iteration4\uncertainty-protocol-candidate\validation\package\math_agent\provider.py:397: in _request
+    return await self._request_once(client, messages, role, candidate, index + 1, prompt_metadata)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+reports\iteration4\uncertainty-protocol-candidate\validation\package\math_agent\provider.py:323: in _request_once
+    text = await self._read_sse(response, outcome)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <math_agent.provider.CompatibleChatProvider object at 0x000001B39DC600E0>
+response = <Response [200 OK]>
+outcome = {'usage': None, 'price': None, 'billing_uncertain': True, 'http_status': 200, ...}
+
+    async def _read_sse(self, response, outcome):
+        content_parts = []
+        usage = None
+        response_id = ''
+        finish_reason = None
+        complete = False
+        pending = b''
+        data_lines = []
+        wire_hash = hashlib.sha256()
+        wire_bytes = 0
+    
+        def protocol_failure(reason):
+            outcome['response_protocol_error'] = reason
+            raise AgentError('PROVIDER_STREAM_PROTOCOL', '供应商流式传输协议不完整或无法解析；部分内容不发布，允许临时切换备用模型')
+    
+        def consume_event(data):
+            nonlocal usage, response_id, finish_reason, complete
+            if data == '[DONE]':
+                if finish_reason != 'stop':
+                    protocol_failure('done_without_stop')
+                if not ''.join(content_parts).strip():
+                    raise AgentError('PROVIDER_EMPTY_RESPONSE', '供应商完成信号未包含正文；保留记录并尝试备用模型')
+                if not self.active():
+                    raise AgentError('CANCELLED', '取消后的 API 响应已丢弃，不发布')
+                complete = True
+                return
+            body = json.loads(data)
+            if not isinstance(body, dict):
+                raise ValueError('invalid stream event')
+            if body.get('error'):
+                # An explicit error may represent a business/refusal decision;
+                # do not infer that switching models is permitted.
+                raise AgentError('PROVIDER_RESPONSE', '供应商流式事件明确返回错误状态')
+            if isinstance(body.get('id'), str):
+                response_id = self._scrub(body['id'])[:200]
+            if isinstance(body.get('model'), str):
+                outcome['reported_model'] = self._scrub(body['model'])[:200]
+            if body.get('usage') is not None:
+                usage = _reported_usage(body['usage'])
+            choices = body.get('choices')
+            if not isinstance(choices, list) or len(choices) > 1:
+                raise ValueError('invalid stream choices')
+            for choice in choices:
+                if not isinstance(choice, dict) or choice.get('index', 0) != 0:
+                    raise ValueError('invalid stream choice')
+                delta = choice.get('delta', {})
+                if not isinstance(delta, dict):
+                    raise ValueError('invalid delta')
+                reason = choice.get('finish_reason')
+                if delta.get('refusal') or reason == 'content_filter':
+                    if reason == 'content_filter':
+                        finish_reason = reason
+                    raise AgentError('PROVIDER_REFUSAL', '供应商拒绝本次内容')
+                if reason == 'length':
+                    finish_reason = reason
+                    raise AgentError('OUTPUT_TRUNCATED', '输出被截断；请缩小计划单元后重试，不自动补成成功')
+                if reason not in (None, 'stop') or delta.get('tool_calls') or delta.get('function_call'):
+                    if reason in ('tool_calls', 'function_call'):
+                        finish_reason = reason
+                    raise AgentError('PROVIDER_RESPONSE', '供应商返回未支持的完成类型；未修改业务参数')
+                fragment = delta.get('content')
+                if fragment is not None and not isinstance(fragment, str):
+                    raise ValueError('invalid stream content')
+                if finish_reason is not None and (fragment or reason is not None):
+                    raise ValueError('content after finish')
+                if fragment:
+                    content_parts.append(fragment)
+                if reason is not None:
+                    finish_reason = reason
+    
+        try:
+            if response.headers.get('content-type', '').split(';')[0].strip().lower() != 'text/event-stream':
+                # A non-SSE body could hold an explicit business/refusal
+                # decision. Do not infer permission to switch without reading it.
+>               raise AgentError('PROVIDER_RESPONSE', '供应商未返回请求的 SSE 格式；保留失败，不推断未读取响应可切换模型')
+E               math_agent.util.AgentError: 供应商未返回请求的 SSE 格式；保留失败，不推断未读取响应可切换模型
+
+reports\iteration4\uncertainty-protocol-candidate\validation\package\math_agent\provider.py:247: AgentError
+============================== warnings summary ===============================
+tests\test_draft_recovery.py:58
+  D:\研究生阶段\数学教学agent\math-teaching-agent\tests\test_draft_recovery.py:58: PytestUnknownMarkWarning: Unknown pytest.mark.unit - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.unit
+
+tests\test_draft_recovery.py:105
+  D:\研究生阶段\数学教学agent\math-teaching-agent\tests\test_draft_recovery.py:105: PytestUnknownMarkWarning: Unknown pytest.mark.unit - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.unit
+
+tests\test_draft_recovery.py:147
+  D:\研究生阶段\数学教学agent\math-teaching-agent\tests\test_draft_recovery.py:147: PytestUnknownMarkWarning: Unknown pytest.mark.unit - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.unit
+
+tests\test_provider.py:93
+  D:\研究生阶段\数学教学agent\math-teaching-agent\tests\test_provider.py:93: PytestUnknownMarkWarning: Unknown pytest.mark.real_api - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.real_api
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED reports\iteration4\uncertainty-protocol-candidate\validation::test_T18_invalid_json_bounded
+FAILED reports\iteration4\uncertainty-protocol-candidate\validation::test_T18_truncated_not_repaired_as_success
+FAILED reports\iteration4\uncertainty-protocol-candidate\validation::test_T19_auth_no_retry_or_body_leak
+FAILED reports\iteration4\uncertainty-protocol-candidate\validation::test_T19_429_budget_retries
+FAILED reports\iteration4\uncertainty-protocol-candidate\validation::test_T19_timeout_classified
+FAILED reports\iteration4\uncertainty-protocol-candidate\validation::test_T20_minimal_protocol_and_exact_url
+FAILED reports\iteration4\uncertainty-protocol-candidate\validation::test_supplier_usage_cannot_echo_secret_into_logs
+7 failed, 127 passed, 4 warnings in 18.80s

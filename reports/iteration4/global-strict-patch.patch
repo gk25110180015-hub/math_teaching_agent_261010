@@ -1,0 +1,1663 @@
+--- a/src/math_agent/pipeline.py
++++ b/src/math_agent/pipeline.py
+@@ -318,11 +318,8 @@
+         return generated,draft
+ 
+     def _global_repair_identity(self, plan):
+-        from .provider import PROMPTS
+-        return {'plan_hash':plan['hash'],'model':self.preferred_model_name,'provider':self.run['input']['provider'],
+-            'repair_prompt_hash':digest((PROMPTS/'repair_content_unit.md').read_bytes()),
+-            'written_schema_hash':digest(WrittenSection.model_json_schema()),
+-            'normalizer_hash':digest(Path(__file__).with_name('lecture_fragments.py').read_bytes())}
++        from .global_repair_contract import patch_identity
++        return patch_identity(self, plan)
+ 
+     def _save_global_repair_state(self, state):
+         path=self.root/'global-repair-state.json'
+@@ -362,14 +359,20 @@
+             try:
+                 state=json.loads(path.read_text(encoding='utf-8'))
+                 if state['identity']==identity:
++                    from .global_repair_contract import resume_migration_audit
++                    if type(state.get('schema_version')) is not int or state['schema_version'] != 2:
++                        raise AgentError('GLOBAL_REPAIR_CACHE_INVALID','全局修复状态版本与补丁契约不一致')
+                     self._global_repair_sections(state)
+-                    return state
++                    return resume_migration_audit(self,plan,state,identity)
+                 if state['identity'].get('plan_hash')==plan['hash']:
+                     self._global_repair_sections(state)
++                    from .global_repair_contract import migrate_known_v1
++                    migrated=migrate_known_v1(self,plan,state,identity)
++                    if migrated is not None:return migrated
+                     raise AgentError('GLOBAL_REPAIR_CONTRACT_CHANGED','同一批准计划的全局修复契约发生变化；已保留原轮次、候选和疑点，不能静默归零。需恢复原契约或显式迁移状态后继续。')
+             except (OSError,ValueError,KeyError,TypeError):
+                 raise AgentError('GLOBAL_REPAIR_CACHE_INVALID','全局修复状态不可读；已保留，不能假定通过') from None
+-        return {'schema_version':1,'identity':identity,'rounds_used':0,'phase':'not_started',
++        return {'schema_version':2,'identity':identity,'rounds_used':0,'phase':'not_started',
+                 'sections':{},'pending':[],'teacher_visual_review':'NOT_RUN'}
+ 
+     def _start_global_repair(self, completed, issues, state):
+@@ -502,20 +505,35 @@
+     def _continue_global_repairs(self, plan, state):
+         from .calculation_protocol import calculation_protocol
+         from .lecture_fragments import normalize_written_section
++        from .local_patch import LocalPatch,apply_local_patch
+         folder=within(self.settings.workspace,state['round_directory'])
+         while state['pending']:
++            if state['rounds_used']>self.effective_budget()['global_repair_rounds']:
++                raise AgentError('BUDGET_EXHAUSTED','当前全局修复轮次超出有效额度；原疑点和候选保留')
+             request=state['pending'][0]
+             sid=request['section_id'];allowed=set(request['allowed_unit_ids'])
+             before=self._global_repair_sections(state)[sid]
+             prefix=sid+'-'+uid()[:8]
+             write_json(folder/(prefix+'-before.json'),before)
+             self.stage('REPAIRING','repair.global.'+sid)
+-            raw=self.provider.generate('repair_content_unit',{'section':before,'issues':request['issues'],
++            raw=self.provider.generate('repair_local_patch',{'section':before,'issues':request['issues'],
+                 'allowed_unit_ids':sorted(allowed),'plan':plan,'calculation_protocol':calculation_protocol(),
+                 'scope':'global_interface_repair','adjacent_sections':request['neighbors'],
+-                'metadata_policy':'Keep all unit IDs, non-target units, their calculations and unrelated uncertainty metadata unchanged.'},WrittenSection)
++                'metadata_policy':'Only authorized tex replacements and calculation updates/additions; preserve every other field.'},LocalPatch)
+             write_json(folder/(prefix+'-raw.json'),raw)
+-            repaired,normalization=normalize_written_section(raw)
++            try:
++                repaired,patch_evidence=apply_local_patch(before,allowed,raw)
++            except ValueError as error:
++                write_json(folder/(prefix+'-rejected.json'),{'status':'REJECTED','code':'GLOBAL_REPAIR_SCOPE_VIOLATION',
++                    'message':str(error)[:2000],'source_hash':digest(before),'proposal_hash':digest(raw),
++                    'allowed_unit_ids':sorted(allowed),'teacher_review':'NOT_RUN'})
++                raise AgentError('GLOBAL_REPAIR_SCOPE_VIOLATION','全局局部补丁越界或结构不合法；原稿和提案保留：'+str(error)[:500]) from None
++            selected={**repaired,'units':[copy.deepcopy(u) for u in repaired['units'] if u['id'] in allowed]}
++            normalized,normalization=normalize_written_section(selected)
++            normalized_by_id={u['id']:u['tex'] for u in normalized['units']}
++            for unit in repaired['units']:
++                if unit['id'] in normalized_by_id:unit['tex']=normalized_by_id[unit['id']]
++            write_json(folder/(prefix+'-patch-evidence.json'),patch_evidence)
+             write_json(folder/(prefix+'-normalization.json'),normalization)
+             write_json(folder/(prefix+'-normalized.json'),repaired)
+             before_ids=[u['id'] for u in before['units']]
+@@ -523,20 +541,28 @@
+             by_id={u['id']:u for u in repaired['units']}
+             if (repaired['section_id']!=sid or before_ids!=after_ids
+                 or not allowed.issubset(before_ids)
+-                or any(u!=by_id.get(u['id']) for u in before['units'] if u['id'] not in allowed)):
+-                raise AgentError('GLOBAL_REPAIR_SCOPE_VIOLATION','全局修复改变了单元ID/顺序或未授权单元；原稿和修复稿均保留')
++                or any(u!=by_id.get(u['id']) for u in before['units'] if u['id'] not in allowed)
++                or any({k:v for k,v in u.items() if k!='tex'}!={k:v for k,v in by_id[u['id']].items() if k!='tex'}
++                       for u in before['units'])):
++                raise AgentError('GLOBAL_REPAIR_SCOPE_VIOLATION','全局补丁改变了单元身份、元数据或未授权正文；未采用')
+             old_calcs=[c for c in before.get('calculations',[]) if c.get('unit_id') not in allowed]
+             new_calcs=[c for c in repaired.get('calculations',[]) if c.get('unit_id') not in allowed]
+-            if old_calcs!=new_calcs or before.get('uncertainties',[])!=repaired.get('uncertainties',[]):
+-                raise AgentError('GLOBAL_REPAIR_SCOPE_VIOLATION','全局修复改动了非目标单元核算或无关不确定性元数据')
++            if old_calcs!=new_calcs or any(repaired.get(key,[])[:len(before.get(key,[]))]!=before.get(key,[])
++                    for key in ('uncertainties','calculation_limitations')):
++                raise AgentError('GLOBAL_REPAIR_SCOPE_VIOLATION','全局补丁改变了非目标核算或删除旧疑点；未采用')
+             if normalization['status']!='PASS':
+                 raise AgentError('GLOBAL_REPAIR_NORMALIZATION_BLOCKED','全局修复片段存在不明确结构，不能自动采用')
+             path=folder/(prefix+'-candidate.json')
+             write_json(path,repaired)
+-            state['sections'][sid]={'candidate_key':path.relative_to(self.settings.workspace).as_posix(),
++            # Fence after a late provider response before accepting its result.
++            with self.store.transaction() as connection:
++                self.store.assert_fence(connection,self.job)
++            next_state=copy.deepcopy(state)
++            next_state['sections'][sid]={'candidate_key':path.relative_to(self.settings.workspace).as_posix(),
+                 'candidate_hash':digest(path.read_bytes())}
+-            state['pending'].pop(0)
+-            self._save_global_repair_state(state)
++            next_state['pending'].pop(0)
++            self._save_global_repair_state(next_state)
++            state.clear();state.update(next_state)
+         state['phase']='checking'
+         self._save_global_repair_state(state)
+ 
+@@ -587,7 +613,7 @@
+         from .provider import PROMPTS
+         modules=('pipeline.py','mathcheck.py','lecture_fragments.py','crossrefs.py',
+                  'parsing.py','compiler.py','compile_recovery.py','calculation_protocol.py','local_recovery.py',
+-                 'review_evidence_attribution.py')
++                 'review_evidence_attribution.py','global_repair_contract.py')
+         from .review_evidence_attribution import attribution_contract
+         from .feedback_review import feedback_contract
+         domain_checker=Path(__file__).with_name('series_domain_text.py')
+--- a/src/math_agent/global_repair_contract.py
++++ b/src/math_agent/global_repair_contract.py
+@@ -0,0 +1,281 @@
++"""Explicit migration of the one deployed full-section repair contract to patches."""
++from __future__ import annotations
++
++import copy
++import json
++from pathlib import Path
++
++from .domain import WrittenSection
++from .local_patch import LocalPatch
++from .util import AgentError, canonical, digest, now, uid, within
++
++
++LEGACY_CONTRACT = {
++    'repair_prompt_hash': '46c1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9',
++    'written_schema_hash': '4e9b07e27f359212c0460381e3cbd6e548d18a48490e553e60b0c56d30d9ada7',
++    'normalizer_hash': '25d2fff448b21fcad71b5e7aae512cf6ab27f66bdeefd9e459ca57652a1fd74c',
++}
++MIGRATION_ID = 'known_full_section_v1_to_strict_patch_v2'
++EVENT = 'global.repair_contract_migrated'
++
++
++def patch_identity(pipeline, plan):
++    from .provider import PROMPTS
++    from .calculation_protocol import calculation_protocol
++    return {
++        'plan_hash': plan['hash'], 'model': pipeline.preferred_model_name,
++        'provider': pipeline.run['input']['provider'], 'repair_contract_version': 2,
++        'repair_prompt_hash': digest((PROMPTS / 'repair_local_patch.md').read_bytes()),
++        'written_schema_hash': digest(WrittenSection.model_json_schema()),
++        'patch_schema_hash': digest(LocalPatch.model_json_schema()),
++        'patch_validator_hash': digest(Path(__file__).with_name('local_patch.py').read_bytes()),
++        'calculation_protocol_hash': digest(calculation_protocol()),
++        'normalizer_hash': digest(Path(__file__).with_name('lecture_fragments.py').read_bytes()),
++        'migration_contract_hash': digest(Path(__file__).read_bytes()),
++    }
++
++
++def known_legacy_identity(pipeline, plan):
++    return {'plan_hash': plan['hash'], 'model': pipeline.preferred_model_name,
++            'provider': pipeline.run['input']['provider'], **LEGACY_CONTRACT}
++
++
++def _error():
++    return AgentError('GLOBAL_REPAIR_MIGRATION_INVALID',
++        '全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。')
++
++
++def _bytes(value):
++    return json.dumps(value, ensure_ascii=False, indent=2).encode('utf-8')
++
++
++def _immutable(path, data):
++    if path.exists():
++        if not path.is_file() or path.read_bytes() != data:
++            raise _error()
++        return
++    temporary = path.with_name('.' + uid()[:12] + '.tmp')
++    temporary.write_bytes(data)
++    temporary.replace(path)
++
++
++def _replace_state(path, data):
++    temporary = path.with_name('.' + uid()[:12] + '.tmp')
++    temporary.write_bytes(data)
++    temporary.replace(path)
++
++
++def _unchanged_payload(state):
++    return {key: value for key, value in state.items()
++            if key not in ('schema_version', 'identity', 'contract_migration')}
++
++
++def _validate_state(pipeline, plan, state):
++    if (type(state.get('schema_version')) is not int
++            or state['schema_version'] not in (1, 2)
++            or type(state.get('rounds_used')) is not int or state['rounds_used'] < 0
++            or state.get('phase') not in ('not_started', 'repair_pending', 'checking', 'validated', 'budget_exhausted')
++            or not isinstance(state.get('sections'), dict) or not isinstance(state.get('pending'), list)):
++        raise ValueError('Invalid version, round count, phase or collection')
++    specs = {spec['id']: spec for spec in plan['sections']}
++    if len(specs) != len(plan['sections']) or not set(state['sections']).issubset(specs):
++        raise ValueError('Unknown section')
++    sections = pipeline._global_repair_sections(state)
++    if state['sections'] or state['pending']:
++        folder = within(pipeline.settings.workspace, state['round_directory'])
++        if folder.parent != (pipeline.root / 'global-repairs').resolve() or not folder.is_dir():
++            raise ValueError('Uncontrolled repair directory')
++        for record in state['sections'].values():
++            if set(record) != {'candidate_key', 'candidate_hash'}:
++                raise ValueError('Unexpected candidate record')
++            if not within(pipeline.settings.workspace, record['candidate_key']).is_relative_to(folder):
++                raise ValueError('Candidate outside its preserved round')
++    if state['phase'] in ('not_started', 'checking', 'validated', 'budget_exhausted') and state['pending']:
++        raise ValueError('Pending proposal is inconsistent with phase')
++    if state['phase'] == 'not_started' and (state['rounds_used'] or state['sections']):
++        raise ValueError('Fresh state cannot contain an accepted repair')
++    if state['phase'] in ('repair_pending', 'checking') and not state['rounds_used']:
++        raise ValueError('Repair state lost its round count')
++    all_ids = [unit['id'] for section in sections.values() for unit in section['units']]
++    if len(set(all_ids)) != len(all_ids):
++        raise ValueError('Ambiguous preserved units')
++    pending_ids = set()
++    issues = state.get('issues', [])
++    if not isinstance(issues, list) or any(not isinstance(issue, dict) for issue in issues):
++        raise ValueError('Invalid original concerns')
++    for request in state['pending']:
++        if not isinstance(request, dict) or set(request) != {'section_id', 'issues', 'allowed_unit_ids', 'neighbors'}:
++            raise ValueError('Invalid pending proposal')
++        sid = request['section_id']
++        if sid not in sections or sid in pending_ids:
++            raise ValueError('Unknown or duplicate pending section')
++        pending_ids.add(sid)
++        allowed = request['allowed_unit_ids']
++        if (not isinstance(allowed, list) or not allowed or any(not isinstance(value, str) for value in allowed)
++                or len(set(allowed)) != len(allowed)
++                or not set(allowed).issubset(unit['id'] for unit in sections[sid]['units'])):
++            raise ValueError('Invalid pending allowed units')
++        pending_issues = request['issues']
++        if (not isinstance(pending_issues, list) or not pending_issues
++                or any(not isinstance(issue, dict) or issue.get('severity') not in ('blocking', 'review')
++                       for issue in pending_issues)
++                or set(allowed) != {issue.get('unit_id') for issue in pending_issues}
++                or any(issue not in issues for issue in pending_issues)):
++            raise ValueError('Pending scope does not match the preserved concerns')
++        if not isinstance(request['neighbors'], list):
++            raise ValueError('Invalid neighbor context')
++        position = list(specs).index(sid)
++        seen = set()
++        for neighbor in request['neighbors']:
++            if not isinstance(neighbor, dict) or set(neighbor) != {'section', 'generated'}:
++                raise ValueError('Invalid neighbor entry')
++            other = neighbor['section']['id']
++            if (other not in specs or other in seen or neighbor['section'] != specs[other]
++                    or abs(list(specs).index(other) - position) != 1):
++                raise ValueError('Neighbor is not the approved adjacent section')
++            seen.add(other)
++            if WrittenSection.model_validate(neighbor['generated']).section_id != other:
++                raise ValueError('Neighbor body identity mismatch')
++    return sections
++
++
++def _approved(pipeline, plan, connection):
++    run = pipeline.store.row(connection, pipeline.run['id'])
++    current = pipeline.store.current_plan(connection, run)
++    approval = connection.execute('SELECT * FROM approvals WHERE run_id=? AND revision=? AND hash=?',
++        (run['id'], plan['revision'], plan['hash'])).fetchone()
++    if (not current or current != plan or current['hash'] != plan['hash'] or current['revision'] != plan['revision']
++            or not approval or approval['input_hash'] != run['input_hash']
++            or run['input_hash'] != pipeline.run['input_hash']):
++        raise _error()
++    return run, dict(approval)
++
++
++def _evidence(pipeline, state, plan, identity):
++    marker = state['contract_migration']
++    if not isinstance(marker, dict) or set(marker) != {'id', 'evidence_key'}:
++        raise _error()
++    path = within(pipeline.settings.workspace, marker['evidence_key'])
++    parent = pipeline.root / 'global-repairs' / 'contract-migrations'
++    if not path.is_relative_to(parent.resolve()) or path.name != 'evidence.json':
++        raise _error()
++    evidence = json.loads(path.read_bytes())
++    old_bytes = (path.parent / 'before.json').read_bytes()
++    after_bytes = (path.parent / 'after.json').read_bytes()
++    old, after = json.loads(old_bytes), json.loads(after_bytes)
++    expected_id = digest([MIGRATION_ID, pipeline.run['id'], digest(old_bytes), identity])
++    if (evidence['id'] != marker['id'] or marker['id'] != expected_id or evidence['migration'] != MIGRATION_ID
++            or evidence['run_id'] != pipeline.run['id'] or evidence['plan_hash'] != plan['hash']
++            or evidence['plan_revision'] != plan['revision']
++            or evidence['before_sha256'] != digest(old_bytes) or evidence['after_sha256'] != digest(after_bytes)
++            or old['identity'] != known_legacy_identity(pipeline, plan) or old['schema_version'] != 1
++            or after['identity'] != identity or after['schema_version'] != 2
++            or after['contract_migration'] != marker or state['identity'] != identity
++            or _unchanged_payload(old) != _unchanged_payload(after)
++            or evidence['preserved_payload_hash'] != digest(_unchanged_payload(old))
++            or evidence['from_identity'] != old['identity'] or evidence['to_identity'] != identity
++            or evidence['phase_preserved'] != old['phase'] or evidence['rounds_used_preserved'] != old['rounds_used']
++            or evidence['pending_scope'] != [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
++                                             for item in old['pending']]
++            or type(evidence['request_count_preserved']) is not int or evidence['request_count_preserved'] < 0
++            or evidence['evidence_key'] != marker['evidence_key']
++            or within(pipeline.settings.workspace, evidence['before_key']) != path.parent / 'before.json'
++            or within(pipeline.settings.workspace, evidence['after_key']) != path.parent / 'after.json'
++            or evidence['teacher_review'] != 'NOT_RUN'):
++        raise _error()
++    _validate_state(pipeline, plan, old)
++    _validate_state(pipeline, plan, after)
++    return evidence, after_bytes
++
++
++def resume_migration_audit(pipeline, plan, state, identity):
++    """Repair only the audit gap after an atomic state write and DB rollback."""
++    try:
++        _validate_state(pipeline, plan, state)
++        if 'contract_migration' not in state:
++            return state
++        evidence, after_bytes = _evidence(pipeline, state, plan, identity)
++        if state['rounds_used'] < evidence['rounds_used_preserved']:
++            raise _error()
++        with pipeline.store.transaction() as connection:
++            pipeline.store.assert_fence(connection, pipeline.job)
++            run, approval = _approved(pipeline, plan, connection)
++            if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
++                    or type(evidence['request_count_preserved']) is not int
++                    or evidence['request_count_preserved'] > run['request_count']):
++                raise _error()
++            rows = connection.execute('SELECT payload_json FROM events WHERE run_id=? AND type=?',
++                (pipeline.run['id'], EVENT)).fetchall()
++            matching = [json.loads(row[0]) for row in rows if json.loads(row[0]).get('id') == evidence['id']]
++            if matching:
++                if len(matching) != 1 or matching[0] != evidence:
++                    raise _error()
++            else:
++                if (pipeline.root / 'global-repair-state.json').read_bytes() != after_bytes:
++                    raise _error()
++                pipeline.store.event(connection, pipeline.run['id'], EVENT, evidence)
++    except (OSError, ValueError, KeyError, TypeError):
++        raise _error() from None
++    return state
++
++
++def migrate_known_v1(pipeline, plan, state, identity):
++    """Return None for any unknown contract; no broad compatibility fallback."""
++    if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
++            or state.get('identity') != known_legacy_identity(pipeline, plan)
++            or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
++        return None
++    try:
++        if 'contract_migration' in state:
++            raise ValueError('Legacy state cannot already claim migration')
++        _validate_state(pipeline, plan, state)
++        path = pipeline.root / 'global-repair-state.json'
++        before_bytes = path.read_bytes()
++        if json.loads(before_bytes) != state:
++            raise ValueError('State changed before migration')
++        migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
++        folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
++        evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
++        after = copy.deepcopy(state)
++        after.update(schema_version=2, identity=identity,
++            contract_migration={'id': migration_id, 'evidence_key': evidence_key})
++        after_bytes = _bytes(after)
++        with pipeline.store.transaction() as connection:
++            pipeline.store.assert_fence(connection, pipeline.job)
++            run, approval = _approved(pipeline, plan, connection)
++            if path.read_bytes() != before_bytes:
++                raise _error()
++            folder.mkdir(parents=True, exist_ok=True)
++            _immutable(folder / 'before.json', before_bytes)
++            _immutable(folder / 'after.json', after_bytes)
++            if (folder / 'evidence.json').exists():
++                evidence, saved_after = _evidence(pipeline, after, plan, identity)
++                if saved_after != after_bytes:
++                    raise _error()
++            else:
++                evidence = {
++                    'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
++                    'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
++                    'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
++                    'input_hash': run['input_hash'], 'approval_hash': digest(approval),
++                    'request_count_preserved': run['request_count'],
++                    'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
++                    'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
++                                      for item in state['pending']],
++                    'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
++                    'preserved_payload_hash': digest(_unchanged_payload(state)),
++                    'from_identity': state['identity'], 'to_identity': identity,
++                    'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
++                    'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
++                    'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
++                }
++                _immutable(folder / 'evidence.json', _bytes(evidence))
++            if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
++                    or type(evidence['request_count_preserved']) is not int
++                    or evidence['request_count_preserved'] > run['request_count']):
++                raise _error()
++            _replace_state(path, after_bytes)
++            pipeline.store.event(connection, run['id'], EVENT, evidence)
++        return after
++    except (OSError, ValueError, KeyError, TypeError):
++        raise _error() from None
+--- a/tests/test_global_repair.py
++++ b/tests/test_global_repair.py
+@@ -102,7 +102,7 @@
+                 if self.mode=='drop_other_calculation' else [])
+             return {'section_id':sid,'units':[{'id':sid+'.U01','kind':'explanation','tex':'取足够大的正整数 N。','relates_to':None},
+                 {'id':sid+'.U02','kind':'explanation','tex':'保留本单元所有内容。','relates_to':None}], 'calculations':calculations, 'uncertainties':[]}
+-        if role=='repair_content_unit':
++        if role=='repair_local_patch':
+             self.repairs.append(copy.deepcopy(context))
+             result=copy.deepcopy(context['section'])
+             if self.mode!='no_progress':result['units'][0]['tex']+=' 正整数无上界（阿基米德性质），因此这样的 N 存在。'
+@@ -110,7 +110,12 @@
+             if self.mode=='add_unit':result['units'].append({'id':'NEW','kind':'explanation','tex':'Extra','relates_to':None})
+             if self.mode=='drop_other_calculation':result['calculations']=[]
+             if self.mode=='mutate_uncertainties':result['uncertainties']=['Unrelated metadata changed']
+-            return result
++            # Deliberately invalid full-section responses remain rejected, never sanitized.
++            if self.mode in ('mutate_other','add_unit','drop_other_calculation','mutate_uncertainties'):
++                return result
++            return {'section_id':result['section_id'],'replacements':[
++                {'unit_id':unit['id'],'tex':unit['tex']} for unit in result['units']
++                if unit['id'] in context['allowed_unit_ids']]}
+         assert role=='reviewer_math'
+         scope=context['scope']
+         if scope['kind']=='chapter_coverage':
+--- a/tests/test_global_budget_resume.py
++++ b/tests/test_global_budget_resume.py
+@@ -79,7 +79,7 @@
+     resumed, before = increase_resume(service, pipeline, plan, provider, active, global_repair_rounds=6)
+     call_count = len(calls)
+     completed, _ = resumed.lecture(plan)
+-    assert calls[call_count] == 'repair_content_unit'  # No fresh reviewer lottery on an unchanged failing body.
++    assert calls[call_count] == 'repair_local_patch'  # No fresh reviewer lottery on an unchanged failing body.
+     assert len(provider.repairs) == 3
+     assert provider.repairs[-1]['issues'] == json.loads(failure_before)['issues']
+     assert provider.writes == ['S01', 'S02']
+--- a/tests/test_teaching_quality_gate.py
++++ b/tests/test_teaching_quality_gate.py
+@@ -54,12 +54,14 @@
+             return {'section_id': sid, 'units': [{'id': sid+'.U01', 'kind': 'explanation',
+                 'tex': r'约定 $A_0=0$，表示空和。' if sid == 'S01' else '本节当前只有一个具体参数例子。',
+                 'relates_to': None}], 'calculations': [], 'uncertainties': []}
+-        if role == 'repair_content_unit':
++        if role == 'repair_local_patch':
+             self.repairs.append(copy.deepcopy(context))
+             result = copy.deepcopy(context['section'])
+             result['units'][0]['tex'] += ' 模拟补全已批准的参数域及边界说明；不代表真实数学验收。'
+             self.problem = False
+-            return result
++            return {'section_id':result['section_id'],'replacements':[
++                {'unit_id':unit['id'],'tex':unit['tex']} for unit in result['units']
++                if unit['id'] in context['allowed_unit_ids']]}
+         assert role == 'reviewer_math'
+         self.reviews.append(copy.deepcopy(context))
+         issues = []
+--- a/tests/test_recheck_feedback_history.py
++++ b/tests/test_recheck_feedback_history.py
+@@ -30,7 +30,7 @@
+         if self.active:
+             self.active.store.count_request(self.active.job,60,
+                 {'role':role,'fixture':'OFFLINE_MOCK_NO_MODEL_HTTP'})
+-        if role=='repair_content_unit':
++        if role=='repair_local_patch':
+             self.repairs.append(copy.deepcopy(context))
+             if self.interrupt_repair_once:
+                 self.interrupt_repair_once=False
+@@ -39,7 +39,9 @@
+             target=result['units'][0]
+             marker=' 反馈缺口已修订。' if context['issues'][0]['message']=='feedback-gap' else ' 历史缺口修订。'
+             target['tex']+=marker
+-            return result
++            return {'section_id':result['section_id'],'replacements':[
++                {'unit_id':unit['id'],'tex':unit['tex']} for unit in result['units']
++                if unit['id'] in context['allowed_unit_ids']]}
+         result=super().generate(role,context,schema)
+         if role=='reviewer_math' and context['scope']['kind']=='chapter_coverage':
+             target=next(u for u in context['units'] if u['id']=='S02.U01')
+@@ -163,7 +165,7 @@
+         retried.provider=provider;provider.active=retried
+         assert retried.job['id']==resumed.job['id']
+         completed,_=retried.lecture(plan)
+-        assert provider.calls[start][0]=='repair_content_unit'
++        assert provider.calls[start][0]=='repair_local_patch'
+         whole=[ctx for role,ctx in provider.calls[start:] if role=='reviewer_math' and ctx['scope']['kind']=='chapter_coverage']
+         assert len(whole)==1 and whole[0]['recheck_feedback']['feedback']=='本轮观察请核查。'
+         assert whole[0]['recheck_feedback']['source_event']['job_id']==retried.job['id']
+@@ -197,7 +199,7 @@
+         retry.provider=provider;provider.active=retry
+         start=len(provider.calls)
+         retry.lecture(plan)
+-        assert provider.calls[start][0]=='repair_content_unit'
++        assert provider.calls[start][0]=='repair_local_patch'
+         assert provider.calls[start][1]['issues']==failure['issues']
+         whole=[ctx for role,ctx in provider.calls[start:] if role=='reviewer_math' and ctx['scope']['kind']=='chapter_coverage']
+         assert len(whole)==1 and whole[0]['recheck_feedback']['source_event']['job_id']==resumed.job['id']
+--- a/tests/test_global_strict_patch_migration.py
++++ b/tests/test_global_strict_patch_migration.py
+@@ -0,0 +1,301 @@
++"""Actual SQLite/fencing, captured rejected AST, controlled model/compiler only."""
++import copy
++import json
++from pathlib import Path
++
++import pytest
++
++from math_agent import global_repair_contract as contract
++from math_agent.pipeline import Pipeline
++from math_agent.local_patch import LocalPatch
++from math_agent.budget import BudgetIncrease
++from math_agent.util import AgentError, digest, write_json
++from test_global_repair import GlobalRepairProvider, setup
++
++
++pytestmark = pytest.mark.unit
++
++
++class PatchProvider(GlobalRepairProvider):
++    def __init__(self):
++        super().__init__()
++        self.calls = []
++        self.active = None
++        self.reply = None
++        self.after_reply = None
++
++    def generate(self, role, context, schema):
++        if self.active:
++            self.active.store.count_request(self.active.job,60,{'role':role,'fixture':'OFFLINE_NO_HTTP'})
++        self.calls.append((role,copy.deepcopy(context)))
++        if role == 'repair_local_patch':
++            assert schema is LocalPatch
++            self.repairs.append(copy.deepcopy(context))
++            response = self.reply or {'section_id':context['section']['section_id'], 'replacements':[
++                {'unit_id':unit['id'],'tex':unit['tex']+' 正整数无上界（阿基米德性质）。'}
++                for unit in context['section']['units'] if unit['id'] in context['allowed_unit_ids']]}
++            if self.after_reply:self.after_reply()
++            return copy.deepcopy(response)
++        assert role != 'repair_content_unit', 'Global repairs must request a strict patch, never a whole section'
++        return super().generate(role,context,schema)
++
++
++def setup_raised(tmp_path,provider,monkeypatch):
++    service,p,plan,compiles=setup(tmp_path,provider,monkeypatch,limit=2)
++    service.store.finish(p.job,'BLOCKED','offline.fixture',{'code':'BUDGET_EXHAUSTED'})
++    service.increase_budget(p.run['id'],BudgetIncrease(expected_version=service.get_budget(p.run['id'])['version'],
++        expected_plan_revision=plan['revision'],expected_plan_hash=plan['hash'],
++        action_id='offline-explicit-global-six',global_repair_rounds=6,note='Offline authorized migration fixture'))
++    service.retry(p.run['id'])
++    resumed=Pipeline(p.settings,p.store,p.store.claim('offline-increased-migration-worker'))
++    resumed.provider=provider
++    return service,resumed,plan,compiles
++
++
++def seed(tmp_path, monkeypatch, *, phase='repair_pending'):
++    provider=PatchProvider()
++    service,pipeline,plan,compiles=setup_raised(tmp_path,provider,monkeypatch)
++    provider.active=pipeline
++    completed,_=pipeline._lecture_sections(plan)
++    state={'schema_version':1,'identity':contract.known_legacy_identity(pipeline,plan),'rounds_used':2,
++        'phase':'validated','sections':{},'pending':[],'teacher_visual_review':'NOT_RUN'}
++    issues=[{'unit_id':'S01.U01','severity':'review','message':'Preserved premise gap',
++             'evidence':'Original bounded mock concern, not a live judgment'}]
++    pipeline._start_global_repair(completed,issues,state)
++    if phase in ('checking','validated','budget_exhausted'):
++        state['pending']=[];state['phase']=phase
++        # A genuinely accepted prior patch must not be rolled back by migration.
++        old=pipeline._global_repair_sections(state)['S01']
++        old['units'][0]['tex']+=' 正整数无上界（阿基米德性质）。'
++        candidate=pipeline.settings.workspace/state['sections']['S01']['candidate_key']
++        write_json(candidate,old);state['sections']['S01']['candidate_hash']=digest(candidate.read_bytes())
++    write_json(pipeline.root/'global-repair-state.json',state)
++    return service,pipeline,plan,provider,compiles,copy.deepcopy(state)
++
++
++def events(pipeline):
++    with pipeline.store.connect() as connection:
++        return [json.loads(row[0]) for row in connection.execute(
++            'SELECT payload_json FROM events WHERE run_id=? AND type=?', (pipeline.run['id'],contract.EVENT))]
++
++
++def test_known_v1_pending_migrates_and_resumes_original_issue_before_any_new_review(tmp_path,monkeypatch):
++    service,p,plan,provider,_,old=seed(tmp_path,monkeypatch)
++    path=p.root/'global-repair-state.json';raw=path.read_bytes()
++    run=service.store.get_run(p.run['id']);count=len(provider.calls)
++    migrated=p._load_global_repair_state(plan)
++    assert migrated['schema_version']==2 and migrated['identity']==p._global_repair_identity(plan)
++    assert {k:v for k,v in migrated.items() if k not in ('identity','schema_version','contract_migration')} == {
++        k:v for k,v in old.items() if k not in ('identity','schema_version')}
++    assert service.store.get_run(p.run['id'])==run and len(provider.calls)==count
++    assert migrated['rounds_used']==3 and migrated['pending']==old['pending']
++    ev=events(p);assert len(ev)==1 and ev[0]['request_count_preserved']==run['request_count']
++    assert (p.settings.workspace/ev[0]['before_key']).read_bytes()==raw
++    assert p._load_global_repair_state(plan)==migrated and len(events(p))==1
++    completed,_=p.lecture(plan)
++    assert provider.calls[count][0]=='repair_local_patch'
++    assert provider.calls[count][1]['issues']==old['pending'][0]['issues']
++    assert len(provider.repairs)==1 and provider.writes==['S01','S02']
++    assert '阿基米德' in completed[0][1]['units'][0]['tex']
++    final=json.loads(path.read_bytes());assert final['phase']=='validated' and final['rounds_used']==3
++    after=service.store.get_run(p.run['id'])
++    assert after['approval']==run['approval'] and after['input_hash']==run['input_hash'] and after['reviews']==[]
++    assert after['request_count']==len(provider.calls)>run['request_count']
++    assert len(events(p))==1
++
++
++@pytest.mark.parametrize('field',['repair_prompt_hash','written_schema_hash','normalizer_hash','extra','model','provider'])
++def test_unknown_legacy_contract_is_not_migrated_or_reset(tmp_path,monkeypatch,field):
++    _,p,plan,provider,_,state=seed(tmp_path,monkeypatch)
++    state['identity'][field]='unknown-contract'
++    path=p.root/'global-repair-state.json';write_json(path,state);raw=path.read_bytes()
++    count=len(provider.calls)
++    with pytest.raises(AgentError) as error:p._load_global_repair_state(plan)
++    assert error.value.code=='GLOBAL_REPAIR_CONTRACT_CHANGED'
++    assert path.read_bytes()==raw and len(provider.calls)==count and events(p)==[]
++
++
++@pytest.mark.parametrize('corruption',['bool_round','negative_round','bad_phase','extra_target','duplicate_target',
++    'issue_target','neighbor','candidate_hash','folder','bool_version'])
++def test_malformed_legacy_state_is_preserved_and_blocked(tmp_path,monkeypatch,corruption):
++    _,p,plan,_,_,state=seed(tmp_path,monkeypatch)
++    if corruption=='bool_round':state['rounds_used']=True
++    elif corruption=='negative_round':state['rounds_used']=-1
++    elif corruption=='bad_phase':state['phase']='accepted_by_model'
++    elif corruption=='extra_target':state['pending'][0]['allowed_unit_ids'].append('S01.U02')
++    elif corruption=='duplicate_target':state['pending'][0]['allowed_unit_ids']*=2
++    elif corruption=='issue_target':state['pending'][0]['issues'][0]['unit_id']='S01.U02'
++    elif corruption=='neighbor':state['pending'][0]['neighbors'][0]['section']['title']='Unapproved changed context'
++    elif corruption=='candidate_hash':state['sections']['S01']['candidate_hash']='0'*64
++    elif corruption=='folder':state['round_directory']='runs/foreign-run/global-repairs/r3-forged'
++    elif corruption=='bool_version':state['schema_version']=True
++    path=p.root/'global-repair-state.json';write_json(path,state);raw=path.read_bytes()
++    with pytest.raises(AgentError) as error:p._load_global_repair_state(plan)
++    assert error.value.code in {'GLOBAL_REPAIR_MIGRATION_INVALID','GLOBAL_REPAIR_CACHE_INVALID','GLOBAL_REPAIR_CONTRACT_CHANGED'}
++    assert path.read_bytes()==raw and events(p)==[]
++
++
++@pytest.mark.parametrize('phase',['checking','validated','budget_exhausted'])
++def test_accepted_candidates_and_rounds_survive_phase_migration(tmp_path,monkeypatch,phase):
++    _,p,plan,provider,_,old=seed(tmp_path,monkeypatch,phase=phase)
++    before=p._global_repair_sections(old);count=len(provider.calls)
++    state=p._load_global_repair_state(plan)
++    assert state['phase']==phase and state['rounds_used']==3 and state['sections']==old['sections']
++    assert p._global_repair_sections(state)==before and state['issues']==old['issues']
++    assert len(provider.calls)==count
++
++
++def test_reachable_validated_checkpoint_is_rechecked_without_rolling_back_accepted_body(tmp_path,monkeypatch):
++    provider=PatchProvider();service,p,plan,compiles=setup_raised(tmp_path,provider,monkeypatch);provider.active=p
++    before,_=p.lecture(plan)
++    path=p.root/'global-repair-state.json';legacy=json.loads(path.read_bytes())
++    assert legacy['phase']=='validated' and legacy['rounds_used']==1
++    assert '阿基米德' in before[0][1]['units'][0]['tex'] and len(provider.repairs)==1
++    legacy.update(schema_version=1,identity=contract.known_legacy_identity(p,plan));write_json(path,legacy)
++    writes=list(provider.writes);repairs=len(provider.repairs);locals_before=len(provider.locals)
++    prior_contract=p._section_check_contract()
++    monkeypatch.setattr(p,'_section_check_contract',lambda:{**prior_contract,'offline_new_checker_contract':True})
++    after,_=p.lecture(plan)
++    assert after==before and provider.writes==writes and len(provider.repairs)==repairs
++    assert len(provider.locals)>locals_before  # Actual refreshed review, not a fixture-return shortcut.
++    saved=json.loads(path.read_bytes());assert saved['phase']=='validated' and saved['rounds_used']==1
++    assert len(events(p))==1 and service.store.get_run(p.run['id'])['reviews']==[]
++
++
++@pytest.mark.parametrize('point',['journal_before_state','state_before_event'])
++def test_migration_crash_recovers_without_duplicate_event_or_new_calls(tmp_path,monkeypatch,point):
++    service,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
++    path=p.root/'global-repair-state.json';raw=path.read_bytes();run=service.store.get_run(p.run['id'])
++    original_event=p.store.event;original_replace=contract._replace_state
++    def event(connection,rid,kind,payload=None):
++        if kind==contract.EVENT:raise RuntimeError('Synthetic crash after state replace')
++        return original_event(connection,rid,kind,payload)
++    def replace(path,data):raise RuntimeError('Synthetic crash after immutable journal')
++    monkeypatch.setattr(p.store,'event',event if point=='state_before_event' else original_event)
++    monkeypatch.setattr(contract,'_replace_state',replace if point=='journal_before_state' else original_replace)
++    with pytest.raises(RuntimeError):p._load_global_repair_state(plan)
++    assert events(p)==[]
++    if point=='journal_before_state':assert path.read_bytes()==raw
++    else:assert json.loads(path.read_bytes())['schema_version']==2
++    monkeypatch.setattr(p.store,'event',original_event);monkeypatch.setattr(contract,'_replace_state',original_replace)
++    calls=len(provider.calls);state=p._load_global_repair_state(plan)
++    assert state['rounds_used']==3 and state['phase']=='repair_pending'
++    assert len(provider.calls)==calls and service.store.get_run(p.run['id'])==run
++    assert len(events(p))==1
++    assert (p.settings.workspace/events(p)[0]['before_key']).read_bytes()==raw
++    p._load_global_repair_state(plan);assert len(events(p))==1
++
++
++def test_lost_lease_before_migration_leaves_original_bytes_and_no_journal(tmp_path,monkeypatch):
++    service,p,plan,_,_,_=seed(tmp_path,monkeypatch)
++    path=p.root/'global-repair-state.json';raw=path.read_bytes()
++    service.cancel(p.run['id'])
++    with pytest.raises(AgentError) as error:p._load_global_repair_state(plan)
++    assert error.value.code=='LEASE_LOST' and path.read_bytes()==raw
++    assert not (p.root/'global-repairs/contract-migrations').exists() and events(p)==[]
++
++
++@pytest.mark.parametrize('rounds,blocked',[(0,True),(2,True),(4,False)])
++def test_migrated_current_rounds_cannot_fall_below_preserved_history(tmp_path,monkeypatch,rounds,blocked):
++    _,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
++    state=p._load_global_repair_state(plan)
++    state['rounds_used']=rounds
++    path=p.root/'global-repair-state.json';write_json(path,state);raw=path.read_bytes()
++    count=len(provider.calls)
++    if blocked:
++        with pytest.raises(AgentError) as error:p._load_global_repair_state(plan)
++        assert error.value.code=='GLOBAL_REPAIR_MIGRATION_INVALID'
++    else:assert p._load_global_repair_state(plan)['rounds_used']==4
++    assert path.read_bytes()==raw and len(events(p))==1 and len(provider.calls)==count
++
++
++@pytest.mark.parametrize('field',['approval_hash','input_hash','request_count_preserved','negative_count','pending_scope'])
++def test_reused_precommit_journal_must_match_current_approval_and_counters(tmp_path,monkeypatch,field):
++    _,p,plan,_,_,_=seed(tmp_path,monkeypatch)
++    path=p.root/'global-repair-state.json';raw=path.read_bytes()
++    original=contract._replace_state
++    def interrupted(*args):raise RuntimeError('Synthetic journal before state interruption')
++    monkeypatch.setattr(contract,'_replace_state',interrupted)
++    with pytest.raises(RuntimeError):p._load_global_repair_state(plan)
++    journal=next((p.root/'global-repairs/contract-migrations').glob('*/evidence.json'))
++    evidence=json.loads(journal.read_bytes())
++    if field=='negative_count':evidence['request_count_preserved']=-1
++    elif field=='pending_scope':evidence['pending_scope']=[]
++    else:evidence[field]=999999 if field=='request_count_preserved' else 'corrupted'
++    write_json(journal,evidence);monkeypatch.setattr(contract,'_replace_state',original)
++    with pytest.raises(AgentError) as error:p._load_global_repair_state(plan)
++    assert error.value.code=='GLOBAL_REPAIR_MIGRATION_INVALID'
++    assert path.read_bytes()==raw and events(p)==[]
++
++
++@pytest.mark.parametrize('file',['before.json','after.json','evidence.json'])
++def test_migration_evidence_corruption_never_reuses_old_pass(tmp_path,monkeypatch,file):
++    _,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
++    state=p._load_global_repair_state(plan);path=p.root/'global-repair-state.json';raw=path.read_bytes()
++    folder=(p.settings.workspace/state['contract_migration']['evidence_key']).parent
++    (folder/file).write_bytes(b'{}')
++    count=len(provider.calls)
++    with pytest.raises(AgentError) as error:p._load_global_repair_state(plan)
++    assert error.value.code=='GLOBAL_REPAIR_MIGRATION_INVALID'
++    assert path.read_bytes()==raw and len(provider.calls)==count
++
++
++def test_request_budget_blocks_pending_patch_without_losing_migration_or_scope(tmp_path,monkeypatch):
++    service,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
++    state=p._load_global_repair_state(plan)
++    limit=p.effective_budget()['requests']
++    while service.store.get_run(p.run['id'])['request_count']<limit:
++        p.store.count_request(p.job,60,{'role':'offline-count-fixture'})
++    path=p.root/'global-repair-state.json';raw=path.read_bytes();count=len(provider.calls)
++    with pytest.raises(AgentError) as error:p._continue_global_repairs(plan,state)
++    assert error.value.code=='BUDGET_EXHAUSTED' and path.read_bytes()==raw
++    assert len(provider.calls)==count and service.store.get_run(p.run['id'])['request_count']==limit
++
++
++def test_late_patch_after_cancel_is_archived_but_not_accepted(tmp_path,monkeypatch):
++    service,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
++    state=p._load_global_repair_state(plan);before=copy.deepcopy(state)
++    path=p.root/'global-repair-state.json';raw=path.read_bytes()
++    provider.after_reply=lambda:service.cancel(p.run['id'])
++    with pytest.raises(AgentError) as error:p._continue_global_repairs(plan,state)
++    assert error.value.code=='LEASE_LOST' and path.read_bytes()==raw and state==before
++    assert list((p.root/'global-repairs').rglob('*-raw.json'))
++
++
++def captured():
++    return json.loads((Path(__file__).parent/'fixtures/global_patch_ch02_rejected.json').read_text(encoding='utf-8'))
++
++
++@pytest.mark.parametrize('response_kind',['valid_sparse','whole_section','forbidden_calculation'])
++def test_real_ch02_proposal_cannot_modify_unrelated_c03_ast(tmp_path,monkeypatch,response_kind):
++    fixture=captured();before=fixture['before'];bad=fixture['rejected']
++    original=next(c for c in before['calculations'] if c['id']=='S02.C03')
++    changed=next(c for c in bad['calculations'] if c['id']=='S02.C03')
++    assert original['unit_id']==changed['unit_id']=='S02.U16' and original['lhs']!=changed['lhs']
++    from math_agent.mathcheck import _calculate
++    assert _calculate({**original,'kind':'numeric_spotcheck','points':[{'n':1}]})['status']=='PASS'
++    assert _calculate({**changed,'kind':'numeric_spotcheck','points':[{'n':1}]})['status']=='FAIL'
++    provider=PatchProvider();_,p,plan,_=setup_raised(tmp_path,provider,monkeypatch);provider.active=p
++    section1=provider.generate('writer_lecture_section',{'section':plan['sections'][0]},None)
++    old={'schema_version':2,'identity':p._global_repair_identity(plan),'rounds_used':2,
++         'phase':'validated','sections':{},'pending':[],'teacher_visual_review':'NOT_RUN'}
++    p._start_global_repair([(plan['sections'][0],section1),(plan['sections'][1],before)],
++        [{'unit_id':'S02.U14','severity':'review','message':'Preserved old concern; no mathematical verdict here'}],old)
++    assert set(old['sections'])=={'S02'} and old['pending'][0]['neighbors'][0]['section']['id']=='S01'
++    replacement=next(u['tex'] for u in bad['units'] if u['id']=='S02.U14')
++    provider.reply={'section_id':'S02','replacements':[{'unit_id':'S02.U14','tex':replacement}]}
++    if response_kind=='whole_section':provider.reply=bad
++    elif response_kind=='forbidden_calculation':provider.reply['calculation_updates']=[changed]
++    path=p.root/'global-repair-state.json';raw=path.read_bytes()
++    if response_kind!='valid_sparse':
++        with pytest.raises(AgentError) as error:p._continue_global_repairs(plan,old)
++        assert error.value.code=='GLOBAL_REPAIR_SCOPE_VIOLATION' and path.read_bytes()==raw
++        assert old['pending'] and list((p.root/'global-repairs').rglob('*-rejected.json'))
++    else:
++        p._continue_global_repairs(plan,old)
++        after=p._global_repair_sections(old)['S02']
++        assert after['calculations']==before['calculations']
++        assert [u for u in after['units'] if u['id']!='S02.U14']==[u for u in before['units'] if u['id']!='S02.U14']
++        assert old['rounds_used']==3 and old['phase']=='checking' and not old['pending']
++        assert _calculate({**next(c for c in after['calculations'] if c['id']=='S02.C03'),
++                           'kind':'numeric_spotcheck','points':[{'n':1}]})['status']=='PASS'
+--- a/tests/fixtures/global_patch_ch02_rejected.json
++++ b/tests/fixtures/global_patch_ch02_rejected.json
+@@ -0,0 +1,854 @@
++{
++  "source_report": "reports/iteration4/CH02-global-r3-rejected-proposal-evidence.json",
++  "before": {
++    "section_id": "S02",
++    "units": [
++      {
++        "id": "S02.U01",
++        "kind": "explanation",
++        "tex": "本节中的级数均为实数项级数，下标从 $1$ 开始。根据定义 \\ref{def:convergence}，判断级数收敛必须考察部分和，而不能只考察通项。以下先从部分和的极限推出通项必须满足的条件，再讨论已经收敛的级数可以进行哪些运算。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U02",
++        "kind": "theorem",
++        "tex": "\\label{thm:term-test}若实数项级数 $\\sum_{n=1}^{\\infty}a_n$ 收敛，则 $\\lim_{n\\to\\infty}a_n=0$。因此，若通项的极限不存在或不等于零，则该级数发散。通项趋于零只是级数收敛的必要条件，不是充分条件。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U03",
++        "kind": "proof",
++        "tex": "设 $S_n=\\sum_{k=1}^{n}a_k$，且级数收敛于 $S\\in\\mathbb{R}$。对每个整数 $n\\geq2$，有\n\\[\na_n=S_n-S_{n-1}.\n\\]\n由 $S_n\\to S$ 可知 $S_{n-1}\\to S$，故由数列极限的运算法则，\n\\[\n\\lim_{n\\to\\infty}a_n=S-S=0.\n\\]\n其逆否命题给出上述发散判断。下面的调和级数例题将证明，通项趋于零不足以保证级数收敛。",
++        "relates_to": "S02.U02"
++      },
++      {
++        "id": "S02.U04",
++        "kind": "example",
++        "tex": "判断下列级数的敛散性，并说明必要条件在判断中起什么作用：\n\\[\n\\text{(1)}\\quad\\sum_{n=1}^{\\infty}c\\quad(c\\in\\mathbb{R});\\qquad\n\\text{(2)}\\quad\\sum_{n=1}^{\\infty}\\frac{n}{n+1};\\qquad\n\\text{(3)}\\quad\\sum_{n=1}^{\\infty}(-1)^{n-1}.\n\\]",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U05",
++        "kind": "solution",
++        "tex": "(1) 部分和为 $S_n=nc$。当 $c=0$ 时，所有部分和都为零，级数收敛且和为零；当 $c\\neq0$ 时，通项极限为 $c\\neq0$，由定理 \\ref{thm:term-test}，级数发散。此时部分和在 $c>0$ 时趋于 $+\\infty$，在 $c<0$ 时趋于 $-\\infty$。\n\n(2) 对正整数 $n$，有\n\\[\n\\frac{n}{n+1}=1-\\frac{1}{n+1}\\longrightarrow1.\n\\]\n通项不趋于零，所以级数发散。\n\n(3) 通项在 $1$ 与 $-1$ 之间交替，极限不存在，所以级数发散。也可直接观察：$S_{2m}=0$，$S_{2m-1}=1$，其中 $m$ 为任意正整数，故部分和没有极限。可见，级数发散并不一定表现为部分和趋于无穷。",
++        "relates_to": "S02.U04"
++      },
++      {
++        "id": "S02.U06",
++        "kind": "example",
++        "tex": "调和级数 $\\sum_{n=1}^{\\infty}1/n$ 的通项趋于零。仅利用部分和和有限项不等式，证明它仍然发散。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U07",
++        "kind": "solution",
++        "tex": "记 $H_n=\\sum_{k=1}^{n}1/k$。对任意正整数 $j$，从 $k=2^{j-1}+1$ 到 $k=2^j$ 共含 $2^{j-1}$ 项，每项至少为 $1/2^j$，所以\n\\[\n\\sum_{k=2^{j-1}+1}^{2^j}\\frac1k\\geq\\frac{2^{j-1}}{2^j}=\\frac12.\n\\]\n因此，对每个正整数 $m$，\n\\[\nH_{2^m}=1+\\sum_{j=1}^{m}\\sum_{k=2^{j-1}+1}^{2^j}\\frac1k\n\\geq1+\\frac m2.\n\\]\n右端随 $m$ 增大而无界，故部分和数列无界，不可能收敛于有限实数。调和级数发散。这里分组的对象始终是有限部分和，并未对尚未确定收敛的无穷和进行运算。\n\n另一方面，$\\lim_{n\\to\\infty}1/n=0$。这就给出了“通项趋于零但级数发散”的反例。实际解题时，通项趋于零意味着必要条件未能排除收敛，而不是已经证明收敛。",
++        "relates_to": "S02.U06"
++      },
++      {
++        "id": "S02.U08",
++        "kind": "theorem",
++        "tex": "\\label{thm:linearity}设实数项级数 $\\sum_{n=1}^{\\infty}a_n=A$ 和 $\\sum_{n=1}^{\\infty}b_n=B$ 均收敛。对任意实常数 $\\alpha,\\beta$，级数 $\\sum_{n=1}^{\\infty}(\\alpha a_n+\\beta b_n)$ 收敛，且\n\\[\n\\sum_{n=1}^{\\infty}(\\alpha a_n+\\beta b_n)=\\alpha A+\\beta B.\n\\]",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U09",
++        "kind": "proof",
++        "tex": "令 $A_n=\\sum_{k=1}^{n}a_k$，$B_n=\\sum_{k=1}^{n}b_k$。由有限和的运算法则，组合级数的第 $n$ 个部分和为\n\\[\nC_n=\\sum_{k=1}^{n}(\\alpha a_k+\\beta b_k)=\\alpha A_n+\\beta B_n.\n\\]\n已知 $A_n\\to A$、$B_n\\to B$，所以 $C_n\\to\\alpha A+\\beta B$。由定理 \\ref{thm:series-limit} 得到结论。",
++        "relates_to": "S02.U08"
++      },
++      {
++        "id": "S02.U10",
++        "kind": "explanation",
++        "tex": "线性运算定理的前提是两个级数都收敛。不能把发散级数当作实数相减。例如，$\\sum_{n=1}^{\\infty}1$ 与 $\\sum_{n=1}^{\\infty}(-1)$ 都发散，但逐项相加后得到的零级数收敛；这并不是两个级数的和相加，因为原来两个级数都没有有限的和。\n\n若一个级数收敛、另一个发散，则它们逐项相加的级数必发散。为证明这一点，设 $\\sum_{n=1}^{\\infty}a_n$ 收敛于 $A$，而 $\\sum_{n=1}^{\\infty}b_n$ 发散。记\n\\[\nA_n=\\sum_{k=1}^{n}a_k,\\qquad B_n=\\sum_{k=1}^{n}b_k,\\qquad C_n=\\sum_{k=1}^{n}(a_k+b_k).\n\\]\n假设逐项相加的级数收敛于有限实数 $C$，则 $C_n\\to C$。由有限和的恒等式 $B_n=C_n-A_n$ 及数列极限的运算法则，得到\n\\[\nB_n\\longrightarrow C-A.\n\\]\n因此 $\\sum_{n=1}^{\\infty}b_n$ 收敛，与假设矛盾。故逐项相加的级数必发散。这里仅对有限部分和作减法，再取极限，并未对发散级数的和作运算。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U11",
++        "kind": "definition",
++        "tex": "\\label{def:remainder}设 $\\sum_{k=1}^{\\infty}a_k$ 收敛且和为 $S$，部分和为 $S_n$。对每个正整数 $n$，定义第 $n$ 个余项为\n\\[\nR_n=S-S_n=\\sum_{k=n+1}^{\\infty}a_k.\n\\]\n这里尾级数的含义是 $\\lim_{m\\to\\infty}\\sum_{k=n+1}^{m}a_k$，其中 $n$ 固定。用 $S_n$ 近似 $S$ 时，带符号的误差为 $R_n$，绝对误差为 $|R_n|$。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U12",
++        "kind": "explanation",
++        "tex": "余项定义中的尾级数确实收敛：固定正整数 $n$，对整数 $m>n$ 有\n\\[\n\\sum_{k=n+1}^{m}a_k=S_m-S_n\\longrightarrow S-S_n.\n\\]\n又因为 $S_n\\to S$，所以 $R_n\\to0$。前一个极限固定 $n$ 而令 $m$ 增大，后一个极限才是令截断位置 $n$ 增大。若原级数发散，则不能把 $S-S_n$ 当作余项，因为此时不存在有限的级数和 $S$。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U13",
++        "kind": "theorem",
++        "tex": "\\label{thm:finite-change}设 $\\{a_n\\}$、$\\{b_n\\}$ 为两个实数列，存在正整数 $N$，使得对所有整数 $n>N$ 都有 $a_n=b_n$。则 $\\sum_{n=1}^{\\infty}a_n$ 与 $\\sum_{n=1}^{\\infty}b_n$ 同敛散。若前者收敛于 $A$，则后者的和为\n\\[\nB=A+\\sum_{k=1}^{N}(b_k-a_k).\n\\]\n因此，改变有限项不改变级数的敛散性，但可能改变级数的和。添加或删去有限项，并保持其余项的相对次序，也不改变敛散性。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U14",
++        "kind": "proof",
++        "tex": "令 $A_n=\\sum_{k=1}^{n}a_k$、$B_n=\\sum_{k=1}^{n}b_k$。对所有整数 $n\\geq N$，\n\\[\nB_n-A_n=\\sum_{k=1}^{N}(b_k-a_k)=C,\n\\]\n其中 $C$ 是与 $n$ 无关的有限实数。因此 $B_n=A_n+C$，两部分和数列同时收敛或同时发散；收敛时极限相差 $C$。\n\n对于删去前 $N$ 项所得的尾级数，其第 $m$ 个部分和为 $A_{N+m}-A_N$，其中 $m$ 为正整数，故它与原级数同敛散。一般地，添加或删去有限项后，在经过最后一个改动位置时，新旧部分和之间只相差一个固定常数和一个固定的下标平移，仍由数列极限性质得到同样结论。这里不涉及无限多项的重新排列。",
++        "relates_to": "S02.U13"
++      },
++      {
++        "id": "S02.U15",
++        "kind": "example",
++        "tex": "设实数列 $\\{b_n\\}$ 满足\n\\[\nb_1=3,\\qquad b_n=\\frac{2}{2^n}\\quad(n\\geq2).\n\\]\n求级数 $\\sum_{n=1}^{\\infty}b_n$ 的和及第 $n$ 个余项，并确定使绝对误差小于 $1/100$ 的最小正整数截断位置 $n$。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U16",
++        "kind": "solution",
++        "tex": "前节已由部分和求得 $\\sum_{k=1}^{\\infty}2^{-k}=1$，且对每个正整数 $n$，有 $\\sum_{k=1}^{n}2^{-k}=1-2^{-n}$。由定理 \\ref{thm:linearity}，$\\sum_{k=1}^{\\infty}2\\cdot2^{-k}=2$。本题将其第一项从 $1$ 改成 $3$，增加了 $2$，故由定理 \\ref{thm:finite-change}，所求级数的和为 $4$。\n\n对每个正整数 $n$，其部分和及余项分别为\n\\[\nS_n=2(1-2^{-n})+2=4-2^{1-n},\\qquad\nR_n=4-S_n=2^{1-n}.\n\\]\n所以 $|R_n|=2^{1-n}$。当 $n=7$ 时，误差为 $1/64>1/100$；当 $n=8$ 时，误差为 $1/128<1/100$。误差随正整数 $n$ 增大严格减小，故满足要求的最小截断位置是 $n=8$。",
++        "relates_to": "S02.U15"
++      },
++      {
++        "id": "S02.U17",
++        "kind": "explanation",
++        "tex": "本节的判断顺序是：先检查通项是否趋于零；若不趋于零，立即判为发散；若趋于零，还需研究部分和或使用其他适用的判别法。线性运算要求有关级数已经收敛；余项用于描述收敛级数的截断误差；有限项改变只保持敛散性，不保证和保持不变。\n\n以下为本节练习，答案统一安排在讲义末尾。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U18",
++        "kind": "exercise",
++        "tex": "分别判断下列级数能否仅用收敛的必要条件判为发散，并对不能据此判定的情形说明原因：\n\\[\n\\text{(1)}\\quad\\sum_{n=1}^{\\infty}\\frac{2n+1}{3n+2};\\qquad\n\\text{(2)}\\quad\\sum_{n=1}^{\\infty}\\frac1{n+2};\\qquad\n\\text{(3)}\\quad\\sum_{n=1}^{\\infty}\\frac{(-1)^n n}{n+1}.\n\\]\n再利用本节已知结论确定第 (2) 个级数的敛散性。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U19",
++        "kind": "exercise",
++        "tex": "设实数项级数 $\\sum_{n=1}^{\\infty}a_n=2$、$\\sum_{n=1}^{\\infty}b_n=-1$ 均收敛。求 $\\sum_{n=1}^{\\infty}(3a_n-2b_n)$ 的和。若将组合级数的第一项增加 $5$，其敛散性与和各有何变化？另说明：仅知道 $\\sum_{n=1}^{\\infty}(a_n+b_n)$ 收敛，能否推出两个原级数都收敛？请给出理由或反例。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U20",
++        "kind": "exercise",
++        "tex": "对于级数 $\\sum_{n=1}^{\\infty}2^{-n}$，写出第 $n$ 个余项，求使绝对误差小于 $1/1000$ 的最小正整数 $n$。若只将该级数第一项改成 $10$，求新级数的和，并说明对每个正整数 $n$，新旧级数的第 $n$ 个余项是否相同。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U18.answer",
++        "kind": "solution",
++        "tex": "(1) 通项满足\n\\[\n\\lim_{n\\to\\infty}\\frac{2n+1}{3n+2}\n=\\lim_{n\\to\\infty}\\frac{2+1/n}{3+2/n}=\\frac23\\ne0.\n\\]\n因此仅用收敛的必要条件即可判定该级数发散。\n\n(2) 因为 $1/(n+2)\\to0$，收敛的必要条件得到满足，但这不能保证级数收敛，也不能据此判为发散。进一步，令 $H_m=\\sum_{k=1}^{m}1/k$，则本题的部分和为\n\\[\nS_n=\\sum_{k=1}^{n}\\frac1{k+2}=H_{n+2}-\\frac32.\n\\]\n该级数是调和级数删去前两项所得的尾级数，由调和级数发散及有限项改变性质，知它发散。\n\n(3) 记 $a_n=(-1)^n n/(n+1)$。其偶数项与奇数项分别满足\n\\[\na_{2m}=\\frac{2m}{2m+1}\\longrightarrow1,\\qquad\na_{2m-1}=-\\frac{2m-1}{2m}\\longrightarrow-1.\n\\]\n两个子数列的极限不同，故通项极限不存在，尤其不趋于零。因此仅用收敛的必要条件即可判定该级数发散。",
++        "relates_to": "S02.U18"
++      },
++      {
++        "id": "S02.U19.answer",
++        "kind": "solution",
++        "tex": "由于两个原级数均收敛，由线性运算定理，组合级数收敛且\n\\[\n\\sum_{n=1}^{\\infty}(3a_n-2b_n)=3\\cdot2-2\\cdot(-1)=8.\n\\]\n若将组合级数第一项增加 $5$，则每个正整数下标的部分和均增加 $5$，故新级数仍收敛，其和为 $8+5=13$。\n\n最后一问仅以逐项相加的级数收敛为条件，不再假定两个原级数分别收敛；此时不能推出两个原级数都收敛。反例为 $a_n=1$、$b_n=-1$：逐项相加后各项均为零，所以 $\\sum_{n=1}^{\\infty}(a_n+b_n)$ 收敛于 $0$，而两个原级数的部分和分别为 $n$ 和 $-n$，均无有限极限，因而均发散。",
++        "relates_to": "S02.U19"
++      },
++      {
++        "id": "S02.U20.answer",
++        "kind": "solution",
++        "tex": "由有限等比数列求和公式，对每个正整数 $n$，\n\\[\nS_n=\\sum_{k=1}^{n}2^{-k}=1-2^{-n}.\n\\]\n所以级数的和为 $S=1$，第 $n$ 个余项为\n\\[\nR_n=S-S_n=2^{-n}.\n\\]\n绝对误差小于 $1/1000$ 等价于 $2^n>1000$。因为\n\\[\n2^9=512<1000<1024=2^{10},\n\\]\n且 $2^n$ 随正整数 $n$ 严格递增，满足要求的最小正整数为 $n=10$。\n\n原第一项为 $1/2$，改为 $10$ 后增加了 $10-1/2=19/2$。由有限项改变性质，新级数仍收敛，其和为\n\\[\n\\widetilde S=1+\\frac{19}{2}=\\frac{21}{2}.\n\\]\n对每个正整数 $n$，新部分和为 $\\widetilde S_n=S_n+19/2$，因此\n\\[\n\\widetilde R_n=\\widetilde S-\\widetilde S_n\n=\\left(S+\\frac{19}{2}\\right)-\\left(S_n+\\frac{19}{2}\\right)\n=S-S_n=2^{-n}.\n\\]\n故新旧级数的第 $n$ 个余项相同。",
++        "relates_to": "S02.U20"
++      }
++    ],
++    "calculations": [
++      {
++        "assumptions": {
++          "n": {
++            "integer": true,
++            "positive": true
++          }
++        },
++        "direction": "-",
++        "expected": {
++          "op": "Integer",
++          "value": 1
++        },
++        "expression": {
++          "args": [
++            {
++              "name": "n",
++              "op": "Symbol"
++            },
++            {
++              "args": [
++                {
++                  "args": [
++                    {
++                      "name": "n",
++                      "op": "Symbol"
++                    },
++                    {
++                      "op": "Integer",
++                      "value": 1
++                    }
++                  ],
++                  "op": "Add"
++                },
++                {
++                  "op": "Integer",
++                  "value": -1
++                }
++              ],
++              "op": "Pow"
++            }
++          ],
++          "op": "Mul"
++        },
++        "id": "S02.C01",
++        "kind": "limit",
++        "point": {
++          "op": "Infinity"
++        },
++        "unit_id": "S02.U05",
++        "variable": "n"
++      },
++      {
++        "assumptions": {
++          "n": {
++            "integer": true,
++            "positive": true
++          }
++        },
++        "end": {
++          "op": "Infinity"
++        },
++        "expected_convergent": false,
++        "id": "S02.C02",
++        "kind": "series",
++        "start": {
++          "op": "Integer",
++          "value": 1
++        },
++        "term": {
++          "args": [
++            {
++              "name": "n",
++              "op": "Symbol"
++            },
++            {
++              "op": "Integer",
++              "value": -1
++            }
++          ],
++          "op": "Pow"
++        },
++        "unit_id": "S02.U07",
++        "variable": "n"
++      },
++      {
++        "assumptions": {
++          "n": {
++            "integer": true,
++            "positive": true
++          }
++        },
++        "id": "S02.C03",
++        "kind": "equivalence",
++        "lhs": {
++          "args": [
++            {
++              "args": [
++                {
++                  "op": "Integer",
++                  "value": 2
++                },
++                {
++                  "args": [
++                    {
++                      "op": "Integer",
++                      "value": 1
++                    },
++                    {
++                      "args": [
++                        {
++                          "op": "Integer",
++                          "value": -1
++                        },
++                        {
++                          "args": [
++                            {
++                              "op": "Integer",
++                              "value": 2
++                            },
++                            {
++                              "args": [
++                                {
++                                  "op": "Integer",
++                                  "value": -1
++                                },
++                                {
++                                  "name": "n",
++                                  "op": "Symbol"
++                                }
++                              ],
++                              "op": "Mul"
++                            }
++                          ],
++                          "op": "Pow"
++                        }
++                      ],
++                      "op": "Mul"
++                    }
++                  ],
++                  "op": "Add"
++                }
++              ],
++              "op": "Mul"
++            },
++            {
++              "op": "Integer",
++              "value": 2
++            }
++          ],
++          "op": "Add"
++        },
++        "rhs": {
++          "args": [
++            {
++              "op": "Integer",
++              "value": 4
++            },
++            {
++              "args": [
++                {
++                  "op": "Integer",
++                  "value": -1
++                },
++                {
++                  "args": [
++                    {
++                      "op": "Integer",
++                      "value": 2
++                    },
++                    {
++                      "args": [
++                        {
++                          "op": "Integer",
++                          "value": 1
++                        },
++                        {
++                          "args": [
++                            {
++                              "op": "Integer",
++                              "value": -1
++                            },
++                            {
++                              "name": "n",
++                              "op": "Symbol"
++                            }
++                          ],
++                          "op": "Mul"
++                        }
++                      ],
++                      "op": "Add"
++                    }
++                  ],
++                  "op": "Pow"
++                }
++              ],
++              "op": "Mul"
++            }
++          ],
++          "op": "Add"
++        },
++        "unit_id": "S02.U16"
++      },
++      {
++        "id": "S02.AC01",
++        "unit_id": "S02.U18.answer",
++        "kind": "limit",
++        "assumptions": {
++          "n": {
++            "integer": true,
++            "positive": true
++          }
++        },
++        "expression": {
++          "op": "Mul",
++          "args": [
++            {
++              "op": "Add",
++              "args": [
++                {
++                  "op": "Mul",
++                  "args": [
++                    {
++                      "op": "Integer",
++                      "value": 2
++                    },
++                    {
++                      "op": "Symbol",
++                      "name": "n"
++                    }
++                  ]
++                },
++                {
++                  "op": "Integer",
++                  "value": 1
++                }
++              ]
++            },
++            {
++              "op": "Pow",
++              "args": [
++                {
++                  "op": "Add",
++                  "args": [
++                    {
++                      "op": "Mul",
++                      "args": [
++                        {
++                          "op": "Integer",
++                          "value": 3
++                        },
++                        {
++                          "op": "Symbol",
++                          "name": "n"
++                        }
++                      ]
++                    },
++                    {
++                      "op": "Integer",
++                      "value": 2
++                    }
++                  ]
++                },
++                {
++                  "op": "Integer",
++                  "value": -1
++                }
++              ]
++            }
++          ]
++        },
++        "variable": "n",
++        "point": {
++          "op": "Infinity"
++        },
++        "direction": "-",
++        "expected": {
++          "op": "Rational",
++          "p": 2,
++          "q": 3
++        }
++      }
++    ],
++    "calculation_limitations": [
++      "核算请求覆盖一个通项极限、调和级数的敛散性及一个部分和公式的代数变形；协议不能直接表达任意实数列及其部分和之间的量化关系，因此一般必要条件、线性运算和有限项改变性质由正文证明，不由这些核算替代。",
++      "新增核算仅覆盖 S02.U18.answer 中第 (1) 项的通项极限。任意实数列的线性运算、有限项改变与余项相等的量化论证不由此核算覆盖；截断位置的最小性由答案中的整数比较和单调性说明。",
++      "S02.U10 的修复使用任意实数列的有限部分和恒等式与数列极限减法法则；现有核算协议不能表达这些部分和的量化关系及反证推理，因此不新增核算请求，该一般结论由正文论证。"
++    ],
++    "uncertainties": []
++  },
++  "rejected": {
++    "section_id": "S02",
++    "units": [
++      {
++        "id": "S02.U01",
++        "kind": "explanation",
++        "tex": "本节中的级数均为实数项级数，下标从 $1$ 开始。根据定义 \\ref{def:convergence}，判断级数收敛必须考察部分和，而不能只考察通项。以下先从部分和的极限推出通项必须满足的条件，再讨论已经收敛的级数可以进行哪些运算。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U02",
++        "kind": "theorem",
++        "tex": "\\label{thm:term-test}若实数项级数 $\\sum_{n=1}^{\\infty}a_n$ 收敛，则 $\\lim_{n\\to\\infty}a_n=0$。因此，若通项的极限不存在或不等于零，则该级数发散。通项趋于零只是级数收敛的必要条件，不是充分条件。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U03",
++        "kind": "proof",
++        "tex": "设 $S_n=\\sum_{k=1}^{n}a_k$，且级数收敛于 $S\\in\\mathbb{R}$。对每个整数 $n\\geq2$，有\n\\[\na_n=S_n-S_{n-1}.\n\\]\n由 $S_n\\to S$ 可知 $S_{n-1}\\to S$，故由数列极限的运算法则，\n\\[\n\\lim_{n\\to\\infty}a_n=S-S=0.\n\\]\n其逆否命题给出上述发散判断。下面的调和级数例题将证明，通项趋于零不足以保证级数收敛。",
++        "relates_to": "S02.U02"
++      },
++      {
++        "id": "S02.U04",
++        "kind": "example",
++        "tex": "判断下列级数的敛散性，并说明必要条件在判断中起什么作用：\n\\[\n\\text{(1)}\\quad\\sum_{n=1}^{\\infty}c\\quad(c\\in\\mathbb{R});\\qquad\n\\text{(2)}\\quad\\sum_{n=1}^{\\infty}\\frac{n}{n+1};\\qquad\n\\text{(3)}\\quad\\sum_{n=1}^{\\infty}(-1)^{n-1}.\n\\]",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U05",
++        "kind": "solution",
++        "tex": "(1) 部分和为 $S_n=nc$。当 $c=0$ 时，所有部分和都为零，级数收敛且和为零；当 $c\\neq0$ 时，通项极限为 $c\\neq0$，由定理 \\ref{thm:term-test}，级数发散。此时部分和在 $c>0$ 时趋于 $+\\infty$，在 $c<0$ 时趋于 $-\\infty$。\n\n(2) 对正整数 $n$，有\n\\[\n\\frac{n}{n+1}=1-\\frac{1}{n+1}\\longrightarrow1.\n\\]\n通项不趋于零，所以级数发散。\n\n(3) 通项在 $1$ 与 $-1$ 之间交替，极限不存在，所以级数发散。也可直接观察：$S_{2m}=0$，$S_{2m-1}=1$，其中 $m$ 为任意正整数，故部分和没有极限。可见，级数发散并不一定表现为部分和趋于无穷。",
++        "relates_to": "S02.U04"
++      },
++      {
++        "id": "S02.U06",
++        "kind": "example",
++        "tex": "调和级数 $\\sum_{n=1}^{\\infty}1/n$ 的通项趋于零。仅利用部分和和有限项不等式，证明它仍然发散。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U07",
++        "kind": "solution",
++        "tex": "记 $H_n=\\sum_{k=1}^{n}1/k$。对任意正整数 $j$，从 $k=2^{j-1}+1$ 到 $k=2^j$ 共含 $2^{j-1}$ 项，每项至少为 $1/2^j$，所以\n\\[\n\\sum_{k=2^{j-1}+1}^{2^j}\\frac1k\\geq\\frac{2^{j-1}}{2^j}=\\frac12.\n\\]\n因此，对每个正整数 $m$，\n\\[\nH_{2^m}=1+\\sum_{j=1}^{m}\\sum_{k=2^{j-1}+1}^{2^j}\\frac1k\n\\geq1+\\frac m2.\n\\]\n右端随 $m$ 增大而无界，故部分和数列无界，不可能收敛于有限实数。调和级数发散。这里分组的对象始终是有限部分和，并未对尚未确定收敛的无穷和进行运算。\n\n另一方面，$\\lim_{n\\to\\infty}1/n=0$。这就给出了“通项趋于零但级数发散”的反例。实际解题时，通项趋于零意味着必要条件未能排除收敛，而不是已经证明收敛。",
++        "relates_to": "S02.U06"
++      },
++      {
++        "id": "S02.U08",
++        "kind": "theorem",
++        "tex": "\\label{thm:linearity}设实数项级数 $\\sum_{n=1}^{\\infty}a_n=A$ 和 $\\sum_{n=1}^{\\infty}b_n=B$ 均收敛。对任意实常数 $\\alpha,\\beta$，级数 $\\sum_{n=1}^{\\infty}(\\alpha a_n+\\beta b_n)$ 收敛，且\n\\[\n\\sum_{n=1}^{\\infty}(\\alpha a_n+\\beta b_n)=\\alpha A+\\beta B.\n\\]",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U09",
++        "kind": "proof",
++        "tex": "令 $A_n=\\sum_{k=1}^{n}a_k$，$B_n=\\sum_{k=1}^{n}b_k$。由有限和的运算法则，组合级数的第 $n$ 个部分和为\n\\[\nC_n=\\sum_{k=1}^{n}(\\alpha a_k+\\beta b_k)=\\alpha A_n+\\beta B_n.\n\\]\n已知 $A_n\\to A$、$B_n\\to B$，所以 $C_n\\to\\alpha A+\\beta B$。由定理 \\ref{thm:series-limit} 得到结论。",
++        "relates_to": "S02.U08"
++      },
++      {
++        "id": "S02.U10",
++        "kind": "explanation",
++        "tex": "线性运算定理的前提是两个级数都收敛。不能把发散级数当作实数相减。例如，$\\sum_{n=1}^{\\infty}1$ 与 $\\sum_{n=1}^{\\infty}(-1)$ 都发散，但逐项相加后得到的零级数收敛；这并不是两个级数的和相加，因为原来两个级数都没有有限的和。\n\n若一个级数收敛、另一个发散，则它们逐项相加的级数必发散。为证明这一点，设 $\\sum_{n=1}^{\\infty}a_n$ 收敛于 $A$，而 $\\sum_{n=1}^{\\infty}b_n$ 发散。记\n\\[\nA_n=\\sum_{k=1}^{n}a_k,\\qquad B_n=\\sum_{k=1}^{n}b_k,\\qquad C_n=\\sum_{k=1}^{n}(a_k+b_k).\n\\]\n假设逐项相加的级数收敛于有限实数 $C$，则 $C_n\\to C$。由有限和的恒等式 $B_n=C_n-A_n$ 及数列极限的运算法则，得到\n\\[\nB_n\\longrightarrow C-A.\n\\]\n因此 $\\sum_{n=1}^{\\infty}b_n$ 收敛，与假设矛盾。故逐项相加的级数必发散。这里仅对有限部分和作减法，再取极限，并未对发散级数的和作运算。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U11",
++        "kind": "definition",
++        "tex": "\\label{def:remainder}设 $\\sum_{k=1}^{\\infty}a_k$ 收敛且和为 $S$，部分和为 $S_n$。对每个正整数 $n$，定义第 $n$ 个余项为\n\\[\nR_n=S-S_n=\\sum_{k=n+1}^{\\infty}a_k.\n\\]\n这里尾级数的含义是 $\\lim_{m\\to\\infty}\\sum_{k=n+1}^{m}a_k$，其中 $n$ 固定。用 $S_n$ 近似 $S$ 时，带符号的误差为 $R_n$，绝对误差为 $|R_n|$。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U12",
++        "kind": "explanation",
++        "tex": "余项定义中的尾级数确实收敛：固定正整数 $n$，对整数 $m>n$ 有\n\\[\n\\sum_{k=n+1}^{m}a_k=S_m-S_n\\longrightarrow S-S_n.\n\\]\n又因为 $S_n\\to S$，所以 $R_n\\to0$。前一个极限固定 $n$ 而令 $m$ 增大，后一个极限才是令截断位置 $n$ 增大。若原级数发散，则不能把 $S-S_n$ 当作余项，因为此时不存在有限的级数和 $S$。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U13",
++        "kind": "theorem",
++        "tex": "\\label{thm:finite-change}设 $\\{a_n\\}$、$\\{b_n\\}$ 为两个实数列，存在正整数 $N$，使得对所有整数 $n>N$ 都有 $a_n=b_n$。则 $\\sum_{n=1}^{\\infty}a_n$ 与 $\\sum_{n=1}^{\\infty}b_n$ 同敛散。若前者收敛于 $A$，则后者的和为\n\\[\nB=A+\\sum_{k=1}^{N}(b_k-a_k).\n\\]\n因此，改变有限项不改变级数的敛散性，但可能改变级数的和。添加或删去有限项，并保持其余项的相对次序，也不改变敛散性。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U14",
++        "kind": "proof",
++        "tex": "令 $A_n=\\sum_{k=1}^{n}a_k$、$B_n=\\sum_{k=1}^{n}b_k$。对所有整数 $n\\geq N+1$，\n\\[\nB_n-A_n=\\sum_{k=1}^{N}(b_k-a_k)=C,\n\\]\n其中 $C$ 是与 $n$ 无关的有限实数。因此 $B_n=A_n+C$，两部分和数列同时收敛或同时发散；收敛时极限相差 $C$。\n\n对于删去前 $N$ 项所得的尾级数，其第 $m$ 个部分和为 $A_{N+m}-A_N$，其中 $m$ 为正整数，故它与原级数同敛散。一般地，添加或删去有限项后，在经过最后一个改动位置时，新旧部分和之间只相差一个固定常数和一个固定的下标平移，仍由数列极限性质得到同样结论。这里不涉及无限多项的重新排列。",
++        "relates_to": "S02.U13"
++      },
++      {
++        "id": "S02.U15",
++        "kind": "example",
++        "tex": "设实数列 $\\{b_n\\}$ 满足\n\\[\nb_1=3,\\qquad b_n=\\frac{2}{2^n}\\quad(n\\geq2).\n\\]\n求级数 $\\sum_{n=1}^{\\infty}b_n$ 的和及第 $n$ 个余项，并确定使绝对误差小于 $1/100$ 的最小正整数截断位置 $n$。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U16",
++        "kind": "solution",
++        "tex": "前节已由部分和求得 $\\sum_{k=1}^{\\infty}2^{-k}=1$，且对每个正整数 $n$，有 $\\sum_{k=1}^{n}2^{-k}=1-2^{-n}$。由定理 \\ref{thm:linearity}，$\\sum_{k=1}^{\\infty}2\\cdot2^{-k}=2$。本题将其第一项从 $1$ 改成 $3$，增加了 $2$，故由定理 \\ref{thm:finite-change}，所求级数的和为 $4$。\n\n对每个正整数 $n$，其部分和及余项分别为\n\\[\nS_n=2(1-2^{-n})+2=4-2^{1-n},\\qquad\nR_n=4-S_n=2^{1-n}.\n\\]\n所以 $|R_n|=2^{1-n}$。当 $n=7$ 时，误差为 $1/64>1/100$；当 $n=8$ 时，误差为 $1/128<1/100$。误差随正整数 $n$ 增大严格减小，故满足要求的最小截断位置是 $n=8$。",
++        "relates_to": "S02.U15"
++      },
++      {
++        "id": "S02.U17",
++        "kind": "explanation",
++        "tex": "本节的判断顺序是：先检查通项是否趋于零；若不趋于零，立即判为发散；若趋于零，还需研究部分和或使用其他适用的判别法。线性运算要求有关级数已经收敛；余项用于描述收敛级数的截断误差；有限项改变只保持敛散性，不保证和保持不变。\n\n以下为本节练习，答案统一安排在讲义末尾。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U18",
++        "kind": "exercise",
++        "tex": "分别判断下列级数能否仅用收敛的必要条件判为发散，并对不能据此判定的情形说明原因：\n\\[\n\\text{(1)}\\quad\\sum_{n=1}^{\\infty}\\frac{2n+1}{3n+2};\\qquad\n\\text{(2)}\\quad\\sum_{n=1}^{\\infty}\\frac1{n+2};\\qquad\n\\text{(3)}\\quad\\sum_{n=1}^{\\infty}\\frac{(-1)^n n}{n+1}.\n\\]\n再利用本节已知结论确定第 (2) 个级数的敛散性。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U19",
++        "kind": "exercise",
++        "tex": "设实数项级数 $\\sum_{n=1}^{\\infty}a_n=2$、$\\sum_{n=1}^{\\infty}b_n=-1$ 均收敛。求 $\\sum_{n=1}^{\\infty}(3a_n-2b_n)$ 的和。若将组合级数的第一项增加 $5$，其敛散性与和各有何变化？另说明：仅知道 $\\sum_{n=1}^{\\infty}(a_n+b_n)$ 收敛，能否推出两个原级数都收敛？请给出理由或反例。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U20",
++        "kind": "exercise",
++        "tex": "对于级数 $\\sum_{n=1}^{\\infty}2^{-n}$，写出第 $n$ 个余项，求使绝对误差小于 $1/1000$ 的最小正整数 $n$。若只将该级数第一项改成 $10$，求新级数的和，并说明对每个正整数 $n$，新旧级数的第 $n$ 个余项是否相同。",
++        "relates_to": null
++      },
++      {
++        "id": "S02.U18.answer",
++        "kind": "solution",
++        "tex": "(1) 通项满足\n\\[\n\\lim_{n\\to\\infty}\\frac{2n+1}{3n+2}\n=\\lim_{n\\to\\infty}\\frac{2+1/n}{3+2/n}=\\frac23\\ne0.\n\\]\n因此仅用收敛的必要条件即可判定该级数发散。\n\n(2) 因为 $1/(n+2)\\to0$，收敛的必要条件得到满足，但这不能保证级数收敛，也不能据此判为发散。进一步，令 $H_m=\\sum_{k=1}^{m}1/k$，则本题的部分和为\n\\[\nS_n=\\sum_{k=1}^{n}\\frac1{k+2}=H_{n+2}-\\frac32.\n\\]\n该级数是调和级数删去前两项所得的尾级数，由调和级数发散及有限项改变性质，知它发散。\n\n(3) 记 $a_n=(-1)^n n/(n+1)$。其偶数项与奇数项分别满足\n\\[\na_{2m}=\\frac{2m}{2m+1}\\longrightarrow1,\\qquad\na_{2m-1}=-\\frac{2m-1}{2m}\\longrightarrow-1.\n\\]\n两个子数列的极限不同，故通项极限不存在，尤其不趋于零。因此仅用收敛的必要条件即可判定该级数发散。",
++        "relates_to": "S02.U18"
++      },
++      {
++        "id": "S02.U19.answer",
++        "kind": "solution",
++        "tex": "由于两个原级数均收敛，由线性运算定理，组合级数收敛且\n\\[\n\\sum_{n=1}^{\\infty}(3a_n-2b_n)=3\\cdot2-2\\cdot(-1)=8.\n\\]\n若将组合级数第一项增加 $5$，则每个正整数下标的部分和均增加 $5$，故新级数仍收敛，其和为 $8+5=13$。\n\n最后一问仅以逐项相加的级数收敛为条件，不再假定两个原级数分别收敛；此时不能推出两个原级数都收敛。反例为 $a_n=1$、$b_n=-1$：逐项相加后各项均为零，所以 $\\sum_{n=1}^{\\infty}(a_n+b_n)$ 收敛于 $0$，而两个原级数的部分和分别为 $n$ 和 $-n$，均无有限极限，因而均发散。",
++        "relates_to": "S02.U19"
++      },
++      {
++        "id": "S02.U20.answer",
++        "kind": "solution",
++        "tex": "由有限等比数列求和公式，对每个正整数 $n$，\n\\[\nS_n=\\sum_{k=1}^{n}2^{-k}=1-2^{-n}.\n\\]\n所以级数的和为 $S=1$，第 $n$ 个余项为\n\\[\nR_n=S-S_n=2^{-n}.\n\\]\n绝对误差小于 $1/1000$ 等价于 $2^n>1000$。因为\n\\[\n2^9=512<1000<1024=2^{10},\n\\]\n且 $2^n$ 随正整数 $n$ 严格递增，满足要求的最小正整数为 $n=10$。\n\n原第一项为 $1/2$，改为 $10$ 后增加了 $10-1/2=19/2$。由有限项改变性质，新级数仍收敛，其和为\n\\[\n\\widetilde S=1+\\frac{19}{2}=\\frac{21}{2}.\n\\]\n对每个正整数 $n$，新部分和为 $\\widetilde S_n=S_n+19/2$，因此\n\\[\n\\widetilde R_n=\\widetilde S-\\widetilde S_n\n=\\left(S+\\frac{19}{2}\\right)-\\left(S_n+\\frac{19}{2}\\right)\n=S-S_n=2^{-n}.\n\\]\n故新旧级数的第 $n$ 个余项相同。",
++        "relates_to": "S02.U20"
++      }
++    ],
++    "calculations": [
++      {
++        "assumptions": {
++          "n": {
++            "integer": true,
++            "positive": true
++          }
++        },
++        "direction": "-",
++        "expected": {
++          "op": "Integer",
++          "value": 1
++        },
++        "expression": {
++          "args": [
++            {
++              "name": "n",
++              "op": "Symbol"
++            },
++            {
++              "args": [
++                {
++                  "args": [
++                    {
++                      "name": "n",
++                      "op": "Symbol"
++                    },
++                    {
++                      "op": "Integer",
++                      "value": 1
++                    }
++                  ],
++                  "op": "Add"
++                },
++                {
++                  "op": "Integer",
++                  "value": -1
++                }
++              ],
++              "op": "Pow"
++            }
++          ],
++          "op": "Mul"
++        },
++        "id": "S02.C01",
++        "kind": "limit",
++        "point": {
++          "op": "Infinity"
++        },
++        "unit_id": "S02.U05",
++        "variable": "n"
++      },
++      {
++        "assumptions": {
++          "n": {
++            "integer": true,
++            "positive": true
++          }
++        },
++        "end": {
++          "op": "Infinity"
++        },
++        "expected_convergent": false,
++        "id": "S02.C02",
++        "kind": "series",
++        "start": {
++          "op": "Integer",
++          "value": 1
++        },
++        "term": {
++          "args": [
++            {
++              "name": "n",
++              "op": "Symbol"
++            },
++            {
++              "op": "Integer",
++              "value": -1
++            }
++          ],
++          "op": "Pow"
++        },
++        "unit_id": "S02.U07",
++        "variable": "n"
++      },
++      {
++        "assumptions": {
++          "n": {
++            "integer": true,
++            "positive": true
++          }
++        },
++        "id": "S02.C03",
++        "kind": "equivalence",
++        "lhs": {
++          "args": [
++            {
++              "args": [
++                {
++                  "op": "Integer",
++                  "value": 2
++                },
++                {
++                  "args": [
++                    {
++                      "op": "Integer",
++                      "value": -1
++                    },
++                    {
++                      "args": [
++                        {
++                          "op": "Integer",
++                          "value": 2
++                        },
++                        {
++                          "op": "Integer",
++                          "value": -1
++                        }
++                      ],
++                      "op": "Mul"
++                    }
++                  ],
++                  "op": "Pow"
++                }
++              ],
++              "op": "Mul"
++            },
++            {
++              "op": "Integer",
++              "value": 2
++            }
++          ],
++          "op": "Add"
++        },
++        "rhs": {
++          "args": [
++            {
++              "op": "Integer",
++              "value": 4
++            },
++            {
++              "args": [
++                {
++                  "op": "Integer",
++                  "value": -1
++                },
++                {
++                  "args": [
++                    {
++                      "op": "Integer",
++                      "value": 2
++                    },
++                    {
++                      "args": [
++                        {
++                          "op": "Integer",
++                          "value": 1
++                        },
++                        {
++                          "args": [
++                            {
++                              "op": "Integer",
++                              "value": -1
++                            },
++                            {
++                              "name": "n",
++                              "op": "Symbol"
++                            }
++                          ],
++                          "op": "Mul"
++                        }
++                      ],
++                      "op": "Add"
++                    }
++                  ],
++                  "op": "Pow"
++                }
++              ],
++              "op": "Mul"
++            }
++          ],
++          "op": "Add"
++        },
++        "unit_id": "S02.U16"
++      },
++      {
++        "assumptions": {
++          "n": {
++            "integer": true,
++            "positive": true
++          }
++        },
++        "direction": "-",
++        "expected": {
++          "op": "Rational",
++          "p": 2,
++          "q": 3
++        },
++        "expression": {
++          "args": [
++            {
++              "args": [
++                {
++                  "args": [
++                    {
++                      "op": "Integer",
++                      "value": 2
++                    },
++                    {
++                      "name": "n",
++                      "op": "Symbol"
++                    }
++                  ],
++                  "op": "Mul"
++                },
++                {
++                  "op": "Integer",
++                  "value": 1
++                }
++              ],
++              "op": "Add"
++            },
++            {
++              "args": [
++                {
++                  "args": [
++                    {
++                      "args": [
++                        {
++                          "op": "Integer",
++                          "value": 3
++                        },
++                        {
++                          "name": "n",
++                          "op": "Symbol"
++                        }
++                      ],
++                      "op": "Mul"
++                    },
++                    {
++                      "op": "Integer",
++                      "value": 2
++                    }
++                  ],
++                  "op": "Add"
++                },
++                {
++                  "op": "Integer",
++                  "value": -1
++                }
++              ],
++              "op": "Pow"
++            }
++          ],
++          "op": "Mul"
++        },
++        "id": "S02.AC01",
++        "kind": "limit",
++        "point": {
++          "op": "Infinity"
++        },
++        "unit_id": "S02.U18.answer",
++        "variable": "n"
++      }
++    ],
++    "calculation_limitations": [
++      "核算请求覆盖一个通项极限、调和级数的敛散性及一个部分和公式的代数变形；协议不能直接表达任意实数列及其部分和之间的量化关系，因此一般必要条件、线性运算和有限项改变性质由正文证明，不由这些核算替代。",
++      "新增核算仅覆盖 S02.U18.answer 中第 (1) 项的通项极限。任意实数列的线性运算、有限项改变与余项相等的量化论证不由此核算覆盖；截断位置的最小性由答案中的整数比较和单调性说明。",
++      "S02.U10 的修复使用任意实数列的有限部分和恒等式与数列极限减法法则；现有核算协议不能表达这些部分和的量化关系及反证推理，因此不新增核算请求，该一般结论由正文论证。"
++    ],
++    "uncertainties": []
++  },
++  "original_before_sha256": "d0d1ecb1b60e318b6042f4b63eb779a84dbbb2b3fe58a8e5923de5f4a4b8ee87",
++  "original_rejected_sha256": "21e16431dd0df3f434f2b22fec73992035a3514cf9ce6b7beb7aacc4b8cc3613",
++  "allowed_unit_ids": [
++    "S02.U14"
++  ]
++}

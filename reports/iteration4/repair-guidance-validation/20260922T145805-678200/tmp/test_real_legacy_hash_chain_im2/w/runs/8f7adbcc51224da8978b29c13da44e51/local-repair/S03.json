@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "e1d51d6028bd5d9e91866352c6a2e7a0662f416d37b753ae103789b475b1011a",
+    "section_id": "S03",
+    "context_hash": "ad2db74d7dd1eb8897c8d98bd0471c8f3390bf05844f524557a1cb0c1c82d283",
+    "base_hash": "7455ba91bf58c095bd4ad03eaa9cb5e8e22650d8d4940f5113f2363a0cc3e9ce",
+    "model": "gpt-6-astra",
+    "provider": "mock"
+  },
+  "phase": "UNCHECKED_REPAIRED",
+  "applied_rounds": 1,
+  "proposal_calls": 2,
+  "rejected_proposals": 1,
+  "pending_issues": [
+    {
+      "rule_id": "MATH_CHECK_UNKNOWN",
+      "severity": "review",
+      "message": "ValueError: 只接受受限表达式 JSON 树；不解析字符串代码。",
+      "location": {
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U03"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S03.U06",
+      "severity": "review",
+      "message": "证明后的替换规则说明与前面的正确恒等式不一致，容易把“乘以修正比值”误读为“用比值替换原因子”。应改为：在整体 F(x)α(x) 中将因子 α(x) 替换为 β(x)，等价于将整体乘以 β(x)/α(x)，从而得到 F(x)β(x)。前面的证明本身成立，但作为操作规则的解释文字需要修正。",
+      "evidence": "正文先正确写出 F(x)β(x)=F(x)α(x)·β(x)/α(x)，随后却说“以 β(x)/α(x) 替换该因子后，所得 F(x)β(x)”。若“该因子”指 α(x)，替换结果是 F(x)β(x)/α(x)；若指 F(x)α(x)，替换结果是 β(x)/α(x)，均不是所称的 F(x)β(x)。"
+    }
+  ],
+  "unit_applied_counts": {
+    "S03.U04": 1,
+    "S03.U06": 1
+  },
+  "proposal_counts_by_key": {
+    "unit:S03.U03": 2,
+    "unit:S03.U06": 2,
+    "unit:S03.U04": 1
+  },
+  "rejected_counts_by_key": {
+    "unit:S03.U03": 1,
+    "unit:S03.U06": 1
+  },
+  "evidence_dependencies": [
+    {
+      "key": "b/8f7adbcc51224da8/sS03_0f70bfe98cc2/candidate.json",
+      "hash": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/8f7adbcc51224da8/sS03_0f70bfe98cc2/candidate-normalization.json",
+      "hash": "7a16722e222b0f53d7139bbf141bf65d8fa4d5031ca800197ad8e03124d69907",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/8f7adbcc51224da8/sS03_0f70bfe98cc2/candidate-normalized.json",
+      "hash": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/8f7adbcc51224da8/sS03_0f70bfe98cc2/repair-1-raw.json",
+      "hash": "f83fb0ad488a76716c1035b4227e264228a769263ed65df8cb1c2e64bcf5fc31",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/8f7adbcc51224da8/sS03_0f70bfe98cc2/review-0.json",
+      "hash": "82d99330205c20d3ef65c42bdfcb6ad2e98447a870236770e6030a67e461a9df",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/8f7adbcc51224da8/sS03_0f70bfe98cc2/repair-1.json",
+      "hash": "27ab613ba344ae302646d8292dcdfdc5e5b1c40609653ffee3aba85ea6c6aa9c",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/8f7adbcc51224da8/sS03_0f70bfe98cc2/review-1.json",
+      "hash": "36fcaca67eeb744e502668fb685bd5d874d153e91a31aaefee9a404413167658",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/8f7adbcc51224da8/sS03_0f70bfe98cc2/repair-2-raw.json",
+      "hash": "a6450eb8ea431009ed23e2b766d73056e57cd17608549d4bb9c5c58578df9c23",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/8f7adbcc51224da8/sS03_0f70bfe98cc2/review-1.json",
+      "hash": "36fcaca67eeb744e502668fb685bd5d874d153e91a31aaefee9a404413167658",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    }
+  ],
+  "last_review_context_hash": null,
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/8f7adbcc51224da8978b29c13da44e51/local-repair/S03/candidate-fe050b801fe8.json",
+  "candidate_hash": "f83fb0ad488a76716c1035b4227e264228a769263ed65df8cb1c2e64bcf5fc31",
+  "legacy_import": {
+    "origin_candidate_key": "b/8f7adbcc51224da8/sS03_0f70bfe98cc2/candidate.json",
+    "origin_candidate_hash": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+    "records": [
+      {
+        "number": 1,
+        "raw_key": "b/8f7adbcc51224da8/sS03_0f70bfe98cc2/repair-1-raw.json",
+        "raw_hash": "f83fb0ad488a76716c1035b4227e264228a769263ed65df8cb1c2e64bcf5fc31",
+        "review_key": "b/8f7adbcc51224da8/sS03_0f70bfe98cc2/review-0.json",
+        "review_hash": "82d99330205c20d3ef65c42bdfcb6ad2e98447a870236770e6030a67e461a9df",
+        "status": "VERIFIED_APPLIED",
+        "applied_hash": "27ab613ba344ae302646d8292dcdfdc5e5b1c40609653ffee3aba85ea6c6aa9c"
+      },
+      {
+        "number": 2,
+        "raw_key": "b/8f7adbcc51224da8/sS03_0f70bfe98cc2/repair-2-raw.json",
+        "raw_hash": "a6450eb8ea431009ed23e2b766d73056e57cd17608549d4bb9c5c58578df9c23",
+        "review_key": "b/8f7adbcc51224da8/sS03_0f70bfe98cc2/review-1.json",
+        "review_hash": "36fcaca67eeb744e502668fb685bd5d874d153e91a31aaefee9a404413167658",
+        "status": "REJECTED_NOT_ADOPTED"
+      }
+    ],
+    "total_request_count_at_import": 26,
+    "old_reviewer_prompt_hash": "UNKNOWN_NOT_ARCHIVED",
+    "migration_policy": "Explicit patch-protocol migration: retain applied/rejected/proposal counters and all existing total requests; no budget reset."
+  }
+}

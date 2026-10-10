@@ -1,0 +1,27 @@
+F..                                                                      [100%]
+================================== FAILURES ===================================
+_______ test_pgf_translation_requires_same_frame_visible_glyph_evidence _______
+
+    @pytest.mark.unit
+    def test_pgf_translation_requires_same_frame_visible_glyph_evidence():
+        from math_agent.pdfcheck import match_pgf_hidden_character
+        hidden={'text':'x','fontname':'AAAAAA+CMR10','size':10,'x0':2028,'top':-1950,'x1':2033,'bottom':-1940}
+        visible={'text':'x','fontname':'BBBBBB+CMR10','size':10,'x0':28,'top':50,'x1':33,'bottom':60}
+        source={'physical_page':1,'frame_id':'F001','nav_verified':True,'width':453,'height':255,'character_index':12}
+        peer={'physical_page':2,'overlay_index':2,'frame_id':'F001','width':453,'height':255,'char':visible,'character_index':12}
+        match=match_pgf_hidden_character(hidden,source,[peer])
+        assert match and match['visible_physical_page']==2 and match['original_bbox_pt']==[2028,-1950,2033,-1940]
+        assert match_pgf_hidden_character(hidden,source,[]) is None
+        assert match_pgf_hidden_character(hidden,source,[{**peer,'frame_id':'F002'}]) is None
+        assert match_pgf_hidden_character(hidden,source,[{**peer,'char':{**visible,'text':'y'}}]) is None
+        assert match_pgf_hidden_character(hidden,source,[{**peer,'char':{**visible,'x0':29}}]) is None
+        assert match_pgf_hidden_character(hidden,{**source,'nav_verified':False},[peer]) is None
+        assert match_pgf_hidden_character({**hidden,'x0':500,'x1':505},source,[peer]) is None
+>       (build/'.math-agent-engine.json').write_text(json.dumps(engine))
+         ^^^^^
+E       NameError: name 'build' is not defined
+
+tests\test_compiler_pdf.py:143: NameError
+=========================== short test summary info ===========================
+FAILED tests/test_compiler_pdf.py::test_pgf_translation_requires_same_frame_visible_glyph_evidence
+1 failed, 2 passed, 13 deselected in 8.62s

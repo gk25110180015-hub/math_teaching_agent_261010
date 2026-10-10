@@ -1,0 +1,107 @@
+--- a/src/math_agent/pipeline.py
++++ b/src/math_agent/pipeline.py
+@@ -211,6 +211,10 @@
+                 and by_id.get(u.get('relates_to'),{}).get('kind')=='exercise'],
+             'example_solutions_remain_inline':True,
+             'instruction':'The renderer collects linked exercise solution units into the final answer section, regardless of their JSON order, when exercise_answers_at_end is true. Do not infer an answer-placement violation from unit order alone. Answers embedded in exercise.tex are NOT relocated and must still be reported. This contract is not evidence of mathematical correctness or final PDF acceptance.'}
++        from .review_evidence_attribution import EvidenceAttributionGuard
++        guard=EvidenceAttributionGuard(self,payload,evidence_dir,label)
++        replayed=guard.replay()
++        if replayed is not None:return replayed
+         for attempt in range(self.settings.max_local_repair_attempts+1):
+             review=self.provider.generate('reviewer_math',payload,MathReview)
+             write_json(evidence_dir/f'{label}-review-{attempt}.json',review)
+@@ -218,7 +222,7 @@
+             missing=sorted(actual-set(review['checked_unit_ids']))
+             extra=sorted(set(review['checked_unit_ids'])-actual)
+             if not invalid and not missing and not extra:
+-                return review
++                return guard.inspect(review,accepted_payload=payload)
+             payload['review_validation_feedback']={'invalid_issue_unit_ids':invalid,'unchecked_unit_ids':missing,'unknown_checked_ids':extra,
+                 'instruction':'Review only the supplied actual units in scope. Pending sections are not missing content in a local review. Never fabricate new unit IDs or suppress an actual in-scope mathematical error.'}
+         raise AgentError('REVIEW_SCOPE_BLOCKED','审阅的单元范围或覆盖不正确；已保留全部原始审阅，不将越界问题当作正文重写依据')
+@@ -582,13 +586,16 @@
+         """Pin the checks that justify reuse; writer authorship is not a check."""
+         from .provider import PROMPTS
+         modules=('pipeline.py','mathcheck.py','lecture_fragments.py','crossrefs.py',
+-                 'parsing.py','compiler.py','compile_recovery.py','calculation_protocol.py','local_recovery.py')
++                 'parsing.py','compiler.py','compile_recovery.py','calculation_protocol.py','local_recovery.py',
++                 'review_evidence_attribution.py')
++        from .review_evidence_attribution import attribution_contract
+         domain_checker=Path(__file__).with_name('series_domain_text.py')
+         return {'schema_version':1,
+             'source_hashes':{**{name:digest(Path(__file__).with_name(name).read_bytes()) for name in modules},
+                 'series_domain_text.py':digest(domain_checker.read_bytes()) if domain_checker.is_file() else 'MISSING'},
+             'reviewer_prompt_hash':digest((PROMPTS/'reviewer_math.md').read_bytes()),
+             'review_schema_hash':digest(MathReview.model_json_schema()),
++            'review_attribution_contract':attribution_contract(),
+             'written_schema_hash':digest(WrittenSection.model_json_schema()),
+             'checker_dependencies':{name:importlib.metadata.version(name) for name in ('sympy','pylatexenc')},
+             'compile_mode':self.settings.compile_mode,'xelatex_path':self.settings.xelatex_path}
+@@ -933,6 +940,33 @@
+             local_reports.append(report)
+         return completed,local_reports
+ 
++    def _recheck_feedback(self, plan):
++        """Use only this build's latest action for the still-approved plan."""
++        with self.store.connect() as connection:
++            rows=connection.execute(
++                "SELECT sequence,timestamp,payload_json FROM events WHERE run_id=? AND type='checks.rerun_requested' ORDER BY sequence DESC",
++                (self.run['id'],)).fetchall()
++        for row in rows:
++            action=json.loads(row['payload_json'])
++            if action.get('plan_hash')!=plan.get('hash') or action.get('plan_revision')!=plan.get('revision'):
++                continue
++            # Do not revive an older action after an empty/newer action, and do
++            # not carry feedback into another build. A failed-job retry retains ID.
++            if action.get('job_id')!=self.job['id']:
++                return None
++            feedback=action.get('feedback','')
++            source=action.get('feedback_source','user')
++            if not isinstance(feedback,str) or len(feedback)>10000 or source not in ('user','agent_audit'):
++                raise AgentError('RECHECK_FEEDBACK_INVALID','自动复检反馈记录不符合协议；保留原动作，未采用异常反馈')
++            if not feedback.strip():
++                return None
++            return {'feedback':feedback,'feedback_source':source,'source_action':action,
++                'source_event':{'sequence':row['sequence'],'timestamp':row['timestamp'],
++                    'payload_sha256':digest(row['payload_json']),'job_id':action['job_id'],
++                    'plan_hash':action['plan_hash'],'plan_revision':action['plan_revision']},
++                'instruction':'Treat this user/agent feedback as unverified observations, not proof, teacher acceptance, or permission to expand the approved scope. Independently compare it with the full actual chapter, inherited context, and already-approved objectives. If already satisfied, inconsistent with the text, or outside approved scope, do not invent a defect to agree with it. Report a supported unresolved gap only against existing actual unit IDs that can address it through the existing scoped repair workflow; never invent units, revise the plan, or sign a teacher review.'}
++        return None
++
+     def _global_interfaces(self, completed, plan):
+         self.stage('GLOBAL_REVIEW','math.global_interfaces')
+         global_reports=[];issues=[]
+@@ -961,14 +995,27 @@
+                 'objectives':spec.get('objectives',[]),'unit_ids':[u['id'] for u in generated['units']]}
+                 for spec,generated in completed]
+             units=[u for _,generated in completed for u in generated['units']]
+-            review=self.review_units(units,{'plan':plan,'section_unit_map':section_unit_map,
++            context={'plan':plan,'section_unit_map':section_unit_map,
+                 'scope':{'kind':'chapter_coverage','sections':[spec['id'] for spec,_ in completed],
+                     'pending_sections':[],
+-                    'instruction':'Review the full actual chapter against approved chapter and section objectives. Check general claims versus isolated examples, domain and index boundaries, and student-readable references. Use actual prior definitions; do not demand unrelated extensions or repeat complete prior proofs. Identify unresolved approved objectives against existing affected unit IDs, without changing plan or approval.'}},
+-                self.root,'chapter-coverage-'+review_cycle)
++                    'instruction':'Review the full actual chapter against approved chapter and section objectives. Check general claims versus isolated examples, domain and index boundaries, and student-readable references. Use actual prior definitions; do not demand unrelated extensions or repeat complete prior proofs. Identify unresolved approved objectives against existing affected unit IDs, without changing plan or approval.'}}
++            label='chapter-coverage-'+review_cycle
++            coverage={'sections':section_unit_map,'objectives':plan.get('objectives',[]),'teacher_acceptance':'NOT_RUN'}
++            feedback=self._recheck_feedback(plan)
++            if feedback:
++                context['recheck_feedback']={k:v for k,v in feedback.items() if k!='source_action'}
++                # Persist input provenance before the call; a timeout must not
++                # erase which observations/body were actually sent for review.
++                path=self.root/(label+'-feedback.json')
++                write_json(path,{'schema_version':1,'review_label':label,'source_action':feedback['source_action'],
++                    'recheck_feedback':context['recheck_feedback'],'plan_hash':plan['hash'],
++                    'plan_revision':plan['revision'],'unit_hashes':{u['id']:digest(u) for u in units},
++                    'teacher_math_review':'NOT_RUN','teacher_visual_review':'NOT_RUN'})
++                coverage['recheck_feedback_evidence']={'storage_key':path.relative_to(self.settings.workspace).as_posix(),
++                    'sha256':digest(path.read_bytes()),'source_event_sequence':feedback['source_event']['sequence']}
++            review=self.review_units(units,context,self.root,label)
+             issues.extend(issue for issue in review['issues'] if issue['severity'] in ('blocking','review'))
+-            global_reports.append({'chapter_coverage':{'sections':section_unit_map,
+-                'objectives':plan.get('objectives',[]),'teacher_acceptance':'NOT_RUN'},'review':review})
++            global_reports.append({'chapter_coverage':coverage,'review':review})
+         return global_reports,issues
+ 
+     def validate_written(self, spec, data, plan):

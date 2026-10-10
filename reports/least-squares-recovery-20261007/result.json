@@ -1,0 +1,85 @@
+{
+  "run_id": "63380f6a1ebf40dfb4de606687953ab5",
+  "finding": "AGENT_RECOVERY_BUG_NOT_USER_ERROR",
+  "original_failure": "Disposition cannot guess or change the declared owner",
+  "validation": {
+    "offline_tests": {
+      "tests": 256,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "passing_tests": 256,
+    "junit": [
+      "owner-core.xml",
+      "owner-recovery.xml"
+    ],
+    "original_uncertainty_files_unchanged": true,
+    "independent_arithmetic": "independent-arithmetic-check.json",
+    "live_task": {
+      "id": "63380f6a1ebf40dfb4de606687953ab5",
+      "status": "BUILDING",
+      "stage": "write.section.S02",
+      "request_count": 15,
+      "error_json": null,
+      "active_plan_revision": 5
+    },
+    "teacher_review": "NOT_RUN",
+    "original_approval_preserved": true,
+    "original_budgets_preserved": true,
+    "independent_code_review": "No major issue found in final read-only review.",
+    "live_supplement": {
+      "guard_id": "afe062a32b863746cb492d15",
+      "action_id": "agent-audit-least-squares-exact-checks-20261007-v2",
+      "added_exact_checks": 14,
+      "all_passed": true,
+      "tex_and_original_calculations_and_doubts_preserved": true,
+      "evidence": "workspace/runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/afe062a32b863746cb492d15/input.json"
+    },
+    "all_frozen_pre_recovery_evidence_unchanged": true,
+    "frozen_evidence_file_count": 27,
+    "live_owner_recovery": {
+      "evidence_key": "runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-owner-recovery/afe062a32b863746cb492d15/recovery.json",
+      "evidence_sha256": "22e9032c5e2fa67e7c2819f7e1570cd4030f242f5526bf053bc885930963d088",
+      "identity_hash": "613f55c56013c33996f02fb71ed95f550f532c841c9bdebbba0d57d78464aa28",
+      "provider_calls_during_replay": 0,
+      "source_identity_hash": "afe062a32b863746cb492d15986143df1e1ea9474a554745db263714e21538c2",
+      "source_state_sha256": "5a951dda16660304c344b3a9538ad464bb38245e2c8fb9b9eab3b6d53e5101c2",
+      "teacher_review": "NOT_RUN"
+    },
+    "s01": {
+      "local_phase": "CHECKED",
+      "pending_issues": [],
+      "uncertainty_status": "REVIEWED_PROTOCOL_RECOVERED",
+      "advanced_to_s02": true
+    }
+  },
+  "changed_files": {
+    "src/math_agent/pipeline.py": "f20038c85511292c8cf50cb04f19d2ae22844313f0358c1d1ef6bf90c3b4b577",
+    "README.md": "575080c0ba0156e31326f97daae103a4d48d95b12321fdbf28013ba4ffb1b031",
+    "tests/test_uncertainty_independent_repair.py": "6827ad743a81e197ff2ecc6bf80aa8d1f23463387fc8685ec76387b537924f87",
+    "tests/fixtures/uncertainty_least_squares/failure-1.json": "efd87f3127a5740bf676f21d0bd5c8544db89d90c535e93fa0faca23cc2f208a",
+    "tests/fixtures/uncertainty_least_squares/input.json": "3924a77f889beb6b5659cfaaf6b2bc742b1aabd7b9d3c2958a9cbb120cb76854",
+    "tests/fixtures/uncertainty_least_squares/ordinary-review.json": "312f9c1b43357ec527882ed8e32e555b682ad1337b7af3fabfec3d41fbeea829",
+    "tests/fixtures/uncertainty_least_squares/response-1.json": "4a1b39ba189abe5032f8de8d1da4ee44f59fb13eccf8820cb675f0b1a6de6ce3",
+    "src/math_agent/local_recovery.py": "893aafbbbc86a8539595835a586b84334c8b92e2f4b2c23463f371e6d0c2b9ab",
+    "tests/test_guidance_accepted_resume.py": "6df41402ae2c399f2ce673a812f2ce237441fb8c0b700fb87ad8f57cd49a95d7",
+    "src/math_agent/uncertainty_owner_recovery.py": "26e376653fd0e701d735918130d580b6c8d327d8d1829a5fcafd96d3a124b83f",
+    "tests/test_uncertainty_owner_recovery.py": "86f6f14530f09cb26755d0891f5bd657244c04d6acf58a92e644413ae0321295",
+    "tests/fixtures/uncertainty_least_squares_resolved/failure-1.json": "32d29464dea1f88ed58759d7e390e90f63b7c6aac111269d7e47196e98ea5979",
+    "tests/fixtures/uncertainty_least_squares_resolved/input.json": "21f440c7d84dd91e009a518f2ebe0de6d9acc428d0862a3367e334f247de47e9",
+    "tests/fixtures/uncertainty_least_squares_resolved/ordinary-review.json": "b1f34ff8c66740201789dc6a0286787960433061358b9d95bee7177396a78638",
+    "tests/fixtures/uncertainty_least_squares_resolved/response-1.json": "73ecfde72c38f31a79816ce830d064dc83915c2a5bb0e74c1dce027368f0b525"
+  },
+  "updated_at": "2026-10-07T05:53:49.179768+00:00",
+  "causes": [
+    "An invalid uncertainty disposition aborted the pipeline before independent located mathematical errors entered local repair.",
+    "Resuming an already accepted candidate falsely changed the local recovery base identity and state hash, invalidating freshly submitted scoped repair guidance.",
+    "For an unlocated doubt, the model confused the cited evidence unit with the immutable declaration owner, even when its saved substantive resolution and every evidence span were valid."
+  ],
+  "fixes": [
+    "Retain invalid disposition and all doubts; repair only independently located ordinary/tool issues under existing budgets; require changed body and full recheck.",
+    "Preserve verified accepted-candidate identity/state when the complete candidate and all non-base identity fields are unchanged; retain normal rebasing and stale-guidance rejection for actual changes.",
+    "Recover only redundant owner metadata in resolved, dependency-free, non-actionable responses citing one actual current unit; preserve raw INVALID evidence, rerun the unchanged strict validator, and record a separate immutable audit with zero additional model calls. Archive bytes use exact UTF-8/LF across Windows replay."
+  ]
+}

@@ -1,0 +1,34 @@
+..............F.                                                         [100%]
+================================== FAILURES ===================================
+___ test_guided_changed_body_runs_math_review_compile_and_checkpoint_again ____
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145048-576500/tmp/test_guided_changed_body_runs_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000022F94AA79E0>
+
+    def test_guided_changed_body_runs_math_review_compile_and_checkpoint_again(tmp_path, monkeypatch):
+        provider = Provider(); original = provider.generate; ordinary = []
+        def generate(role, ctx, schema):
+            if role == 'reviewer_math' and ctx.get('scope', {}).get('kind') != 'chapter_coverage':
+                ordinary.append(copy.deepcopy(ctx))
+                if len(ordinary) == 1: raise AgentError('PROVIDER_TIMEOUT', 'initial blocked fixture')
+            return original(role, ctx, schema)
+        provider.generate = generate
+        service, p, plan, compiled = setup(tmp_path, monkeypatch, provider)
+        with pytest.raises(AgentError, match='initial blocked'): p.lecture(plan)
+        # Real SQL approval/counter state; transport and compiler above are synthetic.
+        p, action = request_and_resume(p, plan, provider)
+        p.run['input']['provider'] = 'live'
+        completed, reports = p.lecture(plan)
+        assert provider.writes == 1 and provider.patches == 1 and len(ordinary) == 2 and len(compiled) == 1
+        assert '已明示前提' in completed[0][1]['units'][0]['tex']
+        assert state(p)['phase'] == 'CHECKED' and state(p)['unit_applied_counts'] == {'S01.U1': 1}
+>       assert reports[0]['math']['status'] == 'PASS'
+E       AssertionError: assert 'NEEDS_REVIEW' == 'PASS'
+E         
+E         - PASS
+E         + NEEDS_REVIEW
+
+reports\iteration4\repair-guidance-validation\20260922T145048-576500\tests\test_repair_guidance.py:207: AssertionError
+=========================== short test summary info ===========================
+FAILED reports/iteration4/repair-guidance-validation/20260922T145048-576500/tests/test_repair_guidance.py::test_guided_changed_body_runs_math_review_compile_and_checkpoint_again
+1 failed, 15 passed in 4.42s

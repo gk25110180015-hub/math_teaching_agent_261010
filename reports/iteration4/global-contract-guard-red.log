@@ -1,0 +1,67 @@
+FFF.                                                                     [100%]
+================================== FAILURES ===================================
+_ test_changed_global_contract_blocks_without_resetting_same_approved_plan_state[repair_prompt_hash] _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gcguard-red/test_changed_global_contract_b0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001BC0EBB4710>
+changed_field = 'repair_prompt_hash'
+
+    @pytest.mark.parametrize('changed_field', ['repair_prompt_hash', 'written_schema_hash', 'normalizer_hash'])
+    def test_changed_global_contract_blocks_without_resetting_same_approved_plan_state(tmp_path, monkeypatch, changed_field):
+        service, pipeline, plan, _, _, _, calls = exhausted_fixture(tmp_path, monkeypatch)
+        path = pipeline.root / 'global-repair-state.json'
+        raw = path.read_bytes()
+        stored = json.loads(raw)
+        before = service.store.get_run(pipeline.run['id'])
+        changed = {**pipeline._global_repair_identity(plan), changed_field: 'updated-contract-fixture'}
+        monkeypatch.setattr(pipeline, '_global_repair_identity', lambda _: changed)
+        calls_before = len(calls)
+>       with pytest.raises(AgentError) as error:
+E       Failed: DID NOT RAISE AgentError
+
+tests\test_global_contract_guard.py:26: Failed
+_ test_changed_global_contract_blocks_without_resetting_same_approved_plan_state[written_schema_hash] _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gcguard-red/test_changed_global_contract_b1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001BC0EC38650>
+changed_field = 'written_schema_hash'
+
+    @pytest.mark.parametrize('changed_field', ['repair_prompt_hash', 'written_schema_hash', 'normalizer_hash'])
+    def test_changed_global_contract_blocks_without_resetting_same_approved_plan_state(tmp_path, monkeypatch, changed_field):
+        service, pipeline, plan, _, _, _, calls = exhausted_fixture(tmp_path, monkeypatch)
+        path = pipeline.root / 'global-repair-state.json'
+        raw = path.read_bytes()
+        stored = json.loads(raw)
+        before = service.store.get_run(pipeline.run['id'])
+        changed = {**pipeline._global_repair_identity(plan), changed_field: 'updated-contract-fixture'}
+        monkeypatch.setattr(pipeline, '_global_repair_identity', lambda _: changed)
+        calls_before = len(calls)
+>       with pytest.raises(AgentError) as error:
+E       Failed: DID NOT RAISE AgentError
+
+tests\test_global_contract_guard.py:26: Failed
+_ test_changed_global_contract_blocks_without_resetting_same_approved_plan_state[normalizer_hash] _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gcguard-red/test_changed_global_contract_b2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001BC0EC0D130>
+changed_field = 'normalizer_hash'
+
+    @pytest.mark.parametrize('changed_field', ['repair_prompt_hash', 'written_schema_hash', 'normalizer_hash'])
+    def test_changed_global_contract_blocks_without_resetting_same_approved_plan_state(tmp_path, monkeypatch, changed_field):
+        service, pipeline, plan, _, _, _, calls = exhausted_fixture(tmp_path, monkeypatch)
+        path = pipeline.root / 'global-repair-state.json'
+        raw = path.read_bytes()
+        stored = json.loads(raw)
+        before = service.store.get_run(pipeline.run['id'])
+        changed = {**pipeline._global_repair_identity(plan), changed_field: 'updated-contract-fixture'}
+        monkeypatch.setattr(pipeline, '_global_repair_identity', lambda _: changed)
+        calls_before = len(calls)
+>       with pytest.raises(AgentError) as error:
+E       Failed: DID NOT RAISE AgentError
+
+tests\test_global_contract_guard.py:26: Failed
+=========================== short test summary info ===========================
+FAILED tests/test_global_contract_guard.py::test_changed_global_contract_blocks_without_resetting_same_approved_plan_state[repair_prompt_hash]
+FAILED tests/test_global_contract_guard.py::test_changed_global_contract_blocks_without_resetting_same_approved_plan_state[written_schema_hash]
+FAILED tests/test_global_contract_guard.py::test_changed_global_contract_blocks_without_resetting_same_approved_plan_state[normalizer_hash]
+3 failed, 1 passed in 3.12s

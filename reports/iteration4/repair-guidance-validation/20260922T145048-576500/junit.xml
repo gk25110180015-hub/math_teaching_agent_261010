@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="16" time="4.386" timestamp="2026-09-22T22:50:48.698500+08:00" hostname="Asuna"><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145048-576500.tests.test_repair_guidance" name="test_target_patch_preserves_original_issues_approval_counters_and_other_unit" time="0.346" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145048-576500.tests.test_repair_guidance" name="test_completed_bad_proposal_is_retained_and_never_rerolled[scope]" time="0.226" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145048-576500.tests.test_repair_guidance" name="test_completed_bad_proposal_is_retained_and_never_rerolled[noop]" time="0.225" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145048-576500.tests.test_repair_guidance" name="test_wrong_bound_evidence_never_calls_model[body]" time="0.145" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145048-576500.tests.test_repair_guidance" name="test_wrong_bound_evidence_never_calls_model[review]" time="0.134" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145048-576500.tests.test_repair_guidance" name="test_wrong_bound_evidence_never_calls_model[state]" time="0.145" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145048-576500.tests.test_repair_guidance" name="test_wrong_bound_evidence_never_calls_model[target]" time="0.141" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145048-576500.tests.test_repair_guidance" name="test_wrong_bound_evidence_never_calls_model[plan]" time="0.133" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145048-576500.tests.test_repair_guidance" name="test_budget_exhausted_before_proposal_preserves_original_state" time="0.150" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145048-576500.tests.test_repair_guidance" name="test_cancelled_lease_rejects_before_any_model_call" time="0.130" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145048-576500.tests.test_repair_guidance" name="test_transport_retry_reuses_counted_proposal_and_preserves_logs" time="0.245" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145048-576500.tests.test_repair_guidance" name="test_crash_after_accept_before_global_pointer_replays_without_second_patch" time="0.350" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145048-576500.tests.test_repair_guidance" name="test_crash_after_applied_event_replays_one_event" time="0.275" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145048-576500.tests.test_repair_guidance" name="test_context_rejects_pending_global_action_or_tampered_candidate" time="0.210" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145048-576500.tests.test_repair_guidance" name="test_guided_changed_body_runs_math_review_compile_and_checkpoint_again" time="0.569"><failure message="AssertionError: assert 'NEEDS_REVIEW' == 'PASS'&#10;  &#10;  - PASS&#10;  + NEEDS_REVIEW">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145048-576500/tmp/test_guided_changed_body_runs_0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000022F94AA79E0&gt;
+
+    def test_guided_changed_body_runs_math_review_compile_and_checkpoint_again(tmp_path, monkeypatch):
+        provider = Provider(); original = provider.generate; ordinary = []
+        def generate(role, ctx, schema):
+            if role == 'reviewer_math' and ctx.get('scope', {}).get('kind') != 'chapter_coverage':
+                ordinary.append(copy.deepcopy(ctx))
+                if len(ordinary) == 1: raise AgentError('PROVIDER_TIMEOUT', 'initial blocked fixture')
+            return original(role, ctx, schema)
+        provider.generate = generate
+        service, p, plan, compiled = setup(tmp_path, monkeypatch, provider)
+        with pytest.raises(AgentError, match='initial blocked'): p.lecture(plan)
+        # Real SQL approval/counter state; transport and compiler above are synthetic.
+        p, action = request_and_resume(p, plan, provider)
+        p.run['input']['provider'] = 'live'
+        completed, reports = p.lecture(plan)
+        assert provider.writes == 1 and provider.patches == 1 and len(ordinary) == 2 and len(compiled) == 1
+        assert '已明示前提' in completed[0][1]['units'][0]['tex']
+        assert state(p)['phase'] == 'CHECKED' and state(p)['unit_applied_counts'] == {'S01.U1': 1}
+&gt;       assert reports[0]['math']['status'] == 'PASS'
+E       AssertionError: assert 'NEEDS_REVIEW' == 'PASS'
+E         
+E         - PASS
+E         + NEEDS_REVIEW
+
+reports\iteration4\repair-guidance-validation\20260922T145048-576500\tests\test_repair_guidance.py:207: AssertionError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145048-576500.tests.test_repair_guidance" name="test_saved_proposal_hash_damage_blocks_without_reroll" time="0.248" /></testsuite></testsuites>

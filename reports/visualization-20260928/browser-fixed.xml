@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="113.071" timestamp="2026-09-28T21:57:41.142730+08:00" hostname="Asuna"><testcase classname="tests.e2e.test_visualization_browser" name="test_visualization_full_browser_flow[\u5bfc\u6570]" time="55.722"><failure message="playwright._impl._errors.TimeoutError: Locator.screenshot: Timeout 29984ms exceeded.&#10;Call log:&#10;  - taking element screenshot&#10;  - waiting for fonts to load...&#10;  - fonts loaded&#10;  - attempting scroll into view action&#10;    - waiting for element to be stable">browser_page = &lt;Page url='http://127.0.0.1:52504/visualizations?run=b35a8a2dcddb41289e1db64b6dbf8485'&gt;
+local_services = ('http://127.0.0.1:52504', WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/visualization-20260928/browser/20260928-215741'))
+topic = '导数'
+
+    @pytest.mark.parametrize('topic', ['导数', '梯度下降算法'])
+    def test_visualization_full_browser_flow(browser_page, local_services, topic):
+        page = browser_page
+        page.get_by_role('link', name='数学概念 → 视频与交互页面').click()
+        page.locator('#visual-topic').fill(topic)
+        page.locator('#visual-provider').select_option('mock')
+        page.locator('#visual-trust').check()
+        page.locator('#visual-create').click()
+        page.locator('#visual-candidate-form').wait_for(timeout=30000)
+        # Arbitrary candidate choice; custom suggestions are intentionally left empty.
+        page.locator('input[name=candidate]').first.check()
+        expect(page.locator('#visual-suggestion')).to_be_visible()
+        page.locator('#visual-choose').click()
+        page.locator('#visual-refine-form fieldset').first.wait_for(timeout=30000)
+        for field in page.locator('#visual-refine-form fieldset').all():
+            field.locator('input[type=radio]').first.check()
+        page.locator('#visual-refine').click()
+        page.locator('#visual-confirm').wait_for(timeout=30000)
+        page.reload()
+        page.locator('#visual-confirm').wait_for(timeout=10000)
+        page.locator('#visual-confirm').click()
+        expect(page.locator('[data-testid=visual-status]')).to_have_attribute('data-status','COMPLETED_WITH_WARNINGS',timeout=150000)
+        video = page.locator('video')
+        expect(video).to_be_visible()
+        page.wait_for_function('()=&gt;document.querySelector("video").readyState &gt;= 1')
+        assert video.evaluate('(v)=&gt;v.videoWidth') == 960
+        video.evaluate('(v)=&gt;v.play()')
+        page.wait_for_function('()=&gt;document.querySelector("video").currentTime &gt; 0.2')
+        video.evaluate('(v)=&gt;v.pause()')
+        iframe=page.frame_locator('iframe[title="数学概念交互页面"]')
+        iframe.locator('#scene').wait_for()
+        frame=next(f for f in page.frames if '/preview' in f.url)
+        frame.evaluate('()=&gt;window.visualization.ready')
+        assert frame.evaluate('self.origin') == 'null'
+        start=frame.evaluate('()=&gt;window.visualization.render(.65)')
+        control=iframe.locator('#controls input').first
+        control.evaluate('(e)=&gt;{e.value=e.max;e.dispatchEvent(new Event("input",{bubbles:true}));}')
+        page.wait_for_timeout(300)
+        after=frame.evaluate('()=&gt;window.visualization.render(.65)')
+        assert start['plot_signature'] != after['plot_signature']
+        assert iframe.locator('#status').inner_text() == ''
+&gt;       iframe.locator('#scene').screenshot(path=str(local_services[1] / ('gradient.png' if '梯度' in topic else 'derivative.png')))
+
+tests\e2e\test_visualization_browser.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\playwright\sync_api\_generated.py:20007: in screenshot
+    self._sync(
+.venv\Lib\site-packages\playwright\_impl\_locator.py:587: in screenshot
+    return await self._with_element(
+.venv\Lib\site-packages\playwright\_impl\_locator.py:118: in _with_element
+    return await task(
+.venv\Lib\site-packages\playwright\_impl\_element_handle.py:352: in screenshot
+    encoded_binary = await self._channel.send(
+.venv\Lib\site-packages\playwright\_impl\_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;playwright._impl._connection.Connection object at 0x0000016725A4B470&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x0000016726282480&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Locator.screenshot: Timeout 29984ms exceeded.
+E           Call log:
+E             - taking element screenshot
+E             - waiting for fonts to load...
+E             - fonts loaded
+E             - attempting scroll into view action
+E               - waiting for element to be stable
+
+.venv\Lib\site-packages\playwright\_impl\_connection.py:632: TimeoutError</failure></testcase><testcase classname="tests.e2e.test_visualization_browser" name="test_visualization_full_browser_flow[\u68af\u5ea6\u4e0b\u964d\u7b97\u6cd5]" time="56.916"><failure message="playwright._impl._errors.TimeoutError: Locator.screenshot: Timeout 30000ms exceeded.&#10;Call log:&#10;  - taking element screenshot&#10;  - waiting for fonts to load...&#10;  - fonts loaded&#10;  - attempting scroll into view action&#10;    - waiting for element to be stable">browser_page = &lt;Page url='http://127.0.0.1:52504/visualizations?run=2e474a3c105b4d349633fae2f6ad09a2'&gt;
+local_services = ('http://127.0.0.1:52504', WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/visualization-20260928/browser/20260928-215741'))
+topic = '梯度下降算法'
+
+    @pytest.mark.parametrize('topic', ['导数', '梯度下降算法'])
+    def test_visualization_full_browser_flow(browser_page, local_services, topic):
+        page = browser_page
+        page.get_by_role('link', name='数学概念 → 视频与交互页面').click()
+        page.locator('#visual-topic').fill(topic)
+        page.locator('#visual-provider').select_option('mock')
+        page.locator('#visual-trust').check()
+        page.locator('#visual-create').click()
+        page.locator('#visual-candidate-form').wait_for(timeout=30000)
+        # Arbitrary candidate choice; custom suggestions are intentionally left empty.
+        page.locator('input[name=candidate]').first.check()
+        expect(page.locator('#visual-suggestion')).to_be_visible()
+        page.locator('#visual-choose').click()
+        page.locator('#visual-refine-form fieldset').first.wait_for(timeout=30000)
+        for field in page.locator('#visual-refine-form fieldset').all():
+            field.locator('input[type=radio]').first.check()
+        page.locator('#visual-refine').click()
+        page.locator('#visual-confirm').wait_for(timeout=30000)
+        page.reload()
+        page.locator('#visual-confirm').wait_for(timeout=10000)
+        page.locator('#visual-confirm').click()
+        expect(page.locator('[data-testid=visual-status]')).to_have_attribute('data-status','COMPLETED_WITH_WARNINGS',timeout=150000)
+        video = page.locator('video')
+        expect(video).to_be_visible()
+        page.wait_for_function('()=&gt;document.querySelector("video").readyState &gt;= 1')
+        assert video.evaluate('(v)=&gt;v.videoWidth') == 960
+        video.evaluate('(v)=&gt;v.play()')
+        page.wait_for_function('()=&gt;document.querySelector("video").currentTime &gt; 0.2')
+        video.evaluate('(v)=&gt;v.pause()')
+        iframe=page.frame_locator('iframe[title="数学概念交互页面"]')
+        iframe.locator('#scene').wait_for()
+        frame=next(f for f in page.frames if '/preview' in f.url)
+        frame.evaluate('()=&gt;window.visualization.ready')
+        assert frame.evaluate('self.origin') == 'null'
+        start=frame.evaluate('()=&gt;window.visualization.render(.65)')
+        control=iframe.locator('#controls input').first
+        control.evaluate('(e)=&gt;{e.value=e.max;e.dispatchEvent(new Event("input",{bubbles:true}));}')
+        page.wait_for_timeout(300)
+        after=frame.evaluate('()=&gt;window.visualization.render(.65)')
+        assert start['plot_signature'] != after['plot_signature']
+        if topic == '导数':
+&gt;           metrics = after['metrics']
+
+tests\e2e\test_visualization_browser.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\playwright\sync_api\_generated.py:20007: in screenshot
+    self._sync(
+.venv\Lib\site-packages\playwright\_impl\_locator.py:587: in screenshot
+    return await self._with_element(
+.venv\Lib\site-packages\playwright\_impl\_locator.py:118: in _with_element
+    return await task(
+.venv\Lib\site-packages\playwright\_impl\_element_handle.py:352: in screenshot
+    encoded_binary = await self._channel.send(
+.venv\Lib\site-packages\playwright\_impl\_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;playwright._impl._connection.Connection object at 0x00000167262D3170&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x00000167264539C0&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Locator.screenshot: Timeout 30000ms exceeded.
+E           Call log:
+E             - taking element screenshot
+E             - waiting for fonts to load...
+E             - fonts loaded
+E             - attempting scroll into view action
+E               - waiting for element to be stable
+
+.venv\Lib\site-packages\playwright\_impl\_connection.py:632: TimeoutError</failure></testcase></testsuite></testsuites>

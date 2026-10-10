@@ -1,0 +1,50 @@
+{
+  "status": "READY_FOR_REVIEWED_DEPLOYMENT",
+  "files": [
+    {
+      "source": "src/math_agent/pipeline.py",
+      "candidate": "review-evidence-feedback-pipeline.candidate.py",
+      "baseline_sha256": "504e66ea5d2abaec818deafa3420ec70db82fbdee59638fed1c64e8383250fa8",
+      "candidate_sha256": "96d0f9e042836bf88fb1609159066d7b20113be41a193bbfa6e57f4f4086a683"
+    },
+    {
+      "source": "src/math_agent/review_evidence_attribution.py",
+      "candidate": "review-evidence-attribution.candidate.py",
+      "baseline_sha256": null,
+      "candidate_sha256": "078a3fe47159d8934b71b30df7d4940742a9b53ba2fbe0f3d0ab66b249377da5"
+    },
+    {
+      "source": "src/math_agent/prompts/review_evidence_attribution.md",
+      "candidate": "review_evidence_attribution.candidate.md",
+      "baseline_sha256": null,
+      "candidate_sha256": "0e2e9c9568299b12597b2a6637d5d043eb13f63c3e28702d8370b212958fc65b"
+    }
+  ],
+  "production_changes": 0,
+  "api_calls": 0,
+  "feedback_pipeline_included": true,
+  "schema_location": "src/math_agent/review_evidence_attribution.py",
+  "global_patch_contract_changed": false,
+  "independent_review": "reports/iteration4/review-evidence-attribution-independent-audit.md",
+  "mock_tests": {
+    "status": "PASS",
+    "passed": 74,
+    "failed": 0,
+    "seconds": 18.33,
+    "evidence": "reports/iteration4/review-evidence-guard-tests-138950",
+    "classification": "MOCK_NO_REAL_API_OR_WINDOWS_COMPILE"
+  },
+  "real_api_controls": {
+    "status": "PASS",
+    "cases": 2,
+    "evidence": "reports/iteration4/live-attribution-controls-20260920-1726",
+    "helper_at_api_time": "edd1a110ac02d9652d5177ffa14b6c570505d8a149c2302ca8b2516b0e0feb32",
+    "final_helper_offline_revalidation": "reports/iteration4/review-attribution-final-helper-saved-replay.json",
+    "repeated_api_calls_for_final_helper": 0
+  },
+  "new_windows_compile": "NOT_RUN",
+  "agent_visual_review": "NOT_RUN",
+  "teacher_math_review": "NOT_RUN",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_tests_scripts_frozen": true
+}

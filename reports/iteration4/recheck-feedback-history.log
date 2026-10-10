@@ -1,0 +1,147 @@
+FFF.                                                                     [100%]
+================================== FAILURES ===================================
+_ test_two_validated_rounds_formal_recheck_reviews_new_feedback_then_latest_empty[] _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/feedback-history-20260921/test_two_validated_rounds_form0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002A511B7E0F0>
+withdrawn = ''
+
+    @pytest.mark.parametrize('withdrawn',['',' \n\t '])
+    def test_two_validated_rounds_formal_recheck_reviews_new_feedback_then_latest_empty(tmp_path,monkeypatch,withdrawn):
+        service,pipeline,plan,provider,_=history_fixture(tmp_path,monkeypatch)
+        before=service.get(pipeline.run['id'])
+>       increase(service,pipeline,plan)
+
+tests\test_recheck_feedback_history.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_recheck_feedback_history.py:68: in increase
+    service.increase_budget(pipeline.run['id'],BudgetIncrease(
+workspace\t\fbpkg-04727c\src\math_agent\service.py:55: in increase_budget
+    return increase(self.store, run_id, request, defaults_from_settings(self.settings), self.actor)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+store = <math_agent.store.Store object at 0x000002A5118209E0>
+run_id = '284eec053e624678a9b9a73d1857c08c'
+request = BudgetIncrease(expected_version=0, expected_plan_revision=1, expected_plan_hash='48792fd2e183f643e2a1c8c76a2fecd553d67...ion_id='history-explicit-global-increase', note='Offline explicit budget increase preserving the existing two rounds.')
+defaults = {'requests': 120, 'local_repairs_per_unit': 2, 'global_repair_rounds': 2}
+actor = 'local_user'
+
+    def increase(store, run_id, request, defaults, actor):
+        if actor != 'local_user':
+            raise AgentError('EXPLICIT_USER_BUDGET_REQUIRED', '只有明确用户动作可以增加预算，基准驱动不能代填', 403)
+        payload = request.model_dump()
+        with store.transaction() as connection:
+            run = store.row(connection, run_id)
+            old = connection.execute('SELECT * FROM budget_actions WHERE run_id=? AND action_id=?',
+                                     (run_id, request.action_id)).fetchone()
+            if old:
+                if old['payload_hash'] != digest(payload):
+                    raise AgentError('ACTION_CONFLICT', '预算动作 ID 已用于不同内容', 409)
+                return json.loads(old['after_json'])
+            if run['status'] != 'BLOCKED':
+>               raise AgentError('BUDGET_NOT_BLOCKED', '仅阻塞且停止执行的任务可以显式增加预算', 409)
+E               math_agent.util.AgentError: 仅阻塞且停止执行的任务可以显式增加预算
+
+workspace\t\fbpkg-04727c\src\math_agent\budget.py:102: AgentError
+_ test_two_validated_rounds_formal_recheck_reviews_new_feedback_then_latest_empty[ \n\t ] _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/feedback-history-20260921/test_two_validated_rounds_form1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002A511C1DF70>
+withdrawn = ' \n\t '
+
+    @pytest.mark.parametrize('withdrawn',['',' \n\t '])
+    def test_two_validated_rounds_formal_recheck_reviews_new_feedback_then_latest_empty(tmp_path,monkeypatch,withdrawn):
+        service,pipeline,plan,provider,_=history_fixture(tmp_path,monkeypatch)
+        before=service.get(pipeline.run['id'])
+>       increase(service,pipeline,plan)
+
+tests\test_recheck_feedback_history.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_recheck_feedback_history.py:68: in increase
+    service.increase_budget(pipeline.run['id'],BudgetIncrease(
+workspace\t\fbpkg-04727c\src\math_agent\service.py:55: in increase_budget
+    return increase(self.store, run_id, request, defaults_from_settings(self.settings), self.actor)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+store = <math_agent.store.Store object at 0x000002A511C1C920>
+run_id = 'a9a96ec45aa641f2bb7377b287df4df7'
+request = BudgetIncrease(expected_version=0, expected_plan_revision=1, expected_plan_hash='48792fd2e183f643e2a1c8c76a2fecd553d67...ion_id='history-explicit-global-increase', note='Offline explicit budget increase preserving the existing two rounds.')
+defaults = {'requests': 120, 'local_repairs_per_unit': 2, 'global_repair_rounds': 2}
+actor = 'local_user'
+
+    def increase(store, run_id, request, defaults, actor):
+        if actor != 'local_user':
+            raise AgentError('EXPLICIT_USER_BUDGET_REQUIRED', '只有明确用户动作可以增加预算，基准驱动不能代填', 403)
+        payload = request.model_dump()
+        with store.transaction() as connection:
+            run = store.row(connection, run_id)
+            old = connection.execute('SELECT * FROM budget_actions WHERE run_id=? AND action_id=?',
+                                     (run_id, request.action_id)).fetchone()
+            if old:
+                if old['payload_hash'] != digest(payload):
+                    raise AgentError('ACTION_CONFLICT', '预算动作 ID 已用于不同内容', 409)
+                return json.loads(old['after_json'])
+            if run['status'] != 'BLOCKED':
+>               raise AgentError('BUDGET_NOT_BLOCKED', '仅阻塞且停止执行的任务可以显式增加预算', 409)
+E               math_agent.util.AgentError: 仅阻塞且停止执行的任务可以显式增加预算
+
+workspace\t\fbpkg-04727c\src\math_agent\budget.py:102: AgentError
+____ test_feedback_pending_round_retry_keeps_job_and_reviews_repaired_body ____
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/feedback-history-20260921/test_feedback_pending_round_re0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002A511C1C860>
+
+    def test_feedback_pending_round_retry_keeps_job_and_reviews_repaired_body(tmp_path,monkeypatch):
+        service,pipeline,plan,provider,_=history_fixture(tmp_path,monkeypatch)
+>       increase(service,pipeline,plan)
+
+tests\test_recheck_feedback_history.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_recheck_feedback_history.py:68: in increase
+    service.increase_budget(pipeline.run['id'],BudgetIncrease(
+workspace\t\fbpkg-04727c\src\math_agent\service.py:55: in increase_budget
+    return increase(self.store, run_id, request, defaults_from_settings(self.settings), self.actor)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+store = <math_agent.store.Store object at 0x000002A511C1DE20>
+run_id = '1536433761fb43dca44665f97fe9af74'
+request = BudgetIncrease(expected_version=0, expected_plan_revision=1, expected_plan_hash='48792fd2e183f643e2a1c8c76a2fecd553d67...ion_id='history-explicit-global-increase', note='Offline explicit budget increase preserving the existing two rounds.')
+defaults = {'requests': 120, 'local_repairs_per_unit': 2, 'global_repair_rounds': 2}
+actor = 'local_user'
+
+    def increase(store, run_id, request, defaults, actor):
+        if actor != 'local_user':
+            raise AgentError('EXPLICIT_USER_BUDGET_REQUIRED', '只有明确用户动作可以增加预算，基准驱动不能代填', 403)
+        payload = request.model_dump()
+        with store.transaction() as connection:
+            run = store.row(connection, run_id)
+            old = connection.execute('SELECT * FROM budget_actions WHERE run_id=? AND action_id=?',
+                                     (run_id, request.action_id)).fetchone()
+            if old:
+                if old['payload_hash'] != digest(payload):
+                    raise AgentError('ACTION_CONFLICT', '预算动作 ID 已用于不同内容', 409)
+                return json.loads(old['after_json'])
+            if run['status'] != 'BLOCKED':
+>               raise AgentError('BUDGET_NOT_BLOCKED', '仅阻塞且停止执行的任务可以显式增加预算', 409)
+E               math_agent.util.AgentError: 仅阻塞且停止执行的任务可以显式增加预算
+
+workspace\t\fbpkg-04727c\src\math_agent\budget.py:102: AgentError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\研究生阶段\数学教学agent\math-teaching-agent\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv\Lib\site-packages\starlette\testclient.py:53
+  D:\研究生阶段\数学教学agent\math-teaching-agent\.venv\Lib\site-packages\starlette\testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_recheck_feedback_history.py::test_two_validated_rounds_formal_recheck_reviews_new_feedback_then_latest_empty[]
+FAILED tests/test_recheck_feedback_history.py::test_two_validated_rounds_formal_recheck_reviews_new_feedback_then_latest_empty[ \n\t ]
+FAILED tests/test_recheck_feedback_history.py::test_feedback_pending_round_retry_keeps_job_and_reviews_repaired_body
+3 failed, 1 passed, 2 warnings in 4.06s
+Production source unchanged: True

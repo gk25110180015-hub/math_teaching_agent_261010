@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="21" skipped="0" tests="31" time="8.942" timestamp="2026-09-21T03:11:57.999505+08:00" hostname="Asuna"><testcase classname="tests.test_global_strict_patch_migration" name="test_known_v1_pending_migrates_and_resumes_original_issue_before_any_new_review" time="0.457"><failure message="assert (1 == 2)">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_known_v1_pending_migrates0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5A9BFE0&gt;
+
+    def test_known_v1_pending_migrates_and_resumes_original_issue_before_any_new_review(tmp_path,monkeypatch):
+        service,p,plan,provider,_,old=seed(tmp_path,monkeypatch)
+        path=p.root/'global-repair-state.json';raw=path.read_bytes()
+        run=service.store.get_run(p.run['id']);count=len(provider.calls)
+        migrated=p._load_global_repair_state(plan)
+&gt;       assert migrated['schema_version']==2 and migrated['identity']==p._global_repair_identity(plan)
+E       assert (1 == 2)
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:87: AssertionError</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_unknown_legacy_contract_is_not_migrated_or_reset[repair_prompt_hash]" time="0.293" /><testcase classname="tests.test_global_strict_patch_migration" name="test_unknown_legacy_contract_is_not_migrated_or_reset[written_schema_hash]" time="0.283" /><testcase classname="tests.test_global_strict_patch_migration" name="test_unknown_legacy_contract_is_not_migrated_or_reset[normalizer_hash]" time="0.303" /><testcase classname="tests.test_global_strict_patch_migration" name="test_unknown_legacy_contract_is_not_migrated_or_reset[extra]" time="0.296" /><testcase classname="tests.test_global_strict_patch_migration" name="test_unknown_legacy_contract_is_not_migrated_or_reset[model]" time="0.320" /><testcase classname="tests.test_global_strict_patch_migration" name="test_unknown_legacy_contract_is_not_migrated_or_reset[provider]" time="0.311" /><testcase classname="tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[bool_round]" time="0.310"><failure message="Failed: DID NOT RAISE AgentError">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_malformed_legacy_state_is0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5AC2210&gt;
+corruption = 'bool_round'
+
+    @pytest.mark.parametrize('corruption',['bool_round','negative_round','bad_phase','extra_target','duplicate_target',
+        'issue_target','neighbor','candidate_hash','folder','bool_version'])
+    def test_malformed_legacy_state_is_preserved_and_blocked(tmp_path,monkeypatch,corruption):
+        _,p,plan,_,_,state=seed(tmp_path,monkeypatch)
+        if corruption=='bool_round':state['rounds_used']=True
+        elif corruption=='negative_round':state['rounds_used']=-1
+        elif corruption=='bad_phase':state['phase']='accepted_by_model'
+        elif corruption=='extra_target':state['pending'][0]['allowed_unit_ids'].append('S01.U02')
+        elif corruption=='duplicate_target':state['pending'][0]['allowed_unit_ids']*=2
+        elif corruption=='issue_target':state['pending'][0]['issues'][0]['unit_id']='S01.U02'
+        elif corruption=='neighbor':state['pending'][0]['neighbors'][0]['section']['title']='Unapproved changed context'
+        elif corruption=='candidate_hash':state['sections']['S01']['candidate_hash']='0'*64
+        elif corruption=='folder':state['round_directory']='runs/foreign-run/global-repairs/r3-forged'
+        elif corruption=='bool_version':state['schema_version']=True
+        path=p.root/'global-repair-state.json';write_json(path,state);raw=path.read_bytes()
+&gt;       with pytest.raises(AgentError) as error:p._load_global_repair_state(plan)
+E       Failed: DID NOT RAISE AgentError
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:133: Failed</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[negative_round]" time="0.274"><failure message="Failed: DID NOT RAISE AgentError">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_malformed_legacy_state_is1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5ABC140&gt;
+corruption = 'negative_round'
+
+    @pytest.mark.parametrize('corruption',['bool_round','negative_round','bad_phase','extra_target','duplicate_target',
+        'issue_target','neighbor','candidate_hash','folder','bool_version'])
+    def test_malformed_legacy_state_is_preserved_and_blocked(tmp_path,monkeypatch,corruption):
+        _,p,plan,_,_,state=seed(tmp_path,monkeypatch)
+        if corruption=='bool_round':state['rounds_used']=True
+        elif corruption=='negative_round':state['rounds_used']=-1
+        elif corruption=='bad_phase':state['phase']='accepted_by_model'
+        elif corruption=='extra_target':state['pending'][0]['allowed_unit_ids'].append('S01.U02')
+        elif corruption=='duplicate_target':state['pending'][0]['allowed_unit_ids']*=2
+        elif corruption=='issue_target':state['pending'][0]['issues'][0]['unit_id']='S01.U02'
+        elif corruption=='neighbor':state['pending'][0]['neighbors'][0]['section']['title']='Unapproved changed context'
+        elif corruption=='candidate_hash':state['sections']['S01']['candidate_hash']='0'*64
+        elif corruption=='folder':state['round_directory']='runs/foreign-run/global-repairs/r3-forged'
+        elif corruption=='bool_version':state['schema_version']=True
+        path=p.root/'global-repair-state.json';write_json(path,state);raw=path.read_bytes()
+&gt;       with pytest.raises(AgentError) as error:p._load_global_repair_state(plan)
+E       Failed: DID NOT RAISE AgentError
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:133: Failed</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[bad_phase]" time="0.298"><failure message="Failed: DID NOT RAISE AgentError">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_malformed_legacy_state_is2')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5ABECC0&gt;
+corruption = 'bad_phase'
+
+    @pytest.mark.parametrize('corruption',['bool_round','negative_round','bad_phase','extra_target','duplicate_target',
+        'issue_target','neighbor','candidate_hash','folder','bool_version'])
+    def test_malformed_legacy_state_is_preserved_and_blocked(tmp_path,monkeypatch,corruption):
+        _,p,plan,_,_,state=seed(tmp_path,monkeypatch)
+        if corruption=='bool_round':state['rounds_used']=True
+        elif corruption=='negative_round':state['rounds_used']=-1
+        elif corruption=='bad_phase':state['phase']='accepted_by_model'
+        elif corruption=='extra_target':state['pending'][0]['allowed_unit_ids'].append('S01.U02')
+        elif corruption=='duplicate_target':state['pending'][0]['allowed_unit_ids']*=2
+        elif corruption=='issue_target':state['pending'][0]['issues'][0]['unit_id']='S01.U02'
+        elif corruption=='neighbor':state['pending'][0]['neighbors'][0]['section']['title']='Unapproved changed context'
+        elif corruption=='candidate_hash':state['sections']['S01']['candidate_hash']='0'*64
+        elif corruption=='folder':state['round_directory']='runs/foreign-run/global-repairs/r3-forged'
+        elif corruption=='bool_version':state['schema_version']=True
+        path=p.root/'global-repair-state.json';write_json(path,state);raw=path.read_bytes()
+&gt;       with pytest.raises(AgentError) as error:p._load_global_repair_state(plan)
+E       Failed: DID NOT RAISE AgentError
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:133: Failed</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[extra_target]" time="0.268"><failure message="Failed: DID NOT RAISE AgentError">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_malformed_legacy_state_is3')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5AC1370&gt;
+corruption = 'extra_target'
+
+    @pytest.mark.parametrize('corruption',['bool_round','negative_round','bad_phase','extra_target','duplicate_target',
+        'issue_target','neighbor','candidate_hash','folder','bool_version'])
+    def test_malformed_legacy_state_is_preserved_and_blocked(tmp_path,monkeypatch,corruption):
+        _,p,plan,_,_,state=seed(tmp_path,monkeypatch)
+        if corruption=='bool_round':state['rounds_used']=True
+        elif corruption=='negative_round':state['rounds_used']=-1
+        elif corruption=='bad_phase':state['phase']='accepted_by_model'
+        elif corruption=='extra_target':state['pending'][0]['allowed_unit_ids'].append('S01.U02')
+        elif corruption=='duplicate_target':state['pending'][0]['allowed_unit_ids']*=2
+        elif corruption=='issue_target':state['pending'][0]['issues'][0]['unit_id']='S01.U02'
+        elif corruption=='neighbor':state['pending'][0]['neighbors'][0]['section']['title']='Unapproved changed context'
+        elif corruption=='candidate_hash':state['sections']['S01']['candidate_hash']='0'*64
+        elif corruption=='folder':state['round_directory']='runs/foreign-run/global-repairs/r3-forged'
+        elif corruption=='bool_version':state['schema_version']=True
+        path=p.root/'global-repair-state.json';write_json(path,state);raw=path.read_bytes()
+&gt;       with pytest.raises(AgentError) as error:p._load_global_repair_state(plan)
+E       Failed: DID NOT RAISE AgentError
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:133: Failed</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[duplicate_target]" time="0.284"><failure message="Failed: DID NOT RAISE AgentError">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_malformed_legacy_state_is4')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5AF4A10&gt;
+corruption = 'duplicate_target'
+
+    @pytest.mark.parametrize('corruption',['bool_round','negative_round','bad_phase','extra_target','duplicate_target',
+        'issue_target','neighbor','candidate_hash','folder','bool_version'])
+    def test_malformed_legacy_state_is_preserved_and_blocked(tmp_path,monkeypatch,corruption):
+        _,p,plan,_,_,state=seed(tmp_path,monkeypatch)
+        if corruption=='bool_round':state['rounds_used']=True
+        elif corruption=='negative_round':state['rounds_used']=-1
+        elif corruption=='bad_phase':state['phase']='accepted_by_model'
+        elif corruption=='extra_target':state['pending'][0]['allowed_unit_ids'].append('S01.U02')
+        elif corruption=='duplicate_target':state['pending'][0]['allowed_unit_ids']*=2
+        elif corruption=='issue_target':state['pending'][0]['issues'][0]['unit_id']='S01.U02'
+        elif corruption=='neighbor':state['pending'][0]['neighbors'][0]['section']['title']='Unapproved changed context'
+        elif corruption=='candidate_hash':state['sections']['S01']['candidate_hash']='0'*64
+        elif corruption=='folder':state['round_directory']='runs/foreign-run/global-repairs/r3-forged'
+        elif corruption=='bool_version':state['schema_version']=True
+        path=p.root/'global-repair-state.json';write_json(path,state);raw=path.read_bytes()
+&gt;       with pytest.raises(AgentError) as error:p._load_global_repair_state(plan)
+E       Failed: DID NOT RAISE AgentError
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:133: Failed</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[issue_target]" time="0.298"><failure message="Failed: DID NOT RAISE AgentError">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_malformed_legacy_state_is5')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5AF5850&gt;
+corruption = 'issue_target'
+
+    @pytest.mark.parametrize('corruption',['bool_round','negative_round','bad_phase','extra_target','duplicate_target',
+        'issue_target','neighbor','candidate_hash','folder','bool_version'])
+    def test_malformed_legacy_state_is_preserved_and_blocked(tmp_path,monkeypatch,corruption):
+        _,p,plan,_,_,state=seed(tmp_path,monkeypatch)
+        if corruption=='bool_round':state['rounds_used']=True
+        elif corruption=='negative_round':state['rounds_used']=-1
+        elif corruption=='bad_phase':state['phase']='accepted_by_model'
+        elif corruption=='extra_target':state['pending'][0]['allowed_unit_ids'].append('S01.U02')
+        elif corruption=='duplicate_target':state['pending'][0]['allowed_unit_ids']*=2
+        elif corruption=='issue_target':state['pending'][0]['issues'][0]['unit_id']='S01.U02'
+        elif corruption=='neighbor':state['pending'][0]['neighbors'][0]['section']['title']='Unapproved changed context'
+        elif corruption=='candidate_hash':state['sections']['S01']['candidate_hash']='0'*64
+        elif corruption=='folder':state['round_directory']='runs/foreign-run/global-repairs/r3-forged'
+        elif corruption=='bool_version':state['schema_version']=True
+        path=p.root/'global-repair-state.json';write_json(path,state);raw=path.read_bytes()
+&gt;       with pytest.raises(AgentError) as error:p._load_global_repair_state(plan)
+E       Failed: DID NOT RAISE AgentError
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:133: Failed</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[neighbor]" time="0.280"><failure message="Failed: DID NOT RAISE AgentError">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_malformed_legacy_state_is6')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5AC1E50&gt;
+corruption = 'neighbor'
+
+    @pytest.mark.parametrize('corruption',['bool_round','negative_round','bad_phase','extra_target','duplicate_target',
+        'issue_target','neighbor','candidate_hash','folder','bool_version'])
+    def test_malformed_legacy_state_is_preserved_and_blocked(tmp_path,monkeypatch,corruption):
+        _,p,plan,_,_,state=seed(tmp_path,monkeypatch)
+        if corruption=='bool_round':state['rounds_used']=True
+        elif corruption=='negative_round':state['rounds_used']=-1
+        elif corruption=='bad_phase':state['phase']='accepted_by_model'
+        elif corruption=='extra_target':state['pending'][0]['allowed_unit_ids'].append('S01.U02')
+        elif corruption=='duplicate_target':state['pending'][0]['allowed_unit_ids']*=2
+        elif corruption=='issue_target':state['pending'][0]['issues'][0]['unit_id']='S01.U02'
+        elif corruption=='neighbor':state['pending'][0]['neighbors'][0]['section']['title']='Unapproved changed context'
+        elif corruption=='candidate_hash':state['sections']['S01']['candidate_hash']='0'*64
+        elif corruption=='folder':state['round_directory']='runs/foreign-run/global-repairs/r3-forged'
+        elif corruption=='bool_version':state['schema_version']=True
+        path=p.root/'global-repair-state.json';write_json(path,state);raw=path.read_bytes()
+&gt;       with pytest.raises(AgentError) as error:p._load_global_repair_state(plan)
+E       Failed: DID NOT RAISE AgentError
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:133: Failed</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[candidate_hash]" time="0.204" /><testcase classname="tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[folder]" time="0.201"><failure message="Failed: DID NOT RAISE AgentError">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_malformed_legacy_state_is8')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5ADA210&gt;
+corruption = 'folder'
+
+    @pytest.mark.parametrize('corruption',['bool_round','negative_round','bad_phase','extra_target','duplicate_target',
+        'issue_target','neighbor','candidate_hash','folder','bool_version'])
+    def test_malformed_legacy_state_is_preserved_and_blocked(tmp_path,monkeypatch,corruption):
+        _,p,plan,_,_,state=seed(tmp_path,monkeypatch)
+        if corruption=='bool_round':state['rounds_used']=True
+        elif corruption=='negative_round':state['rounds_used']=-1
+        elif corruption=='bad_phase':state['phase']='accepted_by_model'
+        elif corruption=='extra_target':state['pending'][0]['allowed_unit_ids'].append('S01.U02')
+        elif corruption=='duplicate_target':state['pending'][0]['allowed_unit_ids']*=2
+        elif corruption=='issue_target':state['pending'][0]['issues'][0]['unit_id']='S01.U02'
+        elif corruption=='neighbor':state['pending'][0]['neighbors'][0]['section']['title']='Unapproved changed context'
+        elif corruption=='candidate_hash':state['sections']['S01']['candidate_hash']='0'*64
+        elif corruption=='folder':state['round_directory']='runs/foreign-run/global-repairs/r3-forged'
+        elif corruption=='bool_version':state['schema_version']=True
+        path=p.root/'global-repair-state.json';write_json(path,state);raw=path.read_bytes()
+&gt;       with pytest.raises(AgentError) as error:p._load_global_repair_state(plan)
+E       Failed: DID NOT RAISE AgentError
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:133: Failed</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[bool_version]" time="0.202"><failure message="Failed: DID NOT RAISE AgentError">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_malformed_legacy_state_is9')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5ABD640&gt;
+corruption = 'bool_version'
+
+    @pytest.mark.parametrize('corruption',['bool_round','negative_round','bad_phase','extra_target','duplicate_target',
+        'issue_target','neighbor','candidate_hash','folder','bool_version'])
+    def test_malformed_legacy_state_is_preserved_and_blocked(tmp_path,monkeypatch,corruption):
+        _,p,plan,_,_,state=seed(tmp_path,monkeypatch)
+        if corruption=='bool_round':state['rounds_used']=True
+        elif corruption=='negative_round':state['rounds_used']=-1
+        elif corruption=='bad_phase':state['phase']='accepted_by_model'
+        elif corruption=='extra_target':state['pending'][0]['allowed_unit_ids'].append('S01.U02')
+        elif corruption=='duplicate_target':state['pending'][0]['allowed_unit_ids']*=2
+        elif corruption=='issue_target':state['pending'][0]['issues'][0]['unit_id']='S01.U02'
+        elif corruption=='neighbor':state['pending'][0]['neighbors'][0]['section']['title']='Unapproved changed context'
+        elif corruption=='candidate_hash':state['sections']['S01']['candidate_hash']='0'*64
+        elif corruption=='folder':state['round_directory']='runs/foreign-run/global-repairs/r3-forged'
+        elif corruption=='bool_version':state['schema_version']=True
+        path=p.root/'global-repair-state.json';write_json(path,state);raw=path.read_bytes()
+&gt;       with pytest.raises(AgentError) as error:p._load_global_repair_state(plan)
+E       Failed: DID NOT RAISE AgentError
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:133: Failed</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_accepted_candidates_and_rounds_survive_phase_migration[checking]" time="0.224" /><testcase classname="tests.test_global_strict_patch_migration" name="test_accepted_candidates_and_rounds_survive_phase_migration[validated]" time="0.219" /><testcase classname="tests.test_global_strict_patch_migration" name="test_accepted_candidates_and_rounds_survive_phase_migration[budget_exhausted]" time="0.212" /><testcase classname="tests.test_global_strict_patch_migration" name="test_migration_crash_recovers_without_duplicate_event_or_new_calls[journal_before_state]" time="0.207"><failure message="Failed: DID NOT RAISE RuntimeError">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_migration_crash_recovers_0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5ABF020&gt;
+point = 'journal_before_state'
+
+    @pytest.mark.parametrize('point',['journal_before_state','state_before_event'])
+    def test_migration_crash_recovers_without_duplicate_event_or_new_calls(tmp_path,monkeypatch,point):
+        service,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
+        path=p.root/'global-repair-state.json';raw=path.read_bytes();run=service.store.get_run(p.run['id'])
+        original_event=p.store.event;original_replace=contract._replace_state
+        def event(connection,rid,kind,payload=None):
+            if kind==contract.EVENT:raise RuntimeError('Synthetic crash after state replace')
+            return original_event(connection,rid,kind,payload)
+        def replace(path,data):raise RuntimeError('Synthetic crash after immutable journal')
+        monkeypatch.setattr(p.store,'event',event if point=='state_before_event' else original_event)
+        monkeypatch.setattr(contract,'_replace_state',replace if point=='journal_before_state' else original_replace)
+&gt;       with pytest.raises(RuntimeError):p._load_global_repair_state(plan)
+E       Failed: DID NOT RAISE RuntimeError
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:170: Failed</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_migration_crash_recovers_without_duplicate_event_or_new_calls[state_before_event]" time="0.212"><failure message="Failed: DID NOT RAISE RuntimeError">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_migration_crash_recovers_1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5A98F50&gt;
+point = 'state_before_event'
+
+    @pytest.mark.parametrize('point',['journal_before_state','state_before_event'])
+    def test_migration_crash_recovers_without_duplicate_event_or_new_calls(tmp_path,monkeypatch,point):
+        service,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
+        path=p.root/'global-repair-state.json';raw=path.read_bytes();run=service.store.get_run(p.run['id'])
+        original_event=p.store.event;original_replace=contract._replace_state
+        def event(connection,rid,kind,payload=None):
+            if kind==contract.EVENT:raise RuntimeError('Synthetic crash after state replace')
+            return original_event(connection,rid,kind,payload)
+        def replace(path,data):raise RuntimeError('Synthetic crash after immutable journal')
+        monkeypatch.setattr(p.store,'event',event if point=='state_before_event' else original_event)
+        monkeypatch.setattr(contract,'_replace_state',replace if point=='journal_before_state' else original_replace)
+&gt;       with pytest.raises(RuntimeError):p._load_global_repair_state(plan)
+E       Failed: DID NOT RAISE RuntimeError
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:170: Failed</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_lost_lease_before_migration_leaves_original_bytes_and_no_journal" time="0.215"><failure message="Failed: DID NOT RAISE AgentError">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_lost_lease_before_migrati0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5ABE330&gt;
+
+    def test_lost_lease_before_migration_leaves_original_bytes_and_no_journal(tmp_path,monkeypatch):
+        service,p,plan,_,_,_=seed(tmp_path,monkeypatch)
+        path=p.root/'global-repair-state.json';raw=path.read_bytes()
+        service.cancel(p.run['id'])
+&gt;       with pytest.raises(AgentError) as error:p._load_global_repair_state(plan)
+E       Failed: DID NOT RAISE AgentError
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:187: Failed</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_migration_evidence_corruption_never_reuses_old_pass[before.json]" time="0.203"><failure message="KeyError: 'contract_migration'">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_migration_evidence_corrup0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5ACE720&gt;
+file = 'before.json'
+
+    @pytest.mark.parametrize('file',['before.json','after.json','evidence.json'])
+    def test_migration_evidence_corruption_never_reuses_old_pass(tmp_path,monkeypatch,file):
+        _,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
+        state=p._load_global_repair_state(plan);path=p.root/'global-repair-state.json';raw=path.read_bytes()
+&gt;       folder=(p.settings.workspace/state['contract_migration']['evidence_key']).parent
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'contract_migration'
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:196: KeyError</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_migration_evidence_corruption_never_reuses_old_pass[after.json]" time="0.211"><failure message="KeyError: 'contract_migration'">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_migration_evidence_corrup1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5ABE540&gt;
+file = 'after.json'
+
+    @pytest.mark.parametrize('file',['before.json','after.json','evidence.json'])
+    def test_migration_evidence_corruption_never_reuses_old_pass(tmp_path,monkeypatch,file):
+        _,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
+        state=p._load_global_repair_state(plan);path=p.root/'global-repair-state.json';raw=path.read_bytes()
+&gt;       folder=(p.settings.workspace/state['contract_migration']['evidence_key']).parent
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'contract_migration'
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:196: KeyError</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_migration_evidence_corruption_never_reuses_old_pass[evidence.json]" time="0.199"><failure message="KeyError: 'contract_migration'">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_migration_evidence_corrup2')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5AC1D30&gt;
+file = 'evidence.json'
+
+    @pytest.mark.parametrize('file',['before.json','after.json','evidence.json'])
+    def test_migration_evidence_corruption_never_reuses_old_pass(tmp_path,monkeypatch,file):
+        _,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
+        state=p._load_global_repair_state(plan);path=p.root/'global-repair-state.json';raw=path.read_bytes()
+&gt;       folder=(p.settings.workspace/state['contract_migration']['evidence_key']).parent
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'contract_migration'
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:196: KeyError</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_request_budget_blocks_pending_patch_without_losing_migration_or_scope" time="0.496"><failure message="AssertionError: Global repairs must request a strict patch, never a whole section&#10;assert 'repair_content_unit' != 'repair_content_unit'">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_request_budget_blocks_pen0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5AC37D0&gt;
+
+    def test_request_budget_blocks_pending_patch_without_losing_migration_or_scope(tmp_path,monkeypatch):
+        service,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
+        state=p._load_global_repair_state(plan)
+        while service.store.get_run(p.run['id'])['request_count']&lt;60:
+            p.store.count_request(p.job,60,{'role':'offline-count-fixture'})
+        path=p.root/'global-repair-state.json';raw=path.read_bytes();count=len(provider.calls)
+&gt;       with pytest.raises(AgentError) as error:p._continue_global_repairs(plan,state)
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:210: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+workspace\t\gpfed118\src\math_agent\pipeline.py:513: in _continue_global_repairs
+    raw=self.provider.generate('repair_content_unit',{'section':before,'issues':request['issues'],
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;test_global_strict_patch_migration.PatchProvider object at 0x00000242F5AC0AD0&gt;
+role = 'repair_content_unit'
+context = {'section': {'section_id': 'S01', 'units': [{'id': 'S01.U01', 'kind': 'explanation', 'tex': '取足够大的正整数 N。', 'relates_to...ifficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}, ...}
+schema = &lt;class 'math_agent.domain.WrittenSection'&gt;
+
+    def generate(self, role, context, schema):
+        if self.active:
+            self.active.store.count_request(self.active.job,60,{'role':role,'fixture':'OFFLINE_NO_HTTP'})
+        self.calls.append((role,copy.deepcopy(context)))
+        if role == 'repair_local_patch':
+            assert schema is LocalPatch
+            self.repairs.append(copy.deepcopy(context))
+            response = self.reply or {'section_id':context['section']['section_id'], 'replacements':[
+                {'unit_id':unit['id'],'tex':unit['tex']+' 正整数无上界（阿基米德性质）。'}
+                for unit in context['section']['units'] if unit['id'] in context['allowed_unit_ids']]}
+            if self.after_reply:self.after_reply()
+            return copy.deepcopy(response)
+&gt;       assert role != 'repair_content_unit', 'Global repairs must request a strict patch, never a whole section'
+E       AssertionError: Global repairs must request a strict patch, never a whole section
+E       assert 'repair_content_unit' != 'repair_content_unit'
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:39: AssertionError</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_late_patch_after_cancel_is_archived_but_not_accepted" time="0.215"><failure message="AssertionError: Global repairs must request a strict patch, never a whole section&#10;assert 'repair_content_unit' != 'repair_content_unit'">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_late_patch_after_cancel_i0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5D5FAA0&gt;
+
+    def test_late_patch_after_cancel_is_archived_but_not_accepted(tmp_path,monkeypatch):
+        service,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
+        state=p._load_global_repair_state(plan);before=copy.deepcopy(state)
+        path=p.root/'global-repair-state.json';raw=path.read_bytes()
+        provider.after_reply=lambda:service.cancel(p.run['id'])
+&gt;       with pytest.raises(AgentError) as error:p._continue_global_repairs(plan,state)
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:220: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+workspace\t\gpfed118\src\math_agent\pipeline.py:513: in _continue_global_repairs
+    raw=self.provider.generate('repair_content_unit',{'section':before,'issues':request['issues'],
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;test_global_strict_patch_migration.PatchProvider object at 0x00000242F5D5EAE0&gt;
+role = 'repair_content_unit'
+context = {'section': {'section_id': 'S01', 'units': [{'id': 'S01.U01', 'kind': 'explanation', 'tex': '取足够大的正整数 N。', 'relates_to...ifficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}, ...}
+schema = &lt;class 'math_agent.domain.WrittenSection'&gt;
+
+    def generate(self, role, context, schema):
+        if self.active:
+            self.active.store.count_request(self.active.job,60,{'role':role,'fixture':'OFFLINE_NO_HTTP'})
+        self.calls.append((role,copy.deepcopy(context)))
+        if role == 'repair_local_patch':
+            assert schema is LocalPatch
+            self.repairs.append(copy.deepcopy(context))
+            response = self.reply or {'section_id':context['section']['section_id'], 'replacements':[
+                {'unit_id':unit['id'],'tex':unit['tex']+' 正整数无上界（阿基米德性质）。'}
+                for unit in context['section']['units'] if unit['id'] in context['allowed_unit_ids']]}
+            if self.after_reply:self.after_reply()
+            return copy.deepcopy(response)
+&gt;       assert role != 'repair_content_unit', 'Global repairs must request a strict patch, never a whole section'
+E       AssertionError: Global repairs must request a strict patch, never a whole section
+E       assert 'repair_content_unit' != 'repair_content_unit'
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:39: AssertionError</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_real_ch02_proposal_cannot_modify_unrelated_c03_ast[valid_sparse]" time="0.524"><failure message="AssertionError: Global repairs must request a strict patch, never a whole section&#10;assert 'repair_content_unit' != 'repair_content_unit'">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_real_ch02_proposal_cannot0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5AC7D10&gt;
+response_kind = 'valid_sparse'
+
+    @pytest.mark.parametrize('response_kind',['valid_sparse','whole_section','forbidden_calculation'])
+    def test_real_ch02_proposal_cannot_modify_unrelated_c03_ast(tmp_path,monkeypatch,response_kind):
+        fixture=captured();before=fixture['before'];bad=fixture['rejected']
+        original=next(c for c in before['calculations'] if c['id']=='S02.C03')
+        changed=next(c for c in bad['calculations'] if c['id']=='S02.C03')
+        assert original['unit_id']==changed['unit_id']=='S02.U16' and original['lhs']!=changed['lhs']
+        from math_agent.mathcheck import _calculate
+        assert _calculate({**original,'kind':'numeric_spotcheck','points':[{'n':1}]})['status']=='PASS'
+        assert _calculate({**changed,'kind':'numeric_spotcheck','points':[{'n':1}]})['status']=='FAIL'
+        provider=PatchProvider();_,p,plan,_=setup_raised(tmp_path,provider,monkeypatch);provider.active=p
+        section1=provider.generate('writer_lecture_section',{'section':plan['sections'][0]},None)
+        old={'schema_version':2,'identity':p._global_repair_identity(plan),'rounds_used':2,
+             'phase':'validated','sections':{},'pending':[],'teacher_visual_review':'NOT_RUN'}
+        p._start_global_repair([(plan['sections'][0],section1),(plan['sections'][1],before)],
+            [{'unit_id':'S02.U14','severity':'review','message':'Preserved old concern; no mathematical verdict here'}],old)
+        assert set(old['sections'])=={'S02'} and old['pending'][0]['neighbors'][0]['section']['id']=='S01'
+        replacement=next(u['tex'] for u in bad['units'] if u['id']=='S02.U14')
+        provider.reply={'section_id':'S02','replacements':[{'unit_id':'S02.U14','tex':replacement}]}
+        if response_kind=='whole_section':provider.reply=bad
+        elif response_kind=='forbidden_calculation':provider.reply['calculation_updates']=[changed]
+        path=p.root/'global-repair-state.json';raw=path.read_bytes()
+        if response_kind!='valid_sparse':
+            with pytest.raises(AgentError) as error:p._continue_global_repairs(plan,old)
+            assert error.value.code=='GLOBAL_REPAIR_SCOPE_VIOLATION' and path.read_bytes()==raw
+            assert old['pending'] and list((p.root/'global-repairs').rglob('*-rejected.json'))
+        else:
+&gt;           p._continue_global_repairs(plan,old)
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+workspace\t\gpfed118\src\math_agent\pipeline.py:513: in _continue_global_repairs
+    raw=self.provider.generate('repair_content_unit',{'section':before,'issues':request['issues'],
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;test_global_strict_patch_migration.PatchProvider object at 0x00000242F78D15B0&gt;
+role = 'repair_content_unit'
+context = {'section': {'section_id': 'S02', 'units': [{'id': 'S02.U01', 'kind': 'explanation', 'tex': '本节中的级数均为实数项级数，下标从 $1$ 开始。...ifficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}, ...}
+schema = &lt;class 'math_agent.domain.WrittenSection'&gt;
+
+    def generate(self, role, context, schema):
+        if self.active:
+            self.active.store.count_request(self.active.job,60,{'role':role,'fixture':'OFFLINE_NO_HTTP'})
+        self.calls.append((role,copy.deepcopy(context)))
+        if role == 'repair_local_patch':
+            assert schema is LocalPatch
+            self.repairs.append(copy.deepcopy(context))
+            response = self.reply or {'section_id':context['section']['section_id'], 'replacements':[
+                {'unit_id':unit['id'],'tex':unit['tex']+' 正整数无上界（阿基米德性质）。'}
+                for unit in context['section']['units'] if unit['id'] in context['allowed_unit_ids']]}
+            if self.after_reply:self.after_reply()
+            return copy.deepcopy(response)
+&gt;       assert role != 'repair_content_unit', 'Global repairs must request a strict patch, never a whole section'
+E       AssertionError: Global repairs must request a strict patch, never a whole section
+E       assert 'repair_content_unit' != 'repair_content_unit'
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:39: AssertionError</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_real_ch02_proposal_cannot_modify_unrelated_c03_ast[whole_section]" time="0.132"><failure message="AssertionError: Global repairs must request a strict patch, never a whole section&#10;assert 'repair_content_unit' != 'repair_content_unit'">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_real_ch02_proposal_cannot1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F5AC7AA0&gt;
+response_kind = 'whole_section'
+
+    @pytest.mark.parametrize('response_kind',['valid_sparse','whole_section','forbidden_calculation'])
+    def test_real_ch02_proposal_cannot_modify_unrelated_c03_ast(tmp_path,monkeypatch,response_kind):
+        fixture=captured();before=fixture['before'];bad=fixture['rejected']
+        original=next(c for c in before['calculations'] if c['id']=='S02.C03')
+        changed=next(c for c in bad['calculations'] if c['id']=='S02.C03')
+        assert original['unit_id']==changed['unit_id']=='S02.U16' and original['lhs']!=changed['lhs']
+        from math_agent.mathcheck import _calculate
+        assert _calculate({**original,'kind':'numeric_spotcheck','points':[{'n':1}]})['status']=='PASS'
+        assert _calculate({**changed,'kind':'numeric_spotcheck','points':[{'n':1}]})['status']=='FAIL'
+        provider=PatchProvider();_,p,plan,_=setup_raised(tmp_path,provider,monkeypatch);provider.active=p
+        section1=provider.generate('writer_lecture_section',{'section':plan['sections'][0]},None)
+        old={'schema_version':2,'identity':p._global_repair_identity(plan),'rounds_used':2,
+             'phase':'validated','sections':{},'pending':[],'teacher_visual_review':'NOT_RUN'}
+        p._start_global_repair([(plan['sections'][0],section1),(plan['sections'][1],before)],
+            [{'unit_id':'S02.U14','severity':'review','message':'Preserved old concern; no mathematical verdict here'}],old)
+        assert set(old['sections'])=={'S02'} and old['pending'][0]['neighbors'][0]['section']['id']=='S01'
+        replacement=next(u['tex'] for u in bad['units'] if u['id']=='S02.U14')
+        provider.reply={'section_id':'S02','replacements':[{'unit_id':'S02.U14','tex':replacement}]}
+        if response_kind=='whole_section':provider.reply=bad
+        elif response_kind=='forbidden_calculation':provider.reply['calculation_updates']=[changed]
+        path=p.root/'global-repair-state.json';raw=path.read_bytes()
+        if response_kind!='valid_sparse':
+&gt;           with pytest.raises(AgentError) as error:p._continue_global_repairs(plan,old)
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:251: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+workspace\t\gpfed118\src\math_agent\pipeline.py:513: in _continue_global_repairs
+    raw=self.provider.generate('repair_content_unit',{'section':before,'issues':request['issues'],
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;test_global_strict_patch_migration.PatchProvider object at 0x00000242F829CAA0&gt;
+role = 'repair_content_unit'
+context = {'section': {'section_id': 'S02', 'units': [{'id': 'S02.U01', 'kind': 'explanation', 'tex': '本节中的级数均为实数项级数，下标从 $1$ 开始。...ifficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}, ...}
+schema = &lt;class 'math_agent.domain.WrittenSection'&gt;
+
+    def generate(self, role, context, schema):
+        if self.active:
+            self.active.store.count_request(self.active.job,60,{'role':role,'fixture':'OFFLINE_NO_HTTP'})
+        self.calls.append((role,copy.deepcopy(context)))
+        if role == 'repair_local_patch':
+            assert schema is LocalPatch
+            self.repairs.append(copy.deepcopy(context))
+            response = self.reply or {'section_id':context['section']['section_id'], 'replacements':[
+                {'unit_id':unit['id'],'tex':unit['tex']+' 正整数无上界（阿基米德性质）。'}
+                for unit in context['section']['units'] if unit['id'] in context['allowed_unit_ids']]}
+            if self.after_reply:self.after_reply()
+            return copy.deepcopy(response)
+&gt;       assert role != 'repair_content_unit', 'Global repairs must request a strict patch, never a whole section'
+E       AssertionError: Global repairs must request a strict patch, never a whole section
+E       assert 'repair_content_unit' != 'repair_content_unit'
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:39: AssertionError</failure></testcase><testcase classname="tests.test_global_strict_patch_migration" name="test_real_ch02_proposal_cannot_modify_unrelated_c03_ast[forbidden_calculation]" time="0.141"><failure message="AssertionError: Global repairs must request a strict patch, never a whole section&#10;assert 'repair_content_unit' != 'repair_content_unit'">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpfed118/t/test_real_ch02_proposal_cannot2')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000242F829F7D0&gt;
+response_kind = 'forbidden_calculation'
+
+    @pytest.mark.parametrize('response_kind',['valid_sparse','whole_section','forbidden_calculation'])
+    def test_real_ch02_proposal_cannot_modify_unrelated_c03_ast(tmp_path,monkeypatch,response_kind):
+        fixture=captured();before=fixture['before'];bad=fixture['rejected']
+        original=next(c for c in before['calculations'] if c['id']=='S02.C03')
+        changed=next(c for c in bad['calculations'] if c['id']=='S02.C03')
+        assert original['unit_id']==changed['unit_id']=='S02.U16' and original['lhs']!=changed['lhs']
+        from math_agent.mathcheck import _calculate
+        assert _calculate({**original,'kind':'numeric_spotcheck','points':[{'n':1}]})['status']=='PASS'
+        assert _calculate({**changed,'kind':'numeric_spotcheck','points':[{'n':1}]})['status']=='FAIL'
+        provider=PatchProvider();_,p,plan,_=setup_raised(tmp_path,provider,monkeypatch);provider.active=p
+        section1=provider.generate('writer_lecture_section',{'section':plan['sections'][0]},None)
+        old={'schema_version':2,'identity':p._global_repair_identity(plan),'rounds_used':2,
+             'phase':'validated','sections':{},'pending':[],'teacher_visual_review':'NOT_RUN'}
+        p._start_global_repair([(plan['sections'][0],section1),(plan['sections'][1],before)],
+            [{'unit_id':'S02.U14','severity':'review','message':'Preserved old concern; no mathematical verdict here'}],old)
+        assert set(old['sections'])=={'S02'} and old['pending'][0]['neighbors'][0]['section']['id']=='S01'
+        replacement=next(u['tex'] for u in bad['units'] if u['id']=='S02.U14')
+        provider.reply={'section_id':'S02','replacements':[{'unit_id':'S02.U14','tex':replacement}]}
+        if response_kind=='whole_section':provider.reply=bad
+        elif response_kind=='forbidden_calculation':provider.reply['calculation_updates']=[changed]
+        path=p.root/'global-repair-state.json';raw=path.read_bytes()
+        if response_kind!='valid_sparse':
+&gt;           with pytest.raises(AgentError) as error:p._continue_global_repairs(plan,old)
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:251: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+workspace\t\gpfed118\src\math_agent\pipeline.py:513: in _continue_global_repairs
+    raw=self.provider.generate('repair_content_unit',{'section':before,'issues':request['issues'],
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;test_global_strict_patch_migration.PatchProvider object at 0x00000242F82A5700&gt;
+role = 'repair_content_unit'
+context = {'section': {'section_id': 'S02', 'units': [{'id': 'S02.U01', 'kind': 'explanation', 'tex': '本节中的级数均为实数项级数，下标从 $1$ 开始。...ifficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}, ...}
+schema = &lt;class 'math_agent.domain.WrittenSection'&gt;
+
+    def generate(self, role, context, schema):
+        if self.active:
+            self.active.store.count_request(self.active.job,60,{'role':role,'fixture':'OFFLINE_NO_HTTP'})
+        self.calls.append((role,copy.deepcopy(context)))
+        if role == 'repair_local_patch':
+            assert schema is LocalPatch
+            self.repairs.append(copy.deepcopy(context))
+            response = self.reply or {'section_id':context['section']['section_id'], 'replacements':[
+                {'unit_id':unit['id'],'tex':unit['tex']+' 正整数无上界（阿基米德性质）。'}
+                for unit in context['section']['units'] if unit['id'] in context['allowed_unit_ids']]}
+            if self.after_reply:self.after_reply()
+            return copy.deepcopy(response)
+&gt;       assert role != 'repair_content_unit', 'Global repairs must request a strict patch, never a whole section'
+E       AssertionError: Global repairs must request a strict patch, never a whole section
+E       assert 'repair_content_unit' != 'repair_content_unit'
+
+workspace\t\gpfed118\tests\test_global_strict_patch_migration.py:39: AssertionError</failure></testcase></testsuite></testsuites>

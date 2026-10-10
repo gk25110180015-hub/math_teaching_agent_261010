@@ -1,0 +1,234 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27;; worker-src blob:; style-src &#x27;unsafe-inline&#x27;; img-src data: blob:; media-src blob:; connect-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;">
+<title>从导数符号读出函数走势</title>
+<style>body{font:16px system-ui,sans-serif;margin:0;padding:20px;background:#edf1f7;color:#18283b}main{max-width:1040px;margin:auto}canvas{width:100%;background:#f7f9fc;border-radius:12px;box-shadow:0 8px 35px #1c36511a}button{padding:9px 20px;border:1px solid #bdcbe5;border-radius:7px;background:white;color:#213d8f;cursor:pointer}.toolbar{display:flex;gap:12px;align-items:center;margin:16px 0}#time{flex:1}#controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}label{display:grid;grid-template-columns:1fr 2fr 50px;gap:8px;align-items:center;background:white;padding:14px;border-radius:8px}#caption{min-height:45px;line-height:1.7}small{color:#607189}#status{color:#a12c2c}input{min-width:0}</style></head>
+<body><style>.control-reason{grid-column:1/-1}.control-reason:empty{display:none}#mode{color:#456087;font-size:14px}</style><main><p><small>调整参数，观察数学过程 · 无声动画与中文字幕 · 待教师复核</small></p>
+<canvas id="scene" width="960" height="540" aria-label="数学概念动画"></canvas>
+<div class="toolbar"><button id="play">播放 / 暂停</button><button id="reset">重置分镜演示</button><input id="time" aria-label="动画进度" type="range" min="0" max="1" step="0.001" value="0"></div>
+<p id="caption"></p><p id="mode"></p><div id="controls"></div><p id="status" role="alert"></p>
+<details><summary>数学说明与适用范围</summary><p>已重新核对三镜：S1 仍绘制完整三次曲线、真实切线、运动点和导数符号；S2 在演示停留阶段继续使用动态数学视窗与驻点左右色带，在探索模式只有 x=-1 或 x=1 时根据实际滑杆值放大并显示对应左右符号，非驻点保持全局视图且当前点可见；S3 继续保留完整曲线、真实切线、当前位置和三段符号带。修复了探索模式 focus 始终为 0 的问题，并使放大字幕只在实际放大图形存在时出现。</p><ul><li>示例函数固定为 f(x)=x³-3x，导数为 f′(x)=3x²-3。</li><li>显示区间固定为 [-2,2]；符号表结论针对该函数和该区间。</li><li>f′(x)=0 只表示驻点，必须检查两侧符号是否变号。</li><li>x=-1 处符号由正变负，是局部极大；x=1 处由负变正，是局部极小。</li><li>运动点沿曲线移动用于展示位置变化，不把导数解释为运动速度。</li><li>位置由数值滑杆控制，不支持直接拖动画布上的点或输入任意函数。</li><li>函数固定为 f(x)=x³−3x，不支持任意函数输入。</li><li>符号表结论限于显示区间 [-2,2]。</li><li>运动点用于展示位置变化，不表示导数是运动速度。</li></ul></details>
+</main><script type="application/json" id="project">{"story": {"interaction_goals": ["用数值滑杆改变曲线上当前位置 x", "用整数切换显示函数图像或导数符号带", "用时间轴播放或暂停运动点", "观察切线斜率与 f′(x) 符号的对应关系", "比较两个驻点左右的导数符号并判断极值"], "math_notes": ["示例函数固定为 f(x)=x³-3x，导数为 f′(x)=3x²-3。", "显示区间固定为 [-2,2]；符号表结论针对该函数和该区间。", "f′(x)=0 只表示驻点，必须检查两侧符号是否变号。", "x=-1 处符号由正变负，是局部极大；x=1 处由负变正，是局部极小。", "运动点沿曲线移动用于展示位置变化，不把导数解释为运动速度。", "位置由数值滑杆控制，不支持直接拖动画布上的点或输入任意函数。"], "objectives": ["用导数符号判断函数在给定区间内的递增与递减", "理解 f′(x)=0 只是驻点条件，不能单独推出极值", "用两侧导数符号判断 x=-1 和 x=1 处的局部极值", "把切线斜率、曲线走势和符号表联系起来"], "scenes": [{"id": "S1", "math": "f(x)=x³-3x，f′(x)=3x²-3。滑杆位置 x∈[-2,2]；当 f′(x)\u003e0 时函数递增，当 f′(x)\u003c0 时函数递减。", "narration": "切线向上时导数为正，函数递增；切线向下时导数为负，函数递减。", "seconds": 10, "title": "切线斜率与函数走势", "visual": "绘制预设曲线 y=x³-3x，横轴显示 [-2,2]。数值滑杆定位 x，显示对应点、切线、f′(x) 和“递增/递减”标记；时间轴播放时运动点从左向右移动，支持暂停。"}, {"id": "S2", "math": "f′(-1)=f′(1)=0。x=-1 左侧为正、右侧为负，是局部极大；x=1 左侧为负、右侧为正，是局部极小。", "narration": "导数为零只说明切线水平；比较两侧符号，才能判断局部极值。", "seconds": 10, "title": "驻点与局部极值", "visual": "时间轴暂停在 x=-1 或 x=1，或由数值滑杆定位到这些点。放大水平切线，并在驻点左右显示导数符号、函数值和极值类型。"}, {"id": "S3", "math": "在显示区间 [-2,2] 内，f′(x)\u003e0 于 [-2,-1) 与 (1,2]，f′(x)\u003c0 于 (-1,1)，且 f′(-1)=f′(1)=0。因此函数先增、后减、再增，x=-1 为局部极大，x=1 为局部极小。", "narration": "符号表把曲线分段：正号上升，负号下降，变号处可判断极值。", "seconds": 10, "title": "用符号表概括增减", "visual": "数值滑杆在 [-2,2] 内移动，联动显示 f(x)、f′(x)、切线和符号表当前位置。整数切换在“函数图像”和“导数符号带”之间切换；不支持直接拖动图形点。"}], "summary": "通过预设函数 f(x)=x³-3x 在 [-2,2] 上的曲线、切线和导数符号表，展示导数为正、为零、为负分别如何对应函数的递增、驻点与递减，并用两侧符号判断局部极小值和极大值。交互仅使用数值滑杆、整数切换及时间轴播放/暂停。", "title": "从导数符号读出函数走势"}, "program": {"runtime_version": 2, "code": "function draw(ctx,t,p){\n  var W=960,H=540;\n  function num(v,d){return typeof v==='number'\u0026\u0026isFinite(v)?v:d;}\n  function lim(v,a,b){return Math.max(a,Math.min(b,v));}\n  function txt(s,x,y,z,c,a){ctx.font=(z||18)+'px sans-serif';ctx.fillStyle=c||'#1e2b30';ctx.textAlign=a||'left';ctx.textBaseline='middle';ctx.fillText(String(s),x,y);}\n  function ln(x1,y1,x2,y2,c,w){ctx.strokeStyle=c||'#52636b';ctx.lineWidth=w||2;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();}\n  function rect(x,y,w,h,c){if(isFinite(x)\u0026\u0026isFinite(y)\u0026\u0026isFinite(w)\u0026\u0026isFinite(h)\u0026\u0026w\u003e=0\u0026\u0026h\u003e=0){ctx.fillStyle=c;ctx.fillRect(x,y,w,h);}}\n  function f(q){return q*q*q-3*q;}\n  function d(q){return 3*q*q-3;}\n  var mode=p\u0026\u0026p.$mode==='explore'?'explore':'presentation';\n  var tt=lim(num(t,0),0,0.999999999);\n  var xin=lim(num(p\u0026\u0026p.x,0),-2,2);\n  var vin=lim(Math.round(num(p\u0026\u0026p.view,0)),0,1);\n  var scene=Math.min(2,Math.floor(tt*3));\n  var u=tt*3-scene;\n  var x=xin,view=vin,focus=0,hold=false;\n  if(mode==='presentation'){\n    if(scene===0){x=-2+4*u;view=0;}\n    if(scene===1){\n      view=0;\n      if(u\u003c0.20){x=-1.65+0.65*u/0.20;focus=-1;}\n      else if(u\u003c0.38){x=-1;focus=-1;hold=true;}\n      else if(u\u003c0.50){x=-1+2*(u-0.38)/0.12;focus=x\u003c0?-1:1;}\n      else if(u\u003c0.68){x=1;focus=1;hold=true;}\n      else{x=1-0.65*(u-0.68)/0.32;focus=1;}\n    }\n    if(scene===2){x=-2+4*u;view=u\u003e=0.55?1:0;}\n  }\n  x=lim(x,-2,2);\n  var fx=f(x),dx=d(x);\n  var atL=Math.abs(x+1)\u003c1e-9,atR=Math.abs(x-1)\u003c1e-9;\n  var stationary=atL||atR;\n  if(mode==='explore') focus=atL?-1:atR?1:0;\n  var sg=dx\u003e1e-8?1:dx\u003c-1e-8?-1:0;\n  var interval=atL||atR?'驻点/区间边界':x\u003c-1?'[-2,-1)':x\u003c1?'(-1,1)':'(1,2]';\n  var xmin=-2,xmax=2,ymin=-2.5,ymax=2.5;\n  var zoomActive=scene===1\u0026\u0026((mode==='explore'\u0026\u0026stationary)||hold);\n  if(zoomActive){\n    var cen=focus===-1?-1:1;\n    xmin=Math.max(-2,cen-0.72);xmax=Math.min(2,cen+0.72);\n    ymin=Infinity;ymax=-Infinity;\n    for(var k=0;k\u003c=80;k++){var q=xmin+(xmax-xmin)*k/80;var z=f(q);ymin=Math.min(ymin,z);ymax=Math.max(ymax,z);}\n    ymin-=0.34;ymax+=0.34;\n  }\n  var plot={l:55,r:610,top:105,bot:395};\n  function X(q){return plot.l+(q-xmin)/(xmax-xmin)*(plot.r-plot.l);}\n  function Y(y){return plot.bot-(y-ymin)/(ymax-ymin)*(plot.bot-plot.top);}\n  ctx.clearRect(0,0,W,H);rect(0,0,W,H,'#fbfcf7');rect(35,85,890,335,'#eef4ef');\n  var st=scene===0?'S1 当前位置与切线':scene===1?'S2 放大驻点':'S3 符号表总结';\n  txt(st,625,101,19,'#41615a');txt('f(x)=x³−3x',625,132,21);txt('f′(x)=3x²−3',625,162,20);\n  txt('x='+x.toFixed(2)+'，f='+fx.toFixed(2),625,192,17);\n  txt('f′(x)='+dx.toFixed(2),625,220,17,sg\u003e0?'#13795b':sg\u003c0?'#b23a48':'#805500');\n  txt(sg\u003e0?'切线斜率为正':sg\u003c0?'切线斜率为负':'切线水平',625,247,17,sg\u003e0?'#13795b':sg\u003c0?'#b23a48':'#805500');\n  txt('符号区间：'+interval,625,274,16);\n  if(atL)txt('x=-1：左正右负，局部极大',625,301,16,'#805500');\n  else if(atR)txt('x=1：左负右正，局部极小',625,301,16,'#805500');\n  else txt(sg\u003e0?'该区间函数递增':sg\u003c0?'该区间函数递减':'驻点：需比较两侧',625,301,16,sg\u003e0?'#13795b':sg\u003c0?'#b23a48':'#805500');\n  ctx.save();ctx.beginPath();ctx.rect(plot.l,plot.top,plot.r-plot.l,plot.bot-plot.top);ctx.clip();\n  var yzero=Y(0),xzero=X(0);\n  if(yzero\u003e=plot.top\u0026\u0026yzero\u003c=plot.bot)ln(plot.l,yzero,plot.r,yzero,'#52636b',1.4);\n  if(xzero\u003e=plot.l\u0026\u0026xzero\u003c=plot.r)ln(xzero,plot.top,xzero,plot.bot,'#52636b',1.4);\n  ctx.strokeStyle='#176b87';ctx.lineWidth=3;ctx.beginPath();\n  for(var i=0;i\u003c=360;i++){var q1=xmin+(xmax-xmin)*i/360;var yy=Y(f(q1));if(i===0)ctx.moveTo(X(q1),yy);else ctx.lineTo(X(q1),yy);}ctx.stroke();\n  ctx.strokeStyle='#d26a3a';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(X(xmin),Y(fx+dx*(xmin-x)));ctx.lineTo(X(xmax),Y(fx+dx*(xmax-x)));ctx.stroke();\n  var px=X(x),py=Y(fx);ctx.fillStyle='#d22f45';ctx.beginPath();ctx.arc(px,py,6,0,Math.PI*2);ctx.fill();\n  txt('P('+x.toFixed(2)+','+fx.toFixed(2)+')',lim(px+10,plot.l+5,plot.r-105),lim(py-16,plot.top+15,plot.bot-15),15,'#b12a3d');\n  if(stationary)txt('水平切线',lim(px+12,plot.l+5,plot.r-80),lim(py+20,plot.top+18,plot.bot-15),15,'#805500');\n  if(zoomActive){\n    txt('放大视窗',plot.l+8,plot.top+17,15,'#52636b');\n    var bandY=plot.bot-42,bandH=38,xf=lim(X(focus),plot.l,plot.r);\n    rect(plot.l,bandY,Math.max(0,xf-plot.l),bandH,focus===-1?'#b9e5cf':'#f4c4c4');\n    rect(xf,bandY,Math.max(0,plot.r-xf),bandH,focus===-1?'#f4c4c4':'#b9e5cf');\n    txt(focus===-1?'+':'−',plot.l+(xf-plot.l)/2,bandY+19,20,focus===-1?'#176b4b':'#9d3040','center');\n    txt(focus===-1?'−':'+',xf+(plot.r-xf)/2,bandY+19,20,focus===-1?'#9d3040':'#176b4b','center');\n    txt('左侧',plot.l+(xf-plot.l)/2,bandY-13,14,'#52636b','center');txt('右侧',xf+(plot.r-xf)/2,bandY-13,14,'#52636b','center');\n  }\n  if(scene===2\u0026\u0026view===1){\n    var by=220,bh=120,a=lim(X(-1),plot.l,plot.r),b=lim(X(1),plot.l,plot.r);\n    rect(plot.l,by,Math.max(0,a-plot.l),bh,'#b9e5cf');rect(a,by,Math.max(0,b-a),bh,'#f4c4c4');rect(b,by,Math.max(0,plot.r-b),bh,'#b9e5cf');\n    txt('＋ 递增',plot.l+(a-plot.l)/2,by+25,17,'#176b4b','center');txt('− 递减',(a+b)/2,by+25,17,'#9d3040','center');txt('＋ 递增',b+(plot.r-b)/2,by+25,17,'#176b4b','center');\n    txt('[-2,-1)',plot.l+(a-plot.l)/2,by-17,15,'#52636b','center');txt('(-1,1)',(a+b)/2,by-17,15,'#52636b','center');txt('(1,2]',b+(plot.r-b)/2,by-17,15,'#52636b','center');\n    ln(plot.l,by+78,plot.r,by+78,'#52636b',2);ln(X(x),by+68,X(x),by+88,'#805500',2);txt('当前位置',lim(X(x),plot.l+35,plot.r-35),by+101,14,'#805500','center');\n  }\n  ctx.restore();\n  txt(view===0?'图像视图':'符号带视图',625,337,17,'#41615a');txt('正号对应递增，负号对应递减',625,365,15,'#52636b');txt('导数为零还需比较两侧',625,391,15,'#52636b');\n  var title,caption;\n  if(mode==='presentation'){\n    title=scene===0?'切线斜率与函数走势':scene===1?'驻点与局部极值':'用符号表概括增减';\n    caption=scene===0?(sg\u003e0?'切线斜率为正，该符号区间递增。':sg\u003c0?'切线斜率为负，该符号区间递减。':'切线水平，继续比较两侧符号。'):scene===1?(atL?'x=-1 左正右负，是局部极大。':atR?'x=1 左负右正，是局部极小。':zoomActive?'放大驻点附近，比较左右导数符号。':'正在移动取点，观察驻点附近的变化。'):'[-2,2] 内先增、后减、再增；由两侧变号判定极值。';\n  }else{\n    title=view===0?'图像探索：导数符号与走势':'符号带探索：增减区间';\n    caption=atL?'当前恰为 x=-1：左正右负，是局部极大。':atR?'当前恰为 x=1：左负右正，是局部极小。':sg\u003e0?'当前切线斜率为正，位于递增区间。':sg\u003c0?'当前切线斜率为负，位于递减区间。':'当前为驻点；仅凭导数为零不能断定极值。';\n  }\n  return {metrics:{x:x,f:fx,derivative:dx,scene:scene,view:view,stationary:stationary,atLeft:atL,atRight:atR,focus:focus,interval:interval,viewport:{xmin:xmin,xmax:xmax,ymin:ymin,ymax:ymax}},controls:{x:x,view:view},disabled:{},title:title,caption:caption};\n}", "controls": [{"id": "x", "label": "曲线上位置 x", "min": -2.0, "max": 2.0, "step": 0.01, "value": 0.0}, {"id": "view", "label": "视图：0图像，1符号带", "min": 0.0, "max": 1.0, "step": 1.0, "value": 0.0}], "covered_decision_ids": ["a37119a5c56a416ca279d276d5a10bcc", "53f804c90b5049f193797f49cb71542b"], "explanation": "已重新核对三镜：S1 仍绘制完整三次曲线、真实切线、运动点和导数符号；S2 在演示停留阶段继续使用动态数学视窗与驻点左右色带，在探索模式只有 x=-1 或 x=1 时根据实际滑杆值放大并显示对应左右符号，非驻点保持全局视图且当前点可见；S3 继续保留完整曲线、真实切线、当前位置和三段符号带。修复了探索模式 focus 始终为 0 的问题，并使放大字幕只在实际放大图形存在时出现。", "limitations": ["函数固定为 f(x)=x³−3x，不支持任意函数输入。", "符号表结论限于显示区间 [-2,2]。", "运动点用于展示位置变化，不表示导数是运动速度。"]}}</script><script>/* Owned runtime. Model code executes only in a disposable, network-blocked worker. */
+"use strict";
+const project = JSON.parse(document.getElementById("project").textContent);
+const canvas = document.getElementById("scene");
+const ctx = canvas.getContext("2d");
+const timeSlider = document.getElementById("time");
+const statusBox = document.getElementById("status");
+const duration = project.story.scenes.reduce((n, s) => n + s.seconds, 0);
+const params = Object.fromEntries(project.program.controls.map(c => [c.id, c.value]));
+const defaults = {...params}, widgets = new Map();
+let mode = 'presentation', effective = {...params};
+const version2 = project.program.runtime_version === 2;
+let position = 0, playing = false, serial = 0, requests = new Map(), broken = null;
+const workerSource = `"use strict";\n${project.program.code}\n;
+const surface = new OffscreenCanvas(960, 540);
+const context = surface.getContext('2d');
+self.onmessage = function(event) {
+  const {id,t,p} = event.data;
+  try {
+    const plotText = [], drawingEvidence = {texts:[],rectangles:[],paints:[],invalid_calls:[]};
+    const originals = {};
+    let clipped = false; const clipStack = [];
+    const numericArguments={fillRect:4,strokeRect:4,clearRect:4,moveTo:2,lineTo:2,rect:4,arc:5,arcTo:5,ellipse:7,bezierCurveTo:6,quadraticCurveTo:4,translate:2,scale:2,rotate:1};
+    const paints=['fillText','strokeText','fillRect','strokeRect','fill','stroke'];
+    for (const method of new Set(['save','restore','clip',...paints,...Object.keys(numericArguments)])) {
+      originals[method] = context[method];
+      context[method] = function(...args) {
+        if (method==='save') clipStack.push(clipped);
+        if (method==='restore' && clipStack.length) clipped=clipStack.pop();
+        if (method==='clip') clipped=true;
+        const required=numericArguments[method];
+        if (required && (args.length<required || args.slice(0,required).some(v=>typeof v!=='number'||!Number.isFinite(v))) && drawingEvidence.invalid_calls.length<12) {
+          drawingEvidence.invalid_calls.push({method,arguments:args.slice(0,required).map(v=>String(v).slice(0,80)),reason:'绘图坐标/尺寸必须是有限数值，检查辅助函数实参是否缺失或错位'});
+        }
+        if (!paints.includes(method)) return originals[method].apply(this,args);
+        const color = String(method.startsWith('stroke') ? this.strokeStyle : this.fillStyle);
+        const matrix=this.getTransform(), transform=[matrix.a,matrix.b,matrix.c,matrix.d,matrix.e,matrix.f];
+        if (method.endsWith('Text') && plotText.length < 80) {
+          plotText.push(String(args[0]).slice(0,200));
+          const measure=this.measureText(String(args[0]));
+          const scale=typeof args[3]==='number' && args[3]>0 ? Math.min(1,args[3]/measure.width) : 1;
+          const left=args[1]-measure.actualBoundingBoxLeft*scale,right=args[1]+measure.actualBoundingBoxRight*scale;
+          const top=args[2]-measure.actualBoundingBoxAscent,bottom=args[2]+measure.actualBoundingBoxDescent;
+          const corners=[[left,top],[right,top],[left,bottom],[right,bottom]].map(([x,y])=>[matrix.a*x+matrix.c*y+matrix.e,matrix.b*x+matrix.d*y+matrix.f]);
+          const bounds=[Math.min(...corners.map(c=>c[0])),Math.min(...corners.map(c=>c[1])),Math.max(...corners.map(c=>c[0])),Math.max(...corners.map(c=>c[1]))];
+          drawingEvidence.texts.push({text:String(args[0]).slice(0,100),x:args[1],y:args[2],color,transform,bounds,clipped});
+        } else if (method.endsWith('Rect') && drawingEvidence.rectangles.length < 24) {
+          drawingEvidence.rectangles.push({method,box:args.slice(0,4),color,transform});
+        } else if ((method==='fill'||method==='stroke') && drawingEvidence.paints.length < 24) {
+          drawingEvidence.paints.push({method,color});
+        }
+        return originals[method].apply(this,args);
+      };
+    }
+    surface.width = 960; surface.height = 540;
+    context.fillStyle = '#f7f9fc'; context.fillRect(0,0,960,540);
+    let result;
+    try { context.save(); result = draw(context,t,p); context.restore(); }
+    finally { for (const method of Object.keys(originals)) context[method] = originals[method]; }
+    const bitmap = surface.transferToImageBitmap();
+    self.postMessage({id,bitmap,result,plotText,drawingEvidence}, [bitmap]);
+  } catch (error) { self.postMessage({id,error:String(error.message || error)}); }
+};`;
+const workerURL = URL.createObjectURL(new Blob([workerSource], {type: "text/javascript"}));
+const worker = new Worker(workerURL);
+URL.revokeObjectURL(workerURL);
+function fail(message) {
+  broken = String(message); playing = false; statusBox.textContent = `动画运行失败：${broken}`;
+  worker.terminate();
+  for (const value of requests.values()) { clearTimeout(value.timer); value.reject(new Error(broken)); }
+  requests.clear();
+}
+worker.onerror = e => { e.preventDefault(); fail(e.message || "动画代码无法运行"); };
+worker.onmessage = e => {
+  const item = requests.get(e.data.id);
+  if (!item) { if (e.data.bitmap) e.data.bitmap.close(); return; }
+  requests.delete(e.data.id); clearTimeout(item.timer);
+  if (e.data.error) { item.reject(new Error(e.data.error)); return; }
+  item.resolve(e.data);
+};
+function requestFrame(t, p) {
+  if (broken) return Promise.reject(new Error(broken));
+  return new Promise((resolve,reject) => {
+    const id = ++serial;
+    const timer = setTimeout(() => fail("单帧超过 3 秒，请修复代码后重试"), 3000);
+    requests.set(id, {resolve,reject,timer}); worker.postMessage({id,t,p});
+  });
+}
+function lines(text, x, y, width, lineHeight, maxLines) {
+  let line = "", count = 0;
+  const chars = [...text];
+  for (let index=0;index<chars.length;index++) {
+    const char=chars[index];
+    if (ctx.measureText(line + char).width > width) {
+      if (count === maxLines-1) { ctx.fillText(line.slice(0,-1)+'…',x,y); return; }
+      ctx.fillText(line, x, y); y += lineHeight; line = ""; count++;
+    }
+    line += char;
+  }
+  ctx.fillText(line, x, y);
+}
+function currentScene(t) {
+  let end = 0;
+  return project.story.scenes.find(s => { end += s.seconds; return t * duration < end; }) || project.story.scenes.at(-1);
+}
+async function render(t, overrides = {}, options = {}) {
+  t = Math.max(0, Math.min(1, t));
+  const frameMode = options.mode || (Object.keys(overrides).length ? 'explore' : mode);
+  const inputs = {...(frameMode === 'presentation' ? defaults : params), ...overrides};
+  const frame = await requestFrame(t, {...inputs, $mode:frameMode});
+  const result = frame.result || {};
+  if (version2) {
+    if (!result.controls || typeof result.title !== 'string' || !result.title.trim() || result.title.length>100 ||
+        typeof result.caption !== 'string' || !result.caption.trim() || result.caption.length>120) {
+      frame.bitmap.close(); throw new Error('draw 必须返回有效 controls、title（1–100字）和 caption（1–120字）');
+    }
+    for (const control of project.program.controls) {
+      const v=result.controls[control.id], reason=result.disabled?.[control.id];
+      if (typeof v !== 'number' || !Number.isFinite(v) || v<control.min-1e-8 || v>control.max+1e-8 ||
+          (reason !== undefined && (typeof reason !== 'string' || !reason.trim()))) {
+        frame.bitmap.close(); throw new Error(`有效控件值或禁用说明无效：${control.id}`);
+      }
+      if (frameMode === 'explore' && !reason && Math.abs(v-inputs[control.id])>1e-7) {
+        frame.bitmap.close(); throw new Error(`自由探索控件被忽略或被时间轴覆盖：${control.id}，输入 ${inputs[control.id]}，实际 ${v}`);
+      }
+    }
+    effective = {...result.controls};
+    for (const [id,w] of widgets) {
+      w.input.value=String(effective[id]); w.output.textContent=String(Number(effective[id].toFixed(5)));
+      w.input.disabled=Boolean(result.disabled?.[id]); w.reason.textContent=result.disabled?.[id] || '';
+    }
+  }
+  ctx.setTransform(1,0,0,1,0,0); ctx.drawImage(frame.bitmap,0,0); frame.bitmap.close();
+  // Hash just the plot area, before captions; a changing subtitle cannot pass animation checks.
+  const pixels = ctx.getImageData(0,68,960,367).data;
+  let signature = 2166136261;
+  for (let i=0;i<pixels.length;i+=4) { signature = Math.imul(signature ^ pixels[i],16777619); signature = Math.imul(signature ^ pixels[i+1],16777619); signature = Math.imul(signature ^ pixels[i+2],16777619); }
+  const scene = currentScene(t);
+  const title = version2 ? result.title : scene.title;
+  const caption = version2 ? result.caption : scene.narration;
+  ctx.fillStyle = "#f7f9fc"; ctx.fillRect(0,0,960,68); ctx.fillRect(0,435,960,105);
+  ctx.fillStyle = "#18283b"; ctx.font = "bold 25px sans-serif";
+  lines(project.story.title,28,34,890,28,1);
+  ctx.fillStyle = "#567087"; ctx.font = "16px sans-serif";
+  ctx.fillText(`${title} · ${(t*duration).toFixed(1)} / ${duration} 秒`,28,59);
+  ctx.fillStyle = "#1d3651"; ctx.font = "19px sans-serif";
+  lines(caption,28,460,900,25,3);
+  ctx.fillStyle = "#4562d9"; ctx.fillRect(0,534,960*t,6);
+  position = t; timeSlider.value = String(t);
+  document.getElementById("caption").textContent = caption;
+  document.getElementById("mode").textContent = frameMode==='presentation' ? '分镜演示 · 调整参数可进入自由探索' : '自由探索 · 滑杆控制当前参数，可重置返回分镜演示';
+  return {metrics: result.metrics || {}, plot_signature: String(signature >>> 0), plot_text:frame.plotText,
+          drawing_evidence:frame.drawingEvidence,
+          title,caption,controls:version2 ? result.controls : inputs,disabled:result.disabled || {},mode:frameMode,scene_id:scene.id};
+}
+let rendering = false, queued = null;
+async function show(t) {
+  queued=t;
+  if (rendering) return;
+  rendering = true;
+  try { while(queued !== null) { const next=queued; queued=null; await render(next); } } catch (e) { fail(e.message); }
+  finally { rendering = false; }
+}
+for (const control of project.program.controls) {
+  const label = document.createElement("label");
+  const title = document.createElement("span"); title.textContent = control.label;
+  const input = document.createElement("input"); input.type="range";
+  input.min=control.min; input.max=control.max; input.step=control.step; input.value=control.value;
+  input.id=`param-${control.id}`; input.setAttribute("aria-label",control.label);
+  const value = document.createElement("output"); value.textContent=control.value;
+  const reason = document.createElement('small'); reason.className='control-reason';
+  input.oninput = () => { if (version2 && mode==='presentation') Object.assign(params,effective); mode='explore'; params[control.id]=Number(input.value); value.textContent=input.value; playing=false; show(position); };
+  widgets.set(control.id,{input,output:value,reason});
+  label.append(title,input,value,reason); document.getElementById("controls").append(label);
+}
+timeSlider.oninput = () => { playing=false; show(Number(timeSlider.value)); };
+document.getElementById("play").onclick = async () => {
+  if (playing) { playing=false; return; }
+  if (position>=1) position=0;
+  playing=true; const start=performance.now()-position*duration*1000;
+  while(playing && position<1 && !broken) {
+    await show(Math.min(1,(performance.now()-start)/(duration*1000)));
+    await new Promise(resolve=>setTimeout(resolve,33));
+  }
+  playing=false;
+};
+document.getElementById("reset").onclick = () => { playing=false; mode='presentation'; Object.assign(params,defaults); show(0); };
+if (version2) {
+  // A presentation can lock every control. Exploration must still be reachable.
+  const explore = document.createElement('button'); explore.id='explore'; explore.textContent='自由探索';
+  explore.onclick = () => { playing=false; if(mode==='presentation')Object.assign(params,effective); mode='explore'; show(position); };
+  document.getElementById('reset').before(explore);
+}
+async function record() {
+  playing=false; mode='presentation'; await render(0,{}, {mode:'presentation'});
+  const mime = ["video/webm;codecs=vp9","video/webm;codecs=vp8"].find(v=>MediaRecorder.isTypeSupported(v));
+  if (!mime) throw new Error("浏览器不支持 WebM 视频编码");
+  const stream=canvas.captureStream(24);
+  const recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:4000000});
+  const chunks=[]; let size=0;
+  const completed=new Promise((resolve,reject)=>{
+    recorder.ondataavailable=e=>{ chunks.push(e.data); size+=e.data.size; if(size>80*1024*1024){recorder.stop();reject(new Error('视频超过 80MB 限制'));} };
+    recorder.onerror=e=>reject(new Error(e.error?.message || "视频编码失败"));
+    recorder.onstop=resolve;
+  });
+  recorder.start(1000); const start=performance.now(); let frames=0;
+  try {
+    while (performance.now()-start<duration*1000) {
+      await render(Math.min(1,(performance.now()-start)/(duration*1000)),{}, {mode:'presentation'}); frames++;
+      await new Promise(resolve=>setTimeout(resolve,1000/24));
+    }
+    await render(1,{}, {mode:'presentation'}); await new Promise(resolve=>setTimeout(resolve,150));
+    recorder.stop(); await completed;
+  } finally { stream.getTracks().forEach(track=>track.stop()); }
+  const blob=new Blob(chunks,{type:mime});
+  const video=document.createElement("video"); video.muted=true; video.src=URL.createObjectURL(blob);
+  await new Promise((resolve,reject)=>{video.onloadeddata=resolve;video.onerror=()=>reject(new Error('视频解码验证失败'));});
+  const dimensions={width:video.videoWidth,height:video.videoHeight}; URL.revokeObjectURL(video.src);
+  const data=await new Promise(resolve=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result.split(',')[1]);reader.readAsDataURL(blob);});
+  return {data,mime,frames,duration_seconds:duration,recorded_seconds:(performance.now()-start)/1000,...dimensions};
+}
+window.visualization = {render,record,params,duration,ready:render(0)};
+window.visualization.ready.catch(e=>fail(e.message));
+</script></body></html>

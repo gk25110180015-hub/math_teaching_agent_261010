@@ -1,0 +1,85 @@
+{
+  "original_review": {
+    "issues": [
+      {
+        "unit_id": "S04.U05",
+        "severity": "blocking",
+        "message": "目标在分母极限为零时错误使用商法则，所称极限为0不成立；同时引用归属需核对。",
+        "evidence": "S04.U05：『应用商的极限法则时必须保证分母的极限存在且为非零实数。』；目标给出的分母极限是0，不能应用该先修商法则。"
+      }
+    ],
+    "checked_unit_ids": [
+      "S04.U05"
+    ],
+    "limitations": [
+      "Synthetic dependency control, not teacher review."
+    ]
+  },
+  "conflicts": [
+    {
+      "issue_index": 0,
+      "issue_hash": "77028c88abf690cdd62f4692097535c25267e939ae7ea75d1b740d076f2ac889",
+      "target_unit_id": "S04.U05",
+      "target_tex_sha256": "9a0b3553d340f88db8a60f7b2bfa0cdd73a70b865e274bc8e1c1ff424687475a",
+      "matches": [
+        {
+          "quote": "应用商的极限法则时必须保证分母的极限存在且为非零实数。",
+          "anchor": "应用商的极限法则时必须保证分母的极限存在且为非零实数",
+          "normalization": "WHITESPACE_ONLY_NO_MATHEMATICAL_EQUIVALENCE",
+          "source_unit_id": "S02.U01",
+          "source_owner": "prior",
+          "source_tex_sha256": "603a6eeafc33d6e17ed4185ea4f0b921c0dee6c10361c922c59fa03539ee82ac",
+          "source_normalized_offset": 0
+        }
+      ],
+      "status": "ATTRIBUTION_REQUIRES_VERIFICATION",
+      "not_a_mathematical_verdict": true
+    }
+  ],
+  "actual_unit_ids": [
+    "S04.U05"
+  ],
+  "review_context": {
+    "units": [
+      {
+        "id": "S04.U05",
+        "kind": "solution",
+        "tex": "令 $f(x)=x$、$g(x)=x^2$，当 $x\\to0$ 时二者极限都是 $0$。直接用商的极限法则得 $\\lim_{x\\to0}f(x)/g(x)=0$。",
+        "relates_to": null
+      }
+    ],
+    "prior_sections": [
+      {
+        "section_id": "S02",
+        "units": [
+          {
+            "id": "S02.U01",
+            "kind": "theorem",
+            "tex": "应用商的极限法则时必须保证分母的极限存在且为非零实数。",
+            "relates_to": null
+          }
+        ]
+      }
+    ],
+    "actual_unit_ids": [
+      "S04.U05"
+    ]
+  },
+  "provided_unit_catalog": [
+    {
+      "unit_id": "S02.U01",
+      "owner": "prior",
+      "tex": "应用商的极限法则时必须保证分母的极限存在且为非零实数。",
+      "tex_sha256": "603a6eeafc33d6e17ed4185ea4f0b921c0dee6c10361c922c59fa03539ee82ac",
+      "relates_to": null
+    },
+    {
+      "unit_id": "S04.U05",
+      "owner": "current",
+      "tex": "令 $f(x)=x$、$g(x)=x^2$，当 $x\\to0$ 时二者极限都是 $0$。直接用商的极限法则得 $\\lim_{x\\to0}f(x)/g(x)=0$。",
+      "tex_sha256": "9a0b3553d340f88db8a60f7b2bfa0cdd73a70b865e274bc8e1c1ff424687475a",
+      "relates_to": null
+    }
+  ],
+  "instruction": "Resolve each original issue explicitly. A positive quote ownership conflict does not prove the mathematical criticism false. Preserve legitimate cross-unit dependency errors. Every disposition needs verbatim actual target and located source spans. A withdrawal needs target counterevidence and a reason that addresses the entire original claim. Do not add issues, reassign issues outside original targets, alter the plan or approve content."
+}

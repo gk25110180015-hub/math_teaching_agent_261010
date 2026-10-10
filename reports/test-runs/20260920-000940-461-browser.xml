@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="4" time="156.084" timestamp="2026-09-20T00:09:40.828823+08:00" hostname="Asuna"><testcase classname="tests.e2e.test_browser_workflows" name="test_lecture_real_clicks_restore_confirmation" time="18.712"><failure message="playwright._impl._errors.Error: APIRequestContext.get: Invalid URL">browser_page = &lt;Page url='http://127.0.0.1:53331/'&gt;
+
+    def test_lecture_real_clicks_restore_confirmation(browser_page):
+        page = browser_page
+        page.locator("#topic").fill("数列极限")
+        page.locator("#difficulty").fill("经济学本科一年级微积分")
+        assert not page.locator("#trusted-input").is_checked()
+        page.locator("#trusted-input").check()
+        page.locator("#create-run").click()
+        wait_for_plan(page)
+        assert page.locator("[data-question-id]").count() &gt; 0
+        for question in page.locator("[data-question-id]").all():
+            assert question.locator(".choice input").last.get_attribute("value") == "CUSTOM"
+            assert question.locator(".choice input:checked").count() == 0
+        submit_recommended(page)
+        page.get_by_text("本次计划变更（diff）", exact=True).wait_for()
+        page.locator("#outline-editor &gt; summary").click()
+        page.locator("#outline-title").fill("数列极限 · 本科教学讲义")
+        page.locator("#save-outline").click()
+        page.get_by_role("heading", name="数列极限 · 本科教学讲义", exact=True).wait_for()
+        confirm_execute_refresh(page)
+        assert "MOCK" in page.locator("main").inner_text()
+&gt;       _, source = accepted_compile_artifacts(page)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\e2e\test_browser_workflows.py:201: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\e2e\test_browser_workflows.py:161: in accepted_compile_artifacts
+    report = page.request.get(report_link.get_attribute("href")).json()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\playwright\sync_api\_generated.py:21313: in get
+    self._sync(
+.venv\Lib\site-packages\playwright\_impl\_fetch.py:211: in get
+    return await self.fetch(
+.venv\Lib\site-packages\playwright\_impl\_fetch.py:337: in fetch
+    return await self._inner_fetch(
+.venv\Lib\site-packages\playwright\_impl\_fetch.py:443: in _inner_fetch
+    response = await self._channel.send(
+.venv\Lib\site-packages\playwright\_impl\_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;playwright._impl._connection.Connection object at 0x000001D90E0F2BA0&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x000001D90E0FAAC0&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: APIRequestContext.get: Invalid URL
+
+.venv\Lib\site-packages\playwright\_impl\_connection.py:632: Error</failure></testcase><testcase classname="tests.e2e.test_browser_workflows" name="test_beamer_exact_deletion_and_addition" time="123.909"><failure message="playwright._impl._errors.TimeoutError: Locator.wait_for: Timeout 120000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;[data-testid=run-status][data-status=AWAITING_USER_REVIEW]&quot;) to be visible">browser_page = &lt;Page url='http://127.0.0.1:53331/'&gt;
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/8738a1b0/test_beamer_exact_deletion_and0')
+
+        _, source = accepted_compile_artifacts(page)
+        assert "数列极限" in source
+    
+    
+    def test_beamer_exact_deletion_and_addition(browser_page, tmp_path):
+        page = browser_page
+        source = tmp_path / "中文 路径(样例).tex"
+        source.write_text(r"""\documentclass{ctexart}
+    \usepackage{amsmath,amssymb,amsthm}
+    \newtheorem{definition}{定义}
+    \newtheorem{example}{例}
+    \begin{document}
+    \section{数列极限}
+    \begin{definition}若对任意 $\varepsilon&gt;0$，存在 $N$，当 $n&gt;N$ 时 $|a_n-a|&lt;\varepsilon$，则称 $a_n$ 收敛于 $a$。\end{definition}
+    \begin{example}例 3：求 $\lim_{n\to\infty} 1/n$。\end{example}
+    \textbf{解：}由数列极限的定义，极限为 $0$。
+    \section{极限运算}
+    若 $a_n\to a$ 且 $b_n\to b$，则 $a_n+b_n\to a+b$。
+    \end{document}
+    """, encoding="utf-8")
+        page.locator("#workflow").select_option("beamer.from_tex")
+        assert page.locator("#theme option[value=fduclassroom]").count() == 1
+        page.locator("#source-file").set_input_files(str(source))
+        page.locator("#trusted-input").check()
+        page.locator("#create-run").click()
+        wait_for_plan(page)
+        if page.locator("#use-recommended").count():
+            page.locator("#use-recommended").click()
+        page.get_by_text("删除或调整原讲义内容", exact=True).click()
+        example = page.locator(".unit").filter(has_text="例 3").first
+        example.locator("input[type=checkbox]").check()
+        deleted_id = example.locator("input").get_attribute("value")
+        page.get_by_text("添加原讲义之外的内容", exact=True).click()
+        page.locator("#add-content").click()
+        page.get_by_label("新增内容", exact=True).fill("补充例题：求常数数列的极限。")
+        page.get_by_label("插入位置", exact=True).select_option("S01")
+        page.locator("#save-decisions").click()
+        expect(page.locator("#confirm-plan")).to_be_enabled()
+&gt;       assert deleted_id in page.locator("main").inner_text()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\e2e\test_browser_workflows.py:243: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\e2e\test_browser_workflows.py:159: in accepted_compile_artifacts
+    ???
+.venv\Lib\site-packages\playwright\sync_api\_generated.py:20696: in wait_for
+    self._sync(
+.venv\Lib\site-packages\playwright\_impl\_locator.py:752: in wait_for
+    await self._frame.wait_for_selector(
+.venv\Lib\site-packages\playwright\_impl\_frame.py:395: in wait_for_selector
+    await self._channel.send(
+.venv\Lib\site-packages\playwright\_impl\_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;playwright._impl._connection.Connection object at 0x000001D90E1A2420&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x000001D90E0FB740&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Locator.wait_for: Timeout 120000ms exceeded.
+E           Call log:
+E             - waiting for locator("[data-testid=run-status][data-status=AWAITING_USER_REVIEW]") to be visible
+
+.venv\Lib\site-packages\playwright\_impl\_connection.py:632: TimeoutError</failure></testcase><testcase classname="tests.e2e.test_browser_workflows" name="test_custom_input_is_saved_as_plan_effect" time="3.573" /><testcase classname="tests.e2e.test_browser_workflows" name="test_compile_failure_retry_does_not_return_to_confirmation" time="8.946"><failure message="playwright._impl._errors.Error: APIRequestContext.get: Invalid URL">browser_page = &lt;Page url='http://127.0.0.1:53331/'&gt;
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/8738a1b0/test_compile_failure_retry_doe0')
+
+        page.get_by_text("本次计划变更（diff）", exact=True).wait_for()
+        expect(page.locator("main")).to_contain_text(custom_text)
+    
+    
+    def test_compile_failure_retry_does_not_return_to_confirmation(browser_page, tmp_path):
+        page = browser_page
+        source = tmp_path / "失败恢复(合成).tex"
+        source.write_text(r"""\documentclass{ctexart}
+    \usepackage{amsmath,amsthm}
+    \newtheorem{definition}{定义}
+    \begin{document}
+    \section{编译失败回归}
+    \begin{definition}数列是以正整数为定义域的函数。\end{definition}
+    \undefinedMathAgentFailure
+    \end{document}
+    """, encoding="utf-8")
+        page.locator("#workflow").select_option("beamer.from_tex")
+        page.locator("#source-file").set_input_files(str(source))
+        page.locator("#trusted-input").check()
+        page.locator("#create-run").click()
+        wait_for_plan(page)
+        submit_recommended(page)
+        confirm_execute_refresh(page)
+        page.locator("#retry-run").wait_for(timeout=120_000)
+&gt;       assert page.locator("#confirm-plan").count() == 0
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\e2e\test_browser_workflows.py:292: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\playwright\sync_api\_generated.py:21313: in get
+    self._sync(
+.venv\Lib\site-packages\playwright\_impl\_fetch.py:211: in get
+    return await self.fetch(
+.venv\Lib\site-packages\playwright\_impl\_fetch.py:337: in fetch
+    return await self._inner_fetch(
+.venv\Lib\site-packages\playwright\_impl\_fetch.py:443: in _inner_fetch
+    response = await self._channel.send(
+.venv\Lib\site-packages\playwright\_impl\_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;playwright._impl._connection.Connection object at 0x000001D90E927080&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x000001D90E8AF740&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: APIRequestContext.get: Invalid URL
+
+.venv\Lib\site-packages\playwright\_impl\_connection.py:632: Error</failure></testcase></testsuite></testsuites>

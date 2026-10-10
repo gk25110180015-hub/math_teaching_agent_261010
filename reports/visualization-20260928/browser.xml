@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="51.486" timestamp="2026-09-28T21:55:24.684833+08:00" hostname="Asuna"><testcase classname="tests.e2e.test_visualization_browser" name="test_visualization_full_browser_flow[\u5bfc\u6570]" time="25.466"><failure message="playwright._impl._errors.Error: Page.wait_for_function: EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: script-src 'self'&quot;.&#10;&#10;    at eval (&lt;anonymous&gt;)&#10;    at predicate (eval at evaluate (:311:30), &lt;anonymous&gt;:4:60)&#10;    at next (eval at evaluate (:311:30), &lt;anonymous&gt;:29:33)">browser_page = &lt;Page url='http://127.0.0.1:51905/visualizations?run=81ab594cf02b4bac8ffa88a6d9ec9c9e'&gt;
+local_services = ('http://127.0.0.1:51905', WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/visualization-20260928/browser/20260928-215524'))
+topic = '导数'
+
+    @pytest.mark.parametrize('topic', ['导数', '梯度下降算法'])
+    def test_visualization_full_browser_flow(browser_page, local_services, topic):
+        page = browser_page
+        page.get_by_role('link', name='数学概念 → 视频与交互页面').click()
+        page.locator('#visual-topic').fill(topic)
+        page.locator('#visual-provider').select_option('mock')
+        page.locator('#visual-trust').check()
+        page.locator('#visual-create').click()
+        page.locator('#visual-candidate-form').wait_for(timeout=30000)
+        # Arbitrary candidate choice; custom suggestions are intentionally left empty.
+        page.locator('input[name=candidate]').first.check()
+        expect(page.locator('#visual-suggestion')).to_be_visible()
+        page.locator('#visual-choose').click()
+        page.locator('#visual-refine-form fieldset').first.wait_for(timeout=30000)
+        for field in page.locator('#visual-refine-form fieldset').all():
+            field.locator('input[type=radio]').first.check()
+        page.locator('#visual-refine').click()
+        page.locator('#visual-confirm').wait_for(timeout=30000)
+        page.reload()
+        page.locator('#visual-confirm').wait_for(timeout=10000)
+        page.locator('#visual-confirm').click()
+        expect(page.locator('[data-testid=visual-status]')).to_have_attribute('data-status','COMPLETED_WITH_WARNINGS',timeout=150000)
+        video = page.locator('video')
+        expect(video).to_be_visible()
+        page.wait_for_function('document.querySelector("video").readyState &gt;= 1')
+        assert video.evaluate('(v)=&gt;v.videoWidth') == 960
+        video.evaluate('(v)=&gt;v.play()')
+&gt;       page.wait_for_function('document.querySelector("video").currentTime &gt; 0.2')
+
+tests\e2e\test_visualization_browser.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\playwright\sync_api\_generated.py:12809: in wait_for_function
+    self._sync(
+.venv\Lib\site-packages\playwright\_impl\_page.py:1153: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\playwright\_impl\_frame.py:941: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+.venv\Lib\site-packages\playwright\_impl\_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;playwright._impl._connection.Connection object at 0x000001F24813AEA0&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x000001F248983740&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: Page.wait_for_function: EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: script-src 'self'".
+E           
+E               at eval (&lt;anonymous&gt;)
+E               at predicate (eval at evaluate (:311:30), &lt;anonymous&gt;:4:60)
+E               at next (eval at evaluate (:311:30), &lt;anonymous&gt;:29:33)
+
+.venv\Lib\site-packages\playwright\_impl\_connection.py:632: Error</failure></testcase><testcase classname="tests.e2e.test_visualization_browser" name="test_visualization_full_browser_flow[\u68af\u5ea6\u4e0b\u964d\u7b97\u6cd5]" time="25.421"><failure message="playwright._impl._errors.Error: Page.wait_for_function: EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: script-src 'self'&quot;.&#10;&#10;    at eval (&lt;anonymous&gt;)&#10;    at predicate (eval at evaluate (:311:30), &lt;anonymous&gt;:4:60)&#10;    at next (eval at evaluate (:311:30), &lt;anonymous&gt;:29:33)">browser_page = &lt;Page url='http://127.0.0.1:51905/visualizations?run=33d24343442c4d5792e25ab1ca57aa75'&gt;
+local_services = ('http://127.0.0.1:51905', WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/visualization-20260928/browser/20260928-215524'))
+topic = '梯度下降算法'
+
+    @pytest.mark.parametrize('topic', ['导数', '梯度下降算法'])
+    def test_visualization_full_browser_flow(browser_page, local_services, topic):
+        page = browser_page
+        page.get_by_role('link', name='数学概念 → 视频与交互页面').click()
+        page.locator('#visual-topic').fill(topic)
+        page.locator('#visual-provider').select_option('mock')
+        page.locator('#visual-trust').check()
+        page.locator('#visual-create').click()
+        page.locator('#visual-candidate-form').wait_for(timeout=30000)
+        # Arbitrary candidate choice; custom suggestions are intentionally left empty.
+        page.locator('input[name=candidate]').first.check()
+        expect(page.locator('#visual-suggestion')).to_be_visible()
+        page.locator('#visual-choose').click()
+        page.locator('#visual-refine-form fieldset').first.wait_for(timeout=30000)
+        for field in page.locator('#visual-refine-form fieldset').all():
+            field.locator('input[type=radio]').first.check()
+        page.locator('#visual-refine').click()
+        page.locator('#visual-confirm').wait_for(timeout=30000)
+        page.reload()
+        page.locator('#visual-confirm').wait_for(timeout=10000)
+        page.locator('#visual-confirm').click()
+        expect(page.locator('[data-testid=visual-status]')).to_have_attribute('data-status','COMPLETED_WITH_WARNINGS',timeout=150000)
+        video = page.locator('video')
+        expect(video).to_be_visible()
+        page.wait_for_function('document.querySelector("video").readyState &gt;= 1')
+        assert video.evaluate('(v)=&gt;v.videoWidth') == 960
+        video.evaluate('(v)=&gt;v.play()')
+&gt;       page.wait_for_function('document.querySelector("video").currentTime &gt; 0.2')
+
+tests\e2e\test_visualization_browser.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\playwright\sync_api\_generated.py:12809: in wait_for_function
+    self._sync(
+.venv\Lib\site-packages\playwright\_impl\_page.py:1153: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\playwright\_impl\_frame.py:941: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+.venv\Lib\site-packages\playwright\_impl\_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;playwright._impl._connection.Connection object at 0x000001F2489D5640&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x000001F248326700&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: Page.wait_for_function: EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: script-src 'self'".
+E           
+E               at eval (&lt;anonymous&gt;)
+E               at predicate (eval at evaluate (:311:30), &lt;anonymous&gt;:4:60)
+E               at next (eval at evaluate (:311:30), &lt;anonymous&gt;:29:33)
+
+.venv\Lib\site-packages\playwright\_impl\_connection.py:632: Error</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,353 @@
+FFFFFF.FF                                                                [100%]
+================================== FAILURES ===================================
+_ test_sqlite_checkpoint_versions_use_time_then_rowid_never_input_hash_order[None-False] _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/tqauditred01/test_sqlite_checkpoint_version0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001EA4B40F5F0>
+same_timestamp = False, corrupt_newest = None
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('same_timestamp', [False, True])
+    @pytest.mark.parametrize('corrupt_newest', [None, 'output_hash', 'source_hash'])
+    def test_sqlite_checkpoint_versions_use_time_then_rowid_never_input_hash_order(tmp_path, monkeypatch, same_timestamp, corrupt_newest):
+        from math_agent.pipeline import render_lecture
+        provider = GlobalRepairProvider()
+        _, pipeline, plan, _ = setup(tmp_path, provider, monkeypatch)
+        pipeline._lecture_sections(plan)
+        with pipeline.store.transaction() as connection:
+            row = connection.execute('SELECT * FROM steps WHERE run_id=? AND step_key=?',
+                (pipeline.run['id'], 'section.S01')).fetchone()
+            newest = json.loads(row['output_json'])
+            connection.execute('UPDATE steps SET input_hash=?,created_at=? WHERE run_id=? AND step_key=?',
+                ('f'*64, '2020-01-01T00:00:00Z', pipeline.run['id'], 'section.S01'))
+        newest['generated']['units'][0]['tex'] += ' 这是最新已接受版本。'
+        folder = pipeline.build_root/'version-order-proof'
+        folder.mkdir()
+        source = folder/'lecture.tex'
+        source.write_text(render_lecture(plan['title'], [(plan['sections'][0], newest['generated'])], plan), encoding='utf-8')
+        newest.update(source_key=source.relative_to(pipeline.settings.workspace).as_posix(), source_hash=digest(source.read_bytes()))
+        pipeline.store.checkpoint(pipeline.job, 'section.S01', '0'*64, newest)
+        with pipeline.store.transaction() as connection:
+            connection.execute('UPDATE steps SET created_at=? WHERE run_id=? AND step_key=? AND input_hash=?',
+                ('2020-01-01T00:00:00Z' if same_timestamp else '2026-01-01T00:00:00Z', pipeline.run['id'], 'section.S01', '0'*64))
+            if corrupt_newest == 'output_hash':
+                connection.execute('UPDATE steps SET output_hash=? WHERE run_id=? AND step_key=? AND input_hash=?',
+                    ('corrupt', pipeline.run['id'], 'section.S01', '0'*64))
+            elif corrupt_newest == 'source_hash':
+                source.write_text('corrupt', encoding='utf-8')
+            assert connection.execute('SELECT count(*) FROM steps WHERE run_id=? AND step_key=?',
+                (pipeline.run['id'], 'section.S01')).fetchone()[0] == 2
+        if corrupt_newest:
+            with pytest.raises(AgentError) as error:
+                pipeline._verified_section_checkpoints(plan)
+            assert error.value.code == 'SECTION_CHECKPOINT_INVALID'
+        else:
+            snapshot = pipeline._verified_section_checkpoints(plan)['S01']
+>           assert snapshot['input_hash'] == '0'*64
+E           AssertionError: assert 'ffffffffffff...fffffffffffff' == '000000000000...0000000000000'
+E             
+E             - 0000000000000000000000000000000000000000000000000000000000000000
+E             + ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+
+tests\test_cached_review_refresh.py:283: AssertionError
+_ test_sqlite_checkpoint_versions_use_time_then_rowid_never_input_hash_order[None-True] _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/tqauditred01/test_sqlite_checkpoint_version1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001EA4B44B4A0>
+same_timestamp = True, corrupt_newest = None
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('same_timestamp', [False, True])
+    @pytest.mark.parametrize('corrupt_newest', [None, 'output_hash', 'source_hash'])
+    def test_sqlite_checkpoint_versions_use_time_then_rowid_never_input_hash_order(tmp_path, monkeypatch, same_timestamp, corrupt_newest):
+        from math_agent.pipeline import render_lecture
+        provider = GlobalRepairProvider()
+        _, pipeline, plan, _ = setup(tmp_path, provider, monkeypatch)
+        pipeline._lecture_sections(plan)
+        with pipeline.store.transaction() as connection:
+            row = connection.execute('SELECT * FROM steps WHERE run_id=? AND step_key=?',
+                (pipeline.run['id'], 'section.S01')).fetchone()
+            newest = json.loads(row['output_json'])
+            connection.execute('UPDATE steps SET input_hash=?,created_at=? WHERE run_id=? AND step_key=?',
+                ('f'*64, '2020-01-01T00:00:00Z', pipeline.run['id'], 'section.S01'))
+        newest['generated']['units'][0]['tex'] += ' 这是最新已接受版本。'
+        folder = pipeline.build_root/'version-order-proof'
+        folder.mkdir()
+        source = folder/'lecture.tex'
+        source.write_text(render_lecture(plan['title'], [(plan['sections'][0], newest['generated'])], plan), encoding='utf-8')
+        newest.update(source_key=source.relative_to(pipeline.settings.workspace).as_posix(), source_hash=digest(source.read_bytes()))
+        pipeline.store.checkpoint(pipeline.job, 'section.S01', '0'*64, newest)
+        with pipeline.store.transaction() as connection:
+            connection.execute('UPDATE steps SET created_at=? WHERE run_id=? AND step_key=? AND input_hash=?',
+                ('2020-01-01T00:00:00Z' if same_timestamp else '2026-01-01T00:00:00Z', pipeline.run['id'], 'section.S01', '0'*64))
+            if corrupt_newest == 'output_hash':
+                connection.execute('UPDATE steps SET output_hash=? WHERE run_id=? AND step_key=? AND input_hash=?',
+                    ('corrupt', pipeline.run['id'], 'section.S01', '0'*64))
+            elif corrupt_newest == 'source_hash':
+                source.write_text('corrupt', encoding='utf-8')
+            assert connection.execute('SELECT count(*) FROM steps WHERE run_id=? AND step_key=?',
+                (pipeline.run['id'], 'section.S01')).fetchone()[0] == 2
+        if corrupt_newest:
+            with pytest.raises(AgentError) as error:
+                pipeline._verified_section_checkpoints(plan)
+            assert error.value.code == 'SECTION_CHECKPOINT_INVALID'
+        else:
+            snapshot = pipeline._verified_section_checkpoints(plan)['S01']
+>           assert snapshot['input_hash'] == '0'*64
+E           AssertionError: assert 'ffffffffffff...fffffffffffff' == '000000000000...0000000000000'
+E             
+E             - 0000000000000000000000000000000000000000000000000000000000000000
+E             + ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+
+tests\test_cached_review_refresh.py:283: AssertionError
+_ test_sqlite_checkpoint_versions_use_time_then_rowid_never_input_hash_order[output_hash-False] _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/tqauditred01/test_sqlite_checkpoint_version2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001EA4B44BFB0>
+same_timestamp = False, corrupt_newest = 'output_hash'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('same_timestamp', [False, True])
+    @pytest.mark.parametrize('corrupt_newest', [None, 'output_hash', 'source_hash'])
+    def test_sqlite_checkpoint_versions_use_time_then_rowid_never_input_hash_order(tmp_path, monkeypatch, same_timestamp, corrupt_newest):
+        from math_agent.pipeline import render_lecture
+        provider = GlobalRepairProvider()
+        _, pipeline, plan, _ = setup(tmp_path, provider, monkeypatch)
+        pipeline._lecture_sections(plan)
+        with pipeline.store.transaction() as connection:
+            row = connection.execute('SELECT * FROM steps WHERE run_id=? AND step_key=?',
+                (pipeline.run['id'], 'section.S01')).fetchone()
+            newest = json.loads(row['output_json'])
+            connection.execute('UPDATE steps SET input_hash=?,created_at=? WHERE run_id=? AND step_key=?',
+                ('f'*64, '2020-01-01T00:00:00Z', pipeline.run['id'], 'section.S01'))
+        newest['generated']['units'][0]['tex'] += ' 这是最新已接受版本。'
+        folder = pipeline.build_root/'version-order-proof'
+        folder.mkdir()
+        source = folder/'lecture.tex'
+        source.write_text(render_lecture(plan['title'], [(plan['sections'][0], newest['generated'])], plan), encoding='utf-8')
+        newest.update(source_key=source.relative_to(pipeline.settings.workspace).as_posix(), source_hash=digest(source.read_bytes()))
+        pipeline.store.checkpoint(pipeline.job, 'section.S01', '0'*64, newest)
+        with pipeline.store.transaction() as connection:
+            connection.execute('UPDATE steps SET created_at=? WHERE run_id=? AND step_key=? AND input_hash=?',
+                ('2020-01-01T00:00:00Z' if same_timestamp else '2026-01-01T00:00:00Z', pipeline.run['id'], 'section.S01', '0'*64))
+            if corrupt_newest == 'output_hash':
+                connection.execute('UPDATE steps SET output_hash=? WHERE run_id=? AND step_key=? AND input_hash=?',
+                    ('corrupt', pipeline.run['id'], 'section.S01', '0'*64))
+            elif corrupt_newest == 'source_hash':
+                source.write_text('corrupt', encoding='utf-8')
+            assert connection.execute('SELECT count(*) FROM steps WHERE run_id=? AND step_key=?',
+                (pipeline.run['id'], 'section.S01')).fetchone()[0] == 2
+        if corrupt_newest:
+>           with pytest.raises(AgentError) as error:
+E           Failed: DID NOT RAISE AgentError
+
+tests\test_cached_review_refresh.py:278: Failed
+_ test_sqlite_checkpoint_versions_use_time_then_rowid_never_input_hash_order[output_hash-True] _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/tqauditred01/test_sqlite_checkpoint_version3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001EA4B53D640>
+same_timestamp = True, corrupt_newest = 'output_hash'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('same_timestamp', [False, True])
+    @pytest.mark.parametrize('corrupt_newest', [None, 'output_hash', 'source_hash'])
+    def test_sqlite_checkpoint_versions_use_time_then_rowid_never_input_hash_order(tmp_path, monkeypatch, same_timestamp, corrupt_newest):
+        from math_agent.pipeline import render_lecture
+        provider = GlobalRepairProvider()
+        _, pipeline, plan, _ = setup(tmp_path, provider, monkeypatch)
+        pipeline._lecture_sections(plan)
+        with pipeline.store.transaction() as connection:
+            row = connection.execute('SELECT * FROM steps WHERE run_id=? AND step_key=?',
+                (pipeline.run['id'], 'section.S01')).fetchone()
+            newest = json.loads(row['output_json'])
+            connection.execute('UPDATE steps SET input_hash=?,created_at=? WHERE run_id=? AND step_key=?',
+                ('f'*64, '2020-01-01T00:00:00Z', pipeline.run['id'], 'section.S01'))
+        newest['generated']['units'][0]['tex'] += ' 这是最新已接受版本。'
+        folder = pipeline.build_root/'version-order-proof'
+        folder.mkdir()
+        source = folder/'lecture.tex'
+        source.write_text(render_lecture(plan['title'], [(plan['sections'][0], newest['generated'])], plan), encoding='utf-8')
+        newest.update(source_key=source.relative_to(pipeline.settings.workspace).as_posix(), source_hash=digest(source.read_bytes()))
+        pipeline.store.checkpoint(pipeline.job, 'section.S01', '0'*64, newest)
+        with pipeline.store.transaction() as connection:
+            connection.execute('UPDATE steps SET created_at=? WHERE run_id=? AND step_key=? AND input_hash=?',
+                ('2020-01-01T00:00:00Z' if same_timestamp else '2026-01-01T00:00:00Z', pipeline.run['id'], 'section.S01', '0'*64))
+            if corrupt_newest == 'output_hash':
+                connection.execute('UPDATE steps SET output_hash=? WHERE run_id=? AND step_key=? AND input_hash=?',
+                    ('corrupt', pipeline.run['id'], 'section.S01', '0'*64))
+            elif corrupt_newest == 'source_hash':
+                source.write_text('corrupt', encoding='utf-8')
+            assert connection.execute('SELECT count(*) FROM steps WHERE run_id=? AND step_key=?',
+                (pipeline.run['id'], 'section.S01')).fetchone()[0] == 2
+        if corrupt_newest:
+>           with pytest.raises(AgentError) as error:
+E           Failed: DID NOT RAISE AgentError
+
+tests\test_cached_review_refresh.py:278: Failed
+_ test_sqlite_checkpoint_versions_use_time_then_rowid_never_input_hash_order[source_hash-False] _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/tqauditred01/test_sqlite_checkpoint_version4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001EA4B53E840>
+same_timestamp = False, corrupt_newest = 'source_hash'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('same_timestamp', [False, True])
+    @pytest.mark.parametrize('corrupt_newest', [None, 'output_hash', 'source_hash'])
+    def test_sqlite_checkpoint_versions_use_time_then_rowid_never_input_hash_order(tmp_path, monkeypatch, same_timestamp, corrupt_newest):
+        from math_agent.pipeline import render_lecture
+        provider = GlobalRepairProvider()
+        _, pipeline, plan, _ = setup(tmp_path, provider, monkeypatch)
+        pipeline._lecture_sections(plan)
+        with pipeline.store.transaction() as connection:
+            row = connection.execute('SELECT * FROM steps WHERE run_id=? AND step_key=?',
+                (pipeline.run['id'], 'section.S01')).fetchone()
+            newest = json.loads(row['output_json'])
+            connection.execute('UPDATE steps SET input_hash=?,created_at=? WHERE run_id=? AND step_key=?',
+                ('f'*64, '2020-01-01T00:00:00Z', pipeline.run['id'], 'section.S01'))
+        newest['generated']['units'][0]['tex'] += ' 这是最新已接受版本。'
+        folder = pipeline.build_root/'version-order-proof'
+        folder.mkdir()
+        source = folder/'lecture.tex'
+        source.write_text(render_lecture(plan['title'], [(plan['sections'][0], newest['generated'])], plan), encoding='utf-8')
+        newest.update(source_key=source.relative_to(pipeline.settings.workspace).as_posix(), source_hash=digest(source.read_bytes()))
+        pipeline.store.checkpoint(pipeline.job, 'section.S01', '0'*64, newest)
+        with pipeline.store.transaction() as connection:
+            connection.execute('UPDATE steps SET created_at=? WHERE run_id=? AND step_key=? AND input_hash=?',
+                ('2020-01-01T00:00:00Z' if same_timestamp else '2026-01-01T00:00:00Z', pipeline.run['id'], 'section.S01', '0'*64))
+            if corrupt_newest == 'output_hash':
+                connection.execute('UPDATE steps SET output_hash=? WHERE run_id=? AND step_key=? AND input_hash=?',
+                    ('corrupt', pipeline.run['id'], 'section.S01', '0'*64))
+            elif corrupt_newest == 'source_hash':
+                source.write_text('corrupt', encoding='utf-8')
+            assert connection.execute('SELECT count(*) FROM steps WHERE run_id=? AND step_key=?',
+                (pipeline.run['id'], 'section.S01')).fetchone()[0] == 2
+        if corrupt_newest:
+>           with pytest.raises(AgentError) as error:
+E           Failed: DID NOT RAISE AgentError
+
+tests\test_cached_review_refresh.py:278: Failed
+_ test_sqlite_checkpoint_versions_use_time_then_rowid_never_input_hash_order[source_hash-True] _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/tqauditred01/test_sqlite_checkpoint_version5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001EA4B53FD10>
+same_timestamp = True, corrupt_newest = 'source_hash'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('same_timestamp', [False, True])
+    @pytest.mark.parametrize('corrupt_newest', [None, 'output_hash', 'source_hash'])
+    def test_sqlite_checkpoint_versions_use_time_then_rowid_never_input_hash_order(tmp_path, monkeypatch, same_timestamp, corrupt_newest):
+        from math_agent.pipeline import render_lecture
+        provider = GlobalRepairProvider()
+        _, pipeline, plan, _ = setup(tmp_path, provider, monkeypatch)
+        pipeline._lecture_sections(plan)
+        with pipeline.store.transaction() as connection:
+            row = connection.execute('SELECT * FROM steps WHERE run_id=? AND step_key=?',
+                (pipeline.run['id'], 'section.S01')).fetchone()
+            newest = json.loads(row['output_json'])
+            connection.execute('UPDATE steps SET input_hash=?,created_at=? WHERE run_id=? AND step_key=?',
+                ('f'*64, '2020-01-01T00:00:00Z', pipeline.run['id'], 'section.S01'))
+        newest['generated']['units'][0]['tex'] += ' 这是最新已接受版本。'
+        folder = pipeline.build_root/'version-order-proof'
+        folder.mkdir()
+        source = folder/'lecture.tex'
+        source.write_text(render_lecture(plan['title'], [(plan['sections'][0], newest['generated'])], plan), encoding='utf-8')
+        newest.update(source_key=source.relative_to(pipeline.settings.workspace).as_posix(), source_hash=digest(source.read_bytes()))
+        pipeline.store.checkpoint(pipeline.job, 'section.S01', '0'*64, newest)
+        with pipeline.store.transaction() as connection:
+            connection.execute('UPDATE steps SET created_at=? WHERE run_id=? AND step_key=? AND input_hash=?',
+                ('2020-01-01T00:00:00Z' if same_timestamp else '2026-01-01T00:00:00Z', pipeline.run['id'], 'section.S01', '0'*64))
+            if corrupt_newest == 'output_hash':
+                connection.execute('UPDATE steps SET output_hash=? WHERE run_id=? AND step_key=? AND input_hash=?',
+                    ('corrupt', pipeline.run['id'], 'section.S01', '0'*64))
+            elif corrupt_newest == 'source_hash':
+                source.write_text('corrupt', encoding='utf-8')
+            assert connection.execute('SELECT count(*) FROM steps WHERE run_id=? AND step_key=?',
+                (pipeline.run['id'], 'section.S01')).fetchone()[0] == 2
+        if corrupt_newest:
+>           with pytest.raises(AgentError) as error:
+E           Failed: DID NOT RAISE AgentError
+
+tests\test_cached_review_refresh.py:278: Failed
+_ test_accepted_uncheckpointed_section_survives_upstream_change_after_compile_failure[True] _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/tqauditred01/test_accepted_uncheckpointed_s1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001EA4B4312E0>
+interrupt_recheck = True
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('interrupt_recheck', [False, True])
+    def test_accepted_uncheckpointed_section_survives_upstream_change_after_compile_failure(tmp_path, monkeypatch, interrupt_recheck):
+        provider = GlobalRepairProvider()
+        service, pipeline, plan, _ = setup(tmp_path, provider, monkeypatch)
+        normal_compile = Pipeline.compile
+        fail_once = [True]
+    
+        def interrupted_compile(self, source, entry, build):
+            if 'sS02_' in str(source) and fail_once[0]:
+                fail_once[0] = False
+                raise AgentError('COMPILE_FAILED', 'Synthetic compile interruption after successful local review')
+            return normal_compile(self, source, entry, build)
+    
+        monkeypatch.setattr(Pipeline, 'compile', interrupted_compile)
+        with pytest.raises(AgentError, match='compile interruption'):
+            pipeline._lecture_sections(plan)
+        with pipeline.store.connect() as connection:
+            row = connection.execute('SELECT output_json FROM steps WHERE run_id=? AND step_key=?',
+                (pipeline.run['id'], 'section.S01')).fetchone()
+            assert connection.execute('SELECT count(*) FROM steps WHERE run_id=? AND step_key=?',
+                (pipeline.run['id'], 'section.S02')).fetchone()[0] == 0
+        upstream = json.loads(row[0])['generated']
+        upstream['units'][0]['tex'] += ' 新增明确的前提。'
+        state_path = pipeline.root/'local-repair/S02.json'
+        state_before = json.loads(state_path.read_bytes())
+        assert state_before['phase'] == 'LOCAL_CHECKS_PENDING_COMPILE'
+        original_candidate = (pipeline.settings.workspace/state_before['candidate_key']).read_bytes()
+        service.store.finish(pipeline.job, 'FAILED', 'compile.section.S02', {'code': 'COMPILE_FAILED'})
+        service.retry(pipeline.run['id'])
+        resumed = Pipeline(pipeline.settings, pipeline.store, pipeline.store.claim('offline-resumed-teaching'))
+        resumed.provider = provider
+        if interrupt_recheck:
+            provider.fail_following_once = True
+            with pytest.raises(AgentError, match='following-section'):
+                resumed._lecture_sections(plan, {'S01': upstream})
+            service.store.finish(resumed.job, 'FAILED', 'review.section.S02', {'code': 'PROVIDER_TIMEOUT'})
+            service.retry(resumed.run['id'])
+            resumed = Pipeline(pipeline.settings, pipeline.store, pipeline.store.claim('offline-third-attempt'))
+            resumed.provider = provider
+            completed, _ = resumed._lecture_sections(plan)
+        else:
+            completed, _ = resumed._lecture_sections(plan, {'S01': upstream})
+>       assert provider.writes == ['S01', 'S02']
+E       AssertionError: assert ['S01', 'S02', 'S02'] == ['S01', 'S02']
+E         
+E         Left contains one more item: 'S02'
+E         Use -v to get more diff
+
+tests\test_teaching_quality_gate.py:193: AssertionError
+___ test_single_completed_section_still_has_explicit_whole_document_review ____
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/tqauditred01/test_single_completed_section_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001EA4B40FAD0>
+
+    @pytest.mark.unit
+    def test_single_completed_section_still_has_explicit_whole_document_review(tmp_path, monkeypatch):
+        provider = TeachingProvider(problem=False)
+        _, pipeline, plan, _ = teaching_setup(tmp_path, monkeypatch, provider, count=1)
+        pipeline.lecture(plan)
+        whole = [context for context in provider.reviews if context['scope']['kind'] == 'chapter_coverage']
+>       assert len(whole) == 1 and len(whole[0]['section_unit_map']) == 1
+E       assert (0 == 1)
+E        +  where 0 = len([])
+
+tests\test_teaching_quality_gate.py:209: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_cached_review_refresh.py::test_sqlite_checkpoint_versions_use_time_then_rowid_never_input_hash_order[None-False]
+FAILED tests/test_cached_review_refresh.py::test_sqlite_checkpoint_versions_use_time_then_rowid_never_input_hash_order[None-True]
+FAILED tests/test_cached_review_refresh.py::test_sqlite_checkpoint_versions_use_time_then_rowid_never_input_hash_order[output_hash-False]
+FAILED tests/test_cached_review_refresh.py::test_sqlite_checkpoint_versions_use_time_then_rowid_never_input_hash_order[output_hash-True]
+FAILED tests/test_cached_review_refresh.py::test_sqlite_checkpoint_versions_use_time_then_rowid_never_input_hash_order[source_hash-False]
+FAILED tests/test_cached_review_refresh.py::test_sqlite_checkpoint_versions_use_time_then_rowid_never_input_hash_order[source_hash-True]
+FAILED tests/test_teaching_quality_gate.py::test_accepted_uncheckpointed_section_survives_upstream_change_after_compile_failure[True]
+FAILED tests/test_teaching_quality_gate.py::test_single_completed_section_still_has_explicit_whole_document_review
+8 failed, 1 passed in 2.64s
+Production source and reviewer prompt hashes unchanged: True

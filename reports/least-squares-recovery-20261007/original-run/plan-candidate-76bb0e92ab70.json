@@ -1,0 +1,122 @@
+{
+  "title": "经济学本科一年级微积分：最小二乘法讲义计划",
+  "objectives": [
+    "建立最小二乘法的几何与微积分直观，理解其在经济数据拟合中的基本用途。",
+    "从一元线性拟合推广到多元线性回归的矩阵表达，掌握正规方程、残差与投影的关系。",
+    "能够解释拟合优度、残差分解及模型结果的经济含义，同时明确方法的适用边界。"
+  ],
+  "prerequisites": [
+    "实数运算与代数变形",
+    "一元函数、导数及极值判别",
+    "有限求和与平方和",
+    "平面直角坐标系与直线方程",
+    "经济学中的变量、观测值与简单数据表"
+  ],
+  "sections": [
+    {
+      "id": "S01",
+      "title": "一元最小二乘拟合：从平方误差到正规方程",
+      "objectives": [
+        "定义观测点、拟合直线、残差和平方误差函数。",
+        "用一元微积分推导截距与斜率的最小二乘估计条件。",
+        "证明平方误差目标函数具有唯一最小值，并理解样本均值与拟合直线的关系。",
+        "通过经济学数据例题计算拟合直线、残差和预测值。"
+      ],
+      "required_kinds": [
+        "definition",
+        "theorem",
+        "example",
+        "solution",
+        "proof",
+        "exercise"
+      ],
+      "prerequisites": [],
+      "reference_labels": [
+        "def:ols-objective",
+        "def:residual",
+        "thm:quadratic-unique-minimum",
+        "thm:normal-equations"
+      ]
+    },
+    {
+      "id": "S02",
+      "title": "多元最小二乘与矩阵表示",
+      "objectives": [
+        "定义设计矩阵、参数向量、响应向量和残差向量。",
+        "将一元最小二乘推广为矩阵形式的平方误差最小化问题。",
+        "推导并解释正规方程，说明在列满秩条件下解的唯一性。",
+        "通过含两个解释变量的经济学例题展示矩阵计算、系数求解和预测。"
+      ],
+      "required_kinds": [
+        "definition",
+        "theorem",
+        "example",
+        "solution",
+        "proof",
+        "exercise"
+      ],
+      "prerequisites": [
+        "S01"
+      ],
+      "reference_labels": [
+        "def:design-matrix",
+        "def:residual-vector",
+        "thm:matrix-normal-equation",
+        "thm:unique-least-squares-solution"
+      ]
+    },
+    {
+      "id": "S03",
+      "title": "残差性质、拟合优度与经济解释",
+      "objectives": [
+        "定义残差正交性、总平方和、残差平方和与决定系数。",
+        "证明在含截距模型中总平方和的分解关系。",
+        "解释决定系数的含义、局限性及其与因果关系的区别。",
+        "通过经济学案例计算残差分解和决定系数，并讨论异常观测与外推风险。"
+      ],
+      "required_kinds": [
+        "definition",
+        "theorem",
+        "example",
+        "solution",
+        "proof",
+        "exercise"
+      ],
+      "prerequisites": [
+        "S02"
+      ],
+      "reference_labels": [
+        "def:orthogonal-residual",
+        "def:total-sum-of-squares",
+        "def:coefficient-of-determination",
+        "thm:sum-of-squares-decomposition"
+      ]
+    }
+  ],
+  "symbols": {
+    "x_i": "第i个观测的解释变量或解释变量向量",
+    "y_i": "第i个观测的被解释变量值",
+    "n": "观测数量",
+    "a": "一元拟合直线的截距参数",
+    "b": "一元拟合直线的斜率参数",
+    "\\hat{y}_i": "第i个观测的拟合值或预测值",
+    "e_i": "第i个观测的残差",
+    "S(a,b)": "一元拟合中的平方误差目标函数",
+    "X": "多元线性模型的设计矩阵",
+    "y": "被解释变量观测值组成的列向量",
+    "\\beta": "回归系数列向量",
+    "\\hat{\\beta}": "最小二乘估计的系数列向量",
+    "e": "残差向量",
+    "TSS": "总平方和",
+    "RSS": "残差平方和",
+    "R^2": "决定系数"
+  },
+  "exclusions": [
+    "不讲概率论、抽样分布、假设检验和置信区间。",
+    "不讲异方差、自相关、内生性等计量经济学进阶问题。",
+    "不讲加权最小二乘、广义最小二乘、岭回归和其他正则化方法。",
+    "不讲非线性最小二乘和数值优化算法。",
+    "不把最小二乘拟合结果解释为因果关系。",
+    "不深入讨论高等线性代数，仅使用矩阵乘法、转置、秩和正交投影的基础概念。"
+  ]
+}

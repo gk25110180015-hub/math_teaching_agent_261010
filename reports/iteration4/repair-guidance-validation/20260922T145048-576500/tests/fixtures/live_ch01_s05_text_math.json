@@ -1,0 +1,170 @@
+{
+  "source_directory": "workspace/iteration2-live/b/05748ab6260c4098/sS05_e84c3142409a",
+  "units": {
+    "original": {
+      "id": "S05.U02",
+      "kind": "theorem",
+      "tex": "\\label{thm:convergence-method-selection}设 $\\{a_n\\}$ 是实数数列。判断其收敛性和计算极限时，以下方法在相应条件下有效：\n\\[\n\\begin{array}{c|c|c}\n\\text{方法}&\\text{需要验证的条件}&\\text{可得到的结论}\\\\ \\hline\n\\text{$\\varepsilon$--$N$ 定义}&\\text{对任意 $\\varepsilon>0$ 构造统一的正整数 $N$}&a_n\\to L\\\\\n\\text{四则运算法则}&\\text{各相关数列的极限存在，且商的分母极限非零}&\\text{直接计算极限}\\\\\n\\text{夹逼定理}&\\text{最终成立的上下界具有相同极限}&\\text{中间数列收敛到该极限}\\\\\n\\text{单调有界原理}&\\text{数列单调且有相应方向的界}&\\text{数列收敛}.\n\\end{array}\n\\]\n其中，任何一种方法都不能省略数列的定义域条件；特别是，不能因为某个因子有界就直接把它当作收敛数列使用乘积极限法则。",
+      "relates_to": null
+    },
+    "patch": {
+      "id": "S05.U02",
+      "kind": "theorem",
+      "tex": "\\label{thm:convergence-method-selection}设 \\(\\{a_n\\}\\) 是实数数列。判断其收敛性和计算极限时，以下方法在相应条件下有效：\n\\[\n\\begin{array}{c|c|c}\n\\text{方法}&\\text{需要验证的条件}&\\text{可得到的结论}\\\\ \\hline\n\\text{$\\varepsilon$--$N$ 定义}&\\text{对任意 $\\varepsilon>0$ 构造统一的正整数 $N$}&a_n\\to L\\\\\n\\text{四则运算法则}&\\text{各相关数列的极限存在，且商的分母极限非零}&\\text{直接计算极限}\\\\\n\\text{夹逼定理}&\\text{最终成立的上下界具有相同极限}&\\text{中间数列收敛到该极限}\\\\\n\\text{单调有界原理}&\\text{数列单调且有相应方向的界}&\\text{数列收敛}.\n\\end{array}\n\\]\n其中，任何一种方法都不能省略数列的定义域条件；特别是，不能因为某个因子有界就直接把它当作收敛数列使用乘积极限法则。",
+      "relates_to": null
+    }
+  },
+  "original_file_hashes": {
+    "candidate.json": "101062162a823cb5bf854f55709d1e83de35338ce195fae35a4aac3028de5c37",
+    "repair-1-patch.json": "307867a5a504cbf4bf471da4ed937c8ddd6a83508906ff1643efb87d2fdee6c3",
+    "repair-1-normalization.json": "b769eb37528a21416ac35925fbf4fd121712321c761f61e7e8a4f197da590d11"
+  },
+  "teacher_visual_review": "NOT_RUN",
+  "original_section": {
+    "section_id": "S05",
+    "units": [
+      {
+        "id": "S05.U01",
+        "kind": "definition",
+        "tex": "\\label{def:limit-proof-strategy}处理数列极限时，可以按以下步骤选择方法。首先检查数列的定义域、分母是否为零以及根式是否有意义；其次判断能否直接使用极限的四则运算法则；若存在有界但未证明收敛的因子，或需要控制绝对值，则优先考虑夹逼定理；若数列由递推关系给出，则先证明单调性和有界性，再由单调有界原理判断收敛，最后才将极限代入递推关系。对于含参数的数列，还必须说明参数条件如何保证每一项有定义以及所用定理的适用条件。",
+        "relates_to": null
+      },
+      {
+        "id": "S05.U02",
+        "kind": "theorem",
+        "tex": "\\label{thm:convergence-method-selection}设 $\\{a_n\\}$ 是实数数列。判断其收敛性和计算极限时，以下方法在相应条件下有效：\n\\[\n\\begin{array}{c|c|c}\n\\text{方法}&\\text{需要验证的条件}&\\text{可得到的结论}\\\\ \\hline\n\\text{$\\varepsilon$--$N$ 定义}&\\text{对任意 $\\varepsilon>0$ 构造统一的正整数 $N$}&a_n\\to L\\\\\n\\text{四则运算法则}&\\text{各相关数列的极限存在，且商的分母极限非零}&\\text{直接计算极限}\\\\\n\\text{夹逼定理}&\\text{最终成立的上下界具有相同极限}&\\text{中间数列收敛到该极限}\\\\\n\\text{单调有界原理}&\\text{数列单调且有相应方向的界}&\\text{数列收敛}.\n\\end{array}\n\\]\n其中，任何一种方法都不能省略数列的定义域条件；特别是，不能因为某个因子有界就直接把它当作收敛数列使用乘积极限法则。",
+        "relates_to": null
+      },
+      {
+        "id": "S05.U03",
+        "kind": "proof",
+        "tex": "对第一种方法，若按照定义对任意 $\\varepsilon>0$ 找到正整数 $N$，使得所有 $n\\geq N$ 都满足 $|a_n-L|<\\varepsilon$，则由数列极限的定义可知 $a_n\\to L$。\n\n对第二种方法，设 $a_n\\to A$、$b_n\\to B$，并且在商的定义域内 $b_n\\neq0$，且 $B\\neq0$。由极限的和、差、积和商法则，分别可以得到常数倍、和、差、积及商的极限。因此四则运算法则的关键不是形式上的代数变形，而是先确认相关极限存在，并在商法则中确认分母数列及其极限满足条件。\n\n对第三种方法，若存在正整数 $N_0$，使得当 $n\\geq N_0$ 时有 $u_n\\leq a_n\\leq v_n$，且 $u_n\\to L$、$v_n\\to L$，则由夹逼定理得到 $a_n\\to L$。因此，夹逼法并不要求先知道 $a_n$ 收敛，而是用两个具有相同极限的界证明其收敛。\n\n对第四种方法，若 $\\{a_n\\}$ 单调递增且有上界，或单调递减且有下界，则由单调有界原理可知它收敛。若数列由递推式给出，必须先完成单调性和有界性的证明；只有在已经知道 $a_n\\to A$ 后，才能利用移位数列也趋于 $A$ 以及极限运算法则，将极限代入递推式。故上述方法分别由数列极限定义、极限运算法则、夹逼定理和单调有界原理保证。",
+        "relates_to": "S05.U02"
+      },
+      {
+        "id": "S05.U04",
+        "kind": "example",
+        "tex": "设 $n\\in\\mathbb{N}^{+}$，考虑数列\n\\[\na_n=\\frac{2n+1}{n+3}.\n\\]\n分别说明直接使用有理式的处理方法与使用定义证明时所需的主要条件，并求其极限。",
+        "relates_to": null
+      },
+      {
+        "id": "S05.U05",
+        "kind": "solution",
+        "tex": "由于 $n\\in\\mathbb{N}^{+}$，所以 $n+3>0$，数列的每一项都有定义。分子、分母同除以 $n$，得到\n\\[\na_n=\\frac{2+1/n}{1+3/n}.\n\\]\n由 $1/n\\to0$，常数倍法则与和法则给出\n\\[\n2+\\frac1n\\to2,\\qquad 1+\\frac3n\\to1.\n\\]\n分母极限为 $1\\neq0$，故可使用商法则，得到\n\\[\n\\lim_{n\\to\\infty}a_n=\\frac21=2.\n\\]\n\n若用定义验证，则应先写出误差：\n\\[\n\\left|\\frac{2n+1}{n+3}-2\\right|=\\frac5{n+3}\\leq\\frac5n.\n\\]\n给定任意 $\\varepsilon>0$，取正整数 $N>5/\\varepsilon$。当 $n\\geq N$ 时，\n\\[\n\\left|a_n-2\\right|\\leq\\frac5n\\leq\\frac5N<\\varepsilon.\n\\]\n所以按照 $\\varepsilon$--$N$ 定义，$a_n\\to2$。本例中，直接使用运算法则较简洁；定义法则明确给出误差如何随 $n$ 减小。",
+        "relates_to": "S05.U04"
+      },
+      {
+        "id": "S05.U06",
+        "kind": "example",
+        "tex": "设 $n\\in\\mathbb{N}^{+}$，定义\n\\[\na_n=\n\\begin{cases}\n\\dfrac1n,&n\\text{为奇数},\\\\[4pt]\n\\dfrac2n,&n\\text{为偶数}.\n\\end{cases}\n\\]\n判断数列是否收敛，并说明为什么不能仅根据两个分支分别出现就直接套用四则运算法则。",
+        "relates_to": null
+      },
+      {
+        "id": "S05.U07",
+        "kind": "solution",
+        "tex": "对每个正整数 $n$，都有\n\\[\n0<a_n\\leq\\frac2n.\n\\]\n由基本极限 $1/n\\to0$ 以及常数倍法则，得 $2/n\\to0$。因此\n\\[\n0\\leq a_n\\leq\\frac2n,\n\\]\n两侧数列都趋于零。由夹逼定理，\n\\[\n\\lim_{n\\to\\infty}a_n=0.\n\\]\n\n本题不能把“奇数项数列”和“偶数项数列”当作两个已经收敛的因子，再直接使用四则运算法则；分段定义本身并不提供相应的收敛性。这里使用的是对所有正整数成立的统一估计，因而夹逼定理比直接套用运算法则更合适。",
+        "relates_to": "S05.U06"
+      },
+      {
+        "id": "S05.U08",
+        "kind": "exercise",
+        "tex": "指出下列论证中的错误，并给出改正方向。\n\n设 $a_n\\to L$，$b_n\\to M$，且 $b_n\\neq0$。有人作如下论证：\n\\[\n\\frac{a_n}{b_n}\\to\\frac{L}{M},\n\\]\n因为“分子和分母分别取极限即可”。因此，即使 $M=0$，结论也成立。请说明该论证缺少哪些条件；再判断在 $a_n\\to1$、$b_n=1/n$ 的情形下，数列 $a_n/b_n$ 是否必然收敛。",
+        "relates_to": null
+      },
+      {
+        "id": "S05.U09",
+        "kind": "solution",
+        "tex": "错误在于省略了商法则的关键条件。除了要求对所讨论的下标有 $b_n\\neq0$，还必须要求分母数列的极限满足 $M\\neq0$。只有在这些条件下，才能由商法则得到\n\\[\n\\frac{a_n}{b_n}\\to\\frac{L}{M}.\n\\]\n\n当 $a_n\\to1$、$b_n=1/n$ 时，虽然每个 $b_n$ 都不为零，但 $b_n\\to0$，所以不能使用商法则。事实上，\n\\[\n\\frac{a_n}{b_n}=n a_n.\n\\]\n由于 $a_n\\to1$，对充分大的 $n$ 有 $a_n>1/2$，从而\n\\[\n\\frac{a_n}{b_n}=n a_n>\\frac n2.\n\\]\n右端随 $n$ 增大而无界，因此 $a_n/b_n$ 不可能收敛于有限实数。改正这类论证时，应先检查定义域，再检查分母极限是否非零；若分母极限为零，应改用误差估计、保号性或其他适用方法，不能直接套用商法则。",
+        "relates_to": "S05.U08"
+      }
+    ],
+    "calculations": [
+      {
+        "id": "S05.C01",
+        "unit_id": "S05.U05",
+        "kind": "limit",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "variable": "n",
+        "point": {
+          "op": "Infinity"
+        },
+        "direction": "-",
+        "expression": {
+          "args": [
+            {
+              "args": [
+                {
+                  "op": "Integer",
+                  "value": 2
+                },
+                {
+                  "args": [
+                    {
+                      "op": "Integer",
+                      "value": 1
+                    },
+                    {
+                      "args": [
+                        {
+                          "name": "n",
+                          "op": "Symbol"
+                        }
+                      ],
+                      "op": "Pow"
+                    }
+                  ],
+                  "op": "Mul"
+                }
+              ],
+              "op": "Add"
+            },
+            {
+              "args": [
+                {
+                  "op": "Integer",
+                  "value": 1
+                },
+                {
+                  "args": [
+                    {
+                      "op": "Integer",
+                      "value": 3
+                    },
+                    {
+                      "args": [
+                        {
+                          "name": "n",
+                          "op": "Symbol"
+                        }
+                      ],
+                      "op": "Pow"
+                    }
+                  ],
+                  "op": "Mul"
+                }
+              ],
+              "op": "Add"
+            }
+          ],
+          "op": "Mul"
+        },
+        "expected": {
+          "op": "Integer",
+          "value": 2
+        }
+      }
+    ],
+    "calculation_limitations": [
+      "协议的表达式树不能表达分段定义中的奇偶条件，因此未对 S05.U06--S05.U07 的夹逼论证提交形式化核算；该结论依赖正文中的全称不等式证明。",
+      "协议不能直接核验方法选择定理中关于量词、适用条件和证明策略的完整逻辑结构；相关内容由正文中的定理陈述与证明支持。"
+    ],
+    "uncertainties": []
+  },
+  "expected_base_hash": "6f31ff52e79f09979fcea606449134c07e7dec008989920ed7a030ff81867463",
+  "original_local_state_sha256": "432f4e624bf095856904f4a1124afe2c2bc788c2a44af1de8d66cb4d99c46e1a"
+}

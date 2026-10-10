@@ -1,0 +1,14 @@
+{
+  "approved": false,
+  "issues": [
+    "运行级阻断：辅助函数 `box(x,y,w,h,c)` 需要 5 个参数，但 S2 左右符号色带调用了 `box(plot.l,bandY,xf-plot.l,leftCol)`、`box(xf,bandY,plot.r-xf,rightCol)`，把颜色字符串传给了高度参数，导致 `fillRect(..., '#b9e5cf')` 等无效 Canvas 调用；runtime_evidence 总体为 FAIL，驻点左右颜色视觉证据因此不能可靠呈现。应补上有效高度（如 `plot.bot-bandY`）并把颜色作为第 5 参数。",
+    "运行级阻断：S3 导数符号带同样错误地调用了 `box(plot.l,by,a-plot.l,'#b9e5cf')`、`box(a,by,b-a,'#f4c4c4')`、`box(b,by,plot.r-b,'#b9e5cf')`，同样将颜色误传为高度；应改为包含明确高度和颜色的五参数调用，例如 `box(plot.l,by,a-plot.l,bandHeight,'#b9e5cf')`。",
+    "S2 的符号色带宽度未统一防护：在动态视窗或边界情况下，`xf-plot.l`、`plot.r-xf` 可能为负或超出绘图区；runtime_evidence 已出现负宽度和 x 超出绘图区的 `fillRect` 记录。修复缺参后仍应将 `xf` 限制在 `[plot.l,plot.r]`，并对两侧宽度取不小于 0 的值，确保放大和探索状态都不产生越界绘图。",
+    "S3 符号带切换到 `view===1` 时只绘制符号带和当前位置，没有绘制确认 visual 中要求联动展示的曲线、切线及当前位置对应的图像证据；右侧文字不能替代切线图形。应明确该视图仍保留小型曲线/切线，或将需求和字幕改为只承诺符号带视图并保持教学目标一致。"
+  ],
+  "limitations": [
+    "runtime_evidence 的控件数值和多数 presentation 采样显示函数、导数、驻点数值一致；但整体运行因 Canvas 调用失败，不能据此确认所有颜色带和切换状态的实际视觉效果。",
+    "未提供完整视频或可视化截图；drawing_evidence 只能辅助确认文字、颜色记录和矩形调用，尚不能完成遮挡、曲线形状、切线视觉质量及字幕同步的人工审核。",
+    "除上述运行故障外，代码中的切线采用 `Y(f(x)+f′(x)(q-x))`，S2 在停留阶段确实安排了 x=-1 与 x=1，并实现了动态数学视窗；这些部分未发现当前仍存在的数学公式错误。"
+  ]
+}

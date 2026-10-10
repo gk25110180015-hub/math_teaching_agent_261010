@@ -1,0 +1,725 @@
+{
+  "at": "2026-09-24T03:04:03.714935+00:00",
+  "read_only": true,
+  "cases": {
+    "CH02": {
+      "id": "fd6736af6ef14be3839e019e86ca1e5c",
+      "status": "BLOCKED",
+      "stage": "review.section.S02",
+      "request_count": 134,
+      "error": {
+        "attempt": 6,
+        "code": "UNCERTAINTY_EVIDENCE_BLOCKED",
+        "job_id": "4678ed20f5c44ad89b289ffcee4d8143",
+        "message": "Ambiguous prior uncertainty verdicts for the same mathematical input",
+        "recovery": "原审批和已通过章节保留；修复条件后点击重试。崩溃边界的外部调用可能重复计费。",
+        "timestamp": "2026-09-23T14:55:02.099575+00:00"
+      },
+      "events": [
+        {
+          "sequence": 2501,
+          "type": "job.finished",
+          "timestamp": "2026-09-23T09:25:57.885846+00:00",
+          "payload": {
+            "error": {
+              "attempt": 5,
+              "code": "PROVIDER_RESPONSE",
+              "job_id": "4678ed20f5c44ad89b289ffcee4d8143",
+              "message": "供应商流式事件明确返回错误状态",
+              "recovery": "原审批和已通过章节保留；修复条件后点击重试。崩溃边界的外部调用可能重复计费。",
+              "timestamp": "2026-09-23T09:25:57.871290+00:00"
+            },
+            "stage": "math.global_interfaces",
+            "status": "FAILED"
+          }
+        },
+        {
+          "sequence": 2640,
+          "type": "job.retry",
+          "timestamp": "2026-09-23T14:54:35.046227+00:00",
+          "payload": {
+            "approval_preserved": true,
+            "job_id": "4678ed20f5c44ad89b289ffcee4d8143",
+            "resume_stage": "math.global_interfaces"
+          }
+        },
+        {
+          "sequence": 2641,
+          "type": "job.claimed",
+          "timestamp": "2026-09-23T14:54:35.989336+00:00",
+          "payload": {
+            "attempt": 6,
+            "job_id": "4678ed20f5c44ad89b289ffcee4d8143",
+            "recovered": false
+          }
+        },
+        {
+          "sequence": 2642,
+          "type": "stage",
+          "timestamp": "2026-09-23T14:54:36.201508+00:00",
+          "payload": {
+            "stage": "write.section.S01",
+            "status": "BUILDING"
+          }
+        },
+        {
+          "sequence": 2643,
+          "type": "stage",
+          "timestamp": "2026-09-23T14:54:36.272657+00:00",
+          "payload": {
+            "stage": "review.section.S01",
+            "status": "LOCAL_REVIEW"
+          }
+        },
+        {
+          "sequence": 2644,
+          "type": "provider.request",
+          "timestamp": "2026-09-23T14:54:37.013148+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "call_id": "7e545cbd86ef420eb6ed258967b45bfd",
+            "input_hash": "ad26fdbb50adae6f657f3e74bd8f6b23396db524b4e5f5295711ded4d0246720",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "requested_model": "gpt-6-astra",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": true,
+            "temperature": 0.1,
+            "timestamp": "2026-09-23T14:54:37.002519+00:00"
+          }
+        },
+        {
+          "sequence": 2645,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T14:54:49.248787+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "billing_uncertain": true,
+            "call_id": "7e545cbd86ef420eb6ed258967b45bfd",
+            "headers_elapsed_seconds": 12.235,
+            "http_status": 200,
+            "input_hash": "ad26fdbb50adae6f657f3e74bd8f6b23396db524b4e5f5295711ded4d0246720",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "price": null,
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "request_id": "",
+            "requested_model": "gpt-6-astra",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": true,
+            "temperature": 0.1,
+            "timestamp": "2026-09-23T14:54:37.002519+00:00",
+            "usage": null
+          }
+        },
+        {
+          "sequence": 2646,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T14:54:56.006989+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "billing_uncertain": false,
+            "call_id": "7e545cbd86ef420eb6ed258967b45bfd",
+            "elapsed_seconds": 19.0,
+            "finish_reason": "stop",
+            "http_status": 200,
+            "input_hash": "ad26fdbb50adae6f657f3e74bd8f6b23396db524b4e5f5295711ded4d0246720",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "price": null,
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "received_content_chars": 427,
+            "received_response_bytes": 56156,
+            "reported_model": "gpt-6-astra",
+            "request_id": "",
+            "requested_model": "gpt-6-astra",
+            "response_bytes_sha256": "08633b7636d9c0bb1ed2092f8bb8a7a49a6cf8a6672c7f76afe70711aa5a2b69",
+            "response_id": "resp_096a07392762f557016ab3e830b81887d0bc230398792ab554",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "stream_complete": true,
+            "streaming": true,
+            "temperature": 0.1,
+            "timestamp": "2026-09-23T14:54:37.002519+00:00",
+            "transport_status": "SUCCESS",
+            "usage": {
+              "completion_tokens": 475,
+              "prompt_tokens": 7258,
+              "total_tokens": 7733
+            }
+          }
+        },
+        {
+          "sequence": 2647,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T14:54:56.022084+00:00",
+          "payload": {
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "call_id": "7e545cbd86ef420eb6ed258967b45bfd",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "output_hash": "de00db0b738d7e3bb3a6ffa6a430b69a82d8a3d1fb8b29b374772d71e00f9dfe",
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reported_model": "gpt-6-astra",
+            "requested_model": "gpt-6-astra",
+            "role": "reviewer_math",
+            "schema_attempt": 1,
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": true,
+            "temperature": 0.1
+          }
+        },
+        {
+          "sequence": 2648,
+          "type": "local.repair_state",
+          "timestamp": "2026-09-23T14:54:56.048126+00:00",
+          "payload": {
+            "applied_rounds": 0,
+            "phase": "LOCAL_CHECKS_PENDING_COMPILE",
+            "proposal_calls": 0,
+            "rejected_proposals": 0,
+            "section_id": "S01"
+          }
+        },
+        {
+          "sequence": 2649,
+          "type": "stage",
+          "timestamp": "2026-09-23T14:54:56.061163+00:00",
+          "payload": {
+            "stage": "compile.section.S01",
+            "status": "LOCAL_REVIEW"
+          }
+        },
+        {
+          "sequence": 2650,
+          "type": "step.checkpoint",
+          "timestamp": "2026-09-23T14:54:59.821257+00:00",
+          "payload": {
+            "output_hash": "fccc47d660cef9e1a0d267ac9ce60cbf6deaaa29ae29ec09dee03ca46824bef2",
+            "step_key": "section.S01"
+          }
+        },
+        {
+          "sequence": 2651,
+          "type": "local.repair_state",
+          "timestamp": "2026-09-23T14:54:59.838637+00:00",
+          "payload": {
+            "applied_rounds": 0,
+            "phase": "CHECKED",
+            "proposal_calls": 0,
+            "rejected_proposals": 0,
+            "section_id": "S01"
+          }
+        },
+        {
+          "sequence": 2652,
+          "type": "stage",
+          "timestamp": "2026-09-23T14:54:59.843855+00:00",
+          "payload": {
+            "stage": "write.section.S02",
+            "status": "BUILDING"
+          }
+        },
+        {
+          "sequence": 2653,
+          "type": "stage",
+          "timestamp": "2026-09-23T14:55:00.020620+00:00",
+          "payload": {
+            "stage": "review.section.S02",
+            "status": "LOCAL_REVIEW"
+          }
+        },
+        {
+          "sequence": 2654,
+          "type": "job.finished",
+          "timestamp": "2026-09-23T14:55:02.123861+00:00",
+          "payload": {
+            "error": {
+              "attempt": 6,
+              "code": "UNCERTAINTY_EVIDENCE_BLOCKED",
+              "job_id": "4678ed20f5c44ad89b289ffcee4d8143",
+              "message": "Ambiguous prior uncertainty verdicts for the same mathematical input",
+              "recovery": "原审批和已通过章节保留；修复条件后点击重试。崩溃边界的外部调用可能重复计费。",
+              "timestamp": "2026-09-23T14:55:02.099575+00:00"
+            },
+            "stage": "review.section.S02",
+            "status": "BLOCKED"
+          }
+        }
+      ]
+    },
+    "CH03": {
+      "id": "a45be503af594ce8aae0bb1e4c30184b",
+      "status": "AWAITING_USER_REVIEW",
+      "stage": "review.pages_and_quality",
+      "request_count": 191,
+      "error": null,
+      "events": [
+        {
+          "sequence": 2624,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:52:21.793869+00:00",
+          "payload": {
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "call_id": "30e75083e8204f2d977f1d632e5df2db",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "output_hash": "7d9f51ab5d5b4e2088bdf951e068fad08d554f32329aa32f2b418b4ba69315a5",
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reported_model": "gpt-6-astra",
+            "requested_model": "gpt-6-astra",
+            "role": "reviewer_math",
+            "schema_attempt": 1,
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": true,
+            "temperature": 0.1
+          }
+        },
+        {
+          "sequence": 2625,
+          "type": "stage",
+          "timestamp": "2026-09-23T09:52:21.801558+00:00",
+          "payload": {
+            "stage": "teaching.chapter_coverage",
+            "status": "GLOBAL_REVIEW"
+          }
+        },
+        {
+          "sequence": 2626,
+          "type": "provider.request",
+          "timestamp": "2026-09-23T09:52:21.967185+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "call_id": "3f75889e8916403aaf80d12d4422f602",
+            "input_hash": "b9fbcbbd0ac36586c1c46b4b048d67fc4ce5667f808a1754fe0427ec98f85f79",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "requested_model": "gpt-6-astra",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": true,
+            "temperature": 0.1,
+            "timestamp": "2026-09-23T09:52:21.965217+00:00"
+          }
+        },
+        {
+          "sequence": 2627,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:52:30.914907+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "billing_uncertain": true,
+            "call_id": "3f75889e8916403aaf80d12d4422f602",
+            "headers_elapsed_seconds": 8.953,
+            "http_status": 200,
+            "input_hash": "b9fbcbbd0ac36586c1c46b4b048d67fc4ce5667f808a1754fe0427ec98f85f79",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "price": null,
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "request_id": "",
+            "requested_model": "gpt-6-astra",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": true,
+            "temperature": 0.1,
+            "timestamp": "2026-09-23T09:52:21.965217+00:00",
+            "usage": null
+          }
+        },
+        {
+          "sequence": 2628,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:53:02.970394+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "billing_uncertain": false,
+            "call_id": "3f75889e8916403aaf80d12d4422f602",
+            "elapsed_seconds": 41.0,
+            "finish_reason": "stop",
+            "http_status": 200,
+            "input_hash": "b9fbcbbd0ac36586c1c46b4b048d67fc4ce5667f808a1754fe0427ec98f85f79",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "price": null,
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "received_content_chars": 1991,
+            "received_response_bytes": 261541,
+            "reported_model": "gpt-6-astra",
+            "request_id": "",
+            "requested_model": "gpt-6-astra",
+            "response_bytes_sha256": "11dbebc63a83b771db1517eef006af3c5c2b9e31253ba54448a9e7252681f21e",
+            "response_id": "resp_028e4d102cb3186c016ab3a15a446087d2a8066787f5ff0d98",
+            "role": "reviewer_math",
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "stream_complete": true,
+            "streaming": true,
+            "temperature": 0.1,
+            "timestamp": "2026-09-23T09:52:21.965217+00:00",
+            "transport_status": "SUCCESS",
+            "usage": {
+              "completion_tokens": 1210,
+              "prompt_tokens": 31070,
+              "total_tokens": 32280
+            }
+          }
+        },
+        {
+          "sequence": 2629,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:53:02.987923+00:00",
+          "payload": {
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "call_id": "3f75889e8916403aaf80d12d4422f602",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "output_hash": "85e492aece5d35c5eadee0f6ed5525cb01a7532c50a95978d64dd413e00d64ac",
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reported_model": "gpt-6-astra",
+            "requested_model": "gpt-6-astra",
+            "role": "reviewer_math",
+            "schema_attempt": 1,
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": true,
+            "temperature": 0.1
+          }
+        },
+        {
+          "sequence": 2630,
+          "type": "stage",
+          "timestamp": "2026-09-23T09:53:02.998924+00:00",
+          "payload": {
+            "stage": "teaching.feedback",
+            "status": "GLOBAL_REVIEW"
+          }
+        },
+        {
+          "sequence": 2631,
+          "type": "provider.request",
+          "timestamp": "2026-09-23T09:53:03.222091+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "call_id": "6cae7fb694c948c8999bc5682956808c",
+            "input_hash": "a2a57ee38933103bab0a04f8e20354f461ad4ccbcfef8f6bc7c528522d951730",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "7a33796275fd68cf28108cfe896039080cc8b6c69fd4789c6352ef194450d736",
+            "prompt_version": 1,
+            "prompt_version_source": "declared_prompt_header",
+            "requested_model": "gpt-6-astra",
+            "role": "reviewer_feedback",
+            "schema_hash": "c41c7e8f5b4a564445660e9d3ffaae7c48b3a6f5bf82da7d7d46045bbca8e419",
+            "streaming": true,
+            "temperature": 0.1,
+            "timestamp": "2026-09-23T09:53:03.217101+00:00"
+          }
+        },
+        {
+          "sequence": 2632,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:53:40.596216+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "billing_uncertain": true,
+            "call_id": "6cae7fb694c948c8999bc5682956808c",
+            "headers_elapsed_seconds": 37.36,
+            "http_status": 200,
+            "input_hash": "a2a57ee38933103bab0a04f8e20354f461ad4ccbcfef8f6bc7c528522d951730",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "price": null,
+            "prompt_hash": "7a33796275fd68cf28108cfe896039080cc8b6c69fd4789c6352ef194450d736",
+            "prompt_version": 1,
+            "prompt_version_source": "declared_prompt_header",
+            "request_id": "",
+            "requested_model": "gpt-6-astra",
+            "role": "reviewer_feedback",
+            "schema_hash": "c41c7e8f5b4a564445660e9d3ffaae7c48b3a6f5bf82da7d7d46045bbca8e419",
+            "streaming": true,
+            "temperature": 0.1,
+            "timestamp": "2026-09-23T09:53:03.217101+00:00",
+            "usage": null
+          }
+        },
+        {
+          "sequence": 2633,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:55:00.245474+00:00",
+          "payload": {
+            "attempt": 1,
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "billing_uncertain": false,
+            "call_id": "6cae7fb694c948c8999bc5682956808c",
+            "elapsed_seconds": 117.016,
+            "finish_reason": "stop",
+            "http_status": 200,
+            "input_hash": "a2a57ee38933103bab0a04f8e20354f461ad4ccbcfef8f6bc7c528522d951730",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "price": null,
+            "prompt_hash": "7a33796275fd68cf28108cfe896039080cc8b6c69fd4789c6352ef194450d736",
+            "prompt_version": 1,
+            "prompt_version_source": "declared_prompt_header",
+            "received_content_chars": 4080,
+            "received_response_bytes": 582420,
+            "reported_model": "gpt-6-astra",
+            "request_id": "",
+            "requested_model": "gpt-6-astra",
+            "response_bytes_sha256": "eee3126bfac6826c94b48a0211a8ab58e2bbebee473b58b4fea8b62d97e9b2b4",
+            "response_id": "resp_06d37f4ce535ca31016ab3a184327887d08efbac3c293e17e1",
+            "role": "reviewer_feedback",
+            "schema_hash": "c41c7e8f5b4a564445660e9d3ffaae7c48b3a6f5bf82da7d7d46045bbca8e419",
+            "stream_complete": true,
+            "streaming": true,
+            "temperature": 0.1,
+            "timestamp": "2026-09-23T09:53:03.217101+00:00",
+            "transport_status": "SUCCESS",
+            "usage": {
+              "completion_tokens": 2843,
+              "prompt_tokens": 30043,
+              "total_tokens": 32886
+            }
+          }
+        },
+        {
+          "sequence": 2634,
+          "type": "provider.result",
+          "timestamp": "2026-09-23T09:55:00.256736+00:00",
+          "payload": {
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "call_id": "6cae7fb694c948c8999bc5682956808c",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "output_hash": "c7dbb2f1e6bb16f4c879f49bc7c7d9115755c565950c5cb256f454d57e377122",
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "7a33796275fd68cf28108cfe896039080cc8b6c69fd4789c6352ef194450d736",
+            "prompt_version": 1,
+            "prompt_version_source": "declared_prompt_header",
+            "reported_model": "gpt-6-astra",
+            "requested_model": "gpt-6-astra",
+            "role": "reviewer_feedback",
+            "schema_attempt": 1,
+            "schema_hash": "c41c7e8f5b4a564445660e9d3ffaae7c48b3a6f5bf82da7d7d46045bbca8e419",
+            "streaming": true,
+            "temperature": 0.1
+          }
+        },
+        {
+          "sequence": 2635,
+          "type": "feedback.reviewed",
+          "timestamp": "2026-09-23T09:55:00.286744+00:00",
+          "payload": {
+            "evidence_key": "runs/a45be503af594ce8aae0bb1e4c30184b/feedback-reviews/b4f65b4a7e5e106d37462281/receipt-1-reviewed.json",
+            "evidence_sha256": "885de593854f3f02296bf6c065ae9ca61b59b697eb4bf2636bec00bfbf4d0135",
+            "feedback_hash": "06234869adb0ea50ef8f5edb9e5da5f7fe690e3e7f6abfd2093d47d8640497dd",
+            "identity_hash": "b4f65b4a7e5e106d374622814929485399e8bad784705910ead83f6648386b36",
+            "items": [
+              {
+                "id": "F1",
+                "objective_evidence": [
+                  {
+                    "field": "objectives",
+                    "quote": "能够运用代数变形、夹逼思想和基本极限完成初等计算。",
+                    "section_id": "S02"
+                  },
+                  {
+                    "field": "lecture.exercises",
+                    "quote": "with_answers",
+                    "section_id": null
+                  }
+                ],
+                "reason": "现稿已在批准的 S02 目标内提供学生独立使用夹逼定理的练习及对应答案，并未改写 U04 的原有示范。U12 的附加小问要求学生自行构造上下界、确认同一去心趋近过程并求共同极限；U13 随后给出完整核查、夹逼结论及不需要计算振荡函数极限的说明。因此该反馈所要求的练习—答案配对已经实际完成。",
+                "repair_instruction": null,
+                "repair_unit_ids": [],
+                "status": "satisfied",
+                "unit_evidence": [
+                  {
+                    "kind": "worked_example",
+                    "quote": "附加小问：用夹逼定理计算\n\\[\n\\lim_{x\\to0}\\frac{x^2}{2+\\cos(1/x)}.\n\\]\n请自行构造上下界，确认原式与上下界在同一去心邻域内有定义，说明所考察的同一趋近过程，计算两端的共同极限，再给出结论。",
+                    "unit_id": "S02.U12"
+                  },
+                  {
+                    "kind": "worked_example",
+                    "quote": "附加小问解答：在去心邻域 $0<|x|<1$ 内，$1/x$ 有定义。由余弦函数的有界性，\n\\[\n-1\\leq\\cos(1/x)\\leq1,\n\\qquad\n1\\leq2+\\cos(1/x)\\leq3.\n\\]\n因此分母始终为正，原式在该去心邻域内有定义。对上述正数取倒数，再乘以非负数 $x^2$，得到\n\\[\n\\frac{x^2}{3}\\leq\\frac{x^2}{2+\\cos(1/x)}\\leq x^2.\n\\]\n上下界也在同一去心邻域内有定义，三者均考察双侧趋近过程 $x\\to0$。由 $\\lim_{x\\to0}x=0$ 及极限的积与常数倍法则，\n\\[\n\\lim_{x\\to0}\\frac{x^2}{3}=0,\n\\qquad\n\\lim_{x\\to0}x^2=0.\n\\]\n两端趋于同一有限数，故由夹逼定理，\n\\[\n\\lim_{x\\to0}\\frac{x^2}{2+\\cos(1/x)}=0.\n\\]\n这里仅使用余弦函数的有界性与代数极限，不需要求 $\\cos(1/x)$ 的极限，也不需要在 $x=0$ 处定义原式。",
+                    "unit_id": "S02.U13"
+                  }
+                ],
+                "unit_ids": [
+                  "S02.U12",
+                  "S02.U13"
+                ]
+              },
+              {
+                "id": "F2",
+                "objective_evidence": [
+                  {
+                    "field": "objectives",
+                    "quote": "理解等价无穷小的定义，并能在乘积和商的极限中进行规范替换。",
+                    "section_id": "S03"
+                  },
+                  {
+                    "field": "lecture.exercises",
+                    "quote": "with_answers",
+                    "section_id": null
+                  }
+                ],
+                "reason": "现稿已在既有 U07/U08 题解配对中给出具体的加减抵消反例，而不是只重复一般警告。文本明确验证 $x+x^2\\sim x$，原式的实际结果为 $1$，直接替换后所得结果为 $0$，并解释这是加减式中的项替换而非定理允许的整体乘积因子或商结构。该反例满足初等代数核查要求，且保留了原题和正确解答。",
+                "repair_instruction": null,
+                "repair_unit_ids": [],
+                "status": "satisfied",
+                "unit_evidence": [
+                  {
+                    "kind": "counterexample",
+                    "quote": "再说明加减式中不能无条件逐项替换等价无穷小。对 $x\\to0$ 且 $x\\neq0$，有\n\\[\n\\frac{x+x^2}{x}=1+x\\longrightarrow1,\n\\]\n所以 $x+x^2\\sim x$；同时分母 $x^2\\neq0$。但是\n\\[\n\\frac{(x+x^2)-x}{x^2}=\\frac{x^2}{x^2}=1,\n\\]\n故原式的极限为 $1$。若把加减项 $x+x^2$ 逐项替换为等价无穷小 $x$，则得到\n\\[\n\\frac{x-x}{x^2}=0,\n\\]\n其极限为 $0$，与原式不同。这里被替换的是加减式中的一个加项，而不是等价无穷小替换定理所许可的整体乘积因子或商结构；因此不能仅由等价关系和表达式有定义就进行这种替换，必须另行检验替换后的整体极限。",
+                    "unit_id": "S03.U08"
+                  }
+                ],
+                "unit_ids": [
+                  "S03.U08"
+                ]
+              },
+              {
+                "id": "F3",
+                "objective_evidence": [
+                  {
+                    "field": "objectives",
+                    "quote": "能够将连续性定理用于判断方程根的存在性及简单经济学模型的可行性。",
+                    "section_id": "S05"
+                  },
+                  {
+                    "field": "lecture.example_focus",
+                    "quote": "balanced",
+                    "section_id": null
+                  }
+                ],
+                "reason": "现稿已在两道经济模型题面及其答案中明确给出价格、数量的计量单位和共同时间尺度，并在数值结论中保持一致。U13/U14 使用元/千克、同一固定一周和千克；U18/U22 同样使用元/千克、同一固定一周和千克，并明确这些是简化教学模型中的统一单位数值而非真实市场事实。原有区间、端点数据、连续性论证、存在性与唯一性区分均被保留，因此无需修复。",
+                "repair_instruction": null,
+                "repair_unit_ids": [],
+                "status": "satisfied",
+                "unit_evidence": [
+                  {
+                    "kind": "worked_example",
+                    "quote": "考虑某商品的简化教学模型：$p$ 为以元/千克计的价格数值，$D(p)$ 与 $S(p)$ 分别为同一个固定的一周内、以千克计的需求量和供给量数值。下列公式是这些统一单位下数值之间的假设关系，并非对真实市场的事实描述。在价格范围 $p\\in[0,8]$（即每千克 $0$ 至 $8$ 元）内，某商品的需求量与供给量分别为\n\\[\nD(p)=24-2p,\\qquad S(p)=4+p.\n\\]\n先用连续性说明该价格范围内存在供需相等的均衡价格，再求出均衡价格与交易量，并说明唯一性的依据。",
+                    "unit_id": "S05.U13"
+                  },
+                  {
+                    "kind": "worked_example",
+                    "quote": "沿用题面的简化教学模型及单位：价格以元/千克计，供需数量均为同一个固定的一周内以千克计的数值。在 $[0,8]$ 上，两种数量均非负，且 $D,S$ 均为连续函数。定义超额需求\n\\[\nE(p)=D(p)-S(p)=20-3p\\qquad(p\\in[0,8]).\n\\]\n这里 $E(p)$ 也是该周内以千克计的数量差数值，价格区间 $[0,8]$ 对应每千克 $0$ 至 $8$ 元。它在闭区间上连续，且 $E(0)=20>0$，$E(8)=-4<0$，分别表示该周的需求量比供给量多 $20$ 千克和少 $4$ 千克。由零点存在性定理，存在 $p_*\\in(0,8)$ 使 $E(p_*)=0$，即供需相等。",
+                    "unit_id": "S05.U14"
+                  },
+                  {
+                    "kind": "worked_example",
+                    "quote": "考虑某商品的简化教学模型：$p$ 为以元/千克计的价格数值，需求函数 $D$ 和供给函数 $S$ 的值分别为同一个固定的一周内、以千克计的需求量和供给量数值。以下条件是统一单位下数值之间的教学假设，并非对真实市场的事实描述。某商品在 $p\\in[1,5]$（即每千克 $1$ 至 $5$ 元）上的需求函数 $D$ 和供给函数 $S$ 均连续且非负，满足\n\\[\nD(1)=12,\\quad S(1)=3,\\qquad D(5)=4,\\quad S(5)=8.\n\\]\n证明存在区间内部的均衡价格。若进一步知道 $D$ 严格递减、$S$ 严格递增，证明均衡价格唯一。仅凭最初给出的条件能否断言唯一？",
+                    "unit_id": "S05.U18"
+                  },
+                  {
+                    "kind": "worked_example",
+                    "quote": "沿用题面的简化教学模型，价格以元/千克计，需求量与供给量均指同一个固定的一周内以千克计的数量。令 $E(p)=D(p)-S(p)$，$p\\in[1,5]$，其中 $E(p)$ 为该周超额需求的千克数，价格区间对应每千克 $1$ 至 $5$ 元。由连续函数的差仍连续，$E$ 在 $[1,5]$ 上连续，且\n\\[\nE(1)=9>0,\\qquad E(5)=-4<0.\n\\]\n这分别表示该周的需求量比供给量多 $9$ 千克和少 $4$ 千克。所以存在 $p_*\\in(1,5)$ 使 $E(p_*)=0$，即 $D(p_*)=S(p_*)$。均衡价格为 $p_*$ 元/千克，位于每千克 $1$ 元与 $5$ 元之间；相等的供需数量是该周以千克计的均衡交易量。",
+                    "unit_id": "S05.U22"
+                  }
+                ],
+                "unit_ids": [
+                  "S05.U13",
+                  "S05.U14",
+                  "S05.U18",
+                  "S05.U22"
+                ]
+              }
+            ],
+            "job_id": "89467291c05a478b9b525da3ce65b50f",
+            "limitations": [
+              "本评估依据所提供的完整正文、批准计划和反馈数据进行文本核对，不等同于形式化数学证明。",
+              "未执行真实 TeX 编译、PDF 全页视觉检查或教师审核；本结果不构成教师数学或视觉验收。"
+            ],
+            "mock": false,
+            "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+            "plan_revision": 2,
+            "schema_version": 1,
+            "status": "reviewed",
+            "teacher_review": "NOT_RUN"
+          }
+        },
+        {
+          "sequence": 2636,
+          "type": "global.repair_state",
+          "timestamp": "2026-09-23T09:55:00.305778+00:00",
+          "payload": {
+            "pending_sections": [],
+            "phase": "validated",
+            "rounds_used": 5
+          }
+        },
+        {
+          "sequence": 2637,
+          "type": "stage",
+          "timestamp": "2026-09-23T09:55:00.318211+00:00",
+          "payload": {
+            "stage": "compile.global",
+            "status": "GLOBAL_REVIEW"
+          }
+        },
+        {
+          "sequence": 2638,
+          "type": "stage",
+          "timestamp": "2026-09-23T09:55:04.328890+00:00",
+          "payload": {
+            "stage": "render.all_pages",
+            "status": "GLOBAL_REVIEW"
+          }
+        },
+        {
+          "sequence": 2639,
+          "type": "job.finished",
+          "timestamp": "2026-09-23T09:55:06.995340+00:00",
+          "payload": {
+            "error": null,
+            "stage": "review.pages_and_quality",
+            "status": "AWAITING_USER_REVIEW"
+          }
+        }
+      ]
+    }
+  }
+}

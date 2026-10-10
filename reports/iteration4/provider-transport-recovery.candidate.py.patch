@@ -1,0 +1,99 @@
+--- reports\iteration4\feedback-assessment-provider.candidate.py
++++ src/math_agent/provider.py
+@@ -1,5 +1,6 @@
+ """Text-only compatible chat provider; capabilities never inferred from HTTP 200."""
+ import asyncio
++import hashlib
+ import json
+ import re
+ import time
+@@ -177,21 +178,31 @@
+         complete = False
+         pending = b''
+         data_lines = []
++        wire_hash = hashlib.sha256()
++        wire_bytes = 0
++
++        def protocol_failure(reason):
++            outcome['response_protocol_error'] = reason
++            raise AgentError('PROVIDER_STREAM_PROTOCOL', '供应商流式传输协议不完整或无法解析；部分内容不发布，允许临时切换备用模型')
+ 
+         def consume_event(data):
+             nonlocal usage, response_id, finish_reason, complete
+             if data == '[DONE]':
+                 if finish_reason != 'stop':
+-                    raise AgentError('OUTPUT_INCOMPLETE', '流式响应缺少完整停止状态；不发布部分内容')
++                    protocol_failure('done_without_stop')
+                 if not ''.join(content_parts).strip():
+-                    raise AgentError('PROVIDER_RESPONSE', '供应商返回结构错误或空正文')
++                    raise AgentError('PROVIDER_EMPTY_RESPONSE', '供应商完成信号未包含正文；保留记录并尝试备用模型')
+                 if not self.active():
+                     raise AgentError('CANCELLED', '取消后的 API 响应已丢弃，不发布')
+                 complete = True
+                 return
+             body = json.loads(data)
+-            if not isinstance(body, dict) or body.get('error'):
++            if not isinstance(body, dict):
+                 raise ValueError('invalid stream event')
++            if body.get('error'):
++                # An explicit error may represent a business/refusal decision;
++                # do not infer that switching models is permitted.
++                raise AgentError('PROVIDER_RESPONSE', '供应商流式事件明确返回错误状态')
+             if isinstance(body.get('id'), str):
+                 response_id = self._scrub(body['id'])[:200]
+             if isinstance(body.get('model'), str):
+@@ -218,7 +229,7 @@
+                 if reason not in (None, 'stop') or delta.get('tool_calls') or delta.get('function_call'):
+                     if reason in ('tool_calls', 'function_call'):
+                         finish_reason = reason
+-                    raise ValueError('unsupported completion')
++                    raise AgentError('PROVIDER_RESPONSE', '供应商返回未支持的完成类型；未修改业务参数')
+                 fragment = delta.get('content')
+                 if fragment is not None and not isinstance(fragment, str):
+                     raise ValueError('invalid stream content')
+@@ -231,8 +242,12 @@
+ 
+         try:
+             if response.headers.get('content-type', '').split(';')[0].strip().lower() != 'text/event-stream':
+-                raise ValueError('not an SSE response')
++                # A non-SSE body could hold an explicit business/refusal
++                # decision. Do not infer permission to switch without reading it.
++                raise AgentError('PROVIDER_RESPONSE', '供应商未返回请求的 SSE 格式；保留失败，不推断未读取响应可切换模型')
+             async for chunk in self._bounded_chunks(response):
++                wire_hash.update(chunk)
++                wire_bytes += len(chunk)
+                 pending += chunk
+                 while b'\n' in pending:
+                     line, pending = pending.split(b'\n', 1)
+@@ -247,11 +262,12 @@
+                         value = line[5:]
+                         data_lines.append(value[1:] if value.startswith(' ') else value)
+                     # Comments and SSE event/id/retry fields carry no completion text.
+-            raise AgentError('OUTPUT_INCOMPLETE', '流式连接结束但缺少 [DONE]；不发布部分内容')
++            protocol_failure('eof_before_done')
+         except (KeyError, IndexError, TypeError, ValueError):
+-            raise AgentError('PROVIDER_RESPONSE', '供应商流式响应结构错误或空正文') from None
++            protocol_failure('invalid_sse_event_or_envelope')
+         finally:
+             outcome.update({'streaming': True, 'stream_complete': complete,
++                            'received_response_bytes': wire_bytes, 'response_bytes_sha256': wire_hash.hexdigest(),
+                             'finish_reason': finish_reason, 'usage': usage, 'price': None,
+                             'response_id': response_id, 'received_content_chars': sum(map(len, content_parts)),
+                             'billing_uncertain': not complete or usage is None})
+@@ -316,8 +332,14 @@
+                                 raise AgentError('OUTPUT_TRUNCATED', '输出被截断；请缩小计划单元后重试，不自动补成成功')
+                             if message.get('refusal') or choice.get('finish_reason') == 'content_filter':
+                                 raise AgentError('PROVIDER_REFUSAL', '供应商拒绝本次内容')
+-                            if not isinstance(content, str) or not content.strip():
+-                                raise ValueError('empty')
++                            if content is None or (isinstance(content, str) and not content.strip()):
++                                outcome.update({'received_content_chars': 0, 'finish_reason': choice.get('finish_reason'),
++                                    'received_response_bytes': len(body_bytes), 'response_bytes_sha256': hashlib.sha256(body_bytes).hexdigest()})
++                                if choice.get('finish_reason') not in (None, 'stop') or message.get('tool_calls') or message.get('function_call'):
++                                    raise AgentError('PROVIDER_RESPONSE', '供应商返回未支持的完成类型；未修改业务参数')
++                                raise AgentError('PROVIDER_EMPTY_RESPONSE', '供应商响应未包含正文；保留记录并尝试备用模型')
++                            if not isinstance(content, str):
++                                raise ValueError('invalid content type')
+                             if not self.active():
+                                 raise AgentError('CANCELLED', '取消后的 API 响应已丢弃，不发布')
+                             usage = _reported_usage(body.get('usage'))

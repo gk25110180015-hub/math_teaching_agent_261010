@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="11" skipped="0" tests="11" time="0.351" timestamp="2026-09-26T11:50:06.035335+08:00" hostname="Asuna"><testcase classname="tests.test_presentation_font_recovery" name="test_source_font_adaptation_preserves_math_and_original[scriptsize-footnotesize]" time="0.020"><failure message="assert not True&#10; +  where True = any(&lt;generator object test_source_font_adaptation_preserves_math_and_original.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001FCD059D3C0&gt;)">tests\test_presentation_font_recovery.py:29: in test_source_font_adaptation_preserves_math_and_original
+    assert not any(i['severity'] == 'blocking' for i in result['issues'])
+E   assert not True
+E    +  where True = any(&lt;generator object test_source_font_adaptation_preserves_math_and_original.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001FCD059D3C0&gt;)</failure></testcase><testcase classname="tests.test_presentation_font_recovery" name="test_source_font_adaptation_preserves_math_and_original[tiny-footnotesize]" time="0.017"><failure message="assert not True&#10; +  where True = any(&lt;generator object test_source_font_adaptation_preserves_math_and_original.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001FCD059E8E0&gt;)">tests\test_presentation_font_recovery.py:29: in test_source_font_adaptation_preserves_math_and_original
+    assert not any(i['severity'] == 'blocking' for i in result['issues'])
+E   assert not True
+E    +  where True = any(&lt;generator object test_source_font_adaptation_preserves_math_and_original.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001FCD059E8E0&gt;)</failure></testcase><testcase classname="tests.test_presentation_font_recovery" name="test_source_font_adaptation_preserves_math_and_original[Large-large]" time="0.019"><failure message="AssertionError: assert '\\Large ' not in '\\documentc...{document}\n'&#10;  &#10;  '\\Large ' is contained here:&#10;    at (0,0) {\Large $\Delta y-\mathrm{d}y$};\end{tikzpicture}\end{center}&#10;  ?           +++++++&#10;    % SOURCE-END U0001&#10;    }&#10;    \end{frame}&#10;    \end{document}">tests\test_presentation_font_recovery.py:30: in test_source_font_adaptation_preserves_math_and_original
+    assert '\\' + command + ' ' not in tex
+E   AssertionError: assert '\\Large ' not in '\\documentc...{document}\n'
+E     
+E     '\\Large ' is contained here:
+E       at (0,0) {\Large $\Delta y-\mathrm{d}y$};\end{tikzpicture}\end{center}
+E     ?           +++++++
+E       % SOURCE-END U0001
+E       }
+E       \end{frame}
+E       \end{document}</failure></testcase><testcase classname="tests.test_presentation_font_recovery" name="test_source_font_adaptation_preserves_math_and_original[LARGE-large]" time="0.014"><failure message="AssertionError: assert '\\LARGE ' not in '\\documentc...{document}\n'&#10;  &#10;  '\\LARGE ' is contained here:&#10;    at (0,0) {\LARGE $\Delta y-\mathrm{d}y$};\end{tikzpicture}\end{center}&#10;  ?           +++++++&#10;    % SOURCE-END U0001&#10;    }&#10;    \end{frame}&#10;    \end{document}">tests\test_presentation_font_recovery.py:30: in test_source_font_adaptation_preserves_math_and_original
+    assert '\\' + command + ' ' not in tex
+E   AssertionError: assert '\\LARGE ' not in '\\documentc...{document}\n'
+E     
+E     '\\LARGE ' is contained here:
+E       at (0,0) {\LARGE $\Delta y-\mathrm{d}y$};\end{tikzpicture}\end{center}
+E     ?           +++++++
+E       % SOURCE-END U0001
+E       }
+E       \end{frame}
+E       \end{document}</failure></testcase><testcase classname="tests.test_presentation_font_recovery" name="test_source_font_adaptation_preserves_math_and_original[huge-large]" time="0.016"><failure message="AssertionError: assert '\\huge ' not in '\\documentc...{document}\n'&#10;  &#10;  '\\huge ' is contained here:&#10;    at (0,0) {\huge $\Delta y-\mathrm{d}y$};\end{tikzpicture}\end{center}&#10;  ?           ++++++&#10;    % SOURCE-END U0001&#10;    }&#10;    \end{frame}&#10;    \end{document}">tests\test_presentation_font_recovery.py:30: in test_source_font_adaptation_preserves_math_and_original
+    assert '\\' + command + ' ' not in tex
+E   AssertionError: assert '\\huge ' not in '\\documentc...{document}\n'
+E     
+E     '\\huge ' is contained here:
+E       at (0,0) {\huge $\Delta y-\mathrm{d}y$};\end{tikzpicture}\end{center}
+E     ?           ++++++
+E       % SOURCE-END U0001
+E       }
+E       \end{frame}
+E       \end{document}</failure></testcase><testcase classname="tests.test_presentation_font_recovery" name="test_source_font_adaptation_preserves_math_and_original[Huge-large]" time="0.013"><failure message="AssertionError: assert '\\Huge ' not in '\\documentc...{document}\n'&#10;  &#10;  '\\Huge ' is contained here:&#10;    at (0,0) {\Huge $\Delta y-\mathrm{d}y$};\end{tikzpicture}\end{center}&#10;  ?           ++++++&#10;    % SOURCE-END U0001&#10;    }&#10;    \end{frame}&#10;    \end{document}">tests\test_presentation_font_recovery.py:30: in test_source_font_adaptation_preserves_math_and_original
+    assert '\\' + command + ' ' not in tex
+E   AssertionError: assert '\\Huge ' not in '\\documentc...{document}\n'
+E     
+E     '\\Huge ' is contained here:
+E       at (0,0) {\Huge $\Delta y-\mathrm{d}y$};\end{tikzpicture}\end{center}
+E     ?           ++++++
+E       % SOURCE-END U0001
+E       }
+E       \end{frame}
+E       \end{document}</failure></testcase><testcase classname="tests.test_presentation_font_recovery" name="test_literal_font_examples_and_comments_are_not_rewritten" time="0.014"><failure message="assert not True&#10; +  where True = any(&lt;generator object test_literal_font_examples_and_comments_are_not_rewritten.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001FCD060E5A0&gt;)">tests\test_presentation_font_recovery.py:45: in test_literal_font_examples_and_comments_are_not_rewritten
+    assert not any(i['rule_id'] == 'B-16' for i in result['issues'])
+E   assert not True
+E    +  where True = any(&lt;generator object test_literal_font_examples_and_comments_are_not_rewritten.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001FCD060E5A0&gt;)</failure></testcase><testcase classname="tests.test_presentation_font_recovery" name="test_arbitrary_scaling_still_blocks_with_actionable_location[\\resizebox{1cm}{!}{$a&lt;b$}]" time="0.007"><failure message="KeyError: 'location'">tests\test_presentation_font_recovery.py:57: in test_arbitrary_scaling_still_blocks_with_actionable_location
+    assert issue['location']['source_line'] &gt;= 1
+           ^^^^^^^^^^^^^^^^^
+E   KeyError: 'location'</failure></testcase><testcase classname="tests.test_presentation_font_recovery" name="test_arbitrary_scaling_still_blocks_with_actionable_location[\\scalebox{0.2}{$a&lt;b$}]" time="0.007"><failure message="KeyError: 'location'">tests\test_presentation_font_recovery.py:57: in test_arbitrary_scaling_still_blocks_with_actionable_location
+    assert issue['location']['source_line'] &gt;= 1
+           ^^^^^^^^^^^^^^^^^
+E   KeyError: 'location'</failure></testcase><testcase classname="tests.test_presentation_font_recovery" name="test_arbitrary_scaling_still_blocks_with_actionable_location[{\\fontsize{4}{5}\\selectfont $a&lt;b$}]" time="0.007"><failure message="KeyError: 'location'">tests\test_presentation_font_recovery.py:57: in test_arbitrary_scaling_still_blocks_with_actionable_location
+    assert issue['location']['source_line'] &gt;= 1
+           ^^^^^^^^^^^^^^^^^
+E   KeyError: 'location'</failure></testcase><testcase classname="tests.test_presentation_font_recovery" name="test_inactive_forbidden_typography_does_not_block" time="0.008"><failure message="assert not True&#10; +  where True = any(&lt;generator object test_inactive_forbidden_typography_does_not_block.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001FCD0644790&gt;)">tests\test_presentation_font_recovery.py:64: in test_inactive_forbidden_typography_does_not_block
+    assert not any(i['rule_id'] == 'B-16' for i in result['issues'])
+E   assert not True
+E    +  where True = any(&lt;generator object test_inactive_forbidden_typography_does_not_block.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001FCD0644790&gt;)</failure></testcase></testsuite></testsuites>

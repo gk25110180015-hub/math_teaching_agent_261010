@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="12" skipped="0" tests="18" time="2.994" timestamp="2026-09-20T23:47:53.152340+08:00" hostname="Asuna"><testcase classname="tests.test_recheck_feedback_api" name="test_feedback_is_bound_to_approved_plan_and_does_not_sign_review_or_reset_budget[user]" time="0.148"><failure message="AssertionError: {&quot;error&quot;:{&quot;code&quot;:&quot;VALIDATION&quot;,&quot;message&quot;:&quot;请求字段、类型或取值无效&quot;},&quot;details&quot;:[{&quot;loc&quot;:[&quot;body&quot;,&quot;feedback&quot;],&quot;type&quot;:&quot;extra_forbidden&quot;},{&quot;loc&quot;:[&quot;body&quot;,&quot;feedback_source&quot;],&quot;type&quot;:&quot;extra_forbidden&quot;}]}&#10;assert 422 == 202&#10; +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code">case = (&lt;starlette.testclient.TestClient object at 0x000002AD5C547620&gt;, &lt;math_agent.service.Service object at 0x000002AD5C212...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+source = 'user'
+
+    @pytest.mark.parametrize('source', ['user', 'agent_audit'])
+    def test_feedback_is_bound_to_approved_plan_and_does_not_sign_review_or_reset_budget(case, source):
+        client, service, pipeline, plan = case
+        rid = pipeline.run['id']
+        before = service.get(rid)
+        old_events = events(service, rid)
+        feedback = '请补充夹逼训练、两个重要极限经典形式及抵消反例。\n保留已批准教学范围。'
+        response = request_recheck(client, pipeline, plan, feedback=feedback, feedback_source=source)
+&gt;       assert response.status_code == 202, response.text
+E       AssertionError: {"error":{"code":"VALIDATION","message":"请求字段、类型或取值无效"},"details":[{"loc":["body","feedback"],"type":"extra_forbidden"},{"loc":["body","feedback_source"],"type":"extra_forbidden"}]}
+E       assert 422 == 202
+E        +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code
+
+tests\test_recheck_feedback_api.py:28: AssertionError</failure></testcase><testcase classname="tests.test_recheck_feedback_api" name="test_feedback_is_bound_to_approved_plan_and_does_not_sign_review_or_reset_budget[agent_audit]" time="0.110"><failure message="AssertionError: {&quot;error&quot;:{&quot;code&quot;:&quot;VALIDATION&quot;,&quot;message&quot;:&quot;请求字段、类型或取值无效&quot;},&quot;details&quot;:[{&quot;loc&quot;:[&quot;body&quot;,&quot;feedback&quot;],&quot;type&quot;:&quot;extra_forbidden&quot;},{&quot;loc&quot;:[&quot;body&quot;,&quot;feedback_source&quot;],&quot;type&quot;:&quot;extra_forbidden&quot;}]}&#10;assert 422 == 202&#10; +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code">case = (&lt;starlette.testclient.TestClient object at 0x000002AD5D7B07D0&gt;, &lt;math_agent.service.Service object at 0x000002AD5C3C8...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+source = 'agent_audit'
+
+    @pytest.mark.parametrize('source', ['user', 'agent_audit'])
+    def test_feedback_is_bound_to_approved_plan_and_does_not_sign_review_or_reset_budget(case, source):
+        client, service, pipeline, plan = case
+        rid = pipeline.run['id']
+        before = service.get(rid)
+        old_events = events(service, rid)
+        feedback = '请补充夹逼训练、两个重要极限经典形式及抵消反例。\n保留已批准教学范围。'
+        response = request_recheck(client, pipeline, plan, feedback=feedback, feedback_source=source)
+&gt;       assert response.status_code == 202, response.text
+E       AssertionError: {"error":{"code":"VALIDATION","message":"请求字段、类型或取值无效"},"details":[{"loc":["body","feedback"],"type":"extra_forbidden"},{"loc":["body","feedback_source"],"type":"extra_forbidden"}]}
+E       assert 422 == 202
+E        +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code
+
+tests\test_recheck_feedback_api.py:28: AssertionError</failure></testcase><testcase classname="tests.test_recheck_feedback_api" name="test_missing_feedback_is_empty_user_feedback_and_replays_with_explicit_defaults" time="0.114"><failure message="assert (422 == 202)&#10; +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code">case = (&lt;starlette.testclient.TestClient object at 0x000002AD5D852CF0&gt;, &lt;math_agent.service.Service object at 0x000002AD5D85B...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def test_missing_feedback_is_empty_user_feedback_and_replays_with_explicit_defaults(case):
+        client, service, pipeline, plan = case
+        first = request_recheck(client, pipeline, plan)
+        assert first.status_code == 202
+        replay = request_recheck(client, pipeline, plan, feedback='', feedback_source='user')
+&gt;       assert replay.status_code == 202 and replay.json()['id'] == first.json()['id']
+E       assert (422 == 202)
+E        +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code
+
+tests\test_recheck_feedback_api.py:54: AssertionError</failure></testcase><testcase classname="tests.test_recheck_feedback_api" name="test_same_key_cannot_be_reused_for_changed_feedback_or_provenance[changed0]" time="0.115"><failure message="assert 422 == 202&#10; +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code">case = (&lt;starlette.testclient.TestClient object at 0x000002AD5D8CA5A0&gt;, &lt;math_agent.service.Service object at 0x000002AD5D8B2...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+changed = {'feedback': '改为只检查抵消反例'}
+
+    @pytest.mark.parametrize('changed', [{'feedback': '改为只检查抵消反例'}, {'feedback_source': 'agent_audit'}])
+    def test_same_key_cannot_be_reused_for_changed_feedback_or_provenance(case, changed):
+        client, service, pipeline, plan = case
+        values = {'feedback': '检查夹逼训练', 'feedback_source': 'user'}
+        first = request_recheck(client, pipeline, plan, **values)
+&gt;       assert first.status_code == 202
+E       assert 422 == 202
+E        +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code
+
+tests\test_recheck_feedback_api.py:66: AssertionError</failure></testcase><testcase classname="tests.test_recheck_feedback_api" name="test_same_key_cannot_be_reused_for_changed_feedback_or_provenance[changed1]" time="0.106"><failure message="assert 422 == 202&#10; +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code">case = (&lt;starlette.testclient.TestClient object at 0x000002AD5D8C91C0&gt;, &lt;math_agent.service.Service object at 0x000002AD5D91D...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+changed = {'feedback_source': 'agent_audit'}
+
+    @pytest.mark.parametrize('changed', [{'feedback': '改为只检查抵消反例'}, {'feedback_source': 'agent_audit'}])
+    def test_same_key_cannot_be_reused_for_changed_feedback_or_provenance(case, changed):
+        client, service, pipeline, plan = case
+        values = {'feedback': '检查夹逼训练', 'feedback_source': 'user'}
+        first = request_recheck(client, pipeline, plan, **values)
+&gt;       assert first.status_code == 202
+E       assert 422 == 202
+E        +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code
+
+tests\test_recheck_feedback_api.py:66: AssertionError</failure></testcase><testcase classname="tests.test_recheck_feedback_api" name="test_pre_feedback_legacy_event_replay_is_compatible_only_when_feedback_remains_empty[-202]" time="0.110"><failure message="AssertionError: {&quot;error&quot;:{&quot;code&quot;:&quot;VALIDATION&quot;,&quot;message&quot;:&quot;请求字段、类型或取值无效&quot;},&quot;details&quot;:[{&quot;loc&quot;:[&quot;body&quot;,&quot;feedback&quot;],&quot;type&quot;:&quot;extra_forbidden&quot;}]}&#10;assert 422 == 202&#10; +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code">case = (&lt;starlette.testclient.TestClient object at 0x000002AD5D934CE0&gt;, &lt;math_agent.service.Service object at 0x000002AD5D85B...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+feedback = '', expected_status = 202
+
+    @pytest.mark.parametrize('feedback,expected_status', [('', 202), ('新增反馈不能复用旧键', 409)])
+    def test_pre_feedback_legacy_event_replay_is_compatible_only_when_feedback_remains_empty(case, feedback, expected_status):
+        client, service, pipeline, plan = case
+        first = request_recheck(client, pipeline, plan)
+        assert first.status_code == 202
+        # In this isolated DB only, emulate a previously persisted ExecuteRequest hash.
+        with service.store.transaction() as connection:
+            event = connection.execute("SELECT sequence,payload_json FROM events WHERE run_id=? AND type='checks.rerun_requested'",
+                                       (pipeline.run['id'],)).fetchone()
+            old = json.loads(event['payload_json'])
+            old.pop('feedback', None)
+            old.pop('feedback_source', None)
+            old['payload_hash'] = digest(payload(plan))
+            connection.execute('UPDATE events SET payload_json=? WHERE sequence=?', (canonical(old), event['sequence']))
+        state_before = service.get(pipeline.run['id'])
+        history_before = events(service, pipeline.run['id'])
+        replay = request_recheck(client, pipeline, plan, feedback=feedback)
+&gt;       assert replay.status_code == expected_status, replay.text
+E       AssertionError: {"error":{"code":"VALIDATION","message":"请求字段、类型或取值无效"},"details":[{"loc":["body","feedback"],"type":"extra_forbidden"}]}
+E       assert 422 == 202
+E        +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code
+
+tests\test_recheck_feedback_api.py:92: AssertionError</failure></testcase><testcase classname="tests.test_recheck_feedback_api" name="test_pre_feedback_legacy_event_replay_is_compatible_only_when_feedback_remains_empty[\u65b0\u589e\u53cd\u9988\u4e0d\u80fd\u590d\u7528\u65e7\u952e-409]" time="0.103"><failure message="AssertionError: {&quot;error&quot;:{&quot;code&quot;:&quot;VALIDATION&quot;,&quot;message&quot;:&quot;请求字段、类型或取值无效&quot;},&quot;details&quot;:[{&quot;loc&quot;:[&quot;body&quot;,&quot;feedback&quot;],&quot;type&quot;:&quot;extra_forbidden&quot;}]}&#10;assert 422 == 409&#10; +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code">case = (&lt;starlette.testclient.TestClient object at 0x000002AD5D9826F0&gt;, &lt;math_agent.service.Service object at 0x000002AD5D901...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+feedback = '新增反馈不能复用旧键', expected_status = 409
+
+    @pytest.mark.parametrize('feedback,expected_status', [('', 202), ('新增反馈不能复用旧键', 409)])
+    def test_pre_feedback_legacy_event_replay_is_compatible_only_when_feedback_remains_empty(case, feedback, expected_status):
+        client, service, pipeline, plan = case
+        first = request_recheck(client, pipeline, plan)
+        assert first.status_code == 202
+        # In this isolated DB only, emulate a previously persisted ExecuteRequest hash.
+        with service.store.transaction() as connection:
+            event = connection.execute("SELECT sequence,payload_json FROM events WHERE run_id=? AND type='checks.rerun_requested'",
+                                       (pipeline.run['id'],)).fetchone()
+            old = json.loads(event['payload_json'])
+            old.pop('feedback', None)
+            old.pop('feedback_source', None)
+            old['payload_hash'] = digest(payload(plan))
+            connection.execute('UPDATE events SET payload_json=? WHERE sequence=?', (canonical(old), event['sequence']))
+        state_before = service.get(pipeline.run['id'])
+        history_before = events(service, pipeline.run['id'])
+        replay = request_recheck(client, pipeline, plan, feedback=feedback)
+&gt;       assert replay.status_code == expected_status, replay.text
+E       AssertionError: {"error":{"code":"VALIDATION","message":"请求字段、类型或取值无效"},"details":[{"loc":["body","feedback"],"type":"extra_forbidden"}]}
+E       assert 422 == 409
+E        +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code
+
+tests\test_recheck_feedback_api.py:92: AssertionError</failure></testcase><testcase classname="tests.test_recheck_feedback_api" name="test_existing_execute_request_python_caller_keeps_empty_feedback_compatibility" time="0.102"><failure message="KeyError: 'feedback'">case = (&lt;starlette.testclient.TestClient object at 0x000002AD5D853F20&gt;, &lt;math_agent.service.Service object at 0x000002AD5D87E...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def test_existing_execute_request_python_caller_keeps_empty_feedback_compatibility(case):
+        _, service, pipeline, plan = case
+        result = service.recheck(pipeline.run['id'], ExecuteRequest(**payload(plan)))
+        values = [json.loads(value['payload_json']) for value in events(service, pipeline.run['id'])
+                  if value['type'] == 'checks.rerun_requested']
+        assert len(values) == 1 and values[0]['job_id'] == result['id']
+&gt;       assert values[0]['feedback'] == '' and values[0]['feedback_source'] == 'user'
+               ^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'feedback'
+
+tests\test_recheck_feedback_api.py:107: KeyError</failure></testcase><testcase classname="tests.test_recheck_feedback_api" name="test_invalid_feedback_is_rejected_before_any_persistent_change[invalid0]" time="0.108" /><testcase classname="tests.test_recheck_feedback_api" name="test_invalid_feedback_is_rejected_before_any_persistent_change[invalid1]" time="0.104" /><testcase classname="tests.test_recheck_feedback_api" name="test_invalid_feedback_is_rejected_before_any_persistent_change[invalid2]" time="0.103" /><testcase classname="tests.test_recheck_feedback_api" name="test_invalid_feedback_is_rejected_before_any_persistent_change[invalid3]" time="0.113" /><testcase classname="tests.test_recheck_feedback_api" name="test_invalid_feedback_is_rejected_before_any_persistent_change[invalid4]" time="0.530" /><testcase classname="tests.test_recheck_feedback_api" name="test_feedback_exact_limit_is_accepted_without_truncation" time="0.109"><failure message="AssertionError: assert 422 == 202&#10; +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code&#10; +    where &lt;Response [422 Unprocessable Entity]&gt; = request_recheck(&lt;starlette.testclient.TestClient object at 0x000002AD5D9B7E00&gt;, &lt;math_agent.pipeline.Pipeline object at 0x000002AD5D9B7CE0&gt;, {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}, feedback='数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数...数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数')">case = (&lt;starlette.testclient.TestClient object at 0x000002AD5D9B7E00&gt;, &lt;math_agent.service.Service object at 0x000002AD5DA4A...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+
+    def test_feedback_exact_limit_is_accepted_without_truncation(case):
+        client, service, pipeline, plan = case
+        feedback = '数' * 10000
+&gt;       assert request_recheck(client, pipeline, plan, feedback=feedback).status_code == 202
+E       AssertionError: assert 422 == 202
+E        +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code
+E        +    where &lt;Response [422 Unprocessable Entity]&gt; = request_recheck(&lt;starlette.testclient.TestClient object at 0x000002AD5D9B7E00&gt;, &lt;math_agent.pipeline.Pipeline object at 0x000002AD5D9B7CE0&gt;, {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}, feedback='数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数...数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数数')
+
+tests\test_recheck_feedback_api.py:126: AssertionError</failure></testcase><testcase classname="tests.test_recheck_feedback_api" name="test_execute_endpoint_does_not_accept_new_recheck_only_fields" time="0.129" /><testcase classname="tests.test_recheck_feedback_api" name="test_feedback_does_not_bypass_recheck_state_job_or_approval_gates[cancelled]" time="0.121"><failure message="assert 422 == 409&#10; +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code">case = (&lt;starlette.testclient.TestClient object at 0x000002AD5D851C40&gt;, &lt;math_agent.service.Service object at 0x000002AD5DAEF...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'cancelled'
+
+    @pytest.mark.parametrize('fault', ['cancelled', 'active', 'unconfirmed'])
+    def test_feedback_does_not_bypass_recheck_state_job_or_approval_gates(case, fault):
+        client, service, pipeline, plan = case
+        with service.store.transaction() as connection:
+            if fault == 'cancelled':
+                connection.execute("UPDATE runs SET status='CANCELLED' WHERE id=?", (pipeline.run['id'],))
+            elif fault == 'active':
+                connection.execute("UPDATE jobs SET status='queued' WHERE id=?", (pipeline.job['id'],))
+            else:
+                connection.execute('DELETE FROM approvals WHERE run_id=?', (pipeline.run['id'],))
+        before = service.get(pipeline.run['id'])
+        old_events = events(service, pipeline.run['id'])
+        response = request_recheck(client, pipeline, plan, feedback='请补训练', feedback_source='agent_audit')
+&gt;       assert response.status_code == 409
+E       assert 422 == 409
+E        +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code
+
+tests\test_recheck_feedback_api.py:154: AssertionError</failure></testcase><testcase classname="tests.test_recheck_feedback_api" name="test_feedback_does_not_bypass_recheck_state_job_or_approval_gates[active]" time="0.115"><failure message="assert 422 == 409&#10; +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code">case = (&lt;starlette.testclient.TestClient object at 0x000002AD5DA3AD20&gt;, &lt;math_agent.service.Service object at 0x000002AD5DA53...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'active'
+
+    @pytest.mark.parametrize('fault', ['cancelled', 'active', 'unconfirmed'])
+    def test_feedback_does_not_bypass_recheck_state_job_or_approval_gates(case, fault):
+        client, service, pipeline, plan = case
+        with service.store.transaction() as connection:
+            if fault == 'cancelled':
+                connection.execute("UPDATE runs SET status='CANCELLED' WHERE id=?", (pipeline.run['id'],))
+            elif fault == 'active':
+                connection.execute("UPDATE jobs SET status='queued' WHERE id=?", (pipeline.job['id'],))
+            else:
+                connection.execute('DELETE FROM approvals WHERE run_id=?', (pipeline.run['id'],))
+        before = service.get(pipeline.run['id'])
+        old_events = events(service, pipeline.run['id'])
+        response = request_recheck(client, pipeline, plan, feedback='请补训练', feedback_source='agent_audit')
+&gt;       assert response.status_code == 409
+E       assert 422 == 409
+E        +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code
+
+tests\test_recheck_feedback_api.py:154: AssertionError</failure></testcase><testcase classname="tests.test_recheck_feedback_api" name="test_feedback_does_not_bypass_recheck_state_job_or_approval_gates[unconfirmed]" time="0.112"><failure message="assert 422 == 409&#10; +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code">case = (&lt;starlette.testclient.TestClient object at 0x000002AD5DB247A0&gt;, &lt;math_agent.service.Service object at 0x000002AD5DB27...], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...})
+fault = 'unconfirmed'
+
+    @pytest.mark.parametrize('fault', ['cancelled', 'active', 'unconfirmed'])
+    def test_feedback_does_not_bypass_recheck_state_job_or_approval_gates(case, fault):
+        client, service, pipeline, plan = case
+        with service.store.transaction() as connection:
+            if fault == 'cancelled':
+                connection.execute("UPDATE runs SET status='CANCELLED' WHERE id=?", (pipeline.run['id'],))
+            elif fault == 'active':
+                connection.execute("UPDATE jobs SET status='queued' WHERE id=?", (pipeline.job['id'],))
+            else:
+                connection.execute('DELETE FROM approvals WHERE run_id=?', (pipeline.run['id'],))
+        before = service.get(pipeline.run['id'])
+        old_events = events(service, pipeline.run['id'])
+        response = request_recheck(client, pipeline, plan, feedback='请补训练', feedback_source='agent_audit')
+&gt;       assert response.status_code == 409
+E       assert 422 == 409
+E        +  where 422 = &lt;Response [422 Unprocessable Entity]&gt;.status_code
+
+tests\test_recheck_feedback_api.py:154: AssertionError</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,27 @@
+FF..F............                                                        [100%]
+================================== FAILURES ===================================
+_ test_real_history_explains_old_and_current_ast_with_immutable_registered_source _
+tests\test_calculation_review_context.py:102: in test_real_history_explains_old_and_current_ast_with_immutable_registered_source
+    assert source['identity_hash'].startswith(OLD_GUARD)
+E   AssertionError: assert False
+E    +  where False = <built-in method startswith of str object at 0x000001C5DD491FB0>('cf1e230123a5d63e68ee10bb')
+E    +    where <built-in method startswith of str object at 0x000001C5DD491FB0> = '6cf90e694a11780fdcf7e11b28f322a2450c00151b8d426d7807bd48da035de4'.startswith
+_ test_package_stays_stable_when_retry_state_changes_and_current_guard_is_added _
+tests\test_calculation_review_context.py:115: in test_package_stays_stable_when_retry_state_changes_and_current_guard_is_added
+    assert again == initial
+E   AssertionError: assert {'schema_vers...}, ...}], ...} == {'schema_vers...}, ...}], ...}
+E     
+E     Omitting 5 identical items, use -vv to show
+E     Differing items:
+E     {'corrections': [{'calculation_id': 'S03.C01', 'unit_id': 'S03.U07', 'expression_field': 'lhs', 'previous_request': {'assumptions': {}, 'id': 'S03.C01', 'kind': 'equivalence', 'lhs': {'args': [{...}, {...}], 'op': 'Add'}, ...}, ...}]} != {'corrections': [{'calculation_id': 'S03.C01', 'unit_id': 'S03.U07', 'expression_field': 'lhs', 'previous_request': {'assumptions': {}, 'id': 'S03.C01', 'kind': 'equivalence', 'lhs': {'args': [{...}, {...}], 'op': 'Add'}, ...}, ...}]}
+E     Use -v to get more diff
+_ test_unrelated_or_unverified_history_never_becomes_recovery_evidence[current_only] _
+tests\test_calculation_review_context.py:147: in test_unrelated_or_unverified_history_never_becomes_recovery_evidence
+    assert build(recovery, section, math) is None
+E   AssertionError: assert {'schema_version': 1, 'status': 'HISTORICAL_FAILURE_REPRODUCED_CURRENT_CHECK_PASSED', 'section_id': 'S03', 'correction...sumptions': {}, 'id': 'S03.C01', 'kind': 'equivalence', 'lhs': {'args': [{...}, {...}], 'op': 'Add'}, ...}, ...}], ...} is None
+E    +  where {'schema_version': 1, 'status': 'HISTORICAL_FAILURE_REPRODUCED_CURRENT_CHECK_PASSED', 'section_id': 'S03', 'correction...sumptions': {}, 'id': 'S03.C01', 'kind': 'equivalence', 'lhs': {'args': [{...}, {...}], 'op': 'Add'}, ...}, ...}], ...} = build(namespace(p=namespace(root=WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/calculation-context-2026100...54200dbcc4bf4edb32', 'section_id': 'S03'}, spec={'id': 'S03'}, state={'pending_issues': [{'message': '原历史核算问题仍需复核。'}]}), {'section_id': 'S03', 'units': [{'id': 'S03.U01', 'kind': 'definition', 'tex': '对含截距的最小二乘拟合，记第 $i$ 个观测的拟合值为 $\\hat y_i...', '现有受支持的等式核算只能核对 S03.C01 中明确提交的 AST（结果为 27/28），不能复现或解释未提供完整表达式的 29/28 记录；因此工具核算无法覆盖两份历史核查记录之间的 provenance 冲突。'], ...}, {'schema_version': 1, 'status': 'NEEDS_REVIEW', 'issues': [{'rule_id': 'DECLARED_MATH_UNCERTAINTY', 'severity': 'revie...ion': '1.14.0', ...}, {'kind': 'equivalence', 'assumptions': {}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}], ...})
+=========================== short test summary info ===========================
+FAILED tests/test_calculation_review_context.py::test_real_history_explains_old_and_current_ast_with_immutable_registered_source
+FAILED tests/test_calculation_review_context.py::test_package_stays_stable_when_retry_state_changes_and_current_guard_is_added
+FAILED tests/test_calculation_review_context.py::test_unrelated_or_unverified_history_never_becomes_recovery_evidence[current_only]
+3 failed, 14 passed in 34.06s

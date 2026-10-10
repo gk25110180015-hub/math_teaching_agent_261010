@@ -1,0 +1,88 @@
+{
+  "status": "PASS",
+  "real_edge": "EXECUTED",
+  "api": "MOCK_ROUTED_IN_BROWSER",
+  "model": "NOT_RUN",
+  "real_api": "NOT_RUN",
+  "windows_compile": "NOT_RUN",
+  "teacher_review": "NOT_RUN",
+  "checks": [
+    "Absent context hides guidance form",
+    "Context-only fingerprint change renders an empty, explicit-selection form with no automatic POST",
+    "Actual timer and forced render preserve selected unit and draft without submitting",
+    "Changed candidate does not inherit old selection or instructions; old same-body draft stays recoverable",
+    "409 retains draft and exact approved plan/body/single-unit request binding",
+    "Same-content retry after HTTP failure reuses action ID; network failure retains draft without automatic retry",
+    "Editing instructions creates a new action ID and 503 preserves the revised draft",
+    "FAILED also supports guidance; successful 202 reuses the action ID and clears only its own draft",
+    "Other workflow hides guidance, no teacher-review endpoint or external service was called"
+  ],
+  "candidate_sha256": "151abd4ac898a78eba9a285e47a096c806c879dfe9f9c562bf3db18b854ee823",
+  "fixture_sha256": "4cee4704da86d7c6e98e44d1c5beb345375aa0cb16d600ff8c4068a816f5e2ee",
+  "source_and_tests_unchanged": true,
+  "posts": [
+    {
+      "path": "/api/runs/synthetic-guidance-run/repair-guidance",
+      "payload": {
+        "expected_plan_revision": 2,
+        "expected_plan_hash": "726775ff4b98721ffc1e4442e128881fcc98d7097c7f63ffdca24f2e2bca4196",
+        "action_id": "5c17814c-489e-492d-bdb3-0ce9521f2cf2",
+        "section_id": "S03",
+        "expected_candidate_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "unit_ids": [
+          "S03.U04"
+        ],
+        "instructions": "请仅补充本单元缺失依据，保持已批准教学范围与其他单元内容不变。",
+        "source": "user"
+      }
+    },
+    {
+      "path": "/api/runs/synthetic-guidance-run/repair-guidance",
+      "payload": {
+        "expected_plan_revision": 2,
+        "expected_plan_hash": "726775ff4b98721ffc1e4442e128881fcc98d7097c7f63ffdca24f2e2bca4196",
+        "action_id": "5c17814c-489e-492d-bdb3-0ce9521f2cf2",
+        "section_id": "S03",
+        "expected_candidate_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "unit_ids": [
+          "S03.U04"
+        ],
+        "instructions": "请仅补充本单元缺失依据，保持已批准教学范围与其他单元内容不变。",
+        "source": "user"
+      }
+    },
+    {
+      "path": "/api/runs/synthetic-guidance-run/repair-guidance",
+      "payload": {
+        "expected_plan_revision": 2,
+        "expected_plan_hash": "726775ff4b98721ffc1e4442e128881fcc98d7097c7f63ffdca24f2e2bca4196",
+        "action_id": "2f3f16d6-0f0f-4163-9acb-5526d6e80306",
+        "section_id": "S03",
+        "expected_candidate_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "unit_ids": [
+          "S03.U04"
+        ],
+        "instructions": "请仅补充本单元缺失依据，保持已批准教学范围与其他单元内容不变。 请优先说明命题的使用条件与非循环的论证过程。",
+        "source": "user"
+      }
+    },
+    {
+      "path": "/api/runs/synthetic-guidance-run/repair-guidance",
+      "payload": {
+        "expected_plan_revision": 2,
+        "expected_plan_hash": "726775ff4b98721ffc1e4442e128881fcc98d7097c7f63ffdca24f2e2bca4196",
+        "action_id": "2f3f16d6-0f0f-4163-9acb-5526d6e80306",
+        "section_id": "S03",
+        "expected_candidate_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "unit_ids": [
+          "S03.U04"
+        ],
+        "instructions": "请仅补充本单元缺失依据，保持已批准教学范围与其他单元内容不变。 请优先说明命题的使用条件与非循环的论证过程。",
+        "source": "user"
+      }
+    }
+  ],
+  "console_errors": [],
+  "external_requests": [],
+  "finished_at": "2026-09-22T14:49:29.320797+00:00"
+}

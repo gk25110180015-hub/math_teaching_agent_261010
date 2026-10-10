@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="3" time="0.748" timestamp="2026-09-20T22:44:42.058998+08:00" hostname="Asuna"><testcase classname="tests.test_series_start_domain" name="test_finite_first_term_does_not_hide_a_later_pole" time="0.539"><failure message="AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}&#10;assert 'PASS' in {'FAIL', 'UNKNOWN'}">@pytest.mark.unit
+    def test_finite_first_term_does_not_hide_a_later_pole():
+        result = _calculate(request(reciprocal(op('Add', N, integer(-2)))))
+&gt;       assert result['status'] in {'UNKNOWN', 'FAIL'}, result
+E       AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}
+E       assert 'PASS' in {'FAIL', 'UNKNOWN'}
+
+tests\test_series_start_domain.py:73: AssertionError</failure></testcase><testcase classname="tests.test_series_start_domain" name="test_cancellation_must_not_hide_a_later_pole" time="0.001"><failure message="AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}&#10;assert 'PASS' in {'FAIL', 'UNKNOWN'}">@pytest.mark.unit
+    def test_cancellation_must_not_hide_a_later_pole():
+        shifted = op('Add', N, integer(-2))
+        result = _calculate(request(op('Mul', shifted, reciprocal(shifted))))
+&gt;       assert result['status'] in {'UNKNOWN', 'FAIL'}, result
+E       AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}
+E       assert 'PASS' in {'FAIL', 'UNKNOWN'}
+
+tests\test_series_start_domain.py:82: AssertionError</failure></testcase><testcase classname="tests.test_series_start_domain" name="test_domain_that_fails_later_is_not_approved_from_first_term" time="0.011"><failure message="AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}&#10;assert 'PASS' in {'FAIL', 'UNKNOWN'}">@pytest.mark.unit
+    def test_domain_that_fails_later_is_not_approved_from_first_term():
+        result = _calculate(request(op('sqrt', op('Add', integer(2), op('Mul', integer(-1), N)))))
+&gt;       assert result['status'] in {'UNKNOWN', 'FAIL'}, result
+E       AssertionError: {'kind': 'series', 'assumptions': {'n': {'integer': True, 'positive': True}}, 'tool': 'SymPy', 'tool_version': '1.14.0', ...}
+E       assert 'PASS' in {'FAIL', 'UNKNOWN'}
+
+tests\test_series_start_domain.py:89: AssertionError</failure></testcase></testsuite></testsuites>

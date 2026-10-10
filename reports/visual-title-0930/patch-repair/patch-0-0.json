@@ -1,0 +1,28 @@
+{
+  "edits": [
+    {
+      "old": "  var atL=Math.abs(x+1)<1e-9,atR=Math.abs(x-1)<1e-9;\n  var stationary=atL||atR;\n  var sg=dx>1e-8?1:dx<-1e-8?-1:0;",
+      "new": "  var atL=Math.abs(x+1)<1e-9,atR=Math.abs(x-1)<1e-9;\n  var stationary=atL||atR;\n  if(mode==='explore') focus=atL?-1:atR?1:0;\n  var sg=dx>1e-8?1:dx<-1e-8?-1:0;",
+      "reason": "探索模式必须根据传入的 x 在精确驻点处设置放大焦点，使 x=-1 或 x=1 时真实显示局部放大和左右导数符号。"
+    },
+    {
+      "old": "  if(scene===1&&(mode==='explore'||hold)){\n    var cen=focus===-1?-1:1;",
+      "new": "  var zoomActive=scene===1&&((mode==='explore'&&stationary)||hold);\n  if(zoomActive){\n    var cen=focus===-1?-1:1;",
+      "reason": "只有探索模式定位到驻点或演示模式实际停留时才启用放大，避免探索时非驻点被错误裁切，也避免演示过渡阶段字幕与图形不一致。"
+    },
+    {
+      "old": "  if(scene===1&&(mode==='explore'||hold)){\n    txt('放大视窗',plot.l+8,plot.top+17,15,'#52636b');",
+      "new": "  if(zoomActive){\n    txt('放大视窗',plot.l+8,plot.top+17,15,'#52636b');",
+      "reason": "放大视窗及其左右正负色带必须与实际数学视窗状态一致；探索模式仅在 x 为两个驻点时绘制。"
+    },
+    {
+      "old": "    caption=scene===0?(sg>0?'切线斜率为正，该符号区间递增。':sg<0?'切线斜率为负，该符号区间递减。':'切线水平，继续比较两侧符号。'):scene===1?(atL?'x=-1 左正右负，是局部极大。':atR?'x=1 左负右正，是局部极小。':'放大驻点附近，比较左右导数符号。'):'[-2,2] 内先增、后减、再增；由两侧变号判定极值。';",
+      "new": "    caption=scene===0?(sg>0?'切线斜率为正，该符号区间递增。':sg<0?'切线斜率为负，该符号区间递减。':'切线水平，继续比较两侧符号。'):scene===1?(atL?'x=-1 左正右负，是局部极大。':atR?'x=1 左负右正，是局部极小。':zoomActive?'放大驻点附近，比较左右导数符号。':'正在移动取点，观察驻点附近的变化。'):'[-2,2] 内先增、后减、再增；由两侧变号判定极值。';",
+      "reason": "演示模式在接近或离开驻点的过渡阶段没有放大图形时，不再声称正在比较放大的左右符号；停留阶段仍保留确认的极值讲解。"
+    }
+  ],
+  "explanation": "已重新核对三镜：S1 仍绘制完整三次曲线、真实切线、运动点和导数符号；S2 在演示停留阶段继续使用动态数学视窗与驻点左右色带，在探索模式只有 x=-1 或 x=1 时根据实际滑杆值放大并显示对应左右符号，非驻点保持全局视图且当前点可见；S3 继续保留完整曲线、真实切线、当前位置和三段符号带。修复了探索模式 focus 始终为 0 的问题，并使放大字幕只在实际放大图形存在时出现。",
+  "controls": null,
+  "covered_decision_ids": null,
+  "limitations": null
+}

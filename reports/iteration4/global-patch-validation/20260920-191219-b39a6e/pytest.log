@@ -1,0 +1,46 @@
+.............F............F....                                          [100%]
+================================== FAILURES ===================================
+_______ test_malformed_legacy_state_is_preserved_and_blocked[neighbor] ________
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpb39a6e/t/test_malformed_legacy_state_is6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000021A668822A0>
+corruption = 'neighbor'
+
+    @pytest.mark.parametrize('corruption',['bool_round','negative_round','bad_phase','extra_target','duplicate_target',
+        'issue_target','neighbor','candidate_hash','folder','bool_version'])
+    def test_malformed_legacy_state_is_preserved_and_blocked(tmp_path,monkeypatch,corruption):
+        _,p,plan,_,_,state=seed(tmp_path,monkeypatch)
+        if corruption=='bool_round':state['rounds_used']=True
+        elif corruption=='negative_round':state['rounds_used']=-1
+        elif corruption=='bad_phase':state['phase']='accepted_by_model'
+        elif corruption=='extra_target':state['pending'][0]['allowed_unit_ids'].append('S01.U02')
+        elif corruption=='duplicate_target':state['pending'][0]['allowed_unit_ids']*=2
+        elif corruption=='issue_target':state['pending'][0]['issues'][0]['unit_id']='S01.U02'
+        elif corruption=='neighbor':state['pending'][0]['neighbors'][0]['section']['title']='Unapproved changed context'
+        elif corruption=='candidate_hash':state['sections']['S01']['candidate_hash']='0'*64
+        elif corruption=='folder':state['round_directory']='runs/foreign-run/global-repairs/r3-forged'
+        elif corruption=='bool_version':state['schema_version']=True
+        path=p.root/'global-repair-state.json';write_json(path,state);raw=path.read_bytes()
+>       with pytest.raises(AgentError) as error:p._load_global_repair_state(plan)
+E       Failed: DID NOT RAISE AgentError
+
+workspace\t\gpb39a6e\tests\test_global_strict_patch_migration.py:133: Failed
+_ test_request_budget_blocks_pending_patch_without_losing_migration_or_scope __
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/gpb39a6e/t/test_request_budget_blocks_pen0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000021A668B6600>
+
+    def test_request_budget_blocks_pending_patch_without_losing_migration_or_scope(tmp_path,monkeypatch):
+        service,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
+        state=p._load_global_repair_state(plan)
+        while service.store.get_run(p.run['id'])['request_count']<60:
+            p.store.count_request(p.job,60,{'role':'offline-count-fixture'})
+        path=p.root/'global-repair-state.json';raw=path.read_bytes();count=len(provider.calls)
+>       with pytest.raises(AgentError) as error:p._continue_global_repairs(plan,state)
+E       Failed: DID NOT RAISE AgentError
+
+workspace\t\gpb39a6e\tests\test_global_strict_patch_migration.py:210: Failed
+=========================== short test summary info ===========================
+FAILED workspace\t\gpb39a6e\tests\test_global_strict_patch_migration.py::test_malformed_legacy_state_is_preserved_and_blocked[neighbor]
+FAILED workspace\t\gpb39a6e\tests\test_global_strict_patch_migration.py::test_request_budget_blocks_pending_patch_without_losing_migration_or_scope
+2 failed, 29 passed in 10.91s

@@ -1,0 +1,189 @@
+........................................................................ [  6%]
+........................................................................ [ 12%]
+........................................................................ [ 19%]
+........................................................................ [ 25%]
+........................................................................ [ 31%]
+........................................................................ [ 38%]
+........................................................................ [ 44%]
+........................................................................ [ 50%]
+........................................................................ [ 57%]
+.............................FFFFFF.F............................F...... [ 63%]
+...FFF.F..FFF.F......................................................... [ 69%]
+........................................................................ [ 76%]
+........................................................................ [ 82%]
+........................................................................ [ 88%]
+........................................................................ [ 95%]
+.......................................................                  [100%]
+================================== FAILURES ===================================
+________________________ test_T18_invalid_json_bounded ________________________
+tests\test_provider.py:24: in test_T18_invalid_json_bounded
+    with pytest.raises(AgentError,match='结构修复预算'):
+E   AssertionError: Regex pattern did not match.
+E     Expected regex: '结构修复预算'
+E     Actual message: '供应商未返回请求的 SSE 格式；保留失败，不推断未读取响应可切换模型'
+_________________ test_T18_truncated_not_repaired_as_success __________________
+tests\test_provider.py:33: in test_T18_truncated_not_repaired_as_success
+    assert exc.value.code=='OUTPUT_TRUNCATED'
+E   AssertionError: assert 'PROVIDER_RESPONSE' == 'OUTPUT_TRUNCATED'
+E     
+E     - OUTPUT_TRUNCATED
+E     + PROVIDER_RESPONSE
+_____________________ test_T19_auth_no_retry_or_body_leak _____________________
+tests\test_provider.py:40: in test_T19_auth_no_retry_or_body_leak
+    assert exc.value.code=='PROVIDER_AUTH'
+E   AssertionError: assert 'PROVIDER_ALL_UNAVAILABLE' == 'PROVIDER_AUTH'
+E     
+E     - PROVIDER_AUTH
+E     + PROVIDER_ALL_UNAVAILABLE
+_________________________ test_T19_429_budget_retries _________________________
+tests\test_provider.py:48: in test_T19_429_budget_retries
+    assert exc.value.code=='PROVIDER_RATE_LIMIT'
+E   AssertionError: assert 'PROVIDER_ALL_UNAVAILABLE' == 'PROVIDER_RATE_LIMIT'
+E     
+E     - PROVIDER_RATE_LIMIT
+E     + PROVIDER_ALL_UNAVAILABLE
+_________________________ test_T19_timeout_classified _________________________
+tests\test_provider.py:56: in test_T19_timeout_classified
+    assert exc.value.code=='PROVIDER_TIMEOUT'
+E   AssertionError: assert 'PROVIDER_ALL_UNAVAILABLE' == 'PROVIDER_TIMEOUT'
+E     
+E     - PROVIDER_TIMEOUT
+E     + PROVIDER_ALL_UNAVAILABLE
+___________________ test_T20_minimal_protocol_and_exact_url ___________________
+tests\test_provider.py:67: in test_T20_minimal_protocol_and_exact_url
+    p.generate('reviewer_math',{},MathReview)
+src\math_agent\provider.py:454: in generate
+    text = asyncio.run(self._request(messages, role, prompt_metadata=prompt_metadata,
+D:\anaconda\Lib\asyncio\runners.py:194: in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+D:\anaconda\Lib\asyncio\runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\anaconda\Lib\asyncio\base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+src\math_agent\provider.py:413: in _request
+    return await self._request_once(client, messages, role, candidate, index + 1, prompt_metadata)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\math_agent\provider.py:339: in _request_once
+    text = await self._read_sse(response, outcome)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\math_agent\provider.py:263: in _read_sse
+    raise AgentError('PROVIDER_RESPONSE', '供应商未返回请求的 SSE 格式；保留失败，不推断未读取响应可切换模型')
+E   math_agent.util.AgentError: 供应商未返回请求的 SSE 格式；保留失败，不推断未读取响应可切换模型
+______________ test_supplier_usage_cannot_echo_secret_into_logs _______________
+tests\test_provider.py:84: in test_supplier_usage_cannot_echo_secret_into_logs
+    assert p.check()=='OK'
+           ^^^^^^^^^
+src\math_agent\provider.py:438: in check
+    return asyncio.run(self._request([{'role': 'user', 'content': '只回复 OK。'}], 'check'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\anaconda\Lib\asyncio\runners.py:194: in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+D:\anaconda\Lib\asyncio\runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\anaconda\Lib\asyncio\base_events.py:687: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+src\math_agent\provider.py:413: in _request
+    return await self._request_once(client, messages, role, candidate, index + 1, prompt_metadata)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\math_agent\provider.py:339: in _request_once
+    text = await self._read_sse(response, outcome)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\math_agent\provider.py:263: in _read_sse
+    raise AgentError('PROVIDER_RESPONSE', '供应商未返回请求的 SSE 格式；保留失败，不推断未读取响应可切换模型')
+E   math_agent.util.AgentError: 供应商未返回请求的 SSE 格式；保留失败，不推断未读取响应可切换模型
+_____ test_prompt_identity_recorded_before_send_and_on_failures[http_504] _____
+tests\test_provider_prompt_identity.py:43: in test_prompt_identity_recorded_before_send_and_on_failures
+    assert len(calls) == 1
+E   AssertionError: assert 3 == 1
+E    +  where 3 = len([{'role': 'reviewer_math', 'model_id': 'gpt6', 'preferred_model_id': 'gpt6', 'model': 'gpt-6-astra', ...}, {'role': 'r...'role': 'reviewer_math', 'model_id': 'deepseek-v4-pro', 'preferred_model_id': 'gpt6', 'model': 'deepseek-v4-pro', ...}])
+_ test_stream_never_publishes_partial_refused_or_unfinished_content[events3-False-PROVIDER_STREAM_PROTOCOL] _
+tests\test_provider_stream.py:87: in test_stream_never_publishes_partial_refused_or_unfinished_content
+    assert error.value.code==code
+E   AssertionError: assert 'PROVIDER_RESPONSE' == 'PROVIDER_STREAM_PROTOCOL'
+E     
+E     - PROVIDER_STREAM_PROTOCOL
+E     + PROVIDER_RESPONSE
+_ test_stream_never_publishes_partial_refused_or_unfinished_content[events4-True-PROVIDER_STREAM_PROTOCOL] _
+tests\test_provider_stream.py:87: in test_stream_never_publishes_partial_refused_or_unfinished_content
+    assert error.value.code==code
+E   AssertionError: assert 'PROVIDER_RESPONSE' == 'PROVIDER_STREAM_PROTOCOL'
+E     
+E     - PROVIDER_STREAM_PROTOCOL
+E     + PROVIDER_RESPONSE
+_ test_stream_never_publishes_partial_refused_or_unfinished_content[events5-True-PROVIDER_EMPTY_RESPONSE] _
+tests\test_provider_stream.py:87: in test_stream_never_publishes_partial_refused_or_unfinished_content
+    assert error.value.code==code
+E   AssertionError: assert 'PROVIDER_RESPONSE' == 'PROVIDER_EMPTY_RESPONSE'
+E     
+E     - PROVIDER_EMPTY_RESPONSE
+E     ?          ------
+E     + PROVIDER_RESPONSE
+___________________ test_malformed_sse_json_is_not_success ____________________
+tests\test_provider_stream.py:95: in test_malformed_sse_json_is_not_success
+    assert error.value.code=="PROVIDER_STREAM_PROTOCOL" and len(calls)==1
+E   AssertionError: assert ('PROVIDER_RESPONSE' == 'PROVIDER_STREAM_PROTOCOL'
+E     
+E     - PROVIDER_STREAM_PROTOCOL
+E     + PROVIDER_RESPONSE)
+_____ test_stream_read_timeout_keeps_billing_uncertain_without_body_leak ______
+tests\test_provider_stream.py:126: in test_stream_read_timeout_keeps_billing_uncertain_without_body_leak
+    assert error.value.code=="PROVIDER_TIMEOUT" and stream.closed
+E   AssertionError: assert ('PROVIDER_ALL_UNAVAILABLE' == 'PROVIDER_TIMEOUT'
+E     
+E     - PROVIDER_TIMEOUT
+E     + PROVIDER_ALL_UNAVAILABLE)
+_____________ test_stream_total_deadline_terminates_stalled_read ______________
+tests\test_provider_stream.py:138: in test_stream_total_deadline_terminates_stalled_read
+    assert error.value.code=="PROVIDER_TOTAL_TIMEOUT" and stream.closed
+E   AssertionError: assert ('PROVIDER_ALL_UNAVAILABLE' == 'PROVIDER_TOTAL_TIMEOUT'
+E     
+E     - PROVIDER_TOTAL_TIMEOUT
+E     + PROVIDER_ALL_UNAVAILABLE)
+_________________ test_stream_http_retry_budget_is_unchanged __________________
+tests\test_provider_stream.py:147: in test_stream_http_retry_budget_is_unchanged
+    assert error.value.code=="PROVIDER_RATE_LIMIT" and len(calls)==3
+E   AssertionError: assert ('PROVIDER_ALL_UNAVAILABLE' == 'PROVIDER_RATE_LIMIT'
+E     
+E     - PROVIDER_RATE_LIMIT
+E     + PROVIDER_ALL_UNAVAILABLE)
+__________________ test_sse_content_after_finish_is_rejected __________________
+tests\test_provider_stream.py:162: in test_sse_content_after_finish_is_rejected
+    assert error.value.code=="PROVIDER_STREAM_PROTOCOL"
+E   AssertionError: assert 'PROVIDER_RESPONSE' == 'PROVIDER_STREAM_PROTOCOL'
+E     
+E     - PROVIDER_STREAM_PROTOCOL
+E     + PROVIDER_RESPONSE
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\研究生阶段\数学教学agent\math-teaching-agent\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv\Lib\site-packages\starlette\testclient.py:53
+  D:\研究生阶段\数学教学agent\math-teaching-agent\.venv\Lib\site-packages\starlette\testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_provider.py::test_T18_invalid_json_bounded - AssertionError...
+FAILED tests/test_provider.py::test_T18_truncated_not_repaired_as_success - A...
+FAILED tests/test_provider.py::test_T19_auth_no_retry_or_body_leak - Assertio...
+FAILED tests/test_provider.py::test_T19_429_budget_retries - AssertionError: ...
+FAILED tests/test_provider.py::test_T19_timeout_classified - AssertionError: ...
+FAILED tests/test_provider.py::test_T20_minimal_protocol_and_exact_url - math...
+FAILED tests/test_provider.py::test_supplier_usage_cannot_echo_secret_into_logs
+FAILED tests/test_provider_prompt_identity.py::test_prompt_identity_recorded_before_send_and_on_failures[http_504]
+FAILED tests/test_provider_stream.py::test_stream_never_publishes_partial_refused_or_unfinished_content[events3-False-PROVIDER_STREAM_PROTOCOL]
+FAILED tests/test_provider_stream.py::test_stream_never_publishes_partial_refused_or_unfinished_content[events4-True-PROVIDER_STREAM_PROTOCOL]
+FAILED tests/test_provider_stream.py::test_stream_never_publishes_partial_refused_or_unfinished_content[events5-True-PROVIDER_EMPTY_RESPONSE]
+FAILED tests/test_provider_stream.py::test_malformed_sse_json_is_not_success
+FAILED tests/test_provider_stream.py::test_stream_read_timeout_keeps_billing_uncertain_without_body_leak
+FAILED tests/test_provider_stream.py::test_stream_total_deadline_terminates_stalled_read
+FAILED tests/test_provider_stream.py::test_stream_http_retry_budget_is_unchanged
+FAILED tests/test_provider_stream.py::test_sse_content_after_finish_is_rejected
+16 failed, 1119 passed, 15 deselected, 2 warnings in 287.88s (0:04:47)

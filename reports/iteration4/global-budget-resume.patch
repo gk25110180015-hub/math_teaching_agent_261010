@@ -1,0 +1,78 @@
+--- a/src/math_agent/pipeline.py
++++ b/src/math_agent/pipeline.py
+@@ -380,16 +380,22 @@
+                                  if abs(j-index)==1]})
+         self._save_global_repair_state(state)
+ 
+-    def _import_legacy_global_failure(self, plan, state):
++    def _import_legacy_global_failure(self, plan, state, *, resume_exhausted=False):
+         """Carry unresolved recorded issues forward without another reviewer lottery."""
+         failure=self.root/'global_review_failure.json'
+-        if state['phase']!='not_started' or not failure.is_file():
++        expected_phase='budget_exhausted' if resume_exhausted else 'not_started'
++        if state['phase']!=expected_phase or not failure.is_file():
++            if resume_exhausted:
++                raise AgentError('GLOBAL_REPAIR_LEGACY_UNVERIFIED','增额恢复所需的原全局疑点记录缺失；不重置修复状态')
+             return
+         try:
+             raw=failure.read_bytes();record=json.loads(raw)
+             issues=[i for i in record['issues'] if i.get('severity') in ('blocking','review')]
+             if not issues:
++                if resume_exhausted:raise ValueError('Exhausted repair lost its unresolved concerns')
+                 return
++            if resume_exhausted and record.get('rounds_used',0)!=state['rounds_used']:
++                raise ValueError('Recorded failure belongs to a different repair round')
+             if record.get('plan_hash',plan['hash'])!=plan['hash']:
+                 raise ValueError('Recorded concern belongs to a different plan')
+             completed=[];checkpoints=[]
+@@ -419,6 +425,8 @@
+                 raise ValueError('Old review scope no longer matches preserved units')
+             if any(i.get('unit_id') not in units for i in issues):
+                 raise ValueError('Old concern does not identify a preserved unit')
++            if resume_exhausted and state['rounds_used'] and set(record.get('unit_hashes',{}))!=set(units):
++                raise ValueError('Exhausted failure does not identify the complete checked body')
+             if any(k not in units or digest(units[k])!=v for k,v in record.get('unit_hashes',{}).items()):
+                 raise ValueError('Recorded unit hashes differ')
+         except (OSError,ValueError,KeyError,TypeError):
+@@ -442,12 +450,25 @@
+                 normalized_seed_key=normalized_seed.relative_to(self.settings.workspace).as_posix(),
+                 normalized_seed_hash=digest(normalized))
+             canonical_completed.append((spec,normalized))
+-        write_json(self.root/'global-repairs'/'legacy-failure-import.json',{
++        import_evidence=self.root/'global-repairs'/('budget-resume-'+uid()[:12]+'.json' if resume_exhausted else 'legacy-failure-import.json')
++        write_json(import_evidence,{
+             'source_key':failure.relative_to(self.settings.workspace).as_posix(),'source_hash':digest(raw),
+             'body_hashes_available':bool(record.get('unit_hashes')),'checkpoint_evidence':checkpoints,
+             'issues':issues,'teacher_visual_review':'NOT_RUN',
+             'limitations':[] if record.get('unit_hashes') else ['旧审阅没有正文哈希；按实际单元ID保守继承疑点，已验证checkpoint及源文件哈希，所有受影响内容仍须重新检查。']})
++        rounds_before=state['rounds_used']
++        requests_before=self.store.get_run(self.run['id'])['request_count']
+         self._start_global_repair(canonical_completed,issues,state)
++        if resume_exhausted:
++            budget=self.effective_budget()
++            with self.store.transaction() as connection:
++                self.store.assert_fence(connection,self.job)
++                self.store.event(connection,self.run['id'],'global.budget_resumed',{
++                    'rounds_used_before':rounds_before,'rounds_used_after':state['rounds_used'],
++                    'effective_global_limit':budget['global_repair_rounds'],'budget_version':budget['version'],
++                    'request_count_preserved':requests_before,'approval_preserved':True,
++                    'failure_source_hash':digest(raw),'evidence_key':import_evidence.relative_to(self.settings.workspace).as_posix(),
++                    'pending_issues':issues,'teacher_review':'NOT_PERFORMED'})
+ 
+     def _continue_global_repairs(self, plan, state):
+         from .calculation_protocol import calculation_protocol
+@@ -493,8 +514,12 @@
+     def lecture(self, plan):
+         state=self._load_global_repair_state(plan)
+         if state['phase']=='budget_exhausted':
+-            raise AgentError('GLOBAL_MATH_BLOCKED','全局修复预算已耗尽；已保留实际疑点、所有修复与原审批')
+-        self._import_legacy_global_failure(plan,state)
++            limit=self.effective_budget()['global_repair_rounds']
++            if state['rounds_used']>=limit:
++                raise AgentError('BUDGET_EXHAUSTED','kind=global_repair_rounds; used='+str(state['rounds_used'])+'; limit='+str(limit)+'。需显式提高全局修复额度；原轮次、请求计数、疑点和审批均保留。')
++            self._import_legacy_global_failure(plan,state,resume_exhausted=True)
++        else:
++            self._import_legacy_global_failure(plan,state)
+         if state['pending']:
+             self._continue_global_repairs(plan,state)
+         while True:

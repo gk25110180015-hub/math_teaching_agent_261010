@@ -1,0 +1,50 @@
+.....................................................F....F..........    [100%]
+================================== FAILURES ===================================
+_ test_layout_fix_reuses_strict_patch_rechecks_math_and_preserves_both_builds _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/iteration4-merged-workflow-02/test_layout_fix_reuses_strict_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002CB8511D4F0>
+
+    @pytest.mark.unit
+    def test_layout_fix_reuses_strict_patch_rechecks_math_and_preserves_both_builds(tmp_path, monkeypatch):
+        from math_agent import mathcheck
+        provider = Provider()
+        _, pipeline, plan = setup_pipeline(tmp_path, provider)
+        pipeline.run['input']['provider'] = 'live'  # Injected fake provider only; zero API calls.
+        calls = []
+        monkeypatch.setattr(Pipeline, 'compile', fake_compiler(calls))
+        math_calls = []
+        original = mathcheck.check_math
+        monkeypatch.setattr(mathcheck, 'check_math', lambda section: (math_calls.append(copy.deepcopy(section)), original(section))[1])
+        completed, reports = pipeline.lecture(plan)
+        assert provider.writes == provider.patches == 1
+>       assert provider.reviews == len(math_calls) == len(calls) == 2
+E       AssertionError: assert 3 == 2
+E        +  where 3 = <test_compile_layout_recovery.Provider object at 0x000002CB8511F830>.reviews
+E        +  and   2 = len([{'section_id': 'S01', 'units': [{'id': 'S01.U1', 'kind': 'definition', 'tex': 'Long explanation before line reorganiz...Preserve this complete unit unchanged.', 'relates_to': None}], 'calculations': [], 'calculation_limitations': [], ...}])
+
+tests\test_compile_layout_recovery.py:124: AssertionError
+_ test_actual_overfull_is_locally_repaired_and_recompiled_without_smaller_font _
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/iteration4-merged-workflow-02/test_actual_overfull_is_locall0')
+
+    @pytest.mark.windows_compile
+    def test_actual_overfull_is_locally_repaired_and_recompiled_without_smaller_font(tmp_path):
+        from math_agent.compiler import resolve_xelatex
+        engine = resolve_xelatex()
+        if engine is None:
+            pytest.skip('XeLaTeX unavailable; actual Windows compile NOT_RUN')
+        provider = Provider(real_tex=True)
+        _, pipeline, plan = setup_pipeline(tmp_path, provider, xelatex_path=str(engine))
+        pipeline.run['input']['provider'] = 'live'  # Same injected provider, no real API.
+        completed, reports = pipeline.lecture(plan)
+>       assert provider.writes == provider.patches == 1 and provider.reviews == 2
+E       assert (1 == 1 and 3 == 2)
+E        +  where 1 = <test_compile_layout_recovery.Provider object at 0x000002CB85183E30>.patches
+E        +  and   3 = <test_compile_layout_recovery.Provider object at 0x000002CB85183E30>.reviews
+
+tests\test_compile_layout_recovery.py:208: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_compile_layout_recovery.py::test_layout_fix_reuses_strict_patch_rechecks_math_and_preserves_both_builds
+FAILED tests/test_compile_layout_recovery.py::test_actual_overfull_is_locally_repaired_and_recompiled_without_smaller_font
+2 failed, 67 passed in 28.49s

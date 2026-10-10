@@ -1,0 +1,1892 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="22" skipped="0" tests="145" time="45.893" timestamp="2026-09-22T22:58:05.973262+08:00" hostname="Asuna"><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_repair_guidance" name="test_target_patch_preserves_original_issues_approval_counters_and_other_unit" time="0.253" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_repair_guidance" name="test_completed_bad_proposal_is_retained_and_never_rerolled[scope]" time="0.208" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_repair_guidance" name="test_completed_bad_proposal_is_retained_and_never_rerolled[noop]" time="0.216" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_repair_guidance" name="test_wrong_bound_evidence_never_calls_model[body]" time="0.138" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_repair_guidance" name="test_wrong_bound_evidence_never_calls_model[review]" time="0.133" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_repair_guidance" name="test_wrong_bound_evidence_never_calls_model[state]" time="0.159" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_repair_guidance" name="test_wrong_bound_evidence_never_calls_model[target]" time="0.159" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_repair_guidance" name="test_wrong_bound_evidence_never_calls_model[plan]" time="0.136" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_repair_guidance" name="test_budget_exhausted_before_proposal_preserves_original_state" time="0.153" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_repair_guidance" name="test_cancelled_lease_rejects_before_any_model_call" time="0.141" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_repair_guidance" name="test_transport_retry_reuses_counted_proposal_and_preserves_logs" time="0.237" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_repair_guidance" name="test_crash_after_accept_before_global_pointer_replays_without_second_patch" time="0.103"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_crash_after_accept_before0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EEB42F4A0&gt;
+
+    def test_crash_after_accept_before_global_pointer_replays_without_second_patch(tmp_path, monkeypatch):
+&gt;       p, plan, r, provider, action, global_state = fixture(tmp_path, global_state=True)
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_repair_guidance.py:147: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_repair_guidance.py:47: in fixture
+    saved_global = p._load_global_repair_state(plan)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEA2137D0&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': 'e1d51d6028bd5d9e91866352c6a2e7a0662f416d37b753ae103789b475b1011a', 'm...: '46c1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 2, 'phase': 'checking', ...}
+identity = {'plan_hash': 'e1d51d6028bd5d9e91866352c6a2e7a0662f416d37b753ae103789b475b1011a', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_repair_guidance" name="test_crash_after_applied_event_replays_one_event" time="0.248" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_repair_guidance" name="test_context_rejects_pending_global_action_or_tampered_candidate" time="0.102"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_context_rejects_pending_g0')
+
+    def test_context_rejects_pending_global_action_or_tampered_candidate(tmp_path):
+&gt;       p, plan, r, provider, action, global_state = fixture(tmp_path, global_state=True)
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_repair_guidance.py:183: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_repair_guidance.py:47: in fixture
+    saved_global = p._load_global_repair_state(plan)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEB4344D0&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': 'e1d51d6028bd5d9e91866352c6a2e7a0662f416d37b753ae103789b475b1011a', 'm...: '46c1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 2, 'phase': 'checking', ...}
+identity = {'plan_hash': 'e1d51d6028bd5d9e91866352c6a2e7a0662f416d37b753ae103789b475b1011a', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_repair_guidance" name="test_guided_changed_body_runs_math_review_compile_and_checkpoint_again" time="0.478" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_repair_guidance" name="test_saved_proposal_hash_damage_blocks_without_reroll" time="0.215" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_repair_guidance" name="test_declared_doubt_is_retained_and_reassessed_only_after_changed_body" time="0.546" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_repair_guidance" name="test_same_guidance_does_not_bypass_independent_math_issue" time="0.437" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_repair_guidance" name="test_late_provider_answer_cannot_accept_after_lease_loss" time="0.185" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_accepted_patch_is_unchecked_and_reused_after_review_failure" time="0.353" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_rejected_patch_is_never_seed_and_retry_retains_same_evidence_doubt" time="0.391" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_noop_proposals_cannot_spin_forever_or_clear_persisted_doubt" time="0.417" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_noop_patch_and_restored_metadata_do_not_justify_review_roulette" time="0.396" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_corrupted_recovery_evidence_fails_closed[candidate]" time="0.249" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_corrupted_recovery_evidence_fails_closed[pointer]" time="0.241" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_corrupted_recovery_evidence_fails_closed[proposal]" time="0.289" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_per_unit_budget_is_not_a_per_section_limit_and_counts_calculation_updates" time="0.283" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_calculation_only_change_consumes_its_bound_unit_budget" time="0.164" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_real_legacy_hash_chain_imports_only_legal_repair_and_preserves_requests[ch01_s04]" time="0.279" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_real_legacy_hash_chain_imports_only_legal_repair_and_preserves_requests[ch02_s02]" time="0.398" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_real_legacy_hash_chain_imports_only_legal_repair_and_preserves_requests[ch03_s03]" time="0.255" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_identical_review_identity_cannot_erase_unresolved_issue" time="0.118" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_parser_result_change_reopens_explicit_review_without_erasing_history" time="0.138" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_strict_local_patch_is_rechecked_then_actually_compiled_on_windows" time="4.638" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_real_ch03_patch_repairs_ast_without_changing_unapproved_punctuation" time="1.112" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_legacy_chain_mismatch_does_not_start_fresh_and_reset_counters[candidate_hash]" time="0.149" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_legacy_chain_mismatch_does_not_start_fresh_and_reset_counters[before_hash]" time="0.159" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_legacy_chain_mismatch_does_not_start_fresh_and_reset_counters[raw_body]" time="0.153" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_explicit_user_budget_increase_preserves_local_counts_and_allows_one_more_edit" time="0.255" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_local_recovery" name="test_pipeline_before_request_retains_independent_hard_cap" time="0.066" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_known_v1_pending_migrates_and_resumes_original_issue_before_any_new_review" time="0.447"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_known_v1_pending_migrates0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EE9E27B00&gt;
+
+    def test_known_v1_pending_migrates_and_resumes_original_issue_before_any_new_review(tmp_path,monkeypatch):
+        service,p,plan,provider,_,old=seed(tmp_path,monkeypatch)
+        path=p.root/'global-repair-state.json';raw=path.read_bytes()
+        run=service.store.get_run(p.run['id']);count=len(provider.calls)
+&gt;       migrated=p._load_global_repair_state(plan)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEB3E6C60&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm...1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 3, 'phase': 'repair_pending', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_unknown_legacy_contract_is_not_migrated_or_reset[repair_prompt_hash]" time="0.399" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_unknown_legacy_contract_is_not_migrated_or_reset[written_schema_hash]" time="0.398" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_unknown_legacy_contract_is_not_migrated_or_reset[normalizer_hash]" time="0.398" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_unknown_legacy_contract_is_not_migrated_or_reset[extra]" time="0.356" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_unknown_legacy_contract_is_not_migrated_or_reset[model]" time="0.318" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_unknown_legacy_contract_is_not_migrated_or_reset[provider]" time="0.354" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[bool_round]" time="0.341" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[negative_round]" time="0.510" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[bad_phase]" time="0.350" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[extra_target]" time="0.385" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[duplicate_target]" time="0.337" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[issue_target]" time="0.341" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[neighbor]" time="0.401" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[candidate_hash]" time="0.350" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[folder]" time="0.351" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_malformed_legacy_state_is_preserved_and_blocked[bool_version]" time="0.378" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_accepted_candidates_and_rounds_survive_phase_migration[checking]" time="0.371"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_accepted_candidates_and_r0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EEB43A2A0&gt;
+phase = 'checking'
+
+    @pytest.mark.parametrize('phase',['checking','validated','budget_exhausted'])
+    def test_accepted_candidates_and_rounds_survive_phase_migration(tmp_path,monkeypatch,phase):
+        _,p,plan,provider,_,old=seed(tmp_path,monkeypatch,phase=phase)
+        before=p._global_repair_sections(old);count=len(provider.calls)
+&gt;       state=p._load_global_repair_state(plan)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEB436CC0&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm...: '46c1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 3, 'phase': 'checking', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_accepted_candidates_and_rounds_survive_phase_migration[validated]" time="0.330"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_accepted_candidates_and_r1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EEB42B470&gt;
+phase = 'validated'
+
+    @pytest.mark.parametrize('phase',['checking','validated','budget_exhausted'])
+    def test_accepted_candidates_and_rounds_survive_phase_migration(tmp_path,monkeypatch,phase):
+        _,p,plan,provider,_,old=seed(tmp_path,monkeypatch,phase=phase)
+        before=p._global_repair_sections(old);count=len(provider.calls)
+&gt;       state=p._load_global_repair_state(plan)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEB42CDA0&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm... '46c1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 3, 'phase': 'validated', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_accepted_candidates_and_rounds_survive_phase_migration[budget_exhausted]" time="0.353"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_accepted_candidates_and_r2')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EEB3E5010&gt;
+phase = 'budget_exhausted'
+
+    @pytest.mark.parametrize('phase',['checking','validated','budget_exhausted'])
+    def test_accepted_candidates_and_rounds_survive_phase_migration(tmp_path,monkeypatch,phase):
+        _,p,plan,provider,_,old=seed(tmp_path,monkeypatch,phase=phase)
+        before=p._global_repair_sections(old);count=len(provider.calls)
+&gt;       state=p._load_global_repair_state(plan)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEB3E44A0&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm...f3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 3, 'phase': 'budget_exhausted', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_reachable_validated_checkpoint_is_rechecked_without_rolling_back_accepted_body" time="0.717"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_reachable_validated_check0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EEB417320&gt;
+
+    def test_reachable_validated_checkpoint_is_rechecked_without_rolling_back_accepted_body(tmp_path,monkeypatch):
+        provider=PatchProvider();service,p,plan,compiles=setup_raised(tmp_path,provider,monkeypatch);provider.active=p
+        before,_=p.lecture(plan)
+        path=p.root/'global-repair-state.json';legacy=json.loads(path.read_bytes())
+        assert legacy['phase']=='validated' and legacy['rounds_used']==1
+        assert '阿基米德' in before[0][1]['units'][0]['tex'] and len(provider.repairs)==1
+        legacy.update(schema_version=1,identity=contract.known_legacy_identity(p,plan));write_json(path,legacy)
+        writes=list(provider.writes);repairs=len(provider.repairs);locals_before=len(provider.locals)
+        prior_contract=p._section_check_contract()
+        monkeypatch.setattr(p,'_section_check_contract',lambda:{**prior_contract,'offline_new_checker_contract':True})
+&gt;       after,_=p.lecture(plan)
+                ^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:158: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:570: in lecture
+    state=self._load_global_repair_state(plan)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEB415A60&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm... '46c1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 1, 'phase': 'validated', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_migration_crash_recovers_without_duplicate_event_or_new_calls[journal_before_state]" time="0.421"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_migration_crash_recovers_0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EE9DE9940&gt;
+point = 'journal_before_state'
+
+    @pytest.mark.parametrize('point',['journal_before_state','state_before_event'])
+    def test_migration_crash_recovers_without_duplicate_event_or_new_calls(tmp_path,monkeypatch,point):
+        service,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
+        path=p.root/'global-repair-state.json';raw=path.read_bytes();run=service.store.get_run(p.run['id'])
+        original_event=p.store.event;original_replace=contract._replace_state
+        def event(connection,rid,kind,payload=None):
+            if kind==contract.EVENT:raise RuntimeError('Synthetic crash after state replace')
+            return original_event(connection,rid,kind,payload)
+        def replace(path,data):raise RuntimeError('Synthetic crash after immutable journal')
+        monkeypatch.setattr(p.store,'event',event if point=='state_before_event' else original_event)
+        monkeypatch.setattr(contract,'_replace_state',replace if point=='journal_before_state' else original_replace)
+&gt;       with pytest.raises(RuntimeError):p._load_global_repair_state(plan)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:176: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EE9DEA9C0&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm...1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 3, 'phase': 'repair_pending', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_migration_crash_recovers_without_duplicate_event_or_new_calls[state_before_event]" time="0.367"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_migration_crash_recovers_1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EEB437140&gt;
+point = 'state_before_event'
+
+    @pytest.mark.parametrize('point',['journal_before_state','state_before_event'])
+    def test_migration_crash_recovers_without_duplicate_event_or_new_calls(tmp_path,monkeypatch,point):
+        service,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
+        path=p.root/'global-repair-state.json';raw=path.read_bytes();run=service.store.get_run(p.run['id'])
+        original_event=p.store.event;original_replace=contract._replace_state
+        def event(connection,rid,kind,payload=None):
+            if kind==contract.EVENT:raise RuntimeError('Synthetic crash after state replace')
+            return original_event(connection,rid,kind,payload)
+        def replace(path,data):raise RuntimeError('Synthetic crash after immutable journal')
+        monkeypatch.setattr(p.store,'event',event if point=='state_before_event' else original_event)
+        monkeypatch.setattr(contract,'_replace_state',replace if point=='journal_before_state' else original_replace)
+&gt;       with pytest.raises(RuntimeError):p._load_global_repair_state(plan)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:176: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEB434470&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm...1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 3, 'phase': 'repair_pending', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_lost_lease_before_migration_leaves_original_bytes_and_no_journal" time="0.367" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_migrated_current_rounds_cannot_fall_below_preserved_history[0-True]" time="0.344"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_migrated_current_rounds_c0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EE9E27920&gt;
+rounds = 0, blocked = True
+
+    @pytest.mark.parametrize('rounds,blocked',[(0,True),(2,True),(4,False)])
+    def test_migrated_current_rounds_cannot_fall_below_preserved_history(tmp_path,monkeypatch,rounds,blocked):
+        _,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
+&gt;       state=p._load_global_repair_state(plan)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:201: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEB435BB0&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm...1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 3, 'phase': 'repair_pending', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_migrated_current_rounds_cannot_fall_below_preserved_history[2-True]" time="0.370"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_migrated_current_rounds_c1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EEB416000&gt;
+rounds = 2, blocked = True
+
+    @pytest.mark.parametrize('rounds,blocked',[(0,True),(2,True),(4,False)])
+    def test_migrated_current_rounds_cannot_fall_below_preserved_history(tmp_path,monkeypatch,rounds,blocked):
+        _,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
+&gt;       state=p._load_global_repair_state(plan)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:201: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEB3E5E80&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm...1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 3, 'phase': 'repair_pending', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_migrated_current_rounds_cannot_fall_below_preserved_history[4-False]" time="0.351"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_migrated_current_rounds_c2')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EEB43AF00&gt;
+rounds = 4, blocked = False
+
+    @pytest.mark.parametrize('rounds,blocked',[(0,True),(2,True),(4,False)])
+    def test_migrated_current_rounds_cannot_fall_below_preserved_history(tmp_path,monkeypatch,rounds,blocked):
+        _,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
+&gt;       state=p._load_global_repair_state(plan)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:201: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEB439010&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm...1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 3, 'phase': 'repair_pending', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_reused_precommit_journal_must_match_current_approval_and_counters[approval_hash]" time="0.385"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_reused_precommit_journal_0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EEB7CEBA0&gt;
+field = 'approval_hash'
+
+    @pytest.mark.parametrize('field',['approval_hash','input_hash','request_count_preserved','negative_count','pending_scope'])
+    def test_reused_precommit_journal_must_match_current_approval_and_counters(tmp_path,monkeypatch,field):
+        _,p,plan,_,_,_=seed(tmp_path,monkeypatch)
+        path=p.root/'global-repair-state.json';raw=path.read_bytes()
+        original=contract._replace_state
+        def interrupted(*args):raise RuntimeError('Synthetic journal before state interruption')
+        monkeypatch.setattr(contract,'_replace_state',interrupted)
+&gt;       with pytest.raises(RuntimeError):p._load_global_repair_state(plan)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:219: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEB438380&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm...1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 3, 'phase': 'repair_pending', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_reused_precommit_journal_must_match_current_approval_and_counters[input_hash]" time="0.397"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_reused_precommit_journal_1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EEB42E930&gt;
+field = 'input_hash'
+
+    @pytest.mark.parametrize('field',['approval_hash','input_hash','request_count_preserved','negative_count','pending_scope'])
+    def test_reused_precommit_journal_must_match_current_approval_and_counters(tmp_path,monkeypatch,field):
+        _,p,plan,_,_,_=seed(tmp_path,monkeypatch)
+        path=p.root/'global-repair-state.json';raw=path.read_bytes()
+        original=contract._replace_state
+        def interrupted(*args):raise RuntimeError('Synthetic journal before state interruption')
+        monkeypatch.setattr(contract,'_replace_state',interrupted)
+&gt;       with pytest.raises(RuntimeError):p._load_global_repair_state(plan)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:219: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEB7CFB90&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm...1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 3, 'phase': 'repair_pending', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_reused_precommit_journal_must_match_current_approval_and_counters[request_count_preserved]" time="0.296"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_reused_precommit_journal_2')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EE9CEF110&gt;
+field = 'request_count_preserved'
+
+    @pytest.mark.parametrize('field',['approval_hash','input_hash','request_count_preserved','negative_count','pending_scope'])
+    def test_reused_precommit_journal_must_match_current_approval_and_counters(tmp_path,monkeypatch,field):
+        _,p,plan,_,_,_=seed(tmp_path,monkeypatch)
+        path=p.root/'global-repair-state.json';raw=path.read_bytes()
+        original=contract._replace_state
+        def interrupted(*args):raise RuntimeError('Synthetic journal before state interruption')
+        monkeypatch.setattr(contract,'_replace_state',interrupted)
+&gt;       with pytest.raises(RuntimeError):p._load_global_repair_state(plan)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:219: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EE9CEFA70&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm...1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 3, 'phase': 'repair_pending', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_reused_precommit_journal_must_match_current_approval_and_counters[negative_count]" time="0.245"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_reused_precommit_journal_3')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EEB43B0B0&gt;
+field = 'negative_count'
+
+    @pytest.mark.parametrize('field',['approval_hash','input_hash','request_count_preserved','negative_count','pending_scope'])
+    def test_reused_precommit_journal_must_match_current_approval_and_counters(tmp_path,monkeypatch,field):
+        _,p,plan,_,_,_=seed(tmp_path,monkeypatch)
+        path=p.root/'global-repair-state.json';raw=path.read_bytes()
+        original=contract._replace_state
+        def interrupted(*args):raise RuntimeError('Synthetic journal before state interruption')
+        monkeypatch.setattr(contract,'_replace_state',interrupted)
+&gt;       with pytest.raises(RuntimeError):p._load_global_repair_state(plan)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:219: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEB4172C0&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm...1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 3, 'phase': 'repair_pending', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_reused_precommit_journal_must_match_current_approval_and_counters[pending_scope]" time="0.245"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_reused_precommit_journal_4')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EE9CEDE50&gt;
+field = 'pending_scope'
+
+    @pytest.mark.parametrize('field',['approval_hash','input_hash','request_count_preserved','negative_count','pending_scope'])
+    def test_reused_precommit_journal_must_match_current_approval_and_counters(tmp_path,monkeypatch,field):
+        _,p,plan,_,_,_=seed(tmp_path,monkeypatch)
+        path=p.root/'global-repair-state.json';raw=path.read_bytes()
+        original=contract._replace_state
+        def interrupted(*args):raise RuntimeError('Synthetic journal before state interruption')
+        monkeypatch.setattr(contract,'_replace_state',interrupted)
+&gt;       with pytest.raises(RuntimeError):p._load_global_repair_state(plan)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:219: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEB42B860&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm...1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 3, 'phase': 'repair_pending', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_migration_evidence_corruption_never_reuses_old_pass[before.json]" time="0.262"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_migration_evidence_corrup0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EEB6D4740&gt;
+file = 'before.json'
+
+    @pytest.mark.parametrize('file',['before.json','after.json','evidence.json'])
+    def test_migration_evidence_corruption_never_reuses_old_pass(tmp_path,monkeypatch,file):
+        _,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
+&gt;       state=p._load_global_repair_state(plan);path=p.root/'global-repair-state.json';raw=path.read_bytes()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:234: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEB43B620&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm...1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 3, 'phase': 'repair_pending', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_migration_evidence_corruption_never_reuses_old_pass[after.json]" time="0.255"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_migration_evidence_corrup1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EEB429C70&gt;
+file = 'after.json'
+
+    @pytest.mark.parametrize('file',['before.json','after.json','evidence.json'])
+    def test_migration_evidence_corruption_never_reuses_old_pass(tmp_path,monkeypatch,file):
+        _,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
+&gt;       state=p._load_global_repair_state(plan);path=p.root/'global-repair-state.json';raw=path.read_bytes()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:234: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEB42B6E0&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm...1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 3, 'phase': 'repair_pending', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_migration_evidence_corruption_never_reuses_old_pass[evidence.json]" time="0.255"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_migration_evidence_corrup2')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EE9CEDE50&gt;
+file = 'evidence.json'
+
+    @pytest.mark.parametrize('file',['before.json','after.json','evidence.json'])
+    def test_migration_evidence_corruption_never_reuses_old_pass(tmp_path,monkeypatch,file):
+        _,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
+&gt;       state=p._load_global_repair_state(plan);path=p.root/'global-repair-state.json';raw=path.read_bytes()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:234: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEB6D7E90&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm...1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 3, 'phase': 'repair_pending', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_request_budget_blocks_pending_patch_without_losing_migration_or_scope" time="0.409"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_request_budget_blocks_pen0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EEB6D47D0&gt;
+
+    def test_request_budget_blocks_pending_patch_without_losing_migration_or_scope(tmp_path,monkeypatch):
+        service,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
+&gt;       state=p._load_global_repair_state(plan)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:245: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEB6D52E0&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm...1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 3, 'phase': 'repair_pending', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_late_patch_after_cancel_is_archived_but_not_accepted" time="0.254"><failure message="math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。">tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/repair-guidance-validation/20260922T145805-678200/tmp/test_late_patch_after_cancel_i0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000015EEB42DB80&gt;
+
+    def test_late_patch_after_cancel_is_archived_but_not_accepted(tmp_path,monkeypatch):
+        service,p,plan,provider,_,_=seed(tmp_path,monkeypatch)
+&gt;       state=p._load_global_repair_state(plan);before=copy.deepcopy(state)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\tests\test_global_strict_patch_migration.py:257: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\pipeline.py:370: in _load_global_repair_state
+    migrated=migrate_known_v1(self,plan,state,identity)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pipeline = &lt;math_agent.pipeline.Pipeline object at 0x0000015EEA0B4170&gt;
+plan = {'decision_ids': [], 'decisions': [], 'difficulty': 'synthetic', 'lecture': {'answers_location': 'end', 'exercises': 'none', 'proof_policy': 'key'}, ...}
+state = {'schema_version': 1, 'identity': {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'm...1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9', ...}, 'rounds_used': 3, 'phase': 'repair_pending', ...}
+identity = {'plan_hash': '374da9795b12ace5ebc923c3aff90e6840d5630b3a65e193b16c1ba124fe319f', 'model': 'gpt-6-astra', 'provider': 'mock', 'repair_contract_version': 2, ...}
+
+    def migrate_known_v1(pipeline, plan, state, identity):
+        """Return None for any unknown contract; no broad compatibility fallback."""
+        if (type(state.get('schema_version')) is not int or state['schema_version'] != 1
+                or state.get('identity') != known_legacy_identity(pipeline, plan)
+                or any(identity.get(key) != LEGACY_CONTRACT[key] for key in ('written_schema_hash', 'normalizer_hash'))):
+            return None
+        try:
+            if 'contract_migration' in state:
+                raise ValueError('Legacy state cannot already claim migration')
+            _validate_state(pipeline, plan, state)
+            path = pipeline.root / 'global-repair-state.json'
+            before_bytes = path.read_bytes()
+            if json.loads(before_bytes) != state:
+                raise ValueError('State changed before migration')
+            migration_id = digest([MIGRATION_ID, pipeline.run['id'], digest(before_bytes), identity])
+            folder = pipeline.root / 'global-repairs' / 'contract-migrations' / migration_id[:24]
+            evidence_key = (folder / 'evidence.json').relative_to(pipeline.settings.workspace).as_posix()
+            after = copy.deepcopy(state)
+            after.update(schema_version=2, identity=identity,
+                contract_migration={'id': migration_id, 'evidence_key': evidence_key})
+            after_bytes = _bytes(after)
+            with pipeline.store.transaction() as connection:
+                pipeline.store.assert_fence(connection, pipeline.job)
+                run, approval = _approved(pipeline, plan, connection)
+                if path.read_bytes() != before_bytes:
+                    raise _error()
+                folder.mkdir(parents=True, exist_ok=True)
+                _immutable(folder / 'before.json', before_bytes)
+                _immutable(folder / 'after.json', after_bytes)
+                if (folder / 'evidence.json').exists():
+                    evidence, saved_after = _evidence(pipeline, after, plan, identity)
+                    if saved_after != after_bytes:
+                        raise _error()
+                else:
+                    evidence = {
+                        'schema_version': 1, 'id': migration_id, 'migration': MIGRATION_ID,
+                        'run_id': run['id'], 'job_id': pipeline.job['id'], 'created_at': now(),
+                        'plan_hash': plan['hash'], 'plan_revision': plan['revision'],
+                        'input_hash': run['input_hash'], 'approval_hash': digest(approval),
+                        'request_count_preserved': run['request_count'],
+                        'rounds_used_preserved': state['rounds_used'], 'phase_preserved': state['phase'],
+                        'pending_scope': [{'section_id': item['section_id'], 'allowed_unit_ids': item['allowed_unit_ids']}
+                                          for item in state['pending']],
+                        'before_sha256': digest(before_bytes), 'after_sha256': digest(after_bytes),
+                        'preserved_payload_hash': digest(_unchanged_payload(state)),
+                        'from_identity': state['identity'], 'to_identity': identity,
+                        'before_key': (folder / 'before.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'after_key': (folder / 'after.json').relative_to(pipeline.settings.workspace).as_posix(),
+                        'evidence_key': evidence_key, 'teacher_review': 'NOT_RUN',
+                    }
+                    _immutable(folder / 'evidence.json', _bytes(evidence))
+                if (evidence['approval_hash'] != digest(approval) or evidence['input_hash'] != run['input_hash']
+                        or type(evidence['request_count_preserved']) is not int
+                        or evidence['request_count_preserved'] &gt; run['request_count']):
+                    raise _error()
+                _replace_state(path, after_bytes)
+                pipeline.store.event(connection, run['id'], EVENT, evidence)
+            return after
+        except (OSError, ValueError, KeyError, TypeError):
+&gt;           raise _error() from None
+E           math_agent.util.AgentError: 全局修复迁移证据、状态或批准计划无法核实；保留原状态，不清零、不接受旧提案。
+
+reports\iteration4\repair-guidance-validation\20260922T145805-678200\src\math_agent\global_repair_contract.py:281: AgentError</failure></testcase><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_real_ch02_proposal_cannot_modify_unrelated_c03_ast[valid_sparse]" time="0.616" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_real_ch02_proposal_cannot_modify_unrelated_c03_ast[whole_section]" time="0.190" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_strict_patch_migration" name="test_real_ch02_proposal_cannot_modify_unrelated_c03_ast[forbidden_calculation]" time="0.134" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_saved_ch03_doubt_binds_exact_owner_without_changing_original_evidence" time="0.010" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_positive_prefix_binding_only[S01.U1 \u539f\u7591\u70b9\u9700\u8981\u6838\u5bf9\u3002-S01.U1]" time="0.001" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_positive_prefix_binding_only[  S01.U1\uff1a\u539f\u7591\u70b9\u9700\u8981\u6838\u5bf9\u3002-S01.U1]" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_positive_prefix_binding_only[S01.U1:\u539f\u7591\u70b9\u9700\u8981\u6838\u5bf9\u3002-S01.U1]" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_positive_prefix_binding_only[S01.U1.answer \u539f\u7b54\u6848\u9700\u8981\u6838\u5bf9\u3002-S01.U1.answer]" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_positive_prefix_binding_only[\u6587\u4e2d\u6d89\u53ca S01.U1 \u7684\u5185\u5bb9\u3002-None]" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_positive_prefix_binding_only[S01.U10 \u539f\u7591\u70b9\u9700\u8981\u6838\u5bf9\u3002-None]" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_positive_prefix_binding_only[S02.U1 \u539f\u7591\u70b9\u9700\u8981\u6838\u5bf9\u3002-None]" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_positive_prefix_binding_only[S01.U1/ S01.U2 \u4e24\u5355\u5143\u9700\u8981\u6838\u5bf9\u3002-None]" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_positive_prefix_binding_only[S01.U1-None]" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_positive_prefix_binding_only[S01.U1x \u539f\u7591\u70b9\u9700\u8981\u6838\u5bf9\u3002-None]" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_full_note_hash_not_truncated_and_duplicates_have_stable_occurrence_ids" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_invalid_resolutions_are_rejected[empty]" time="0.001" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_invalid_resolutions_are_rejected[duplicate]" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_invalid_resolutions_are_rejected[wrong_id]" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_invalid_resolutions_are_rejected[wrong_owner]" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_invalid_resolutions_are_rejected[blank_quote]" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_invalid_resolutions_are_rejected[wrong_quote]" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_invalid_resolutions_are_rejected[wrong_sha]" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_invalid_resolutions_are_rejected[blank_reason]" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_invalid_resolutions_are_rejected[external_source]" time="0.001" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_invalid_resolutions_are_rejected[remaining_dependency]" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_invalid_resolutions_are_rejected[no_current_evidence]" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_resolving_declared_note_does_not_turn_symbolic_unknown_into_pass" time="0.000" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_actual_patch_resolves_note_but_preserves_original_metadata_and_budget" time="0.429" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_completed_unresolved_or_invalid_does_not_redraw_on_retry[open_dependency-UNCERTAINTY_DEPENDENCY_BLOCKED]" time="0.270" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_completed_unresolved_or_invalid_does_not_redraw_on_retry[invalid-UNCERTAINTY_REVIEW_BLOCKED]" time="0.246" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_transport_retry_preserves_ordinary_concern_and_exact_input[PROVIDER_ALL_UNAVAILABLE]" time="0.255" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_transport_retry_preserves_ordinary_concern_and_exact_input[PROVIDER_EMPTY_RESPONSE]" time="0.255" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_transport_retry_preserves_ordinary_concern_and_exact_input[BUDGET_EXHAUSTED]" time="0.241" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_resolved_assessment_cannot_clear_ordinary_math_blocker" time="0.212" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_job_and_model_selection_alone_do_not_reopen_a_completed_disposition" time="0.118" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_evidence_damage_never_redraws_completed_verdict[response]" time="0.116" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_evidence_damage_never_redraws_completed_verdict[missing_state]" time="0.116" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_evidence_damage_never_redraws_completed_verdict[orphan_response]" time="0.126" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_new_body_requires_new_explicit_disposition_but_old_evidence_stays" time="0.152" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_legacy_duplicate_migration_retains_original_normal_review_issue" time="0.081" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_unknown_same_rule_or_known_id_does_not_authorize_erasing_issue" time="0.089" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_crash_after_failure_evidence_cannot_redraw_completed_invalid_response[INVALID_MODEL_JSON-False]" time="0.120" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_crash_after_failure_evidence_cannot_redraw_completed_invalid_response[PROVIDER_ALL_UNAVAILABLE-True]" time="0.137" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_new_role_mock_never_pretends_original_doubt_was_proved" time="0.001" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_uncertainty_writes_require_active_job_lease" time="0.078" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_formal_retry_after_all_models_transport_failure_finishes_same_slot" time="0.367" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_uncertainty_review" name="test_completed_schema_error_gets_one_attempt_and_no_model_fallback" time="0.051" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_repair" name="test_legacy_failure_is_repaired_before_any_new_global_review[none]" time="0.636" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_repair" name="test_legacy_failure_is_repaired_before_any_new_global_review[unknown_unit]" time="0.305" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_repair" name="test_legacy_failure_is_repaired_before_any_new_global_review[changed_hash]" time="0.287" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_repair" name="test_legacy_failure_is_repaired_before_any_new_global_review[source_hash]" time="0.285" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_repair" name="test_legacy_failure_is_repaired_before_any_new_global_review[checkpoint_hash]" time="0.315" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_repair" name="test_legacy_failure_respects_zero_global_repair_budget" time="0.331" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_repair" name="test_legacy_nontarget_equation_is_normalized_before_scoped_repair" time="0.675" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_repair" name="test_global_issue_repairs_only_target_and_rechecks_affected_and_following_sections" time="0.596" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_repair" name="test_global_repair_cannot_change_other_units_or_ids[mutate_other]" time="0.284" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_repair" name="test_global_repair_cannot_change_other_units_or_ids[add_unit]" time="0.275" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_repair" name="test_global_repair_cannot_change_other_units_or_ids[drop_other_calculation]" time="1.362" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_repair" name="test_global_repair_cannot_change_other_units_or_ids[mutate_uncertainties]" time="0.221" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_repair" name="test_global_round_budget_blocks_unresolved_issue_without_unbounded_recursion" time="0.613" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_repair" name="test_repair_is_persisted_before_following_review_timeout_and_resume_reuses_it" time="0.551" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_repair" name="test_corrupt_persisted_global_candidate_fails_before_model_call" time="0.337" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_budget_resume" name="test_unchanged_global_budget_still_blocks_without_model_calls_or_state_reset" time="0.609" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_budget_resume" name="test_explicit_global_increase_repairs_preserved_concern_before_fresh_checks" time="0.886" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_budget_resume" name="test_request_only_increase_does_not_unlock_global_rounds" time="0.656" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_budget_resume" name="test_increased_global_budget_cannot_skip_unverified_failure_evidence[missing_failure]" time="0.650" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_budget_resume" name="test_increased_global_budget_cannot_skip_unverified_failure_evidence[round_mismatch]" time="0.695" /><testcase classname="reports.iteration4.repair-guidance-validation.20260922T145805-678200.tests.test_global_budget_resume" name="test_increased_global_budget_cannot_skip_unverified_failure_evidence[body_hash]" time="0.672" /></testsuite></testsuites>

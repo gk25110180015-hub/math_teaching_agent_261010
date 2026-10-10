@@ -1,0 +1,41 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+___________ test_t27_t34_compile_chinese_path_and_all_overlay_pages ___________
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/test_pgf_hidden_red/test_t27_t34_compile_chinese_p0')
+
+    @pytest.mark.windows_compile
+    def test_t27_t34_compile_chinese_path_and_all_overlay_pages(tmp_path):
+        if os.name != 'nt' or not resolve_xelatex():
+            pytest.skip('Actual Windows XeLaTeX unavailable')
+        src = source(tmp_path, r'''\documentclass[10pt,aspectratio=169,fontset=fandol]{ctexbeamer}
+    \setbeamertemplate{navigation symbols}{}
+    \begin{document}
+    \section{数列极限}
+    \begin{frame}{数列极限的定义}
+    \begin{block}{例题}\normalsize 证明 $a_n=1/n$ 收敛于零。\end{block}
+    \pause {\normalsize\textbf{证明：}任取 $\varepsilon>0$，取 $N>1/\varepsilon$。当 $n>N$，有 $|a_n|<\varepsilon$。}
+    \end{frame}
+    \end{document}''')
+        (src / 'main.tex').rename(src / '讲义 (第一章).tex')
+        result = TexCompiler(timeout=120).compile(src, '讲义 (第一章).tex', tmp_path / '新 构建 (2)', trusted=True)
+        (tmp_path/'compile_result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
+        assert result['status'] == 'PASS', result
+        assert 2 <= result['passes'] <= 4
+        pdf = inspect_pdf(Path(result['pdf_path']), tmp_path / '预览', beamer=True)
+        assert pdf['page_count'] == 2
+        assert len(pdf['pages']) == 2 and all(Path(p['image_path']).is_file() for p in pdf['pages'])
+        assert pdf['overlay_map']['status'] == 'PASS'
+        assert pdf['overlay_map']['pages'][1]['overlay_index'] == 2
+        assert pdf['visual_review']['status'] == 'NOT_RUN'
+>       assert pdf['status'] == 'PASS', 'PGF-hidden first-overlay solution must not be reported as visible clipping.'
+E       AssertionError: PGF-hidden first-overlay solution must not be reported as visible clipping.
+E       assert 'FAIL' == 'PASS'
+E         
+E         - PASS
+E         + FAIL
+
+tests\test_compiler_pdf.py:155: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_compiler_pdf.py::test_t27_t34_compile_chinese_path_and_all_overlay_pages
+1 failed, 14 deselected in 4.50s

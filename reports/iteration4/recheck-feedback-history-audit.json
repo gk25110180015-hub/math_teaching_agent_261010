@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "status": "NO_CONFIRMED_BUG_FOUND_IN_BOUNDED_AUDIT",
+  "pipeline_candidate_raw_sha256": "43058915b1775a9236d0a98732aa8131c4f2eecddbdf09802a14d7ad14b34695",
+  "candidate_mutations": 0,
+  "production_mutations": 0,
+  "live_database_mutations": 0,
+  "api_calls": 0,
+  "mock_test_result": {
+    "passed": 4,
+    "failed": 0,
+    "seconds": 5.08,
+    "test_file": "tests/test_recheck_feedback_history.py",
+    "log": "reports/iteration4/recheck-feedback-history-03.log",
+    "junit": "reports/iteration4/recheck-feedback-history-03.xml",
+    "production_five_file_hashes_unchanged": true,
+    "sqlite_and_testclient": "REAL_ISOLATED",
+    "model_provider": "MOCK",
+    "compiler": "MOCK"
+  },
+  "preserved_setup_failures": [
+    {
+      "log": "reports/iteration4/recheck-feedback-history.log",
+      "passed": 1,
+      "failed": 3,
+      "cause": "Invalid test setup attempted a budget increase while AWAITING_USER_REVIEW; product correctly required BLOCKED."
+    },
+    {
+      "log": "reports/iteration4/recheck-feedback-history-02.log",
+      "passed": 1,
+      "failed": 3,
+      "cause": "Invalid test setup exceeded startup Settings global-round bound; product correctly rejected it."
+    }
+  ],
+  "checks": {
+    "validated_history_still_reviews_feedback": "PASS_MOCK",
+    "rounds_and_request_counts_preserved": "PASS_MOCK",
+    "repaired_body_review_evidence_recomputed": "PASS_MOCK",
+    "pending_failure_recheck_rejected": "PASS_MOCK",
+    "pending_same_job_retry_retains_feedback": "PASS_MOCK",
+    "latest_empty_feedback_does_not_revive_older_text": "PASS_MOCK",
+    "exhausted_rounds_do_not_fake_success": "PASS_MOCK",
+    "explicit_increase_repairs_stored_concern_before_new_review": "PASS_MOCK",
+    "approval_and_teacher_records_unchanged": "PASS_MOCK"
+  },
+  "limitations": [
+    "Successful execution reaching the whole-chapter stage reviews the current action; earlier honest failures may prevent that stage and must not be labelled reviewed.",
+    "A pending verified mathematical issue is not withdrawn by changing an unverified observation; formal recheck is unavailable until the previous run reaches AWAITING_USER_REVIEW.",
+    "Synthetic semantic judgments test routing/state, not real-model teaching accuracy."
+  ],
+  "real_api": "NOT_RUN",
+  "windows_compile": "NOT_RUN",
+  "agent_visual_review": "NOT_RUN",
+  "teacher_math_review": "NOT_RUN",
+  "teacher_visual_review": "NOT_RUN"
+}

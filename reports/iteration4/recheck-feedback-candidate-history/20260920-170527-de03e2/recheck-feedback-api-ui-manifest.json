@@ -1,0 +1,68 @@
+{
+  "status": "PROPOSED_NOT_APPLIED",
+  "files": [
+    {
+      "source": "src/math_agent/domain.py",
+      "candidate": "recheck-feedback-src_math_agent_domain.candidate.py",
+      "baseline_sha256": "d4570f85e2b9571bbe4336e44b7299bb5896cf1a946c295f0ee3cba70959b75e",
+      "candidate_sha256": "2f46aab48901b6fcceb24641c8dd6bd0446ded7b0b59798011d28b5cd4cbf208"
+    },
+    {
+      "source": "src/math_agent/service.py",
+      "candidate": "recheck-feedback-src_math_agent_service.candidate.py",
+      "baseline_sha256": "74314e753a8201a9d43f81f9bd252bef6afede73dc0e41fef625142a14cdb05d",
+      "candidate_sha256": "3f46cdfb1c63c302656c85a997443d026e85f4451a3e65834dfeb86d32aed7ec"
+    },
+    {
+      "source": "src/math_agent/web/app.py",
+      "candidate": "recheck-feedback-src_math_agent_web_app.candidate.py",
+      "baseline_sha256": "5f22d8b5e161afaf619236a70baf6ca63ac9acbac78827eba3e0b97aae95c489",
+      "candidate_sha256": "2f8e2c3b2518d065d2972066dbd901940096183802cd35abfc621856cb983b19"
+    },
+    {
+      "source": "src/math_agent/web/static/app.js",
+      "candidate": "recheck-feedback-src_math_agent_web_static_app.candidate.js",
+      "baseline_sha256": "727a2bbc1239448bbcc869a6efd8f6df824b989c331cfb01330e710412df0584",
+      "candidate_sha256": "347d7ca6095dfdd324eefbced99ca71171203f0e120e845c5f1e237f524d1b8b"
+    }
+  ],
+  "red_regression": {
+    "failed": 12,
+    "passed": 6
+  },
+  "isolated_candidate_regression": {
+    "passed": 84,
+    "failed": 0,
+    "skipped": 0,
+    "warnings": 3,
+    "elapsed_seconds": 10.58,
+    "production_source_unchanged": true,
+    "log": "recheck-feedback-api-candidate.log",
+    "junit": "recheck-feedback-api-candidate.xml"
+  },
+  "javascript_syntax": {
+    "status": "PASS",
+    "command": "node --check recheck-feedback-src_math_agent_web_static_app.candidate.js",
+    "exit_code": 0
+  },
+  "combined_api_pipeline_package_regression": {
+    "passed": 46,
+    "failed": 0,
+    "skipped": 0,
+    "warnings": 3,
+    "elapsed_seconds": 7.33,
+    "composition": "18 new API + 13 new Pipeline + 2 TestClient-to-Pipeline integration + 13 existing recheck",
+    "production_source_unchanged": true,
+    "evidence": "recheck-feedback-combined/20260920-155629-04727c",
+    "isolated_package": "workspace/t/fbpkg-04727c"
+  },
+  "browser_regression": {
+    "test_file": "tests/e2e/test_recheck_feedback.py",
+    "collection": "PASS_1_TEST",
+    "execution": "NOT_RUN_PENDING_DEPLOYMENT"
+  },
+  "real_api": "NOT_RUN",
+  "windows_compile": "NOT_RUN",
+  "real_browser": "NOT_RUN",
+  "teacher_review": "NOT_RUN"
+}
