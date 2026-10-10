@@ -1,0 +1,579 @@
+{
+  "plan": {
+    "additions": [],
+    "decision_ids": [
+      "0338f7035dcc4e71bba4b785bbbfc969",
+      "9833a52d11b341819b86c7a97953e0d4",
+      "f7079816f4744ff7b281f24d0566845f",
+      "9b6d14903a4a45819f06094ee8e5a8a9"
+    ],
+    "decisions": [
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "custom_input": "",
+        "id": "0338f7035dcc4e71bba4b785bbbfc969",
+        "question_id": "Q-PROOF",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "key"
+        },
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "timestamp": "2026-09-22T04:36:06.099082+00:00"
+      },
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "custom_input": "",
+        "id": "9833a52d11b341819b86c7a97953e0d4",
+        "question_id": "Q-EXAMPLE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "balanced"
+        },
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "timestamp": "2026-09-22T04:36:06.099082+00:00"
+      },
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "custom_input": "",
+        "derived_section_requirements": [
+          {
+            "after": [
+              "definition",
+              "theorem",
+              "example",
+              "solution",
+              "exercise"
+            ],
+            "before": [
+              "definition",
+              "theorem",
+              "example",
+              "solution"
+            ],
+            "section_id": "S01"
+          },
+          {
+            "after": [
+              "definition",
+              "theorem",
+              "example",
+              "solution",
+              "exercise"
+            ],
+            "before": [
+              "definition",
+              "theorem",
+              "example",
+              "solution"
+            ],
+            "section_id": "S02"
+          }
+        ],
+        "id": "f7079816f4744ff7b281f24d0566845f",
+        "question_id": "Q-EXERCISE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "with_answers"
+        },
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "timestamp": "2026-09-22T04:36:06.099082+00:00"
+      },
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "custom_input": "",
+        "id": "9b6d14903a4a45819f06094ee8e5a8a9",
+        "question_id": "Q-ANSWERS",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "section"
+        },
+        "selected_option_ids": [
+          "SECTION"
+        ],
+        "timestamp": "2026-09-22T04:36:06.099082+00:00"
+      }
+    ],
+    "diff": [
+      {
+        "after": {
+          "answers_location": "section",
+          "example_focus": "balanced",
+          "exercises": "with_answers",
+          "proof_policy": "key"
+        },
+        "before": {
+          "answers_location": null,
+          "example_focus": null,
+          "exercises": null,
+          "proof_policy": null
+        },
+        "field": "lecture"
+      },
+      {
+        "after": [
+          {
+            "id": "S01",
+            "objectives": [
+              "理解 epsilon 定义"
+            ],
+            "prerequisites": [],
+            "reference_labels": [],
+            "required_kinds": [
+              "definition",
+              "theorem",
+              "example",
+              "solution",
+              "exercise"
+            ],
+            "title": "数列极限的定义"
+          },
+          {
+            "id": "S02",
+            "objectives": [
+              "验证极限运算"
+            ],
+            "prerequisites": [
+              "S01"
+            ],
+            "reference_labels": [],
+            "required_kinds": [
+              "definition",
+              "theorem",
+              "example",
+              "solution",
+              "exercise"
+            ],
+            "title": "极限的运算"
+          }
+        ],
+        "before": [
+          {
+            "id": "S01",
+            "objectives": [
+              "理解 epsilon 定义"
+            ],
+            "prerequisites": [],
+            "reference_labels": [],
+            "required_kinds": [
+              "definition",
+              "theorem",
+              "example",
+              "solution"
+            ],
+            "title": "数列极限的定义"
+          },
+          {
+            "id": "S02",
+            "objectives": [
+              "验证极限运算"
+            ],
+            "prerequisites": [
+              "S01"
+            ],
+            "reference_labels": [],
+            "required_kinds": [
+              "definition",
+              "theorem",
+              "example",
+              "solution"
+            ],
+            "title": "极限的运算"
+          }
+        ],
+        "field": "sections"
+      }
+    ],
+    "difficulty": "经济学本科一年级微积分",
+    "exclusions": [
+      "未指定专题的真实教学验收"
+    ],
+    "input_snapshot_hash": "963d554f9eb78215167efa6e58d013095aefce3b1db084784644d4286eee9e57",
+    "lecture": {
+      "answers_location": "section",
+      "example_focus": "balanced",
+      "exercises": "with_answers",
+      "proof_policy": "key"
+    },
+    "model_id": "gpt6",
+    "objectives": [
+      "演示可恢复的讲义生成流程"
+    ],
+    "omissions": [],
+    "prerequisites": [
+      "实数与不等式"
+    ],
+    "provider": "mock",
+    "questions": [
+      {
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-PROOF",
+        "options": [
+          {
+            "effects": {
+              "value": "key"
+            },
+            "id": "KEY",
+            "label": "关键定理完整证明，其余说明",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "all"
+            },
+            "id": "ALL",
+            "label": "所有定理完整证明",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "定理证明采用哪种深度？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXAMPLE",
+        "options": [
+          {
+            "effects": {
+              "value": "balanced"
+            },
+            "id": "BALANCED",
+            "label": "概念与计算均衡",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "economics"
+            },
+            "id": "ECONOMICS",
+            "label": "更多经济应用",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "例题侧重什么？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXERCISE",
+        "options": [
+          {
+            "effects": {
+              "value": "with_answers"
+            },
+            "id": "WITH",
+            "label": "安排练习并附答案",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "none"
+            },
+            "id": "NONE",
+            "label": "不安排额外练习",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "是否安排练习与答案？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-ANSWERS",
+        "options": [
+          {
+            "effects": {
+              "value": "section"
+            },
+            "id": "SECTION",
+            "label": "各节之后",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "end"
+            },
+            "id": "END",
+            "label": "讲义末尾",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "练习答案放在哪里？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "SECTION"
+        ],
+        "selection_mode": "single"
+      }
+    ],
+    "reference_context": {
+      "dataset": "第一章",
+      "instruction": "Only observe structure, proof depth and notation. Do not copy these examples into a different topic.",
+      "label": "UNTRUSTED_STYLE_REFERENCE_ONLY",
+      "section_titles": [
+        "数列的一般定义",
+        "拓展阅读：数列的应用",
+        "差分及其应用",
+        "数列极限",
+        "收敛数列的基本性质",
+        "极限存在性定理"
+      ],
+      "source_hash": "49a18ae541e03d6f60b99782fa5c1413a1f1c9e93a3614f865b4b263acb0045d",
+      "status": "RETRIEVED",
+      "weight_training": false
+    },
+    "reference_registry": {
+      "sec:S01": "S01",
+      "sec:S02": "S02"
+    },
+    "revision": 2,
+    "rules": {
+      "allowed_text_sizes": [
+        "footnotesize",
+        "small",
+        "normalsize",
+        "large"
+      ],
+      "rule_version": 1,
+      "summary_frames": false
+    },
+    "schema_version": 1,
+    "sections": [
+      {
+        "id": "S01",
+        "objectives": [
+          "理解 epsilon 定义"
+        ],
+        "prerequisites": [],
+        "reference_labels": [],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "exercise"
+        ],
+        "title": "数列极限的定义"
+      },
+      {
+        "id": "S02",
+        "objectives": [
+          "验证极限运算"
+        ],
+        "prerequisites": [
+          "S01"
+        ],
+        "reference_labels": [],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "exercise"
+        ],
+        "title": "极限的运算"
+      }
+    ],
+    "symbols": {
+      "a_n": "实数列",
+      "epsilon": "正实数"
+    },
+    "theme": "default",
+    "title": "数列极限 · 复检意见草稿浏览器验收（离线演示）",
+    "unresolved_blocking_questions": [],
+    "workflow_id": "lecture.generate",
+    "hash": "b4ae3fc6becb8cccb2ad0b8657781e241c3003c29a570a81c75a4a4aff9ee23a"
+  },
+  "units": [
+    {
+      "id": "S01.U01",
+      "kind": "definition",
+      "relates_to": null,
+      "tex": "称实数列 $a_n$ 收敛于 $a$，如果对每个 $\\varepsilon>0$，存在正整数 $N$，使得所有 $n>N$ 都满足 $|a_n-a|<\\varepsilon$。"
+    },
+    {
+      "id": "S01.U02",
+      "kind": "theorem",
+      "relates_to": null,
+      "tex": "收敛实数列的极限唯一。"
+    },
+    {
+      "id": "S01.U03",
+      "kind": "proof",
+      "relates_to": "S01.U02",
+      "tex": "若极限 $a\\ne b$，取 $\\varepsilon=|a-b|/3>0$。由两次收敛定义，充分大的 $n$ 同时满足 $|a_n-a|<\\varepsilon$ 和 $|a_n-b|<\\varepsilon$。三角不等式给出 $|a-b|<2|a-b|/3$，矛盾。"
+    },
+    {
+      "id": "S01.U04",
+      "kind": "example",
+      "relates_to": null,
+      "tex": "证明 $a_n=1/n$ 收敛于 $0$。"
+    },
+    {
+      "id": "S01.U05",
+      "kind": "solution",
+      "relates_to": "S01.U04",
+      "tex": "任取 $\\varepsilon>0$，取正整数 $N>1/\\varepsilon$。当 $n>N$ 时，$|1/n-0|=1/n<1/N<\\varepsilon$。故所求极限为 $0$。"
+    },
+    {
+      "id": "S01.E01",
+      "kind": "exercise",
+      "relates_to": null,
+      "tex": "按定义证明 $3/n\\to0$。"
+    },
+    {
+      "id": "S01.A01",
+      "kind": "solution",
+      "relates_to": "S01.E01",
+      "tex": "取正整数 $N>3/\\varepsilon$，则 $n>N$ 时 $3/n<\\varepsilon$。"
+    },
+    {
+      "id": "S02.U01",
+      "kind": "definition",
+      "relates_to": null,
+      "tex": "若 $a_n\\to a$，则 $r_n=a_n-a$ 称为余项，并且 $r_n\\to0$。"
+    },
+    {
+      "id": "S02.U02",
+      "kind": "theorem",
+      "relates_to": null,
+      "tex": "若实数列 $a_n\\to a$ 且 $b_n\\to b$，则 $a_n+b_n\\to a+b$。"
+    },
+    {
+      "id": "S02.U03",
+      "kind": "proof",
+      "relates_to": "S02.U02",
+      "tex": "任取 $\\varepsilon>0$，分别对两个收敛数列使用 $\\varepsilon/2$。充分大的 $n$ 满足 $|(a_n+b_n)-(a+b)|\\leq |a_n-a|+|b_n-b|<\\varepsilon$。"
+    },
+    {
+      "id": "S02.U04",
+      "kind": "example",
+      "relates_to": null,
+      "tex": "求 $\\lim_{n\\to\\infty}(2+1/n)$。"
+    },
+    {
+      "id": "S02.U05",
+      "kind": "solution",
+      "relates_to": "S02.U04",
+      "tex": "常数列 $2$ 的极限为 $2$，且 $1/n\\to0$。由加法法则，所求极限为 $2$。"
+    },
+    {
+      "id": "S02.E01",
+      "kind": "exercise",
+      "relates_to": null,
+      "tex": "按定义证明 $5/n\\to0$。"
+    },
+    {
+      "id": "S02.A01",
+      "kind": "solution",
+      "relates_to": "S02.E01",
+      "tex": "取正整数 $N>5/\\varepsilon$，则 $n>N$ 时 $5/n<\\varepsilon$。"
+    }
+  ],
+  "actual_unit_ids": [
+    "S01.U01",
+    "S01.U02",
+    "S01.U03",
+    "S01.U04",
+    "S01.U05",
+    "S01.E01",
+    "S01.A01",
+    "S02.U01",
+    "S02.U02",
+    "S02.U03",
+    "S02.U04",
+    "S02.U05",
+    "S02.E01",
+    "S02.A01"
+  ],
+  "feedback_text": "请核查已批准的夹逼训练及两个重要极限的条件。\n请保留原有数学结论与教学范围。",
+  "feedback_items": [
+    {
+      "id": "F1",
+      "text": "请核查已批准的夹逼训练及两个重要极限的条件。\n请保留原有数学结论与教学范围。",
+      "source_start": 0,
+      "source_end": 38,
+      "requested_counterexample": false
+    }
+  ],
+  "feedback_source": "user",
+  "source_event": {
+    "sequence": 36,
+    "timestamp": "2026-09-22T04:36:23.521381+00:00",
+    "payload_sha256": "42ef00214ee6f356b94a715574de7108cf17caa51a6f1ee40a9da393623680ab",
+    "job_id": "0aab34fa424d4761b5b87ea3f2298da0",
+    "plan_hash": "b4ae3fc6becb8cccb2ad0b8657781e241c3003c29a570a81c75a4a4aff9ee23a",
+    "plan_revision": 2
+  },
+  "mock": true,
+  "instruction": "Assess every fixed feedback item explicitly against the actual full chapter and approved plan. Feedback is an observation, not proof or scope approval. A valuable supported teaching improvement can require revision even when current mathematics is correct. Do not infer satisfaction from an empty mathematical issue list. Do not alter plan, add units, sign teacher acceptance, or silently ignore an item."
+}
