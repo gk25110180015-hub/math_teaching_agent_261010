@@ -1,0 +1,55 @@
+{
+  "runtime_version": 2,
+  "code": "function draw(ctx,t,p){\nconst sec=t*48,si=sec<10?0:sec<24?1:sec<38?2:3,u=si===0?sec/10:si===1?(sec-10)/14:si===2?(sec-24)/14:(sec-38)/10,ex=p.$mode==='explore';\nlet c={theta1:p.theta1,theta2:p.theta2,b3:p.b3,example:p.example,azimuth:p.azimuth};\nif(!ex){c.example=si===3?1:0;c.azimuth=-40;c.b3=0;if(si===0){c.theta1=0.7+0.5*Math.sin(u*6);c.theta2=0.5+0.45*Math.cos(u*6);}if(si===1){c.b3=u<0.62?0:2*Math.min(1,(u-0.62)/0.22);let h=(1+c.b3)/3,v=Math.min(1,u/0.35);c.theta1=(1-v)*1.5+v*h;c.theta2=(1-v)*(-0.5)+v*h;}if(si===2){let v=Math.max(0,Math.min(1,(u-0.53)/0.2));c.theta1=1/3+v*0.9;c.theta2=1/3-v*0.5;}if(si===3){c.theta1=u<0.4?0.5:u<0.6?0.5*(1-(u-0.4)/0.2):0;c.theta2=0.5-c.theta1;}}\nconst rank=c.example===1,a1=[1,0,1],a2=rank?[1,0,1]:[0,1,1],b=[1,1,c.b3],h=(1+c.b3)/(rank?2:3),hat=rank?[h,0]:[h,h];\nfunction model(x,y){return rank?[x+y,0,x+y]:[x,y,x+y];}\nconst q=model(c.theta1,c.theta2),foot=model(hat[0],hat[1]);\nfunction sub(a,b){return a.map((v,i)=>v-b[i]);}function add(a,b){return a.map((v,i)=>v+b[i]);}function mul(a,k){return a.map(v=>v*k);}function dot(a,b){return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];}\nconst r=sub(b,foot),err=sub(b,q),d=sub(q,foot),r2=dot(r,r),e2=dot(err,err),d2=dot(d,d),exact=r2<1e-12;\nconst blue='#236da4',green='#11836a',red='#c04c46',purple='#8551ad',ink='#263849';\nctx.clearRect(0,0,960,540);ctx.fillStyle='#f6f9fc';ctx.fillRect(0,0,960,540);ctx.font='17px sans-serif';ctx.textBaseline='middle';\nfunction text(s,x,y,color){ctx.fillStyle=color||ink;ctx.fillText(s,x,y);}function fmt(v){return Math.abs(v)<0.0005?'0':v.toFixed(3);}function vec(v){return '('+v.map(fmt).join(', ')+')';}\nconst ang=c.azimuth*Math.PI/180,co=Math.cos(ang),sn=Math.sin(ang);\nfunction raw(v){return [co*v[0]+sn*v[1],0.45*(-sn*v[0]+co*v[1])-0.89*v[2]];}\n// Fit the complete mathematical domain, including every allowed prediction.\nlet lo=[1e9,1e9],hi=[-1e9,-1e9];for(let x of [-2,4])for(let y of [-1.5,2.5])for(let z of [-2,4]){let v=raw([x,y,z]);for(let j=0;j<2;j++){lo[j]=Math.min(lo[j],v[j]);hi[j]=Math.max(hi[j],v[j]);}}\nconst scale=Math.min(475/(hi[0]-lo[0]),255/(hi[1]-lo[1]));\nfunction P(v){let w=raw(v);return [287+(w[0]-(hi[0]+lo[0])/2)*scale,247+(w[1]-(hi[1]+lo[1])/2)*scale];}\nfunction line(a,b,color,width,dash){let A=P(a),B=P(b);ctx.beginPath();ctx.strokeStyle=color;ctx.lineWidth=width||1.5;ctx.setLineDash(dash||[]);ctx.moveTo(A[0],A[1]);ctx.lineTo(B[0],B[1]);ctx.stroke();ctx.setLineDash([]);}\nfunction point(v,label,color,dx,dy){let w=P(v);ctx.beginPath();ctx.fillStyle=color;ctx.arc(w[0],w[1],5,0,Math.PI*2);ctx.fill();text(label,w[0]+(dx||9),w[1]+(dy||0),color);}\nctx.save();ctx.beginPath();ctx.rect(35,85,515,335);ctx.clip();\nif(!rank){let corners=[[-1,-1,-2],[2,-1,1],[2,2,4],[-1,2,1]];ctx.beginPath();corners.forEach((v,i)=>{let w=P(v);if(i===0)ctx.moveTo(w[0],w[1]);else ctx.lineTo(w[0],w[1]);});ctx.closePath();ctx.fillStyle='rgba(73,150,196,0.14)';ctx.fill();for(let k=-1;k<=2.001;k+=0.5){line([k,-1,k-1],[k,2,k+2],'#b1cedc',1);line([-1,k,k-1],[2,k,k+2],'#b1cedc',1);}}else{line([-2,0,-2],[4,0,4],'#b6d5e7',9);}\nconst O=[0,0,0];line([-1.3,0,0],[2.5,0,0],'#9eaab6');line([0,-1.3,0],[0,2.5,0],'#9eaab6');line([0,0,-1.6],[0,0,3.6],'#9eaab6');for(let item of [[[2.5,0,0],'x'],[[0,2.5,0],'y'],[[0,0,3.6],'z']]){let w=P(item[0]);text(item[1],w[0]+5,w[1]);}\nline(O,a1,blue,3);line(O,a2,purple,rank?1.5:3,rank?[4,3]:[]);point(a1,rank?'a₁ = a₂':'a₁',blue,9,-12);if(!rank)point(a2,'a₂',purple,9,12);\nline(q,b,'#dd9e52',2,[5,4]);line(foot,q,blue,2);line(foot,b,red,3);\nif(r2>1e-10){const n=mul(r,0.22/Math.sqrt(r2));for(let v of rank?[a1]:[a1,a2]){const w=mul(v,0.22/Math.sqrt(dot(v,v))),v1=add(foot,n),v2=add(v1,w),v3=add(foot,w);line(v1,v2,red,2);line(v2,v3,red,2);line(foot,add(foot,mul(w,2.8)),green,1.5);}}\npoint(foot,'投影 p',green,9,19);point(q,'Aθ',blue,9,-18);point(b,exact?'b = p':'b',red,9,-3);\nctx.restore();\ntext(rank?'列空间：直线 span{(1,0,1)ᵀ}':'列空间：平面 z = x + y',48,99,blue);\ntext('三个坐标对应三条观测',48,397);text('蓝：预测   绿：投影   红：最小残差',48,419);\nctx.fillStyle='#ffffff';ctx.fillRect(566,85,359,345);\nlet yy=101;function row(s,color){ctx.font='17px sans-serif';let lineStr='';for(let ch of s){if(ctx.measureText(lineStr+ch).width>335){text(lineStr,578,yy,color);yy+=22;lineStr='';}lineStr+=ch;}if(lineStr){text(lineStr,578,yy,color);yy+=22;}}\nif(si===0){row(rank?'A = [a a]，a = (1,0,1)ᵀ':'A = [a₁ a₂]');if(!rank){row('a₁ = (1,0,1)ᵀ');row('a₂ = (0,1,1)ᵀ');}row(rank?'Aθ = (θ₁+θ₂, 0, θ₁+θ₂)ᵀ':'Aθ = (θ₁, θ₂, θ₁+θ₂)ᵀ');row('θ = '+vec([c.theta1,c.theta2]));row('Aθ = '+vec(q),blue);row('b = '+vec(b),red);row('误差平方 = '+fmt(e2));row(rank?'两列重合，预测只能沿直线移动。':'改变系数，预测始终留在平面内。');}\nif(si===1){row(rank?'直线上的正交投影':'平面上的正交投影',green);row(rank?'投影所需 θ₁+θ₂ = (1+b₃)/2':'θ̂₁ = θ̂₂ = (1+b₃)/3');row('p = '+vec(foot));row('r = b − p');row(vec(r),red);row('a₁ᵀr = '+fmt(dot(a1,r)));row('a₂ᵀr = '+fmt(dot(a2,r)));row('当前连线长度 = '+fmt(Math.sqrt(e2)));row('最短长度 ‖r‖ = '+fmt(Math.sqrt(r2)));row(exact?'残差归零：目标就在列空间内！':'红线与列空间正交；小折线标示直角。',exact?green:red);}\nif(si===2){row('残差垂直于每一列');row('Aᵀr = 0',green);if(ex||u>=0.16)row('Aᵀ(b − Aθ̂) = 0',green);if(ex||u>=0.32){row('AᵀAθ̂ = Aᵀb',green);row(rank?'AᵀA = [[2,2],[2,2]]':'AᵀA = [[2,1],[1,2]]');row('Aᵀb = ('+fmt(1+c.b3)+', '+fmt(1+c.b3)+')ᵀ');}if(ex||u>=0.53){row('‖b−Aθ‖² = ‖r‖² + ‖Aθ−p‖²');row(fmt(e2)+' = '+fmt(r2)+' + '+fmt(d2),blue);row('橙：总误差；红：最短距离');row('蓝线：列空间内的额外距离');row('额外平方距离 ≥ 0，垂足最优。');}}\nif(si===3){row(rank?'列相关对照：A = [a a]':'满列秩主例：A = [a₁ a₂]',blue);if(rank){row('a = (1,0,1)ᵀ，秩为 1');row('Aθ = (θ₁+θ₂)a');row('当前 θ = '+vec([c.theta1,c.theta2]));row('当前系数和 = '+fmt(c.theta1+c.theta2));row('同一投影的两种系数：');row('('+fmt(h)+', 0) 与 (0, '+fmt(h)+')');row('两者均生成 p = '+vec(foot));row('投影唯一；系数不唯一。',green);}else{row('秩为 2，两列线性无关');row('唯一系数 θ̂ = '+vec(hat));row('p = '+vec(foot));row('投影唯一，系数也唯一。',green);}row('当前误差平方 = '+fmt(e2));row('数值求解通常采用 QR 或 SVD。');}\nlet title=['所有预测组成一个平面','最短连线必须垂直','把正交写成正规方程','投影唯一，不等于系数唯一'][si];let caption=['两个系数生成的预测向量都在同一个平面上，而目标向量未必在平面内。','最小二乘选取离目标最近的平面点；到达垂足时，残差垂直于平面内的每个方向。','正交条件就是正规方程；离开垂足，误差会增加一项非负的平方距离。','列不满秩时，投影点仍唯一，但不同系数组合可能表示同一个预测向量。'][si];\nif(ex){title=(rank?'列相关直线':'满列秩平面')+'：'+['预测与目标','正交投影','正规方程与误差分解','投影和系数的唯一性'][si];caption=(rank?'预测由系数和决定，投影唯一但系数不唯一。':'两列独立，投影及最优系数均唯一。')+(exact?'当前目标在列空间内，最小残差为零。':'当前最小残差平方为 '+fmt(r2)+'。')+'当前预测误差平方为 '+fmt(e2)+'。';}else if(si===1&&exact){caption='当 b₃=2 时，b=(1,1,2)ᵀ 已在平面上；投影等于目标，最小残差归零。';}\nreturn {controls:c,disabled:{},title:title,caption:caption,metrics:{场景:'S'+(si+1),矩阵类型:rank?'两列相同，秩一':'满列秩，秩二',目标:b,系数:[c.theta1,c.theta2],预测:q,投影:foot,一组最优系数:hat,最小残差:r,最小残差平方:r2,当前误差平方:e2,额外平方距离:d2,平方分解偏差:e2-r2-d2,列残差内积:[dot(a1,r),dot(a2,r)],精确拟合:exact,投影唯一:true,系数唯一:!rank,视角:c.azimuth,投影缩放:scale}};\n}",
+  "controls": [
+    {
+      "id": "theta1",
+      "label": "系数 θ₁",
+      "min": -1.0,
+      "max": 2.0,
+      "step": 0.01,
+      "value": 1.0
+    },
+    {
+      "id": "theta2",
+      "label": "系数 θ₂",
+      "min": -1.0,
+      "max": 2.0,
+      "step": 0.01,
+      "value": 0.0
+    },
+    {
+      "id": "b3",
+      "label": "目标第三坐标 b₃",
+      "min": -1.0,
+      "max": 3.0,
+      "step": 0.01,
+      "value": 0.0
+    },
+    {
+      "id": "example",
+      "label": "矩阵：0 满列秩，1 两列相同",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 1.0,
+      "value": 0.0
+    },
+    {
+      "id": "azimuth",
+      "label": "三维视角（度）",
+      "min": -75.0,
+      "max": -15.0,
+      "step": 1.0,
+      "value": -40.0
+    }
+  ],
+  "covered_decision_ids": [
+    "518b0180a2544f3d9e38cf3b1df7d70f",
+    "8ab9affca67a4f2082bd0abadc4f6777"
+  ],
+  "explanation": "按累计时间实现四镜：S1 为 0–10 秒，绘制三维坐标、半透明列空间网格、两列向量和随系数移动的预测；S2 为 10–24 秒，先移动至垂足并停留，再将 b₃ 移至 2 并保留残差归零阶段，空间直角折线分别标记残差与列方向的正交；S3 为 24–38 秒，逐步显现三步正规方程推导，随后移动预测，使用同一状态绘制误差三角形并计算平方分解；S4 为 38–48 秒，将列空间变为直线，先后停留于 (0.5,0) 与 (0,0.5)，两组系数生成同一投影。列相关例明确采用 a=(1,0,1)ᵀ。\n探索模式完全使用五个滑杆值，矩阵选择在任何镜头均有效；数学量、投影、字幕及唯一性结论同步切换。视角控件用于真实三维投影。绘图范围依据完整参数域投影包围盒设置，并使用矩形裁剪；公式侧栏按实际文字宽度换行。所有误差来自实际向量运算，不使用预设数值替代计算。",
+  "limitations": [
+    "三维观测空间采用二维正交投影显示；屏幕上的直角折线表示空间正交关系，透视后的夹角不必为屏幕直角。",
+    "此演示固定两组示例矩阵及目标前两个分量，不提供任意矩阵输入或通用最小二乘求解器。"
+  ]
+}

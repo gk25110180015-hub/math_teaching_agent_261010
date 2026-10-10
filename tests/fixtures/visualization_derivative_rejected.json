@@ -1,0 +1,124 @@
+{
+  "story": {
+    "interaction_goals": [
+      "用 |h| 数值滑杆在 0.02 到 2 之间调节步长，用正负整数切换选择趋近方向，始终避免 h=0。",
+      "先将 x0 默认设为 1，再用 x0 数值滑杆探索不同位置，观察平方函数切线斜率 2x0 的变化。",
+      "用固定示例整数切换选择 f(x)=x² 或 f(x)=|x|，不提供任意函数输入。",
+      "用时间轴和播放暂停观察割线趋近过程，暂停时核对 h、差商及切线斜率。",
+      "在左右对照镜头中共用步长大小，比较两侧差商是否趋于同一个有限数。",
+      "在局部近似镜头中改变步长，比较误差 h² 与步长 |h| 的缩小速度。"
+    ],
+    "math_notes": [
+      "h 始终非零；数值演示的最小步长不是数学上的零，也不能凭有限帧证明极限存在。",
+      "对平方函数，差商恒等式 m(h)=2x0+h 提供导数为 2x0 的解析依据。",
+      "导数要求左右差商极限存在、相等且为有限实数；无穷斜率不视为本片定义下的导数。",
+      "切线方程为 L(x)=f(x0)+f'(x0)(x-x0)，以导数存在为前提。",
+      "平方函数的曲线与切线差值为 h²，说明局部线性近似并不意味着完全重合。",
+      "|x| 在原点连续但不可导；可导必连续，连续未必可导。",
+      "x0 的探索先从 1 开始，再通过滑杆观察 f'(x0)=2x0 如何随位置改变。"
+    ],
+    "objectives": [
+      "理解差商是割线斜率，而不是两个点重合后的比值。",
+      "通过左右趋近理解导数存在需要差商趋于同一个有限实数。",
+      "由平方函数差商化简得到 f'(x0)=2x0，并联系导函数。",
+      "理解导数给出切线斜率，并用 h² 误差说明局部线性近似。",
+      "用 |x| 在原点的反例区分连续与可导。"
+    ],
+    "scenes": [
+      {
+        "id": "S1",
+        "math": "主例 f(x)=x²。取 P=(x0,x0²)，Q=(x0+h,(x0+h)²)，其中 h≠0；默认 x0=1。",
+        "narration": "在曲线上固定一点 P，再取附近的点 Q。我们研究 Q 靠近 P 时，连线斜率怎样变化。",
+        "seconds": 8,
+        "title": "固定点与附近的动点",
+        "visual": "显示坐标轴与抛物线 y=x²，默认高亮 P=(1,1)。显示 x0 数值滑杆，默认值为 1；Q 的位置由步长滑杆控制，不提供直接拖点。"
+      },
+      {
+        "id": "S2",
+        "math": "m(h)=[f(x0+h)-f(x0)]/h。对 f(x)=x²，m(h)=[(x0+h)²-x0²]/h=2x0+h，且 h≠0。",
+        "narration": "割线斜率是函数增量除以自变量增量。对平方函数，差商化简为 2x0+h。",
+        "seconds": 14,
+        "title": "用增量构造割线斜率",
+        "visual": "连接 P、Q 并延长为割线，标注 Δx=h 与 Δy。显示 |h| 数值滑杆和正负整数切换，持续显示差商数值与公式；不允许 h=0。"
+      },
+      {
+        "id": "S3",
+        "math": "lim(h→0+)m(h)=lim(h→0+)(2x0+h)=2x0。默认 x0=1 时，m(h)→2；h=0.02 时 m=2.02。",
+        "narration": "从右侧缩小步长，割线斜率越来越接近 2x0。有限帧展示趋近，但不会把 h 取成零。",
+        "seconds": 14,
+        "title": "从右侧逼近切线",
+        "visual": "时间轴使 h 从 1 缩小至 0.02，Q 从右侧靠近 P，割线旋转；数值表同步显示 h 和 2x0+h，并以虚线预示斜率 2x0。"
+      },
+      {
+        "id": "S4",
+        "math": "lim(h→0+)m(h)=lim(h→0-)m(h)=2x0，因此 f'(x0)=lim(h→0)[f(x0+h)-f(x0)]/h=2x0。",
+        "narration": "再从左侧靠近。只有左右差商都趋于同一个有限数，导数才存在。",
+        "seconds": 14,
+        "title": "左右极限必须一致",
+        "visual": "并排显示同一 x0 下 h=+|h| 与 h=-|h| 的割线，两栏共用 |h| 滑杆。暂停时可调整 x0，观察两侧斜率共同趋向 2x0。"
+      },
+      {
+        "id": "S5",
+        "math": "f(x0+h)=x0²+2x0h+h²。故 f(x0+h)-L(x0+h)=h²，且 h²/|h|=|h|→0，说明局部线性近似。",
+        "narration": "导数给出切线斜率。对平方函数，切线预测误差是 h²，且比步长缩小得更快。",
+        "seconds": 14,
+        "title": "切线为何能近似曲线",
+        "visual": "显示平方曲线与切线 L(x)=x0²+2x0(x-x0)。在 x0+h 处标出曲线高度和切线预测高度的差，滑动 |h| 查看误差 h² 及其与 |h| 的比值。"
+      },
+      {
+        "id": "S6",
+        "math": "f(x)=|x|，x0=0。m(h)=|h|/h：h<0 时为 -1，h>0 时为 1。左右极限不相等，故 f'(0) 不存在；但 f 在 0 连续。",
+        "narration": "绝对值函数在原点连续，但左右斜率分别为负一和正一，因此原点不可导。",
+        "seconds": 14,
+        "title": "连续的尖点为何不可导",
+        "visual": "用固定示例整数切换选择 |x|，并锁定 x0=0。左右两栏显示斜率始终为 -1 与 1 的单侧割线，不将它们合成为切线。"
+      }
+    ],
+    "summary": "以平方函数为主例，从固定点 x0=1 出发，用非零步长 h 的数值滑杆和正负整数切换观察割线斜率从左右趋近切线斜率；随后用 x0 滑杆探索斜率 2x0，并展示切线的 h² 局部误差。最后以 |x| 在原点的尖点说明连续不必然可导。全片 78 秒，仅使用数值滑杆、整数切换、时间轴和播放暂停。",
+    "title": "割线旋转成切线：导数的极限定义"
+  },
+  "program": {
+    "code": "function draw(ctx, t, p) {\n  const W=960,H=540,TAU=Math.PI*2;\n  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));\n  const n=(v,d)=>Number.isFinite(Number(v))?Number(v):d;\n  const fmt=(v,k=3)=>Number.isFinite(v)?v.toFixed(k):\"不存在\";\n  const lerp=(a,b,u)=>a+(b-a)*u;\n  const x0raw=clamp(n(p.x0,1),-2,2);\n  const mag=clamp(n(p.h,.5),.02,2);\n  const side=n(p.side,1)<0?-1:1;\n  const example=n(p.example,0)>=.5?1:0;\n  const ends=[8,22,36,50,64,78], total=78;\n  const sec=clamp(n(t,0),0,1)*total;\n  let si=0; while(si<5&&sec>=ends[si])si++;\n  const start=si?ends[si-1]:0, local=clamp((sec-start)/(ends[si]-start),0,1);\n  const main=true;\n  const isAbs=si===5;\n  const x0=isAbs?0:x0raw;\n  const f=x=>isAbs?Math.abs(x):x*x;\n  const der=isAbs?NaN:2*x0;\n  let h;\n  if(si===2) h=side*lerp(1,.02,local);\n  else h=side*mag;\n  const qx=x0+h, fp=f(x0), fq=f(qx);\n  const slope=Math.abs(h)>1e-12?(fq-fp)/h:NaN;\n  const residual=isAbs?NaN:fq-(fp+der*h);\n  ctx.fillStyle=\"#f7fafc\";ctx.fillRect(0,0,W,H);\n  ctx.fillStyle=\"#18324a\";ctx.font=\"bold 23px sans-serif\";ctx.fillText(\"割线旋转成切线：导数的极限定义\",35,42);\n  ctx.font=\"17px sans-serif\";ctx.fillStyle=\"#5a7286\";ctx.fillText(\"h ≠ 0；总时长 78 秒\",748,42);\n  const GX0=45,GX1=620,GY0=95,GY1=415,xmin=-4.6,xmax=4.6,ymin=-1.2,ymax=17;\n  const X=x=>GX0+(x-xmin)/(xmax-xmin)*(GX1-GX0);\n  const Y=y=>GY1-(y-ymin)/(ymax-ymin)*(GY1-GY0);\n  ctx.fillStyle=\"#fff\";ctx.fillRect(GX0,GY0,GX1-GX0,GY1-GY0);\n  ctx.strokeStyle=\"#d6e4ed\";ctx.strokeRect(GX0+.5,GY0+.5,GX1-GX0-1,GY1-GY0-1);\n  ctx.strokeStyle=\"#e8f1f6\";ctx.lineWidth=1;\n  for(let z=-4;z<=4;z++){ctx.beginPath();ctx.moveTo(X(z),GY0);ctx.lineTo(X(z),GY1);ctx.stroke();}\n  for(let z=0;z<=16;z+=2){ctx.beginPath();ctx.moveTo(GX0,Y(z));ctx.lineTo(GX1,Y(z));ctx.stroke();}\n  ctx.strokeStyle=\"#365a72\";ctx.lineWidth=2;\n  ctx.beginPath();ctx.moveTo(GX0,Y(0));ctx.lineTo(GX1,Y(0));ctx.stroke();\n  ctx.beginPath();ctx.moveTo(X(0),GY1);ctx.lineTo(X(0),GY0);ctx.stroke();\n  ctx.fillStyle=\"#365a72\";ctx.font=\"15px sans-serif\";\n  for(let z=-4;z<=4;z++){if(z){ctx.fillText(String(z),X(z)-5,Y(0)+20);}}\n  for(let z=2;z<=16;z+=4)ctx.fillText(String(z),X(0)+8,Y(z)+5);\n  ctx.font=\"bold 16px sans-serif\";ctx.fillText(\"x\",GX1-14,Y(0)-10);ctx.fillText(\"y\",X(0)+10,GY0+16);\n  function clip(){ctx.beginPath();ctx.rect(GX0,GY0,GX1-GX0,GY1-GY0);ctx.clip();}\n  function seg(a,b,c,d,col,w=2,dash=[]){ctx.save();clip();ctx.strokeStyle=col;ctx.lineWidth=w;ctx.setLineDash(dash);ctx.beginPath();ctx.moveTo(X(a),Y(b));ctx.lineTo(X(c),Y(d));ctx.stroke();ctx.restore();}\n  function dot(a,b,col,r=6){ctx.save();clip();ctx.fillStyle=col;ctx.beginPath();ctx.arc(X(a),Y(b),r,0,TAU);ctx.fill();ctx.restore();}\n  function label(a,b,s,col,dx=8,dy=-8){ctx.save();ctx.fillStyle=col;ctx.font=\"bold 17px sans-serif\";ctx.fillText(s,clamp(X(a)+dx,GX0+4,GX1-55),clamp(Y(b)+dy,GY0+20,GY1-6));ctx.restore();}\n  ctx.save();clip();ctx.strokeStyle=\"#236fb5\";ctx.lineWidth=3.5;ctx.beginPath();\n  for(let i=0;i<=420;i++){const xx=xmin+(xmax-xmin)*i/420, yy=f(xx);i?ctx.lineTo(X(xx),Y(yy)):ctx.moveTo(X(xx),Y(yy));}ctx.stroke();ctx.restore();\n  if(si>=2&&!isAbs)seg(xmin,fp+der*(xmin-x0),xmax,fp+der*(xmax-x0),\"#9b55b6\",2,[8,6]);\n  if(si===3||si===5){\n    seg(x0,fp,x0-mag,f(x0-mag),side<0?\"#d84b4b\":\"#efb2b2\",side<0?3:2);\n    seg(x0,fp,x0+mag,f(x0+mag),side>0?\"#168c70\":\"#9bd7c5\",side>0?3:2);\n  }else{\n    seg(x0,fp,qx,fp,\"#e58b32\",2,[6,5]);seg(qx,fp,qx,fq,\"#e58b32\",2,[6,5]);seg(x0,fp,qx,fq,\"#7a4aa8\",3);\n  }\n  if(si===4&&!isAbs)seg(qx,fp+der*h,qx,fq,\"#d84b4b\",4);\n  dot(x0,fp,\"#f28e2b\",7);label(x0,fp,\"P\",\"#a3591a\");\n  if(si===3||si===5){dot(x0-mag,f(x0-mag),\"#d84b4b\",6);dot(x0+mag,f(x0+mag),\"#168c70\",6);label(x0-mag,f(x0-mag),\"Q−\",\"#a02c20\",-35);label(x0+mag,f(x0+mag),\"Q+\",\"#14614a\");}\n  else{dot(qx,fq,\"#7a4aa8\",6);label(qx,fq,\"Q\",\"#5c3480\");}\n  ctx.font=\"16px sans-serif\";ctx.fillStyle=\"#236fb5\";ctx.fillText(\"▬ 蓝：曲线\",45,86);ctx.fillStyle=\"#e58b32\";ctx.fillText(\"▬ 橙：增量\",165,86);ctx.fillStyle=\"#7a4aa8\";ctx.fillText(\"▬ 紫：割线/切线\",285,86);\n  const BX=636,BY=90,BW=286,BH=330;ctx.fillStyle=\"#eef5fa\";ctx.fillRect(BX,BY,BW,BH);ctx.strokeStyle=\"#c6d9e5\";ctx.strokeRect(BX+.5,BY+.5,BW-1,BH-1);\n  const titles=[\"固定点与附近的动点\",\"用增量构造割线斜率\",\"从右侧逼近切线\",\"左右极限必须一致\",\"切线为何能近似曲线\",\"连续的尖点为何不可导\"];\n  ctx.fillStyle=\"#18324a\";ctx.font=\"bold 18px sans-serif\";ctx.fillText(\"S\"+(si+1)+\" \"+titles[si],BX+14,BY+32);ctx.strokeStyle=\"#c6d9e5\";ctx.beginPath();ctx.moveTo(BX+12,BY+46);ctx.lineTo(BX+BW-12,BY+46);ctx.stroke();\n  let rows=[];\n  if(isAbs){\n    rows=[\"f(x)=|x|，x₀ = 0（尖点）\",\"|h| = \"+fmt(mag,2)+\"；选中方向 h = \"+(side>0?\"+\":\"−\")+\"|h|\",\"m(+|h|) = +1.000\",\"m(−|h|) = −1.000\",\"左右极限不相等\",\"连续但不可导\"];\n  }else{\n    rows=[\"f(x)=x²，x₀ = \"+fmt(x0,2),\"h = \"+(h>0?\"+\":\"−\")+fmt(Math.abs(h),3),\"m(h) = \"+fmt(slope,4),\"m(+|h|) = \"+fmt(2*x0+mag,4),\"m(−|h|) = \"+fmt(2*x0-mag,4),\"f′(x₀)=2x₀ = \"+fmt(der,3)];\n    if(si===4)rows=[\"x₀ = \"+fmt(x0,2),\"|h| = \"+fmt(Math.abs(h),4),\"误差 r(h)=h² = \"+fmt(Math.abs(residual),6),\"r(h)/|h| = \"+fmt(Math.abs(residual)/Math.abs(h),6),\"|h| 越小，误差比越趋近 0\",\"L(x)=x₀²+2x₀(x−x₀)\"];\n  }\n  ctx.font=\"17px sans-serif\";ctx.fillStyle=\"#2f4a5e\";for(let i=0;i<rows.length;i++)ctx.fillText(rows[i],BX+14,BY+76+i*28);\n  ctx.strokeStyle=\"#c6d9e5\";ctx.beginPath();ctx.moveTo(BX+12,BY+236);ctx.lineTo(BX+BW-12,BY+236);ctx.stroke();ctx.fillStyle=\"#7a4aa8\";ctx.font=\"17px sans-serif\";\n  const formulas=isAbs?[\"m(h)=|h|/h\",\"h>0→1，h<0→−1\",\"f′(0) 不存在\"]:si===4?[\"f(x₀+h)=x₀²+2x₀h+h²\",\"f(x₀+h)−L(x₀+h)=h²\",\"h²/|h|=|h|→0\"]:[\"m(h)=[f(x₀+h)−f(x₀)]/h\",\"[(x₀+h)²−x₀²]/h=2x₀+h\",\"左右极限相同，f′(x₀)=2x₀\"];\n  for(let i=0;i<formulas.length;i++)ctx.fillText(formulas[i],BX+14,BY+262+i*28);\n  return {metrics:{scene:si+1,elapsedSeconds:Number(sec.toFixed(3)),x0:Number(x0.toFixed(4)),h:Number(h.toFixed(5)),slope:Number.isFinite(slope)?Number(slope.toFixed(5)):\"不存在\",derivative:Number.isFinite(der)?Number(der.toFixed(4)):\"不存在\",residual:Number.isFinite(residual)?Number(residual.toFixed(6)):\"不适用\",example:isAbs?\"|x|\":\"x²\",selectedSide:side}};\n}",
+    "controls": [
+      {
+        "id": "h",
+        "label": "步长 |h|",
+        "min": 0.02,
+        "max": 2.0,
+        "step": 0.01,
+        "value": 0.5
+      },
+      {
+        "id": "side",
+        "label": "趋近方向（−1 左 / +1 右）",
+        "min": -1.0,
+        "max": 1.0,
+        "step": 2.0,
+        "value": 1.0
+      },
+      {
+        "id": "x0",
+        "label": "固定点 x₀",
+        "min": -2.0,
+        "max": 2.0,
+        "step": 0.1,
+        "value": 1.0
+      },
+      {
+        "id": "example",
+        "label": "示例函数（0：平方主例，1：绝对值反例）",
+        "min": 0.0,
+        "max": 1.0,
+        "step": 1.0,
+        "value": 0.0
+      }
+    ],
+    "covered_decision_ids": [],
+    "explanation": "按已确认的 78 秒六镜方案实现。前五镜始终保持平方函数主线，避免示例切换造成公式和旁白矛盾；第六镜展示原点绝对值反例，example 控件改变该镜的强调状态。side 在第三镜控制从左侧或右侧缩小 h，在第四、六镜以粗线高亮所选单侧割线；x0 在平方函数镜头中改变 P、差商、切线斜率和 h² 误差。第六镜按方案锁定 x0=0。第4镜同时显示两侧差商，第5镜同时显示 |h|、h² 和误差比。",
+    "limitations": [
+      "有限帧动画只能展示数值趋近，不能替代极限存在性的严格证明；h 的最小数值为 0.02 且始终非零。",
+      "第六镜的绝对值反例按确认方案固定在 x₀=0，因此该镜中 x₀ 滑杆不改变取点。",
+      "Canvas 使用 Unicode 数学字符排版，具体下标和撇号字形依赖运行环境的 sans-serif 字体。"
+    ]
+  }
+}

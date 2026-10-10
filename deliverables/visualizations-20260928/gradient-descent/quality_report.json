@@ -1,0 +1,827 @@
+{
+  "status": "PASS_WITH_REVIEW_REQUIRED",
+  "created_at": "2026-09-28T14:25:44.683454+00:00",
+  "plan_hash": "938825641941e7d0ef3cd01a345e27b2e4a97b11c6e693ac72f4e0ddaffb9a21",
+  "provider": "live",
+  "code_review": {
+    "approved": true,
+    "issues": [],
+    "limitations": [
+      "未提供实际渲染结果，画家算法四边形深度排序方向、3D 标签/箭头是否被裁剪区截断、以及各镜头文字与图形是否重叠等视觉正确性未经人工核验。",
+      "S6 仅在滑杆保持默认值 α=0.20 时由脚本内部把 α 从 0.20 演示到 0.55；此时画面显示的 α 与滑杆位置（仍为 0.20）不一致，用户一旦改动滑杆该镜头即完全采用滑杆值。",
+      "traj 中「临界」状态要求偏差因子精确等于 1（容差 1e-9），S6 连续 ramp 过程中黄色「临界：误差不衰减」仅瞬时可见；要稳定观察需把滑杆精确设为 0.50（步长 0.01 可达）。",
+      "收敛/发散判据只使用初值中非零的误差分量：若用户将 θ₂₀ 设为 0.5，则 α=0.5 或 α>0.5 也判为「收敛」（数学上正确，但与方案「α>0.5 轨迹变红」的文字在视觉上不一致）；S3 的 max|1−αλ| 与 S4 的控制因子同样只统计活跃方向。",
+      "俯仰角/方位角滑杆是各镜头默认视角的偏移量（S1/S2/S3 基准 30°/−35°，S4 由 30° 抬至 88°，S6 基准 88°），不是绝对相机角；接近正上方时滑杆只能在该基准附近有限偏转。",
+      "发散时轨迹在 |θ|>25 处被裁断不绘制，迭代值超过 1e4 即停止计算，仅以红色曲线、损失曲线冲出图表上限与文字警告表达发散。",
+      "损失曲线线性纵轴上限截断在 40，对数纵轴把 J−2 截断在 1e-12…1e6，极值情形下曲线会贴边或丢失极值段。",
+      "曲面为 24×24（部分镜头 20×20、12×12）离散四边形填充近似，非解析曲面，采样精度之外的细节不可见。",
+      "show_eig 与 log_scale 开关只改变显示（特征方向虚线、误差因子信息块、损失纵轴刻度），不改变轨迹数值，属预期行为但需注意二者不属于数学过程控制。",
+      "确认方案 S2 的 visual 文本写 ‖∇J(θ₀)‖≈3.1，而按 θ₀=(−2.2,1.6)、∇J=(−3.2,4.4) 实算为 5.44；程序显示的是实时计算的 5.44（正确），与方案示例数字不符。",
+      "S1 只绘制了 θ₁、θ₂、J 三个轴名标签，未实现方案所述「三条坐标轴带短刻度标签」。",
+      "字幕/旁白文本由宿主提供，未包含在本程序的代码中，无法核验其与画面数值（如 5.44、|1−4α|、J(θₖ)）逐条一致。",
+      "程序按宿主契约假定 t∈[0,1] 且 ctx 每次重置，未自行处理 t 越界或跨帧状态；t=1 时被钳制到 90−1e-6，落在 S6 末尾。"
+    ]
+  },
+  "render": {
+    "status": "PASS",
+    "samples": [
+      {
+        "time": 0.0,
+        "metrics": {
+          "scene": 1,
+          "time_sec": 0,
+          "alpha": 0.2,
+          "steps_K": 40,
+          "steps_shown": 0,
+          "theta1_final": 0.9996,
+          "theta2_final": 0.5,
+          "J_final": 2,
+          "factor_theta1": 0.8,
+          "factor_theta2": 0.2,
+          "max_factor": 0.8,
+          "status": "converged",
+          "theta_star_J": 2
+        },
+        "plot_signature": "1017166447"
+      },
+      {
+        "time": 0.25,
+        "metrics": {
+          "scene": 2,
+          "time_sec": 22.5,
+          "alpha": 0.2,
+          "steps_K": 40,
+          "steps_shown": 0,
+          "theta1_final": 0.9996,
+          "theta2_final": 0.5,
+          "J_final": 2,
+          "factor_theta1": 0.8,
+          "factor_theta2": 0.2,
+          "max_factor": 0.8,
+          "status": "converged",
+          "theta_star_J": 2
+        },
+        "plot_signature": "1428121208"
+      },
+      {
+        "time": 0.5,
+        "metrics": {
+          "scene": 3,
+          "time_sec": 45,
+          "alpha": 0.2,
+          "steps_K": 40,
+          "steps_shown": 40,
+          "theta1_final": 0.9996,
+          "theta2_final": 0.5,
+          "J_final": 2,
+          "factor_theta1": 0.8,
+          "factor_theta2": 0.2,
+          "max_factor": 0.8,
+          "status": "converged",
+          "theta_star_J": 2
+        },
+        "plot_signature": "3059076907"
+      },
+      {
+        "time": 0.75,
+        "metrics": {
+          "scene": 5,
+          "time_sec": 67.5,
+          "alpha": 0.2,
+          "steps_K": 40,
+          "steps_shown": 40,
+          "theta1_final": 0.9996,
+          "theta2_final": 0.5,
+          "J_final": 2,
+          "factor_theta1": 0.8,
+          "factor_theta2": 0.2,
+          "max_factor": 0.8,
+          "status": "converged",
+          "theta_star_J": 2
+        },
+        "plot_signature": "2286086805"
+      },
+      {
+        "time": 1.0,
+        "metrics": {
+          "scene": 6,
+          "time_sec": 90,
+          "alpha": 0.55,
+          "steps_K": 40,
+          "steps_shown": 40,
+          "theta1_final": 1,
+          "theta2_final": 1617.2487,
+          "J_final": 5227754.8781,
+          "factor_theta1": 0.45,
+          "factor_theta2": 1.2,
+          "max_factor": 1.2,
+          "status": "diverged",
+          "theta_star_J": 2
+        },
+        "plot_signature": "1377521997"
+      }
+    ],
+    "controls": [
+      {
+        "id": "alpha",
+        "status": "PASS",
+        "probes": [
+          {
+            "time": 0.37,
+            "min": {
+              "metrics": {
+                "scene": 3,
+                "time_sec": 33.3,
+                "alpha": 0.01,
+                "steps_K": 40,
+                "steps_shown": 5,
+                "theta1_final": -1.1407,
+                "theta2_final": 0.7149,
+                "J_final": 4.3837,
+                "factor_theta1": 0.99,
+                "factor_theta2": 0.96,
+                "max_factor": 0.99,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "1912224178"
+            },
+            "max": {
+              "metrics": {
+                "scene": 3,
+                "time_sec": 33.3,
+                "alpha": 0.6,
+                "steps_K": 40,
+                "steps_shown": 3,
+                "theta1_final": 1,
+                "theta2_final": 10000,
+                "J_final": 199980002.5,
+                "factor_theta1": 0.4,
+                "factor_theta2": 1.4,
+                "max_factor": 1.4,
+                "status": "diverged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "857990969"
+            }
+          },
+          {
+            "time": 0.73,
+            "min": {
+              "metrics": {
+                "scene": 5,
+                "time_sec": 65.7,
+                "alpha": 0.01,
+                "steps_K": 40,
+                "steps_shown": 40,
+                "theta1_final": -1.1407,
+                "theta2_final": 0.7149,
+                "J_final": 4.3837,
+                "factor_theta1": 0.99,
+                "factor_theta2": 0.96,
+                "max_factor": 0.99,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "2461204875"
+            },
+            "max": {
+              "metrics": {
+                "scene": 5,
+                "time_sec": 65.7,
+                "alpha": 0.6,
+                "steps_K": 40,
+                "steps_shown": 28,
+                "theta1_final": 1,
+                "theta2_final": 10000,
+                "J_final": 199980002.5,
+                "factor_theta1": 0.4,
+                "factor_theta2": 1.4,
+                "max_factor": 1.4,
+                "status": "diverged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "64824118"
+            }
+          }
+        ]
+      },
+      {
+        "id": "steps",
+        "status": "PASS",
+        "probes": [
+          {
+            "time": 0.37,
+            "min": {
+              "metrics": {
+                "scene": 3,
+                "time_sec": 33.3,
+                "alpha": 0.2,
+                "steps_K": -0.0,
+                "steps_shown": 0,
+                "theta1_final": -2.2,
+                "theta2_final": 1.6,
+                "J_final": 9.54,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "970401661"
+            },
+            "max": {
+              "metrics": {
+                "scene": 3,
+                "time_sec": 33.3,
+                "alpha": 0.2,
+                "steps_K": 100,
+                "steps_shown": 13,
+                "theta1_final": 1,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "1998692098"
+            }
+          },
+          {
+            "time": 0.73,
+            "min": {
+              "metrics": {
+                "scene": 5,
+                "time_sec": 65.7,
+                "alpha": 0.2,
+                "steps_K": -0.0,
+                "steps_shown": 0,
+                "theta1_final": -2.2,
+                "theta2_final": 1.6,
+                "J_final": 9.54,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "3617977700"
+            },
+            "max": {
+              "metrics": {
+                "scene": 5,
+                "time_sec": 65.7,
+                "alpha": 0.2,
+                "steps_K": 100,
+                "steps_shown": 100,
+                "theta1_final": 1,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "2884736787"
+            }
+          }
+        ]
+      },
+      {
+        "id": "theta1_0",
+        "status": "PASS",
+        "probes": [
+          {
+            "time": 0.37,
+            "min": {
+              "metrics": {
+                "scene": 3,
+                "time_sec": 33.3,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 5,
+                "theta1_final": 0.9995,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "247495365"
+            },
+            "max": {
+              "metrics": {
+                "scene": 3,
+                "time_sec": 33.3,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 5,
+                "theta1_final": 1.0003,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "3685899449"
+            }
+          },
+          {
+            "time": 0.73,
+            "min": {
+              "metrics": {
+                "scene": 5,
+                "time_sec": 65.7,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 40,
+                "theta1_final": 0.9995,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "2244062241"
+            },
+            "max": {
+              "metrics": {
+                "scene": 5,
+                "time_sec": 65.7,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 40,
+                "theta1_final": 1.0003,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "893989219"
+            }
+          }
+        ]
+      },
+      {
+        "id": "theta2_0",
+        "status": "PASS",
+        "probes": [
+          {
+            "time": 0.37,
+            "min": {
+              "metrics": {
+                "scene": 3,
+                "time_sec": 33.3,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 5,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "2439173899"
+            },
+            "max": {
+              "metrics": {
+                "scene": 3,
+                "time_sec": 33.3,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 5,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "3945721863"
+            }
+          },
+          {
+            "time": 0.73,
+            "min": {
+              "metrics": {
+                "scene": 5,
+                "time_sec": 65.7,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 40,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "19695179"
+            },
+            "max": {
+              "metrics": {
+                "scene": 5,
+                "time_sec": 65.7,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 40,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "4169775793"
+            }
+          }
+        ]
+      },
+      {
+        "id": "elev",
+        "status": "PASS",
+        "probes": [
+          {
+            "time": 0.37,
+            "min": {
+              "metrics": {
+                "scene": 3,
+                "time_sec": 33.3,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 5,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "3160984102"
+            },
+            "max": {
+              "metrics": {
+                "scene": 3,
+                "time_sec": 33.3,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 5,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "166687544"
+            }
+          },
+          {
+            "time": 0.73,
+            "min": {
+              "metrics": {
+                "scene": 5,
+                "time_sec": 65.7,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 40,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "3892916833"
+            },
+            "max": {
+              "metrics": {
+                "scene": 5,
+                "time_sec": 65.7,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 40,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "1011935631"
+            }
+          }
+        ]
+      },
+      {
+        "id": "azim",
+        "status": "PASS",
+        "probes": [
+          {
+            "time": 0.37,
+            "min": {
+              "metrics": {
+                "scene": 3,
+                "time_sec": 33.3,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 5,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "2234925465"
+            },
+            "max": {
+              "metrics": {
+                "scene": 3,
+                "time_sec": 33.3,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 5,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "1877926289"
+            }
+          },
+          {
+            "time": 0.73,
+            "min": {
+              "metrics": {
+                "scene": 5,
+                "time_sec": 65.7,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 40,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "2764260632"
+            },
+            "max": {
+              "metrics": {
+                "scene": 5,
+                "time_sec": 65.7,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 40,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "2764260632"
+            }
+          }
+        ]
+      },
+      {
+        "id": "show_eig",
+        "status": "PASS",
+        "probes": [
+          {
+            "time": 0.37,
+            "min": {
+              "metrics": {
+                "scene": 3,
+                "time_sec": 33.3,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 5,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "1504481344"
+            },
+            "max": {
+              "metrics": {
+                "scene": 3,
+                "time_sec": 33.3,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 5,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "1385711724"
+            }
+          },
+          {
+            "time": 0.73,
+            "min": {
+              "metrics": {
+                "scene": 5,
+                "time_sec": 65.7,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 40,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "1408829105"
+            },
+            "max": {
+              "metrics": {
+                "scene": 5,
+                "time_sec": 65.7,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 40,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "2286086805"
+            }
+          }
+        ]
+      },
+      {
+        "id": "log_scale",
+        "status": "PASS",
+        "probes": [
+          {
+            "time": 0.37,
+            "min": {
+              "metrics": {
+                "scene": 3,
+                "time_sec": 33.3,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 5,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "1385711724"
+            },
+            "max": {
+              "metrics": {
+                "scene": 3,
+                "time_sec": 33.3,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 5,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "1385711724"
+            }
+          },
+          {
+            "time": 0.73,
+            "min": {
+              "metrics": {
+                "scene": 5,
+                "time_sec": 65.7,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 40,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "2286086805"
+            },
+            "max": {
+              "metrics": {
+                "scene": 5,
+                "time_sec": 65.7,
+                "alpha": 0.2,
+                "steps_K": 40,
+                "steps_shown": 40,
+                "theta1_final": 0.9996,
+                "theta2_final": 0.5,
+                "J_final": 2,
+                "factor_theta1": 0.8,
+                "factor_theta2": 0.2,
+                "max_factor": 0.8,
+                "status": "converged",
+                "theta_star_J": 2
+              },
+              "plot_signature": "761599057"
+            }
+          }
+        ]
+      }
+    ],
+    "network_requests_blocked": 0,
+    "human_visual_review": "NOT_RUN",
+    "code_execution": "browser_web_worker",
+    "video": {
+      "mime": "video/webm;codecs=vp9",
+      "frames": 1463,
+      "duration_seconds": 90,
+      "recorded_seconds": 90.21620000000298,
+      "width": 960,
+      "height": 540,
+      "bytes": 8131936
+    }
+  },
+  "human_math_review": "NOT_RUN",
+  "human_visual_review": "NOT_RUN",
+  "limitations": [
+    "S6 为在视频中稳定呈现「临界→发散」的跨越，当学习率滑杆保持默认值 0.20 时由脚本把 α 从 0.20 演示到 0.55；一旦用户改动滑杆（离开默认值），该镜头完全采用滑杆值，不再自动抬升。",
+    "俯仰角/方位角滑杆是各镜头默认视角的偏移量（S1/S2/S3 基准 30°/−35°，S4 从 30° 抬到 88°，S6 基准 88°），不是绝对相机角；接近正上方俯视时滑杆只能在该基准上做有限偏转。",
+    "发散时轨迹迅速飞出参数范围，超出 |θ|>25 的线段被裁断不画，仅以变红的曲线、曲线冲出图表顶部以及「发散」文字表达；迭代值超过 1e4 即停止继续计算。",
+    "损失曲线线性纵轴上限截断在 40，对数纵轴把 J−2 截断在 1e-12…1e6，用于避免 log(0) 与溢出；极值下曲线会贴着图表边缘。",
+    "曲面为 25×25（部分镜头 20×20/12×12）离散四边形填充的近似，不是解析曲面；采样精度外的细节不可见。",
+    "「显示特征方向」开关在 S4 中直接控制两个特征方向虚线与标注的显示，在所有镜头中通过右上角误差因子信息块的有无产生可见变化；它不改变迭代数值本身。",
+    "未提供拖拽取点、自由输入函数或外部数据导入，仅使用数值滑杆、整数开关与系统统一时间轴，符合确认方案设定的交互边界。"
+  ],
+  "covered_decision_ids": [
+    "9501b78051f5420493fa3b34aeecee4d",
+    "7ac75f931b7d4d3bb17a44e67b7854d0"
+  ],
+  "format": "WebM VP8/VP9, 960x540, silent animation with Chinese captions"
+}

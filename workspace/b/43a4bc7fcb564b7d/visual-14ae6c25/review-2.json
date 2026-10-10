@@ -1,0 +1,13 @@
+{
+  "approved": false,
+  "issues": [
+    "presentation 模式 si===3（S4）仍使用 `mag=si===2?1-.98*local:inputH`，因此 t∈[50,64) 时 h 固定为 inputH（默认 0.5），左右割线不随时间轴旋转；面板显示 m(+|h|)=2x0+|h|、m(−|h|)=2x0−|h|，而字幕称“两侧都趋向同一个有限数 2x₀”。触发：presentation、t=0.55、p.h=0.5。修复：在 si===3 让 |h| 随 local 从 1 缩小到 0.02（并同步 disabled/controls），或修改字幕为当前固定步长下的对比。",
+    "explore 模式 si===4（S5）且 example=1、x0≠0 时，caption 固定说“在不跨过原点的局部区间内……误差为 0”，但未判断 Q 是否与 P 同侧；当 |h|>|x0| 时 residual=f(x0+h)-L(x0+h)≠0，面板和 metrics 显示 r(h) 与 r(h)/|h| 非零。触发：explore、t=0.7、example=1、x0=1、side=-1、h=2（qx=-1），面板显示 r(h)=2、r(h)/|h|=1，字幕仍说误差为 0。修复：在 si===4 且 isAbs 时判断 `x0*(x0+h)>0`（或 `Math.abs(h)<Math.abs(x0)`），跨过时动态修改 caption/公式说明当前割线跨过尖点、不适用局部线性结论，或限制 |h| 使 Q 与 P 在同一分支。"
+  ],
+  "limitations": [
+    "未进行人工视觉审阅，仅依据提供代码与 runtime_evidence 采样，不能确认实际字形、颜色对比和标签重叠。",
+    "有限动画不能替代极限存在性的严格证明；h 始终非零。",
+    "Canvas 中文字体具体字形依赖运行环境提供的 sans-serif 字体。",
+    "presentation S5 中 h 默认不随时间轴自动缩小，误差比趋于 0 需在 explore 中手动调 h 观察；这属于演示交互限制，不影响公式正确性。"
+  ]
+}

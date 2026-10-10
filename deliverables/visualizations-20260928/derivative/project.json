@@ -1,0 +1,102 @@
+{
+  "story": {
+    "interaction_goals": [
+      "用数值滑杆改变非零 h，观察点 B、Δy 和割线斜率同步变化",
+      "用整数切换在两个固定预设函数示例间选择，并同步更新对应基准点",
+      "用时间轴和播放暂停控制 h 从正、负两侧逐步逼近零",
+      "比较正、负 h 对应的差商是否趋向同一值",
+      "切换显示差商数值、关键代数化简或切线方程",
+      "明确 h=0 只是极限位置，不参与差商计算"
+    ],
+    "math_notes": [
+      "割线斜率为 m_sec=[f(a+h)-f(a)]/h，其中 h≠0",
+      "导数定义为 f'(a)=lim_{h→0}[f(a+h)-f(a)]/h，要求双侧极限存在",
+      "有限个 h 值只能近似展示极限，不能把某一次差商等同于导数",
+      "主示范为 f(x)=x²、a=1，差商化简为 2+h，导数为 2",
+      "第二预设为 f(x)=2x+1、a=1，切换时同步使用 A=(1,3)",
+      "整数切换只选择固定预设函数，不提供任意函数文本输入",
+      "h=0 只作为极限位置，不显示差商数值",
+      "约去 h 的代数步骤建立在 h≠0 的前提上",
+      "双侧差商趋向同一值时，才可将该极限称为导数"
+    ],
+    "objectives": [
+      "理解导数是函数在一点的瞬时变化率",
+      "观察割线斜率随 h 变小而趋近切线斜率",
+      "掌握差商极限与导数记号",
+      "区分有限 h 下的差商与 h→0 的极限",
+      "能够解释 f(x)=x² 在 a=1 处的切线斜率"
+    ],
+    "scenes": [
+      {
+        "id": "S1",
+        "math": "m_sec=Δy/Δx=[f(a+h)-f(a)]/h，其中 h≠0；这里 Δx=h，Δy=f(a+h)-f(a)。",
+        "narration": "两个不同的点确定一条割线。函数值变化量除以自变量变化量，就是区间的平均变化率。",
+        "seconds": 10,
+        "title": "两点确定割线",
+        "visual": "绘制坐标轴和预设函数曲线，默认选择 f(x)=x²，a=1，固定 A=(1,1)，显示 B=(1+h,(1+h)²)。数值滑杆改变非零 h，并标注 h、Δy 和割线 AB。整数切换可选择预设 f(x)=x²、a=1 或 f(x)=2x+1、a=1；切换时同步更新 A 和 B。播放暂停控制预设 h 序列。"
+      },
+      {
+        "id": "S2",
+        "math": "f'(a)=lim_{h→0}[f(a+h)-f(a)]/h。只有双侧极限存在时，才能称其为 f 在 a 处的导数；有限个非零 h 只能近似展示极限。",
+        "narration": "从左右两侧接近时，差商若趋向同一值，这个极限就是该点的瞬时变化率，也就是导数。",
+        "seconds": 12,
+        "title": "双侧逼近切线",
+        "visual": "保持 A 不动，用时间轴控制 B 从左右两侧接近 A。数值滑杆只选择预设的非零正值或负值 h，播放暂停控制动画。时间轴分成 h>0 与 h<0 两段，分别显示两组差商；h=0 处仅标注“极限位置”，不显示差商。右侧同步显示 h、差商和割线斜率。"
+      },
+      {
+        "id": "S3",
+        "math": "[f(1+h)-f(1)]/h=[(1+h)²-1]/h=[2h+h²]/h=2+h，因此 f'(1)=lim_{h→0}(2+h)=2；切线为 y-1=2(x-1)。约去 h 只适用于 h≠0。",
+        "narration": "对 f(x)=x² 且 x=1，差商化简为 2+h，趋近 2，所以切线斜率是 2。",
+        "seconds": 12,
+        "title": "x² 的具体计算",
+        "visual": "整数切换选择 f(x)=x²、a=1，时间轴依次呈现 h=1、0.5、0.1、0.01 的 B 点、割线和差商。播放暂停控制步骤；画面依次显示因式分解、约去 h 和结果 2+h，最后高亮切线 y-1=2(x-1)。"
+      }
+    ],
+    "summary": "面向经济学本科一年级微积分，以 f(x)=x²、a=1 为主示范，通过数值滑杆、整数切换、时间轴和播放暂停展示割线斜率趋近切线斜率。函数仅从有限预设中选择，不提供任意函数文本输入；差商始终要求 h≠0，并明确有限逼近不等于严格极限。总时长约34秒。",
+    "title": "从割线到切线：导数是瞬时变化率"
+  },
+  "program": {
+    "code": "function draw(ctx, t, p) {\n  var W = 960, H = 540;\n  var z = Number(t);\n  if (!isFinite(z)) z = 0;\n  z = Math.max(0, Math.min(1, z));\n  var mag = Number(p && p.h);\n  if (!isFinite(mag)) mag = 0.5;\n  mag = Math.max(0.01, Math.min(1, mag));\n  var preset = Number(p && p.preset);\n  preset = preset >= 0.5 ? 1 : 0;\n  var display = Math.round(Number(p && p.display));\n  if (!isFinite(display)) display = 0;\n  display = Math.max(0, Math.min(2, display));\n\n  var sec = z * 34;\n  var scene = sec < 10 ? 1 : (sec < 22 ? 2 : 3);\n  var local = scene === 1 ? sec / 10 : (scene === 2 ? (sec - 10) / 12 : (sec - 22) / 12);\n  var isX2 = preset === 0;\n  var a = 1;\n  function f(x) { return isX2 ? x * x : 2 * x + 1; }\n  function derivative() { return 2; }\n  function fmt(x, n) { return (isFinite(x) ? x : 0).toFixed(n || 2); }\n  function txt(s, x, y, size, color, align) {\n    ctx.font = (size || 17) + 'px sans-serif';\n    ctx.fillStyle = color || '#263238';\n    ctx.textAlign = align || 'left';\n    ctx.textBaseline = 'middle';\n    ctx.fillText(String(s), x, y);\n  }\n  function line(x1, y1, x2, y2, color, width, dash) {\n    ctx.save();\n    ctx.strokeStyle = color || '#263238';\n    ctx.lineWidth = width || 2;\n    ctx.setLineDash(dash || []);\n    ctx.beginPath();\n    ctx.moveTo(x1, y1);\n    ctx.lineTo(x2, y2);\n    ctx.stroke();\n    ctx.restore();\n  }\n  function dot(x, y, r, color) {\n    ctx.fillStyle = color;\n    ctx.beginPath();\n    ctx.arc(x, y, r, 0, Math.PI * 2);\n    ctx.fill();\n  }\n\n  var h;\n  if (scene === 1) {\n    h = mag * (1 - 0.55 * Math.min(1, local));\n  } else if (scene === 2) {\n    var q = local < 0.5 ? local * 2 : (local - 0.5) * 2;\n    var side = local < 0.5 ? 1 : -1;\n    h = side * (0.02 + mag * (1 - q));\n  } else {\n    var seq = [1, 0.5, 0.1, 0.01];\n    var k = Math.min(3, Math.floor(local * 4));\n    h = seq[k];\n  }\n  if (Math.abs(h) < 0.001) h = h < 0 ? -0.001 : 0.001;\n\n  var ya = f(a), xb = a + h, yb = f(xb), dy = yb - ya;\n  var slope = dy / h, tangent = derivative();\n  var hp = scene === 2 ? Math.abs(h) : Math.max(0.01, Math.abs(h));\n  var ym = (f(a - hp) - f(a)) / (-hp);\n  var yp = (f(a + hp) - f(a)) / hp;\n\n  ctx.fillStyle = '#f8fbff';\n  ctx.fillRect(0, 0, W, H);\n  ctx.fillStyle = '#ffffff';\n  ctx.fillRect(35, 85, 890, 350);\n  ctx.strokeStyle = '#d2e0ea';\n  ctx.lineWidth = 1;\n  ctx.strokeRect(35, 85, 890, 350);\n\n  var title = scene === 1 ? '第1幕：两点确定割线' : (scene === 2 ? '第2幕：双侧逼近切线' : '第3幕：具体计算');\n  txt(title, 55, 103, 21, '#6b3fa0');\n\n  var left = 65, top = 120, bottom = 390, plotW = 575, plotH = 255;\n  var xmin = -1, xmax = 3.2, ymin = -1, ymax = 10;\n  function X(x) { return left + (x - xmin) / (xmax - xmin) * plotW; }\n  function Y(y) { return bottom - (y - ymin) / (ymax - ymin) * plotH; }\n\n  for (var gx = -1; gx <= 3; gx++) line(X(gx), Y(ymin), X(gx), Y(ymax), '#e6eef4', 1);\n  for (var gy = 0; gy <= 10; gy += 2) line(X(xmin), Y(gy), X(xmax), Y(gy), '#e6eef4', 1);\n  line(X(xmin), Y(0), X(xmax), Y(0), '#40566b', 2);\n  line(X(0), Y(ymin), X(0), Y(ymax), '#40566b', 2);\n  for (gx = -1; gx <= 3; gx++) txt(gx, X(gx), Y(0) + 16, 14, '#526b7a', 'center');\n  for (gy = 0; gy <= 10; gy += 2) txt(gy, X(0) - 9, Y(gy), 14, '#526b7a', 'right');\n  txt('x', X(xmax) + 12, Y(0), 17, '#263238');\n  txt('y', X(0), Y(ymax) - 8, 17, '#263238');\n\n  ctx.save();\n  ctx.strokeStyle = '#2878c8';\n  ctx.lineWidth = 3;\n  ctx.beginPath();\n  var started = false;\n  for (var i = 0; i <= 260; i++) {\n    var xx = xmin + (xmax - xmin) * i / 260;\n    var yy = f(xx);\n    if (yy >= ymin && yy <= ymax) {\n      if (!started) { ctx.moveTo(X(xx), Y(yy)); started = true; }\n      else ctx.lineTo(X(xx), Y(yy));\n    }\n  }\n  ctx.stroke();\n  ctx.restore();\n  txt(isX2 ? 'y=f(x)=x²' : 'y=f(x)=2x+1', 455, 137, 18, '#2878c8');\n\n  var Ax = X(a), Ay = Y(ya), Bx = X(xb), By = Y(yb);\n  var tangentVisible = scene === 3 || (scene === 2 && Math.abs(h) < 0.18);\n  if (tangentVisible) {\n    ctx.save();\n    ctx.globalAlpha = scene === 3 ? 1 : Math.max(0, Math.min(1, (0.18 - Math.abs(h)) / 0.16));\n    line(X(xmin), Y(ya + tangent * (xmin - a)), X(xmax), Y(ya + tangent * (xmax - a)), '#8d4bbb', 3, [8, 5]);\n    ctx.restore();\n  }\n\n  line(Ax, Ay, Bx, By, '#ee8b2d', 4);\n  line(Ax, Ay, Bx, Ay, '#ee8b2d', 2, [5, 4]);\n  line(Bx, Ay, Bx, By, '#ee8b2d', 2, [5, 4]);\n  dot(Ax, Ay, 6, '#17324d');\n  dot(Bx, By, 6, '#ee8b2d');\n  txt('A=(1,' + fmt(ya) + ')', Ax + 10, Ay - 17, 16, '#17324d');\n  txt('B=(1+h,' + fmt(yb) + ')', Bx + 8, By - 17, 16, '#b55b12');\n  txt('h=' + fmt(h), (Ax + Bx) / 2, Ay + 20, 17, '#b55b12', 'center');\n  txt('Δy=' + fmt(dy), Bx + 38, (Ay + By) / 2, 16, '#b55b12', 'center');\n\n  var px = 675, py = 120, pw = 230, ph = 270;\n  ctx.fillStyle = '#fdfefe';\n  ctx.fillRect(px, py, pw, ph);\n  ctx.strokeStyle = '#c5d8e5';\n  ctx.strokeRect(px, py, pw, ph);\n  txt('数值与公式', px + pw / 2, py + 22, 19, '#17324d', 'center');\n\n  if (scene === 1) {\n    txt('m割 = Δy / h', px + 15, py + 58, 18, '#b55b12');\n    txt('m割 = ' + fmt(slope, 4), px + 15, py + 88, 19, '#b55b12');\n    txt('Δx = h ≠ 0', px + 15, py + 119, 17, '#263238');\n    txt('平均变化率', px + 15, py + 151, 17, '#2878c8');\n    txt('h=0 不参与差商', px + 15, py + 184, 16, '#6b3fa0');\n    txt('割线 AB 已高亮', px + 15, py + 218, 16, '#ee8b2d');\n  } else if (scene === 2) {\n    txt('f′(a)=lim h→0 差商', px + 15, py + 55, 16, '#6b3fa0');\n    txt('当前 h=' + fmt(h), px + 15, py + 84, 17, '#b55b12');\n    txt('当前差商=' + fmt(slope, 4), px + 15, py + 112, 17, '#b55b12');\n    txt('右侧 h>0：' + fmt(yp, 4), px + 15, py + 148, 16, '#2878c8');\n    txt('左侧 h<0：' + fmt(ym, 4), px + 15, py + 177, 16, '#8d4bbb');\n    txt('两侧都趋向 2', px + 15, py + 210, 17, '#17324d');\n    txt('h=0：极限位置', px + 15, py + 239, 16, '#6b3fa0');\n  } else {\n    if (display === 0) {\n      txt('h=' + fmt(h), px + 15, py + 55, 18, '#b55b12');\n      txt('差商=' + fmt(slope, 4), px + 15, py + 87, 18, '#b55b12');\n      txt('有限差商不等于极限', px + 15, py + 122, 16, '#6b3fa0');\n    } else if (display === 1 && isX2) {\n      txt('[f(1+h)-f(1)]/h', px + 15, py + 52, 16, '#263238');\n      txt('=[(1+h)²−1]/h', px + 15, py + 82, 16, '#263238');\n      txt('=[2h+h²]/h', px + 15, py + 112, 17, '#263238');\n      txt('=2+h（h≠0）', px + 15, py + 144, 18, '#b55b12');\n    } else if (display === 1) {\n      txt('[2(1+h)+1−3]/h', px + 15, py + 60, 16, '#263238');\n      txt('=2h/h=2（h≠0）', px + 15, py + 94, 17, '#b55b12');\n      txt('两侧差商均为 2', px + 15, py + 130, 17, '#6b3fa0');\n    } else {\n      txt('切线斜率 f′(1)=2', px + 15, py + 55, 18, '#6b3fa0');\n      txt(isX2 ? 'y−1=2(x−1)' : 'y−3=2(x−1)', px + 15, py + 91, 20, '#2878c8');\n      txt('h=0 仅为极限位置', px + 15, py + 130, 16, '#b55b12');\n      txt('双侧极限相同 ⇒ 可导', px + 15, py + 166, 16, '#6b3fa0');\n    }\n    txt('序列：1，0.5，0.1，0.01', px + 15, py + 218, 15, '#263238');\n    txt('当前步骤 ' + (Math.min(3, Math.floor(local * 4) + 1)) + ' / 4', px + 15, py + 246, 16, '#2878c8');\n  }\n\n  var functionText = isX2 ? '预设①：f(x)=x²，a=1' : '预设②：f(x)=2x+1，a=1';\n  txt(functionText, 55, 413, 16, '#263238');\n  txt('时间 ' + fmt(sec, 1) + ' / 34 秒', 905, 413, 16, '#526b7a', 'right');\n\n  return {\n    metrics: {\n      scene: scene,\n      h: h,\n      delta_y: dy,\n      secant_slope: isFinite(slope) ? slope : 0,\n      right_secant_slope: isFinite(yp) ? yp : 0,\n      left_secant_slope: isFinite(ym) ? ym : 0,\n      derivative: tangent,\n      function: isX2 ? 'x^2' : '2x+1',\n      seconds: sec\n    }\n  };\n}",
+    "controls": [
+      {
+        "id": "h",
+        "label": "非零 h 的大小",
+        "min": 0.01,
+        "max": 1.0,
+        "step": 0.01,
+        "value": 0.5
+      },
+      {
+        "id": "preset",
+        "label": "预设函数（0:x²，1:2x+1）",
+        "min": 0.0,
+        "max": 1.0,
+        "step": 1.0,
+        "value": 0.0
+      },
+      {
+        "id": "display",
+        "label": "显示模式（0数值，1化简，2切线）",
+        "min": 0.0,
+        "max": 2.0,
+        "step": 1.0,
+        "value": 0.0
+      }
+    ],
+    "covered_decision_ids": [
+      "d59bb3ef51814044aadd8a22ae8e4a06",
+      "a6e098a7cd2844fcbe291a2fa2f9b4ae",
+      "bc3e134305fd4175afe66cdee8d182c3",
+      "8c59c91b2aa34d39b6a58b7a1ac6326a",
+      "e0085af3af3d45808ab281be2d07c615"
+    ],
+    "explanation": "程序按确认方案的34秒累计时间切换三幕：第一幕只展示割线与真实差商，第二幕按时间从h>0和h<0两侧逼近，并在同一面板比较两侧差商；h=0只标记为极限位置，不参与计算。第三幕使用固定序列1、0.5、0.1、0.01，展示x²的因式分解、约去h和2+h，并高亮切线方程。两个固定预设函数会同步更新A点和公式，显示模式、非零h滑杆和预设切换均有可观察效果。",
+    "limitations": [
+      "Canvas动画只能用有限个非零h近似双侧极限，不能把某一次差商等同于严格导数。",
+      "函数选择仅限确认方案中的两个固定预设，不提供任意函数文本输入。",
+      "第三幕的h序列按确认方案固定，不由h滑杆缩放；h滑杆主要影响第一、二幕的几何位置和差商。"
+    ]
+  },
+  "plan_hash": "24967a1aee157520f7bfbed424bca67852032bb92b38503dedf06326d90c4e70",
+  "provider": "live"
+}

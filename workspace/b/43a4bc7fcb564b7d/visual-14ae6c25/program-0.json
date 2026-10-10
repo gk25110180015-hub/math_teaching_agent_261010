@@ -1,0 +1,48 @@
+{
+  "runtime_version": 2,
+  "code": "function draw(ctx,t,p){\n  const W=960,H=540,TAU=Math.PI*2;\n  const num=(v,d)=>Number.isFinite(Number(v))?Number(v):d;\n  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));\n  const fmt=(v,k)=>Number.isFinite(v)?v.toFixed(k):\"不存在\";\n  const mode=p.$mode===\"explore\"?\"explore\":\"presentation\";\n  const rawH=clamp(num(p.h,.5),.02,2), rawX0=clamp(num(p.x0,1),-2,2);\n  const side=num(p.side,1)<0?-1:1, rawExample=num(p.example,0)>=.5?1:0;\n  const ends=[8,22,36,50,64,78], total=78;\n  const sec=clamp(num(t,0),0,1)*total;\n  let si=0; while(si<5&&sec>=ends[si])si++;\n  const local=clamp((sec-(si?ends[si-1]:0))/(ends[si]-(si?ends[si-1]:0)),0,1);\n  const presentationAbs=si===5;\n  const example=mode===\"presentation\"?(presentationAbs?1:0):rawExample;\n  const isAbs=example===1;\n  const x0=mode===\"presentation\"&&presentationAbs?0:rawX0;\n  const f=x=>isAbs?Math.abs(x):x*x;\n  const derivative=(!isAbs)?2*x0:(Math.abs(x0)<1e-9?NaN:(x0>0?1:-1));\n  let h;\n  if(mode===\"presentation\"&&si===2) h=side*(1-.98*local);\n  else h=side*rawH;\n  const qx=x0+h, fp=f(x0), fq=f(qx);\n  const slope=(Math.abs(h)>1e-12)?(fq-fp)/h:NaN;\n  const residual=Number.isFinite(derivative)?fq-(fp+derivative*h):NaN;\n  const absErr=Number.isFinite(residual)?Math.abs(residual):NaN;\n  const errRatio=Number.isFinite(absErr)?absErr/Math.abs(h):NaN;\n  const rightH=Math.abs(h), leftH=-Math.abs(h);\n  const rightSlope=(Math.abs(rightH)>1e-12)?(f(x0+rightH)-fp)/rightH:NaN;\n  const leftSlope=(Math.abs(leftH)>1e-12)?(f(x0+leftH)-fp)/leftH:NaN;\n  const disabled={};\n  if(mode===\"presentation\"&&presentationAbs){disabled.x0=\"演示第六镜按方案固定在绝对值原点 x₀=0\";disabled.example=\"演示第六镜固定展示绝对值反例\";}\n  ctx.fillStyle=\"#f7fafc\";ctx.fillRect(0,0,W,H);\n  ctx.fillStyle=\"#18324a\";ctx.font=\"bold 23px sans-serif\";ctx.fillText(\"割线旋转成切线：导数的极限定义\",35,42);\n  ctx.fillStyle=\"#5a7286\";ctx.font=\"17px sans-serif\";ctx.fillText(\"h ≠ 0 · 总时长 78 秒\",770,42);\n  const gx=45,gy=92,gw=570,gh=328,xmin=-4.6,xmax=4.6,ymin=-2.2,ymax=18;\n  const X=x=>gx+(x-xmin)/(xmax-xmin)*gw, Y=y=>gy+gh-(y-ymin)/(ymax-ymin)*gh;\n  ctx.fillStyle=\"#fff\";ctx.fillRect(gx,gy,gw,gh);ctx.strokeStyle=\"#cbdde8\";ctx.strokeRect(gx+.5,gy+.5,gw-1,gh-1);\n  function clipped(fn){ctx.save();ctx.beginPath();ctx.rect(gx,gy,gw,gh);ctx.clip();fn();ctx.restore();}\n  function line(x1,y1,x2,y2,col,w,dash){clipped(()=>{ctx.strokeStyle=col;ctx.lineWidth=w||2;ctx.setLineDash(dash||[]);ctx.beginPath();ctx.moveTo(X(x1),Y(y1));ctx.lineTo(X(x2),Y(y2));ctx.stroke();});}\n  function dot(x,y,col,r){clipped(()=>{ctx.fillStyle=col;ctx.beginPath();ctx.arc(X(x),Y(y),r||6,0,TAU);ctx.fill();});}\n  function text(x,y,s,col){ctx.fillStyle=col||\"#2f4a5e\";ctx.font=\"16px sans-serif\";ctx.fillText(s,x,y);}\n  ctx.strokeStyle=\"#e7f0f5\";ctx.lineWidth=1;\n  for(let z=-4;z<=4;z++){line(z,ymin,z,ymax,\"#e7f0f5\",1);}\n  for(let z=0;z<=16;z+=2){line(xmin,z,xmax,z,\"#e7f0f5\",1);}\n  line(xmin,0,xmax,0,\"#385d73\",2);line(0,ymin,0,ymax,\"#385d73\",2);\n  text(gx+gw-18,Y(0)-9,\"x\");text(X(0)+8,gy+17,\"y\");\n  clipped(()=>{ctx.strokeStyle=\"#236fb5\";ctx.lineWidth=3.5;ctx.beginPath();for(let i=0;i<=500;i++){const x=xmin+(xmax-xmin)*i/500,y=f(x);if(i===0)ctx.moveTo(X(x),Y(y));else ctx.lineTo(X(x),Y(y));}ctx.stroke();});\n  if(Number.isFinite(derivative)&&si>=2)line(xmin,fp+derivative*(xmin-x0),xmax,fp+derivative*(xmax-x0),\"#9b55b6\",2,[8,6]);\n  const showBoth=si===3||si===5;\n  if(showBoth){\n    const sel=side>0?\"#168c70\":\"#d84b4b\", other=side>0?\"#efb2b2\":\"#9bd7c5\";\n    line(x0,fp,x0+rightH,f(x0+rightH),sel,3);line(x0,fp,x0+leftH,f(x0+leftH),other,3);\n    dot(x0+rightH,f(x0+rightH),\"#168c70\",6);dot(x0+leftH,f(x0+leftH),\"#d84b4b\",6);\n  }else{\n    line(x0,fp,qx,fp,\"#e58b32\",2,[6,5]);line(qx,fp,qx,fq,\"#e58b32\",2,[6,5]);line(x0,fp,qx,fq,\"#7a4aa8\",3);dot(qx,fq,\"#7a4aa8\",6);\n  }\n  dot(x0,fp,\"#f28e2b\",7);\n  text(56,86,\"蓝：曲线\", \"#236fb5\");text(155,86,\"橙：增量\",\"#e58b32\");text(260,86,\"紫：割线/切线\",\"#7a4aa8\");\n  ctx.fillStyle=\"#a3591a\";ctx.font=\"bold 17px sans-serif\";ctx.fillText(\"P\",clamp(X(x0)+8,gx+4,gx+gw-25),clamp(Y(fp)-8,gy+20,gy+gh-6));\n  if(!showBoth){ctx.fillStyle=\"#5c3480\";ctx.fillText(\"Q\",clamp(X(qx)+8,gx+4,gx+gw-25),clamp(Y(fq)-8,gy+20,gy+gh-6));}\n  const bx=636,by=88,bw=289,bh=334;ctx.fillStyle=\"#eef5fa\";ctx.fillRect(bx,by,bw,bh);ctx.strokeStyle=\"#c6d9e5\";ctx.strokeRect(bx+.5,by+.5,bw-1,bh-1);\n  const titles=[\"固定点与附近的动点\",\"用增量构造割线斜率\",(side>0?\"从右侧\":\"从左侧\")+\"逼近切线\",\"左右极限必须一致\",\"切线为何能近似曲线\",\"连续的尖点为何不可导\"];\n  ctx.fillStyle=\"#18324a\";ctx.font=\"bold 18px sans-serif\";ctx.fillText(\"S\"+(si+1)+\" \"+titles[si],bx+14,by+31);\n  ctx.strokeStyle=\"#c6d9e5\";ctx.beginPath();ctx.moveTo(bx+12,by+45);ctx.lineTo(bx+bw-12,by+45);ctx.stroke();\n  const rows=[];\n  if(isAbs){\n    rows.push(\"f(x)=|x|，x₀ = \"+fmt(x0,2));\n    rows.push(\"h = \"+(h>0?\"+\":\"−\")+fmt(Math.abs(h),3));\n    rows.push(\"m(+|h|) = \"+fmt(rightSlope,3));\n    rows.push(\"m(−|h|) = \"+fmt(leftSlope,3));\n    rows.push(Math.abs(x0)<1e-9?\"原点左右极限不相等\":\"当前点可导，斜率 = \"+fmt(derivative,2));\n    rows.push(Math.abs(x0)<1e-9?\"连续但不可导\":\"绝对值函数在非原点可导\");\n  }else if(si===4){\n    rows.push(\"f(x)=x²，x₀ = \"+fmt(x0,2));\n    rows.push(\"|h| = \"+fmt(Math.abs(h),4));\n    rows.push(\"r(h)=h² = \"+fmt(absErr,6));\n    rows.push(\"r(h)/|h| = \"+fmt(errRatio,6));\n    rows.push(\"|h| 与误差比均由实际 h 计算\");\n    rows.push(\"L(x)=x₀²+2x₀(x−x₀)\");\n  }else if(si===3){\n    rows.push(\"f(x)=x²，x₀ = \"+fmt(x0,2));\n    rows.push(\"|h| = \"+fmt(Math.abs(h),3));\n    rows.push(\"m(+|h|) = \"+fmt(rightSlope,4));\n    rows.push(\"m(−|h|) = \"+fmt(leftSlope,4));\n    rows.push(\"两侧共同趋向 2x₀\");\n    rows.push(\"当前高亮：\"+(side>0?\"右侧\":\"左侧\"));\n  }else{\n    rows.push(\"f(x)=x²，x₀ = \"+fmt(x0,2));\n    rows.push(\"h = \"+(h>0?\"+\":\"−\")+fmt(Math.abs(h),3));\n    rows.push(\"m(h) = \"+fmt(slope,4));\n    rows.push(\"m(h)=2x₀+h\");\n    rows.push(\"f′(x₀)=2x₀ = \"+fmt(derivative,3));\n    rows.push(\"Q=(x₀+h,(x₀+h)²)\");\n  }\n  ctx.fillStyle=\"#2f4a5e\";ctx.font=\"17px sans-serif\";for(let i=0;i<rows.length;i++)ctx.fillText(rows[i],bx+14,by+74+i*27);\n  ctx.strokeStyle=\"#c6d9e5\";ctx.beginPath();ctx.moveTo(bx+12,by+238);ctx.lineTo(bx+bw-12,by+238);ctx.stroke();\n  const formulas=isAbs?[\"m(h)=|h|/h\",\"h>0→1，h<0→−1\",Math.abs(x0)<1e-9?\"f′(0) 不存在\":\"f′(x₀) = \"+fmt(derivative,2)]:si===4?[\"f(x₀+h)=x₀²+2x₀h+h²\",\"f(x₀+h)−L(x₀+h)=h²\",\"h²/|h|=|h|→0\"]:[\"m(h)=[f(x₀+h)−f(x₀)]/h\",\"[(x₀+h)²−x₀²]/h=2x₀+h\",\"左右极限相同，f′(x₀)=2x₀\"];\n  ctx.fillStyle=\"#7a4aa8\";ctx.font=\"16px sans-serif\";for(let i=0;i<formulas.length;i++)ctx.fillText(formulas[i],bx+14,by+264+i*27);\n  let title=titles[si],caption;\n  if(isAbs&&Math.abs(x0)<1e-9)caption=\"绝对值在原点连续，但左、右差商分别为 −1 与 1，因此双侧导数不存在。\";\n  else if(isAbs)caption=\"当前点不在尖点，绝对值函数的差商趋向其单侧斜率；原点才是不可导反例。\";\n  else if(si===0)caption=\"固定 P=(x₀,x₀²)，取 Q=(x₀+h,(x₀+h)²)，先观察附近点与割线。\";\n  else if(si===1)caption=\"差商就是割线斜率；平方函数化简为 m(h)=2x₀+h，且 h 始终非零。\";\n  else if(si===2)caption=(side>0?\"从右侧\":\"从左侧\")+\"缩小 h，数值割线斜率趋近切线斜率 2x₀；有限动画不等于取到 h=0。\";\n  else if(si===3)caption=\"同时比较两侧差商：只有它们趋向同一个有限数，导数才存在。\";\n  else caption=\"平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。\";\n  const actualControls={h:Number(Math.abs(h).toFixed(4)),side:side,x0:Number(x0.toFixed(4)),example:example};\n  return {metrics:{scene:si+1,elapsedSeconds:Number(sec.toFixed(3)),example:isAbs?\"|x|\":\"x²\",x0:Number(x0.toFixed(5)),h:Number(h.toFixed(5)),slope:Number.isFinite(slope)?Number(slope.toFixed(6)):\"不存在\",rightSlope:Number.isFinite(rightSlope)?Number(rightSlope.toFixed(6)):\"不存在\",leftSlope:Number.isFinite(leftSlope)?Number(leftSlope.toFixed(6)):\"不存在\",derivative:Number.isFinite(derivative)?Number(derivative.toFixed(6)):\"不存在\",residual:Number.isFinite(residual)?Number(residual.toFixed(6)):\"不适用\",errorRatio:Number.isFinite(errRatio)?Number(errRatio.toFixed(6)):\"不适用\"},controls:actualControls,disabled:disabled,title:title,caption:caption};\n}",
+  "controls": [
+    {
+      "id": "h",
+      "label": "步长 |h|",
+      "min": 0.02,
+      "max": 2.0,
+      "step": 0.01,
+      "value": 0.5
+    },
+    {
+      "id": "side",
+      "label": "趋近方向（−1 左 / +1 右）",
+      "min": -1.0,
+      "max": 1.0,
+      "step": 2.0,
+      "value": 1.0
+    },
+    {
+      "id": "x0",
+      "label": "固定点 x₀",
+      "min": -2.0,
+      "max": 2.0,
+      "step": 0.1,
+      "value": 1.0
+    },
+    {
+      "id": "example",
+      "label": "示例函数（0：平方函数，1：绝对值函数）",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 1.0,
+      "value": 0.0
+    }
+  ],
+  "covered_decision_ids": [
+    "ef80e9169fd64af685004a20aeb7274f",
+    "5c9563c276f242c8905c942a42455e44"
+  ],
+  "explanation": "实现已确认的 78 秒六镜方案。presentation 按累计秒数展示平方函数主线，并在最后一镜展示绝对值原点反例；S3 的步长由时间轴从 1 缩小到 0.02，方向由 side 决定。explore 中函数、x₀、非零 h 和方向均以传入控件为准，example 会真实改变曲线、差商、切线和结论。所有曲线、割线和切线均在矩形 clip 内绘制，坐标范围覆盖 x₀∈[-2,2]、|h|∈[0.02,2] 产生的点。",
+  "limitations": [
+    "有限时间动画只能展示数值趋近，不能替代极限存在性的严格证明；h 始终非零。",
+    "presentation 第六镜按确认方案固定为 |x| 在 x₀=0 的反例，因此该镜禁用 x₀ 与 example 的交互。",
+    "Canvas 中文数学字符的具体字形依赖运行环境提供的 sans-serif 字体。"
+  ]
+}

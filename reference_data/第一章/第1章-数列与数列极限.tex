@@ -1,0 +1,999 @@
+%!TEX program = xelatex
+\documentclass[aspectratio=169,10pt]{ctexbeamer}
+\usetheme{fduclassroom}
+
+\usepackage[UTF8,fontset=none]{ctex}
+\usepackage{amsmath,amssymb,mathtools,bm}
+\usepackage{booktabs,array,tabularx}
+\usepackage{tikz,pgfplots}
+\usetikzlibrary{arrows.meta,calc,positioning}
+\pgfplotsset{compat=1.18}
+\usepackage{hyperref}
+
+
+\IfFontExistsTF{TeX Gyre Heros}{\setsansfont{TeX Gyre Heros}}{}
+\IfFontExistsTF{PingFang SC}{
+  \setCJKmainfont{PingFang SC}
+  \setCJKsansfont{PingFang SC}
+}{
+  \setCJKmainfont{SimSun}
+  \setCJKsansfont{SimHei}
+}
+\usefonttheme{professionalfonts}
+
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\term}[1]{\textcolor{FDUBlue}{\bfseries #1}}
+\newcommand{\warn}[1]{\textcolor{FDURed}{\bfseries #1}}
+\newcommand{\source}[1]{\par\vfill{\tiny\color{MutedText}资料来源：#1}}
+\newcommand{\qedhereppt}{\hfill$\square$}
+\newcommand{\sectionframe}{\begin{frame}[plain]\sectionpage\end{frame}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+
+% --- 自动生成带进度颜色的章节过渡页 ---
+\AtBeginSection[]{
+	\begin{frame}{目录}
+		% 临时重定义目录中 section 的排版格式
+		\setbeamertemplate{section in toc}{%
+			\leavevmode\leftskip=2em % 整体向右缩进一点使其居中对齐
+			\ifnum\inserttocsectionnumber>\insertsectionnumber\relax
+			% 1. 未来的章节（大于当前章节号）：使用 MutedText（浅灰色）
+			\color{MutedText}%
+			\else
+			\ifnum\inserttocsectionnumber=\insertsectionnumber\relax
+			% 2. 当前即将开始的章节：使用 FDUBlue 并加粗（高亮深色）
+			\color{FDUBlue}\bfseries%
+			\else
+			% 3. 已经结束的章节（过去）：使用 TextBlack（普通深色）
+			\color{TextBlack}%
+			\fi
+			\fi
+			% 输出章节号和章节名称
+			% 【修改此处】：将原来的 \vspace{0.3cm} 改小，例如改为 0.1cm 或 0.15cm
+			\inserttocsectionnumber. \inserttocsection\par\vspace{0.1cm}
+		}
+		
+		% 生成目录，并隐藏子章节(subsection)以保持过渡页清爽
+		\tableofcontents[hideallsubsections]
+	\end{frame}
+}
+
+\addtobeamertemplate{frametitle}{\vspace*{0.5cm}}{}
+\title[第一章：数列与数列极限]{第一章：数列与数列极限}
+\author[大学数学（I）]{大学数学（I）}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+
+
+
+
+
+
+\section{数列的定义与性质}
+
+
+\begin{frame}{数列的定义}
+	
+	
+  \begin{block}{定义}
+    无穷多个数按下列顺序排列：
+    
+    $$
+    a_1, a_2, \cdots, a_n, \cdots
+    $$
+    
+    称为数列，记为 $\left\{a_n\right\}$ ,其中 $a_n$ 称为数列的通项或一般项；正整数 $n$ 称为 $a_n$ 的下标。
+  \end{block}
+  \vspace{0.4cm}
+  
+  \pause
+
+      \begin{exampleblock}{从函数的视角理解数列}
+        数列可以看作一种特殊函数：
+        \[
+        a_n=f(n),\qquad n\in\mathbb{N}^+.
+        \]
+        讨论数列时，项的顺序不可随意改变；同一组数字若排列顺序不同，通常就是不同数列。
+      \end{exampleblock}
+
+
+\end{frame}
+
+\begin{frame}{数列的三种常用表示}
+
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.32\textwidth}
+      \begin{block}{通项公式}
+        \[
+          a_n=\frac{n+1}{2n-1}.
+        \]
+        直接给出第 $n$ 项，便于研究整体结构。
+      \end{block}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \begin{block}{递推关系}
+        \[
+          a_1=1,\qquad a_{n+1}=2a_n+1.
+        \]
+        由已知项逐步产生后续项。
+      \end{block}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \begin{block}{列表或图像}
+        \[
+          1,2,4,8,\ldots
+        \]
+        有助于发现模式，但有限观察通常不能确定完整规则。
+      \end{block}
+    \end{column}
+  \end{columns}
+  \vspace{0.7cm}
+  \begin{alertblock}{在描述数列时须指出数列的起始项}
+    同一公式若从 $n=0$ 或 $n=1$ 开始，得到的数列可能不同。
+  \end{alertblock}
+  
+  
+\end{frame}
+
+\begin{frame}{递推关系表示数列}
+	\small
+	\begin{block}{递推关系的严谨描述}
+		$k$阶递推的含义是将数列自第$k+1$项起的每一项由前k项表示：
+		
+		\begin{equation*}
+			\begin{cases}
+				a_1 = c_1, \\
+				a_2 = c_2, \\
+				\quad \vdots \\
+				a_k = c_k, \\
+				a_n = f(a_{n-1}, a_{n-2}, \dots, a_{n-k}), & \forall n > k, \; n \in \mathbb{N}^*
+			\end{cases}
+		\end{equation*}
+	\end{block}
+	
+		一阶递推：
+	\begin{equation*}
+		\begin{cases}
+			a_1 = 1, \\
+			a_n = 2 a_{n-1} + 3, & (n \ge 2, \; n \in \mathbb{N}^+)
+		\end{cases}
+	\end{equation*}
+	
+	二阶递推：
+	\[
+	a_1 = 1,\ a_2 = 1,\ a_n = a_{n-1} + a_{n-2}\ (n \geq 3)
+	\]
+
+  
+\end{frame}
+
+
+
+\begin{frame}
+  \begin{block}{例题}
+  	判断下列对象能否确定一个数列，并说明理由。
+  	\[
+  	(1)\ a_n=\frac{n+1}{2n-1};\qquad
+  	(2)\ a_1=1,\ a_{n+1}=2a_n+1;\qquad
+  	(3)\ 1,2,4,\ldots .
+  	\]
+  \end{block}
+  \pause
+  \textbf{解：}
+  
+    (1) 给出了通项公式，对每个正整数 $n$ 都能唯一确定 $a_n$，因此确定一个数列。
+    
+    (2) 给出了初值和递推关系。 由 $a_1=1$ 可依次得到
+    \[
+    a_2=3,\quad a_3=7,\quad a_4=15,\ldots
+    \]
+    因此也确定一个数列。
+    
+    (3) 只列出前三项，不能唯一确定一个数列。 例如 $a_n=2^{n-1}$ 的前三项为 $1,2,4$；但 $b_1=1,b_2=2,b_3=4,b_n=0(n\ge4)$ 也有同样前三项。 因此仅凭有限项通常不能严格确定无穷数列。
+
+\end{frame}
+
+
+% ================= 第一页：子列的概念 =================
+\begin{frame}{子列的概念}
+	\begin{block}{定义}
+		从数列 $\left\{a_n\right\}: a_1, \cdots, a_n, \cdots$ 中选取无穷多项，并按原来的先后顺序组成新的数列，称新数列为原数列的子数列，记为
+		
+		$$
+		\left\{a_{n_k}\right\}: a_{n_1}, a_{n_2}, \cdots, a_{n_k}
+		$$
+		
+		其中下标 $n_1, n_2, \cdots, n_k, \cdots$ 为正整数，且满足
+		
+		$$
+		n_1<n_2<\cdots<n_k<\cdots .
+		$$
+	\end{block}
+	
+	\vspace{0.5cm}
+	\textbf{理解子列的两个核心要素：}
+	\begin{itemize}
+		\item \textbf{无限性：} 必须从中挑出无限多项构成新数列。
+		\item \textbf{保序性：} 下标必须严格递增，原数列中在前的项，在子列中也必须在前；且同一项不能被重复选取。
+	\end{itemize}
+\end{frame}
+
+% ================= 第二页：例题与判断 =================
+\begin{frame}{判断下列是否是子列}
+	\begin{block}{例题}
+		已知原数列为 $\{x_n\} : x_1, x_2, x_3, x_4, x_5, x_6, \dots$
+
+		请判断下列数列是否为 $\{x_n\}$ 的子列，并说明理由：
+		
+		\vspace{0.3cm}
+		\begin{enumerate}
+			\item $x_2, x_4, x_6, x_8,\dots x_{10000}$
+			\item $x_1, x_1, x_2, x_3, \dots$
+			\item $x_3, x_2, x_4, x_5, \dots$
+			\item $x_{1^2}, x_{2^2}, x_{3^2}, x_{4^2}, \dots$ （即 $x_1, x_4, x_9, x_{16}, \dots$）
+		\end{enumerate}
+	
+	\end{block}
+	
+	
+	\pause 
+	\textbf{解：}
+	\begin{itemize}
+		\item[1.] \textcolor{red}{否}。未选取无穷项构成新数列，违背无限性。
+		\item[2.] \textcolor{red}{否}。下标出现了重复（$n_1 = n_2 = 1$），破坏了严格递增。
+		\item[3.] \textcolor{red}{否}。下标顺序被打乱（$n_1=3 > n_2=2$），没有保持原次序。
+		\item[4.] \textcolor{blue}{是}。下标 $n_k = k^2$，满足 $1 < 4 < 9 < 16 < \dots$，严格递增。
+	\end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+
+\begin{frame}
+	 \footnotesize
+  \begin{block}{应用实例1：固定间隔重复给药}
+  	设每次给药后新增浓度 $C_0>0$；在相邻两次给药之间，原有浓度保留比例为 $q$，其中 $0<q<1$。若 $A_n$ 表示第 $n$ 次给药后的浓度，则
+  	$
+  	A_{n+1}=qA_n+C_0$,求$A_n$的通项公式。
+  \end{block}
+  \pause
+  \scriptsize
+
+   \textbf{解：}考虑数列递推的不动点：$A=qA+C_0.$
+   解得
+   \[
+   A=\frac{C_0}{1-q}.
+   \]
+   为了求出 $A_n$ 的通项公式，令 $B_n=A_n-A$。由 $A=qA+C_0$ 及 $A_{n+1}=qA_n+C_0$ 相减得
+   \[
+   B_{n+1}=A_{n+1}-A=q(A_n-A)=qB_n.
+   \]
+
+   \[
+   B_n=B_1 q^{n-1}.
+   \]
+   由题意可知，第一次给药后的初始浓度为 $A_1 = C_0$，因此
+   \[
+   B_1 = A_1 - A = C_0 - \frac{C_0}{1-q} = -\frac{C_0 q}{1-q}.
+   \]
+   代入 $B_n$ 的表达式可得：
+   \[
+   B_n = \left(-\frac{C_0 q}{1-q}\right) q^{n-1} = -\frac{C_0 q^n}{1-q}.
+   \]
+   最后由 $A_n = B_n + A$，得到 $A_n$ 的通项公式为：
+   \[
+   A_n = \frac{C_0(1-q^n)}{1-q}.
+   \]
+
+  
+\end{frame}
+
+
+\begin{frame}
+	\footnotesize
+	\begin{block}{应用实例2：二分查找}
+	每次将搜索范围缩小一半。在最坏情况下，需要查找的次数满足递推关系：
+	\[
+	T(n) = T\left(\dfrac{n}{2}\right) + 1,\quad T(1) = 1\qquad(n=2^m).
+	\]
+	求解$T(n)$的通项公式。
+	\end{block}
+	\pause
+	\scriptsize
+	\textbf{解：}
+
+		令 $n = 2^m$，可得 $m = \log_2 n$。将 $n=2^m$ 代入原递推式得：
+		\[
+		T(2^m) = T(2^{m-1}) + 1
+		\]
+		为了简化，令 $S(m) = T(2^m)$，则原式转化为关于 $m$ 的等差数列：
+		\[
+		S(m) = S(m-1) + 1
+		\]
+		根据初始条件 $T(1) = 1$，当 $n=1$ 时 $m=0$，因此：
+		\[
+		S(0) = T(2^0) = T(1) = 1
+		\]
+		 由等差数列（公差为 $1$）的通项公式可得：
+	\[
+			S(m) = S(0) + m \cdot 1 = m + 1
+	\]
+		 最后，将 $S(m) = T(n)$ 和 $m = \log_2 n$ 代回，得到最终通项公式：
+		\[
+		T(n) = \log_2 n + 1
+		\]
+对一般的数组长度，最坏查找次数随 $n$ 按对数级增长，常记为 \(O(\log n)\)。
+\end{frame}
+
+
+\begin{frame}
+	\footnotesize
+	\begin{block}{应用实例3：汉诺塔问题}
+	把 \(n\) 个圆盘从一根柱子移到另一根，最少需要移动的次数满足：
+	\[
+	H_n = 2H_{n-1} + 1,\quad H_1 = 1.
+	\]
+	求解$H_n$的通项公式。
+	\end{block}
+	\pause
+	\scriptsize
+	\textbf{解：}
+	
+		 对方程两边同时加 $1$，进行常数项凑配：
+		\[
+		H_n + 1 = 2H_{n-1} + 2
+		\]
+		 提取等号右侧的公因数 $2$，构造出统一的形式：
+		\[
+		H_n + 1 = 2(H_{n-1} + 1)
+		\]
+		令辅助数列 $A_n = H_n + 1$，则原递推式转化为：
+		\[
+		A_n = 2A_{n-1}
+		\]
+		 此时可知，数列 $\{A_n\}$ 是一个公比 $q=2$ 的等比数列。由初始条件求首项：
+		\[
+		A_1 = H_1 + 1 = 1 + 1 = 2
+		\]
+		 根据等比数列通项公式 $A_n = A_1 \cdot q^{n-1}$ 可得：
+		\[
+		A_n = 2 \cdot 2^{n-1} = 2^n
+		\]
+		将 $A_n = H_n + 1$ 代回，得到最终的通项公式：
+		\[
+		H_n = 2^n - 1
+		\]
+
+	
+	
+	
+\end{frame}
+
+
+
+
+
+
+\begin{frame}{数列的性质}
+	
+	\begin{block}{单调性}
+		数列 $\left(a_n\right)$ 称为递增（或者递减），如果对任何 $n \geqslant 1$ ，有 $a_{n+1} \geqslant$（或者 $\leqslant$ ）$a_n$ 。
+		一个递增或者递减的数列称为是单调数列．如果把定义中的 $\geqslant$ 改为 $>$（ $\leqslant$ 改为 $<$ ），那么数列 $\left(a_n\right)$ 被称为严格递增（严格递减）．
+	\end{block}
+	\vspace{0.5cm}
+	\begin{block}{有界性}
+		一个数列 $\left(a_n\right)$ 被称为是有界的，如果存在常数 $C>0$ ，使得对任何$n \geqslant 1$ ，有 $\left|a_n\right| \leqslant C$ ．
+	\end{block}
+	\begin{alertblock}{注：}
+		“有限”通常描述一个数；“有界”描述整列数能否被同一个常数统一控制。
+	\end{alertblock}
+	
+	
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+\section{数列差分}
+
+
+\begin{frame}{差分：离散变量的变化量}
+  \small
+  差分是刻画离散变量变化速率的工具。
+  \begin{block}{定义}
+    对于数列 \(\{a_n\}\)，定义：
+    \begin{itemize}
+    	\item 一阶差分：\(\Delta a_n = a_{n+1} - a_n\)；
+    	\item 二阶差分：\(\Delta^2 a_n = \Delta(\Delta a_n) = a_{n+2} - 2a_{n+1} + a_n\)；
+    	\item \(k\) 阶差分：\(\Delta^k a_n = \Delta(\Delta^{k-1} a_n)\)。
+    \end{itemize}
+  \end{block}
+ 
+ \begin{block}{差分的性质}
+ 	\begin{enumerate}
+ 		\item \(\Delta C = 0\)（\(C\) 为常数）；
+ 		\item \(\Delta(C a_n) = C \Delta a_n\)；
+ 		\item \(\Delta(a_n + b_n) = \Delta a_n + \Delta b_n\)。
+ 	\end{enumerate}
+ \end{block}
+ 
+ 
+\end{frame}
+
+
+
+
+
+\begin{frame}{离散牛顿--莱布尼茨公式}
+
+  \small
+  \begin{block}{定理}
+    \[
+    \sum _{k=m}^{n-1} \Delta a_k = a_n - a_m.
+    \]
+    特别地，\(\sum_{k=1}^{n-1} \Delta a_k = a_n - a_1\)。
+  \end{block}
+  \begin{block}{证明}
+  	展开左端：
+  	\begin{align*}
+  		\sum_{k=m}^{n-1}\Delta a_k
+  		&=(a_{m+1}-a_m)+(a_{m+2}-a_{m+1})+\cdots+(a_n-a_{n-1})\\
+  		&=a_n-a_m.
+  	\end{align*}
+  	中间项逐一抵消。\qedhereppt
+  \end{block}
+ 
+\end{frame}
+
+\begin{frame}{离散牛顿--莱布尼茨公式}
+  \small
+   \begin{exampleblock}{逆运算关系}
+  	如果能找到一个数列 \(b_k\) 使得 \(\Delta b_k=a_k\)，就可以得到
+  	\[
+  	\sum_{k=m}^{n-1}a_k=b_n-b_m.
+  	\]
+  	这可以理解为“差分是求和的逆运算”。
+  \end{exampleblock}
+  
+  这个思想体现差分的一个核心应用：数列求和。
+
+\end{frame}
+
+
+\begin{frame}{裂项构造差分}
+	\footnotesize
+	\begin{block}{例题}
+		求
+		\[
+		S_n=\sum_{k=1}^{n}\frac1{k(k+1)}.
+		\]
+	\end{block}
+	\pause
+	\textbf{解：}
+	部分分式分解给出
+	\[
+	\frac1{k(k+1)}=\frac1k-\frac1{k+1}=-\Delta\!\left(\frac1k\right).
+	\]
+	因此
+	\begin{align*}
+		S_n&=\left(1-\frac12\right)+\left(\frac12-\frac13\right)+\cdots+
+		\left(\frac1n-\frac1{n+1}\right)\\
+		&=1-\frac1{n+1}=\frac{n}{n+1}.
+	\end{align*}
+	\qedhereppt
+	
+\end{frame}
+
+
+
+\begin{frame}{利用差分求自然数平方和}
+	
+	\small
+	\begin{block}{例题}
+		求 \(\sum_{k=1}^n k^2\)。
+	\end{block}
+	\pause
+	\textbf{解：}由
+	\[
+	\Delta(k^3)=(k+1)^3-k^3=3k^2+3k+1,
+	\]
+	对 $k=1,\ldots,n$ 求和：
+	\[
+	(n+1)^3-1=3\sum_{k=1}^n k^2+3\sum_{k=1}^n k+n.
+	\]
+	代入 $\sum_{k=1}^n k=n(n+1)/2$，整理得
+	\[
+	\sum_{k=1}^n k^2=\frac{n(n+1)(2n+1)}6.
+	\]
+	\begin{alertblock}{技巧归纳}
+		构造一个差分，使被求和项出现在展开式中；求和后利用首尾项和已知低次幂和式求解。
+	\end{alertblock}
+\end{frame}
+
+
+
+
+
+
+
+\section{数列极限的定义}
+
+
+
+
+	
+\begin{frame}{从直观角度引入极限}
+	
+	
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.58\textwidth}
+      \begin{tikzpicture}
+        \begin{axis}[
+          width=7.4cm,height=5.0cm,
+          xmin=0,xmax=21,ymin=-0.05,ymax=1.08,
+          axis lines=left,xlabel={$n$},ylabel={$a_n$},
+          xtick={1,5,10,15,20},ytick={0,0.2,0.5,1},
+          grid=major,grid style={gray!20}]
+          \addplot[only marks,mark=*,mark size=2pt,FDUBlue] coordinates {
+            (1,1) (2,.5) (3,.3333) (4,.25) (5,.2) (6,.1667) (7,.1429)
+            (8,.125) (9,.1111) (10,.1) (12,.0833) (15,.0667) (20,.05)};
+          \addplot[FDURed,dashed,domain=0:21]{0.1};
+          \node[anchor=west,text=FDURed] at (axis cs:12,0.13) {$\eps=0.1$};
+        \end{axis}
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.39\textwidth}
+      \small
+      \begin{block}{直观上}
+        考虑数列 \(a_n = \dfrac{1}{n}\)：
+        
+        $a_1=1,\ a_2=0.5,\ a_3\approx 0.333,\ a_{10}=0.1,\ a_{100}=0.01,$
+        $\ a_{1000}=0.001.$
+        当 \(n\) 越来越大时，\(a_n\) 越来越接近 0。
+      \end{block}
+      \begin{alertblock}{严谨的数学描述}
+      	那么，如何用数学语言精确刻画这种“越来越接近”？
+      	
+        对任意给定的误差 $\eps>0$，从某一项起，\term{所有}后续项都落入 $(-\eps,\eps)$。
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+
+
+
+\begin{frame}{ $\eps$--$N$语言定义数列极限}
+  \begin{block}{数列极限}
+    设 $a_n$ 是一个数列．说它收敛于 $L$ ，记为 $a_n \rightarrow L$ ，或者 $\lim \limits_{n \to \infty} a_n=L$ ，如果对如何正数 $\varepsilon$ ，存在 $N$ 使得当 $n \geqslant N$ 时，有 $\left|a_n-L\right|<\varepsilon$ ．
+  \end{block}
+在这个定义中尤其要注意理解$\epsilon$和$N$给出的顺序:
+\begin{center}
+	\Large
+	$\forall\eps>0 \Rightarrow$
+	$\exists N=N(\eps) \Rightarrow$
+	$\forall n\ge N$
+\end{center}
+
+ \begin{itemize}
+	\item $\eps$ 由检验者任意给定，证明者不能只验证某个固定误差。
+	\item $N$ 可以依赖 $\eps$，但一旦选定，必须同时控制所有 $n\ge N$。
+	\item $N$ 不能依赖于之后任取的 $n$；否则没有统一控制整个尾部。
+\end{itemize}
+
+
+\end{frame}
+
+
+
+
+\begin{frame}{用定义证明极限}
+  
+  \begin{block}{例题}
+   证明 \(\lim\limits_{n\to\infty} \dfrac{1}{n} = 0\)。
+  \end{block}
+  \pause
+  \vspace{0.7cm}
+  \textbf{证明：}
+  对任意正数 \(\varepsilon \)，要使 \(\left|\dfrac{1}{n} - 0\right| = \dfrac{1}{n} < \varepsilon\)，只需 \(n > \dfrac{1}{\varepsilon}\)。
+  
+  取 \(N = \left[ \dfrac{1}{\varepsilon} \right] + 1\)，则当 \(n > N\) 时，有 \(\dfrac{1}{n} < \varepsilon\)。
+  
+  故极限为 0。\(\square\)
+  
+  
+  
+  
+\end{frame}
+
+\begin{frame}{用定义证明极限}
+  \begin{block}{例题}
+  	证明 \(\lim\limits_{n\to\infty} \dfrac{2n+1}{3n-2} = \dfrac{2}{3}\)。
+  \end{block}
+  \pause
+  \vspace{0.7cm}
+   \textbf{证明：}
+  \[
+  \left|\dfrac{2n+1}{3n-2} - \dfrac{2}{3}\right| = \left|\dfrac{3(2n+1)-2(3n-2)}{3(3n-2)}\right| = \dfrac{7}{3(3n-2)}.
+  \]
+  对 \(\varepsilon > 0\)，要使 \(\dfrac{7}{3(3n-2)} < \varepsilon\)，只需 \(3n-2 > \dfrac{7}{3\varepsilon}\)，即 \(n > \dfrac{7}{9\varepsilon} + \dfrac{2}{3}\)。
+  
+  
+  取 \(N = \left  [     \dfrac{7}{9\varepsilon} + \dfrac{2}{3} \right] +1 \)，则当 \(n > N\) 时不等式成立, $|\dfrac{2n+1}{3n-2} - \dfrac{2}{3}| < \varepsilon$  ,故极限为$\dfrac{2}{3}$。\(\square\)
+\end{frame}
+
+\begin{frame}{用定义证明极限}
+
+  \begin{block}{例题}
+   证明 \(\lim\limits_{n\to\infty} \left(\sqrt{n+1} - \sqrt{n}\right) = 0\)。
+  \end{block}
+  \pause
+  \vspace{0.6cm}
+  \textbf{证明：}
+  先进行分子有理化：
+  \[
+  \left|\sqrt{n+1} - \sqrt{n} - 0\right| = \dfrac{(\sqrt{n+1} - \sqrt{n})(\sqrt{n+1} + \sqrt{n})}{\sqrt{n+1} + \sqrt{n}} = \dfrac{1}{\sqrt{n+1} + \sqrt{n}} < \dfrac{1}{2\sqrt{n}}.
+  \]
+  对任意 \(\varepsilon > 0\)，要使 \(\dfrac{1}{2\sqrt{n}} < \varepsilon\)，只需 \(\sqrt{n} > \dfrac{1}{2\varepsilon}\)，即 \(n > \dfrac{1}{4\varepsilon^2}\)。
+  
+  取 \(N = \left [ \dfrac{1}{4\varepsilon^2} \right] +1\)，则当 \(n > N\) 时，有 \(\left|\sqrt{n+1} - \sqrt{n}\right| < \varepsilon\)。故极限为 0。\(\square\)
+\end{frame}
+
+\begin{frame}{用定义证明极限}
+  \small
+  
+  \begin{block}{例题}
+    证明 \(\lim\limits_{n\to\infty} \dfrac{n \sin n}{n^2 + 1} = 0\)。
+  \end{block}
+  \pause
+  \vspace{0.5cm}
+  \textbf{证明：}
+  注意到 \(|\sin n| \leq 1\)，因此
+  \[
+  \left|\dfrac{n \sin n}{n^2 + 1} - 0\right| = \dfrac{n |\sin n|}{n^2 + 1} \leq \dfrac{n}{n^2 + 1} < \dfrac{n}{n^2} = \dfrac{1}{n}.
+  \]
+  对任意 \(\varepsilon > 0\)，取 \(N = \left[\dfrac{1}{\varepsilon} \right]+1\)，则当 \(n > N\) 时，有
+  \[
+  \left|\dfrac{n \sin n}{n^2 + 1}\right| \leq \dfrac{1}{n} < \varepsilon.
+  \]
+  故极限为 0。\(\square\)
+  
+
+\end{frame}
+
+\begin{frame}{用定义证明极限}
+
+\begin{block}{例题}
+	证明 \(\lim\limits_{n\to\infty} \dfrac{3n^2 + 2n - 1}{n^2 + 5} = 3\)。
+\end{block}
+\pause
+\textbf{证明：}
+\[
+\left|\dfrac{3n^2 + 2n - 1}{n^2 + 5} - 3\right| = \left|\dfrac{3n^2 + 2n - 1 - 3(n^2 + 5)}{n^2 + 5}\right| = \left|\dfrac{2n - 16}{n^2 + 5}\right|.
+\]
+当 \(n \geq 4\) 时，\(|2n - 16| \leq 2n\)，因此
+\[
+\left|\dfrac{2n - 16}{n^2 + 5}\right| \leq \dfrac{2n}{n^2 + 5} < \dfrac{2n}{n^2} = \dfrac{2}{n}.
+\]
+对任意 \(\varepsilon > 0\)，要使 \(\dfrac{2}{n} < \varepsilon\)，只需 \(n > \dfrac{2}{\varepsilon}\)。
+取 \(N = \max\left\{4, \left[ \dfrac{2}{\varepsilon} \right]+1\right\}\)，则当 \(n > N\) 时，有
+\[
+\left|\dfrac{3n^2 + 2n - 1}{n^2 + 5} - 3\right| < \dfrac{2}{n} < \varepsilon.
+\]
+故极限为 3。\(\square\)
+
+
+\end{frame}
+
+
+
+
+\begin{frame}{无穷小数列与无穷大数列}
+
+  
+  \begin{block}{无穷小数列}
+    若 \(\lim\limits_{n\to\infty} a_n = 0\)，则称 \(\{a_n\}\) 为无穷小数列。
+  \end{block}
+  \vspace{0.7cm}
+  \begin{block}{无穷大数列}
+    若对任意 \(M>0\)，存在 \(N\)，当 \(n>N\) 时 \(|a_n|>M\)，则称 \(\{a_n\}\) 的绝对值趋于无穷，记作 \(|a_n|\to\infty\)。
+    若对任意 \(M>0\)，充分大的 \(n\) 都满足 \(a_n>M\)，则记作 \(a_n\to+\infty\)；若充分大的 \(n\) 都满足 \(a_n<-M\)，则记作 \(a_n\to-\infty\)。
+  \end{block}
+  
+\end{frame}
+
+
+
+
+
+\section{数列极限的性质}
+
+
+
+\begin{frame}{极限的唯一性}
+  \small
+  \begin{block}{数列的收敛与发散}
+  	如果存在 L 使得数列 $\left\{\mathrm{a}_{\mathrm{n}}\right\}$ 收敛于 L，那么称 $\left\{\mathrm{a}_{\mathrm{n}}\right\}$ 收敛或者有极限，否则称数列 $\left\{a_n\right\}$ 发散．
+  \end{block}
+  \begin{block}{极限的唯一性}
+    	收敛数列极限唯一。
+  \end{block}
+  \textbf{证明:}
+    	假设 \(a_n \to L_1\) 且 \(a_n \to L_2\)。对任意 \(\varepsilon > 0\)，存在 \(N_1, N_2\) 使当 \(n > \max(N_1, N_2)\) 时，
+    \[
+    |a_n - L_1| < \varepsilon,\quad |a_n - L_2| < \varepsilon.
+    \]
+    于是，由绝对值的三角不等式：
+    \[
+    |L_1 - L_2| \leq |L_1 - a_n| + |a_n - L_2| < 2\varepsilon.
+    \]
+    由于 \(\varepsilon\) 可以任意小，而 \(|L_1 - L_2|\) 是常数，故 \(L_1 = L_2\)。\(\square\)
+
+\end{frame}
+
+\begin{frame}{收敛数列必有界}
+  \small
+  \begin{block}{定理}
+    若数列 $\{a_n\}$ 收敛，则 $\{a_n\}$ 有界。
+  \end{block}
+  \textbf{证明:}
+    设 $a_n\to A$。 取 $\varepsilon=1$，存在 $N$，当 $n>N$ 时
+    \[
+    |a_n-A|<1,
+    \]
+    从而，由绝对值的三角不等式，$\left| {{a_n}} \right| - \left| A \right| < \left| {{a_n} - A} \right| < 1$,即 $|a_n|<|A|+1$。 前 $N$ 项只有有限个，令
+    \[
+    M=\max\{|a_1|,\ldots,|a_N|,|A|+1\}.
+    \]
+    则对任意正整数 $n$ 都有 $|a_n|\le M$，故数列有界。
+ 
+  \begin{alertblock}{逆命题不成立}
+    $(-1)^n$ 有界但不收敛。
+  \end{alertblock}
+\end{frame}
+
+
+
+\begin{frame}
+ \footnotesize
+  \begin{block}{数列极限的四则运算法则}
+    设数列 $\{a_n\}$ 和 $\{b_n\}$ 均收敛，且其极限分别为：
+    \begin{equation*}
+    	\lim\limits_{n \to \infty} a_n = A, \quad \lim\limits_{n \to \infty} b_n = B
+    \end{equation*}
+    则数列 $\{a_n \pm b_n\}$，$\{a_n \cdot b_n\}$，以及 $\left\{\frac{a_n}{b_n}\right\}$（当分母不为零时）也均收敛，且满足以下运算法则：
+    
+    \begin{enumerate}
+    	\item \textbf{加减法则：}
+    	\begin{equation*}
+    		\lim\limits_{n \to \infty} (a_n \pm b_n) = \lim\limits_{n \to \infty} a_n \pm \lim\limits_{n \to \infty} b_n = A \pm B
+    	\end{equation*}
+    	
+    	\item \textbf{数乘法则}（作为常数 $c$ 的特例）：
+    	\begin{equation*}
+    		\lim\limits_{n \to \infty} (c \cdot a_n) = c \cdot \lim\limits_{n \to \infty} a_n = cA
+    	\end{equation*}
+    	
+    	\item \textbf{乘法法则：}
+    	\begin{equation*}
+    		\lim_{n \to \infty} (a_n \cdot b_n) = \lim_{n \to \infty} a_n \cdot \lim_{n \to \infty} b_n = A \cdot B
+    	\end{equation*}
+    	
+    	\item \textbf{除法法则：}
+    	若对任意 $n \in \mathbb{N}^*$ 均有 $b_n \neq 0$，且 $\lim\limits_{n \to \infty} b_n = B \neq 0$，则：
+    	\[
+    		\lim_{n \to \infty} \frac{a_n}{b_n} = \frac{\lim\limits_{n \to \infty} a_n}{\lim\limits_{n \to \infty} b_n} = \frac{A}{B}
+    	\]
+    \end{enumerate}
+  \end{block}
+
+\end{frame}
+
+\begin{frame}{四则运算法则证明：加法与数乘}
+  \footnotesize
+  \begin{block}{加法}
+    任取 $\eps>0$。分别取 $N_1,N_2$，使
+    \[
+      n\ge N_1\Rightarrow |a_n-A|<\frac\eps2,\qquad
+      n\ge N_2\Rightarrow |b_n-B|<\frac\eps2.
+    \]
+    当 $n\ge\max\{N_1,N_2\}$ 时，
+    \[
+      |(a_n+b_n)-(A+B)|
+      \le|a_n-A|+|b_n-B|<\eps.
+    \]
+  \end{block}
+  \begin{block}{数乘}
+    $c=0$ 时结论成立。若 $c\ne0$，由 $a_n\to A$，把允许误差取为 $\eps/|c|$，则
+    \[
+      |ca_n-cA|=|c|\,|a_n-A|<\eps.
+    \]
+    两个结论均由定义得到。\qedhereppt
+  \end{block}
+\end{frame}
+
+\begin{frame}{四则运算法则证明：乘法}
+  \small
+  \begin{block}{乘法}
+  	
+  
+  由 $a_n\to A$ 可知 $\{a_n\}$ 有界。取 $M\ge1$ 使 $|a_n|\le M$。恒等式
+  \[
+    a_nb_n-AB=a_n(b_n-B)+B(a_n-A)
+  \]
+  给出
+  \[
+    |a_nb_n-AB|\le M|b_n-B|+|B|\,|a_n-A|.
+  \]
+  任取 $\eps>0$。充分大的 $n$ 同时满足
+  \[
+    |b_n-B|<\frac\eps{2M},\qquad
+    |a_n-A|<\frac\eps{2(|B|+1)}.
+  \]
+  因此
+  \[
+    |a_nb_n-AB|<\frac\eps2+\frac{|B|}{|B|+1}\frac\eps2<\eps.
+  \]
+  故 $a_nb_n\to AB$。\qedhereppt
+  \end{block}
+\end{frame}
+
+\begin{frame}{四则运算法则证明：倒数与商}
+  \small
+  \begin{block}{倒数与商}
+  设 $b_n\to B\ne0$。取 $\eps_0=|B|/2$，则充分大的 $n$ 满足
+  \[
+    |b_n-B|<\frac{|B|}{2}.
+  \]
+  由反向三角不等式，
+  \[
+    |b_n|\ge |B|-|b_n-B|>\frac{|B|}{2}>0.
+  \]
+  因而尾部的倒数有定义，且
+  \[
+    \left|\frac1{b_n}-\frac1B\right|
+    =\frac{|b_n-B|}{|b_n||B|}
+    \le\frac{2}{|B|^2}|b_n-B|\to0.
+  \]
+  所以 $1/b_n\to1/B$。再由乘法法则，
+  \[
+    \frac{a_n}{b_n}=a_n\cdot\frac1{b_n}\longrightarrow\frac AB.
+  \]
+  \qedhereppt
+\end{block}
+\end{frame}
+
+\begin{frame}{数列极限的保号性与保序性}
+  \footnotesize
+  
+  \begin{block}{保号性}
+    若当 \(n\) 充分大时 \(a_n \geq 0\)，且 \(\lim\limits_{n \to \infty} a_n = L\)，则 \(L \geq 0\)。
+  \end{block}
+  \vspace{0.3cm}
+  \textbf{证明：}
+  假设 \(\lim a_n = L < 0\)。取 \(\varepsilon = -L/2 > 0\)，则存在 \(N\)，当 \(n > N\) 时 \(|a_n - L| < -L/2\)，从而 \(a_n < L/2 < 0\)，与 \(a_n \geq 0\) 矛盾。故 \(L \geq 0\)。\(\square\)
+  \vspace{0.7cm}
+  \begin{block}{保号性的推论：保序性}
+    若最终有 $a_n\le b_n$，且 $a_n\to A,b_n\to B$，则 $A\le B$。因为 $b_n-a_n\ge0$ 最终成立，而 $b_n-a_n\to B-A$，由保号性得 $B-A\ge0$。\qedhereppt
+  \end{block}
+\end{frame}
+
+\begin{frame}{数列极限的其它性质}
+
+	\begin{block}{绝对值连续性}
+		若 $a_n\to A$，则 $|a_n|\to|A|$。因为
+		\[
+		\bigl||a_n|-|A|\bigr|\le|a_n-A|\to0.
+		\]
+	\end{block}
+  \begin{block}{夹逼准则}
+    若 \(b_n \leq a_n \leq c_n\)（当 \(n\) 充分大）且 \(\lim\limits_{n \to \infty} b_n = \lim\limits_{n \to \infty} c_n = L\)，则 \(\lim\limits_{n \to \infty} a_n = L\)。
+  \end{block}
+ 
+  \textbf{证明：}
+    由 \(\lim \limits_{n \to \infty} b_n = L\)，对 \(\varepsilon > 0\)，存在 \(N_1\) 使 \(n > N_1\) 时 \(L - \varepsilon < b_n < L + \varepsilon\)。
+    由 \(\lim\limits_{n \to \infty} c_n = L\)，存在 \(N_2\) 使 \(n > N_2\) 时 \(L - \varepsilon < c_n < L + \varepsilon\)。
+    取 \(N = \max(N_1, N_2)\)，则当 \(n > N\) 时，
+    \[
+    L - \varepsilon < b_n \leq a_n \leq c_n < L + \varepsilon,
+    \]
+    故 \(|a_n - L| < \varepsilon\)，即 \(\lim \limits_{n \to \infty}a_n = L\)。\(\square\)
+  
+\end{frame}
+
+
+\section{数列极限的存在性}
+
+
+
+
+\begin{frame}{单调有界收敛准则}
+	
+
+  用数列极限的$\epsilon - N$定义证明极限存在往往需要预先知道极限值，但有时候我们不知道极限值，但仍能借助以下定理判断极限是否存在。
+  
+  \vspace{0.6cm}
+  \begin{block}{定理}
+    单调递增且有上界的数列必收敛；单调递减且有下界的数列必收敛。
+  \end{block}
+  \vspace{0.6cm}
+  \begin{alertblock}{用反例说明条件的必要性}
+    $a_n=n$ 单调但无上界；$a_n=(-1)^n$ 有界但不单调，两者都不收敛。
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}{单调有界收敛准则的证明}
+  
+  只证明单调递增且有上界的情形，单调递减且有下界的情形可令 $b_n=-a_n$ 化为前一情形。
+  
+  设 $\{a_n\}$ 单调递增且有上界。 由实数完备性，集合
+  \[
+  A=\{a_n:n=1,2,\ldots\}
+  \]
+  存在上确界，记为 $\alpha=\sup A$。 下面证明 $a_n\to\alpha$。
+  
+  任取 $\varepsilon>0$。 因 $\alpha$ 是 $A$ 的上确界，$\alpha-\varepsilon$ 不是 $A$ 的上界，否则它会小于上确界却仍为上界，与上确界定义矛盾。 因此存在某个正整数 $N$，使得
+  \[
+  a_N>\alpha-\varepsilon.
+  \]
+  又因数列单调递增，当 $n\ge N$ 时有
+  \[
+  a_n\ge a_N>\alpha-\varepsilon.
+  \]
+  同时 $\alpha$ 是上界，故 $a_n\le \alpha$。 于是当 $n\ge N$ 时，
+  \[
+  0\le \alpha-a_n<\varepsilon,
+  \]
+  即 $|a_n-\alpha|<\varepsilon$。 由数列极限定义，$a_n\to\alpha$。
+\end{frame}
+
+\begin{frame}
+ 
+  
+  \begin{block}{例题}
+      证明数列 \(a_1 = \sqrt{2}\)，\(a_{n+1} = \sqrt{2 + a_n}\) 收敛并求极限。
+  \end{block}
+  \pause
+  \vspace{0.6cm}
+  \textbf{证明：}
+  
+  \textbf{有界性：} \(a_1=\sqrt{2}<2\)，假设 \(a_k<2\)，则 \(a_{k+1}=\sqrt{2+a_k}<\sqrt4=2\)，故 \(a_n<2\) 对所有 \(n\) 成立。
+  \vspace{0.2cm}
+  
+  \textbf{单调性：} \(a_2 = \sqrt{2+\sqrt{2}} > \sqrt{2} = a_1\)，假设 \(a_k > a_{k-1}\)，则 \(a_{k+1} = \sqrt{2 + a_k} > \sqrt{2 + a_{k-1}} = a_k\)，故 \(\{a_n\}\) 严格递增。
+  
+  \vspace{0.2cm}
+  由单调有界准则，极限存在。
+  
+  设 \(\lim \limits_{n \to \infty}a_n = L\)，在递推式两边取极限：
+  \[
+  L = \sqrt{2 + L} \quad\Longrightarrow\quad L^2 = L + 2 \quad\Longrightarrow\quad L = 2\ (\text{舍去 } -1).
+  \]
+\end{frame}
+
+
+
+
+
+
+
+\end{document}

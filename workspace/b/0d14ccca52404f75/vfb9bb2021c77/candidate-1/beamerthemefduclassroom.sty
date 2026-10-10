@@ -1,0 +1,113 @@
+\ProvidesPackage{beamerthemefduclassroom}[2026/08/22 FDU classroom theme]
+\RequirePackage{tikz}
+
+\mode<presentation>
+
+\definecolor{FDUBlue}{HTML}{1F4E8C}
+\definecolor{FDUDeep}{HTML}{18365C}
+\definecolor{FDULight}{HTML}{EAF1F8}
+\definecolor{FDUPale}{HTML}{F6F8FB}
+\definecolor{FDURed}{HTML}{A63D40}
+% Legacy accent name retained for slide compatibility; all accents are blue.
+\colorlet{FDUGold}{FDUBlue}
+\definecolor{TextBlack}{HTML}{18212B}
+\definecolor{MutedText}{HTML}{596673}
+
+\useinnertheme{rectangles}
+\setbeamercolor{normal text}{fg=TextBlack,bg=white}
+\setbeamercolor{structure}{fg=FDUBlue}
+\setbeamercolor{title}{fg=white,bg=FDUBlue}
+\setbeamercolor{frametitle}{fg=FDUDeep,bg=white}
+\setbeamercolor{framesubtitle}{fg=MutedText,bg=white}
+\setbeamercolor{palette primary}{fg=white,bg=FDUDeep}
+\setbeamercolor{palette secondary}{fg=white,bg=FDUBlue}
+\setbeamercolor{author in head/foot}{fg=white,bg=FDUDeep}
+\setbeamercolor{title in head/foot}{fg=white,bg=FDUBlue}
+\setbeamercolor{date in head/foot}{fg=white,bg=FDUDeep}
+\setbeamercolor{section in head/foot}{fg=white}
+\setbeamercolor{section in head/foot shaded}{fg=white!60!FDUBlue}
+\setbeamercolor{block title}{fg=FDUDeep,bg=FDUPale}
+\setbeamercolor{block body}{fg=TextBlack,bg=FDUPale}
+\setbeamercolor{block title alerted}{fg=FDUBlue,bg=FDULight}
+\setbeamercolor{block body alerted}{fg=TextBlack,bg=FDUPale}
+\setbeamercolor{block title example}{fg=FDUDeep,bg=FDUPale}
+\setbeamercolor{block body example}{fg=TextBlack,bg=FDULight}
+
+\setbeamerfont{title}{series=\bfseries,size=\LARGE}
+\setbeamerfont{subtitle}{size=\large}
+\setbeamerfont{frametitle}{series=\bfseries,size=\Large}
+\setbeamerfont{framesubtitle}{size=\small}
+\setbeamerfont{block title}{series=\bfseries,size=\normalsize}
+\setbeamerfont{block title alerted}{series=\bfseries,size=\small}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize item}{\raise0.15ex\hbox{\scriptsize$\blacksquare$}}
+\setbeamertemplate{itemize subitem}{\raise0.15ex\hbox{\tiny$\blacktriangleright$}}
+\setbeamertemplate{enumerate item}[default]
+\setbeamertemplate{blocks}[default]
+
+\setbeamertemplate{headline}{%
+  \leavevmode
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.35ex,dp=.95ex,center]{palette secondary}
+    \usebeamerfont{section in head/foot}\insertsectionnavigationhorizontal{.96\paperwidth}{}{}
+  \end{beamercolorbox}
+}
+
+\setbeamertemplate{footline}{%
+  \leavevmode
+  \hbox{%
+    \begin{beamercolorbox}[wd=.48\paperwidth,ht=2.35ex,dp=.95ex,center]{author in head/foot}%
+      \usebeamerfont{author in head/foot}\insertshorttitle
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.34\paperwidth,ht=2.35ex,dp=.95ex,center]{title in head/foot}%
+      \usebeamerfont{title in head/foot}\insertshortauthor
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.18\paperwidth,ht=2.35ex,dp=.95ex,center]{date in head/foot}%
+      \insertframenumber\,/\,\inserttotalframenumber
+    \end{beamercolorbox}%
+  }
+}
+
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\textwidth,sep=0pt,ht=0.78cm,dp=0.10cm]{frametitle}
+    \vbox to 0.72cm{\vfil\strut\insertframetitle\strut\vfil}%
+    \ifx\insertframesubtitle\@empty\else
+      \vspace{-0.14cm}{\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}\vspace{0.04cm}
+    \fi
+  \end{beamercolorbox}
+  \vspace{0.05cm}
+}
+
+\setbeamertemplate{title page}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[FDULight] (current page.south west) rectangle ([xshift=3.05cm]current page.north west);
+    \fill[FDUBlue] ([xshift=3.05cm]current page.south west) rectangle ([xshift=3.18cm]current page.north west);
+    \node[anchor=north west] at ([xshift=0.52cm,yshift=-0.65cm]current page.north west)
+      {\includegraphics[width=1.95cm]{resources/fudan}};
+    
+    \node[anchor=west,text width=.64\paperwidth,align=left] at
+      ([xshift=3.80cm,yshift=1.05cm]current page.west)
+      {{\usebeamerfont{title}\color{FDUDeep}\inserttitle}};
+    \node[anchor=west,text width=.64\paperwidth,align=left] at
+      ([xshift=3.80cm,yshift=0.20cm]current page.west)
+      {{\usebeamerfont{subtitle}\color{FDUBlue}\insertsubtitle}};
+    \node[anchor=west,text width=.64\paperwidth,align=left] at
+      ([xshift=3.80cm,yshift=-1.00cm]current page.west)
+      {{\color{MutedText}\insertauthor\\[0.10cm]
+        \small\insertinstitute}};
+  \end{tikzpicture}
+}
+
+\setbeamertemplate{section page}{%
+  \begin{centering}
+    \vfill
+    {\usebeamerfont{title}\color{FDUDeep}\insertsection\par}
+
+    \vfill
+  \end{centering}
+}
+
+\setbeamertemplate{background canvas}{\color{white}\rule{\paperwidth}{\paperheight}}
+
+\mode<all>

@@ -1,0 +1,815 @@
+%!TEX program = xelatex
+\documentclass[aspectratio=169,10pt]{ctexbeamer}
+\usetheme{fduclassroom}
+
+\usepackage[UTF8,fontset=none]{ctex}
+\usepackage{amsmath,amssymb,mathtools,bm}
+\usepackage{booktabs,array,tabularx}
+\usepackage{tikz,pgfplots}
+\usetikzlibrary{arrows.meta,calc,positioning}
+\pgfplotsset{compat=1.18}
+\usepackage{hyperref}
+
+
+\IfFontExistsTF{TeX Gyre Heros}{\setsansfont{TeX Gyre Heros}}{}
+\IfFontExistsTF{PingFang SC}{
+  \setCJKmainfont{PingFang SC}
+  \setCJKsansfont{PingFang SC}
+}{
+  \setCJKmainfont{SimSun}
+  \setCJKsansfont{SimHei}
+}
+\usefonttheme{professionalfonts}
+
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\term}[1]{\textcolor{FDUBlue}{\bfseries #1}}
+\newcommand{\warn}[1]{\textcolor{FDURed}{\bfseries #1}}
+\newcommand{\source}[1]{\par\vfill{\tiny\color{MutedText}资料来源：#1}}
+\newcommand{\qedhereppt}{\hfill$\square$}
+\newcommand{\sectionframe}{\begin{frame}[plain]\sectionpage\end{frame}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\ee}{\mathrm{e}}
+
+% --- 自动生成带进度颜色的章节过渡页 ---
+\AtBeginSection[]{
+	\begin{frame}{目录}
+		% 临时重定义目录中 section 的排版格式
+		\setbeamertemplate{section in toc}{%
+			\leavevmode\leftskip=2em % 整体向右缩进一点使其居中对齐
+			\ifnum\inserttocsectionnumber>\insertsectionnumber\relax
+			% 1. 未来的章节（大于当前章节号）：使用 MutedText（浅灰色）
+			\color{MutedText}%
+			\else
+			\ifnum\inserttocsectionnumber=\insertsectionnumber\relax
+			% 2. 当前即将开始的章节：使用 FDUBlue 并加粗（高亮深色）
+			\color{FDUBlue}\bfseries%
+			\else
+			% 3. 已经结束的章节（过去）：使用 TextBlack（普通深色）
+			\color{TextBlack}%
+			\fi
+			\fi
+			% 输出章节号和章节名称
+			% 【修改此处】：将原来的 \vspace{0.3cm} 改小，例如改为 0.1cm 或 0.15cm
+			\inserttocsectionnumber. \inserttocsection\par\vspace{0.1cm}
+		}
+		
+		% 生成目录，并隐藏子章节(subsection)以保持过渡页清爽
+		\tableofcontents[hideallsubsections]
+	\end{frame}
+}
+
+\addtobeamertemplate{frametitle}{\vspace*{0.5cm}}{}
+\title[第二章：无穷级数]{第二章：无穷级数}
+\author[大学数学（I）]{大学数学（I）}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+
+
+
+
+
+\section{级数的基本概念}
+
+
+
+\begin{frame}{级数概念的引入}
+	
+	\begin{block}{芝诺悖论}
+		古希腊哲学家芝诺说：阿喀琉斯永远追不上乌龟。因为阿喀琉斯每次到达乌龟之前的位置时，乌龟又向前爬了一小段。设阿喀琉斯的速度是乌龟的 10 倍，初始距离为 1。他追到乌龟原位置时，乌龟又爬了 \(0.1\)；他再追 \(0.1\)，乌龟又爬了 \(0.01\)；如此继续，他需要跑的无限段距离是：
+		\[
+		1 + 0.1 + 0.01 + 0.001 + \cdots = 1.111\ldots
+		\]
+		\vspace{0.5cm}
+		
+		芝诺认为无限段长度的和是无穷大——但这是错的！
+		\vspace{0.5cm}
+		
+		事实上，\(1 + 0.1 + 0.01 + 0.001 + \cdots = \dfrac{10}{9}\) 是有限的。阿喀琉斯只需跑 \(\dfrac{10}{9}\) 的距离就能追上乌龟。
+	\end{block}
+	\iffalse
+	上述悖论将追赶的总距离分解为无穷多个正数之和。有限项加法所满足的运算性质不能随意移植到无穷项的情形。为了准确研究无穷多个数量依次相加是否能够得到一个有限确定的值，我们需要建立 “无穷项求和” 的严格定义，由此引出级数的概念。
+	\fi
+\end{frame}
+
+\begin{frame}
+	\begin{block}{常数项级数}
+		给定数列 \(\{a_n\}\)，称
+		\[
+		\sum_{n=1}^{\infty} a_n = a_1 + a_2 + a_3 + \cdots
+		\]
+		为无穷级数，简称级数，\(a_n\) 称为通项。
+	\end{block}
+	\vspace{0.8cm}
+	\begin{block}{部分和}
+		级数 \(\sum\limits_{n = 1}^{  \infty }  a_n\) 的前 \(n\) 项和
+		\[
+		S_n = a_1 + a_2 + \cdots + a_n
+		\]
+		称为部分和。
+	\end{block}
+	
+\end{frame}
+
+\begin{frame}{级数收敛与发散}
+	\begin{block}{}
+		若部分和数列 \(\{S_n\}\) 收敛于 \(S\)，则称级数 \(\sum\limits_{n = 1}^{  \infty } a_n\) 收敛，且和为 \(S\)，记作 \(\sum\limits_{n = 1}^{  \infty } a_n = S\)；若 \(\{S_n\}\) 发散，则称级数发散。
+	\end{block}
+	
+	\vspace{0.8cm}
+	\textbf{注：}要讨论级数的敛散性，我们一般先计算部分和数列
+	\[
+	S_1=a_1,\quad S_2=a_1+a_2,\quad \ldots,\quad S_n=a_1+\cdots+a_n,
+	\]
+	再研究 $\{S_n\}$ 是否有极限。
+\end{frame}
+
+\begin{frame}
+	
+	\begin{block}{例题}
+		判断级数
+		\[
+		\sum_{n=1}^{\infty}\frac{1}{n(n+1)}
+		\]
+		是否收敛，并求其和。
+	\end{block}
+	\pause
+	\textbf{解：}
+	
+	先裂项：
+	\[
+	\frac{1}{n(n+1)}=\frac1n-\frac{1}{n+1}.
+	\]
+	第 $N$ 个部分和为
+	\[
+	S_N=\sum_{n=1}^{N}\left(\frac1n-\frac{1}{n+1}\right)
+	=1-\frac{1}{N+1}.
+	\]
+	由于 $S_N\to1$，故原级数收敛，且
+	\[
+	\sum_{n=1}^{\infty}\frac{1}{n(n+1)}=1.
+	\]
+	
+	
+\end{frame}
+
+\begin{frame}{几何级数的敛散性}
+	\small
+	\begin{block}{}
+		几何级数 \(\sum\limits_{n = 1}^{  \infty } ar^n\)（\(a \neq 0\)）：
+		\[
+		\sum_{n=0}^{\infty} ar^n = 
+		\begin{cases}
+			\dfrac{a}{1-r}, & |r| < 1,\\[6pt]
+			\text{发散}, & |r| \geq 1.
+		\end{cases}
+		\]
+	\end{block}
+	\pause
+	\textbf{证明：}
+	
+	当 \(r \neq 1\) 时，部分和为
+	\[
+	S_n = a + ar + ar^2 + \cdots + ar^{n-1} = a\dfrac{1-r^n}{1-r}.
+	\]
+	\begin{itemize}
+		\item 若 \(|r| < 1\)，则 \(r^n \to 0\)，所以 \(S_n \to \dfrac{a}{1-r}\)。
+		\item 若 \(|r| > 1\)，则 \(|r^n| \to \infty\)，\(S_n\) 发散。
+		\item 若 \(r=1\)，则 \(S_n=na\)，当 \(a\neq0\) 时有 \(|S_n|\to\infty\)。
+		\item 若 \(r = -1\)，则 \(S_n = a, 0, a, 0, \dots\)，发散。
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}{循环小数化为分数}
+	\begin{block}{例题}
+		将 \(0.333\ldots\) 化为分数。
+	\end{block}
+	\pause
+	\vspace{0.7cm}
+	\textbf{解：}
+	
+	\[
+	0.333\ldots = \dfrac{3}{10} + \dfrac{3}{100} + \dfrac{3}{1000} + \cdots = \dfrac{3/10}{1-1/10} = \dfrac{3/10}{9/10} = \dfrac{1}{3}.
+	\]
+\end{frame}
+
+\section{级数的基本性质}
+\small
+\begin{frame}{级数的基本性质}
+	\begin{block}{性质1}
+		设 $A$ 为非零常数，则级数 $\sum\limits_{n = 1}^{  \infty } A u_n$ 与级数 $\sum\limits_{n = 1}^{  \infty } u_n$ 同时收敛或同时发散。
+	\end{block}
+	
+	\textbf{证明：}
+	
+	设级数 $\sum\limits_{n = 1}^{  \infty } A u_n$ 与 $\sum\limits_{n = 1}^{  \infty } u_n$ 的部分和分别记为 $S_n^{\prime}$ 与 $S_n^{\prime \prime}$ ，则有
+	
+	$$
+	\begin{aligned}
+		S_n^{\prime} & =A u_1+A u_2+\cdots+A u_n \\
+		& =A\left(u_1+u_2+\cdots+u_n\right)=A S_n^{\prime \prime}
+	\end{aligned}
+	$$
+	
+	于是，由数列极限的性质可知，极限 $\lim \limits_{n \to \infty} S_n^{\prime}$ 与 $\lim \limits_{n \to \infty} S_n^{\prime \prime}$ 同时存在或同时不存在，即级数 $\sum\limits_{n = 1}^{  \infty } A u_n$ 与 $\sum\limits_{n = 1}^{  \infty } u_n$ 同时收敛或同时发散．且当二极限同时存在时，有 $\lim \limits_{n \to \infty} S_n^{\prime}=$ $A \lim \limits_{n \to \infty} S_n^{\prime \prime}$ ，即有
+	
+	$$
+	\sum_{n=1}^{\infty} A u_n=A \sum_{n=1}^{\infty} u_n .
+	$$
+	
+\end{frame}
+
+\begin{frame}
+	\begin{block}{性质2：级数的线性性质}
+		若级数 \(\sum\limits_{n = 1}^{  \infty } a_n\) 收敛于 \(S\)，\(\sum\limits_{n = 1}^{  \infty } b_n\) 收敛于 \(T\)，\(\alpha, \beta\) 为常数，则
+		\[
+		\sum_{n=1}^{\infty} (\alpha a_n + \beta b_n) = \alpha S + \beta T.
+		\]
+	\end{block}
+	\textbf{证明：}
+	
+	记
+	\[
+	A_n=\sum_{k=1}^{n}a_k,\qquad B_n=\sum_{k=1}^{n}b_k.
+	\]
+	由条件 $A_n\to S,\ B_n\to T$。 对级数 $\sum(\alpha a_n+\beta b_n)$，其第 $n$ 个部分和为
+	\[
+	\sum_{k=1}^{n}(\alpha a_k+\beta b_k)=\alpha A_n+\beta B_n.
+	\]
+	由收敛数列四则运算法则，
+	\[
+	\alpha A_n+\beta B_n\to \alpha S+\beta T.
+	\]
+	因此该级数收敛，且和为 $\alpha S+\beta T$。
+	
+\end{frame}
+
+\begin{frame}
+	\begin{block}{性质3}
+		在级数中添加、删除或改变有限项，不改变级数的敛散性。但若级数收敛，其和可能会改变。
+	\end{block}
+	\vspace{0.7cm}
+	\textbf{证明：}
+	
+	以改变前 $m$ 项为例。 设原级数部分和为
+	\[
+	S_n=a_1+\cdots+a_n,
+	\]
+	改变前 $m$ 项后得到的新级数部分和记为 $T_n$。 当 $n>m$ 时，$T_n$ 与 $S_n$ 只相差一个固定常数 $C$，即
+	\[
+	T_n=S_n+C.
+	\]
+	若 $S_n$ 收敛，则 $T_n$ 也收敛；若 $S_n$ 发散而 $T_n$ 收敛，则 $S_n=T_n-C$ 收敛，矛盾。 因此二者敛散性相同。 当收敛时，极限值相差 $C$，所以级数和可能改变。
+	
+\end{frame}
+
+\begin{frame}
+	\begin{block}{性质4}
+		收敛级数任意加括号后所成的新级数仍然收敛，且和不变。
+		
+		
+	\end{block}
+	\vspace{0.25cm}
+	
+	\textbf{证明：}
+	
+	设原级数 $\sum\limits_{n = 1}^{  \infty } a_n$ 的部分和 $S_n\to S$。 任意加括号后，新级数的部分和等于原部分和数列中的一个子列：
+	\[
+	T_k=S_{n_k},\qquad 1\le n_1<n_2<\cdots .
+	\]
+	收敛数列的任意子列收敛到同一极限，因此 $T_k\to S$。 所以加括号后的级数仍收敛，且和不变。 
+	\vspace{0.25cm}
+	
+	\begin{alertblock}{注意：}
+		 逆命题不成立。即加括号后收敛的级数，原级数未必收敛。例如：
+		\[
+		(1-1)+(1-1)+(1-1)+\cdots = 0+0+0+\cdots = 0,
+		\]
+		但原级数 \(1-1+1-1+1-1+\cdots\) 是发散的。
+	\end{alertblock}
+	
+\end{frame}
+
+
+\begin{frame}
+	\begin{block}{性质5：级数收敛的必要条件}
+		若 \(\sum\limits_{n = 1}^{  \infty } a_n\) 收敛，则 \(\lim\limits_{n \to \infty} a_n = 0\)。
+	\end{block}
+	\vspace{0.8cm}
+	
+	\text{证明：}
+	
+	设部分和 \(S_n \to S\)，则 \(a_n = S_n - S_{n-1} \to S - S = 0\)。\(\square\)
+	\vspace{0.8cm}
+	\begin{alertblock}{注意：}
+		这个条件是必要的，但不是充分的。也就是说，\(a_n \to 0\) 不能保证级数收敛。
+	\end{alertblock}
+\end{frame}
+
+
+\begin{frame}{调和级数的敛散性}
+	\begin{block}{例题}
+		证明：调和级数 \(\sum\limits_{n = 1}^{  \infty } \dfrac{1}{n}\) 虽然通项 \(\dfrac{1}{n} \to 0\)，但它是发散的。
+	\end{block}
+	\pause
+	
+	\textbf{证明：}
+	
+	考虑部分和 \(S_{2^n}\)：
+	\[
+	S_{2^n} = 1 + \dfrac12 + \left(\dfrac13+\dfrac14\right) + \left(\dfrac15+\cdots+\dfrac18\right) + \cdots + \left(\dfrac{1}{2^{n-1}+1} + \cdots + \dfrac{1}{2^n}\right).
+	\]
+	$\dfrac13+\dfrac14 > \dfrac14 \times 2 =\dfrac12$,$\dfrac15+\cdots+\dfrac18>\dfrac18 \times 4 =\dfrac12$,以此类推，第 \(k\) 组有 \(2^{k-1}\) 项，每项不小于 \(1/2^k\)，每一括号的和至少为 \(\dfrac12\)，所以
+	\[
+	S_{2^n}\geq1+\dfrac n2\to\infty.
+	\]
+	故调和级数发散。
+\end{frame}
+
+\section{正项级数及其判别法}
+
+
+
+\begin{frame}{正项级数及其判别法}
+	
+	\begin{block}{定理}
+		设 $\sum\limits_{n = 1}^{  \infty } a_n$ 为正项级数，则 $\sum\limits_{n = 1}^{  \infty }a_n$ 收敛的充分必要条件是它的部分和数列有上界．
+	\end{block}
+	\vspace{0.6cm}
+	
+	
+	\textbf{证明：}
+	
+	由 $a_n \geqslant 0(n=1,2, \cdots)$ 可知
+	
+	$$
+	S_{n+1}=S_n+a_{n+1} \geqslant S_n \geqslant 0, \quad n \in N .
+	$$
+	
+	可见 $\left\{S_n\right\}$ 是单调增加数列．因此，由单调有界收敛定理可知，若 $\left\{S_n\right\}$ 有上界，则极限 $\lim \limits_{n \to \infty} S_n$存在，从而 $\sum\limits_{n = 1}^{  \infty } a_n$ 收敛，充分性得证；若 $\left\{S_n\right\}$ 无上界，则 $\lim \limits_{n \to \infty} S_n=+\infty$ ，从而 $\sum\limits_{n = 1}^{  \infty } a_n$ 发散，换句话说，若数列收敛，则部分和数列 $\left\{S_n\right\}$ 必有上界，必要性得证．定理得证．
+	
+	
+\end{frame}
+
+
+\begin{frame}{比较判别法}
+	\scriptsize
+	\begin{block}{定理}
+		设 \(\sum\limits_{n = 1}^{  \infty } a_n\) 和 \(\sum\limits_{n = 1}^{  \infty } b_n\) 为正项级数，且存在 \(N\)，当 \(n > N\) 时 \(a_n \leq b_n\)。
+		\begin{enumerate}
+			\item 若 \(\sum\limits_{n = 1}^{  \infty } b_n\) 收敛，则 \(\sum\limits_{n = 1}^{  \infty } a_n\) 收敛；
+			\item 若 \(\sum\limits_{n = 1}^{  \infty } a_n\) 发散，则 \(\sum\limits_{n = 1}^{  \infty } b_n\) 发散。
+		\end{enumerate}
+	\end{block}
+	
+	\textbf{证明：}
+	
+	只需考虑从 $N+1$ 项开始的尾级数，因为添加或删除有限项不改变敛散性。 记
+	\[
+	A_m=\sum_{n=N+1}^{m}a_n,\qquad B_m=\sum_{n=N+1}^{m}b_n.
+	\]
+	由于 $0\le a_n\le b_n$，所以对所有 $m>N$ 有
+	\[
+	0\le A_m\le B_m.
+	\]
+	若 $\sum\limits_{n = 1}^{  \infty } b_n$ 收敛，则 $\{B_m\}$ 有上界，从而 $\{A_m\}$ 是单调递增且有上界的数列，由单调有界准则知 $\{A_m\}$ 收敛，故 $\sum\limits_{n = 1}^{  \infty } a_n$ 收敛。
+	
+	第二个结论是第一个结论的逆否命题：若 $\sum\limits_{n = 1}^{  \infty } b_n$ 收敛，则 $\sum\limits_{n = 1}^{  \infty } a_n$ 收敛。 因此若 $\sum\limits_{n = 1}^{  \infty } a_n$ 发散，$\sum\limits_{n = 1}^{  \infty } b_n$ 不可能收敛，只能发散。
+	
+	
+	
+\end{frame}
+
+\begin{frame}{比较判别法的推论}
+	\begin{block}{推论}
+			设 $\sum\limits_{n = 1}^{  \infty } u_n$ 和 $\sum\limits_{n = 1}^{  \infty } v_n$ 为正项级数，且存在常数 $c>0$ 和自然数 $N$ ，使当$n>N$ 时，有
+		
+		$$
+		u_n \leqslant c v_n .
+		$$
+		
+		则有
+		\begin{itemize}
+			\item[（1）] 当 $\sum\limits_{n = 1}^{  \infty } v_n$ 收敛时，$\sum\limits_{n = 1}^{  \infty } u_n$ 收敛；
+			\item[（2）] 当 $\sum\limits_{n = 1}^{  \infty } u_n$ 发散时，$\sum\limits_{n = 1}^{  \infty } v_n$ 发散．
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+
+\begin{frame}{比较判别法的极限形式}
+	\normalsize
+	\begin{block}{}
+		
+		设 $\sum_{n=1} u_n$ 与 $\sum_{n=1} v_n$ 均为正项级数，且有
+		
+		$$
+		\lim _{n \rightarrow \infty} \frac{u_n}{v_n}=A .
+		$$
+		\vspace{0.4cm}
+		
+		\begin{itemize}
+			\item[（1）] 若 $0<A<+\infty$ ，则级数 $\sum_{n=1}^{\infty} u_n$ 与 $\sum_{n=1}^{\infty} v_n$ 同时收敛或同时发散；
+			\vspace{0.4cm}
+			\item[（2）] 若 $A=0$ ，且 $\sum_{n=1}^{\infty} v_n$ 收敛，则 $\sum_{n=1}^{\infty} u_n$ 收敛；
+			\vspace{0.4cm}
+			\item[（3）] 若 $A=+\infty$ ，且 $\sum_{n=1}^{\infty} v_n$ 发散，则 $\sum_{n=1}^{\infty} u_n$ 发散．
+		\end{itemize}
+	\end{block}
+	
+\end{frame}
+
+\begin{frame}
+	\begin{block}{例题}
+		判断级数 \(\sum\limits_{n = 1}^{  \infty } \dfrac{1}{n!}\) 的敛散性。
+	\end{block}
+	\pause
+	\textbf{证明：}
+	
+	当 \(n \geq 1\) 时，\(n! = 1 \cdot 2 \cdot 3 \cdots n \geq 1 \cdot 2 \cdot 2 \cdots 2 = 2^{n-1}\)，因此
+	\[
+	\dfrac{1}{n!} \leq \dfrac{1}{2^{n-1}}.
+	\]
+	
+	而几何级数 \(\sum\limits_{n = 1}^{  \infty } \dfrac{1}{2^{n-1}} = 1 + \dfrac12 + \dfrac14 + \cdots = 2\) 是收敛的。由比较判别法，\(\sum\limits_{n = 1}^{  \infty } \dfrac{1}{n!}\) 也收敛。
+	
+	事实上，这个级数的和就是自然常数 \(\ee\)：
+	\[
+	\ee = \sum_{n=0}^{\infty} \dfrac{1}{n!} = 1 + 1 + \dfrac12 + \dfrac16 + \dfrac{1}{24} + \cdots \approx 2.71828.
+	\]
+	
+\end{frame}
+
+\begin{frame}
+	\begin{block}{例题}
+		判断 \(\sum\limits_{n = 1}^{  \infty } \dfrac{1}{n^2}\) 的敛散性。
+	\end{block}
+	\pause
+	\vspace{0.7cm}
+	\textbf{证明：}
+	
+	当 \(n \geq 2\) 时，\(\dfrac{1}{n^2} \leq \dfrac{1}{n(n-1)} = \dfrac{1}{n-1} - \dfrac{1}{n}\)。
+	而 \(\sum\limits_{n = 2}^{  \infty } \left(\dfrac{1}{n-1} - \dfrac{1}{n}\right) = 1\) 收敛，故 \(\sum\limits_{n = 1}^{  \infty } \dfrac{1}{n^2}\) 收敛。
+	
+\end{frame}
+
+
+\begin{frame}{\(p\)-级数}
+	\scriptsize	
+	\begin{block}{例题}
+		证明：
+		\[
+		\sum_{n=1}^{\infty} \dfrac{1}{n^p}
+		\]
+		当 \(p > 1\) 时收敛，当 \(p \leq 1\) 时发散。
+	\end{block}
+	\pause
+	\textbf{证明：}
+	先设 $p>1$。 将 $n\ge2$ 的项按
+	\[
+	2^k\le n\le 2^{k+1}-1\qquad(k=0,1,2,\ldots)
+	\]
+	分组。 在第 $k$ 组中共有 $2^k$ 项，且每项不超过 $1/(2^k)^p$，故该组和不超过
+	\[
+	2^k\cdot \frac{1}{(2^k)^p}=2^{k(1-p)}.
+	\]
+	因为 $p>1$，几何级数 $\sum\limits_{k = 0}^{  \infty }2^{k(1-p)}$ 收敛，由比较判别法知 $\sum\limits_{n = 1}^{  \infty } 1/n^p$ 收敛。
+	
+	若 $p=1$，得到调和级数，前文已经证明其发散。 若 $p<1$，则对 $n\ge1$ 有 $n^p\le n$，从而
+	\[
+	\frac1{n^p}\ge \frac1n.
+	\]
+	由比较判别法，$\sum\limits_{n = 1}^{  \infty } 1/n^p$ 发散。
+	
+\end{frame}
+
+
+\begin{frame}{比值判别法（达朗贝尔判别法）}
+	\normalsize
+	\begin{block}{定理}
+		设 \(\sum\limits_{n = 1}^{  \infty }a_n\) 为正项级数，若 \(\lim\limits_{n\to\infty}\dfrac{a_{n+1}}{a_n}=\rho\)，则
+		\begin{itemize}
+			\item 若 \(\rho < 1\)，级数收敛；
+			\item 若 \(\rho > 1\)（包括 \(\rho = +\infty\)），级数发散；
+			\item 若 \(\rho = 1\)，判别法失效，需用其他方法判断。
+		\end{itemize}
+	\end{block}
+
+	
+
+	
+\end{frame}
+
+
+
+
+\begin{frame}{比值判别法的证明}
+	
+		若 $\rho<1$，取常数 $r$ 使 $\rho<r<1$。 由极限定义，存在 $N$，当 $n\ge N$ 时
+	\[
+	\frac{a_{n+1}}{a_n}\le r.
+	\]
+	于是
+	\[
+	a_{N+k}\le a_N r^k\qquad(k=1,2,\ldots).
+	\]
+	尾级数 $\sum\limits_{k = 1}^{  \infty }a_N r^k$ 是收敛的几何级数，由比较判别法，$\sum\limits_{n = 1}^{  \infty } a_n$ 收敛。
+	
+	若 $\rho>1$，取 $r$ 使 $1<r<\rho$。 则存在 $N$，当 $n\ge N$ 时
+	\[
+	\frac{a_{n+1}}{a_n}\ge r>1.
+	\]
+	因此 $a_{n+1}\ge a_n$ 对充分大的 $n$ 成立，且 $a_n$ 不可能趋于 $0$。 由级数收敛的必要条件，$\sum\limits_{n = 1}^{  \infty } a_n$ 发散。 当 $\rho=+\infty$ 时同理可取任意 $r>1$。
+	
+	当 $\rho=1$ 时，该方法不能给出结论。 例如 $\sum\limits_{n = 1}^{  \infty } 1/n$ 发散而 $\sum\limits_{n = 1}^{  \infty } 1/n^2$ 收敛，二者的相邻项比值极限都为 $1$。
+\end{frame}
+
+
+\begin{frame}
+	\begin{block}{例题}
+		判断级数 \(\sum\limits_{n = 1}^{  \infty } \dfrac{2^n}{n!}\) 的敛散性。
+	\end{block}
+	
+	\pause
+	\vspace{0.8cm}
+	
+	\textbf{解：}
+	
+	\[
+	\dfrac{a_{n+1}}{a_n} = \dfrac{2^{n+1}}{(n+1)!} \cdot \dfrac{n!}{2^n} = \dfrac{2}{n+1} \to 0 < 1,
+	\]
+	由比值判别法，级数收敛。
+\end{frame}
+\begin{frame}{根值判别法（柯西判别法）}
+	\normalsize
+	\begin{block}{定理}
+		
+		设 \(\sum\limits_{n = 1}^{  \infty } a_n\) 为正项级数，且 \(\lim\limits_{n\to\infty} \sqrt[n]{a_n} = \rho\)，则
+		\begin{itemize}
+			\item 若 \(\rho < 1\)，级数收敛；
+			\item 若 \(\rho > 1\)（包括 \(\rho = +\infty\)），级数发散；
+			\item 若 \(\rho = 1\)，判别法失效。
+		\end{itemize}
+		\end{block}
+		
+		
+\end{frame}
+
+\begin{frame}{根值判别法的证明}
+	\normalsize
+	若 $\rho<1$，取 $r$ 使 $\rho<r<1$。 由极限定义，存在 $N$，当 $n\ge N$ 时
+	\[
+	\sqrt[n]{a_n}\le r,
+	\]
+	即 $a_n\le r^n$。 因 $\sum\limits_{n = 1}^{  \infty } r^n$ 收敛，由比较判别法知 $\sum\limits_{n = 1}^{  \infty } a_n$ 收敛。
+	
+	若 $\rho>1$，取 $r$ 使 $1<r<\rho$。 则存在 $N$，当 $n\ge N$ 时
+	\[
+	\sqrt[n]{a_n}\ge r,
+	\]
+	从而 $a_n\ge r^n>1$。 因此 $a_n$ 不趋于 $0$，由级数收敛的必要条件，$\sum\limits_{n = 1}^{  \infty } a_n$ 发散。 $\rho=+\infty$ 的情形同理。
+	
+	当 $\rho=1$ 时，该判别法不能区分 $\sum\limits_{n = 1}^{  \infty } 1/n$ 与 $\sum\limits_{n = 1}^{  \infty } 1/n^2$ 这类情形，因此失效。
+\end{frame}
+
+\begin{frame}
+	\begin{block}{例题}
+		判断级数 \(\sum\limits_{n = 1}^{  \infty } \left(\dfrac{n}{2n+1}\right)^n\) 的敛散性。
+	\end{block}
+	
+	\pause
+	\vspace{0.8cm}
+	
+	\textbf{解：}
+	
+	\[
+	\sqrt[n]{a_n} = \dfrac{n}{2n+1} = \dfrac{1}{2 + \dfrac{1}{n}} \to \dfrac{1}{2} < 1,
+	\]
+	由根值判别法，级数收敛。
+\end{frame}
+
+\section{任意项级数的敛散性及其判别法}
+
+\begin{frame}{绝对收敛与条件收敛}
+	\begin{block}{绝对收敛}
+		若级数 \(\sum\limits_{n = 1}^{  \infty } |a_n|\) 收敛，则称 \(\sum\limits_{n = 1}^{  \infty } a_n\) 绝对收敛。
+	\end{block}
+	
+	\vspace{0.8cm}
+	
+	\begin{block}{条件收敛}
+		若 \(\sum\limits_{n = 1}^{  \infty } a_n\) 收敛，但 \(\sum\limits_{n = 1}^{  \infty } |a_n|\) 发散，则称 \(\sum\limits_{n = 1}^{  \infty } a_n\) 条件收敛。
+	\end{block}
+	
+	
+\end{frame}
+
+
+
+\begin{frame}{绝对收敛与条件收敛的关系}
+	\begin{block}{定理}
+		绝对收敛的级数一定条件收敛。即若 \(\sum\limits_{n = 1}^{  \infty } |a_n|\) 收敛，则 \(\sum\limits_{n = 1}^{  \infty } a_n\) 必收敛。
+	\end{block}
+
+	
+	\textbf{证明：}
+	
+	
+		定义
+	\[
+	a_n^+=\frac{|a_n|+a_n}{2},\qquad a_n^-=\frac{|a_n|-a_n}{2}.
+	\]
+	则 $a_n^+\ge0,\ a_n^-\ge0$，且
+	\[
+	a_n=a_n^+-a_n^-,\qquad 0\le a_n^+\le |a_n|,\quad 0\le a_n^-\le |a_n|.
+	\]
+	若 $\sum\limits_{n = 1}^{  \infty } |a_n|$ 收敛，由比较判别法，正项级数 $\sum\limits_{n = 1}^{  \infty } a_n^+$ 与 $\sum\limits_{n = 1}^{  \infty } a_n^-$ 都收敛。 由级数线性性质，
+	\[
+	\sum_{n=1}^{\infty} a_n=\sum_{n=1}^{\infty} a_n^+-\sum_{n=1}^{\infty} a_n^-
+	\]
+	收敛。 因此绝对收敛必推出条件收敛。
+\end{frame}
+
+
+\begin{frame}
+	\begin{block}{例子}
+		\begin{itemize}
+			\item 级数 \(\sum\limits_{n = 1}^{  \infty } \dfrac{(-1)^{n-1}}{n^2}\) 绝对收敛，因为 \(\sum\limits_{n = 1}^{  \infty } \dfrac{1}{n^2}\) 收敛。
+			\item 交错调和级数 \(\sum\limits_{n = 1}^{  \infty } \dfrac{(-1)^{n-1}}{n}\) 条件收敛，因为它本身收敛，但 \(\sum\limits_{n = 1}^{  \infty } \dfrac{1}{n}\) 发散。
+		\end{itemize}
+	\end{block}
+	
+	\vspace{0.6cm}
+	
+\textbf{注：}无穷级数中的“加法”与有限和的加法有着本质的不同，我们不能随意调换顺序，根据黎曼重排定理：条件收敛的级数，可以通过重排使其收敛到任意实数，甚至发散。
+	
+\end{frame}
+
+
+
+
+
+
+\begin{frame}{交错级数与莱布尼茨判别法}
+	\begin{block}{交错级数的定义}
+		$b_n > 0$,形如
+		\[
+		\sum_{n=1}^{\infty} (-1)^{n-1} b_n = b_1 - b_2 + b_3 - b_4 + \cdots \quad 
+		\]
+		的级数称为交错级数。
+	\end{block}	
+	\begin{block}{莱布尼茨判别法}
+		若交错级数 \(\sum_{n=1}^{\infty} (-1)^{n-1} b_n\) 满足：
+		\begin{enumerate}
+			\item \(b_n\) 单调递减,即 \(b_1 \geq b_2 \geq b_3 \geq \cdots\)；
+			\item \(\lim\limits_{n\to\infty} b_n = 0\)，
+		\end{enumerate}
+		则级数收敛，且其和 \(S\) 满足 \(0\leq S\leq b_1\)，余项满足
+		\[
+	|R_n|\le b_{n+1}.
+		\]
+	\end{block}
+	
+	
+	
+	
+\end{frame}
+
+
+\iffalse
+\begin{frame}{莱布尼茨判别法的证明}
+	\footnotesize
+	记部分和为 $S_n=\sum\limits_{k=1}^{n}(-1)^{k-1}b_k$。 偶数项部分和满足
+	\[
+	S_{2m+2}-S_{2m}=b_{2m+1}-b_{2m+2}\ge0,
+	\]
+	故 $\{S_{2m}\}$ 单调递增。 又
+	\[
+	S_{2m}=(b_1-b_2)+\cdots+(b_{2m-1}-b_{2m})\ge0,
+	\]
+	且
+	\[
+	S_{2m}=b_1-(b_2-b_3)-\cdots-(b_{2m-2}-b_{2m-1})-b_{2m}\le b_1.
+	\]
+	因此 $\{S_{2m}\}$ 单调有界，设其极限为 $S$。
+	
+	奇数项部分和满足
+	\[
+	S_{2m+1}=S_{2m}+b_{2m+1}.
+	\]
+	因 $b_{2m+1}\to0$，得 $S_{2m+1}\to S$。 偶数子列和奇数子列趋于同一极限，所以 $S_n\to S$，级数收敛。 由 $0\le S_{2m}\le S\le S_{2m+1}\le b_1$ 可得 $0\le S\le b_1$。 若进一步假设 $b_n>0$ 且严格单调递减，则可进一步得到 $0<S<b_1$。
+	
+	余项估计来自同样的夹逼。 从第 $n+1$ 项起的尾和是首项为 $b_{n+1}$、项的绝对值单调趋零的交错和，其值位于 $0$ 与首项之间或二者相反数之间，所以
+	\[
+	|R_n|\le b_{n+1}.
+	\]
+	若进一步假设 $b_n>0$ 且严格单调递减，则可进一步得到 $|R_n|<b_{n+1}$；主定理统一采用非严格估计。
+\end{frame}
+
+\fi
+\begin{frame}
+	\begin{block}{例题}
+		判断交错调和级数 \(\sum\limits_{n=1}^{\infty} (-1)^{n-1} \dfrac{1}{n} = 1 - \dfrac12 + \dfrac13 - \dfrac14 + \cdots\) 的敛散性。
+	\end{block}
+	
+	\pause
+	
+	\vspace{0.8cm}
+	
+	\textbf{解：}
+	
+	
+	这里 \(b_n = \dfrac{1}{n}\) 单调递减趋于 0，满足莱布尼茨判别法的条件，故级数收敛。
+	
+	\vspace{0.8cm}
+	
+	值得注意的是：调和级数 \(\sum \limits_{n=1}^{\infty}\dfrac{1}{n}\) 是发散的，但给它加上交错符号后却收敛了。这说明正负交替可以“抵消”掉部分发散性。
+\end{frame}
+
+\begin{frame}{判别法小结}
+	\normalsize
+	\begin{tabular}{|c|c|c|}
+		\hline
+		\textbf{判别法} & \textbf{适用类型} & \textbf{结论} \\
+		\hline
+		比较判别法 & 正项级数 & 需已知一个比较级数 \\
+		\hline
+		比值判别法 & 正项级数（含阶乘、指数） & \(\rho < 1\) 收敛，\(\rho > 1\) 发散 \\
+		\hline
+		根值判别法 & 正项级数（含 \(n\) 次幂） & \(\rho < 1\) 收敛，\(\rho > 1\) 发散 \\
+		\hline
+		莱布尼茨判别法 & 交错级数 & 单调递减趋于 0 则收敛 \\
+		\hline
+	\end{tabular}
+\end{frame}
+
+\section{无穷级数的实际应用}
+
+\begin{frame}{应用实例1：永续年金}
+	\scriptsize
+	\begin{block}{问题背景}
+		假设你有一笔资金存入银行，希望每年年末都能领取固定金额 \(A\) 元，且本金永不减少（即每年只领取利息，本金保持不变）。设年利率为 \(i>0\)，问最初需要存入多少本金？
+	\end{block}
+	\pause
+	
+	\begin{itemize}
+		\item 要保证每年年末领取 \(A\) 元，第一年末领取的 \(A\) 元来源于本金的利息。
+		\item 更一般的思路是：将未来每年领取的 \(A\) 元折算到当前，其现值之和应等于最初存入的本金。
+		\item 第 \(k\) 年末领取的 \(A\) 元，折现到当前的价值为 \(\dfrac{A}{(1+i)^k}\)。
+	\end{itemize}
+	
+	因此，最初需要存入的本金为：
+	\[
+	P = \frac{A}{1+i} + \frac{A}{(1+i)^2} + \frac{A}{(1+i)^3} + \cdots
+	\]
+	
+	这是一个首项 \(a=\dfrac{A}{1+i}\)、公比 \(q=\dfrac{1}{1+i}\) 的几何级数。由于 \(0<q<1\)，级数收敛，其和为：
+	\[
+	P=\frac{\frac{A}{1+i}}{1-\frac{1}{1+i}}
+	=\frac{A}{1+i}\cdot\frac{1+i}{i}
+	=\frac{A}{i}.
+	\]
+	
+	\textbf{结论：} 永续年金的现值公式为 \(P=\dfrac{A}{i}\)。例如，若年利率为 \(5\%\)，希望每年末领取 10000 元，则最初需要存入 \(P=\dfrac{10000}{0.05}=200000\) 元。
+	
+\end{frame}
+
+\begin{frame}{应用实例2：药物浓度累积}
+	\begin{block}{问题背景}
+		假设每次给药带来的浓度增量相同，药物浓度按指数规律衰减：经过时间 \(\Delta t\) 后，单次给药所贡献的浓度降至原来的 \(\ee^{-k\Delta t}\) 倍。设每次注射后体内药物的初始浓度为 \(C_0\)，每隔时间 \(T\) 注射一次。
+	\end{block}
+	
+	\pause
+	
+	\begin{itemize}
+		\item 第一次注射后，体内药物浓度为 \(C_0\)。
+		\item 第二次注射前，第一次注射的药物浓度已衰减为 \(C_0\ee^{-kT}\)。第二次注射后，模型给出的峰浓度为 \(C_0+C_0\ee^{-kT}\)。
+		\item 第三次注射前，前两次的药物浓度分别衰减为 \(C_0\ee^{-2kT}\) 和 \(C_0\ee^{-kT}\)。第三次注射后的峰浓度为 \(C_0+C_0\ee^{-kT}+C_0\ee^{-2kT}\)。
+		\item 依此类推，第 \(n\) 次注射后的模型峰浓度为：
+		\[
+		C_n=C_0\left(1+\ee^{-kT}+\ee^{-2kT}+\cdots+\ee^{-(n-1)kT}\right).
+		\]
+	\end{itemize}
+	
+	这是一个首项为 \(C_0\)、公比为 \(\ee^{-kT}\) 的几何级数部分和。由于 \(0<\ee^{-kT}<1\)，当 \(n\to\infty\) 时，给药后峰浓度趋于稳态峰值：
+	\[
+	C_{\infty}=\lim_{n\to\infty}C_n=\frac{C_0}{1-\ee^{-kT}}.
+	\]
+	
+
+	
+
+\end{frame}
+
+
+
+
+
+\end{document}

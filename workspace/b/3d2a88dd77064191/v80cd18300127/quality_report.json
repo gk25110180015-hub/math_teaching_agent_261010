@@ -1,0 +1,126 @@
+{
+  "content": {
+    "status": "PASS",
+    "evidence": [
+      "实际 TeX 与保留源单元对照"
+    ],
+    "limitations": []
+  },
+  "math": {
+    "status": "NEEDS_REVIEW",
+    "evidence": [
+      "原文保真；未自动修正源讲义数学结论"
+    ],
+    "limitations": [
+      "教师须复核原文的具体数学疑点"
+    ]
+  },
+  "fidelity": {
+    "status": "PASS",
+    "issues": [],
+    "evidence": "Independent comparison of actual source payload strings and exact contiguous original intervals; scaffold fingerprint checked when supplied",
+    "checked_units": 122,
+    "limitations": [
+      "Whitespace/comments ignored; no claim of semantic equivalence for rewritten mathematics"
+    ]
+  },
+  "compile": {
+    "status": "FAIL",
+    "pdf_path": null,
+    "issues": [
+      {
+        "rule_id": "COMPILE_FAILED",
+        "severity": "blocking",
+        "message": "XeLaTeX 非零退出；日志末尾：MATH-AGENT-FRAME-END F019\nMATH-AGENT-FRAME-BEGIN F020\n\\openout4 = `slides.vrb'.\n\n(./slides.vrb)\n\n[27\n\n]\nMATH-AGENT-FRAME-END F020\nMATH-AGENT-FRAME-BEGIN F021\n\\openout4 = `s",
+        "location": {},
+        "resolution_status": "open"
+      }
+    ],
+    "log_paths": [
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\3d2a88dd77064191\\v80cd18300127\\build-5\\pass-1.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\3d2a88dd77064191\\v80cd18300127\\build-5\\pass-1.tex.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\3d2a88dd77064191\\v80cd18300127\\build-5\\pass-2.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\3d2a88dd77064191\\v80cd18300127\\build-5\\pass-2.tex.log"
+    ],
+    "engine": {
+      "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+    },
+    "passes": 2,
+    "compile_mode": "trusted_local",
+    "isolation": "NOT_IMPLEMENTED",
+    "limitations": [
+      "原生可信本机编译不是文件系统或网络隔离沙箱。"
+    ],
+    "command": [
+      "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "-no-shell-escape",
+      "-recorder",
+      "-synctex=1",
+      "-jobname=slides",
+      "-output-directory=.",
+      "slides.tex"
+    ],
+    "elapsed_seconds": 11.391
+  },
+  "layout": {
+    "status": "NOT_RUN",
+    "evidence": [],
+    "limitations": []
+  },
+  "policy": {
+    "status": "PASS",
+    "evidence": {
+      "schema_version": 1,
+      "decisions": [
+        {
+          "decision_id": "3ec5a503188d471d8c6f871204eeceac",
+          "resolved_effects": [
+            "U0001"
+          ],
+          "status": "PASS",
+          "artifact": "slides.tex",
+          "artifact_hash": "be3597a52f22d64857a6757d33e3624c053ee75e46001af5250cb1ecd3c725db",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        },
+        {
+          "decision_id": "2f96f442b5984c439605cbafacede58b",
+          "resolved_effects": [],
+          "status": "PASS",
+          "artifact": "slides.tex",
+          "artifact_hash": "be3597a52f22d64857a6757d33e3624c053ee75e46001af5250cb1ecd3c725db",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        }
+      ],
+      "limitations": [
+        "语义自定义不能仅凭模型自评当作落实；发布前须人工审阅质量报告。"
+      ]
+    },
+    "limitations": []
+  },
+  "security": {
+    "status": "NOT_RUN",
+    "evidence": [
+      "回环服务、受控源码、编译参数及白名单子进程环境"
+    ],
+    "limitations": [
+      "trusted_local 不是文件系统/网络隔离沙箱"
+    ]
+  },
+  "schema_version": 1,
+  "provider": "live",
+  "human_visual_review": "NOT_RUN",
+  "model_visual_review": "NOT_RUN",
+  "issues": [
+    {
+      "rule_id": "COMPILE_FAILED",
+      "severity": "blocking",
+      "message": "XeLaTeX 非零退出；日志末尾：MATH-AGENT-FRAME-END F019\nMATH-AGENT-FRAME-BEGIN F020\n\\openout4 = `slides.vrb'.\n\n(./slides.vrb)\n\n[27\n\n]\nMATH-AGENT-FRAME-END F020\nMATH-AGENT-FRAME-BEGIN F021\n\\openout4 = `s",
+      "location": {},
+      "resolution_status": "open"
+    }
+  ]
+}

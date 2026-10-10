@@ -1,0 +1,180 @@
+{
+  "content": {
+    "status": "PASS",
+    "evidence": [
+      "实际 TeX 与保留源单元对照"
+    ],
+    "limitations": []
+  },
+  "math": {
+    "status": "NEEDS_REVIEW",
+    "evidence": [
+      "原文保真；未自动修正源讲义数学结论"
+    ],
+    "limitations": [
+      "教师须复核原文的具体数学疑点"
+    ]
+  },
+  "fidelity": {
+    "status": "PASS",
+    "issues": [],
+    "evidence": "Independent comparison of actual source payload strings and exact contiguous original intervals; scaffold fingerprint checked when supplied",
+    "checked_units": 2,
+    "limitations": [
+      "Whitespace/comments ignored; no claim of semantic equivalence for rewritten mathematics"
+    ]
+  },
+  "compile": {
+    "status": "PASS",
+    "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\3f550a70\\r0\\w\\b\\223aed1cbbc84291\\v4a1336c6e9ff\\build-1\\slides.pdf",
+    "issues": [],
+    "log_paths": [
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\3f550a70\\r0\\w\\b\\223aed1cbbc84291\\v4a1336c6e9ff\\build-1\\pass-1.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\3f550a70\\r0\\w\\b\\223aed1cbbc84291\\v4a1336c6e9ff\\build-1\\pass-1.tex.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\3f550a70\\r0\\w\\b\\223aed1cbbc84291\\v4a1336c6e9ff\\build-1\\pass-2.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\3f550a70\\r0\\w\\b\\223aed1cbbc84291\\v4a1336c6e9ff\\build-1\\pass-2.tex.log"
+    ],
+    "engine": {
+      "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+    },
+    "passes": 2,
+    "compile_mode": "trusted_local",
+    "isolation": "NOT_IMPLEMENTED",
+    "limitations": [
+      "原生可信本机编译不是文件系统或网络隔离沙箱。"
+    ],
+    "command": [
+      "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "-no-shell-escape",
+      "-recorder",
+      "-synctex=1",
+      "-jobname=slides",
+      "-output-directory=.",
+      "slides.tex"
+    ],
+    "elapsed_seconds": 4.329,
+    "page_count": 5,
+    "pdf_sha256": "65dd54edc466b7b76995ea692e64dca3eddae5a0e0763368a9f5317906d77777",
+    "auxiliary_hashes": {
+      ".aux": "ebd53b9690b356962d3a7a7f3395da851b3c9c6e16ee303d2638f48d6d01b537",
+      ".toc": "d23c203d1df27c1a4ee20f70c393a71a72e657bb1642be6cdf5daf635de84629",
+      ".nav": "af3a3c96cd6f0d5b8ccd1d030ade68b45eda808d9751eab69e0c1394882b17ec",
+      ".snm": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      ".out": "be7bf1749af239235d6966d7c00054b64f2fabfe6444da09c002b9245af39320"
+    }
+  },
+  "layout": {
+    "status": "NEEDS_REVIEW",
+    "evidence": {
+      "page_count": 5,
+      "all_rendered": true
+    },
+    "limitations": [
+      "几何检查是启发式，只能定位可测风险，不能证明所有正文均无裁切或遮挡。",
+      "尚未做模型视觉复核或教师人工逐页审核；每页图片及哈希供独立审核。",
+      "数学上下标的自然小字号不判为违规；PDF 文字提取不是数学内容真值。",
+      "正文安全区来自匹配模板的实际 measured_probe；仍是单个探针估计，不是完整版式校准。"
+    ]
+  },
+  "policy": {
+    "status": "PASS",
+    "evidence": {
+      "schema_version": 1,
+      "decisions": [
+        {
+          "decision_id": "4f43e5c03e1d4aafb9e88eba153a9567",
+          "resolved_effects": [
+            "U0002",
+            "U0003"
+          ],
+          "status": "PASS",
+          "artifact": "slides.tex",
+          "artifact_hash": "4e30b5e3aee92b0f00cfcc0958102da194fe7fdc4d209276306a03aa360e34be",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        },
+        {
+          "decision_id": "7e5a7e0c862a4938a6aa3db9a81cd41d",
+          "resolved_effects": [
+            {
+              "actor": "local_user",
+              "id": "b3c8ec39e5164535abfefc0b3f71a7b2",
+              "insertion_location": "S01",
+              "new_content": "补充例题：求常数数列的极限。",
+              "priority": "必须"
+            }
+          ],
+          "status": "PASS",
+          "artifact": "slides.tex",
+          "artifact_hash": "4e30b5e3aee92b0f00cfcc0958102da194fe7fdc4d209276306a03aa360e34be",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        }
+      ],
+      "limitations": [
+        "语义自定义不能仅凭模型自评当作落实；发布前须人工审阅质量报告。"
+      ]
+    },
+    "limitations": []
+  },
+  "security": {
+    "status": "PASS",
+    "evidence": [
+      "回环服务、受控源码、编译参数及白名单子进程环境"
+    ],
+    "limitations": [
+      "trusted_local 不是文件系统/网络隔离沙箱"
+    ]
+  },
+  "schema_version": 1,
+  "provider": "mock",
+  "human_visual_review": "NOT_RUN",
+  "model_visual_review": "NOT_RUN",
+  "issues": [
+    {
+      "rule_id": "BODY_REGION_CONTACT",
+      "severity": "review",
+      "message": "正文文字接近或跨过实测探针估计的标题/页脚安全边界，需结合页面复核。",
+      "evidence": [
+        {
+          "text": "→",
+          "bbox": [
+            53.513,
+            47.796,
+            63.476,
+            57.759
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "→",
+          "bbox": [
+            99.877,
+            47.796,
+            109.84,
+            57.759
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "→",
+          "bbox": [
+            174.541,
+            47.796,
+            184.504,
+            57.759
+          ],
+          "region": "body",
+          "boundary": "header"
+        }
+      ],
+      "location": {
+        "physical_page": 5
+      }
+    }
+  ]
+}
