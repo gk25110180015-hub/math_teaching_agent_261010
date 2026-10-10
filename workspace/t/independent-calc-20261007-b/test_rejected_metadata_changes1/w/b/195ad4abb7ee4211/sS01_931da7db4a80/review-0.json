@@ -1,0 +1,143 @@
+{
+  "section_id": "S01",
+  "math": {
+    "schema_version": 1,
+    "status": "FAIL",
+    "issues": [
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "S01.U2 原数学疑点仍需对照完整正文进行独立核查。",
+        "location": {},
+        "resolution_status": "open"
+      },
+      {
+        "rule_id": "SYMBOLIC_COUNTERCHECK_FAILED",
+        "severity": "blocking",
+        "message": "在声明假设下符号结果与预期不一致。",
+        "location": {
+          "calculation_id": "S01.C01",
+          "unit_id": "S01.U1"
+        },
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "kind": "equivalence",
+        "assumptions": {},
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "FAIL",
+        "evidence_type": "symbolic_check_failed",
+        "result": "29/28",
+        "message": "在声明假设下符号结果与预期不一致。",
+        "calculation_id": "S01.C01",
+        "unit_id": "S01.U1"
+      },
+      {
+        "kind": "equivalence",
+        "assumptions": {},
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "9/2",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S01.C02",
+        "unit_id": "S01.U1"
+      }
+    ],
+    "coverage": [
+      "S01.U1",
+      "S01.U2"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S01.U1",
+      "S01.U2"
+    ],
+    "limitations": [
+      "Injected offline review; not teacher approval."
+    ]
+  },
+  "issues": [
+    {
+      "rule_id": "SYMBOLIC_COUNTERCHECK_FAILED",
+      "severity": "blocking",
+      "message": "在声明假设下符号结果与预期不一致。",
+      "location": {
+        "calculation_id": "S01.C01",
+        "unit_id": "S01.U1"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "S01.U2 原数学疑点仍需对照完整正文进行独立核查。",
+      "location": {
+        "unit_id": "S01.U2"
+      },
+      "uncertainty_id": "D001-3503f8cde03e4d36",
+      "original_sha256": "3503f8cde03e4d36253173d0dcb74c3843c54b316977f09fc8ecd9681f197bbe",
+      "resolution_status": "open"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "uncertainty_review": {
+    "identity_hash": "a903de64030afe0e645ed3a09998ee555d1d723ad4a4cd431f58d7a2f7c14979",
+    "status": "INVALID",
+    "evidence_key": "runs/195ad4abb7ee42118c530d0edeb938b6/uncertainty-reviews/a903de64030afe0e645ed3a0/state.json",
+    "evidence_sha256": "f4201c60ec65959d15107cc9576a8bd6971b710eaf893e6de03101ef9e45731b",
+    "failure": {
+      "code": null,
+      "message": "1 validation error for UncertaintyAssessment\nitems\n  List should have at least 1 item after validation, not 0 [type=too_short, input_value=[], input_type=list]\n    For further information visit https://errors.pydantic.dev/2.13/v/too_short",
+      "at": "2026-10-07T06:28:07.274604+00:00",
+      "retryable_same_slot": false
+    },
+    "teacher_review": "NOT_RUN"
+  },
+  "uncertainty_legacy_mapping": [],
+  "local_recovery": {
+    "applied_rounds": 0,
+    "proposal_calls": 0,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "04d92eb3e517de5c38c16a6a5954845be1972d3b9ee85de2e00bcf94d027ba5f",
+      "tool_checks_hash": "f66611f96698e08e45b5e1058b46d0653271a6d7361107173ec9b8adc787d882",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "21f4e4014c3124f10f141f23477b9f2943dde6a7e8f281581e83e8d86633361a",
+      "deterministic_checks_hash": "740ba787ff059a127e0265d73c623a13251660a4b77c456a80cb060d0b8a0c1f",
+      "uncertainty_identity": "a903de64030afe0e645ed3a09998ee555d1d723ad4a4cd431f58d7a2f7c14979",
+      "uncertainty_failure_hash": "3506278289f0a9212ce7575bb7183cb6834b68c65e4e6a2402ddab65207ef7b7"
+    }
+  },
+  "independent_repair": {
+    "status": "REQUIRED",
+    "issues": [
+      {
+        "rule_id": "SYMBOLIC_COUNTERCHECK_FAILED",
+        "severity": "blocking",
+        "message": "在声明假设下符号结果与预期不一致。",
+        "location": {
+          "calculation_id": "S01.C01",
+          "unit_id": "S01.U1"
+        },
+        "resolution_status": "open"
+      }
+    ],
+    "uncertainty_status": "INVALID",
+    "requires_changed_body_or_verified_calculation_correction": true,
+    "requires_full_recheck": true
+  }
+}

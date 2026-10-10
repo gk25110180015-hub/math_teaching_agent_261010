@@ -1,0 +1,127 @@
+{
+  "prior_issues": [
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "S01.U2 原数学疑点仍需对照完整正文进行独立核查。",
+      "location": {
+        "unit_id": "S01.U2"
+      },
+      "uncertainty_id": "D001-3503f8cde03e4d36",
+      "original_sha256": "3503f8cde03e4d36253173d0dcb74c3843c54b316977f09fc8ecd9681f197bbe",
+      "resolution_status": "open"
+    }
+  ],
+  "review_identity": {
+    "candidate_hash": "ca809b009f2e928b97f0194fa5bd607e023149a3f3e07203994bc4c63dfda931",
+    "tool_checks_hash": "6fc6156303a0bff729e15f562c78a0bd7670dee1088f487bd9226a56bf249a2f",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "21f4e4014c3124f10f141f23477b9f2943dde6a7e8f281581e83e8d86633361a",
+    "deterministic_checks_hash": "acfd5520973cface73582376f545d54fff60330a04803a889649a1332618b0ec",
+    "uncertainty_identity": "16d2b591da2cffb731541c26c340943b4b4dfcdf49e2dd31c9408b6cc9b009cb",
+    "uncertainty_failure_hash": "e30d13f5996b715548e16613722ff844d610ba026ff633b154ab352b5fe41da5"
+  },
+  "report": {
+    "section_id": "S01",
+    "math": {
+      "schema_version": 1,
+      "status": "NEEDS_REVIEW",
+      "issues": [
+        {
+          "rule_id": "DECLARED_MATH_UNCERTAINTY",
+          "severity": "review",
+          "message": "S01.U2 原数学疑点仍需对照完整正文进行独立核查。",
+          "location": {},
+          "resolution_status": "open"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "equivalence",
+          "assumptions": {},
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "27/28",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S01.C01",
+          "unit_id": "S01.U1"
+        },
+        {
+          "kind": "equivalence",
+          "assumptions": {},
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "9/2",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S01.C02",
+          "unit_id": "S01.U1"
+        }
+      ],
+      "coverage": [
+        "S01.U1",
+        "S01.U2"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S01.U1",
+        "S01.U2"
+      ],
+      "limitations": [
+        "Injected offline review; not teacher approval."
+      ]
+    },
+    "issues": [
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "S01.U2 原数学疑点仍需对照完整正文进行独立核查。",
+        "location": {
+          "unit_id": "S01.U2"
+        },
+        "uncertainty_id": "D001-3503f8cde03e4d36",
+        "original_sha256": "3503f8cde03e4d36253173d0dcb74c3843c54b316977f09fc8ecd9681f197bbe",
+        "resolution_status": "open"
+      }
+    ],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false,
+    "uncertainty_review": {
+      "identity_hash": "16d2b591da2cffb731541c26c340943b4b4dfcdf49e2dd31c9408b6cc9b009cb",
+      "status": "INVALID",
+      "evidence_key": "runs/76a9143751874554a3a8de294cc688b4/uncertainty-reviews/16d2b591da2cffb731541c26/state.json",
+      "evidence_sha256": "9f93071842e49fd41c9c770e9f18ae51f0219523dd8a7420757c570e6d3c6081",
+      "failure": {
+        "code": null,
+        "message": "1 validation error for UncertaintyAssessment\nitems\n  List should have at least 1 item after validation, not 0 [type=too_short, input_value=[], input_type=list]\n    For further information visit https://errors.pydantic.dev/2.13/v/too_short",
+        "at": "2026-10-07T06:27:57.483884+00:00",
+        "retryable_same_slot": false
+      },
+      "teacher_review": "NOT_RUN"
+    },
+    "uncertainty_legacy_mapping": []
+  },
+  "retained_issues": [
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "S01.U2 原数学疑点仍需对照完整正文进行独立核查。",
+      "location": {
+        "unit_id": "S01.U2"
+      },
+      "uncertainty_id": "D001-3503f8cde03e4d36",
+      "original_sha256": "3503f8cde03e4d36253173d0dcb74c3843c54b316977f09fc8ecd9681f197bbe",
+      "resolution_status": "open"
+    }
+  ]
+}

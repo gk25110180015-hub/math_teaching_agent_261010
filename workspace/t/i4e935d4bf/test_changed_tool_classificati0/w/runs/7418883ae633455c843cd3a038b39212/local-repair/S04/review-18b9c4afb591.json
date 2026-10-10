@@ -1,0 +1,69 @@
+{
+  "prior_issues": [
+    {
+      "rule_id": "NUMERIC_IS_NOT_PROOF",
+      "severity": "review",
+      "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+      "location": {
+        "calculation_id": "S04.C01",
+        "unit_id": "S04.U05"
+      },
+      "resolution_status": "open"
+    }
+  ],
+  "review_identity": {
+    "candidate_hash": "94c5ff1cd3167e63424ad0241a32176db187afe1f1d2c20940eadfdd296d5cdb",
+    "tool_checks_hash": "778ce264f72e2a52bcb5514e79493f3f51a2dd0e44729de4739cfbe6fa60a51f",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "144df4ed0bccc0018b60b914a1d1c4df68bd536bd500932403187cc2d2c8a3e1",
+    "deterministic_checks_hash": "7db31fb5013d99e38cb0c472a4291565595eb20ec4fda47e74215ddc9ab4ef67"
+  },
+  "report": {
+    "math": {
+      "schema_version": 1,
+      "status": "NEEDS_REVIEW",
+      "issues": [
+        {
+          "rule_id": "NUMERIC_IS_NOT_PROOF",
+          "severity": "warning",
+          "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+          "location": {
+            "calculation_id": "S04.C01",
+            "unit_id": "S04.U05"
+          },
+          "resolution_status": "open"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "numeric_spotcheck",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "numeric_spotcheck_passed",
+          "point_count": 1,
+          "message": "仅在指定点数值一致，不是一般性证明。",
+          "calculation_id": "S04.C01",
+          "unit_id": "S04.U05"
+        }
+      ],
+      "coverage": [
+        "S04.U05",
+        "S04.U06"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "协议的数值核算只能抽查交错项在指定整数处的取值，不能表达对所有正整数的单调性、极限或余项不等式；交错级数判别法及余项估计仍由正文证明。",
+        "既有核算 S04.C01 仅比较 n=3 时的通项值与 1/3，覆盖范围限于该单点等式；不提供对所有正整数的结论，也不构成交错调和级数收敛性或截断误差界的证明。这些结论依赖正文中的判别条件核实与定理证明。"
+      ]
+    }
+  },
+  "retained_issues": []
+}

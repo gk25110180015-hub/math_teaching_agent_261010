@@ -1,0 +1,150 @@
+{
+  "section_id": "S02",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "limit",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "1",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S02.C01",
+        "unit_id": "S02.U05"
+      },
+      {
+        "kind": "series",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": false,
+        "message": "级数收敛性核算与声明一致。",
+        "calculation_id": "S02.C02",
+        "unit_id": "S02.U07"
+      },
+      {
+        "kind": "equivalence",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "4 - 2/2**n",
+        "message": "在声明假设下符号差为零。",
+        "calculation_id": "S02.C03",
+        "unit_id": "S02.U16"
+      }
+    ],
+    "coverage": [
+      "S02.U01",
+      "S02.U02",
+      "S02.U03",
+      "S02.U04",
+      "S02.U05",
+      "S02.U06",
+      "S02.U07",
+      "S02.U08",
+      "S02.U09",
+      "S02.U10",
+      "S02.U11",
+      "S02.U12",
+      "S02.U13",
+      "S02.U14",
+      "S02.U15",
+      "S02.U16",
+      "S02.U17",
+      "S02.U18",
+      "S02.U19",
+      "S02.U20"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "核算请求覆盖一个通项极限、调和级数的敛散性及一个部分和公式的代数变形；协议不能直接表达任意实数列及其部分和之间的量化关系，因此一般必要条件、线性运算和有限项改变性质由正文证明，不由这些核算替代。"
+    ]
+  },
+  "llm_review": {
+    "issues": [
+      {
+        "unit_id": "S02.U18",
+        "severity": "blocking",
+        "message": "练习答案直接嵌在本节题目正文中，违反已锁定的“答案统一放在讲义末尾”条件。同样的问题见 S02.U19、S02.U20。应保留本节练习题目，将答案正文移至讲义末尾；这些答案的数学内容本身未发现错误。",
+        "evidence": "锁定配置为 lecture.answers_location=\"end\"。S02.U17 也明确写道“以下为本节练习，答案统一安排在讲义末尾”，但 S02.U18 的同一 tex 正文紧随题目包含“答案：(1) 通项极限为 2/3…”及全部解答；S02.U19、S02.U20 同样在题目后直接包含“答案：”和完整计算。当前提供的正文没有将这些答案与本节题目分离。"
+      }
+    ],
+    "checked_unit_ids": [
+      "S02.U01",
+      "S02.U02",
+      "S02.U03",
+      "S02.U04",
+      "S02.U05",
+      "S02.U06",
+      "S02.U07",
+      "S02.U08",
+      "S02.U09",
+      "S02.U10",
+      "S02.U11",
+      "S02.U12",
+      "S02.U13",
+      "S02.U14",
+      "S02.U15",
+      "S02.U16",
+      "S02.U17",
+      "S02.U18",
+      "S02.U19",
+      "S02.U20"
+    ],
+    "limitations": [
+      "本次按 section_local 范围逐单元核对 S02.U01—S02.U20；前节材料仅用于核实本节引用的定义与几何级数结果，不作前节独立审阅。尚未生成的 S03—S05 不属于本次范围，不据此认定遗漏。",
+      "在所读数学正文中，未发现确定的数学错误：必要条件及其逆否命题、调和级数有限分组证明、线性运算的收敛假设、余项的两个不同极限、有限项改变性质，以及例题和练习中的符号、下标、严格误差界与最小截断位置均已核对。",
+      "答案位置问题依据当前实际单元正文判定；未提供最终排版结果或将嵌入答案自动抽取至文末的实现证据，不能假定后续处理已经修正这一冲突。",
+      "本次为普通模型数学审阅，不是形式化证明；没有独立运行符号计算工具，也未将所附工具 PASS 或作者说明视为全文正确性的证明。"
+    ]
+  },
+  "issues": [
+    {
+      "severity": "blocking",
+      "unit_id": "S02.U18",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "severity": "blocking",
+      "unit_id": "S02.U19",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "severity": "blocking",
+      "unit_id": "S02.U20",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "unit_id": "S02.U18",
+      "severity": "blocking",
+      "message": "练习答案直接嵌在本节题目正文中，违反已锁定的“答案统一放在讲义末尾”条件。同样的问题见 S02.U19、S02.U20。应保留本节练习题目，将答案正文移至讲义末尾；这些答案的数学内容本身未发现错误。",
+      "evidence": "锁定配置为 lecture.answers_location=\"end\"。S02.U17 也明确写道“以下为本节练习，答案统一安排在讲义末尾”，但 S02.U18 的同一 tex 正文紧随题目包含“答案：(1) 通项极限为 2/3…”及全部解答；S02.U19、S02.U20 同样在题目后直接包含“答案：”和完整计算。当前提供的正文没有将这些答案与本节题目分离。"
+    }
+  ],
+  "mock": false
+}

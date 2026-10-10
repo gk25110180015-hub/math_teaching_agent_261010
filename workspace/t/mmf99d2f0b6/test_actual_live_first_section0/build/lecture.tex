@@ -1,0 +1,136 @@
+\documentclass[UTF8,fontset=fandol,11pt]{ctexart}
+\usepackage[a4paper,margin=24mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,graphicx,tabularx,booktabs,hyperref}
+\newtheorem{definition}{定义}[section]
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{example}[definition]{例题}
+\newtheorem{exercise}[definition]{练习}
+\hypersetup{unicode=true,colorlinks=true,linkcolor=blue}
+\title{数列极限入门：定义、唯一性与简单运算}
+\date{}
+\begin{document}
+\maketitle
+\section{数列极限的定义与唯一性}\label{sec:S01}
+% UNIT S01-U01
+\begin{definition}
+\textbf{数列极限}\par
+
+设 $\{a_n\}$ 是定义在 $\mathbb{N}^+=\{1,2,3,\ldots\}$ 上的实数数列，$A\in\mathbb{R}$。直观地说，当下标 $n$ 足够大时，$a_n$ 可以任意接近 $A$，就称数列 $\{a_n\}$ 收敛于 $A$，记作
+\[
+\lim_{n\to\infty}a_n=A.
+\]
+严格地说，若对任意 $\varepsilon>0$，都存在正整数 $N$，使得对所有满足 $n>N$ 的正整数 $n$，均有
+\[
+|a_n-A|<\varepsilon,
+\]
+则称数列 $\{a_n\}$ 收敛于 $A$。
+\label{def:sequence-limit}
+
+
+这里的量词顺序是：先任意给定 $\varepsilon>0$，再选择正整数 $N$，最后要求所有 $n>N$ 都满足不等式。所选择的 $N$ 可以依赖于 $\varepsilon$，但不能在检验不同的 $n$ 时随 $n$ 改变。
+\end{definition}
+% UNIT S01-U02
+\begin{theorem}
+\textbf{数列极限的唯一性}\par
+
+若数列 $\{a_n\}$ 收敛于 $A$，且也收敛于 $B$，其中 $A,B\in\mathbb{R}$，则
+\[
+A=B.
+\]
+\label{thm:limit-uniqueness}
+
+\end{theorem}
+% UNIT S01-U03
+\begin{proof}
+
+反设 $A\ne B$。取
+\[
+\varepsilon=\frac{|A-B|}{3}>0.
+\]
+由 $a_n\to A$，存在正整数 $N_1$，使得当 $n>N_1$ 时，
+\[
+|a_n-A|<\varepsilon.
+\]
+同理由 $a_n\to B$，存在正整数 $N_2$，使得当 $n>N_2$ 时，
+\[
+|a_n-B|<\varepsilon.
+\]
+取正整数 $n>\max\{N_1,N_2\}$，则由三角不等式，
+\[
+|A-B|=|(A-a_n)+(a_n-B)|
+\le |A-a_n|+|a_n-B|
+<2\varepsilon=\frac{2|A-B|}{3}.
+\]
+这意味着 $|A-B|<\frac{2|A-B|}{3}$，与 $|A-B|>0$ 矛盾。因此 $A=B$。
+
+\end{proof}
+% UNIT S01-U04
+\begin{example}
+
+用数列极限的定义证明
+\[
+\lim_{n\to\infty}\frac{1}{n}=0.
+\]
+
+\end{example}
+% UNIT S01-U05
+\par\noindent\textbf{解：}
+任意给定 $\varepsilon>0$。为了使
+\[
+\left|\frac{1}{n}-0\right|<\varepsilon,
+\]
+只需使 $\frac{1}{n}<\varepsilon$，即 $n>\frac{1}{\varepsilon}$。因此，取正整数 $N$ 满足
+\[
+N>\frac{1}{\varepsilon}.
+\]
+例如可以取 $N=\left\lfloor\frac{1}{\varepsilon}\right\rfloor+1$。当任意正整数 $n>N$ 时，有
+\[
+\left|\frac{1}{n}-0\right|=\frac{1}{n}<\frac{1}{N}<\varepsilon.
+\]
+所以按照数列极限的定义，
+\[
+\lim_{n\to\infty}\frac{1}{n}=0.
+\tag{1}\label{eq:reciprocal-limit}
+\]
+这里 $N$ 可以依赖于预先给定的 $\varepsilon$，但一旦选定，就必须对所有 $n>N$ 同时成立。
+\par
+% UNIT S01-U06
+\begin{exercise}
+\label{mathagent:exercise:00f3ca86b052020f03928eb8b6a5b7fd0cc5cf9711fabd7b41e6a358cfff3ed4}
+
+用数列极限的定义证明
+\[
+\lim_{n\to\infty}\left(2+\frac{3}{n}\right)=2.
+\]
+
+\end{exercise}
+\section*{练习答案}
+% UNIT S01-U07
+\par\noindent\textbf{\hyperref[mathagent:exercise:00f3ca86b052020f03928eb8b6a5b7fd0cc5cf9711fabd7b41e6a358cfff3ed4]{练习 \ref*{mathagent:exercise:00f3ca86b052020f03928eb8b6a5b7fd0cc5cf9711fabd7b41e6a358cfff3ed4} 的解答：}}
+任意给定 $\varepsilon>0$。有
+\[
+\left|\left(2+\frac{3}{n}\right)-2\right|=\frac{3}{n}.
+\]
+为了使上式小于 $\varepsilon$，只需使
+\[
+\frac{3}{n}<\varepsilon,
+\qquad\text{即}\qquad
+n>\frac{3}{\varepsilon}.
+\]
+取正整数 $N$ 满足
+\[
+N>\frac{3}{\varepsilon}.
+\]
+当任意正整数 $n>N$ 时，便有
+\[
+\left|\left(2+\frac{3}{n}\right)-2\right|
+=\frac{3}{n}
+<\frac{3}{N}
+<\varepsilon.
+\]
+因此，根据数列极限的定义，
+\[
+\lim_{n\to\infty}\left(2+\frac{3}{n}\right)=2.
+\]
+\par
+\end{document}
