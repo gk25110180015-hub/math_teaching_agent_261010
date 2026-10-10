@@ -1,0 +1,1853 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-09-20T17:07:26.238822+00:00",
+  "scope": "INTERMEDIATE_S04_ROUND3_FOLLOWUP_NOT_FINAL_CH03_DELIVERY",
+  "run_snapshot": {
+    "id": "a45be503af594ce8aae0bb1e4c30184b",
+    "status": "GLOBAL_REVIEW",
+    "stage": "math.global_interfaces",
+    "request_count": 101,
+    "updated_at": "2026-09-20T17:06:27.173684+00:00"
+  },
+  "api_calls_by_this_audit": 0,
+  "production_mutations": 0,
+  "versions": {
+    "r1_before": {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\runs\\a45be503af594ce8aae0bb1e4c30184b\\global-repairs\\r1-37ae927f\\S04-before.json",
+      "relative_path": "workspace/iteration2-live/runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r1-37ae927f/S04-before.json",
+      "raw_sha256": "d6e13219dc377b71f226e3ac4f540e26f0bbf1ff1708186c11a86de71e2723f2",
+      "value": {
+        "section_id": "S04",
+        "units": [
+          {
+            "id": "S04.U01",
+            "kind": "definition",
+            "tex": "设函数 $f$ 在点 $x_0$ 的某个邻域内有定义。若 $f$ 在 $x_0$ 处有定义，且\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n则称函数 $f$ 在点 $x_0$ 处连续。等价地，$f$ 在 $x_0$ 处连续是指：对任意 $\\varepsilon>0$，都存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时有\n\\[\n|f(x)-f(x_0)|<\\varepsilon.\n\\]\n其中，条件 $f(x_0)$ 有定义不可省略。若 $f$ 在区间内每一点都连续，则称 $f$ 在该区间上连续。\\label{def:point-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U02",
+            "kind": "definition",
+            "tex": "设 $f$ 在区间 $I$ 上有定义。若对每个内点 $x_0\\in I$，函数 $f$ 在 $x_0$ 处连续；当 $I$ 含有端点时，函数在左端点处连续是指右极限等于函数值，在右端点处连续是指左极限等于函数值，则称 $f$ 在区间 $I$ 上连续。\n\n特别地，当 $I=[a,b]$ 且 $a<b$ 时，$f$ 在 $[a,b]$ 上连续意味着：对每个 $x_0\\in(a,b)$，有\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n并且有\n\\[\n\\lim_{x\\to a^+}f(x)=f(a)\\text{，}\n\\qquad\n\\lim_{x\\to b^-}f(x)=f(b)\\text{。}\n\\]\n\\label{def:interval-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U03",
+            "kind": "definition",
+            "tex": "设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义。若 $f$ 在 $x_0$ 处不连续，则称 $x_0$ 为 $f$ 的间断点。常见类型如下。\n\n若极限 $\\lim_{x\\to x_0}f(x)$ 存在且为有限数，但 $f(x_0)$ 未定义或 $f(x_0)\\neq\\lim_{x\\to x_0}f(x)$，则称 $x_0$ 为可去间断点。\n\n若左、右极限都存在且有限，但不相等，即\n\\[\n\\lim_{x\\to x_0^-}f(x)\\neq\\lim_{x\\to x_0^+}f(x)\\text{，}\n\\]\n则称 $x_0$ 为跳跃间断点。\n\n若至少有一个单侧极限为 $+\\infty$ 或 $-\\infty$，即函数值沿相应方向趋于正无穷或负无穷，则称 $x_0$ 为无穷间断点。若函数在 $x_0$ 附近无界，但不存在趋于 $+\\infty$ 或 $-\\infty$ 的单侧极限，则不称为无穷间断点，而归入第二类间断点中的无界振荡情形。分类时必须先说明函数在相关去心邻域内有定义以及所考察的极限存在性条件。\\label{def:discontinuity-types}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U04",
+            "kind": "theorem",
+            "tex": "设函数 $f$ 与 $g$ 在点 $x_0$ 处连续，且相关运算在 $x_0$ 处有定义。则函数\n\\[\nf+g,\n\\qquad f-g,\n\\qquad fg\n\\]\n在 $x_0$ 处连续。若 $g(x_0)\\neq0$，并且在 $x_0$ 的某个邻域内 $g(x)\\neq0$，则\n\\[\n\\frac{f}{g}\n\\]\n在 $x_0$ 处连续。\n\n若函数 $g$ 在 $x_0$ 处连续，函数 $f$ 在 $g(x_0)$ 处连续，并且复合函数 $f\\circ g$ 在 $x_0$ 的某个邻域内有定义，则 $f\\circ g$ 在 $x_0$ 处连续。\\label{thm:continuity-algebra}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U05",
+            "kind": "proof",
+            "tex": "由连续性的定义，函数 $f$ 与 $g$ 在 $x_0$ 处连续分别意味着\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\qquad\n\\lim_{x\\to x_0}g(x)=g(x_0)\\text{。}\n\\]\n根据极限的和、差与积法则，有\n\\[\n\\lim_{x\\to x_0}(f(x)+g(x))=f(x_0)+g(x_0)=(f+g)(x_0)\\text{，}\n\\]\n\\[\n\\lim_{x\\to x_0}(f(x)-g(x))=f(x_0)-g(x_0)=(f-g)(x_0)\\text{，}\n\\]\n以及\n\\[\n\\lim_{x\\to x_0}f(x)g(x)=f(x_0)g(x_0)=(fg)(x_0)\\text{。}\n\\]\n因此和、差与积在 $x_0$ 处连续。\n\n若 $g(x_0)\\neq0$ 且 $g$ 在 $x_0$ 的某个邻域内不为零，则由商的极限法则，\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)}{g(x)}\n=\\frac{f(x_0)}{g(x_0)}\n=\\left(\\frac{f}{g}\\right)(x_0)\\text{，}\n\\]\n所以商在 $x_0$ 处连续。\n\n最后设 $g$ 在 $x_0$ 处连续，$f$ 在 $g(x_0)$ 处连续，且复合函数在相应邻域内有定义。令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n对这样的 $x$，取 $t=g(x)$；由复合函数在该邻域内有定义，且 $|t-g(x_0)|<\\eta$，从而\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n又因为 $(f\\circ g)(x_0)=f(g(x_0))$，所以 $f\\circ g$ 在 $x_0$ 处连续。",
+            "relates_to": "S04.U04"
+          },
+          {
+            "id": "S04.U06",
+            "kind": "theorem",
+            "tex": "设函数 $g$ 在点 $x_0$ 处连续，函数 $f$ 在点 $g(x_0)$ 处连续，并且存在 $x_0$ 的某个邻域 $U$，使得对每个 $x\\in U$，$g(x)$ 都属于 $f$ 的定义域。则复合函数\n\\[\n(f\\circ g)(x)=f(g(x))\n\\]\n在点 $x_0$ 处连续。\\label{thm:composition-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U07",
+            "kind": "proof",
+            "tex": "令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n根据假设，当 $x$ 属于该邻域 $U$ 时，$g(x)$ 属于 $f$ 的定义域；缩小 $\\delta$ 后还可令 $|x-x_0|<\\delta$ 的点属于 $U$。于是对满足 $|x-x_0|<\\delta$ 的 $x$，令 $t=g(x)$，便有\n\\[\n|t-g(x_0)|=|g(x)-g(x_0)|<\\eta\n\\]\n以及\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n而\n\\[\n(f\\circ g)(x_0)=f(g(x_0))\\text{，}\n\\]\n故\n\\[\n|(f\\circ g)(x)-(f\\circ g)(x_0)|<\\varepsilon.\n\\]\n由点连续的定义，$f\\circ g$ 在 $x_0$ 处连续。",
+            "relates_to": "S04.U06"
+          },
+          {
+            "id": "S04.U08",
+            "kind": "example",
+            "tex": "判断函数\n\\[\nf(x)=\\frac{x^2-1}{x-1}\n\\]\n在 $x=1$ 处的连续性，并指出该点的间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U09",
+            "kind": "solution",
+            "tex": "函数 $f$ 的定义域为 $\\mathbb{R}\\setminus\\{1\\}$，因此 $f(1)$ 未定义。当 $x\\neq1$ 时，\n\\[\nf(x)=\\frac{(x-1)(x+1)}{x-1}=x+1\\text{。}\n\\]\n所以\n\\[\n\\lim_{x\\to1}f(x)=\\lim_{x\\to1}(x+1)=2\\text{。}\n\\]\n极限存在且为有限数，但函数在 $x=1$ 处没有定义。因此 $x=1$ 是可去间断点。若补定义 $f(1)=2$，所得函数将在 $x=1$ 处连续。",
+            "relates_to": "S04.U08"
+          },
+          {
+            "id": "S04.U10",
+            "kind": "example",
+            "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n1+x,&x<0,\\\\\n2+x^2,&x\\geq0\\text{。}\n\\end{cases}\n\\]\n判断 $f$ 在 $x=0$ 处的连续性及间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U11",
+            "kind": "solution",
+            "tex": "由左侧表达式可得\n\\[\n\\lim_{x\\to0^-}f(x)=\\lim_{x\\to0^-}(1+x)=1\\text{。}\n\\]\n由右侧表达式可得\n\\[\n\\lim_{x\\to0^+}f(x)=\\lim_{x\\to0^+}(2+x^2)=2\\text{。}\n\\]\n又因为 $f(0)=2$，所以右极限等于函数值，但左极限与右极限不相等。根据双侧极限存在的充要条件，$\\lim_{x\\to0}f(x)$ 不存在。因此 $f$ 在 $x=0$ 处不连续，且 $x=0$ 是跳跃间断点。",
+            "relates_to": "S04.U10"
+          },
+          {
+            "id": "S04.U12",
+            "kind": "exercise",
+            "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n\\dfrac{x^2-4}{x-2},&x\\neq2,\\\\\na,&x=2\\text{。}\n\\end{cases}\n\\]\n求常数 $a$ 的值，使函数 $f$ 在 $x=2$ 处连续，并说明若 $a$ 取其他值时该点的间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U13",
+            "kind": "solution",
+            "tex": "当 $x\\neq2$ 时，\n\\[\n\\frac{x^2-4}{x-2}=\\frac{(x-2)(x+2)}{x-2}=x+2\\text{。}\n\\]\n因此\n\\[\n\\lim_{x\\to2}f(x)=\\lim_{x\\to2}(x+2)=4\\text{。}\n\\]\n函数在 $x=2$ 处连续的条件是\n\\[\n\\lim_{x\\to2}f(x)=f(2)=a\\text{，}\n\\]\n所以必须取\n\\[\na=4\\text{。}\n\\]\n当 $a=4$ 时，函数在 $x=2$ 处连续；当 $a\\neq4$ 时，极限仍存在且等于 $4$，但函数值不等于极限值，因此 $x=2$ 是可去间断点。",
+            "relates_to": "S04.U12"
+          }
+        ],
+        "calculations": [],
+        "calculation_limitations": [
+          "协议支持的表达式树不能表达函数定义、邻域量词、分段函数及连续性的定义条件，因此无法对本节关于点连续、区间连续和间断点分类的结论提交适用的符号核算。",
+          "本节定理涉及一般函数的定义域、极限存在性以及复合函数的定义域条件，现有核算协议不能完整表示这些复合约束；相关结论由正文中的条件和证明给出。"
+        ],
+        "uncertainties": []
+      }
+    },
+    "r1_checked": {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\runs\\a45be503af594ce8aae0bb1e4c30184b\\global-repairs\\r1-37ae927f\\S04-locally-checked-c30ac4fa.json",
+      "relative_path": "workspace/iteration2-live/runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r1-37ae927f/S04-locally-checked-c30ac4fa.json",
+      "raw_sha256": "fa8a07176b0d4cbc1fd5a427619c463d135d3f48b9aacded8cf670c3fb87e00b",
+      "value": {
+        "section_id": "S04",
+        "units": [
+          {
+            "id": "S04.U01",
+            "kind": "definition",
+            "tex": "设函数 $f$ 在点 $x_0$ 的某个邻域内有定义。若 $f$ 在 $x_0$ 处有定义，且\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n则称函数 $f$ 在点 $x_0$ 处连续。等价地，$f$ 在 $x_0$ 处连续是指：对任意 $\\varepsilon>0$，都存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时有\n\\[\n|f(x)-f(x_0)|<\\varepsilon.\n\\]\n其中，条件 $f(x_0)$ 有定义不可省略。若 $f$ 在区间内每一点都连续，则称 $f$ 在该区间上连续。\\label{def:point-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U02",
+            "kind": "definition",
+            "tex": "设 $f$ 在区间 $I$ 上有定义。若对每个内点 $x_0\\in I$，函数 $f$ 在 $x_0$ 处连续；当 $I$ 含有端点时，函数在左端点处连续是指右极限等于函数值，在右端点处连续是指左极限等于函数值，则称 $f$ 在区间 $I$ 上连续。\n\n特别地，当 $I=[a,b]$ 且 $a<b$ 时，$f$ 在 $[a,b]$ 上连续意味着：对每个 $x_0\\in(a,b)$，有\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n并且有\n\\[\n\\lim_{x\\to a^+}f(x)=f(a)\\text{，}\n\\qquad\n\\lim_{x\\to b^-}f(x)=f(b)\\text{。}\n\\]\n\\label{def:interval-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U03",
+            "kind": "definition",
+            "tex": "设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义。若 $f(x_0)$ 未定义，或 $f(x_0)$ 有定义但 $f$ 在 $x_0$ 处不连续，则称 $x_0$ 为 $f$ 的间断点。因此，间断点不要求属于函数的定义域。常见类型如下。\n\n若极限 $\\lim_{x\\to x_0}f(x)$ 存在且为有限数，但 $f(x_0)$ 未定义或 $f(x_0)\\neq\\lim_{x\\to x_0}f(x)$，则称 $x_0$ 为可去间断点。\n\n若左、右极限都存在且有限，但不相等，即\n\\[\n\\lim_{x\\to x_0^-}f(x)\\neq\\lim_{x\\to x_0^+}f(x)\\text{，}\n\\]\n则称 $x_0$ 为跳跃间断点。\n\n为说明无穷间断点，先定义单侧无穷极限。在上述去心邻域条件下，若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=-\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=-\\infty.\n\\]\n这里的 $\\delta$ 均可取小到使相应单侧去心邻域包含在函数的定义域内。\n\n若至少有一个单侧极限为 $+\\infty$ 或 $-\\infty$，即函数值沿相应方向趋于正无穷或负无穷，则称 $x_0$ 为无穷间断点。若函数在 $x_0$ 附近无界，但不存在趋于 $+\\infty$ 或 $-\\infty$ 的单侧极限，则不称为无穷间断点，而归入第二类间断点中的无界振荡情形。分类时必须先说明函数在相关去心邻域内有定义以及所考察的极限存在性条件。\\label{def:discontinuity-types}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U04",
+            "kind": "theorem",
+            "tex": "设函数 $f$ 与 $g$ 在点 $x_0$ 处连续，且相关运算在 $x_0$ 处有定义。则函数\n\\[\nf+g,\n\\qquad f-g,\n\\qquad fg\n\\]\n在 $x_0$ 处连续。若 $g(x_0)\\neq0$，并且在 $x_0$ 的某个邻域内 $g(x)\\neq0$，则\n\\[\n\\frac{f}{g}\n\\]\n在 $x_0$ 处连续。\n\n若函数 $g$ 在 $x_0$ 处连续，函数 $f$ 在 $g(x_0)$ 处连续，并且复合函数 $f\\circ g$ 在 $x_0$ 的某个邻域内有定义，则 $f\\circ g$ 在 $x_0$ 处连续。\\label{thm:continuity-algebra}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U05",
+            "kind": "proof",
+            "tex": "由连续性的定义，函数 $f$ 与 $g$ 在 $x_0$ 处连续分别意味着\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\qquad\n\\lim_{x\\to x_0}g(x)=g(x_0)\\text{。}\n\\]\n根据极限的和、差与积法则，有\n\\[\n\\lim_{x\\to x_0}(f(x)+g(x))=f(x_0)+g(x_0)=(f+g)(x_0)\\text{，}\n\\]\n\\[\n\\lim_{x\\to x_0}(f(x)-g(x))=f(x_0)-g(x_0)=(f-g)(x_0)\\text{，}\n\\]\n以及\n\\[\n\\lim_{x\\to x_0}f(x)g(x)=f(x_0)g(x_0)=(fg)(x_0)\\text{。}\n\\]\n因此和、差与积在 $x_0$ 处连续。\n\n若 $g(x_0)\\neq0$ 且 $g$ 在 $x_0$ 的某个邻域内不为零，则由商的极限法则，\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)}{g(x)}\n=\\frac{f(x_0)}{g(x_0)}\n=\\left(\\frac{f}{g}\\right)(x_0)\\text{，}\n\\]\n所以商在 $x_0$ 处连续。\n\n最后设 $g$ 在 $x_0$ 处连续，$f$ 在 $g(x_0)$ 处连续，且复合函数在相应邻域内有定义。令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n对这样的 $x$，取 $t=g(x)$；由复合函数在该邻域内有定义，且 $|t-g(x_0)|<\\eta$，从而\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n又因为 $(f\\circ g)(x_0)=f(g(x_0))$，所以 $f\\circ g$ 在 $x_0$ 处连续。",
+            "relates_to": "S04.U04"
+          },
+          {
+            "id": "S04.U06",
+            "kind": "theorem",
+            "tex": "设函数 $g$ 在点 $x_0$ 处连续，函数 $f$ 在点 $g(x_0)$ 处连续，并且存在 $x_0$ 的某个邻域 $U$，使得对每个 $x\\in U$，$g(x)$ 都属于 $f$ 的定义域。则复合函数\n\\[\n(f\\circ g)(x)=f(g(x))\n\\]\n在点 $x_0$ 处连续。\\label{thm:composition-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U07",
+            "kind": "proof",
+            "tex": "令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n根据假设，当 $x$ 属于该邻域 $U$ 时，$g(x)$ 属于 $f$ 的定义域；缩小 $\\delta$ 后还可令 $|x-x_0|<\\delta$ 的点属于 $U$。于是对满足 $|x-x_0|<\\delta$ 的 $x$，令 $t=g(x)$，便有\n\\[\n|t-g(x_0)|=|g(x)-g(x_0)|<\\eta\n\\]\n以及\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n而\n\\[\n(f\\circ g)(x_0)=f(g(x_0))\\text{，}\n\\]\n故\n\\[\n|(f\\circ g)(x)-(f\\circ g)(x_0)|<\\varepsilon.\n\\]\n由点连续的定义，$f\\circ g$ 在 $x_0$ 处连续。",
+            "relates_to": "S04.U06"
+          },
+          {
+            "id": "S04.U08",
+            "kind": "example",
+            "tex": "判断函数\n\\[\nf(x)=\\frac{x^2-1}{x-1}\n\\]\n在 $x=1$ 处的连续性，并指出该点的间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U09",
+            "kind": "solution",
+            "tex": "函数 $f$ 的定义域为 $\\mathbb{R}\\setminus\\{1\\}$，因此 $f(1)$ 未定义。当 $x\\neq1$ 时，\n\\[\nf(x)=\\frac{(x-1)(x+1)}{x-1}=x+1\\text{。}\n\\]\n所以\n\\[\n\\lim_{x\\to1}f(x)=\\lim_{x\\to1}(x+1)=2\\text{。}\n\\]\n极限存在且为有限数，但函数在 $x=1$ 处没有定义。因此 $x=1$ 是可去间断点。若补定义 $f(1)=2$，所得函数将在 $x=1$ 处连续。",
+            "relates_to": "S04.U08"
+          },
+          {
+            "id": "S04.U10",
+            "kind": "example",
+            "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n1+x,&x<0,\\\\\n2+x^2,&x\\geq0\\text{。}\n\\end{cases}\n\\]\n判断 $f$ 在 $x=0$ 处的连续性及间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U11",
+            "kind": "solution",
+            "tex": "由左侧表达式可得\n\\[\n\\lim_{x\\to0^-}f(x)=\\lim_{x\\to0^-}(1+x)=1\\text{。}\n\\]\n由右侧表达式可得\n\\[\n\\lim_{x\\to0^+}f(x)=\\lim_{x\\to0^+}(2+x^2)=2\\text{。}\n\\]\n又因为 $f(0)=2$，所以右极限等于函数值，但左极限与右极限不相等。根据双侧极限存在的充要条件，$\\lim_{x\\to0}f(x)$ 不存在。因此 $f$ 在 $x=0$ 处不连续，且 $x=0$ 是跳跃间断点。",
+            "relates_to": "S04.U10"
+          },
+          {
+            "id": "S04.U12",
+            "kind": "exercise",
+            "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n\\dfrac{x^2-4}{x-2},&x\\neq2,\\\\\na,&x=2\\text{。}\n\\end{cases}\n\\]\n求常数 $a$ 的值，使函数 $f$ 在 $x=2$ 处连续，并说明若 $a$ 取其他值时该点的间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U13",
+            "kind": "solution",
+            "tex": "当 $x\\neq2$ 时，\n\\[\n\\frac{x^2-4}{x-2}=\\frac{(x-2)(x+2)}{x-2}=x+2\\text{。}\n\\]\n因此\n\\[\n\\lim_{x\\to2}f(x)=\\lim_{x\\to2}(x+2)=4\\text{。}\n\\]\n函数在 $x=2$ 处连续的条件是\n\\[\n\\lim_{x\\to2}f(x)=f(2)=a\\text{，}\n\\]\n所以必须取\n\\[\na=4\\text{。}\n\\]\n当 $a=4$ 时，函数在 $x=2$ 处连续；当 $a\\neq4$ 时，极限仍存在且等于 $4$，但函数值不等于极限值，因此 $x=2$ 是可去间断点。",
+            "relates_to": "S04.U12"
+          }
+        ],
+        "calculations": [],
+        "calculation_limitations": [
+          "协议支持的表达式树不能表达函数定义、邻域量词、分段函数及连续性的定义条件，因此无法对本节关于点连续、区间连续和间断点分类的结论提交适用的符号核算。",
+          "本节定理涉及一般函数的定义域、极限存在性以及复合函数的定义域条件，现有核算协议不能完整表示这些复合约束；相关结论由正文中的条件和证明给出。"
+        ],
+        "uncertainties": []
+      }
+    },
+    "r2_checked": {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\runs\\a45be503af594ce8aae0bb1e4c30184b\\global-repairs\\r2-e4e359cf\\S04-locally-checked-cc72d851.json",
+      "relative_path": "workspace/iteration2-live/runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r2-e4e359cf/S04-locally-checked-cc72d851.json",
+      "raw_sha256": "f34ca906975479e054f012ccae72f56d7c90f113911784fac98cb12cd5f8c0aa",
+      "value": {
+        "section_id": "S04",
+        "units": [
+          {
+            "id": "S04.U01",
+            "kind": "definition",
+            "tex": "设函数 $f$ 在点 $x_0$ 的某个邻域内有定义。若 $f$ 在 $x_0$ 处有定义，且\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n则称函数 $f$ 在点 $x_0$ 处连续。等价地，$f$ 在 $x_0$ 处连续是指：对任意 $\\varepsilon>0$，都存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时有\n\\[\n|f(x)-f(x_0)|<\\varepsilon.\n\\]\n其中，条件 $f(x_0)$ 有定义不可省略。若 $f$ 在区间内每一点都连续，则称 $f$ 在该区间上连续。\\label{def:point-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U02",
+            "kind": "definition",
+            "tex": "设 $f$ 在区间 $I$ 上有定义。若对每个内点 $x_0\\in I$，函数 $f$ 在 $x_0$ 处连续；当 $I$ 含有端点时，函数在左端点处连续是指右极限等于函数值，在右端点处连续是指左极限等于函数值，则称 $f$ 在区间 $I$ 上连续。\n\n特别地，当 $I=[a,b]$ 且 $a<b$ 时，$f$ 在 $[a,b]$ 上连续意味着：对每个 $x_0\\in(a,b)$，有\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n并且有\n\\[\n\\lim_{x\\to a^+}f(x)=f(a)\\text{，}\n\\qquad\n\\lim_{x\\to b^-}f(x)=f(b)\\text{。}\n\\]\n\\label{def:interval-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U03",
+            "kind": "definition",
+            "tex": "设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义。若 $f(x_0)$ 未定义，或 $f(x_0)$ 有定义但 $f$ 在 $x_0$ 处不连续，则称 $x_0$ 为 $f$ 的间断点。因此，间断点不要求属于函数的定义域。常见类型如下。\n\n若极限 $\\lim_{x\\to x_0}f(x)$ 存在且为有限数，但 $f(x_0)$ 未定义或 $f(x_0)\\neq\\lim_{x\\to x_0}f(x)$，则称 $x_0$ 为可去间断点。\n\n若左、右极限都存在且有限，但不相等，即\n\\[\n\\lim_{x\\to x_0^-}f(x)\\neq\\lim_{x\\to x_0^+}f(x)\\text{，}\n\\]\n则称 $x_0$ 为跳跃间断点。\n\n为说明无穷间断点，先定义单侧无穷极限。在上述去心邻域条件下，若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=-\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=-\\infty.\n\\]\n这里的 $\\delta$ 均可取小到使相应单侧去心邻域包含在函数的定义域内。\n\n例如，考虑定义在 $\\mathbb{R}\\setminus\\{0\\}$ 上的函数\n\\[\nf(x)=\\frac{1}{x}.\n\\]\n在 $x_0=0$ 处考察右侧。对任意 $M>0$，取 $\\delta=1/M$，当 $0<x<\\delta$ 时有 $f(x)=1/x>M$，所以\n\\[\n\\lim_{x\\to0^+}\\frac{1}{x}=+\\infty.\n\\]\n因此，$x=0$ 是无穷间断点。这里明确使用了定义域 $\\mathbb{R}\\setminus\\{0\\}$、考察方向 $x\\to0^+$ 以及“对任意 $M>0$，存在 $\\delta>0$”的量词条件。\n\n若至少有一个单侧极限为 $+\\infty$ 或 $-\\infty$，即函数值沿相应方向趋于正无穷或负无穷，则称 $x_0$ 为无穷间断点。若函数在 $x_0$ 附近无界，但不存在趋于 $+\\infty$ 或 $-\\infty$ 的单侧极限，则不称为无穷间断点，而归入第二类间断点中的无界振荡情形。分类时必须先说明函数在相关去心邻域内有定义以及所考察的极限存在性条件。\\label{def:discontinuity-types}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U04",
+            "kind": "theorem",
+            "tex": "设函数 $f$ 与 $g$ 在点 $x_0$ 处连续，且相关运算在 $x_0$ 处有定义。则函数\n\\[\nf+g,\n\\qquad f-g,\n\\qquad fg\n\\]\n在 $x_0$ 处连续。若 $g(x_0)\\neq0$，并且在 $x_0$ 的某个邻域内 $g(x)\\neq0$，则\n\\[\n\\frac{f}{g}\n\\]\n在 $x_0$ 处连续。\n\n若函数 $g$ 在 $x_0$ 处连续，函数 $f$ 在 $g(x_0)$ 处连续，并且复合函数 $f\\circ g$ 在 $x_0$ 的某个邻域内有定义，则 $f\\circ g$ 在 $x_0$ 处连续。\\label{thm:continuity-algebra}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U05",
+            "kind": "proof",
+            "tex": "由连续性的定义，函数 $f$ 与 $g$ 在 $x_0$ 处连续分别意味着\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\qquad\n\\lim_{x\\to x_0}g(x)=g(x_0)\\text{。}\n\\]\n根据极限的和、差与积法则，有\n\\[\n\\lim_{x\\to x_0}(f(x)+g(x))=f(x_0)+g(x_0)=(f+g)(x_0)\\text{，}\n\\]\n\\[\n\\lim_{x\\to x_0}(f(x)-g(x))=f(x_0)-g(x_0)=(f-g)(x_0)\\text{，}\n\\]\n以及\n\\[\n\\lim_{x\\to x_0}f(x)g(x)=f(x_0)g(x_0)=(fg)(x_0)\\text{。}\n\\]\n因此和、差与积在 $x_0$ 处连续。\n\n若 $g(x_0)\\neq0$ 且 $g$ 在 $x_0$ 的某个邻域内不为零，则由商的极限法则，\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)}{g(x)}\n=\\frac{f(x_0)}{g(x_0)}\n=\\left(\\frac{f}{g}\\right)(x_0)\\text{，}\n\\]\n所以商在 $x_0$ 处连续。\n\n最后设 $g$ 在 $x_0$ 处连续，$f$ 在 $g(x_0)$ 处连续，且复合函数在相应邻域内有定义。令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n对这样的 $x$，取 $t=g(x)$；由复合函数在该邻域内有定义，且 $|t-g(x_0)|<\\eta$，从而\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n又因为 $(f\\circ g)(x_0)=f(g(x_0))$，所以 $f\\circ g$ 在 $x_0$ 处连续。",
+            "relates_to": "S04.U04"
+          },
+          {
+            "id": "S04.U06",
+            "kind": "theorem",
+            "tex": "设函数 $g$ 在点 $x_0$ 处连续，函数 $f$ 在点 $g(x_0)$ 处连续，并且存在 $x_0$ 的某个邻域 $U$，使得对每个 $x\\in U$，$g(x)$ 都属于 $f$ 的定义域。则复合函数\n\\[\n(f\\circ g)(x)=f(g(x))\n\\]\n在点 $x_0$ 处连续。\\label{thm:composition-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U07",
+            "kind": "proof",
+            "tex": "令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n根据假设，当 $x$ 属于该邻域 $U$ 时，$g(x)$ 属于 $f$ 的定义域；缩小 $\\delta$ 后还可令 $|x-x_0|<\\delta$ 的点属于 $U$。于是对满足 $|x-x_0|<\\delta$ 的 $x$，令 $t=g(x)$，便有\n\\[\n|t-g(x_0)|=|g(x)-g(x_0)|<\\eta\n\\]\n以及\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n而\n\\[\n(f\\circ g)(x_0)=f(g(x_0))\\text{，}\n\\]\n故\n\\[\n|(f\\circ g)(x)-(f\\circ g)(x_0)|<\\varepsilon.\n\\]\n由点连续的定义，$f\\circ g$ 在 $x_0$ 处连续。",
+            "relates_to": "S04.U06"
+          },
+          {
+            "id": "S04.U08",
+            "kind": "example",
+            "tex": "判断函数\n\\[\nf(x)=\\frac{x^2-1}{x-1}\n\\]\n在 $x=1$ 处的连续性，并指出该点的间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U09",
+            "kind": "solution",
+            "tex": "函数 $f$ 的定义域为 $\\mathbb{R}\\setminus\\{1\\}$，因此 $f(1)$ 未定义。当 $x\\neq1$ 时，\n\\[\nf(x)=\\frac{(x-1)(x+1)}{x-1}=x+1\\text{。}\n\\]\n所以\n\\[\n\\lim_{x\\to1}f(x)=\\lim_{x\\to1}(x+1)=2\\text{。}\n\\]\n极限存在且为有限数，但函数在 $x=1$ 处没有定义。因此 $x=1$ 是可去间断点。若补定义 $f(1)=2$，所得函数将在 $x=1$ 处连续。",
+            "relates_to": "S04.U08"
+          },
+          {
+            "id": "S04.U10",
+            "kind": "example",
+            "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n1+x,&x<0,\\\\\n2+x^2,&x\\geq0\\text{。}\n\\end{cases}\n\\]\n判断 $f$ 在 $x=0$ 处的连续性及间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U11",
+            "kind": "solution",
+            "tex": "由左侧表达式可得\n\\[\n\\lim_{x\\to0^-}f(x)=\\lim_{x\\to0^-}(1+x)=1\\text{。}\n\\]\n由右侧表达式可得\n\\[\n\\lim_{x\\to0^+}f(x)=\\lim_{x\\to0^+}(2+x^2)=2\\text{。}\n\\]\n又因为 $f(0)=2$，所以右极限等于函数值，但左极限与右极限不相等。根据双侧极限存在的充要条件，$\\lim_{x\\to0}f(x)$ 不存在。因此 $f$ 在 $x=0$ 处不连续，且 $x=0$ 是跳跃间断点。",
+            "relates_to": "S04.U10"
+          },
+          {
+            "id": "S04.U12",
+            "kind": "exercise",
+            "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n\\dfrac{x^2-4}{x-2},&x\\neq2,\\\\\na,&x=2\\text{。}\n\\end{cases}\n\\]\n求常数 $a$ 的值，使函数 $f$ 在 $x=2$ 处连续，并说明若 $a$ 取其他值时该点的间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U13",
+            "kind": "solution",
+            "tex": "当 $x\\neq2$ 时，\n\\[\n\\frac{x^2-4}{x-2}=\\frac{(x-2)(x+2)}{x-2}=x+2\\text{。}\n\\]\n因此\n\\[\n\\lim_{x\\to2}f(x)=\\lim_{x\\to2}(x+2)=4\\text{。}\n\\]\n函数在 $x=2$ 处连续的条件是\n\\[\n\\lim_{x\\to2}f(x)=f(2)=a\\text{，}\n\\]\n所以必须取\n\\[\na=4\\text{。}\n\\]\n当 $a=4$ 时，函数在 $x=2$ 处连续；当 $a\\neq4$ 时，极限仍存在且等于 $4$，但函数值不等于极限值，因此 $x=2$ 是可去间断点。",
+            "relates_to": "S04.U12"
+          }
+        ],
+        "calculations": [],
+        "calculation_limitations": [
+          "协议支持的表达式树不能表达函数定义、邻域量词、分段函数及连续性的定义条件，因此无法对本节关于点连续、区间连续和间断点分类的结论提交适用的符号核算。",
+          "本节定理涉及一般函数的定义域、极限存在性以及复合函数的定义域条件，现有核算协议不能完整表示这些复合约束；相关结论由正文中的条件和证明给出。"
+        ],
+        "uncertainties": []
+      }
+    },
+    "r3_before": {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\runs\\a45be503af594ce8aae0bb1e4c30184b\\global-repairs\\r3-b62b4971\\S04-before.json",
+      "relative_path": "workspace/iteration2-live/runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r3-b62b4971/S04-before.json",
+      "raw_sha256": "f34ca906975479e054f012ccae72f56d7c90f113911784fac98cb12cd5f8c0aa",
+      "value": {
+        "section_id": "S04",
+        "units": [
+          {
+            "id": "S04.U01",
+            "kind": "definition",
+            "tex": "设函数 $f$ 在点 $x_0$ 的某个邻域内有定义。若 $f$ 在 $x_0$ 处有定义，且\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n则称函数 $f$ 在点 $x_0$ 处连续。等价地，$f$ 在 $x_0$ 处连续是指：对任意 $\\varepsilon>0$，都存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时有\n\\[\n|f(x)-f(x_0)|<\\varepsilon.\n\\]\n其中，条件 $f(x_0)$ 有定义不可省略。若 $f$ 在区间内每一点都连续，则称 $f$ 在该区间上连续。\\label{def:point-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U02",
+            "kind": "definition",
+            "tex": "设 $f$ 在区间 $I$ 上有定义。若对每个内点 $x_0\\in I$，函数 $f$ 在 $x_0$ 处连续；当 $I$ 含有端点时，函数在左端点处连续是指右极限等于函数值，在右端点处连续是指左极限等于函数值，则称 $f$ 在区间 $I$ 上连续。\n\n特别地，当 $I=[a,b]$ 且 $a<b$ 时，$f$ 在 $[a,b]$ 上连续意味着：对每个 $x_0\\in(a,b)$，有\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n并且有\n\\[\n\\lim_{x\\to a^+}f(x)=f(a)\\text{，}\n\\qquad\n\\lim_{x\\to b^-}f(x)=f(b)\\text{。}\n\\]\n\\label{def:interval-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U03",
+            "kind": "definition",
+            "tex": "设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义。若 $f(x_0)$ 未定义，或 $f(x_0)$ 有定义但 $f$ 在 $x_0$ 处不连续，则称 $x_0$ 为 $f$ 的间断点。因此，间断点不要求属于函数的定义域。常见类型如下。\n\n若极限 $\\lim_{x\\to x_0}f(x)$ 存在且为有限数，但 $f(x_0)$ 未定义或 $f(x_0)\\neq\\lim_{x\\to x_0}f(x)$，则称 $x_0$ 为可去间断点。\n\n若左、右极限都存在且有限，但不相等，即\n\\[\n\\lim_{x\\to x_0^-}f(x)\\neq\\lim_{x\\to x_0^+}f(x)\\text{，}\n\\]\n则称 $x_0$ 为跳跃间断点。\n\n为说明无穷间断点，先定义单侧无穷极限。在上述去心邻域条件下，若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=-\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=-\\infty.\n\\]\n这里的 $\\delta$ 均可取小到使相应单侧去心邻域包含在函数的定义域内。\n\n例如，考虑定义在 $\\mathbb{R}\\setminus\\{0\\}$ 上的函数\n\\[\nf(x)=\\frac{1}{x}.\n\\]\n在 $x_0=0$ 处考察右侧。对任意 $M>0$，取 $\\delta=1/M$，当 $0<x<\\delta$ 时有 $f(x)=1/x>M$，所以\n\\[\n\\lim_{x\\to0^+}\\frac{1}{x}=+\\infty.\n\\]\n因此，$x=0$ 是无穷间断点。这里明确使用了定义域 $\\mathbb{R}\\setminus\\{0\\}$、考察方向 $x\\to0^+$ 以及“对任意 $M>0$，存在 $\\delta>0$”的量词条件。\n\n若至少有一个单侧极限为 $+\\infty$ 或 $-\\infty$，即函数值沿相应方向趋于正无穷或负无穷，则称 $x_0$ 为无穷间断点。若函数在 $x_0$ 附近无界，但不存在趋于 $+\\infty$ 或 $-\\infty$ 的单侧极限，则不称为无穷间断点，而归入第二类间断点中的无界振荡情形。分类时必须先说明函数在相关去心邻域内有定义以及所考察的极限存在性条件。\\label{def:discontinuity-types}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U04",
+            "kind": "theorem",
+            "tex": "设函数 $f$ 与 $g$ 在点 $x_0$ 处连续，且相关运算在 $x_0$ 处有定义。则函数\n\\[\nf+g,\n\\qquad f-g,\n\\qquad fg\n\\]\n在 $x_0$ 处连续。若 $g(x_0)\\neq0$，并且在 $x_0$ 的某个邻域内 $g(x)\\neq0$，则\n\\[\n\\frac{f}{g}\n\\]\n在 $x_0$ 处连续。\n\n若函数 $g$ 在 $x_0$ 处连续，函数 $f$ 在 $g(x_0)$ 处连续，并且复合函数 $f\\circ g$ 在 $x_0$ 的某个邻域内有定义，则 $f\\circ g$ 在 $x_0$ 处连续。\\label{thm:continuity-algebra}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U05",
+            "kind": "proof",
+            "tex": "由连续性的定义，函数 $f$ 与 $g$ 在 $x_0$ 处连续分别意味着\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\qquad\n\\lim_{x\\to x_0}g(x)=g(x_0)\\text{。}\n\\]\n根据极限的和、差与积法则，有\n\\[\n\\lim_{x\\to x_0}(f(x)+g(x))=f(x_0)+g(x_0)=(f+g)(x_0)\\text{，}\n\\]\n\\[\n\\lim_{x\\to x_0}(f(x)-g(x))=f(x_0)-g(x_0)=(f-g)(x_0)\\text{，}\n\\]\n以及\n\\[\n\\lim_{x\\to x_0}f(x)g(x)=f(x_0)g(x_0)=(fg)(x_0)\\text{。}\n\\]\n因此和、差与积在 $x_0$ 处连续。\n\n若 $g(x_0)\\neq0$ 且 $g$ 在 $x_0$ 的某个邻域内不为零，则由商的极限法则，\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)}{g(x)}\n=\\frac{f(x_0)}{g(x_0)}\n=\\left(\\frac{f}{g}\\right)(x_0)\\text{，}\n\\]\n所以商在 $x_0$ 处连续。\n\n最后设 $g$ 在 $x_0$ 处连续，$f$ 在 $g(x_0)$ 处连续，且复合函数在相应邻域内有定义。令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n对这样的 $x$，取 $t=g(x)$；由复合函数在该邻域内有定义，且 $|t-g(x_0)|<\\eta$，从而\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n又因为 $(f\\circ g)(x_0)=f(g(x_0))$，所以 $f\\circ g$ 在 $x_0$ 处连续。",
+            "relates_to": "S04.U04"
+          },
+          {
+            "id": "S04.U06",
+            "kind": "theorem",
+            "tex": "设函数 $g$ 在点 $x_0$ 处连续，函数 $f$ 在点 $g(x_0)$ 处连续，并且存在 $x_0$ 的某个邻域 $U$，使得对每个 $x\\in U$，$g(x)$ 都属于 $f$ 的定义域。则复合函数\n\\[\n(f\\circ g)(x)=f(g(x))\n\\]\n在点 $x_0$ 处连续。\\label{thm:composition-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U07",
+            "kind": "proof",
+            "tex": "令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n根据假设，当 $x$ 属于该邻域 $U$ 时，$g(x)$ 属于 $f$ 的定义域；缩小 $\\delta$ 后还可令 $|x-x_0|<\\delta$ 的点属于 $U$。于是对满足 $|x-x_0|<\\delta$ 的 $x$，令 $t=g(x)$，便有\n\\[\n|t-g(x_0)|=|g(x)-g(x_0)|<\\eta\n\\]\n以及\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n而\n\\[\n(f\\circ g)(x_0)=f(g(x_0))\\text{，}\n\\]\n故\n\\[\n|(f\\circ g)(x)-(f\\circ g)(x_0)|<\\varepsilon.\n\\]\n由点连续的定义，$f\\circ g$ 在 $x_0$ 处连续。",
+            "relates_to": "S04.U06"
+          },
+          {
+            "id": "S04.U08",
+            "kind": "example",
+            "tex": "判断函数\n\\[\nf(x)=\\frac{x^2-1}{x-1}\n\\]\n在 $x=1$ 处的连续性，并指出该点的间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U09",
+            "kind": "solution",
+            "tex": "函数 $f$ 的定义域为 $\\mathbb{R}\\setminus\\{1\\}$，因此 $f(1)$ 未定义。当 $x\\neq1$ 时，\n\\[\nf(x)=\\frac{(x-1)(x+1)}{x-1}=x+1\\text{。}\n\\]\n所以\n\\[\n\\lim_{x\\to1}f(x)=\\lim_{x\\to1}(x+1)=2\\text{。}\n\\]\n极限存在且为有限数，但函数在 $x=1$ 处没有定义。因此 $x=1$ 是可去间断点。若补定义 $f(1)=2$，所得函数将在 $x=1$ 处连续。",
+            "relates_to": "S04.U08"
+          },
+          {
+            "id": "S04.U10",
+            "kind": "example",
+            "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n1+x,&x<0,\\\\\n2+x^2,&x\\geq0\\text{。}\n\\end{cases}\n\\]\n判断 $f$ 在 $x=0$ 处的连续性及间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U11",
+            "kind": "solution",
+            "tex": "由左侧表达式可得\n\\[\n\\lim_{x\\to0^-}f(x)=\\lim_{x\\to0^-}(1+x)=1\\text{。}\n\\]\n由右侧表达式可得\n\\[\n\\lim_{x\\to0^+}f(x)=\\lim_{x\\to0^+}(2+x^2)=2\\text{。}\n\\]\n又因为 $f(0)=2$，所以右极限等于函数值，但左极限与右极限不相等。根据双侧极限存在的充要条件，$\\lim_{x\\to0}f(x)$ 不存在。因此 $f$ 在 $x=0$ 处不连续，且 $x=0$ 是跳跃间断点。",
+            "relates_to": "S04.U10"
+          },
+          {
+            "id": "S04.U12",
+            "kind": "exercise",
+            "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n\\dfrac{x^2-4}{x-2},&x\\neq2,\\\\\na,&x=2\\text{。}\n\\end{cases}\n\\]\n求常数 $a$ 的值，使函数 $f$ 在 $x=2$ 处连续，并说明若 $a$ 取其他值时该点的间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U13",
+            "kind": "solution",
+            "tex": "当 $x\\neq2$ 时，\n\\[\n\\frac{x^2-4}{x-2}=\\frac{(x-2)(x+2)}{x-2}=x+2\\text{。}\n\\]\n因此\n\\[\n\\lim_{x\\to2}f(x)=\\lim_{x\\to2}(x+2)=4\\text{。}\n\\]\n函数在 $x=2$ 处连续的条件是\n\\[\n\\lim_{x\\to2}f(x)=f(2)=a\\text{，}\n\\]\n所以必须取\n\\[\na=4\\text{。}\n\\]\n当 $a=4$ 时，函数在 $x=2$ 处连续；当 $a\\neq4$ 时，极限仍存在且等于 $4$，但函数值不等于极限值，因此 $x=2$ 是可去间断点。",
+            "relates_to": "S04.U12"
+          }
+        ],
+        "calculations": [],
+        "calculation_limitations": [
+          "协议支持的表达式树不能表达函数定义、邻域量词、分段函数及连续性的定义条件，因此无法对本节关于点连续、区间连续和间断点分类的结论提交适用的符号核算。",
+          "本节定理涉及一般函数的定义域、极限存在性以及复合函数的定义域条件，现有核算协议不能完整表示这些复合约束；相关结论由正文中的条件和证明给出。"
+        ],
+        "uncertainties": []
+      }
+    },
+    "r3_raw": {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\runs\\a45be503af594ce8aae0bb1e4c30184b\\global-repairs\\r3-b62b4971\\S04-b685fe55-raw.json",
+      "relative_path": "workspace/iteration2-live/runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r3-b62b4971/S04-b685fe55-raw.json",
+      "raw_sha256": "77e41e8d9ad2d70f1fca0d774c05d2e5c25a81e5bdf1dff683c6bc4bfc1b0396",
+      "value": {
+        "section_id": "S04",
+        "units": [
+          {
+            "id": "S04.U01",
+            "kind": "definition",
+            "tex": "设函数 $f$ 在点 $x_0$ 的某个邻域内有定义。若 $f$ 在 $x_0$ 处有定义，且\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n则称函数 $f$ 在点 $x_0$ 处连续。等价地，$f$ 在 $x_0$ 处连续是指：对任意 $\\varepsilon>0$，都存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时有\n\\[\n|f(x)-f(x_0)|<\\varepsilon.\n\\]\n其中，条件 $f(x_0)$ 有定义不可省略。若 $f$ 在区间内每一点都连续，则称 $f$ 在该区间上连续。\\label{def:point-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U02",
+            "kind": "definition",
+            "tex": "设 $f$ 在区间 $I$ 上有定义。若对每个内点 $x_0\\in I$，函数 $f$ 在 $x_0$ 处连续；当 $I$ 含有端点时，函数在左端点处连续是指右极限等于函数值，在右端点处连续是指左极限等于函数值，则称 $f$ 在区间 $I$ 上连续。\n\n特别地，当 $I=[a,b]$ 且 $a<b$ 时，$f$ 在 $[a,b]$ 上连续意味着：对每个 $x_0\\in(a,b)$，有\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n并且有\n\\[\n\\lim_{x\\to a^+}f(x)=f(a)\\text{，}\n\\qquad\n\\lim_{x\\to b^-}f(x)=f(b)\\text{。}\n\\]\n\\label{def:interval-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U03",
+            "kind": "definition",
+            "tex": "设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义。若 $f(x_0)$ 未定义，或 $f(x_0)$ 有定义但 $f$ 在 $x_0$ 处不连续，则称 $x_0$ 为 $f$ 的间断点。因此，间断点不要求属于函数的定义域。常见类型如下。\n\n若极限 $\\lim_{x\\to x_0}f(x)$ 存在且为有限数，但 $f(x_0)$ 未定义或 $f(x_0)\\neq\\lim_{x\\to x_0}f(x)$，则称 $x_0$ 为可去间断点。\n\n若左、右极限都存在且有限，但不相等，即\n\\[\n\\lim_{x\\to x_0^-}f(x)\\neq\\lim_{x\\to x_0^+}f(x)\\text{，}\n\\]\n则称 $x_0$ 为跳跃间断点。\n\n为说明无穷间断点，先独立定义单侧无穷极限；这些定义不要求上述双侧去心邻域条件。定义右侧无穷极限时，只设 $f$ 在某个右侧去心邻域 $(x_0,x_0+r)$ 内有定义，其中 $r>0$。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=-\\infty.\n\\]\n定义左侧无穷极限时，只设 $f$ 在某个左侧去心邻域 $(x_0-r,x_0)$ 内有定义，其中 $r>0$，不要求右侧有定义。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=-\\infty.\n\\]\n这里的 $\\delta$ 均可取小到使相应单侧去心邻域包含在函数的定义域内；右侧定义不要求左侧有定义，左侧定义不要求右侧有定义，且均不要求 $f(x_0)$ 有定义。\n\n例如，考虑定义在 $\\mathbb{R}\\setminus\\{0\\}$ 上的函数\n\\[\nf(x)=\\frac{1}{x}.\n\\]\n在 $x_0=0$ 处考察右侧。对任意 $M>0$，取 $\\delta=1/M$，当 $0<x<\\delta$ 时有 $f(x)=1/x>M$，所以\n\\[\n\\lim_{x\\to0^+}\\frac{1}{x}=+\\infty.\n\\]\n因此，$x=0$ 是无穷间断点。这里明确使用了定义域 $\\mathbb{R}\\setminus\\{0\\}$、考察方向 $x\\to0^+$ 以及“对任意 $M>0$，存在 $\\delta>0$”的量词条件。\n\n若至少有一个单侧极限为 $+\\infty$ 或 $-\\infty$，即函数值沿相应方向趋于正无穷或负无穷，则称 $x_0$ 为无穷间断点。若函数在 $x_0$ 附近无界，但不存在趋于 $+\\infty$ 或 $-\\infty$ 的单侧极限，则不称为无穷间断点，而归入第二类间断点中的无界振荡情形。分类时必须先说明函数在相关去心邻域内有定义以及所考察的极限存在性条件。\\label{def:discontinuity-types}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U04",
+            "kind": "theorem",
+            "tex": "设函数 $f$ 与 $g$ 在点 $x_0$ 处连续，且相关运算在 $x_0$ 处有定义。则函数\n\\[\nf+g,\n\\qquad f-g,\n\\qquad fg\n\\]\n在 $x_0$ 处连续。若 $g(x_0)\\neq0$，并且在 $x_0$ 的某个邻域内 $g(x)\\neq0$，则\n\\[\n\\frac{f}{g}\n\\]\n在 $x_0$ 处连续。\n\n若函数 $g$ 在 $x_0$ 处连续，函数 $f$ 在 $g(x_0)$ 处连续，并且复合函数 $f\\circ g$ 在 $x_0$ 的某个邻域内有定义，则 $f\\circ g$ 在 $x_0$ 处连续。\\label{thm:continuity-algebra}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U05",
+            "kind": "proof",
+            "tex": "由连续性的定义，函数 $f$ 与 $g$ 在 $x_0$ 处连续分别意味着\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\qquad\n\\lim_{x\\to x_0}g(x)=g(x_0)\\text{。}\n\\]\n根据极限的和、差与积法则，有\n\\[\n\\lim_{x\\to x_0}(f(x)+g(x))=f(x_0)+g(x_0)=(f+g)(x_0)\\text{，}\n\\]\n\\[\n\\lim_{x\\to x_0}(f(x)-g(x))=f(x_0)-g(x_0)=(f-g)(x_0)\\text{，}\n\\]\n以及\n\\[\n\\lim_{x\\to x_0}f(x)g(x)=f(x_0)g(x_0)=(fg)(x_0)\\text{。}\n\\]\n因此和、差与积在 $x_0$ 处连续。\n\n若 $g(x_0)\\neq0$ 且 $g$ 在 $x_0$ 的某个邻域内不为零，则由商的极限法则，\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)}{g(x)}\n=\\frac{f(x_0)}{g(x_0)}\n=\\left(\\frac{f}{g}\\right)(x_0)\\text{，}\n\\]\n所以商在 $x_0$ 处连续。\n\n最后设 $g$ 在 $x_0$ 处连续，$f$ 在 $g(x_0)$ 处连续，且复合函数在相应邻域内有定义。令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n对这样的 $x$，取 $t=g(x)$；由复合函数在该邻域内有定义，且 $|t-g(x_0)|<\\eta$，从而\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n又因为 $(f\\circ g)(x_0)=f(g(x_0))$，所以 $f\\circ g$ 在 $x_0$ 处连续。",
+            "relates_to": "S04.U04"
+          },
+          {
+            "id": "S04.U06",
+            "kind": "theorem",
+            "tex": "设函数 $g$ 在点 $x_0$ 处连续，函数 $f$ 在点 $g(x_0)$ 处连续，并且存在 $x_0$ 的某个邻域 $U$，使得对每个 $x\\in U$，$g(x)$ 都属于 $f$ 的定义域。则复合函数\n\\[\n(f\\circ g)(x)=f(g(x))\n\\]\n在点 $x_0$ 处连续。\\label{thm:composition-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U07",
+            "kind": "proof",
+            "tex": "令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n根据假设，当 $x$ 属于该邻域 $U$ 时，$g(x)$ 属于 $f$ 的定义域；缩小 $\\delta$ 后还可令 $|x-x_0|<\\delta$ 的点属于 $U$。于是对满足 $|x-x_0|<\\delta$ 的 $x$，令 $t=g(x)$，便有\n\\[\n|t-g(x_0)|=|g(x)-g(x_0)|<\\eta\n\\]\n以及\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n而\n\\[\n(f\\circ g)(x_0)=f(g(x_0))\\text{，}\n\\]\n故\n\\[\n|(f\\circ g)(x)-(f\\circ g)(x_0)|<\\varepsilon.\n\\]\n由点连续的定义，$f\\circ g$ 在 $x_0$ 处连续。",
+            "relates_to": "S04.U06"
+          },
+          {
+            "id": "S04.U08",
+            "kind": "example",
+            "tex": "判断函数\n\\[\nf(x)=\\frac{x^2-1}{x-1}\n\\]\n在 $x=1$ 处的连续性，并指出该点的间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U09",
+            "kind": "solution",
+            "tex": "函数 $f$ 的定义域为 $\\mathbb{R}\\setminus\\{1\\}$，因此 $f(1)$ 未定义。当 $x\\neq1$ 时，\n\\[\nf(x)=\\frac{(x-1)(x+1)}{x-1}=x+1\\text{。}\n\\]\n所以\n\\[\n\\lim_{x\\to1}f(x)=\\lim_{x\\to1}(x+1)=2\\text{。}\n\\]\n极限存在且为有限数，但函数在 $x=1$ 处没有定义。因此 $x=1$ 是可去间断点。若补定义 $f(1)=2$，所得函数将在 $x=1$ 处连续。",
+            "relates_to": "S04.U08"
+          },
+          {
+            "id": "S04.U10",
+            "kind": "example",
+            "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n1+x,&x<0,\\\\\n2+x^2,&x\\geq0\\text{。}\n\\end{cases}\n\\]\n判断 $f$ 在 $x=0$ 处的连续性及间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U11",
+            "kind": "solution",
+            "tex": "由左侧表达式可得\n\\[\n\\lim_{x\\to0^-}f(x)=\\lim_{x\\to0^-}(1+x)=1\\text{。}\n\\]\n由右侧表达式可得\n\\[\n\\lim_{x\\to0^+}f(x)=\\lim_{x\\to0^+}(2+x^2)=2\\text{。}\n\\]\n又因为 $f(0)=2$，所以右极限等于函数值，但左极限与右极限不相等。根据双侧极限存在的充要条件，$\\lim_{x\\to0}f(x)$ 不存在。因此 $f$ 在 $x=0$ 处不连续，且 $x=0$ 是跳跃间断点。",
+            "relates_to": "S04.U10"
+          },
+          {
+            "id": "S04.U12",
+            "kind": "exercise",
+            "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n\\dfrac{x^2-4}{x-2},&x\\neq2,\\\\\na,&x=2\\text{。}\n\\end{cases}\n\\]\n求常数 $a$ 的值，使函数 $f$ 在 $x=2$ 处连续，并说明若 $a$ 取其他值时该点的间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U13",
+            "kind": "solution",
+            "tex": "当 $x\\neq2$ 时，\n\\[\n\\frac{x^2-4}{x-2}=\\frac{(x-2)(x+2)}{x-2}=x+2\\text{。}\n\\]\n因此\n\\[\n\\lim_{x\\to2}f(x)=\\lim_{x\\to2}(x+2)=4\\text{。}\n\\]\n函数在 $x=2$ 处连续的条件是\n\\[\n\\lim_{x\\to2}f(x)=f(2)=a\\text{，}\n\\]\n所以必须取\n\\[\na=4\\text{。}\n\\]\n当 $a=4$ 时，函数在 $x=2$ 处连续；当 $a\\neq4$ 时，极限仍存在且等于 $4$，但函数值不等于极限值，因此 $x=2$ 是可去间断点。",
+            "relates_to": "S04.U12"
+          }
+        ],
+        "calculations": [],
+        "calculation_limitations": [
+          "协议支持的表达式树不能表达函数定义、邻域量词、分段函数及连续性的定义条件，因此无法对本节关于点连续、区间连续和间断点分类的结论提交适用的符号核算。",
+          "本节定理涉及一般函数的定义域、极限存在性以及复合函数的定义域条件，现有核算协议不能完整表示这些复合约束；相关结论由正文中的条件和证明给出。"
+        ],
+        "uncertainties": []
+      }
+    },
+    "r3_candidate": {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\runs\\a45be503af594ce8aae0bb1e4c30184b\\global-repairs\\r3-b62b4971\\S04-b685fe55-candidate.json",
+      "relative_path": "workspace/iteration2-live/runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r3-b62b4971/S04-b685fe55-candidate.json",
+      "raw_sha256": "77e41e8d9ad2d70f1fca0d774c05d2e5c25a81e5bdf1dff683c6bc4bfc1b0396",
+      "value": {
+        "section_id": "S04",
+        "units": [
+          {
+            "id": "S04.U01",
+            "kind": "definition",
+            "tex": "设函数 $f$ 在点 $x_0$ 的某个邻域内有定义。若 $f$ 在 $x_0$ 处有定义，且\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n则称函数 $f$ 在点 $x_0$ 处连续。等价地，$f$ 在 $x_0$ 处连续是指：对任意 $\\varepsilon>0$，都存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时有\n\\[\n|f(x)-f(x_0)|<\\varepsilon.\n\\]\n其中，条件 $f(x_0)$ 有定义不可省略。若 $f$ 在区间内每一点都连续，则称 $f$ 在该区间上连续。\\label{def:point-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U02",
+            "kind": "definition",
+            "tex": "设 $f$ 在区间 $I$ 上有定义。若对每个内点 $x_0\\in I$，函数 $f$ 在 $x_0$ 处连续；当 $I$ 含有端点时，函数在左端点处连续是指右极限等于函数值，在右端点处连续是指左极限等于函数值，则称 $f$ 在区间 $I$ 上连续。\n\n特别地，当 $I=[a,b]$ 且 $a<b$ 时，$f$ 在 $[a,b]$ 上连续意味着：对每个 $x_0\\in(a,b)$，有\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n并且有\n\\[\n\\lim_{x\\to a^+}f(x)=f(a)\\text{，}\n\\qquad\n\\lim_{x\\to b^-}f(x)=f(b)\\text{。}\n\\]\n\\label{def:interval-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U03",
+            "kind": "definition",
+            "tex": "设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义。若 $f(x_0)$ 未定义，或 $f(x_0)$ 有定义但 $f$ 在 $x_0$ 处不连续，则称 $x_0$ 为 $f$ 的间断点。因此，间断点不要求属于函数的定义域。常见类型如下。\n\n若极限 $\\lim_{x\\to x_0}f(x)$ 存在且为有限数，但 $f(x_0)$ 未定义或 $f(x_0)\\neq\\lim_{x\\to x_0}f(x)$，则称 $x_0$ 为可去间断点。\n\n若左、右极限都存在且有限，但不相等，即\n\\[\n\\lim_{x\\to x_0^-}f(x)\\neq\\lim_{x\\to x_0^+}f(x)\\text{，}\n\\]\n则称 $x_0$ 为跳跃间断点。\n\n为说明无穷间断点，先独立定义单侧无穷极限；这些定义不要求上述双侧去心邻域条件。定义右侧无穷极限时，只设 $f$ 在某个右侧去心邻域 $(x_0,x_0+r)$ 内有定义，其中 $r>0$。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=-\\infty.\n\\]\n定义左侧无穷极限时，只设 $f$ 在某个左侧去心邻域 $(x_0-r,x_0)$ 内有定义，其中 $r>0$，不要求右侧有定义。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=-\\infty.\n\\]\n这里的 $\\delta$ 均可取小到使相应单侧去心邻域包含在函数的定义域内；右侧定义不要求左侧有定义，左侧定义不要求右侧有定义，且均不要求 $f(x_0)$ 有定义。\n\n例如，考虑定义在 $\\mathbb{R}\\setminus\\{0\\}$ 上的函数\n\\[\nf(x)=\\frac{1}{x}.\n\\]\n在 $x_0=0$ 处考察右侧。对任意 $M>0$，取 $\\delta=1/M$，当 $0<x<\\delta$ 时有 $f(x)=1/x>M$，所以\n\\[\n\\lim_{x\\to0^+}\\frac{1}{x}=+\\infty.\n\\]\n因此，$x=0$ 是无穷间断点。这里明确使用了定义域 $\\mathbb{R}\\setminus\\{0\\}$、考察方向 $x\\to0^+$ 以及“对任意 $M>0$，存在 $\\delta>0$”的量词条件。\n\n若至少有一个单侧极限为 $+\\infty$ 或 $-\\infty$，即函数值沿相应方向趋于正无穷或负无穷，则称 $x_0$ 为无穷间断点。若函数在 $x_0$ 附近无界，但不存在趋于 $+\\infty$ 或 $-\\infty$ 的单侧极限，则不称为无穷间断点，而归入第二类间断点中的无界振荡情形。分类时必须先说明函数在相关去心邻域内有定义以及所考察的极限存在性条件。\\label{def:discontinuity-types}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U04",
+            "kind": "theorem",
+            "tex": "设函数 $f$ 与 $g$ 在点 $x_0$ 处连续，且相关运算在 $x_0$ 处有定义。则函数\n\\[\nf+g,\n\\qquad f-g,\n\\qquad fg\n\\]\n在 $x_0$ 处连续。若 $g(x_0)\\neq0$，并且在 $x_0$ 的某个邻域内 $g(x)\\neq0$，则\n\\[\n\\frac{f}{g}\n\\]\n在 $x_0$ 处连续。\n\n若函数 $g$ 在 $x_0$ 处连续，函数 $f$ 在 $g(x_0)$ 处连续，并且复合函数 $f\\circ g$ 在 $x_0$ 的某个邻域内有定义，则 $f\\circ g$ 在 $x_0$ 处连续。\\label{thm:continuity-algebra}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U05",
+            "kind": "proof",
+            "tex": "由连续性的定义，函数 $f$ 与 $g$ 在 $x_0$ 处连续分别意味着\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\qquad\n\\lim_{x\\to x_0}g(x)=g(x_0)\\text{。}\n\\]\n根据极限的和、差与积法则，有\n\\[\n\\lim_{x\\to x_0}(f(x)+g(x))=f(x_0)+g(x_0)=(f+g)(x_0)\\text{，}\n\\]\n\\[\n\\lim_{x\\to x_0}(f(x)-g(x))=f(x_0)-g(x_0)=(f-g)(x_0)\\text{，}\n\\]\n以及\n\\[\n\\lim_{x\\to x_0}f(x)g(x)=f(x_0)g(x_0)=(fg)(x_0)\\text{。}\n\\]\n因此和、差与积在 $x_0$ 处连续。\n\n若 $g(x_0)\\neq0$ 且 $g$ 在 $x_0$ 的某个邻域内不为零，则由商的极限法则，\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)}{g(x)}\n=\\frac{f(x_0)}{g(x_0)}\n=\\left(\\frac{f}{g}\\right)(x_0)\\text{，}\n\\]\n所以商在 $x_0$ 处连续。\n\n最后设 $g$ 在 $x_0$ 处连续，$f$ 在 $g(x_0)$ 处连续，且复合函数在相应邻域内有定义。令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n对这样的 $x$，取 $t=g(x)$；由复合函数在该邻域内有定义，且 $|t-g(x_0)|<\\eta$，从而\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n又因为 $(f\\circ g)(x_0)=f(g(x_0))$，所以 $f\\circ g$ 在 $x_0$ 处连续。",
+            "relates_to": "S04.U04"
+          },
+          {
+            "id": "S04.U06",
+            "kind": "theorem",
+            "tex": "设函数 $g$ 在点 $x_0$ 处连续，函数 $f$ 在点 $g(x_0)$ 处连续，并且存在 $x_0$ 的某个邻域 $U$，使得对每个 $x\\in U$，$g(x)$ 都属于 $f$ 的定义域。则复合函数\n\\[\n(f\\circ g)(x)=f(g(x))\n\\]\n在点 $x_0$ 处连续。\\label{thm:composition-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U07",
+            "kind": "proof",
+            "tex": "令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n根据假设，当 $x$ 属于该邻域 $U$ 时，$g(x)$ 属于 $f$ 的定义域；缩小 $\\delta$ 后还可令 $|x-x_0|<\\delta$ 的点属于 $U$。于是对满足 $|x-x_0|<\\delta$ 的 $x$，令 $t=g(x)$，便有\n\\[\n|t-g(x_0)|=|g(x)-g(x_0)|<\\eta\n\\]\n以及\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n而\n\\[\n(f\\circ g)(x_0)=f(g(x_0))\\text{，}\n\\]\n故\n\\[\n|(f\\circ g)(x)-(f\\circ g)(x_0)|<\\varepsilon.\n\\]\n由点连续的定义，$f\\circ g$ 在 $x_0$ 处连续。",
+            "relates_to": "S04.U06"
+          },
+          {
+            "id": "S04.U08",
+            "kind": "example",
+            "tex": "判断函数\n\\[\nf(x)=\\frac{x^2-1}{x-1}\n\\]\n在 $x=1$ 处的连续性，并指出该点的间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U09",
+            "kind": "solution",
+            "tex": "函数 $f$ 的定义域为 $\\mathbb{R}\\setminus\\{1\\}$，因此 $f(1)$ 未定义。当 $x\\neq1$ 时，\n\\[\nf(x)=\\frac{(x-1)(x+1)}{x-1}=x+1\\text{。}\n\\]\n所以\n\\[\n\\lim_{x\\to1}f(x)=\\lim_{x\\to1}(x+1)=2\\text{。}\n\\]\n极限存在且为有限数，但函数在 $x=1$ 处没有定义。因此 $x=1$ 是可去间断点。若补定义 $f(1)=2$，所得函数将在 $x=1$ 处连续。",
+            "relates_to": "S04.U08"
+          },
+          {
+            "id": "S04.U10",
+            "kind": "example",
+            "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n1+x,&x<0,\\\\\n2+x^2,&x\\geq0\\text{。}\n\\end{cases}\n\\]\n判断 $f$ 在 $x=0$ 处的连续性及间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U11",
+            "kind": "solution",
+            "tex": "由左侧表达式可得\n\\[\n\\lim_{x\\to0^-}f(x)=\\lim_{x\\to0^-}(1+x)=1\\text{。}\n\\]\n由右侧表达式可得\n\\[\n\\lim_{x\\to0^+}f(x)=\\lim_{x\\to0^+}(2+x^2)=2\\text{。}\n\\]\n又因为 $f(0)=2$，所以右极限等于函数值，但左极限与右极限不相等。根据双侧极限存在的充要条件，$\\lim_{x\\to0}f(x)$ 不存在。因此 $f$ 在 $x=0$ 处不连续，且 $x=0$ 是跳跃间断点。",
+            "relates_to": "S04.U10"
+          },
+          {
+            "id": "S04.U12",
+            "kind": "exercise",
+            "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n\\dfrac{x^2-4}{x-2},&x\\neq2,\\\\\na,&x=2\\text{。}\n\\end{cases}\n\\]\n求常数 $a$ 的值，使函数 $f$ 在 $x=2$ 处连续，并说明若 $a$ 取其他值时该点的间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U13",
+            "kind": "solution",
+            "tex": "当 $x\\neq2$ 时，\n\\[\n\\frac{x^2-4}{x-2}=\\frac{(x-2)(x+2)}{x-2}=x+2\\text{。}\n\\]\n因此\n\\[\n\\lim_{x\\to2}f(x)=\\lim_{x\\to2}(x+2)=4\\text{。}\n\\]\n函数在 $x=2$ 处连续的条件是\n\\[\n\\lim_{x\\to2}f(x)=f(2)=a\\text{，}\n\\]\n所以必须取\n\\[\na=4\\text{。}\n\\]\n当 $a=4$ 时，函数在 $x=2$ 处连续；当 $a\\neq4$ 时，极限仍存在且等于 $4$，但函数值不等于极限值，因此 $x=2$ 是可去间断点。",
+            "relates_to": "S04.U12"
+          }
+        ],
+        "calculations": [],
+        "calculation_limitations": [
+          "协议支持的表达式树不能表达函数定义、邻域量词、分段函数及连续性的定义条件，因此无法对本节关于点连续、区间连续和间断点分类的结论提交适用的符号核算。",
+          "本节定理涉及一般函数的定义域、极限存在性以及复合函数的定义域条件，现有核算协议不能完整表示这些复合约束；相关结论由正文中的条件和证明给出。"
+        ],
+        "uncertainties": []
+      }
+    },
+    "local_candidate": {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\candidate.json",
+      "relative_path": "workspace/iteration2-live/b/a45be503af594ce8/sS04_00aecb9ed051/candidate.json",
+      "raw_sha256": "77e41e8d9ad2d70f1fca0d774c05d2e5c25a81e5bdf1dff683c6bc4bfc1b0396",
+      "value": {
+        "section_id": "S04",
+        "units": [
+          {
+            "id": "S04.U01",
+            "kind": "definition",
+            "tex": "设函数 $f$ 在点 $x_0$ 的某个邻域内有定义。若 $f$ 在 $x_0$ 处有定义，且\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n则称函数 $f$ 在点 $x_0$ 处连续。等价地，$f$ 在 $x_0$ 处连续是指：对任意 $\\varepsilon>0$，都存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时有\n\\[\n|f(x)-f(x_0)|<\\varepsilon.\n\\]\n其中，条件 $f(x_0)$ 有定义不可省略。若 $f$ 在区间内每一点都连续，则称 $f$ 在该区间上连续。\\label{def:point-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U02",
+            "kind": "definition",
+            "tex": "设 $f$ 在区间 $I$ 上有定义。若对每个内点 $x_0\\in I$，函数 $f$ 在 $x_0$ 处连续；当 $I$ 含有端点时，函数在左端点处连续是指右极限等于函数值，在右端点处连续是指左极限等于函数值，则称 $f$ 在区间 $I$ 上连续。\n\n特别地，当 $I=[a,b]$ 且 $a<b$ 时，$f$ 在 $[a,b]$ 上连续意味着：对每个 $x_0\\in(a,b)$，有\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n并且有\n\\[\n\\lim_{x\\to a^+}f(x)=f(a)\\text{，}\n\\qquad\n\\lim_{x\\to b^-}f(x)=f(b)\\text{。}\n\\]\n\\label{def:interval-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U03",
+            "kind": "definition",
+            "tex": "设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义。若 $f(x_0)$ 未定义，或 $f(x_0)$ 有定义但 $f$ 在 $x_0$ 处不连续，则称 $x_0$ 为 $f$ 的间断点。因此，间断点不要求属于函数的定义域。常见类型如下。\n\n若极限 $\\lim_{x\\to x_0}f(x)$ 存在且为有限数，但 $f(x_0)$ 未定义或 $f(x_0)\\neq\\lim_{x\\to x_0}f(x)$，则称 $x_0$ 为可去间断点。\n\n若左、右极限都存在且有限，但不相等，即\n\\[\n\\lim_{x\\to x_0^-}f(x)\\neq\\lim_{x\\to x_0^+}f(x)\\text{，}\n\\]\n则称 $x_0$ 为跳跃间断点。\n\n为说明无穷间断点，先独立定义单侧无穷极限；这些定义不要求上述双侧去心邻域条件。定义右侧无穷极限时，只设 $f$ 在某个右侧去心邻域 $(x_0,x_0+r)$ 内有定义，其中 $r>0$。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=-\\infty.\n\\]\n定义左侧无穷极限时，只设 $f$ 在某个左侧去心邻域 $(x_0-r,x_0)$ 内有定义，其中 $r>0$，不要求右侧有定义。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=-\\infty.\n\\]\n这里的 $\\delta$ 均可取小到使相应单侧去心邻域包含在函数的定义域内；右侧定义不要求左侧有定义，左侧定义不要求右侧有定义，且均不要求 $f(x_0)$ 有定义。\n\n例如，考虑定义在 $\\mathbb{R}\\setminus\\{0\\}$ 上的函数\n\\[\nf(x)=\\frac{1}{x}.\n\\]\n在 $x_0=0$ 处考察右侧。对任意 $M>0$，取 $\\delta=1/M$，当 $0<x<\\delta$ 时有 $f(x)=1/x>M$，所以\n\\[\n\\lim_{x\\to0^+}\\frac{1}{x}=+\\infty.\n\\]\n因此，$x=0$ 是无穷间断点。这里明确使用了定义域 $\\mathbb{R}\\setminus\\{0\\}$、考察方向 $x\\to0^+$ 以及“对任意 $M>0$，存在 $\\delta>0$”的量词条件。\n\n若至少有一个单侧极限为 $+\\infty$ 或 $-\\infty$，即函数值沿相应方向趋于正无穷或负无穷，则称 $x_0$ 为无穷间断点。若函数在 $x_0$ 附近无界，但不存在趋于 $+\\infty$ 或 $-\\infty$ 的单侧极限，则不称为无穷间断点，而归入第二类间断点中的无界振荡情形。分类时必须先说明函数在相关去心邻域内有定义以及所考察的极限存在性条件。\\label{def:discontinuity-types}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U04",
+            "kind": "theorem",
+            "tex": "设函数 $f$ 与 $g$ 在点 $x_0$ 处连续，且相关运算在 $x_0$ 处有定义。则函数\n\\[\nf+g,\n\\qquad f-g,\n\\qquad fg\n\\]\n在 $x_0$ 处连续。若 $g(x_0)\\neq0$，并且在 $x_0$ 的某个邻域内 $g(x)\\neq0$，则\n\\[\n\\frac{f}{g}\n\\]\n在 $x_0$ 处连续。\n\n若函数 $g$ 在 $x_0$ 处连续，函数 $f$ 在 $g(x_0)$ 处连续，并且复合函数 $f\\circ g$ 在 $x_0$ 的某个邻域内有定义，则 $f\\circ g$ 在 $x_0$ 处连续。\\label{thm:continuity-algebra}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U05",
+            "kind": "proof",
+            "tex": "由连续性的定义，函数 $f$ 与 $g$ 在 $x_0$ 处连续分别意味着\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\qquad\n\\lim_{x\\to x_0}g(x)=g(x_0)\\text{。}\n\\]\n根据极限的和、差与积法则，有\n\\[\n\\lim_{x\\to x_0}(f(x)+g(x))=f(x_0)+g(x_0)=(f+g)(x_0)\\text{，}\n\\]\n\\[\n\\lim_{x\\to x_0}(f(x)-g(x))=f(x_0)-g(x_0)=(f-g)(x_0)\\text{，}\n\\]\n以及\n\\[\n\\lim_{x\\to x_0}f(x)g(x)=f(x_0)g(x_0)=(fg)(x_0)\\text{。}\n\\]\n因此和、差与积在 $x_0$ 处连续。\n\n若 $g(x_0)\\neq0$ 且 $g$ 在 $x_0$ 的某个邻域内不为零，则由商的极限法则，\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)}{g(x)}\n=\\frac{f(x_0)}{g(x_0)}\n=\\left(\\frac{f}{g}\\right)(x_0)\\text{，}\n\\]\n所以商在 $x_0$ 处连续。\n\n最后设 $g$ 在 $x_0$ 处连续，$f$ 在 $g(x_0)$ 处连续，且复合函数在相应邻域内有定义。令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n对这样的 $x$，取 $t=g(x)$；由复合函数在该邻域内有定义，且 $|t-g(x_0)|<\\eta$，从而\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n又因为 $(f\\circ g)(x_0)=f(g(x_0))$，所以 $f\\circ g$ 在 $x_0$ 处连续。",
+            "relates_to": "S04.U04"
+          },
+          {
+            "id": "S04.U06",
+            "kind": "theorem",
+            "tex": "设函数 $g$ 在点 $x_0$ 处连续，函数 $f$ 在点 $g(x_0)$ 处连续，并且存在 $x_0$ 的某个邻域 $U$，使得对每个 $x\\in U$，$g(x)$ 都属于 $f$ 的定义域。则复合函数\n\\[\n(f\\circ g)(x)=f(g(x))\n\\]\n在点 $x_0$ 处连续。\\label{thm:composition-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U07",
+            "kind": "proof",
+            "tex": "令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n根据假设，当 $x$ 属于该邻域 $U$ 时，$g(x)$ 属于 $f$ 的定义域；缩小 $\\delta$ 后还可令 $|x-x_0|<\\delta$ 的点属于 $U$。于是对满足 $|x-x_0|<\\delta$ 的 $x$，令 $t=g(x)$，便有\n\\[\n|t-g(x_0)|=|g(x)-g(x_0)|<\\eta\n\\]\n以及\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n而\n\\[\n(f\\circ g)(x_0)=f(g(x_0))\\text{，}\n\\]\n故\n\\[\n|(f\\circ g)(x)-(f\\circ g)(x_0)|<\\varepsilon.\n\\]\n由点连续的定义，$f\\circ g$ 在 $x_0$ 处连续。",
+            "relates_to": "S04.U06"
+          },
+          {
+            "id": "S04.U08",
+            "kind": "example",
+            "tex": "判断函数\n\\[\nf(x)=\\frac{x^2-1}{x-1}\n\\]\n在 $x=1$ 处的连续性，并指出该点的间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U09",
+            "kind": "solution",
+            "tex": "函数 $f$ 的定义域为 $\\mathbb{R}\\setminus\\{1\\}$，因此 $f(1)$ 未定义。当 $x\\neq1$ 时，\n\\[\nf(x)=\\frac{(x-1)(x+1)}{x-1}=x+1\\text{。}\n\\]\n所以\n\\[\n\\lim_{x\\to1}f(x)=\\lim_{x\\to1}(x+1)=2\\text{。}\n\\]\n极限存在且为有限数，但函数在 $x=1$ 处没有定义。因此 $x=1$ 是可去间断点。若补定义 $f(1)=2$，所得函数将在 $x=1$ 处连续。",
+            "relates_to": "S04.U08"
+          },
+          {
+            "id": "S04.U10",
+            "kind": "example",
+            "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n1+x,&x<0,\\\\\n2+x^2,&x\\geq0\\text{。}\n\\end{cases}\n\\]\n判断 $f$ 在 $x=0$ 处的连续性及间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U11",
+            "kind": "solution",
+            "tex": "由左侧表达式可得\n\\[\n\\lim_{x\\to0^-}f(x)=\\lim_{x\\to0^-}(1+x)=1\\text{。}\n\\]\n由右侧表达式可得\n\\[\n\\lim_{x\\to0^+}f(x)=\\lim_{x\\to0^+}(2+x^2)=2\\text{。}\n\\]\n又因为 $f(0)=2$，所以右极限等于函数值，但左极限与右极限不相等。根据双侧极限存在的充要条件，$\\lim_{x\\to0}f(x)$ 不存在。因此 $f$ 在 $x=0$ 处不连续，且 $x=0$ 是跳跃间断点。",
+            "relates_to": "S04.U10"
+          },
+          {
+            "id": "S04.U12",
+            "kind": "exercise",
+            "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n\\dfrac{x^2-4}{x-2},&x\\neq2,\\\\\na,&x=2\\text{。}\n\\end{cases}\n\\]\n求常数 $a$ 的值，使函数 $f$ 在 $x=2$ 处连续，并说明若 $a$ 取其他值时该点的间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U13",
+            "kind": "solution",
+            "tex": "当 $x\\neq2$ 时，\n\\[\n\\frac{x^2-4}{x-2}=\\frac{(x-2)(x+2)}{x-2}=x+2\\text{。}\n\\]\n因此\n\\[\n\\lim_{x\\to2}f(x)=\\lim_{x\\to2}(x+2)=4\\text{。}\n\\]\n函数在 $x=2$ 处连续的条件是\n\\[\n\\lim_{x\\to2}f(x)=f(2)=a\\text{，}\n\\]\n所以必须取\n\\[\na=4\\text{。}\n\\]\n当 $a=4$ 时，函数在 $x=2$ 处连续；当 $a\\neq4$ 时，极限仍存在且等于 $4$，但函数值不等于极限值，因此 $x=2$ 是可去间断点。",
+            "relates_to": "S04.U12"
+          }
+        ],
+        "calculations": [],
+        "calculation_limitations": [
+          "协议支持的表达式树不能表达函数定义、邻域量词、分段函数及连续性的定义条件，因此无法对本节关于点连续、区间连续和间断点分类的结论提交适用的符号核算。",
+          "本节定理涉及一般函数的定义域、极限存在性以及复合函数的定义域条件，现有核算协议不能完整表示这些复合约束；相关结论由正文中的条件和证明给出。"
+        ],
+        "uncertainties": []
+      }
+    },
+    "local_normalized": {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\candidate-normalized.json",
+      "relative_path": "workspace/iteration2-live/b/a45be503af594ce8/sS04_00aecb9ed051/candidate-normalized.json",
+      "raw_sha256": "77e41e8d9ad2d70f1fca0d774c05d2e5c25a81e5bdf1dff683c6bc4bfc1b0396",
+      "value": {
+        "section_id": "S04",
+        "units": [
+          {
+            "id": "S04.U01",
+            "kind": "definition",
+            "tex": "设函数 $f$ 在点 $x_0$ 的某个邻域内有定义。若 $f$ 在 $x_0$ 处有定义，且\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n则称函数 $f$ 在点 $x_0$ 处连续。等价地，$f$ 在 $x_0$ 处连续是指：对任意 $\\varepsilon>0$，都存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时有\n\\[\n|f(x)-f(x_0)|<\\varepsilon.\n\\]\n其中，条件 $f(x_0)$ 有定义不可省略。若 $f$ 在区间内每一点都连续，则称 $f$ 在该区间上连续。\\label{def:point-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U02",
+            "kind": "definition",
+            "tex": "设 $f$ 在区间 $I$ 上有定义。若对每个内点 $x_0\\in I$，函数 $f$ 在 $x_0$ 处连续；当 $I$ 含有端点时，函数在左端点处连续是指右极限等于函数值，在右端点处连续是指左极限等于函数值，则称 $f$ 在区间 $I$ 上连续。\n\n特别地，当 $I=[a,b]$ 且 $a<b$ 时，$f$ 在 $[a,b]$ 上连续意味着：对每个 $x_0\\in(a,b)$，有\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n并且有\n\\[\n\\lim_{x\\to a^+}f(x)=f(a)\\text{，}\n\\qquad\n\\lim_{x\\to b^-}f(x)=f(b)\\text{。}\n\\]\n\\label{def:interval-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U03",
+            "kind": "definition",
+            "tex": "设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义。若 $f(x_0)$ 未定义，或 $f(x_0)$ 有定义但 $f$ 在 $x_0$ 处不连续，则称 $x_0$ 为 $f$ 的间断点。因此，间断点不要求属于函数的定义域。常见类型如下。\n\n若极限 $\\lim_{x\\to x_0}f(x)$ 存在且为有限数，但 $f(x_0)$ 未定义或 $f(x_0)\\neq\\lim_{x\\to x_0}f(x)$，则称 $x_0$ 为可去间断点。\n\n若左、右极限都存在且有限，但不相等，即\n\\[\n\\lim_{x\\to x_0^-}f(x)\\neq\\lim_{x\\to x_0^+}f(x)\\text{，}\n\\]\n则称 $x_0$ 为跳跃间断点。\n\n为说明无穷间断点，先独立定义单侧无穷极限；这些定义不要求上述双侧去心邻域条件。定义右侧无穷极限时，只设 $f$ 在某个右侧去心邻域 $(x_0,x_0+r)$ 内有定义，其中 $r>0$。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=-\\infty.\n\\]\n定义左侧无穷极限时，只设 $f$ 在某个左侧去心邻域 $(x_0-r,x_0)$ 内有定义，其中 $r>0$，不要求右侧有定义。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=-\\infty.\n\\]\n这里的 $\\delta$ 均可取小到使相应单侧去心邻域包含在函数的定义域内；右侧定义不要求左侧有定义，左侧定义不要求右侧有定义，且均不要求 $f(x_0)$ 有定义。\n\n例如，考虑定义在 $\\mathbb{R}\\setminus\\{0\\}$ 上的函数\n\\[\nf(x)=\\frac{1}{x}.\n\\]\n在 $x_0=0$ 处考察右侧。对任意 $M>0$，取 $\\delta=1/M$，当 $0<x<\\delta$ 时有 $f(x)=1/x>M$，所以\n\\[\n\\lim_{x\\to0^+}\\frac{1}{x}=+\\infty.\n\\]\n因此，$x=0$ 是无穷间断点。这里明确使用了定义域 $\\mathbb{R}\\setminus\\{0\\}$、考察方向 $x\\to0^+$ 以及“对任意 $M>0$，存在 $\\delta>0$”的量词条件。\n\n若至少有一个单侧极限为 $+\\infty$ 或 $-\\infty$，即函数值沿相应方向趋于正无穷或负无穷，则称 $x_0$ 为无穷间断点。若函数在 $x_0$ 附近无界，但不存在趋于 $+\\infty$ 或 $-\\infty$ 的单侧极限，则不称为无穷间断点，而归入第二类间断点中的无界振荡情形。分类时必须先说明函数在相关去心邻域内有定义以及所考察的极限存在性条件。\\label{def:discontinuity-types}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U04",
+            "kind": "theorem",
+            "tex": "设函数 $f$ 与 $g$ 在点 $x_0$ 处连续，且相关运算在 $x_0$ 处有定义。则函数\n\\[\nf+g,\n\\qquad f-g,\n\\qquad fg\n\\]\n在 $x_0$ 处连续。若 $g(x_0)\\neq0$，并且在 $x_0$ 的某个邻域内 $g(x)\\neq0$，则\n\\[\n\\frac{f}{g}\n\\]\n在 $x_0$ 处连续。\n\n若函数 $g$ 在 $x_0$ 处连续，函数 $f$ 在 $g(x_0)$ 处连续，并且复合函数 $f\\circ g$ 在 $x_0$ 的某个邻域内有定义，则 $f\\circ g$ 在 $x_0$ 处连续。\\label{thm:continuity-algebra}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U05",
+            "kind": "proof",
+            "tex": "由连续性的定义，函数 $f$ 与 $g$ 在 $x_0$ 处连续分别意味着\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\qquad\n\\lim_{x\\to x_0}g(x)=g(x_0)\\text{。}\n\\]\n根据极限的和、差与积法则，有\n\\[\n\\lim_{x\\to x_0}(f(x)+g(x))=f(x_0)+g(x_0)=(f+g)(x_0)\\text{，}\n\\]\n\\[\n\\lim_{x\\to x_0}(f(x)-g(x))=f(x_0)-g(x_0)=(f-g)(x_0)\\text{，}\n\\]\n以及\n\\[\n\\lim_{x\\to x_0}f(x)g(x)=f(x_0)g(x_0)=(fg)(x_0)\\text{。}\n\\]\n因此和、差与积在 $x_0$ 处连续。\n\n若 $g(x_0)\\neq0$ 且 $g$ 在 $x_0$ 的某个邻域内不为零，则由商的极限法则，\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)}{g(x)}\n=\\frac{f(x_0)}{g(x_0)}\n=\\left(\\frac{f}{g}\\right)(x_0)\\text{，}\n\\]\n所以商在 $x_0$ 处连续。\n\n最后设 $g$ 在 $x_0$ 处连续，$f$ 在 $g(x_0)$ 处连续，且复合函数在相应邻域内有定义。令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n对这样的 $x$，取 $t=g(x)$；由复合函数在该邻域内有定义，且 $|t-g(x_0)|<\\eta$，从而\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n又因为 $(f\\circ g)(x_0)=f(g(x_0))$，所以 $f\\circ g$ 在 $x_0$ 处连续。",
+            "relates_to": "S04.U04"
+          },
+          {
+            "id": "S04.U06",
+            "kind": "theorem",
+            "tex": "设函数 $g$ 在点 $x_0$ 处连续，函数 $f$ 在点 $g(x_0)$ 处连续，并且存在 $x_0$ 的某个邻域 $U$，使得对每个 $x\\in U$，$g(x)$ 都属于 $f$ 的定义域。则复合函数\n\\[\n(f\\circ g)(x)=f(g(x))\n\\]\n在点 $x_0$ 处连续。\\label{thm:composition-continuity}",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U07",
+            "kind": "proof",
+            "tex": "令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n根据假设，当 $x$ 属于该邻域 $U$ 时，$g(x)$ 属于 $f$ 的定义域；缩小 $\\delta$ 后还可令 $|x-x_0|<\\delta$ 的点属于 $U$。于是对满足 $|x-x_0|<\\delta$ 的 $x$，令 $t=g(x)$，便有\n\\[\n|t-g(x_0)|=|g(x)-g(x_0)|<\\eta\n\\]\n以及\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n而\n\\[\n(f\\circ g)(x_0)=f(g(x_0))\\text{，}\n\\]\n故\n\\[\n|(f\\circ g)(x)-(f\\circ g)(x_0)|<\\varepsilon.\n\\]\n由点连续的定义，$f\\circ g$ 在 $x_0$ 处连续。",
+            "relates_to": "S04.U06"
+          },
+          {
+            "id": "S04.U08",
+            "kind": "example",
+            "tex": "判断函数\n\\[\nf(x)=\\frac{x^2-1}{x-1}\n\\]\n在 $x=1$ 处的连续性，并指出该点的间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U09",
+            "kind": "solution",
+            "tex": "函数 $f$ 的定义域为 $\\mathbb{R}\\setminus\\{1\\}$，因此 $f(1)$ 未定义。当 $x\\neq1$ 时，\n\\[\nf(x)=\\frac{(x-1)(x+1)}{x-1}=x+1\\text{。}\n\\]\n所以\n\\[\n\\lim_{x\\to1}f(x)=\\lim_{x\\to1}(x+1)=2\\text{。}\n\\]\n极限存在且为有限数，但函数在 $x=1$ 处没有定义。因此 $x=1$ 是可去间断点。若补定义 $f(1)=2$，所得函数将在 $x=1$ 处连续。",
+            "relates_to": "S04.U08"
+          },
+          {
+            "id": "S04.U10",
+            "kind": "example",
+            "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n1+x,&x<0,\\\\\n2+x^2,&x\\geq0\\text{。}\n\\end{cases}\n\\]\n判断 $f$ 在 $x=0$ 处的连续性及间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U11",
+            "kind": "solution",
+            "tex": "由左侧表达式可得\n\\[\n\\lim_{x\\to0^-}f(x)=\\lim_{x\\to0^-}(1+x)=1\\text{。}\n\\]\n由右侧表达式可得\n\\[\n\\lim_{x\\to0^+}f(x)=\\lim_{x\\to0^+}(2+x^2)=2\\text{。}\n\\]\n又因为 $f(0)=2$，所以右极限等于函数值，但左极限与右极限不相等。根据双侧极限存在的充要条件，$\\lim_{x\\to0}f(x)$ 不存在。因此 $f$ 在 $x=0$ 处不连续，且 $x=0$ 是跳跃间断点。",
+            "relates_to": "S04.U10"
+          },
+          {
+            "id": "S04.U12",
+            "kind": "exercise",
+            "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n\\dfrac{x^2-4}{x-2},&x\\neq2,\\\\\na,&x=2\\text{。}\n\\end{cases}\n\\]\n求常数 $a$ 的值，使函数 $f$ 在 $x=2$ 处连续，并说明若 $a$ 取其他值时该点的间断类型。",
+            "relates_to": null
+          },
+          {
+            "id": "S04.U13",
+            "kind": "solution",
+            "tex": "当 $x\\neq2$ 时，\n\\[\n\\frac{x^2-4}{x-2}=\\frac{(x-2)(x+2)}{x-2}=x+2\\text{。}\n\\]\n因此\n\\[\n\\lim_{x\\to2}f(x)=\\lim_{x\\to2}(x+2)=4\\text{。}\n\\]\n函数在 $x=2$ 处连续的条件是\n\\[\n\\lim_{x\\to2}f(x)=f(2)=a\\text{，}\n\\]\n所以必须取\n\\[\na=4\\text{。}\n\\]\n当 $a=4$ 时，函数在 $x=2$ 处连续；当 $a\\neq4$ 时，极限仍存在且等于 $4$，但函数值不等于极限值，因此 $x=2$ 是可去间断点。",
+            "relates_to": "S04.U12"
+          }
+        ],
+        "calculations": [],
+        "calculation_limitations": [
+          "协议支持的表达式树不能表达函数定义、邻域量词、分段函数及连续性的定义条件，因此无法对本节关于点连续、区间连续和间断点分类的结论提交适用的符号核算。",
+          "本节定理涉及一般函数的定义域、极限存在性以及复合函数的定义域条件，现有核算协议不能完整表示这些复合约束；相关结论由正文中的条件和证明给出。"
+        ],
+        "uncertainties": []
+      }
+    },
+    "after_patch_3": {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\repair-3.json",
+      "relative_path": "workspace/iteration2-live/b/a45be503af594ce8/sS04_00aecb9ed051/repair-3.json",
+      "raw_sha256": "13f56aef5a89fe898927ed467b2f17006d37e28e6326863cca13b10b84eb11f0",
+      "value": {
+        "before_hash": "f432f77a40c64e15c5ac4d756b1d0dabb42e5f2c5b531078e881a2b22d881d80",
+        "after_hash": "e6a05a6de4d57a0ee3a5ab75a60554852a573430a1f9f45116090dbbbbcd6990",
+        "section": {
+          "section_id": "S04",
+          "units": [
+            {
+              "id": "S04.U01",
+              "kind": "definition",
+              "tex": "设函数 $f$ 在点 $x_0$ 的某个邻域内有定义。若 $f$ 在 $x_0$ 处有定义，且\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n则称函数 $f$ 在点 $x_0$ 处连续。等价地，$f$ 在 $x_0$ 处连续是指：对任意 $\\varepsilon>0$，都存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时有\n\\[\n|f(x)-f(x_0)|<\\varepsilon.\n\\]\n其中，条件 $f(x_0)$ 有定义不可省略。若 $f$ 在区间内每一点都连续，则称 $f$ 在该区间上连续。\\label{def:point-continuity}",
+              "relates_to": null
+            },
+            {
+              "id": "S04.U02",
+              "kind": "definition",
+              "tex": "设 $f$ 在区间 $I$ 上有定义。若对每个内点 $x_0\\in I$，函数 $f$ 在 $x_0$ 处连续；当 $I$ 含有端点时，函数在左端点处连续是指右极限等于函数值，在右端点处连续是指左极限等于函数值，则称 $f$ 在区间 $I$ 上连续。\n\n特别地，当 $I=[a,b]$ 且 $a<b$ 时，$f$ 在 $[a,b]$ 上连续意味着：对每个 $x_0\\in(a,b)$，有\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n并且有\n\\[\n\\lim_{x\\to a^+}f(x)=f(a)\\text{，}\n\\qquad\n\\lim_{x\\to b^-}f(x)=f(b)\\text{。}\n\\]\n\\label{def:interval-continuity}",
+              "relates_to": null
+            },
+            {
+              "id": "S04.U03",
+              "kind": "definition",
+              "tex": "设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义。若 $f(x_0)$ 未定义，或 $f(x_0)$ 有定义但 $f$ 在 $x_0$ 处不连续，则称 $x_0$ 为 $f$ 的间断点。因此，间断点不要求属于函数的定义域。常见类型如下。\n\n若极限 $\\lim_{x\\to x_0}f(x)$ 存在且为有限数，但 $f(x_0)$ 未定义或 $f(x_0)\\neq\\lim_{x\\to x_0}f(x)$，则称 $x_0$ 为可去间断点。\n\n若左、右极限都存在且有限，但不相等，即\n\\[\n\\lim_{x\\to x_0^-}f(x)\\neq\\lim_{x\\to x_0^+}f(x)\\text{，}\n\\]\n则称 $x_0$ 为跳跃间断点。\n\n为说明无穷间断点，先独立定义单侧无穷极限；这些定义不要求上述双侧去心邻域条件。定义右侧无穷极限时，只设 $f$ 在某个右侧去心邻域 $(x_0,x_0+r)$ 内有定义，其中 $r>0$。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=-\\infty.\n\\]\n定义左侧无穷极限时，只设 $f$ 在某个左侧去心邻域 $(x_0-r,x_0)$ 内有定义，其中 $r>0$，不要求右侧有定义。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=-\\infty.\n\\]\n这里的 $\\delta$ 均可取小到使相应单侧去心邻域包含在函数的定义域内；右侧定义不要求左侧有定义，左侧定义不要求右侧有定义，且均不要求 $f(x_0)$ 有定义。\n\n例如，考虑定义在 $\\mathbb{R}\\setminus\\{0\\}$ 上的函数\n\\[\nf(x)=\\frac{1}{x}.\n\\]\n在 $x_0=0$ 处考察右侧。对任意 $M>0$，取 $\\delta=1/M$，当 $0<x<\\delta$ 时有 $f(x)=1/x>M$，所以\n\\[\n\\lim_{x\\to0^+}\\frac{1}{x}=+\\infty.\n\\]\n因此，$x=0$ 是无穷间断点。这里明确使用了定义域 $\\mathbb{R}\\setminus\\{0\\}$、考察方向 $x\\to0^+$ 以及“对任意 $M>0$，存在 $\\delta>0$”的量词条件。\n\n若至少有一个单侧极限为 $+\\infty$ 或 $-\\infty$，即函数值沿相应方向趋于正无穷或负无穷，则称 $x_0$ 为无穷间断点。若函数在 $x_0$ 附近无界，但不存在趋于 $+\\infty$ 或 $-\\infty$ 的单侧极限，则不称为无穷间断点，而归入第二类间断点中的无界振荡情形。分类时必须先说明函数在相关去心邻域内有定义以及所考察的极限存在性条件。\\label{def:discontinuity-types}",
+              "relates_to": null
+            },
+            {
+              "id": "S04.U04",
+              "kind": "theorem",
+              "tex": "设函数 $f$ 与 $g$ 在点 $x_0$ 处连续，且相关运算在 $x_0$ 处有定义。则函数\n\\[\nf+g,\n\\qquad f-g,\n\\qquad fg\n\\]\n在 $x_0$ 处连续。若 $g(x_0)\\neq0$，并且在 $x_0$ 的某个邻域内 $g(x)\\neq0$，则\n\\[\n\\frac{f}{g}\n\\]\n在 $x_0$ 处连续。\n\n若函数 $g$ 在 $x_0$ 处连续，函数 $f$ 在 $g(x_0)$ 处连续，并且复合函数 $f\\circ g$ 在 $x_0$ 的某个邻域内有定义，则 $f\\circ g$ 在 $x_0$ 处连续。\\label{thm:continuity-algebra}",
+              "relates_to": null
+            },
+            {
+              "id": "S04.U05",
+              "kind": "proof",
+              "tex": "由连续性的定义，函数 $f$ 与 $g$ 在 $x_0$ 处连续分别意味着\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\qquad\n\\lim_{x\\to x_0}g(x)=g(x_0)\\text{。}\n\\]\n根据极限的和、差与积法则，有\n\\[\n\\lim_{x\\to x_0}(f(x)+g(x))=f(x_0)+g(x_0)=(f+g)(x_0)\\text{，}\n\\]\n\\[\n\\lim_{x\\to x_0}(f(x)-g(x))=f(x_0)-g(x_0)=(f-g)(x_0)\\text{，}\n\\]\n以及\n\\[\n\\lim_{x\\to x_0}f(x)g(x)=f(x_0)g(x_0)=(fg)(x_0)\\text{。}\n\\]\n因此和、差与积在 $x_0$ 处连续。\n\n若 $g(x_0)\\neq0$ 且 $g$ 在 $x_0$ 的某个邻域内不为零，则由商的极限法则，\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)}{g(x)}\n=\\frac{f(x_0)}{g(x_0)}\n=\\left(\\frac{f}{g}\\right)(x_0)\\text{，}\n\\]\n所以商在 $x_0$ 处连续。\n\n最后设 $g$ 在 $x_0$ 处连续，$f$ 在 $g(x_0)$ 处连续，并且存在 $x_0$ 的某个邻域 $U$，使得对每个 $x\\in U$，$g(x)$ 都属于 $f$ 的定义域。令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta_1>0$，使得当 $|x-x_0|<\\delta_1$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n又因为 $U$ 是 $x_0$ 的邻域，存在 $\\delta_2>0$，使得当 $|x-x_0|<\\delta_2$ 时，$x\\in U$。取 $\\delta=\\min\\{\\delta_1,\\delta_2\\}$。当 $|x-x_0|<\\delta$ 时，$g(x)$ 属于 $f$ 的定义域，且\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n令 $t=g(x)$，便有\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $(f\\circ g)(x)=f(g(x))$ 且 $(f\\circ g)(x_0)=f(g(x_0))$，故\n\\[\n|(f\\circ g)(x)-(f\\circ g)(x_0)|<\\varepsilon.\n\\]\n由点连续的定义，$f\\circ g$ 在 $x_0$ 处连续。",
+              "relates_to": "S04.U04"
+            },
+            {
+              "id": "S04.U06",
+              "kind": "theorem",
+              "tex": "设函数 $g$ 在点 $x_0$ 处连续，函数 $f$ 在点 $g(x_0)$ 处连续，并且存在 $x_0$ 的某个邻域 $U$，使得对每个 $x\\in U$，$g(x)$ 都属于 $f$ 的定义域。则复合函数\n\\[\n(f\\circ g)(x)=f(g(x))\n\\]\n在点 $x_0$ 处连续。\\label{thm:composition-continuity}",
+              "relates_to": null
+            },
+            {
+              "id": "S04.U07",
+              "kind": "proof",
+              "tex": "令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n根据假设，当 $x$ 属于该邻域 $U$ 时，$g(x)$ 属于 $f$ 的定义域；缩小 $\\delta$ 后还可令 $|x-x_0|<\\delta$ 的点属于 $U$。于是对满足 $|x-x_0|<\\delta$ 的 $x$，令 $t=g(x)$，便有\n\\[\n|t-g(x_0)|=|g(x)-g(x_0)|<\\eta\n\\]\n以及\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n而\n\\[\n(f\\circ g)(x_0)=f(g(x_0))\\text{，}\n\\]\n故\n\\[\n|(f\\circ g)(x)-(f\\circ g)(x_0)|<\\varepsilon.\n\\]\n由点连续的定义，$f\\circ g$ 在 $x_0$ 处连续。",
+              "relates_to": "S04.U06"
+            },
+            {
+              "id": "S04.U08",
+              "kind": "example",
+              "tex": "判断函数\n\\[\nf(x)=\\frac{x^2-1}{x-1}\n\\]\n在 $x=1$ 处的连续性，并指出该点的间断类型。",
+              "relates_to": null
+            },
+            {
+              "id": "S04.U09",
+              "kind": "solution",
+              "tex": "函数 $f$ 的定义域为 $\\mathbb{R}\\setminus\\{1\\}$，因此 $f(1)$ 未定义。当 $x\\neq1$ 时，\n\\[\nf(x)=\\frac{(x-1)(x+1)}{x-1}=x+1\\text{。}\n\\]\n所以\n\\[\n\\lim_{x\\to1}f(x)=\\lim_{x\\to1}(x+1)=2\\text{。}\n\\]\n极限存在且为有限数，但函数在 $x=1$ 处没有定义。因此 $x=1$ 是可去间断点。若补定义 $f(1)=2$，所得函数将在 $x=1$ 处连续。",
+              "relates_to": "S04.U08"
+            },
+            {
+              "id": "S04.U10",
+              "kind": "example",
+              "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n1+x,&x<0,\\\\\n2+x^2,&x\\geq0\\text{。}\n\\end{cases}\n\\]\n判断 $f$ 在 $x=0$ 处的连续性及间断类型。",
+              "relates_to": null
+            },
+            {
+              "id": "S04.U11",
+              "kind": "solution",
+              "tex": "由左侧表达式可得\n\\[\n\\lim_{x\\to0^-}f(x)=\\lim_{x\\to0^-}(1+x)=1\\text{。}\n\\]\n由右侧表达式可得\n\\[\n\\lim_{x\\to0^+}f(x)=\\lim_{x\\to0^+}(2+x^2)=2\\text{。}\n\\]\n又因为 $f(0)=2$，所以右极限等于函数值，但左极限与右极限不相等。根据双侧极限存在的充要条件，$\\lim_{x\\to0}f(x)$ 不存在。因此 $f$ 在 $x=0$ 处不连续，且 $x=0$ 是跳跃间断点。",
+              "relates_to": "S04.U10"
+            },
+            {
+              "id": "S04.U12",
+              "kind": "exercise",
+              "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n\\dfrac{x^2-4}{x-2},&x\\neq2,\\\\\na,&x=2\\text{。}\n\\end{cases}\n\\]\n求常数 $a$ 的值，使函数 $f$ 在 $x=2$ 处连续，并说明若 $a$ 取其他值时该点的间断类型。",
+              "relates_to": null
+            },
+            {
+              "id": "S04.U13",
+              "kind": "solution",
+              "tex": "当 $x\\neq2$ 时，\n\\[\n\\frac{x^2-4}{x-2}=\\frac{(x-2)(x+2)}{x-2}=x+2\\text{。}\n\\]\n因此\n\\[\n\\lim_{x\\to2}f(x)=\\lim_{x\\to2}(x+2)=4\\text{。}\n\\]\n函数在 $x=2$ 处连续的条件是\n\\[\n\\lim_{x\\to2}f(x)=f(2)=a\\text{，}\n\\]\n所以必须取\n\\[\na=4\\text{。}\n\\]\n当 $a=4$ 时，函数在 $x=2$ 处连续；当 $a\\neq4$ 时，极限仍存在且等于 $4$，但函数值不等于极限值，因此 $x=2$ 是可去间断点。",
+              "relates_to": "S04.U12"
+            }
+          ],
+          "calculations": [],
+          "calculation_limitations": [
+            "协议支持的表达式树不能表达函数定义、邻域量词、分段函数及连续性的定义条件，因此无法对本节关于点连续、区间连续和间断点分类的结论提交适用的符号核算。",
+            "本节定理涉及一般函数的定义域、极限存在性以及复合函数的定义域条件，现有核算协议不能完整表示这些复合约束；相关结论由正文中的条件和证明给出。"
+          ],
+          "uncertainties": []
+        }
+      }
+    },
+    "after_patch_4": {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\repair-4.json",
+      "relative_path": "workspace/iteration2-live/b/a45be503af594ce8/sS04_00aecb9ed051/repair-4.json",
+      "raw_sha256": "efbe0c9aeb65ebc73d28eb41521e1403d98f22c7f3f711efb3c836e1293f16b9",
+      "value": {
+        "before_hash": "e6a05a6de4d57a0ee3a5ab75a60554852a573430a1f9f45116090dbbbbcd6990",
+        "after_hash": "d0b7670d4dbf500e0a5d5db44b926d41ef443fae726af1c7191b4b7534aaf57a",
+        "section": {
+          "section_id": "S04",
+          "units": [
+            {
+              "id": "S04.U01",
+              "kind": "definition",
+              "tex": "设函数 $f$ 在点 $x_0$ 的某个邻域内有定义。若 $f$ 在 $x_0$ 处有定义，且\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n则称函数 $f$ 在点 $x_0$ 处连续。等价地，$f$ 在 $x_0$ 处连续是指：对任意 $\\varepsilon>0$，都存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时有\n\\[\n|f(x)-f(x_0)|<\\varepsilon.\n\\]\n其中，条件 $f(x_0)$ 有定义不可省略。若 $f$ 在区间内每一点都连续，则称 $f$ 在该区间上连续。\\label{def:point-continuity}",
+              "relates_to": null
+            },
+            {
+              "id": "S04.U02",
+              "kind": "definition",
+              "tex": "设 $f$ 在区间 $I$ 上有定义。若对每个内点 $x_0\\in I$，函数 $f$ 在 $x_0$ 处连续；当 $I$ 含有端点时，函数在左端点处连续是指右极限等于函数值，在右端点处连续是指左极限等于函数值，则称 $f$ 在区间 $I$ 上连续。\n\n特别地，当 $I=[a,b]$ 且 $a<b$ 时，$f$ 在 $[a,b]$ 上连续意味着：对每个 $x_0\\in(a,b)$，有\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\]\n并且有\n\\[\n\\lim_{x\\to a^+}f(x)=f(a)\\text{，}\n\\qquad\n\\lim_{x\\to b^-}f(x)=f(b)\\text{。}\n\\]\n\\label{def:interval-continuity}",
+              "relates_to": null
+            },
+            {
+              "id": "S04.U03",
+              "kind": "definition",
+              "tex": "设函数 $f$ 在点 $x_0$ 的某个双侧去心邻域内有定义。若 $f(x_0)$ 未定义，或 $f(x_0)$ 有定义但 $f$ 在 $x_0$ 处不连续，则称 $x_0$ 为 $f$ 的间断点。因此，间断点不要求属于函数的定义域。下述间断点分类均保留这一双侧去心邻域条件，单侧无穷极限的独立定义则不受此条件限制。常见类型如下。\n\n若极限 $\\lim_{x\\to x_0}f(x)$ 存在且为有限数，但 $f(x_0)$ 未定义或 $f(x_0)\\neq\\lim_{x\\to x_0}f(x)$，则称 $x_0$ 为可去间断点。\n\n若左、右极限都存在且有限，但不相等，即\n\\[\n\\lim_{x\\to x_0^-}f(x)\\neq\\lim_{x\\to x_0^+}f(x)\\text{，}\n\\]\n则称 $x_0$ 为跳跃间断点。\n\n为说明无穷间断点，先独立定义单侧无穷极限；这些定义不要求上述双侧去心邻域条件。定义右侧无穷极限时，只设 $f$ 在某个右侧去心邻域 $(x_0,x_0+r)$ 内有定义，其中 $r>0$。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=-\\infty.\n\\]\n定义左侧无穷极限时，只设 $f$ 在某个左侧去心邻域 $(x_0-r,x_0)$ 内有定义，其中 $r>0$，不要求右侧有定义。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=-\\infty.\n\\]\n这里的 $\\delta$ 均可取小到使相应单侧去心邻域包含在函数的定义域内；右侧定义不要求左侧有定义，左侧定义不要求右侧有定义，且均不要求 $f(x_0)$ 有定义。这些单侧极限定义本身并不把仅在单侧有定义的边界点归为本节所称的间断点。\n\n例如，考虑定义在 $\\mathbb{R}\\setminus\\{0\\}$ 上的函数\n\\[\nf(x)=\\frac{1}{x}.\n\\]\n在 $x_0=0$ 处考察右侧。对任意 $M>0$，取 $\\delta=1/M$，当 $0<x<\\delta$ 时有 $f(x)=1/x>M$，所以\n\\[\n\\lim_{x\\to0^+}\\frac{1}{x}=+\\infty.\n\\]\n由于该函数在 $0$ 的某个双侧去心邻域内有定义，且右极限为 $+\\infty$，因此，$x=0$ 是无穷间断点。这里明确使用了定义域 $\\mathbb{R}\\setminus\\{0\\}$、考察方向 $x\\to0^+$ 以及“对任意 $M>0$，存在 $\\delta>0$”的量词条件。\n\n在函数 $f$ 于 $x_0$ 的某个双侧去心邻域内有定义的前提下，若至少有一个单侧极限为 $+\\infty$ 或 $-\\infty$，即函数值沿相应方向趋于正无穷或负无穷，则称 $x_0$ 为无穷间断点。在同一双侧去心邻域前提下，若函数在 $x_0$ 附近无界，但不存在趋于 $+\\infty$ 或 $-\\infty$ 的单侧极限，则不称为无穷间断点，而归入第二类间断点中的无界振荡情形。分类时必须先确认函数在某个双侧去心邻域内有定义，再核对所考察的极限存在性条件；仅在单侧邻域有定义时，可以讨论相应的单侧无穷极限，但不纳入本节上述间断点分类。\\label{def:discontinuity-types}",
+              "relates_to": null
+            },
+            {
+              "id": "S04.U04",
+              "kind": "theorem",
+              "tex": "设函数 $f$ 与 $g$ 在点 $x_0$ 处连续，且相关运算在 $x_0$ 处有定义。则函数\n\\[\nf+g,\n\\qquad f-g,\n\\qquad fg\n\\]\n在 $x_0$ 处连续。若 $g(x_0)\\neq0$，并且在 $x_0$ 的某个邻域内 $g(x)\\neq0$，则\n\\[\n\\frac{f}{g}\n\\]\n在 $x_0$ 处连续。\n\n若函数 $g$ 在 $x_0$ 处连续，函数 $f$ 在 $g(x_0)$ 处连续，并且复合函数 $f\\circ g$ 在 $x_0$ 的某个邻域内有定义，则 $f\\circ g$ 在 $x_0$ 处连续。\\label{thm:continuity-algebra}",
+              "relates_to": null
+            },
+            {
+              "id": "S04.U05",
+              "kind": "proof",
+              "tex": "由连续性的定义，函数 $f$ 与 $g$ 在 $x_0$ 处连续分别意味着\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\qquad\n\\lim_{x\\to x_0}g(x)=g(x_0)\\text{。}\n\\]\n根据极限的和、差与积法则，有\n\\[\n\\lim_{x\\to x_0}(f(x)+g(x))=f(x_0)+g(x_0)=(f+g)(x_0)\\text{，}\n\\]\n\\[\n\\lim_{x\\to x_0}(f(x)-g(x))=f(x_0)-g(x_0)=(f-g)(x_0)\\text{，}\n\\]\n以及\n\\[\n\\lim_{x\\to x_0}f(x)g(x)=f(x_0)g(x_0)=(fg)(x_0)\\text{。}\n\\]\n因此和、差与积在 $x_0$ 处连续。\n\n若 $g(x_0)\\neq0$ 且 $g$ 在 $x_0$ 的某个邻域内不为零，则由商的极限法则，\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)}{g(x)}\n=\\frac{f(x_0)}{g(x_0)}\n=\\left(\\frac{f}{g}\\right)(x_0)\\text{，}\n\\]\n所以商在 $x_0$ 处连续。\n\n最后设 $g$ 在 $x_0$ 处连续，$f$ 在 $g(x_0)$ 处连续，并且存在 $x_0$ 的某个邻域 $U$，使得对每个 $x\\in U$，$g(x)$ 都属于 $f$ 的定义域。令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta_1>0$，使得当 $|x-x_0|<\\delta_1$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n又因为 $U$ 是 $x_0$ 的邻域，存在 $\\delta_2>0$，使得当 $|x-x_0|<\\delta_2$ 时，$x\\in U$。取 $\\delta=\\min\\{\\delta_1,\\delta_2\\}$。当 $|x-x_0|<\\delta$ 时，$g(x)$ 属于 $f$ 的定义域，且\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n令 $t=g(x)$，便有\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $(f\\circ g)(x)=f(g(x))$ 且 $(f\\circ g)(x_0)=f(g(x_0))$，故\n\\[\n|(f\\circ g)(x)-(f\\circ g)(x_0)|<\\varepsilon.\n\\]\n由点连续的定义，$f\\circ g$ 在 $x_0$ 处连续。",
+              "relates_to": "S04.U04"
+            },
+            {
+              "id": "S04.U06",
+              "kind": "theorem",
+              "tex": "设函数 $g$ 在点 $x_0$ 处连续，函数 $f$ 在点 $g(x_0)$ 处连续，并且存在 $x_0$ 的某个邻域 $U$，使得对每个 $x\\in U$，$g(x)$ 都属于 $f$ 的定义域。则复合函数\n\\[\n(f\\circ g)(x)=f(g(x))\n\\]\n在点 $x_0$ 处连续。\\label{thm:composition-continuity}",
+              "relates_to": null
+            },
+            {
+              "id": "S04.U07",
+              "kind": "proof",
+              "tex": "令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n根据假设，当 $x$ 属于该邻域 $U$ 时，$g(x)$ 属于 $f$ 的定义域；缩小 $\\delta$ 后还可令 $|x-x_0|<\\delta$ 的点属于 $U$。于是对满足 $|x-x_0|<\\delta$ 的 $x$，令 $t=g(x)$，便有\n\\[\n|t-g(x_0)|=|g(x)-g(x_0)|<\\eta\n\\]\n以及\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n而\n\\[\n(f\\circ g)(x_0)=f(g(x_0))\\text{，}\n\\]\n故\n\\[\n|(f\\circ g)(x)-(f\\circ g)(x_0)|<\\varepsilon.\n\\]\n由点连续的定义，$f\\circ g$ 在 $x_0$ 处连续。",
+              "relates_to": "S04.U06"
+            },
+            {
+              "id": "S04.U08",
+              "kind": "example",
+              "tex": "判断函数\n\\[\nf(x)=\\frac{x^2-1}{x-1}\n\\]\n在 $x=1$ 处的连续性，并指出该点的间断类型。",
+              "relates_to": null
+            },
+            {
+              "id": "S04.U09",
+              "kind": "solution",
+              "tex": "函数 $f$ 的定义域为 $\\mathbb{R}\\setminus\\{1\\}$，因此 $f(1)$ 未定义。当 $x\\neq1$ 时，\n\\[\nf(x)=\\frac{(x-1)(x+1)}{x-1}=x+1\\text{。}\n\\]\n所以\n\\[\n\\lim_{x\\to1}f(x)=\\lim_{x\\to1}(x+1)=2\\text{。}\n\\]\n极限存在且为有限数，但函数在 $x=1$ 处没有定义。因此 $x=1$ 是可去间断点。若补定义 $f(1)=2$，所得函数将在 $x=1$ 处连续。",
+              "relates_to": "S04.U08"
+            },
+            {
+              "id": "S04.U10",
+              "kind": "example",
+              "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n1+x,&x<0,\\\\\n2+x^2,&x\\geq0\\text{。}\n\\end{cases}\n\\]\n判断 $f$ 在 $x=0$ 处的连续性及间断类型。",
+              "relates_to": null
+            },
+            {
+              "id": "S04.U11",
+              "kind": "solution",
+              "tex": "由左侧表达式可得\n\\[\n\\lim_{x\\to0^-}f(x)=\\lim_{x\\to0^-}(1+x)=1\\text{。}\n\\]\n由右侧表达式可得\n\\[\n\\lim_{x\\to0^+}f(x)=\\lim_{x\\to0^+}(2+x^2)=2\\text{。}\n\\]\n又因为 $f(0)=2$，所以右极限等于函数值，但左极限与右极限不相等。根据双侧极限存在的充要条件，$\\lim_{x\\to0}f(x)$ 不存在。因此 $f$ 在 $x=0$ 处不连续，且 $x=0$ 是跳跃间断点。",
+              "relates_to": "S04.U10"
+            },
+            {
+              "id": "S04.U12",
+              "kind": "exercise",
+              "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n\\dfrac{x^2-4}{x-2},&x\\neq2,\\\\\na,&x=2\\text{。}\n\\end{cases}\n\\]\n求常数 $a$ 的值，使函数 $f$ 在 $x=2$ 处连续，并说明若 $a$ 取其他值时该点的间断类型。",
+              "relates_to": null
+            },
+            {
+              "id": "S04.U13",
+              "kind": "solution",
+              "tex": "当 $x\\neq2$ 时，\n\\[\n\\frac{x^2-4}{x-2}=\\frac{(x-2)(x+2)}{x-2}=x+2\\text{。}\n\\]\n因此\n\\[\n\\lim_{x\\to2}f(x)=\\lim_{x\\to2}(x+2)=4\\text{。}\n\\]\n函数在 $x=2$ 处连续的条件是\n\\[\n\\lim_{x\\to2}f(x)=f(2)=a\\text{，}\n\\]\n所以必须取\n\\[\na=4\\text{。}\n\\]\n当 $a=4$ 时，函数在 $x=2$ 处连续；当 $a\\neq4$ 时，极限仍存在且等于 $4$，但函数值不等于极限值，因此 $x=2$ 是可去间断点。",
+              "relates_to": "S04.U12"
+            }
+          ],
+          "calculations": [],
+          "calculation_limitations": [
+            "协议支持的表达式树不能表达函数定义、邻域量词、分段函数及连续性的定义条件，因此无法对本节关于点连续、区间连续和间断点分类的结论提交适用的符号核算。",
+            "本节定理涉及一般函数的定义域、极限存在性以及复合函数的定义域条件，现有核算协议不能完整表示这些复合约束；相关结论由正文中的条件和证明给出。",
+            "本次修复涉及间断点分类的双侧定义域前提与单侧无穷极限定义之间的适用范围区别；协议不能表达一般函数定义域、邻域包含关系及量词条件，故未为这一范围修复新增符号核算。"
+          ],
+          "uncertainties": []
+        }
+      }
+    }
+  },
+  "change_checks": [
+    {
+      "before": "r3_before",
+      "after": "r3_candidate",
+      "changed_unit_ids": [
+        "S04.U03"
+      ],
+      "diffs": {
+        "S04.U03": "--- r3_before\n+++ r3_candidate\n@@ -8,7 +8,7 @@\n \\]\n 则称 $x_0$ 为跳跃间断点。\n \n-为说明无穷间断点，先定义单侧无穷极限。在上述去心邻域条件下，若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)>M$，则记为\n+为说明无穷间断点，先独立定义单侧无穷极限；这些定义不要求上述双侧去心邻域条件。定义右侧无穷极限时，只设 $f$ 在某个右侧去心邻域 $(x_0,x_0+r)$ 内有定义，其中 $r>0$。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)>M$，则记为\n \\[\n \\lim_{x\\to x_0^+}f(x)=+\\infty.\n \\]\n@@ -16,7 +16,7 @@\n \\[\n \\lim_{x\\to x_0^+}f(x)=-\\infty.\n \\]\n-若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)>M$，则记为\n+定义左侧无穷极限时，只设 $f$ 在某个左侧去心邻域 $(x_0-r,x_0)$ 内有定义，其中 $r>0$，不要求右侧有定义。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)>M$，则记为\n \\[\n \\lim_{x\\to x_0^-}f(x)=+\\infty.\n \\]\n@@ -24,7 +24,7 @@\n \\[\n \\lim_{x\\to x_0^-}f(x)=-\\infty.\n \\]\n-这里的 $\\delta$ 均可取小到使相应单侧去心邻域包含在函数的定义域内。\n+这里的 $\\delta$ 均可取小到使相应单侧去心邻域包含在函数的定义域内；右侧定义不要求左侧有定义，左侧定义不要求右侧有定义，且均不要求 $f(x_0)$ 有定义。\n \n 例如，考虑定义在 $\\mathbb{R}\\setminus\\{0\\}$ 上的函数\n \\[\n"
+      }
+    },
+    {
+      "before": "local_normalized",
+      "after": "after_patch_3",
+      "changed_unit_ids": [
+        "S04.U05"
+      ],
+      "diffs": {
+        "S04.U05": "--- local_normalized\n+++ after_patch_3\n@@ -25,16 +25,24 @@\n \\]\n 所以商在 $x_0$ 处连续。\n \n-最后设 $g$ 在 $x_0$ 处连续，$f$ 在 $g(x_0)$ 处连续，且复合函数在相应邻域内有定义。令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n+最后设 $g$ 在 $x_0$ 处连续，$f$ 在 $g(x_0)$ 处连续，并且存在 $x_0$ 的某个邻域 $U$，使得对每个 $x\\in U$，$g(x)$ 都属于 $f$ 的定义域。令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n \\[\n |f(t)-f(g(x_0))|<\\varepsilon.\n \\]\n-由于 $g$ 在 $x_0$ 处连续，存在 $\\delta>0$，使得当 $|x-x_0|<\\delta$ 时，\n+由于 $g$ 在 $x_0$ 处连续，存在 $\\delta_1>0$，使得当 $|x-x_0|<\\delta_1$ 时，\n \\[\n |g(x)-g(x_0)|<\\eta.\n \\]\n-对这样的 $x$，取 $t=g(x)$；由复合函数在该邻域内有定义，且 $|t-g(x_0)|<\\eta$，从而\n+又因为 $U$ 是 $x_0$ 的邻域，存在 $\\delta_2>0$，使得当 $|x-x_0|<\\delta_2$ 时，$x\\in U$。取 $\\delta=\\min\\{\\delta_1,\\delta_2\\}$。当 $|x-x_0|<\\delta$ 时，$g(x)$ 属于 $f$ 的定义域，且\n+\\[\n+|g(x)-g(x_0)|<\\eta.\n+\\]\n+令 $t=g(x)$，便有\n \\[\n |f(g(x))-f(g(x_0))|<\\varepsilon.\n \\]\n-又因为 $(f\\circ g)(x_0)=f(g(x_0))$，所以 $f\\circ g$ 在 $x_0$ 处连续。+由于 $(f\\circ g)(x)=f(g(x))$ 且 $(f\\circ g)(x_0)=f(g(x_0))$，故\n+\\[\n+|(f\\circ g)(x)-(f\\circ g)(x_0)|<\\varepsilon.\n+\\]\n+由点连续的定义，$f\\circ g$ 在 $x_0$ 处连续。"
+      }
+    },
+    {
+      "before": "after_patch_3",
+      "after": "after_patch_4",
+      "changed_unit_ids": [
+        "S04.U03"
+      ],
+      "diffs": {
+        "S04.U03": "--- after_patch_3\n+++ after_patch_4\n@@ -1,4 +1,4 @@\n-设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义。若 $f(x_0)$ 未定义，或 $f(x_0)$ 有定义但 $f$ 在 $x_0$ 处不连续，则称 $x_0$ 为 $f$ 的间断点。因此，间断点不要求属于函数的定义域。常见类型如下。\n+设函数 $f$ 在点 $x_0$ 的某个双侧去心邻域内有定义。若 $f(x_0)$ 未定义，或 $f(x_0)$ 有定义但 $f$ 在 $x_0$ 处不连续，则称 $x_0$ 为 $f$ 的间断点。因此，间断点不要求属于函数的定义域。下述间断点分类均保留这一双侧去心邻域条件，单侧无穷极限的独立定义则不受此条件限制。常见类型如下。\n \n 若极限 $\\lim_{x\\to x_0}f(x)$ 存在且为有限数，但 $f(x_0)$ 未定义或 $f(x_0)\\neq\\lim_{x\\to x_0}f(x)$，则称 $x_0$ 为可去间断点。\n \n@@ -24,7 +24,7 @@\n \\[\n \\lim_{x\\to x_0^-}f(x)=-\\infty.\n \\]\n-这里的 $\\delta$ 均可取小到使相应单侧去心邻域包含在函数的定义域内；右侧定义不要求左侧有定义，左侧定义不要求右侧有定义，且均不要求 $f(x_0)$ 有定义。\n+这里的 $\\delta$ 均可取小到使相应单侧去心邻域包含在函数的定义域内；右侧定义不要求左侧有定义，左侧定义不要求右侧有定义，且均不要求 $f(x_0)$ 有定义。这些单侧极限定义本身并不把仅在单侧有定义的边界点归为本节所称的间断点。\n \n 例如，考虑定义在 $\\mathbb{R}\\setminus\\{0\\}$ 上的函数\n \\[\n@@ -34,6 +34,6 @@\n \\[\n \\lim_{x\\to0^+}\\frac{1}{x}=+\\infty.\n \\]\n-因此，$x=0$ 是无穷间断点。这里明确使用了定义域 $\\mathbb{R}\\setminus\\{0\\}$、考察方向 $x\\to0^+$ 以及“对任意 $M>0$，存在 $\\delta>0$”的量词条件。\n+由于该函数在 $0$ 的某个双侧去心邻域内有定义，且右极限为 $+\\infty$，因此，$x=0$ 是无穷间断点。这里明确使用了定义域 $\\mathbb{R}\\setminus\\{0\\}$、考察方向 $x\\to0^+$ 以及“对任意 $M>0$，存在 $\\delta>0$”的量词条件。\n \n-若至少有一个单侧极限为 $+\\infty$ 或 $-\\infty$，即函数值沿相应方向趋于正无穷或负无穷，则称 $x_0$ 为无穷间断点。若函数在 $x_0$ 附近无界，但不存在趋于 $+\\infty$ 或 $-\\infty$ 的单侧极限，则不称为无穷间断点，而归入第二类间断点中的无界振荡情形。分类时必须先说明函数在相关去心邻域内有定义以及所考察的极限存在性条件。\\label{def:discontinuity-types}+在函数 $f$ 于 $x_0$ 的某个双侧去心邻域内有定义的前提下，若至少有一个单侧极限为 $+\\infty$ 或 $-\\infty$，即函数值沿相应方向趋于正无穷或负无穷，则称 $x_0$ 为无穷间断点。在同一双侧去心邻域前提下，若函数在 $x_0$ 附近无界，但不存在趋于 $+\\infty$ 或 $-\\infty$ 的单侧极限，则不称为无穷间断点，而归入第二类间断点中的无界振荡情形。分类时必须先确认函数在某个双侧去心邻域内有定义，再核对所考察的极限存在性条件；仅在单侧邻域有定义时，可以讨论相应的单侧无穷极限，但不纳入本节上述间断点分类。\\label{def:discontinuity-types}"
+      }
+    }
+  ],
+  "reviews": [
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\local-0-review-0.json",
+      "relative_path": "workspace/iteration2-live/b/a45be503af594ce8/sS04_00aecb9ed051/local-0-review-0.json",
+      "raw_sha256": "1d8bee978bf1f05642e7d84183c08288e7df93519b158f086d5617d8b7b5618f",
+      "value": {
+        "issues": [
+          {
+            "unit_id": "S04.U05",
+            "severity": "blocking",
+            "message": "S04.U05 的最后一段没有证明 S04.U04 中的复合函数连续性结论。S04.U04 断言：若 g 在 x0 连续、f 在 g(x0) 连续且 f∘g 在 x0 某邻域有定义，则 f∘g 在 x0 连续。但 U05 的复合部分额外假设 g(x)≠b，并只推出极限 lim_{x→x0} f(g(x))=L，而不是证明 f∘g 在 x0 连续。该额外条件不在 U04 的假设中，且结论类型也不是连续性。虽然后续 S04.U06/U07 另行给出并证明了复合连续性定理，但 S04.U05 作为 U04 的证明单元仍存在确定的证明与目标不匹配问题。",
+            "evidence": "S04.U04：『若函数 g 在 x0 处连续，函数 f 在 g(x0) 处连续，并且复合函数 f∘g 在 x0 的某个邻域内有定义，则 f∘g 在 x0 处连续。』S04.U05：『最后证明复合极限结论。按该结论的假设，取 r>0，使得当 0<|x-x0|<r 时，g(x)≠b 且 f(g(x)) 有定义……由极限定义即得 lim_{x→x0} f(g(x))=L。』该段使用了 g(x)≠b 与 lim_{t→b} f(t)=L，并只证明极限值，不匹配 U04 的复合连续性结论。"
+          },
+          {
+            "unit_id": "S04.U03",
+            "severity": "warning",
+            "message": "U03 在定义无穷间断点前强调单侧无穷极限不要求双侧去心邻域，随后直接以『至少有一个单侧极限为 +∞ 或 -∞』作为无穷间断点的条件，未在该句重申 x0 仍须满足前文间断点定义中的双侧去心邻域有定义条件。按完整上下文的承接读法可以理解为仍继承前文条件，但表述上可能让学生把仅单侧有定义的区间端点误判为无穷间断点。建议显式保留前文间断点条件，或明确说明该分类仍要求 x0 是已定义的间断点。",
+            "evidence": "S04.U03：『为说明无穷间断点，先独立定义单侧无穷极限；这些定义不要求上述双侧去心邻域条件。』随后：『若至少有一个单侧极限为 +∞ 或 -∞，即函数值沿相应方向趋于正无穷或负无穷，则称 x0 为无穷间断点。』前文间断点定义则要求：『设函数 f 在点 x0 的某个去心邻域内有定义。若 f(x0) 未定义，或 f(x0) 有定义但 f 在 x0 处不连续，则称 x0 为 f 的间断点。』"
+          }
+        ],
+        "checked_unit_ids": [
+          "S04.U01",
+          "S04.U02",
+          "S04.U03",
+          "S04.U04",
+          "S04.U05",
+          "S04.U06",
+          "S04.U07",
+          "S04.U08",
+          "S04.U09",
+          "S04.U10",
+          "S04.U11",
+          "S04.U12",
+          "S04.U13"
+        ],
+        "limitations": [
+          "普通模型审阅，不等同于形式化证明；tool_checks 显示未执行结构化 SymPy 核算，故未对可符号化极限进行独立复算。",
+          "仅审阅当前 S04 的 13 个单元及必要先修引用，未审阅 pending 的 S05。",
+          "对 S04.U03 的无穷间断点采用了承接前文间断点定义的读法；若要求完全显式，可将其视为 warning 而非已确认数学错误。",
+          "未执行最终 PDF 渲染、答案位置及完整学生可读性的最终检查。"
+        ]
+      },
+      "pipeline_review": {
+        "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\review-0.json",
+        "relative_path": "workspace/iteration2-live/b/a45be503af594ce8/sS04_00aecb9ed051/review-0.json",
+        "raw_sha256": "e8ce943317a3f1e895867cf3187d4f5b313163b1a1aa3f4c776544e9a9565183",
+        "value": {
+          "section_id": "S04",
+          "math": {
+            "schema_version": 1,
+            "status": "NEEDS_REVIEW",
+            "issues": [],
+            "evidence": [
+              {
+                "evidence_type": "not_checked",
+                "status": "NOT_RUN",
+                "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+              }
+            ],
+            "coverage": [
+              "S04.U01",
+              "S04.U02",
+              "S04.U03",
+              "S04.U04",
+              "S04.U05",
+              "S04.U06",
+              "S04.U07",
+              "S04.U08",
+              "S04.U09",
+              "S04.U10",
+              "S04.U11",
+              "S04.U12",
+              "S04.U13"
+            ],
+            "limitations": [
+              "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+              "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+              "协议支持的表达式树不能表达函数定义、邻域量词、分段函数及连续性的定义条件，因此无法对本节关于点连续、区间连续和间断点分类的结论提交适用的符号核算。",
+              "本节定理涉及一般函数的定义域、极限存在性以及复合函数的定义域条件，现有核算协议不能完整表示这些复合约束；相关结论由正文中的条件和证明给出。"
+            ]
+          },
+          "llm_review": {
+            "issues": [
+              {
+                "unit_id": "S04.U05",
+                "severity": "blocking",
+                "message": "S04.U05 的最后一段没有证明 S04.U04 中的复合函数连续性结论。S04.U04 断言：若 g 在 x0 连续、f 在 g(x0) 连续且 f∘g 在 x0 某邻域有定义，则 f∘g 在 x0 连续。但 U05 的复合部分额外假设 g(x)≠b，并只推出极限 lim_{x→x0} f(g(x))=L，而不是证明 f∘g 在 x0 连续。该额外条件不在 U04 的假设中，且结论类型也不是连续性。虽然后续 S04.U06/U07 另行给出并证明了复合连续性定理，但 S04.U05 作为 U04 的证明单元仍存在确定的证明与目标不匹配问题。",
+                "evidence": "S04.U04：『若函数 g 在 x0 处连续，函数 f 在 g(x0) 处连续，并且复合函数 f∘g 在 x0 的某个邻域内有定义，则 f∘g 在 x0 处连续。』S04.U05：『最后证明复合极限结论。按该结论的假设，取 r>0，使得当 0<|x-x0|<r 时，g(x)≠b 且 f(g(x)) 有定义……由极限定义即得 lim_{x→x0} f(g(x))=L。』该段使用了 g(x)≠b 与 lim_{t→b} f(t)=L，并只证明极限值，不匹配 U04 的复合连续性结论。"
+              },
+              {
+                "unit_id": "S04.U03",
+                "severity": "warning",
+                "message": "U03 在定义无穷间断点前强调单侧无穷极限不要求双侧去心邻域，随后直接以『至少有一个单侧极限为 +∞ 或 -∞』作为无穷间断点的条件，未在该句重申 x0 仍须满足前文间断点定义中的双侧去心邻域有定义条件。按完整上下文的承接读法可以理解为仍继承前文条件，但表述上可能让学生把仅单侧有定义的区间端点误判为无穷间断点。建议显式保留前文间断点条件，或明确说明该分类仍要求 x0 是已定义的间断点。",
+                "evidence": "S04.U03：『为说明无穷间断点，先独立定义单侧无穷极限；这些定义不要求上述双侧去心邻域条件。』随后：『若至少有一个单侧极限为 +∞ 或 -∞，即函数值沿相应方向趋于正无穷或负无穷，则称 x0 为无穷间断点。』前文间断点定义则要求：『设函数 f 在点 x0 的某个去心邻域内有定义。若 f(x0) 未定义，或 f(x0) 有定义但 f 在 x0 处不连续，则称 x0 为 f 的间断点。』"
+              }
+            ],
+            "checked_unit_ids": [
+              "S04.U01",
+              "S04.U02",
+              "S04.U03",
+              "S04.U04",
+              "S04.U05",
+              "S04.U06",
+              "S04.U07",
+              "S04.U08",
+              "S04.U09",
+              "S04.U10",
+              "S04.U11",
+              "S04.U12",
+              "S04.U13"
+            ],
+            "limitations": [
+              "普通模型审阅，不等同于形式化证明；tool_checks 显示未执行结构化 SymPy 核算，故未对可符号化极限进行独立复算。",
+              "仅审阅当前 S04 的 13 个单元及必要先修引用，未审阅 pending 的 S05。",
+              "对 S04.U03 的无穷间断点采用了承接前文间断点定义的读法；若要求完全显式，可将其视为 warning 而非已确认数学错误。",
+              "未执行最终 PDF 渲染、答案位置及完整学生可读性的最终检查。"
+            ]
+          },
+          "issues": [
+            {
+              "unit_id": "S04.U05",
+              "severity": "blocking",
+              "message": "S04.U05 的最后一段没有证明 S04.U04 中的复合函数连续性结论。S04.U04 断言：若 g 在 x0 连续、f 在 g(x0) 连续且 f∘g 在 x0 某邻域有定义，则 f∘g 在 x0 连续。但 U05 的复合部分额外假设 g(x)≠b，并只推出极限 lim_{x→x0} f(g(x))=L，而不是证明 f∘g 在 x0 连续。该额外条件不在 U04 的假设中，且结论类型也不是连续性。虽然后续 S04.U06/U07 另行给出并证明了复合连续性定理，但 S04.U05 作为 U04 的证明单元仍存在确定的证明与目标不匹配问题。",
+              "evidence": "S04.U04：『若函数 g 在 x0 处连续，函数 f 在 g(x0) 处连续，并且复合函数 f∘g 在 x0 的某个邻域内有定义，则 f∘g 在 x0 处连续。』S04.U05：『最后证明复合极限结论。按该结论的假设，取 r>0，使得当 0<|x-x0|<r 时，g(x)≠b 且 f(g(x)) 有定义……由极限定义即得 lim_{x→x0} f(g(x))=L。』该段使用了 g(x)≠b 与 lim_{t→b} f(t)=L，并只证明极限值，不匹配 U04 的复合连续性结论。"
+            },
+            {
+              "unit_id": "S04.U03",
+              "severity": "warning",
+              "message": "U03 在定义无穷间断点前强调单侧无穷极限不要求双侧去心邻域，随后直接以『至少有一个单侧极限为 +∞ 或 -∞』作为无穷间断点的条件，未在该句重申 x0 仍须满足前文间断点定义中的双侧去心邻域有定义条件。按完整上下文的承接读法可以理解为仍继承前文条件，但表述上可能让学生把仅单侧有定义的区间端点误判为无穷间断点。建议显式保留前文间断点条件，或明确说明该分类仍要求 x0 是已定义的间断点。",
+              "evidence": "S04.U03：『为说明无穷间断点，先独立定义单侧无穷极限；这些定义不要求上述双侧去心邻域条件。』随后：『若至少有一个单侧极限为 +∞ 或 -∞，即函数值沿相应方向趋于正无穷或负无穷，则称 x0 为无穷间断点。』前文间断点定义则要求：『设函数 f 在点 x0 的某个去心邻域内有定义。若 f(x0) 未定义，或 f(x0) 有定义但 f 在 x0 处不连续，则称 x0 为 f 的间断点。』"
+            }
+          ],
+          "reference_recovery": null,
+          "answer_recovery": null,
+          "mock": false,
+          "local_recovery": {
+            "applied_rounds": 2,
+            "proposal_calls": 2,
+            "rejected_proposals": 0,
+            "preserved_issues": [],
+            "review_identity": {
+              "candidate_hash": "f432f77a40c64e15c5ac4d756b1d0dabb42e5f2c5b531078e881a2b22d881d80",
+              "tool_checks_hash": "b97a24aab877d35859de8cd5d684dc0c89535504fbb68cc591945fec9561c0d6",
+              "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+              "plan_context_hash": "a66090b604f0b2c570d27bbcc3db5b89f8c0d10539634222f06e7ad1a3c4d59e",
+              "deterministic_checks_hash": "b7a97f6e7012eaa6e2cc40a081302120e0c99649cd3e096e141c946a1c53ee9f"
+            }
+          }
+        }
+      },
+      "provider_result_matches": [
+        {
+          "sequence": 1436,
+          "timestamp": "2026-09-20T16:57:35.883217+00:00",
+          "type": "provider.result",
+          "payload": {
+            "base_url": "https://api.deepseek.com",
+            "call_id": "1a8d5bca8603409e82de2ecf002bf552",
+            "model": "deepseek-flash",
+            "model_id": "deepseek-flash",
+            "output_hash": "7c8ff3033950e85da5d5b1974320a2edf1fac04a7e17a6a27418e52278296054",
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reasoning_effort": "high",
+            "reported_model": "deepseek-flash",
+            "requested_model": "deepseek-flash",
+            "role": "reviewer_math",
+            "schema_attempt": 1,
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": false,
+            "thinking": {
+              "type": "enabled"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\local-1-review-0.json",
+      "relative_path": "workspace/iteration2-live/b/a45be503af594ce8/sS04_00aecb9ed051/local-1-review-0.json",
+      "raw_sha256": "528c8bbb3257b75485a6de4c5118013aab23d1658327078514c57dbe8b4663cd",
+      "value": {
+        "issues": [
+          {
+            "unit_id": "S04.U03",
+            "severity": "review",
+            "message": "无穷间断点的定义域条件前后不一致/未明确：开头把间断点限定为 f 在 x0 的某个双侧去心邻域内有定义；随后定义单侧无穷极限时明确右侧不要求左侧、左侧不要求右侧，紧接着又以“至少有一个单侧极限为 +∞ 或 -∞”称 x0 为无穷间断点，未说明这一分类是否仍要求最初的双侧去心邻域。这样字面上可把仅在单侧有定义的边界点（例如仅定义在 (0,+∞) 上的 f(x)=1/x 在 x0=0）归为无穷间断点，与最初的间断点定义冲突。应明确无穷间断点要求双侧去心邻域还是相应单侧邻域，并统一表述。",
+            "evidence": "S04.U03 开头：“设函数 f 在点 x0 的某个去心邻域内有定义。若 f(x0) 未定义，或 … 则称 x0 为 f 的间断点。”随后：“这些定义不要求上述双侧去心邻域条件……右侧定义不要求左侧有定义，左侧定义不要求右侧有定义。”分类句：“若至少有一个单侧极限为 +∞ 或 -∞……则称 x0 为无穷间断点。”"
+          }
+        ],
+        "checked_unit_ids": [
+          "S04.U01",
+          "S04.U02",
+          "S04.U03",
+          "S04.U04",
+          "S04.U05",
+          "S04.U06",
+          "S04.U07",
+          "S04.U08",
+          "S04.U09",
+          "S04.U10",
+          "S04.U11",
+          "S04.U12",
+          "S04.U13"
+        ],
+        "limitations": [
+          "本轮仅核对当前提供的 S04 正文、已提供先修 S01-S03 与锁定计划；未生成并审阅 S05。",
+          "未执行或未能由现有核算协议完整形式化验证本节的定义域、邻域量词、分段函数和复合连续性条件；结论基于正文逐句审阅。",
+          "普通模型审阅不等于形式化证明；未对整份讲义或最终 PDF 作授权、验收或全称正确性声明。",
+          "遗留的 S04.U05 问题已按实际正文重新核对：实际 S04.U05 最后一段直接使用 f 在 g(x0) 连续、g 在 x0 连续及邻域 U 的 ε-δ 论证证明 f∘g 的连续性，未使用 g(x)≠b 的复合极限条件，故未列为问题。"
+        ]
+      },
+      "pipeline_review": {
+        "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\review-1.json",
+        "relative_path": "workspace/iteration2-live/b/a45be503af594ce8/sS04_00aecb9ed051/review-1.json",
+        "raw_sha256": "a1460a6a331355ce49fb08658ede0136aba9bf1b02af28497fb5c511afe442f2",
+        "value": {
+          "section_id": "S04",
+          "math": {
+            "schema_version": 1,
+            "status": "NEEDS_REVIEW",
+            "issues": [],
+            "evidence": [
+              {
+                "evidence_type": "not_checked",
+                "status": "NOT_RUN",
+                "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+              }
+            ],
+            "coverage": [
+              "S04.U01",
+              "S04.U02",
+              "S04.U03",
+              "S04.U04",
+              "S04.U05",
+              "S04.U06",
+              "S04.U07",
+              "S04.U08",
+              "S04.U09",
+              "S04.U10",
+              "S04.U11",
+              "S04.U12",
+              "S04.U13"
+            ],
+            "limitations": [
+              "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+              "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+              "协议支持的表达式树不能表达函数定义、邻域量词、分段函数及连续性的定义条件，因此无法对本节关于点连续、区间连续和间断点分类的结论提交适用的符号核算。",
+              "本节定理涉及一般函数的定义域、极限存在性以及复合函数的定义域条件，现有核算协议不能完整表示这些复合约束；相关结论由正文中的条件和证明给出。"
+            ]
+          },
+          "llm_review": {
+            "issues": [
+              {
+                "unit_id": "S04.U03",
+                "severity": "review",
+                "message": "无穷间断点的定义域条件前后不一致/未明确：开头把间断点限定为 f 在 x0 的某个双侧去心邻域内有定义；随后定义单侧无穷极限时明确右侧不要求左侧、左侧不要求右侧，紧接着又以“至少有一个单侧极限为 +∞ 或 -∞”称 x0 为无穷间断点，未说明这一分类是否仍要求最初的双侧去心邻域。这样字面上可把仅在单侧有定义的边界点（例如仅定义在 (0,+∞) 上的 f(x)=1/x 在 x0=0）归为无穷间断点，与最初的间断点定义冲突。应明确无穷间断点要求双侧去心邻域还是相应单侧邻域，并统一表述。",
+                "evidence": "S04.U03 开头：“设函数 f 在点 x0 的某个去心邻域内有定义。若 f(x0) 未定义，或 … 则称 x0 为 f 的间断点。”随后：“这些定义不要求上述双侧去心邻域条件……右侧定义不要求左侧有定义，左侧定义不要求右侧有定义。”分类句：“若至少有一个单侧极限为 +∞ 或 -∞……则称 x0 为无穷间断点。”"
+              }
+            ],
+            "checked_unit_ids": [
+              "S04.U01",
+              "S04.U02",
+              "S04.U03",
+              "S04.U04",
+              "S04.U05",
+              "S04.U06",
+              "S04.U07",
+              "S04.U08",
+              "S04.U09",
+              "S04.U10",
+              "S04.U11",
+              "S04.U12",
+              "S04.U13"
+            ],
+            "limitations": [
+              "本轮仅核对当前提供的 S04 正文、已提供先修 S01-S03 与锁定计划；未生成并审阅 S05。",
+              "未执行或未能由现有核算协议完整形式化验证本节的定义域、邻域量词、分段函数和复合连续性条件；结论基于正文逐句审阅。",
+              "普通模型审阅不等于形式化证明；未对整份讲义或最终 PDF 作授权、验收或全称正确性声明。",
+              "遗留的 S04.U05 问题已按实际正文重新核对：实际 S04.U05 最后一段直接使用 f 在 g(x0) 连续、g 在 x0 连续及邻域 U 的 ε-δ 论证证明 f∘g 的连续性，未使用 g(x)≠b 的复合极限条件，故未列为问题。"
+            ]
+          },
+          "issues": [
+            {
+              "unit_id": "S04.U03",
+              "severity": "review",
+              "message": "无穷间断点的定义域条件前后不一致/未明确：开头把间断点限定为 f 在 x0 的某个双侧去心邻域内有定义；随后定义单侧无穷极限时明确右侧不要求左侧、左侧不要求右侧，紧接着又以“至少有一个单侧极限为 +∞ 或 -∞”称 x0 为无穷间断点，未说明这一分类是否仍要求最初的双侧去心邻域。这样字面上可把仅在单侧有定义的边界点（例如仅定义在 (0,+∞) 上的 f(x)=1/x 在 x0=0）归为无穷间断点，与最初的间断点定义冲突。应明确无穷间断点要求双侧去心邻域还是相应单侧邻域，并统一表述。",
+              "evidence": "S04.U03 开头：“设函数 f 在点 x0 的某个去心邻域内有定义。若 f(x0) 未定义，或 … 则称 x0 为 f 的间断点。”随后：“这些定义不要求上述双侧去心邻域条件……右侧定义不要求左侧有定义，左侧定义不要求右侧有定义。”分类句：“若至少有一个单侧极限为 +∞ 或 -∞……则称 x0 为无穷间断点。”"
+            }
+          ],
+          "reference_recovery": null,
+          "answer_recovery": null,
+          "mock": false,
+          "local_recovery": {
+            "applied_rounds": 3,
+            "proposal_calls": 3,
+            "rejected_proposals": 0,
+            "preserved_issues": [
+              {
+                "unit_id": "S04.U05",
+                "severity": "blocking",
+                "message": "S04.U05 的最后一段没有证明 S04.U04 中的复合函数连续性结论。S04.U04 断言：若 g 在 x0 连续、f 在 g(x0) 连续且 f∘g 在 x0 某邻域有定义，则 f∘g 在 x0 连续。但 U05 的复合部分额外假设 g(x)≠b，并只推出极限 lim_{x→x0} f(g(x))=L，而不是证明 f∘g 在 x0 连续。该额外条件不在 U04 的假设中，且结论类型也不是连续性。虽然后续 S04.U06/U07 另行给出并证明了复合连续性定理，但 S04.U05 作为 U04 的证明单元仍存在确定的证明与目标不匹配问题。",
+                "evidence": "S04.U04：『若函数 g 在 x0 处连续，函数 f 在 g(x0) 处连续，并且复合函数 f∘g 在 x0 的某个邻域内有定义，则 f∘g 在 x0 处连续。』S04.U05：『最后证明复合极限结论。按该结论的假设，取 r>0，使得当 0<|x-x0|<r 时，g(x)≠b 且 f(g(x)) 有定义……由极限定义即得 lim_{x→x0} f(g(x))=L。』该段使用了 g(x)≠b 与 lim_{t→b} f(t)=L，并只证明极限值，不匹配 U04 的复合连续性结论。"
+              }
+            ],
+            "review_identity": {
+              "candidate_hash": "e6a05a6de4d57a0ee3a5ab75a60554852a573430a1f9f45116090dbbbbcd6990",
+              "tool_checks_hash": "b97a24aab877d35859de8cd5d684dc0c89535504fbb68cc591945fec9561c0d6",
+              "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+              "plan_context_hash": "a66090b604f0b2c570d27bbcc3db5b89f8c0d10539634222f06e7ad1a3c4d59e",
+              "deterministic_checks_hash": "b7a97f6e7012eaa6e2cc40a081302120e0c99649cd3e096e141c946a1c53ee9f"
+            }
+          }
+        }
+      },
+      "provider_result_matches": [
+        {
+          "sequence": 1453,
+          "timestamp": "2026-09-20T17:01:15.124261+00:00",
+          "type": "provider.result",
+          "payload": {
+            "base_url": "https://api.deepseek.com",
+            "call_id": "a6948ad24bcf4768abebffaaa2bdffc3",
+            "model": "deepseek-flash",
+            "model_id": "deepseek-flash",
+            "output_hash": "d87da3cb77d94f6c015e29cfe98c439b70c5b35ec9b30adfc940bbf8e1686030",
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reasoning_effort": "high",
+            "reported_model": "deepseek-flash",
+            "requested_model": "deepseek-flash",
+            "role": "reviewer_math",
+            "schema_attempt": 1,
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": false,
+            "thinking": {
+              "type": "enabled"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\local-2-review-0.json",
+      "relative_path": "workspace/iteration2-live/b/a45be503af594ce8/sS04_00aecb9ed051/local-2-review-0.json",
+      "raw_sha256": "887e76195e617f3a1e8fe33e5c49867fcf7ab9abe3b09a10b7c337d427fb4b5b",
+      "value": {
+        "issues": [
+          {
+            "unit_id": "S04.U04",
+            "severity": "warning",
+            "message": "定理中同时陈述连续函数的四则运算与复合连续性，随后 S04.U06 又单独陈述并证明复合连续性，内容重复。建议保留一个统一的复合连续性定理，并在四则运算定理中只保留相应的和、差、积、商结论，以减少学生对定理边界和证明对应关系的混淆。该问题不影响当前结论的数学正确性。",
+            "evidence": "S04.U04 先在同一单元中陈述和、差、积、商的连续性，随后又陈述“若函数 g 在 x0 处连续，函数 f 在 g(x0) 处连续……则 f∘g 在 x0 处连续”；S04.U06 再次以相同假设和相同结论单独陈述复合连续性，S04.U07 又给出其证明。"
+          }
+        ],
+        "checked_unit_ids": [
+          "S04.U01",
+          "S04.U02",
+          "S04.U03",
+          "S04.U04",
+          "S04.U05",
+          "S04.U06",
+          "S04.U07",
+          "S04.U08",
+          "S04.U09",
+          "S04.U10",
+          "S04.U11",
+          "S04.U12",
+          "S04.U13"
+        ],
+        "limitations": [
+          "本次已逐一核对所提供的全部 S04 实际单元及 S01—S03 先修正文；S05 尚未生成，未将其视为当前节遗漏。",
+          "普通模型审阅检查了定义域、量词、端点、正负号、极限条件、定理假设、先修依赖及公式与文字一致性，但不等同于形式化证明。",
+          "当前工具检查状态为未执行结构化符号复算；连续性、间断点分类及一般函数量词条件未经过独立形式化核验。",
+          "未发现此前关于 S04.U03 的双侧定义域条件与单侧无穷极限定义冲突：正文已明确单侧极限独立定义，而本节间断点分类继续要求双侧去心邻域，并给出了相应限定。"
+        ]
+      },
+      "pipeline_review": {
+        "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\review-2.json",
+        "relative_path": "workspace/iteration2-live/b/a45be503af594ce8/sS04_00aecb9ed051/review-2.json",
+        "raw_sha256": "1e449daaf92a275bd2fb004e2b18f3c4988aa3bc4757d7bdf9b43ee2c7a3f51c",
+        "value": {
+          "section_id": "S04",
+          "math": {
+            "schema_version": 1,
+            "status": "NEEDS_REVIEW",
+            "issues": [],
+            "evidence": [
+              {
+                "evidence_type": "not_checked",
+                "status": "NOT_RUN",
+                "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+              }
+            ],
+            "coverage": [
+              "S04.U01",
+              "S04.U02",
+              "S04.U03",
+              "S04.U04",
+              "S04.U05",
+              "S04.U06",
+              "S04.U07",
+              "S04.U08",
+              "S04.U09",
+              "S04.U10",
+              "S04.U11",
+              "S04.U12",
+              "S04.U13"
+            ],
+            "limitations": [
+              "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+              "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+              "协议支持的表达式树不能表达函数定义、邻域量词、分段函数及连续性的定义条件，因此无法对本节关于点连续、区间连续和间断点分类的结论提交适用的符号核算。",
+              "本节定理涉及一般函数的定义域、极限存在性以及复合函数的定义域条件，现有核算协议不能完整表示这些复合约束；相关结论由正文中的条件和证明给出。",
+              "本次修复涉及间断点分类的双侧定义域前提与单侧无穷极限定义之间的适用范围区别；协议不能表达一般函数定义域、邻域包含关系及量词条件，故未为这一范围修复新增符号核算。"
+            ]
+          },
+          "llm_review": {
+            "issues": [
+              {
+                "unit_id": "S04.U04",
+                "severity": "warning",
+                "message": "定理中同时陈述连续函数的四则运算与复合连续性，随后 S04.U06 又单独陈述并证明复合连续性，内容重复。建议保留一个统一的复合连续性定理，并在四则运算定理中只保留相应的和、差、积、商结论，以减少学生对定理边界和证明对应关系的混淆。该问题不影响当前结论的数学正确性。",
+                "evidence": "S04.U04 先在同一单元中陈述和、差、积、商的连续性，随后又陈述“若函数 g 在 x0 处连续，函数 f 在 g(x0) 处连续……则 f∘g 在 x0 处连续”；S04.U06 再次以相同假设和相同结论单独陈述复合连续性，S04.U07 又给出其证明。"
+              }
+            ],
+            "checked_unit_ids": [
+              "S04.U01",
+              "S04.U02",
+              "S04.U03",
+              "S04.U04",
+              "S04.U05",
+              "S04.U06",
+              "S04.U07",
+              "S04.U08",
+              "S04.U09",
+              "S04.U10",
+              "S04.U11",
+              "S04.U12",
+              "S04.U13"
+            ],
+            "limitations": [
+              "本次已逐一核对所提供的全部 S04 实际单元及 S01—S03 先修正文；S05 尚未生成，未将其视为当前节遗漏。",
+              "普通模型审阅检查了定义域、量词、端点、正负号、极限条件、定理假设、先修依赖及公式与文字一致性，但不等同于形式化证明。",
+              "当前工具检查状态为未执行结构化符号复算；连续性、间断点分类及一般函数量词条件未经过独立形式化核验。",
+              "未发现此前关于 S04.U03 的双侧定义域条件与单侧无穷极限定义冲突：正文已明确单侧极限独立定义，而本节间断点分类继续要求双侧去心邻域，并给出了相应限定。"
+            ]
+          },
+          "issues": [
+            {
+              "unit_id": "S04.U04",
+              "severity": "warning",
+              "message": "定理中同时陈述连续函数的四则运算与复合连续性，随后 S04.U06 又单独陈述并证明复合连续性，内容重复。建议保留一个统一的复合连续性定理，并在四则运算定理中只保留相应的和、差、积、商结论，以减少学生对定理边界和证明对应关系的混淆。该问题不影响当前结论的数学正确性。",
+              "evidence": "S04.U04 先在同一单元中陈述和、差、积、商的连续性，随后又陈述“若函数 g 在 x0 处连续，函数 f 在 g(x0) 处连续……则 f∘g 在 x0 处连续”；S04.U06 再次以相同假设和相同结论单独陈述复合连续性，S04.U07 又给出其证明。"
+            }
+          ],
+          "reference_recovery": null,
+          "answer_recovery": null,
+          "mock": false,
+          "local_recovery": {
+            "applied_rounds": 4,
+            "proposal_calls": 4,
+            "rejected_proposals": 0,
+            "preserved_issues": [
+              {
+                "unit_id": "S04.U03",
+                "severity": "review",
+                "message": "无穷间断点的定义域条件前后不一致/未明确：开头把间断点限定为 f 在 x0 的某个双侧去心邻域内有定义；随后定义单侧无穷极限时明确右侧不要求左侧、左侧不要求右侧，紧接着又以“至少有一个单侧极限为 +∞ 或 -∞”称 x0 为无穷间断点，未说明这一分类是否仍要求最初的双侧去心邻域。这样字面上可把仅在单侧有定义的边界点（例如仅定义在 (0,+∞) 上的 f(x)=1/x 在 x0=0）归为无穷间断点，与最初的间断点定义冲突。应明确无穷间断点要求双侧去心邻域还是相应单侧邻域，并统一表述。",
+                "evidence": "S04.U03 开头：“设函数 f 在点 x0 的某个去心邻域内有定义。若 f(x0) 未定义，或 … 则称 x0 为 f 的间断点。”随后：“这些定义不要求上述双侧去心邻域条件……右侧定义不要求左侧有定义，左侧定义不要求右侧有定义。”分类句：“若至少有一个单侧极限为 +∞ 或 -∞……则称 x0 为无穷间断点。”"
+              }
+            ],
+            "review_identity": {
+              "candidate_hash": "d0b7670d4dbf500e0a5d5db44b926d41ef443fae726af1c7191b4b7534aaf57a",
+              "tool_checks_hash": "565f326bbcf4fc55d66bb8a91bce7e445531687ad4853ef09d2a02e412371b70",
+              "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+              "plan_context_hash": "a66090b604f0b2c570d27bbcc3db5b89f8c0d10539634222f06e7ad1a3c4d59e",
+              "deterministic_checks_hash": "b7a97f6e7012eaa6e2cc40a081302120e0c99649cd3e096e141c946a1c53ee9f"
+            }
+          }
+        }
+      },
+      "provider_result_matches": [
+        {
+          "sequence": 1466,
+          "timestamp": "2026-09-20T17:03:26.158702+00:00",
+          "type": "provider.result",
+          "payload": {
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "call_id": "2e9cc804d98d40f5a040ed4943486fa4",
+            "model": "gpt-6-astra",
+            "model_id": "gpt6",
+            "output_hash": "d35a96f40bb92023f6272cab0dcfd7844c5fb00d7d29c34a819f3ea2b4f5f8ef",
+            "preferred_model_id": "gpt6",
+            "prompt_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+            "prompt_version": 6,
+            "prompt_version_source": "declared_prompt_header",
+            "reported_model": "gpt-6-astra",
+            "requested_model": "gpt-6-astra",
+            "role": "reviewer_math",
+            "schema_attempt": 1,
+            "schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+            "streaming": true,
+            "temperature": 0.1
+          }
+        }
+      ]
+    }
+  ],
+  "patches": [
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\repair-3-patch.json",
+      "relative_path": "workspace/iteration2-live/b/a45be503af594ce8/sS04_00aecb9ed051/repair-3-patch.json",
+      "raw_sha256": "1adead109381274e98ac04118fc5a2913c4f6b18ca4a9cf41134bc40d989f1f9",
+      "value": {
+        "section_id": "S04",
+        "replacements": [
+          {
+            "unit_id": "S04.U05",
+            "tex": "由连续性的定义，函数 $f$ 与 $g$ 在 $x_0$ 处连续分别意味着\n\\[\n\\lim_{x\\to x_0}f(x)=f(x_0)\\text{，}\n\\qquad\n\\lim_{x\\to x_0}g(x)=g(x_0)\\text{。}\n\\]\n根据极限的和、差与积法则，有\n\\[\n\\lim_{x\\to x_0}(f(x)+g(x))=f(x_0)+g(x_0)=(f+g)(x_0)\\text{，}\n\\]\n\\[\n\\lim_{x\\to x_0}(f(x)-g(x))=f(x_0)-g(x_0)=(f-g)(x_0)\\text{，}\n\\]\n以及\n\\[\n\\lim_{x\\to x_0}f(x)g(x)=f(x_0)g(x_0)=(fg)(x_0)\\text{。}\n\\]\n因此和、差与积在 $x_0$ 处连续。\n\n若 $g(x_0)\\neq0$ 且 $g$ 在 $x_0$ 的某个邻域内不为零，则由商的极限法则，\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)}{g(x)}\n=\\frac{f(x_0)}{g(x_0)}\n=\\left(\\frac{f}{g}\\right)(x_0)\\text{，}\n\\]\n所以商在 $x_0$ 处连续。\n\n最后设 $g$ 在 $x_0$ 处连续，$f$ 在 $g(x_0)$ 处连续，并且存在 $x_0$ 的某个邻域 $U$，使得对每个 $x\\in U$，$g(x)$ 都属于 $f$ 的定义域。令 $\\varepsilon>0$。由于 $f$ 在 $g(x_0)$ 处连续，存在 $\\eta>0$，使得当 $|t-g(x_0)|<\\eta$ 时，\n\\[\n|f(t)-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $g$ 在 $x_0$ 处连续，存在 $\\delta_1>0$，使得当 $|x-x_0|<\\delta_1$ 时，\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n又因为 $U$ 是 $x_0$ 的邻域，存在 $\\delta_2>0$，使得当 $|x-x_0|<\\delta_2$ 时，$x\\in U$。取 $\\delta=\\min\\{\\delta_1,\\delta_2\\}$。当 $|x-x_0|<\\delta$ 时，$g(x)$ 属于 $f$ 的定义域，且\n\\[\n|g(x)-g(x_0)|<\\eta.\n\\]\n令 $t=g(x)$，便有\n\\[\n|f(g(x))-f(g(x_0))|<\\varepsilon.\n\\]\n由于 $(f\\circ g)(x)=f(g(x))$ 且 $(f\\circ g)(x_0)=f(g(x_0))$，故\n\\[\n|(f\\circ g)(x)-(f\\circ g)(x_0)|<\\varepsilon.\n\\]\n由点连续的定义，$f\\circ g$ 在 $x_0$ 处连续。"
+          }
+        ],
+        "calculation_updates": [],
+        "calculation_additions": [],
+        "uncertainties_append": [],
+        "calculation_limitations_append": []
+      }
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\repair-4-patch.json",
+      "relative_path": "workspace/iteration2-live/b/a45be503af594ce8/sS04_00aecb9ed051/repair-4-patch.json",
+      "raw_sha256": "699fbd24fe69fa81895846c759f7d33362a9ac6939b483ebb991fd7e1236fb61",
+      "value": {
+        "section_id": "S04",
+        "replacements": [
+          {
+            "unit_id": "S04.U03",
+            "tex": "设函数 $f$ 在点 $x_0$ 的某个双侧去心邻域内有定义。若 $f(x_0)$ 未定义，或 $f(x_0)$ 有定义但 $f$ 在 $x_0$ 处不连续，则称 $x_0$ 为 $f$ 的间断点。因此，间断点不要求属于函数的定义域。下述间断点分类均保留这一双侧去心邻域条件，单侧无穷极限的独立定义则不受此条件限制。常见类型如下。\n\n若极限 $\\lim_{x\\to x_0}f(x)$ 存在且为有限数，但 $f(x_0)$ 未定义或 $f(x_0)\\neq\\lim_{x\\to x_0}f(x)$，则称 $x_0$ 为可去间断点。\n\n若左、右极限都存在且有限，但不相等，即\n\\[\n\\lim_{x\\to x_0^-}f(x)\\neq\\lim_{x\\to x_0^+}f(x)\\text{，}\n\\]\n则称 $x_0$ 为跳跃间断点。\n\n为说明无穷间断点，先独立定义单侧无穷极限；这些定义不要求上述双侧去心邻域条件。定义右侧无穷极限时，只设 $f$ 在某个右侧去心邻域 $(x_0,x_0+r)$ 内有定义，其中 $r>0$。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x-x_0<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=-\\infty.\n\\]\n定义左侧无穷极限时，只设 $f$ 在某个左侧去心邻域 $(x_0-r,x_0)$ 内有定义，其中 $r>0$，不要求右侧有定义。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=+\\infty.\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<x_0-x<\\delta$ 时有 $f(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=-\\infty.\n\\]\n这里的 $\\delta$ 均可取小到使相应单侧去心邻域包含在函数的定义域内；右侧定义不要求左侧有定义，左侧定义不要求右侧有定义，且均不要求 $f(x_0)$ 有定义。这些单侧极限定义本身并不把仅在单侧有定义的边界点归为本节所称的间断点。\n\n例如，考虑定义在 $\\mathbb{R}\\setminus\\{0\\}$ 上的函数\n\\[\nf(x)=\\frac{1}{x}.\n\\]\n在 $x_0=0$ 处考察右侧。对任意 $M>0$，取 $\\delta=1/M$，当 $0<x<\\delta$ 时有 $f(x)=1/x>M$，所以\n\\[\n\\lim_{x\\to0^+}\\frac{1}{x}=+\\infty.\n\\]\n由于该函数在 $0$ 的某个双侧去心邻域内有定义，且右极限为 $+\\infty$，因此，$x=0$ 是无穷间断点。这里明确使用了定义域 $\\mathbb{R}\\setminus\\{0\\}$、考察方向 $x\\to0^+$ 以及“对任意 $M>0$，存在 $\\delta>0$”的量词条件。\n\n在函数 $f$ 于 $x_0$ 的某个双侧去心邻域内有定义的前提下，若至少有一个单侧极限为 $+\\infty$ 或 $-\\infty$，即函数值沿相应方向趋于正无穷或负无穷，则称 $x_0$ 为无穷间断点。在同一双侧去心邻域前提下，若函数在 $x_0$ 附近无界，但不存在趋于 $+\\infty$ 或 $-\\infty$ 的单侧极限，则不称为无穷间断点，而归入第二类间断点中的无界振荡情形。分类时必须先确认函数在某个双侧去心邻域内有定义，再核对所考察的极限存在性条件；仅在单侧邻域有定义时，可以讨论相应的单侧无穷极限，但不纳入本节上述间断点分类。\\label{def:discontinuity-types}"
+          }
+        ],
+        "calculation_updates": [],
+        "calculation_additions": [],
+        "uncertainties_append": [],
+        "calculation_limitations_append": [
+          "本次修复涉及间断点分类的双侧定义域前提与单侧无穷极限定义之间的适用范围区别；协议不能表达一般函数定义域、邻域包含关系及量词条件，故未为这一范围修复新增符号核算。"
+        ]
+      }
+    }
+  ],
+  "patch_evidence": [
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\repair-3-evidence.json",
+      "relative_path": "workspace/iteration2-live/b/a45be503af594ce8/sS04_00aecb9ed051/repair-3-evidence.json",
+      "raw_sha256": "e50c3761adc2409f38b88c287b8fc0fd9edc0a964437bb5a6ecbe71f39f33656",
+      "value": {
+        "schema_version": 1,
+        "operation": "strict_local_patch",
+        "status": "APPLIED_UNCHECKED",
+        "source_section_hash": "f432f77a40c64e15c5ac4d756b1d0dabb42e5f2c5b531078e881a2b22d881d80",
+        "patch_hash": "282d35e5cce3dc372f6ef4eee194b969ee031b8f35f2d3c3e5384cdfdda3da56",
+        "result_section_hash": "e6a05a6de4d57a0ee3a5ab75a60554852a573430a1f9f45116090dbbbbcd6990",
+        "allowed_unit_ids": [
+          "S04.U05"
+        ],
+        "changed_unit_ids": [
+          "S04.U05"
+        ],
+        "unit_order_preserved": true,
+        "unit_identity_and_metadata_preserved": true,
+        "non_target_units_preserved": true,
+        "original_calculation_count": 0,
+        "calculation_updates": [],
+        "calculation_additions": [],
+        "non_target_calculations_preserved": true,
+        "old_uncertainties_preserved": true,
+        "old_calculation_limitations_preserved": true,
+        "normalization": "NOT_RUN",
+        "math_check": "NOT_RUN",
+        "teacher_review": "NOT_RUN"
+      }
+    },
+    {
+      "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\repair-4-evidence.json",
+      "relative_path": "workspace/iteration2-live/b/a45be503af594ce8/sS04_00aecb9ed051/repair-4-evidence.json",
+      "raw_sha256": "b730c6fb59e9b862a4e1d02fcc91f4aa0d7bdf32e289ecb7f3b4be75717e1e82",
+      "value": {
+        "schema_version": 1,
+        "operation": "strict_local_patch",
+        "status": "APPLIED_UNCHECKED",
+        "source_section_hash": "e6a05a6de4d57a0ee3a5ab75a60554852a573430a1f9f45116090dbbbbcd6990",
+        "patch_hash": "b6e21f4fec84d167d074a219af7105e26ec78dd300fccec18686f8d2a8da3295",
+        "result_section_hash": "d0b7670d4dbf500e0a5d5db44b926d41ef443fae726af1c7191b4b7534aaf57a",
+        "allowed_unit_ids": [
+          "S04.U03"
+        ],
+        "changed_unit_ids": [
+          "S04.U03"
+        ],
+        "unit_order_preserved": true,
+        "unit_identity_and_metadata_preserved": true,
+        "non_target_units_preserved": true,
+        "original_calculation_count": 0,
+        "calculation_updates": [],
+        "calculation_additions": [],
+        "non_target_calculations_preserved": true,
+        "old_uncertainties_preserved": true,
+        "old_calculation_limitations_preserved": true,
+        "normalization": "NOT_RUN",
+        "math_check": "NOT_RUN",
+        "teacher_review": "NOT_RUN"
+      }
+    }
+  ],
+  "misattributed_proof": {
+    "source_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\compile-attempt-2\\source\\lecture.tex",
+    "source_raw_sha256": "83b772f04c14c28359e8394ce4f0aace41404e12d40f4d6a4b73a56dcc85a767",
+    "actual_unit_id": "S02.U03",
+    "unit_marker_line_1based": 174,
+    "quoted_proof_line_1based": 208,
+    "actual_proof": "最后证明复合极限结论。按该结论的假设，取 $r>0$，使得当 $0<|x-x_0|<r$ 时，$g(x)\\neq b$ 且 $f(g(x))$ 有定义。给定 $\\varepsilon>0$，由 $\\lim_{t\\to b}f(t)=L$，存在 $\\eta>0$，使得当 $0<|t-b|<\\eta$ 时 $|f(t)-L|<\\varepsilon$。由 $g(x)\\to b$，存在 $\\delta_5>0$，使得当 $0<|x-x_0|<\\delta_5$ 时 $|g(x)-b|<\\eta$。因此，当 $0<|x-x_0|<\\min\\{r,\\delta_5\\}$ 时，\n\\[\n0<|g(x)-b|<\\eta,\\qquad |f(g(x))-L|<\\varepsilon.\n\\]\n由极限定义即得 $\\lim_{x\\to x_0}f(g(x))=L$。\n\\end{proof}",
+    "incorrect_review_target": "S04.U05",
+    "actual_target_tex_sha256": "b096735f5c724baa924c48c56f408ca3538658b8e4cc1a7c493ba5bc0c9b868d",
+    "original_target_already_proves_composition_continuity": true
+  },
+  "local_state": {
+    "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\runs\\a45be503af594ce8aae0bb1e4c30184b\\local-repair\\S04.json",
+    "relative_path": "workspace/iteration2-live/runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S04.json",
+    "raw_sha256": "30bf5f66e38ecf9cde9eff9435511fe37b247d69ff1993d5382a2d1002be79aa",
+    "value": {
+      "schema_version": 1,
+      "identity": {
+        "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+        "section_id": "S04",
+        "context_hash": "a66090b604f0b2c570d27bbcc3db5b89f8c0d10539634222f06e7ad1a3c4d59e",
+        "base_hash": "f432f77a40c64e15c5ac4d756b1d0dabb42e5f2c5b531078e881a2b22d881d80",
+        "model": "gpt-6-astra",
+        "provider": "live"
+      },
+      "phase": "CHECKED",
+      "applied_rounds": 4,
+      "proposal_calls": 4,
+      "rejected_proposals": 0,
+      "pending_issues": [],
+      "unit_applied_counts": {
+        "S04.U05": 2,
+        "S04.U07": 1,
+        "S04.U03": 3
+      },
+      "proposal_counts_by_key": {
+        "unit:S04.U03": 3,
+        "unit:S04.U05": 2,
+        "unit:S04.U07": 1
+      },
+      "rejected_counts_by_key": {},
+      "evidence_dependencies": [
+        {
+          "key": "b/a45be503af594ce8/sS04_1131f5fcd8cf/repair-1-patch.json",
+          "hash": "49d7ef3a21a86bde9c5e2cbdac037f2949efaec309ce8027a34af843d2b19f61",
+          "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+        },
+        {
+          "key": "b/a45be503af594ce8/sS04_d8112be51cdd/repair-2-patch.json",
+          "hash": "1bfacae647f631c9b1f2539f3778fbb370fcee9189594f342cff20f91be5173f",
+          "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+        },
+        {
+          "key": "b/a45be503af594ce8/sS04_00aecb9ed051/repair-3-patch.json",
+          "hash": "1adead109381274e98ac04118fc5a2913c4f6b18ca4a9cf41134bc40d989f1f9",
+          "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+        },
+        {
+          "key": "b/a45be503af594ce8/sS04_00aecb9ed051/repair-4-patch.json",
+          "hash": "699fbd24fe69fa81895846c759f7d33362a9ac6939b483ebb991fd7e1236fb61",
+          "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+        }
+      ],
+      "last_review_context_hash": "822f9c245dc791045a8e6c062852ef69bb787457442e9fc281f1282d04f10503",
+      "reference_recovery": null,
+      "answer_recovery": null,
+      "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+      "teacher_visual_review": "NOT_RUN",
+      "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S04/candidate-689115374ca6.json",
+      "candidate_hash": "3d3aede5baa12a9bf4cd7cc36ec8cc102f4e69d11746483eb60d8e0c1a30fbac",
+      "last_review_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S04/review-31857e7a9bbd.json",
+      "pending_operation": "strict_local_patch",
+      "pending_keys": [
+        "unit:S04.U03"
+      ],
+      "request_count_before": 96,
+      "patch_evidence": {
+        "schema_version": 1,
+        "operation": "strict_local_patch",
+        "status": "APPLIED_UNCHECKED",
+        "source_section_hash": "e6a05a6de4d57a0ee3a5ab75a60554852a573430a1f9f45116090dbbbbcd6990",
+        "patch_hash": "b6e21f4fec84d167d074a219af7105e26ec78dd300fccec18686f8d2a8da3295",
+        "result_section_hash": "d0b7670d4dbf500e0a5d5db44b926d41ef443fae726af1c7191b4b7534aaf57a",
+        "allowed_unit_ids": [
+          "S04.U03"
+        ],
+        "changed_unit_ids": [
+          "S04.U03"
+        ],
+        "unit_order_preserved": true,
+        "unit_identity_and_metadata_preserved": true,
+        "non_target_units_preserved": true,
+        "original_calculation_count": 0,
+        "calculation_updates": [],
+        "calculation_additions": [],
+        "non_target_calculations_preserved": true,
+        "old_uncertainties_preserved": true,
+        "old_calculation_limitations_preserved": true,
+        "normalization": "NOT_RUN",
+        "math_check": "NOT_RUN",
+        "teacher_review": "NOT_RUN",
+        "proposal_key": "b/a45be503af594ce8/sS04_00aecb9ed051/repair-4-patch.json"
+      },
+      "reason": "Explicit global-repair seed; existing local counters retained"
+    }
+  },
+  "observed_existing_windows_compile": {
+    "path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\compile-attempt-2\\compile.json",
+    "relative_path": "workspace/iteration2-live/b/a45be503af594ce8/sS04_00aecb9ed051/compile-attempt-2/compile.json",
+    "raw_sha256": "4424f052efcd27aad2a78a8ae8f967a4875b595604c8b31f7fb1d94356f45729",
+    "value": {
+      "status": "PASS",
+      "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\compile-attempt-2\\build\\lecture.pdf",
+      "issues": [],
+      "log_paths": [
+        "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\compile-attempt-2\\build\\pass-1.stdout.log",
+        "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\compile-attempt-2\\build\\pass-1.tex.log",
+        "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\compile-attempt-2\\build\\pass-2.stdout.log",
+        "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\a45be503af594ce8\\sS04_00aecb9ed051\\compile-attempt-2\\build\\pass-2.tex.log"
+      ],
+      "engine": {
+        "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+        "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+      },
+      "passes": 2,
+      "compile_mode": "trusted_local",
+      "isolation": "NOT_IMPLEMENTED",
+      "limitations": [
+        "原生可信本机编译不是文件系统或网络隔离沙箱。"
+      ],
+      "command": [
+        "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "-no-shell-escape",
+        "-recorder",
+        "-synctex=1",
+        "-jobname=lecture",
+        "-output-directory=.",
+        "lecture.tex"
+      ],
+      "elapsed_seconds": 3.75,
+      "page_count": 15,
+      "pdf_sha256": "10e9e1bc8bc6c30ed4c754736e20621786047e6efd8be328937564ad21bb1c01",
+      "auxiliary_hashes": {
+        ".aux": "60ab2c5524d64ea02240203111b6c635ac8ce11a02067891b2c402e9c95bc7f2",
+        ".out": "4ccfd0d22c837e786e83c44b008e11e795e3a5335e6605daf9887e4ebcc5da55"
+      }
+    }
+  },
+  "budget_events": [
+    {
+      "sequence": 508,
+      "timestamp": "2026-09-19T20:05:41.934820+00:00",
+      "type": "budget.initialized",
+      "payload": {
+        "defaults": {
+          "requests": 60
+        },
+        "existing_request_count": 22,
+        "historical_limit_inferred": false,
+        "source": "VERIFIED_BENCHMARK_STATE"
+      }
+    },
+    {
+      "sequence": 509,
+      "timestamp": "2026-09-19T20:05:41.935812+00:00",
+      "type": "budget.legacy_requests_imported",
+      "payload": {
+        "actor": "local_user",
+        "case": "CH03",
+        "evidence_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration2\\budget-migration-20260920-040218\\benchmark_state.json",
+        "evidence_sha256": "4e21b76233b7b785930656436d2edae6807578ab99dec72612a79630a68b37f3",
+        "execution": "NOT_STARTED",
+        "historical_limit_inferred": false,
+        "local_global_historical_limits": "UNKNOWN",
+        "request_count_preserved": 22,
+        "requests": 60,
+        "run_id": "a45be503af594ce8aae0bb1e4c30184b",
+        "workspace": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live"
+      }
+    },
+    {
+      "sequence": 612,
+      "timestamp": "2026-09-19T20:18:02.440083+00:00",
+      "type": "budget.initial_fields_recorded",
+      "payload": {
+        "fields": {
+          "global_repair_rounds": 2,
+          "local_repairs_per_unit": 2
+        },
+        "source": "ACTUAL_EXECUTION_SETTINGS_LEGACY"
+      }
+    },
+    {
+      "sequence": 801,
+      "timestamp": "2026-09-20T14:33:57.713309+00:00",
+      "type": "budget.increased_by_user",
+      "payload": {
+        "action_id": "authorized-iteration4-CH03-20260920T143357-e340db",
+        "actor": "local_user",
+        "after": {
+          "global_repair_rounds": 6,
+          "local_repairs_per_unit": 6,
+          "requests": 240
+        },
+        "approval_preserved": true,
+        "before": {
+          "global_repair_rounds": 2,
+          "local_repairs_per_unit": 2,
+          "requests": 60
+        },
+        "execution": "NOT_STARTED",
+        "note": "用户明确授权提高第二、三章修复及请求上限，以完善工作流和制作质量为优先；由Codex代为执行本次已授权预算动作。",
+        "request_count_preserved": 27,
+        "request_limit_action": "INCREASE_KNOWN_LIMIT",
+        "teacher_review": "NOT_PERFORMED"
+      }
+    }
+  ],
+  "findings": {
+    "U05_blocking_issue": "CONFIRMED_FALSE_POSITIVE_WRONG_UNIT_EVIDENCE_S02_U03_ATTRIBUTED_TO_S04_U05",
+    "U05_text_regression_before_patch3": "NOT_FOUND_EXACT_UNIT_EQUALITY_FROM_R1_BEFORE_TO_R3_NORMALIZED",
+    "U05_patch3_effect": "EXPLICIT_NEIGHBORHOOD_SHRINKING_IN_ALREADY_VALID_CONTINUITY_PROOF",
+    "U03_patch4_trigger": "UNCHANGED_TEXT_WARNING_TO_REVIEW_SEVERITY_DRIFT_CONTEXT_INHERITANCE_AMBIGUITY",
+    "U03_counterexample": "ONE_SIDED_DOMAIN_DOES_NOT_SATISFY_OPENING_TWO_SIDED_CLASSIFICATION_PREMISE_NOT_A_PROOF_OF_CONTRADICTION",
+    "U03_patch4_effect": "EXPLICITLY_RETAINS_TWO_SIDED_CLASSIFICATION_AND_INDEPENDENT_ONE_SIDED_LIMIT_DEFINITIONS",
+    "old_per_unit_limit2": "PATCH4_U03_WOULD_BLOCK_AT_PRIOR_COUNT2_CURRENT6_ALLOWED_THIRD_ACCEPTED_CHANGE",
+    "patch3_budget_distinction": "U05_COUNT1_TO2_WOULD_NOT_ITSELF_BE_BLOCKED_BY_PER_UNIT_LIMIT2"
+  },
+  "tests": {
+    "audit_assertions": "PASS",
+    "new_mock_tests": "NOT_RUN_NO_IMPLEMENTATION_CHANGE",
+    "new_real_api_tests": "NOT_RUN_READ_ONLY_REAL_HISTORY",
+    "new_windows_compile": "NOT_RUN_EXISTING_COMPILER_RECORD_OBSERVED",
+    "agent_visual": "NOT_RUN",
+    "teacher_math": "NOT_RUN",
+    "teacher_visual": "NOT_RUN"
+  }
+}

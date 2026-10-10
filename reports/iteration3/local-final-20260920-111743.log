@@ -1,0 +1,39 @@
+........................................................................ [ 12%]
+........................................................................ [ 24%]
+............................................F........................... [ 36%]
+........................................................................ [ 48%]
+........................................................................ [ 60%]
+..................................................F..................... [ 72%]
+........................................................................ [ 84%]
+........................................................................ [ 96%]
+........................                                                 [100%]
+================================== FAILURES ===================================
+________ test_t55_export_excludes_environment_key_and_private_sidecars ________
+tests\test_delivery.py:163: in test_t55_export_excludes_environment_key_and_private_sidecars
+    bundle = export_fixture(tmp_path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_delivery.py:58: in export_fixture
+    pipeline.export_source(source, 'lecture.tex', output, {'hash': 'synthetic-confirmed-plan-fixture'})
+src\math_agent\pipeline.py:876: in export_source
+    model_routing = routing_summary(self.store, self.run)
+                                    ^^^^^^^^^^
+E   AttributeError: 'Pipeline' object has no attribute 'store'. Did you mean: 'stage'?
+_______ test_total_deadline_falls_back_without_reusing_stalled_request ________
+tests\test_model_routing.py:243: in test_total_deadline_falls_back_without_reusing_stalled_request
+    assert len(calls) == 2
+E   AssertionError: assert 3 == 2
+E    +  where 3 = len([{'role': 'check', 'model_id': 'gpt6', 'preferred_model_id': 'gpt6', 'model': 'gpt-6-astra', ...}, {'role': 'check', '... ...}, {'role': 'check', 'model_id': 'deepseek-v4-pro', 'preferred_model_id': 'gpt6', 'model': 'deepseek-v4-pro', ...}])
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\研究生阶段\数学教学agent\math-teaching-agent\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv\Lib\site-packages\starlette\testclient.py:53
+  D:\研究生阶段\数学教学agent\math-teaching-agent\.venv\Lib\site-packages\starlette\testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_delivery.py::test_t55_export_excludes_environment_key_and_private_sidecars
+FAILED tests/test_model_routing.py::test_total_deadline_falls_back_without_reusing_stalled_request
+2 failed, 598 passed, 1 deselected, 2 warnings in 234.84s (0:03:54)

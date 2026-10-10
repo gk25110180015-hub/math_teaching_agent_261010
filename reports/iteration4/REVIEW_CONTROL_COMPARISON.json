@@ -1,0 +1,881 @@
+{
+  "schema_version": 1,
+  "status": "COMPARISON_COMPLETE",
+  "created_at_utc": "2026-09-20T15:29:26.684149+00:00",
+  "evidence_kind": "REAL_API_TARGETED_REGRESSION",
+  "versions": {
+    "v5": {
+      "recorded_run_status": "NEEDS_REVIEW",
+      "request_count": 6,
+      "started_at_utc": "2026-09-20T15:11:31.648276+00:00",
+      "finished_at_utc": "2026-09-20T15:17:37.414941+00:00",
+      "run_wall_seconds": 365.767,
+      "strict_matches": 3,
+      "validated_responses": 6,
+      "positive_false_alarms": 2,
+      "negative_detected": 3,
+      "severity_only_mismatches": 1,
+      "all_model_labels_match_selection": true,
+      "http_error_statuses": [],
+      "failure_or_schema_error_events": [],
+      "automatic_fallback": false,
+      "prompt_evidence": {
+        "path": "reports/iteration4/live-review-controls-v5-20260920-1515/prompts/reviewer_math.md",
+        "raw_sha256": "db70a7e3b2a91f81157cb478f5a9b2c5edf2ca9a595c4f7cc28e5b9e6f96822b",
+        "bytes": 7223
+      },
+      "state_evidence": {
+        "path": "reports/iteration4/live-review-controls-v5-20260920-1515/state.json",
+        "raw_sha256": "01d445fa861717326c0df01ecfc67a032021212005b2e1b0962a4c23e81b831e",
+        "bytes": 39572
+      },
+      "two_cases_snapshot_evidence": {
+        "path": "reports/iteration4/live-review-controls-v5-20260920-1515/fixtures-local-only.json",
+        "raw_sha256": "0fc6be0ea14687a91f5c93fb760ab203cba777144e3755344b828d00f239de56",
+        "bytes": 3409
+      },
+      "results": [
+        {
+          "model_id": "gpt6",
+          "case_id": "R01",
+          "case_kind": "CORRECT_CONTROL",
+          "started_at_utc": "2026-09-20T15:11:31.649282+00:00",
+          "finished_at_utc": "2026-09-20T15:12:38.243447+00:00",
+          "case_wall_seconds": 66.594,
+          "response_status": "RESPONSE_VALIDATED",
+          "recorded_local_classification": "FAIL",
+          "request_count": 1,
+          "preferred_model_id": "gpt6",
+          "actual_model_id": "gpt6",
+          "requested_api_model": "gpt-6-astra",
+          "reported_model": "gpt-6-astra",
+          "expected_api_model": "gpt-6-astra",
+          "http_status": 200,
+          "transport_status": "SUCCESS",
+          "call_id": "6fac5f7bc02d4ed8910d3c7331544fb6",
+          "endpoint": "https://oneapi.advancedsolver.com/v1",
+          "usage": {
+            "prompt_tokens": 2296,
+            "completion_tokens": 977,
+            "total_tokens": 3273
+          },
+          "streaming": true,
+          "temperature": 0.1,
+          "thinking": null,
+          "reasoning_effort": null,
+          "request_messages_hash": "a4db712d25bb36d2d3baeea8dbd0468090f59820b735f72746f541f40c11fb65",
+          "provider_prompt_text_hash": "cce39dfcc5d883416dd1ee815b6405933401d4351a59ddf361c56ddaf66f0482",
+          "review_schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+          "error": null,
+          "recomputed_local_classification": "FAIL",
+          "coverage_complete": true,
+          "issue_ids_valid": true,
+          "flagged_unit_ids": [
+            "S21.U01"
+          ],
+          "blocking_unit_ids": [],
+          "severity_counts": {
+            "review": 1,
+            "warning": 1
+          },
+          "workflow_would_require_repair": true,
+          "finding_category": "POSITIVE_FALSE_ALARM",
+          "response_evidence": {
+            "path": "reports/iteration4/live-review-controls-v5-20260920-1515/gpt6/R01-review.json",
+            "raw_sha256": "ea7b0a0a9ce916bf4c6b3dd3342489c197821fd05bc1946649edab6e06eebdbf",
+            "bytes": 1815
+          },
+          "issues": [
+            {
+              "unit_id": "S21.U01",
+              "severity": "review",
+              "message": "“当且仅当二者还都是该过程中的无穷小”在逻辑上有歧义，可能被读成“p(t)∼q(t)当且仅当p(t)→0且q(t)→0”，但两个函数都趋于0并不能推出它们等价，例如p(t)=t、q(t)=t^2。应明确写成：在已经满足p(t)∼q(t)的前提下，若p(t)→0且q(t)→0，则称其为等价无穷小；或直接将定义写为“p(t)∼q(t)且p(t)→0且q(t)→0”。",
+              "evidence": "正文先用“若 lim_{t→c} p(t)/q(t)=1，称二者……等价”，随后写“当且仅当二者还都是……无穷小……时，称它们为等价无穷小”。“当且仅当”的两边未明确包含前面已经建立的p(t)∼q(t)条件，因此按字面会遗漏等价关系这一必要条件。"
+            },
+            {
+              "unit_id": "S21.U01",
+              "severity": "warning",
+              "message": "定义域条件可进一步明确为：存在某个δ>0，使p、q在0<|t−c|<δ上有定义，且q(t)≠0；这样可明确分式在整个取极限的去心邻域上有意义。若“q(t)≠0”已 intended 为该邻域内处处成立，则这是表述澄清而非数学错误。",
+              "evidence": "正文写“p(t),q(t)在c的某个去心邻域有定义，且q(t)≠0”，未显式说明不等式所量化的t范围；极限商p(t)/q(t)的定义需要相应的去心邻域条件。"
+            }
+          ],
+          "limitations": [
+            "本次仅核对实际提供的单元S21.U01；未提供先修正文、锁定objectives或相邻章节正文，因此未对跨节依赖和目标覆盖作额外判断。",
+            "本审阅是普通数学文本审查，不是形式化证明；未检查渲染后的最终PDF或程序组装位置。"
+          ],
+          "selected_and_returned_models_match": true
+        },
+        {
+          "model_id": "gpt6",
+          "case_id": "R02",
+          "case_kind": "DEFINITE_ERROR_CONTROL",
+          "started_at_utc": "2026-09-20T15:12:38.244447+00:00",
+          "finished_at_utc": "2026-09-20T15:12:53.762536+00:00",
+          "case_wall_seconds": 15.518,
+          "response_status": "RESPONSE_VALIDATED",
+          "recorded_local_classification": "PASS",
+          "request_count": 1,
+          "preferred_model_id": "gpt6",
+          "actual_model_id": "gpt6",
+          "requested_api_model": "gpt-6-astra",
+          "reported_model": "gpt-6-astra",
+          "expected_api_model": "gpt-6-astra",
+          "http_status": 200,
+          "transport_status": "SUCCESS",
+          "call_id": "27d2a963b73f42f3b63434562c07e1c4",
+          "endpoint": "https://oneapi.advancedsolver.com/v1",
+          "usage": {
+            "prompt_tokens": 2259,
+            "completion_tokens": 370,
+            "total_tokens": 2629
+          },
+          "streaming": true,
+          "temperature": 0.1,
+          "thinking": null,
+          "reasoning_effort": null,
+          "request_messages_hash": "ff59ddba8ab7515ab054b8fac8cc8ac6fb8afe3d1c2275245dd70c22de4eee64",
+          "provider_prompt_text_hash": "cce39dfcc5d883416dd1ee815b6405933401d4351a59ddf361c56ddaf66f0482",
+          "review_schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+          "error": null,
+          "recomputed_local_classification": "PASS",
+          "coverage_complete": true,
+          "issue_ids_valid": true,
+          "flagged_unit_ids": [
+            "S21.U01"
+          ],
+          "blocking_unit_ids": [
+            "S21.U01"
+          ],
+          "severity_counts": {
+            "blocking": 1
+          },
+          "workflow_would_require_repair": true,
+          "finding_category": "ERROR_DETECTED_AND_BLOCKING",
+          "response_evidence": {
+            "path": "reports/iteration4/live-review-controls-v5-20260920-1515/gpt6/R02-review.json",
+            "raw_sha256": "dc75af19d9aabb665054acf56f3b8ce9dfd32bdaaff0728246b81c673e2e4181",
+            "bytes": 1240
+          },
+          "issues": [
+            {
+              "unit_id": "S21.U01",
+              "severity": "blocking",
+              "message": "将比值趋于1直接定义为“等价无穷小”，并明确否认趋零条件，混淆了渐近等价与等价无穷小。应增加其中一个函数在 t→c 时趋于0的条件；结合比值趋于1，可推出另一个也趋于0。若要保留无需趋零的一般定义，应改称“渐近等价”，再将等价无穷小作为两个函数趋零时的子类。",
+              "evidence": "完整正文先规定去心邻域内有定义且 q(t)≠0，随后以 lim_{t→c}p(t)/q(t)=1 定义“等价无穷小”，最后明确写道“这里无需另要求任一函数趋于零”。取 p(t)=q(t)=1，满足全部实际假设且比值恒为1，但两函数均不趋于0，因而不是无穷小。后续限定未弥补该缺口，反而明确排除了必要的趋零要求。"
+            }
+          ],
+          "limitations": [
+            "本次仅审查所提供的 S21.U01 完整正文；未提供先修正文或具体锁定教学目标，未对其他单元或整章教学覆盖作出结论。",
+            "本审阅属于普通模型数学审查，不等同于形式化证明；未检查最终PDF呈现。"
+          ],
+          "selected_and_returned_models_match": true
+        },
+        {
+          "model_id": "deepseek-flash",
+          "case_id": "R01",
+          "case_kind": "CORRECT_CONTROL",
+          "started_at_utc": "2026-09-20T15:12:53.763536+00:00",
+          "finished_at_utc": "2026-09-20T15:13:56.508965+00:00",
+          "case_wall_seconds": 62.745,
+          "response_status": "RESPONSE_VALIDATED",
+          "recorded_local_classification": "FAIL",
+          "request_count": 1,
+          "preferred_model_id": "deepseek-flash",
+          "actual_model_id": "deepseek-flash",
+          "requested_api_model": "deepseek-flash",
+          "reported_model": "deepseek-flash",
+          "expected_api_model": "deepseek-flash",
+          "http_status": 200,
+          "transport_status": "SUCCESS",
+          "call_id": "06631e61b6f443bf94bd35a99c24a358",
+          "endpoint": "https://api.deepseek.com",
+          "usage": {
+            "prompt_tokens": 2008,
+            "completion_tokens": 7195,
+            "total_tokens": 9203
+          },
+          "streaming": false,
+          "temperature": null,
+          "thinking": {
+            "type": "enabled"
+          },
+          "reasoning_effort": "high",
+          "request_messages_hash": "a4db712d25bb36d2d3baeea8dbd0468090f59820b735f72746f541f40c11fb65",
+          "provider_prompt_text_hash": "cce39dfcc5d883416dd1ee815b6405933401d4351a59ddf361c56ddaf66f0482",
+          "review_schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+          "error": null,
+          "recomputed_local_classification": "FAIL",
+          "coverage_complete": true,
+          "issue_ids_valid": true,
+          "flagged_unit_ids": [
+            "S21.U01"
+          ],
+          "blocking_unit_ids": [],
+          "severity_counts": {
+            "review": 1
+          },
+          "workflow_would_require_repair": true,
+          "finding_category": "POSITIVE_FALSE_ALARM",
+          "response_evidence": {
+            "path": "reports/iteration4/live-review-controls-v5-20260920-1515/deepseek-flash/R01-review.json",
+            "raw_sha256": "073d5f0de0e4c5c609a146894d9bde5d0a8d1d8b1644c688eb7482957c1598c5",
+            "bytes": 1513
+          },
+          "issues": [
+            {
+              "unit_id": "S21.U01",
+              "severity": "review",
+              "message": "“等价无穷小”的定义存在核心歧义。正文先定义 p~q 为 lim p/q=1，随后说“当且仅当二者还都是该过程中的无穷小，即 p(t)→0 且 q(t)→0 时，称它们为等价无穷小”。这里的“还”虽可理解为以前提 p~q 为条件，但“当且仅当”句没有在条件中明示 lim p/q=1；若读者未把前句作为持续前提，会把任意两个无穷小都称为等价无穷小。应明确写成：若 p~q 且 p,q 均为无穷小，则称二者为等价无穷小；反过来，称等价无穷小时必须同时满足 p~q 与二者均为无穷小。",
+              "evidence": "原文：“若 $\\lim_{t\\to c}p(t)/q(t)=1$，称二者在该过程中等价，记作 $p(t)\\sim q(t)$。当且仅当二者还都是该过程中的无穷小，即 $p(t)\\to0$ 且 $q(t)\\to0$ 时，称它们为等价无穷小。”"
+            }
+          ],
+          "limitations": [
+            "本次仅审查当前实际单元 S21.U01；prior_sections 为空，未能核对函数极限定义等先修正文，只能按计划声明其为先修。",
+            "未进行形式化证明；未发现确定的数学错误，但上述等价无穷小定义需要澄清以避免量词和条件歧义。",
+            "当前定义只针对有限点 $t\\to c$ 的双侧去心邻域；未评估后续若用于单侧或无穷远过程时是否需补充相应定义域条件。"
+          ],
+          "selected_and_returned_models_match": true
+        },
+        {
+          "model_id": "deepseek-flash",
+          "case_id": "R02",
+          "case_kind": "DEFINITE_ERROR_CONTROL",
+          "started_at_utc": "2026-09-20T15:13:56.510961+00:00",
+          "finished_at_utc": "2026-09-20T15:14:18.516114+00:00",
+          "case_wall_seconds": 22.005,
+          "response_status": "RESPONSE_VALIDATED",
+          "recorded_local_classification": "PASS",
+          "request_count": 1,
+          "preferred_model_id": "deepseek-flash",
+          "actual_model_id": "deepseek-flash",
+          "requested_api_model": "deepseek-flash",
+          "reported_model": "deepseek-flash",
+          "expected_api_model": "deepseek-flash",
+          "http_status": 200,
+          "transport_status": "SUCCESS",
+          "call_id": "4a01aec6907144fba943904d2916808c",
+          "endpoint": "https://api.deepseek.com",
+          "usage": {
+            "prompt_tokens": 1977,
+            "completion_tokens": 2504,
+            "total_tokens": 4481
+          },
+          "streaming": false,
+          "temperature": null,
+          "thinking": {
+            "type": "enabled"
+          },
+          "reasoning_effort": "high",
+          "request_messages_hash": "ff59ddba8ab7515ab054b8fac8cc8ac6fb8afe3d1c2275245dd70c22de4eee64",
+          "provider_prompt_text_hash": "cce39dfcc5d883416dd1ee815b6405933401d4351a59ddf361c56ddaf66f0482",
+          "review_schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+          "error": null,
+          "recomputed_local_classification": "PASS",
+          "coverage_complete": true,
+          "issue_ids_valid": true,
+          "flagged_unit_ids": [
+            "S21.U01"
+          ],
+          "blocking_unit_ids": [
+            "S21.U01"
+          ],
+          "severity_counts": {
+            "blocking": 1
+          },
+          "workflow_would_require_repair": true,
+          "finding_category": "ERROR_DETECTED_AND_BLOCKING",
+          "response_evidence": {
+            "path": "reports/iteration4/live-review-controls-v5-20260920-1515/deepseek-flash/R02-review.json",
+            "raw_sha256": "8b3d5d0065767a2f496c80425d43bd4ef643a9039dd19a28a4f26712184e22ed",
+            "bytes": 1333
+          },
+          "issues": [
+            {
+              "unit_id": "S21.U01",
+              "severity": "blocking",
+              "message": "该单元把“等价无穷小”定义为仅需 lim_{t→c} p(t)/q(t)=1，并明确“无需另要求任一函数趋于零”。这与“无穷小”的标准含义冲突：满足该定义的函数不必是无穷小，因而核心定义本身错误或至少命名与实质定义不一致。若课程意图是“函数等价/渐近等价”，应改名为等价函数或渐近等价；若保留“等价无穷小”，则必须要求 p、q 在过程中趋于零（在比值极限为 1 且 q 非零时，要求其一趋于零即可推出另一个也趋于零）。",
+              "evidence": "取 c=0，去心邻域为 0<|t|<1，令 p(t)=q(t)=1。此时 p,q 在该去心邻域有定义且 q(t)≠0，并有 lim_{t→0} p(t)/q(t)=1。按 S21.U01 原文，这会被称为“该过程中的等价无穷小”，但 p,q 都不趋于 0，不是无穷小。该反例满足正文的全部实际假设。"
+            }
+          ],
+          "limitations": [
+            "仅审阅了当前提供的实际单元 S21.U01；未提供该节其他单元、先修正文或锁定目标，无法核对后续使用、跨节依赖及教学覆盖。",
+            "本次为数学内容审阅，不是形式化证明或授权审批。"
+          ],
+          "selected_and_returned_models_match": true
+        },
+        {
+          "model_id": "deepseek-v4-pro",
+          "case_id": "R01",
+          "case_kind": "CORRECT_CONTROL",
+          "started_at_utc": "2026-09-20T15:14:18.518110+00:00",
+          "finished_at_utc": "2026-09-20T15:16:08.139301+00:00",
+          "case_wall_seconds": 109.621,
+          "response_status": "RESPONSE_VALIDATED",
+          "recorded_local_classification": "PASS",
+          "request_count": 1,
+          "preferred_model_id": "deepseek-v4-pro",
+          "actual_model_id": "deepseek-v4-pro",
+          "requested_api_model": "deepseek-v4-pro",
+          "reported_model": "deepseek-v4-pro",
+          "expected_api_model": "deepseek-v4-pro",
+          "http_status": 200,
+          "transport_status": "SUCCESS",
+          "call_id": "1f49388355e040c088b1e1df5c4ba781",
+          "endpoint": "https://api.deepseek.com",
+          "usage": {
+            "prompt_tokens": 2061,
+            "completion_tokens": 6522,
+            "total_tokens": 8583
+          },
+          "streaming": false,
+          "temperature": null,
+          "thinking": {
+            "type": "enabled"
+          },
+          "reasoning_effort": "high",
+          "request_messages_hash": "a4db712d25bb36d2d3baeea8dbd0468090f59820b735f72746f541f40c11fb65",
+          "provider_prompt_text_hash": "cce39dfcc5d883416dd1ee815b6405933401d4351a59ddf361c56ddaf66f0482",
+          "review_schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+          "error": null,
+          "recomputed_local_classification": "PASS",
+          "coverage_complete": true,
+          "issue_ids_valid": true,
+          "flagged_unit_ids": [],
+          "blocking_unit_ids": [],
+          "severity_counts": {},
+          "workflow_would_require_repair": false,
+          "finding_category": "CORRECT_CONTROL_ACCEPTED",
+          "response_evidence": {
+            "path": "reports/iteration4/live-review-controls-v5-20260920-1515/deepseek-v4-pro/R01-review.json",
+            "raw_sha256": "ad2ce39a32b68b9d1a80c551813226c07c1bdb9d20ee73b270561505b24a0846",
+            "bytes": 444
+          },
+          "issues": [],
+          "limitations": [
+            "本次仅审阅当前提供的 S21.U01，局部检查不能替代完整章节覆盖或后续单元的验收。",
+            "该单元是定义，没有证明或后续应用可供交叉验证；因此只能核对其内部条件与表述一致性。",
+            "普通模型审阅不是形式化证明，未发现错误不代表已进行形式化验证。"
+          ],
+          "selected_and_returned_models_match": true
+        },
+        {
+          "model_id": "deepseek-v4-pro",
+          "case_id": "R02",
+          "case_kind": "DEFINITE_ERROR_CONTROL",
+          "started_at_utc": "2026-09-20T15:16:08.140305+00:00",
+          "finished_at_utc": "2026-09-20T15:17:37.413940+00:00",
+          "case_wall_seconds": 89.274,
+          "response_status": "RESPONSE_VALIDATED",
+          "recorded_local_classification": "FAIL",
+          "request_count": 1,
+          "preferred_model_id": "deepseek-v4-pro",
+          "actual_model_id": "deepseek-v4-pro",
+          "requested_api_model": "deepseek-v4-pro",
+          "reported_model": "deepseek-v4-pro",
+          "expected_api_model": "deepseek-v4-pro",
+          "http_status": 200,
+          "transport_status": "SUCCESS",
+          "call_id": "e1f18f35d2b1428f87faaca1217ba5db",
+          "endpoint": "https://api.deepseek.com",
+          "usage": {
+            "prompt_tokens": 2030,
+            "completion_tokens": 4933,
+            "total_tokens": 6963
+          },
+          "streaming": false,
+          "temperature": null,
+          "thinking": {
+            "type": "enabled"
+          },
+          "reasoning_effort": "high",
+          "request_messages_hash": "ff59ddba8ab7515ab054b8fac8cc8ac6fb8afe3d1c2275245dd70c22de4eee64",
+          "provider_prompt_text_hash": "cce39dfcc5d883416dd1ee815b6405933401d4351a59ddf361c56ddaf66f0482",
+          "review_schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+          "error": null,
+          "recomputed_local_classification": "FAIL",
+          "coverage_complete": true,
+          "issue_ids_valid": true,
+          "flagged_unit_ids": [
+            "S21.U01"
+          ],
+          "blocking_unit_ids": [],
+          "severity_counts": {
+            "review": 1
+          },
+          "workflow_would_require_repair": true,
+          "finding_category": "ERROR_DETECTED_SEVERITY_MISMATCH",
+          "response_evidence": {
+            "path": "reports/iteration4/live-review-controls-v5-20260920-1515/deepseek-v4-pro/R02-review.json",
+            "raw_sha256": "d31840f73ca2f6fd390329153331fdc73c6ff1dc509e4d5b60487c63d9e63aa9",
+            "bytes": 1130
+          },
+          "issues": [
+            {
+              "unit_id": "S21.U01",
+              "severity": "review",
+              "message": "该定义把“等价无穷小”设定为只要求 p/q→1，并明确无需 p,q 趋于零；这与“无穷小”的通常含义冲突，容易误导核心概念。例如 p(t)=q(t)=1 满足比值极限为 1，但不能称为无穷小。建议要么将术语改为更一般的“等价/渐近等价”，要么明确“等价无穷小”是额外满足二者均趋于零的子类。",
+              "evidence": "正文称“若 \\lim_{t\\to c}p(t)/q(t)=1，就称 p(t),q(t) 为该过程中的等价无穷小；这里无需另要求任一函数趋于零。”取 p(t)=q(t)=1，任意有限 c，则 p/q=1 且极限为 1，但二者均不趋于 0，仍会被该定义称为“等价无穷小”。"
+            }
+          ],
+          "limitations": [
+            "仅审查了提供的当前单元 S21.U01；未提供本节锁定 objectives 的完整文本，不能核对目标级教学覆盖。",
+            "普通模型审阅不等同于形式化证明；无问题项不代表已给出机器可验证的证明。"
+          ],
+          "selected_and_returned_models_match": true
+        }
+      ]
+    },
+    "v6": {
+      "recorded_run_status": "NEEDS_REVIEW",
+      "request_count": 6,
+      "started_at_utc": "2026-09-20T15:21:35.558815+00:00",
+      "finished_at_utc": "2026-09-20T15:27:38.937079+00:00",
+      "run_wall_seconds": 363.378,
+      "strict_matches": 5,
+      "validated_responses": 6,
+      "positive_false_alarms": 0,
+      "negative_detected": 3,
+      "severity_only_mismatches": 1,
+      "all_model_labels_match_selection": true,
+      "http_error_statuses": [],
+      "failure_or_schema_error_events": [],
+      "automatic_fallback": false,
+      "prompt_evidence": {
+        "path": "reports/iteration4/live-review-controls-v6-20260920-1530/prompts/reviewer_math.md",
+        "raw_sha256": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+        "bytes": 8710
+      },
+      "state_evidence": {
+        "path": "reports/iteration4/live-review-controls-v6-20260920-1530/state.json",
+        "raw_sha256": "fd8aaf6c2ddb116a092176145bde202936f886ee079a20bcac19b5925dd3434e",
+        "bytes": 39519
+      },
+      "two_cases_snapshot_evidence": {
+        "path": "reports/iteration4/live-review-controls-v6-20260920-1530/fixtures-local-only.json",
+        "raw_sha256": "0fc6be0ea14687a91f5c93fb760ab203cba777144e3755344b828d00f239de56",
+        "bytes": 3409
+      },
+      "results": [
+        {
+          "model_id": "gpt6",
+          "case_id": "R01",
+          "case_kind": "CORRECT_CONTROL",
+          "started_at_utc": "2026-09-20T15:21:35.559820+00:00",
+          "finished_at_utc": "2026-09-20T15:22:21.324128+00:00",
+          "case_wall_seconds": 45.764,
+          "response_status": "RESPONSE_VALIDATED",
+          "recorded_local_classification": "PASS",
+          "request_count": 1,
+          "preferred_model_id": "gpt6",
+          "actual_model_id": "gpt6",
+          "requested_api_model": "gpt-6-astra",
+          "reported_model": "gpt-6-astra",
+          "expected_api_model": "gpt-6-astra",
+          "http_status": 200,
+          "transport_status": "SUCCESS",
+          "call_id": "6ecb81754c7946db9aba15915665bd9d",
+          "endpoint": "https://oneapi.advancedsolver.com/v1",
+          "usage": {
+            "prompt_tokens": 2673,
+            "completion_tokens": 564,
+            "total_tokens": 3237
+          },
+          "streaming": true,
+          "temperature": 0.1,
+          "thinking": null,
+          "reasoning_effort": null,
+          "request_messages_hash": "55254b79ce2642310769ece83c7db53a6b856e27ebe1d4dd230d98c3cff982e6",
+          "provider_prompt_text_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+          "review_schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+          "error": null,
+          "recomputed_local_classification": "PASS",
+          "coverage_complete": true,
+          "issue_ids_valid": true,
+          "flagged_unit_ids": [],
+          "blocking_unit_ids": [],
+          "severity_counts": {},
+          "workflow_would_require_repair": false,
+          "finding_category": "CORRECT_CONTROL_ACCEPTED",
+          "response_evidence": {
+            "path": "reports/iteration4/live-review-controls-v6-20260920-1530/gpt6/R01-review.json",
+            "raw_sha256": "959913cbd5a487afd032d1be6c58bd8e9dbe78846e724f3efa01199c195dbc97",
+            "bytes": 470
+          },
+          "issues": [],
+          "limitations": [
+            "本次仅核对实际提供的单元 S21.U01；未提供先修正文，因此未核对跨单元依赖。",
+            "审查确认该定义在通常的双侧趋近于 c、去心邻域内 q(t) 不为零的解释下条件一致；未进一步验证整章后续定理或应用。",
+            "普通模型审阅不等同于形式化证明，未进行机械化语义或证明验证。"
+          ],
+          "selected_and_returned_models_match": true
+        },
+        {
+          "model_id": "gpt6",
+          "case_id": "R02",
+          "case_kind": "DEFINITE_ERROR_CONTROL",
+          "started_at_utc": "2026-09-20T15:22:21.324128+00:00",
+          "finished_at_utc": "2026-09-20T15:22:35.106455+00:00",
+          "case_wall_seconds": 13.782,
+          "response_status": "RESPONSE_VALIDATED",
+          "recorded_local_classification": "PASS",
+          "request_count": 1,
+          "preferred_model_id": "gpt6",
+          "actual_model_id": "gpt6",
+          "requested_api_model": "gpt-6-astra",
+          "reported_model": "gpt-6-astra",
+          "expected_api_model": "gpt-6-astra",
+          "http_status": 200,
+          "transport_status": "SUCCESS",
+          "call_id": "33e37964b2264764832b9bb81814642e",
+          "endpoint": "https://oneapi.advancedsolver.com/v1",
+          "usage": {
+            "prompt_tokens": 2636,
+            "completion_tokens": 336,
+            "total_tokens": 2972
+          },
+          "streaming": true,
+          "temperature": 0.1,
+          "thinking": null,
+          "reasoning_effort": null,
+          "request_messages_hash": "7e93b3b05d4fc12202e142736da7121ce5218f6f4768ec6d066176a4ac507352",
+          "provider_prompt_text_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+          "review_schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+          "error": null,
+          "recomputed_local_classification": "PASS",
+          "coverage_complete": true,
+          "issue_ids_valid": true,
+          "flagged_unit_ids": [
+            "S21.U01"
+          ],
+          "blocking_unit_ids": [
+            "S21.U01"
+          ],
+          "severity_counts": {
+            "blocking": 1
+          },
+          "workflow_would_require_repair": true,
+          "finding_category": "ERROR_DETECTED_AND_BLOCKING",
+          "response_evidence": {
+            "path": "reports/iteration4/live-review-controls-v6-20260920-1530/gpt6/R02-review.json",
+            "raw_sha256": "9a1bcf3dc458bb742a9ae8b7e9327169668d7b714dd3f97a32c657ce1a156ce5",
+            "bytes": 1157
+          },
+          "issues": [
+            {
+              "unit_id": "S21.U01",
+              "severity": "blocking",
+              "message": "定义将一般的渐近等价误称为“等价无穷小”，并明确排除了必要的趋零条件。比值趋于1不能推出任一函数是无穷小。应将名称改为“渐近等价”，或保留“等价无穷小”并要求其中一个函数趋于零；在现有比值条件下，另一个函数也随之趋于零。",
+              "evidence": "完整正文仅要求两函数在c的某个去心邻域有定义、q(t)≠0以及lim_{t→c}p(t)/q(t)=1，随后明确说“这里无需另要求任一函数趋于零”。取p(t)=q(t)=1，满足全部所述假设，比值恒为1，但两函数均趋于1而非0，因此不是无穷小。该反例也符合去心邻域和分母非零条件。"
+            }
+          ],
+          "limitations": [
+            "本次仅核对实际提供的S21.U01完整正文；未提供先修正文或具体锁定教学目标，未对其他单元或整章教学覆盖作判断。",
+            "这是普通模型数学审阅，不是形式化证明；未检查最终PDF的公式呈现与排版。"
+          ],
+          "selected_and_returned_models_match": true
+        },
+        {
+          "model_id": "deepseek-flash",
+          "case_id": "R01",
+          "case_kind": "CORRECT_CONTROL",
+          "started_at_utc": "2026-09-20T15:22:35.107460+00:00",
+          "finished_at_utc": "2026-09-20T15:23:14.647303+00:00",
+          "case_wall_seconds": 39.54,
+          "response_status": "RESPONSE_VALIDATED",
+          "recorded_local_classification": "PASS",
+          "request_count": 1,
+          "preferred_model_id": "deepseek-flash",
+          "actual_model_id": "deepseek-flash",
+          "requested_api_model": "deepseek-flash",
+          "reported_model": "deepseek-flash",
+          "expected_api_model": "deepseek-flash",
+          "http_status": 200,
+          "transport_status": "SUCCESS",
+          "call_id": "8b9748d3f98e440088597af6c681e4d2",
+          "endpoint": "https://api.deepseek.com",
+          "usage": {
+            "prompt_tokens": 2329,
+            "completion_tokens": 8049,
+            "total_tokens": 10378
+          },
+          "streaming": false,
+          "temperature": null,
+          "thinking": {
+            "type": "enabled"
+          },
+          "reasoning_effort": "high",
+          "request_messages_hash": "55254b79ce2642310769ece83c7db53a6b856e27ebe1d4dd230d98c3cff982e6",
+          "provider_prompt_text_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+          "review_schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+          "error": null,
+          "recomputed_local_classification": "PASS",
+          "coverage_complete": true,
+          "issue_ids_valid": true,
+          "flagged_unit_ids": [],
+          "blocking_unit_ids": [],
+          "severity_counts": {},
+          "workflow_would_require_repair": false,
+          "finding_category": "CORRECT_CONTROL_ACCEPTED",
+          "response_evidence": {
+            "path": "reports/iteration4/live-review-controls-v6-20260920-1530/deepseek-flash/R01-review.json",
+            "raw_sha256": "35c89e7dba5c7df8b2319164f4ea323ff4259e948c5535a81a6bf1dd0f24f734",
+            "bytes": 329
+          },
+          "issues": [],
+          "limitations": [
+            "仅审查当前提供的 S21.U01 定义；未提供本节其他单元、锁定 objectives 或先修正文，不能据此判断整节教学覆盖。",
+            "未进行形式化证明；未检查最终 PDF、渲染或授权审批。"
+          ],
+          "selected_and_returned_models_match": true
+        },
+        {
+          "model_id": "deepseek-flash",
+          "case_id": "R02",
+          "case_kind": "DEFINITE_ERROR_CONTROL",
+          "started_at_utc": "2026-09-20T15:23:14.649395+00:00",
+          "finished_at_utc": "2026-09-20T15:23:39.901815+00:00",
+          "case_wall_seconds": 25.252,
+          "response_status": "RESPONSE_VALIDATED",
+          "recorded_local_classification": "PASS",
+          "request_count": 1,
+          "preferred_model_id": "deepseek-flash",
+          "actual_model_id": "deepseek-flash",
+          "requested_api_model": "deepseek-flash",
+          "reported_model": "deepseek-flash",
+          "expected_api_model": "deepseek-flash",
+          "http_status": 200,
+          "transport_status": "SUCCESS",
+          "call_id": "d08130bba73a45f1975823c87e769334",
+          "endpoint": "https://api.deepseek.com",
+          "usage": {
+            "prompt_tokens": 2298,
+            "completion_tokens": 4438,
+            "total_tokens": 6736
+          },
+          "streaming": false,
+          "temperature": null,
+          "thinking": {
+            "type": "enabled"
+          },
+          "reasoning_effort": "high",
+          "request_messages_hash": "7e93b3b05d4fc12202e142736da7121ce5218f6f4768ec6d066176a4ac507352",
+          "provider_prompt_text_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+          "review_schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+          "error": null,
+          "recomputed_local_classification": "PASS",
+          "coverage_complete": true,
+          "issue_ids_valid": true,
+          "flagged_unit_ids": [
+            "S21.U01"
+          ],
+          "blocking_unit_ids": [
+            "S21.U01"
+          ],
+          "severity_counts": {
+            "blocking": 1
+          },
+          "workflow_would_require_repair": true,
+          "finding_category": "ERROR_DETECTED_AND_BLOCKING",
+          "response_evidence": {
+            "path": "reports/iteration4/live-review-controls-v6-20260920-1530/deepseek-flash/R02-review.json",
+            "raw_sha256": "e72c84dce619412150bdfc357c1feee6ec07e876861a903456adc8b80ea93ead",
+            "bytes": 1312
+          },
+          "issues": [
+            {
+              "unit_id": "S21.U01",
+              "severity": "blocking",
+              "message": "核心定义把满足 p/q→1 的函数对称为“等价无穷小”，并明确说无需任一函数趋于零；这与“无穷小”的数学含义直接冲突。该条件实际定义的是渐近等价/等价量，不能推出 p、q 为无穷小。若后续按等价无穷小使用，会错误地把极限非零或无穷大的函数对当作无穷小替换对象。应二选一：要求 p、q 在该过程中都趋于 0 后再称等价无穷小，或改称渐近等价并删除“无穷小”。",
+              "evidence": "取 c=0，p(t)=q(t)=1。二者在 0 的任意去心邻域有定义且 q(t)≠0，且 lim_{t→0} p(t)/q(t)=1；按该定义它们被称作“等价无穷小”，但 p、q 都不趋于 0（极限为 1）。因此该定义的核心术语与所列条件不一致。"
+            }
+          ],
+          "limitations": [
+            "本次仅对 section_local 范围内的实际单元 S21.U01 做数学审阅；本节其他单元或后续章节不在范围内。",
+            "未提供本节的锁定 objectives，无法进行完整教学目标覆盖核验。",
+            "未使用 prior_sections（为空）；普通模型审阅不构成形式化证明或教师验收。"
+          ],
+          "selected_and_returned_models_match": true
+        },
+        {
+          "model_id": "deepseek-v4-pro",
+          "case_id": "R01",
+          "case_kind": "CORRECT_CONTROL",
+          "started_at_utc": "2026-09-20T15:23:39.902815+00:00",
+          "finished_at_utc": "2026-09-20T15:26:01.596161+00:00",
+          "case_wall_seconds": 141.693,
+          "response_status": "RESPONSE_VALIDATED",
+          "recorded_local_classification": "PASS",
+          "request_count": 1,
+          "preferred_model_id": "deepseek-v4-pro",
+          "actual_model_id": "deepseek-v4-pro",
+          "requested_api_model": "deepseek-v4-pro",
+          "reported_model": "deepseek-v4-pro",
+          "expected_api_model": "deepseek-v4-pro",
+          "http_status": 200,
+          "transport_status": "SUCCESS",
+          "call_id": "3e22b6c72fb14c6d9a9eebd6226aa665",
+          "endpoint": "https://api.deepseek.com",
+          "usage": {
+            "prompt_tokens": 2382,
+            "completion_tokens": 8659,
+            "total_tokens": 11041
+          },
+          "streaming": false,
+          "temperature": null,
+          "thinking": {
+            "type": "enabled"
+          },
+          "reasoning_effort": "high",
+          "request_messages_hash": "55254b79ce2642310769ece83c7db53a6b856e27ebe1d4dd230d98c3cff982e6",
+          "provider_prompt_text_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+          "review_schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+          "error": null,
+          "recomputed_local_classification": "PASS",
+          "coverage_complete": true,
+          "issue_ids_valid": true,
+          "flagged_unit_ids": [],
+          "blocking_unit_ids": [],
+          "severity_counts": {
+            "warning": 1
+          },
+          "workflow_would_require_repair": false,
+          "finding_category": "CORRECT_CONTROL_ACCEPTED",
+          "response_evidence": {
+            "path": "reports/iteration4/live-review-controls-v6-20260920-1530/deepseek-v4-pro/R01-review.json",
+            "raw_sha256": "6c1f03dcbe6dfe4c6e756fa8d6017b212c577bc0607f2a2e9ff3a878763b6f08",
+            "bytes": 1316
+          },
+          "issues": [
+            {
+              "unit_id": "S21.U01",
+              "severity": "warning",
+              "message": "建议把第二句“当且仅当二者还都是该过程中的无穷小”改为显式承接写法：在 $p(t)\\sim q(t)$ 且 $p(t)\\to0,q(t)\\to0$ 时，称它们为等价无穷小。当前表述依赖首句的先行条件；单独阅读时可能被误读为只需二者都是无穷小。",
+              "evidence": "首句已定义 $p(t)\\sim q(t)$ 为 $\\lim_{t\\to c}p(t)/q(t)=1$；第二句“当且仅当二者还都是该过程中的无穷小”用“二者还”承接首句，但“当且仅当”省略了首句条件，存在可读性歧义。按完整上下文可理解为等价无穷小=等价且二者均为无穷小，未发现数学矛盾。"
+            }
+          ],
+          "limitations": [
+            "本次为 section_local 范围，只审阅了 S21.U01；未评估后续小节或整章计划。",
+            "prior_sections 为空，无法核对先修极限定义和符号约定的一致性。",
+            "该定义使用去心邻域和双侧极限记号 $t\\to c$，默认适用于有限点 c 的双侧极限；未涉及单侧极限、端点或 $c=\\pm\\infty$ 过程。",
+            "普通模型审阅不等于形式化证明；最终 PDF 组装和学生可见引用未检查。"
+          ],
+          "selected_and_returned_models_match": true
+        },
+        {
+          "model_id": "deepseek-v4-pro",
+          "case_id": "R02",
+          "case_kind": "DEFINITE_ERROR_CONTROL",
+          "started_at_utc": "2026-09-20T15:26:01.598177+00:00",
+          "finished_at_utc": "2026-09-20T15:27:38.935673+00:00",
+          "case_wall_seconds": 97.337,
+          "response_status": "RESPONSE_VALIDATED",
+          "recorded_local_classification": "FAIL",
+          "request_count": 1,
+          "preferred_model_id": "deepseek-v4-pro",
+          "actual_model_id": "deepseek-v4-pro",
+          "requested_api_model": "deepseek-v4-pro",
+          "reported_model": "deepseek-v4-pro",
+          "expected_api_model": "deepseek-v4-pro",
+          "http_status": 200,
+          "transport_status": "SUCCESS",
+          "call_id": "4fcc765e4f3a45ecb39d2a5a35075dd2",
+          "endpoint": "https://api.deepseek.com",
+          "usage": {
+            "prompt_tokens": 2351,
+            "completion_tokens": 5624,
+            "total_tokens": 7975
+          },
+          "streaming": false,
+          "temperature": null,
+          "thinking": {
+            "type": "enabled"
+          },
+          "reasoning_effort": "high",
+          "request_messages_hash": "7e93b3b05d4fc12202e142736da7121ce5218f6f4768ec6d066176a4ac507352",
+          "provider_prompt_text_hash": "507f1381a56b9a20af443183d252bf2db0d86f361ba868322ecaa33727f9114d",
+          "review_schema_hash": "e116894cd37689f5f569ba9fd2873ff2f5e058ee98733ee5ce8c517fb99b2b5f",
+          "error": null,
+          "recomputed_local_classification": "FAIL",
+          "coverage_complete": true,
+          "issue_ids_valid": true,
+          "flagged_unit_ids": [
+            "S21.U01"
+          ],
+          "blocking_unit_ids": [],
+          "severity_counts": {
+            "review": 1
+          },
+          "workflow_would_require_repair": true,
+          "finding_category": "ERROR_DETECTED_SEVERITY_MISMATCH",
+          "response_evidence": {
+            "path": "reports/iteration4/live-review-controls-v6-20260920-1530/deepseek-v4-pro/R02-review.json",
+            "raw_sha256": "a99a3b4c0b6c3f38b5e71b1f288c798ec121a12d6e40ea1eaa5e4d2365b1d396",
+            "bytes": 1297
+          },
+          "issues": [
+            {
+              "unit_id": "S21.U01",
+              "severity": "review",
+              "message": "该定义把“比值极限为 1”直接作为“等价无穷小”的完整条件，并明确宣称无需任一函数趋于零；这与“无穷小”的标准含义冲突。若本单元意图定义一般函数等价关系，应避免使用“无穷小”这一术语；若意图定义标准等价无穷小，则应至少要求其中一个函数趋于零，因为由 `lim p/q=1` 可推出另一个也趋于零。",
+              "evidence": "原文：『若 $\\lim_{t\\to c}p(t)/q(t)=1$，就称 $p(t),q(t)$ 为该过程中的等价无穷小；这里无需另要求任一函数趋于零。』取 $p(t)=q(t)=1$，$c=0$，满足 $q(t)\\ne0$ 且 $\\lim_{t\\to0}p(t)/q(t)=1$，但二者均不趋于零，按该定义却会被称为等价无穷小。"
+            }
+          ],
+          "limitations": [
+            "本次为 section_local 检查，仅覆盖实际提供的 S21.U01；未提供后续单元、锁定 objectives、final PDF 或 rendering_contract，因此未检查这些范围。",
+            "普通模型审阅不是形式化证明；此处对“无穷小”术语的判断基于通常微积分定义，最终是否接受该非标准表述需由课程口径确认。"
+          ],
+          "selected_and_returned_models_match": true
+        }
+      ]
+    }
+  },
+  "baseline_fixture_evidence": {
+    "path": "reports/iteration2/review-context-calibration-fixtures.json",
+    "raw_sha256": "3596ee97894637b949385f04ce6f51defd8a330e2f121aa313abb5fdb2a71dc7",
+    "bytes": 10951
+  },
+  "cases": {
+    "R01": {
+      "kind": "CORRECT_CONTROL",
+      "input_sha256": "0d8b299ee78ec85ff925688586ff6f63af47f8c6dc5b0be975442253a0fcae00",
+      "expectation_sha256": "8e5f114568e5f226ad34c20d2751b75dd5d2370c6e4151e5c3fde1d41646f7a5",
+      "expected_flagged_unit_ids": [],
+      "expected_blocking_unit_ids": []
+    },
+    "R02": {
+      "kind": "DEFINITE_ERROR_CONTROL",
+      "input_sha256": "029c9e34cd212d54c82d6f00fbf6fc1e4805cda944ba4f220d3d4bd1fd6930ae",
+      "expectation_sha256": "7f5d5e5f80e9dd5d5825f37c682a809513512ebbd8f940e8f7532a7e64c672fb",
+      "expected_flagged_unit_ids": [
+        "S21.U01"
+      ],
+      "expected_blocking_unit_ids": [
+        "S21.U01"
+      ]
+    }
+  },
+  "model_order": [
+    "gpt6",
+    "deepseek-flash",
+    "deepseek-v4-pro"
+  ],
+  "same_case_inputs_verified": true,
+  "same_expectations_verified": true,
+  "expectations_sent_to_models": false,
+  "weight_training": false,
+  "blind_test": false,
+  "teacher_mathematical_review": "NOT_RUN",
+  "human_visual_acceptance": "NOT_RUN",
+  "windows_compile": "NOT_APPLICABLE_TO_THESE_TEXT_CONTROLS",
+  "new_api_calls_by_report": 0,
+  "existing_task_state_modified": false,
+  "limitations": [
+    "仅两个已知控制题、每模型每版本各一次；V6在读取V5相同题的反馈后修改。这是针对性回归，不是盲测、留出集或总体数学准确率估计。",
+    "没有模型权重训练。修改的是通用审阅提示词；两版本fixture与本地预期相同，预期没有发送给模型。",
+    "严格本地评分对负例要求blocking；真实工作流将review与blocking都作为未解决问题处理。严重度不符不能描述为模型漏检。",
+    "单题墙钟耗时包含网络、生成、结构验证及结果落盘，未隔离服务负载或采样波动，不能据两点推断性能提升或提示词的因果效应。",
+    "reported_model是服务端返回标签，不是对供应商后台模型身份的独立鉴定。此次成功记录不保证未来API可用。",
+    "两题没有覆盖一般几何级数、部分和初值、完整章目标与PDF排版；不能据此宣称真实章节制作效果或人工数学/视觉验收通过。",
+    "未解析或传播模型隐藏推理；审读对象是归档的最终结构化回复。"
+  ]
+}

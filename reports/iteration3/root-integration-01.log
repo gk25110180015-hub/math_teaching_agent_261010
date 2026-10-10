@@ -1,0 +1,62 @@
+............................F...............................             [100%]
+================================== FAILURES ===================================
+______ test_unchecked_cache_invalidates_on_every_relevant_change[model] _______
+
+tmp_path = WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/workspace/t/mmroot01/test_unchecked_cache_invalidat1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000014DEAB5D8B0>
+change = 'model'
+
+    @pytest.mark.unit
+    @pytest.mark.parametrize('change',['context','model','prompt','schema','candidate_hash','schema_payload','path_escape'])
+    def test_unchecked_cache_invalidates_on_every_relevant_change(tmp_path,monkeypatch,change):
+        import math_agent.pipeline as module
+        import math_agent.provider as provider_module
+        provider=OfflineProvider()
+        _,pipeline,plan=setup_pipeline(tmp_path,provider)
+        spec=plan['sections'][0]
+        context={'section':spec,'topic':'first'}
+        _,first_dir=pipeline.writer_draft(spec,context)
+        first_file=first_dir/'candidate.json'
+        first_bytes=first_file.read_bytes()
+        cache_path=pipeline.root/'draft-cache/S01.json'
+        metadata=json.loads(cache_path.read_text(encoding='utf-8'))
+        if change=='context':
+            context={**context,'topic':'second'}
+        elif change=='model':
+            pipeline.settings=pipeline.settings.model_copy(update={'model':'different-offline-model'})
+        elif change=='prompt':
+            prompts=tmp_path/'prompts';prompts.mkdir()
+            (prompts/'writer_lecture_section.md').write_text('Different controlled prompt',encoding='utf-8')
+            monkeypatch.setattr(provider_module,'PROMPTS',prompts)
+        elif change=='schema':
+            class FutureSchema(module.WrittenSection):
+                protocol_revision: int = 2
+            monkeypatch.setattr(module,'WrittenSection',FutureSchema)
+        elif change=='candidate_hash':
+            first_file.write_text('{}',encoding='utf-8')
+        elif change=='schema_payload':
+            first_file.write_text('{"section_id":"S01","units":[]}',encoding='utf-8')
+            metadata['candidate_hash']=digest(first_file.read_bytes())
+            cache_path.write_text(json.dumps(metadata),encoding='utf-8')
+        else:
+            metadata['candidate_key']='../outside-candidate.json'
+            cache_path.write_text(json.dumps(metadata),encoding='utf-8')
+        _,second_dir=pipeline.writer_draft(spec,context)
+>       assert provider.writer_calls==2 and first_dir!=second_dir
+E       assert (1 == 2)
+E        +  where 1 = <test_draft_recovery.OfflineProvider object at 0x0000014DEAB5D1C0>.writer_calls
+
+tests\test_draft_recovery.py:137: AssertionError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\研究生阶段\数学教学agent\math-teaching-agent\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv\Lib\site-packages\starlette\testclient.py:53
+  D:\研究生阶段\数学教学agent\math-teaching-agent\.venv\Lib\site-packages\starlette\testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_draft_recovery.py::test_unchecked_cache_invalidates_on_every_relevant_change[model]
+1 failed, 59 passed, 2 warnings in 24.23s

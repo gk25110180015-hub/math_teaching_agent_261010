@@ -1,0 +1,19 @@
+{
+  "run_id": "a45be503af594ce8aae0bb1e4c30184b",
+  "job_id": "89467291c05a478b9b525da3ce65b50f",
+  "phase": "GLOBAL_ROUND_4_CANDIDATE_PENDING_LOCAL_REVIEW",
+  "candidate_path": "workspace/iteration2-live/runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r4-24d1db18/S03-5ca5a291-candidate.json",
+  "candidate_raw_sha256": "48e052398edd90d595627b555cea3dab3ad5bb800d783385eabc47a139acad86",
+  "unit": {
+    "id": "S03.U04",
+    "kind": "proof",
+    "tex": "先补充说明三角函数部分所需的基础事实。这里所有角均采用弧度制。由三角函数的基本恒等式与有界性 $|\\sin u|\\leq1$，有\n\\[\n1-\\cos x=2\\sin^2\\frac{x}{2},\n\\qquad\n0\\leq1-\\cos x\\leq\\frac{x^2}{2}.\n\\]\n由于 $x^2/2\\to0$，由夹逼原理得到\n\\[\n\\lim_{x\\to0}\\cos x=1.\n\\]\n因此，下面使用的 $\\cos x\\to1$ 已由上述估计得到，而不是未经说明的前提。\n\n对 $0<x<\\dfrac{\\pi}{2}$，由单位圆中的几何不等式，有\n\\[\n\\sin x<x<\\tan x.\n\\]\n由于 $\\sin x>0$，两边分别除以 $\\sin x$，得到\n\\[\n1<\\frac{x}{\\sin x}<\\frac{1}{\\cos x}.\n\\]\n取倒数可得\n\\[\n\\cos x<\\frac{\\sin x}{x}<1.\n\\]\n当 $x\\to0^+$ 时，$\\cos x\\to1$。这里所用的是夹逼原理在右侧邻域上的同样结论：若在某个右侧去心邻域内有 $h(x)\\leq f(x)\\leq g(x)$，且当 $x\\to x_0^+$ 时 $h(x)$ 与 $g(x)$ 都趋于同一有限数 $L$，则对任意 $\\varepsilon>0$，分别由两个单侧极限取得适用的 $\\delta_1,\\delta_2$，取 $\\delta=\\min\\{\\delta_1,\\delta_2\\}$，即可得到 $|f(x)-L|<\\varepsilon$；因此 $f(x)\\to L$。这只是双侧夹逼证明的同样 $\\delta$ 论证，并将考察范围限制在右侧邻域。由此可知\n\\[\n\\lim_{x\\to0^+}\\frac{\\sin x}{x}=1.\n\\]\n又因为 $\\sin x/x$ 是偶函数，所以左极限也等于 $1$，从而\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1.\n\\]\n\n再证明第二个基本极限。这里采用先修课程中已建立的指数函数基本性质：对 $0<t<1$，有\n\\[\n1+t\\le e^t\\le\\frac{1}{1-t}.\n\\]\n该不等式是指数函数基本性质的标准推论，独立于待证的差商极限；本证明不把待证极限作为指数函数在零点的导数值，也不循环使用该极限。\n\n当 $0<x<1$ 时，由上述不等式得到\n\\[\n1\\leq\\frac{e^x-1}{x}\\leq\\frac{1}{1-x}.\n\\]\n令 $x\\to0^+$，并应用上面说明的右侧夹逼结论，得到\n\\[\n\\lim_{x\\to0^+}\\frac{e^x-1}{x}=1.\n\\]\n当 $x=-t<0$ 且 $0<t<1$ 时，对 $1+t\\le e^t\\le1/(1-t)$ 取倒数，得到\n\\[\n1-t\\le e^{-t}\\le\\frac{1}{1+t}.\n\\]\n因此\n\\[\n\\frac{1}{1+t}\\le\\frac{e^{-t}-1}{-t}\\le1.\n\\]\n令 $t\\to0^+$，再次应用右侧夹逼结论，得到\n\\[\n\\lim_{x\\to0^-}\\frac{e^x-1}{x}=1.\n\\]\n左右极限相等，所以\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]\n整个论证只使用已说明的三角函数估计、先修课程中建立的指数函数不等式和夹逼定理，没有把待证极限作为指数函数在零点的导数值使用。",
+    "relates_to": "S03.U03"
+  },
+  "literal_unsupported_step": "先补充说明三角函数部分所需的基础事实。这里所有角均采用弧度制。由三角函数的基本恒等式与有界性 $|\\sin u|\\leq1$，有\n\\[\n1-\\cos x=2\\sin^2\\frac{x}{2},\n\\qquad\n0\\leq1-\\cos x\\leq\\frac{x^2}{2}.\n\\]\n",
+  "observation": "The stated boundedness |sin u|<=1 alone gives 1-cos x<=2, not x^2/2. A small-angle estimate |sin u|<=|u| with its domain/negative-side use is needed. A positive-angle geometric inequality occurs later in the same unit, but this first paragraph does not explicitly cite it. Review the actual final linkage; do not infer correction from an empty model issue list.",
+  "claim_limit_value_incorrect": false,
+  "final_semantic_decision": "PENDING_FINAL_TEXT",
+  "teacher_review": "NOT_RUN",
+  "source_modified": false
+}

@@ -1,0 +1,6 @@
+The first audit invocation used the normal restricted exec environment. All read-only assertions completed, but writing the new report failed:
+Traceback (most recent call last):
+  File "reports/iteration4/audit-ch02-pre-feedback-evidence.py", line 178, in <module>
+    DEST.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')
+PermissionError: [Errno 13] Permission denied: 'D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration4\\CH02-pre-feedback-semantic-visual.json'
+This failed attempt is not counted as a completed audit execution. A subsequent invocation requests workspace report-write access and preserves this log.

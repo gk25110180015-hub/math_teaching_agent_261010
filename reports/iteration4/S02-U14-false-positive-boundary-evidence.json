@@ -1,0 +1,88 @@
+{
+  "classification": "DEFINITE_SEMANTIC_FALSE_POSITIVE_NOT_MATHEMATICAL_CORRECTION",
+  "review_path": "workspace\\iteration2-live\\runs\\fd6736af6ef14be3839e019e86ca1e5c\\global-8c697e38-0-review-0.json",
+  "review_sha256": "b134c18b7af03ffdd020a2313ce96f168ea5e91f74bbb8cd1abcf7d082c863cc",
+  "review": {
+    "issues": [
+      {
+        "unit_id": "S02.U14",
+        "severity": "blocking",
+        "message": "有限项改变定理的证明在端点指标处写错：由定理假设仅能推出对 n>N 有 a_n=b_n，因此对 n≥N+1 才有 B_n-A_n=∑_{k=1}^{N}(b_k-a_k)。正文写成“对所有整数 n≥N”，在 n=N 时未必成立，导致证明中的恒等式不被现有假设推出。应将该处改为 n≥N+1，或相应调整假设与求和上限。",
+        "evidence": "S02.U13 的假设是“对所有整数 n>N 都有 a_n=b_n”；S02.U14 却断言“对所有整数 n≥N，B_n-A_n=∑_{k=1}^{N}(b_k-a_k)”。例如 N=1、a_1=0、b_1=1 且 n>1 时 a_n=b_n=0，满足全部定理假设，但在 n=N=1 时 B_1-A_1=1，而右端 b_1-a_1=1（若按证明中的差分与后续固定尾部解释则应从 N+1 起论证）；当前证明的 n≥N 边界没有由假设支持，需修正指标后才能完成证明。"
+      }
+    ],
+    "checked_unit_ids": [
+      "S01.U01",
+      "S01.U02",
+      "S01.U03",
+      "S01.U04",
+      "S01.U05",
+      "S01.U06",
+      "S01.U07",
+      "S01.U08",
+      "S01.U09",
+      "S02.U01",
+      "S02.U02",
+      "S02.U03",
+      "S02.U04",
+      "S02.U05",
+      "S02.U06",
+      "S02.U07",
+      "S02.U08",
+      "S02.U09",
+      "S02.U10",
+      "S02.U11",
+      "S02.U12",
+      "S02.U13",
+      "S02.U14",
+      "S02.U15",
+      "S02.U16",
+      "S02.U17",
+      "S02.U18",
+      "S02.U18.answer",
+      "S02.U19",
+      "S02.U19.answer",
+      "S02.U20",
+      "S02.U20.answer"
+    ],
+    "limitations": [
+      "本次按 adjacent_interface 仅核对 S01 与 S02 的实际正文及其已提供依赖；S03、S04、S05 未纳入本次检查。",
+      "本审阅是逐单元的普通数学审阅，不等同于形式化证明；未进行自动定理证明、程序验证或最终 PDF 排版检查。"
+    ]
+  },
+  "original_candidate_path": "workspace\\iteration2-live\\runs\\fd6736af6ef14be3839e019e86ca1e5c\\local-repair\\S02\\candidate-0636aaa67e80.json",
+  "original_candidate_sha256": "d0d1ecb1b60e318b6042f4b63eb779a84dbbb2b3fe58a8e5923de5f4a4b8ee87",
+  "original_units": [
+    {
+      "id": "S02.U13",
+      "kind": "theorem",
+      "tex": "\\label{thm:finite-change}设 $\\{a_n\\}$、$\\{b_n\\}$ 为两个实数列，存在正整数 $N$，使得对所有整数 $n>N$ 都有 $a_n=b_n$。则 $\\sum_{n=1}^{\\infty}a_n$ 与 $\\sum_{n=1}^{\\infty}b_n$ 同敛散。若前者收敛于 $A$，则后者的和为\n\\[\nB=A+\\sum_{k=1}^{N}(b_k-a_k).\n\\]\n因此，改变有限项不改变级数的敛散性，但可能改变级数的和。添加或删去有限项，并保持其余项的相对次序，也不改变敛散性。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U14",
+      "kind": "proof",
+      "tex": "令 $A_n=\\sum_{k=1}^{n}a_k$、$B_n=\\sum_{k=1}^{n}b_k$。对所有整数 $n\\geq N$，\n\\[\nB_n-A_n=\\sum_{k=1}^{N}(b_k-a_k)=C,\n\\]\n其中 $C$ 是与 $n$ 无关的有限实数。因此 $B_n=A_n+C$，两部分和数列同时收敛或同时发散；收敛时极限相差 $C$。\n\n对于删去前 $N$ 项所得的尾级数，其第 $m$ 个部分和为 $A_{N+m}-A_N$，其中 $m$ 为正整数，故它与原级数同敛散。一般地，添加或删去有限项后，在经过最后一个改动位置时，新旧部分和之间只相差一个固定常数和一个固定的下标平移，仍由数列极限性质得到同样结论。这里不涉及无限多项的重新排列。",
+      "relates_to": "S02.U13"
+    }
+  ],
+  "counterexample_arithmetic": {
+    "N": 1,
+    "n": 1,
+    "a_first_terms": [
+      0
+    ],
+    "b_first_terms": [
+      1
+    ],
+    "tail_convention": "a_n=b_n=0 for n>1",
+    "left_Bn_minus_An": 1,
+    "right_sum_k1_to_N_bk_minus_ak": 1,
+    "equal": true,
+    "result": "Claimed counterexample satisfies the asserted identity."
+  },
+  "general_reason": "At n=N the identity is exactly subtraction of the finite partial-sum definitions. For n>N each additional difference is zero by the premise. N is explicitly a positive integer.",
+  "new_api_calls": 0,
+  "teacher_review": "NOT_RUN",
+  "possible_subsequent_n_ge_N_plus_1": "Still valid but unnecessary narrowing, not a correction of a false identity."
+}

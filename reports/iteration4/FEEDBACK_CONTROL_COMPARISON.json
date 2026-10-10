@@ -1,0 +1,287 @@
+{
+  "scope": "Targeted controls of explicit feedback protocol, with fixed inputs and expectations. No chapter mutations, blind-accuracy claim or teacher review.",
+  "versions": [
+    {
+      "directory": "live-feedback-controls-20260920-1801",
+      "state_sha256": "c04d88baca3aad15865c0b90f6629b604cc5500be4277919a678a0f3c60ab97e",
+      "status": "NEEDS_REVIEW",
+      "request_count": 2,
+      "frozen_sha256": {
+        "helper.py": "9371244a2db887ee79c172caf5ed420772c3dd13bee10ae9ef751d11cecc985a",
+        "reviewer_feedback.md": "c5f769baa4b742ea8df947c2aedeccf055256ad8692c45d39ddae41ce25e09ea",
+        "fixtures-local-only.json": "22fab0ccec6b081f89ab9f8619daf7295c8e48f31ee1c063724849ac7c9d9ebf"
+      },
+      "results": [
+        {
+          "case_id": "ch03_actual_remaining_improvements",
+          "started_at": "2026-09-20T18:02:25.654555+00:00",
+          "input_sha256": "e9b36491aaee2fd38c1e24f8b030b08d068d7722a7ab858c37ccadfce44e17ff",
+          "expected_local_only": {
+            "F1": "satisfied",
+            "F2": "supported_improvement",
+            "F3": "supported_improvement"
+          },
+          "classification": "PASS",
+          "response_sha256": "c3b28c7770c34b79050301999d078cc50515831c1f5f2be14e84faf6fcf962f3",
+          "actual_response": {
+            "role": "reviewer_feedback",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "model": "gpt-6-astra",
+            "requested_model": "gpt-6-astra",
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "call_id": "36c0419baf134615b0730afd1127ef71",
+            "attempt": 1,
+            "input_hash": "26723232679f4859c4b82dcc95b947e6fc733359195f9ef2c2eca37aaebe2f0b",
+            "timestamp": "2026-09-20T18:02:25.854443+00:00",
+            "streaming": true,
+            "temperature": 0.1,
+            "prompt_hash": "c5f769baa4b742ea8df947c2aedeccf055256ad8692c45d39ddae41ce25e09ea",
+            "prompt_version": 1,
+            "prompt_version_source": "declared_prompt_header",
+            "schema_hash": "86c075e6b9d7cff2788dd095926edd1741d89b278e5227209e6f04f417ad1978",
+            "usage": {
+              "prompt_tokens": 27123,
+              "completion_tokens": 2503,
+              "total_tokens": 29626
+            },
+            "price": null,
+            "billing_uncertain": false,
+            "http_status": 200,
+            "request_id": "",
+            "reported_model": "gpt-6-astra",
+            "stream_complete": true,
+            "finish_reason": "stop",
+            "response_id": "resp_08bd206796389fda016ab01fb6363887d08c5896ec315bdd07",
+            "received_content_chars": 4796,
+            "transport_status": "SUCCESS"
+          },
+          "status": "VALIDATED",
+          "observed_dispositions": {
+            "F1": "satisfied",
+            "F2": "supported_improvement",
+            "F3": "supported_improvement"
+          },
+          "per_item_expected_matches": {
+            "F1": true,
+            "F2": true,
+            "F3": true
+          },
+          "scoped_issue_count": 7,
+          "finished_at": "2026-09-20T18:03:47.285062+00:00"
+        },
+        {
+          "case_id": "already_satisfied_and_outside_approved_scope",
+          "started_at": "2026-09-20T18:03:47.287062+00:00",
+          "input_sha256": "0d0c1b4d8637873f1e78391a4c7169a3bfa76474de2dae0a461f4935cca0f4e3",
+          "expected_local_only": {
+            "F1": "satisfied",
+            "F2": "out_of_scope"
+          },
+          "classification": "FAIL",
+          "response_sha256": "18a2922eb3ca0ad7eb805223c24cd6d7f3d1b40e2b9c7ee58bf85650d5b2162f",
+          "actual_response": {
+            "role": "reviewer_feedback",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "model": "gpt-6-astra",
+            "requested_model": "gpt-6-astra",
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "call_id": "7c3b18f8d1e64c07a6b89783efc687a7",
+            "attempt": 1,
+            "input_hash": "a937c9d0cefa184bc3a0254361ec6a4df35a54c1352f0525cd400a65f42f8b71",
+            "timestamp": "2026-09-20T18:03:47.443231+00:00",
+            "streaming": true,
+            "temperature": 0.1,
+            "prompt_hash": "c5f769baa4b742ea8df947c2aedeccf055256ad8692c45d39ddae41ce25e09ea",
+            "prompt_version": 1,
+            "prompt_version_source": "declared_prompt_header",
+            "schema_hash": "86c075e6b9d7cff2788dd095926edd1741d89b278e5227209e6f04f417ad1978",
+            "usage": {
+              "prompt_tokens": 24557,
+              "completion_tokens": 1224,
+              "total_tokens": 25781
+            },
+            "price": null,
+            "billing_uncertain": false,
+            "http_status": 200,
+            "request_id": "",
+            "reported_model": "gpt-6-astra",
+            "stream_complete": true,
+            "finish_reason": "stop",
+            "response_id": "resp_0c86824e55fe3fe6016ab02006146887d0be692183f3c8b238",
+            "received_content_chars": 1571,
+            "transport_status": "SUCCESS"
+          },
+          "status": "BLOCKED",
+          "error_type": "ValueError",
+          "error_code": null,
+          "error": "Every completed feedback disposition needs actual evidence for every target",
+          "finished_at": "2026-09-20T18:04:58.975486+00:00"
+        }
+      ]
+    },
+    {
+      "directory": "live-feedback-controls-v2-20260920-1808",
+      "state_sha256": "b71534010ca2ad5ff6518d1ce15b7c0f5ffc7642b092add5851e29339b128dc0",
+      "status": "NEEDS_REVIEW",
+      "request_count": 2,
+      "frozen_sha256": {
+        "helper.py": "ecb2005aac1018f274d06cec2315c78c3ec68a344e1e1ba03c5d37f048154a52",
+        "reviewer_feedback.md": "7a33796275fd68cf28108cfe896039080cc8b6c69fd4789c6352ef194450d736",
+        "fixtures-local-only.json": "22fab0ccec6b081f89ab9f8619daf7295c8e48f31ee1c063724849ac7c9d9ebf"
+      },
+      "results": [
+        {
+          "case_id": "ch03_actual_remaining_improvements",
+          "started_at": "2026-09-20T18:08:47.495723+00:00",
+          "input_sha256": "e9b36491aaee2fd38c1e24f8b030b08d068d7722a7ab858c37ccadfce44e17ff",
+          "expected_local_only": {
+            "F1": "satisfied",
+            "F2": "supported_improvement",
+            "F3": "supported_improvement"
+          },
+          "classification": "FAIL",
+          "response_sha256": "342953b951ddfc0611f25fc60d62fc79ce9810e687ed848c26ad332841fdb482",
+          "actual_response": {
+            "role": "reviewer_feedback",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "model": "gpt-6-astra",
+            "requested_model": "gpt-6-astra",
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "call_id": "4b41d3fec71640d09e2f27ea883b1992",
+            "attempt": 1,
+            "input_hash": "91fe3e51982aa1d48ba28616a7d611cf9b4cb6413541ea2cfa888df2d90ddd25",
+            "timestamp": "2026-09-20T18:08:47.709928+00:00",
+            "streaming": true,
+            "temperature": 0.1,
+            "prompt_hash": "7a33796275fd68cf28108cfe896039080cc8b6c69fd4789c6352ef194450d736",
+            "prompt_version": 1,
+            "prompt_version_source": "declared_prompt_header",
+            "schema_hash": "c41c7e8f5b4a564445660e9d3ffaae7c48b3a6f5bf82da7d7d46045bbca8e419",
+            "usage": {
+              "prompt_tokens": 27407,
+              "completion_tokens": 3348,
+              "total_tokens": 30755
+            },
+            "price": null,
+            "billing_uncertain": false,
+            "http_status": 200,
+            "request_id": "",
+            "reported_model": "gpt-6-astra",
+            "stream_complete": true,
+            "finish_reason": "stop",
+            "response_id": "resp_03fc0cfd00e9a506016ab0213283e087d0b8a6adf01416cd6b",
+            "received_content_chars": 5006,
+            "transport_status": "SUCCESS"
+          },
+          "status": "VALIDATED",
+          "observed_dispositions": {
+            "F1": "supported_improvement",
+            "F2": "supported_improvement",
+            "F3": "supported_improvement"
+          },
+          "per_item_expected_matches": {
+            "F1": false,
+            "F2": true,
+            "F3": true
+          },
+          "scoped_issue_count": 7,
+          "repair_unit_ids": {
+            "F1": [
+              "S02.U12",
+              "S02.U13"
+            ],
+            "F2": [
+              "S03.U08"
+            ],
+            "F3": [
+              "S05.U13",
+              "S05.U14",
+              "S05.U18",
+              "S05.U22"
+            ]
+          },
+          "scoped_issue_unit_ids": [
+            "S02.U12",
+            "S02.U13",
+            "S03.U08",
+            "S05.U13",
+            "S05.U14",
+            "S05.U18",
+            "S05.U22"
+          ],
+          "scoped_actions_match_explicit_targets": true,
+          "finished_at": "2026-09-20T18:11:16.097216+00:00"
+        },
+        {
+          "case_id": "already_satisfied_and_outside_approved_scope",
+          "started_at": "2026-09-20T18:11:16.100210+00:00",
+          "input_sha256": "0d0c1b4d8637873f1e78391a4c7169a3bfa76474de2dae0a461f4935cca0f4e3",
+          "expected_local_only": {
+            "F1": "satisfied",
+            "F2": "out_of_scope"
+          },
+          "classification": "PASS",
+          "response_sha256": "bfef248e10940a81c5e83137138929f9183036d1bccbedb6ca3a246205e6f55a",
+          "actual_response": {
+            "role": "reviewer_feedback",
+            "model_id": "gpt6",
+            "preferred_model_id": "gpt6",
+            "model": "gpt-6-astra",
+            "requested_model": "gpt-6-astra",
+            "base_url": "https://oneapi.advancedsolver.com/v1",
+            "call_id": "5075dd17a34d4fc6bff3387fb899a706",
+            "attempt": 1,
+            "input_hash": "ca5c3f9b0401e42c859fabcfade5c686019726541982a2de3cdd0b52f06f52f6",
+            "timestamp": "2026-09-20T18:11:16.260841+00:00",
+            "streaming": true,
+            "temperature": 0.1,
+            "prompt_hash": "7a33796275fd68cf28108cfe896039080cc8b6c69fd4789c6352ef194450d736",
+            "prompt_version": 1,
+            "prompt_version_source": "declared_prompt_header",
+            "schema_hash": "c41c7e8f5b4a564445660e9d3ffaae7c48b3a6f5bf82da7d7d46045bbca8e419",
+            "usage": {
+              "prompt_tokens": 24841,
+              "completion_tokens": 1007,
+              "total_tokens": 25848
+            },
+            "price": null,
+            "billing_uncertain": false,
+            "http_status": 200,
+            "request_id": "",
+            "reported_model": "gpt-6-astra",
+            "stream_complete": true,
+            "finish_reason": "stop",
+            "response_id": "resp_0957191bdf5f3167016ab021c7795c87d09a906ca8c9abd5ae",
+            "received_content_chars": 2042,
+            "transport_status": "SUCCESS"
+          },
+          "status": "VALIDATED",
+          "observed_dispositions": {
+            "F1": "satisfied",
+            "F2": "out_of_scope"
+          },
+          "per_item_expected_matches": {
+            "F1": true,
+            "F2": true
+          },
+          "scoped_issue_count": 0,
+          "repair_unit_ids": {
+            "F1": [],
+            "F2": []
+          },
+          "scoped_issue_unit_ids": [],
+          "scoped_actions_match_explicit_targets": true,
+          "finished_at": "2026-09-20T18:11:51.488639+00:00"
+        }
+      ]
+    }
+  ],
+  "expected_inputs_unchanged": true,
+  "teacher_math_review": "NOT_RUN",
+  "teacher_visual_review": "NOT_RUN",
+  "windows_compile": "NOT_RUN_TEXT_CONTROL_ONLY",
+  "total_actual_requests": 4
+}
