@@ -1,0 +1,88 @@
+{
+  "section_id": "S01",
+  "math": {
+    "schema_version": 1,
+    "status": "NEEDS_REVIEW",
+    "issues": [
+      {
+        "rule_id": "NUMERIC_IS_NOT_PROOF",
+        "severity": "warning",
+        "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+        "location": {
+          "calculation_id": "S04.C01",
+          "unit_id": "S01.U05"
+        },
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "kind": "numeric_spotcheck",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "numeric_spotcheck_passed",
+        "point_count": 1,
+        "message": "仅在指定点数值一致，不是一般性证明。",
+        "calculation_id": "S04.C01",
+        "unit_id": "S01.U05"
+      }
+    ],
+    "coverage": [
+      "S01.U00",
+      "S01.U05",
+      "S01.U06"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "协议的数值核算只能抽查交错项在指定整数处的取值，不能表达对所有正整数的单调性、极限或余项不等式；交错级数判别法及余项估计仍由正文证明。",
+      "既有核算 S04.C01 仅比较 n=3 时的通项值与 1/3，覆盖范围限于该单点等式；不提供对所有正整数的结论，也不构成交错调和级数收敛性或截断误差界的证明。这些结论依赖正文中的判别条件核实与定理证明。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S01.U00",
+      "S01.U05",
+      "S01.U06"
+    ],
+    "limitations": [
+      "MOCK reviewer; not teacher acceptance or formal proof."
+    ]
+  },
+  "issues": [
+    {
+      "rule_id": "NUMERIC_IS_NOT_PROOF",
+      "severity": "warning",
+      "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+      "location": {
+        "calculation_id": "S04.C01",
+        "unit_id": "S01.U05"
+      },
+      "resolution_status": "open"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 0,
+    "proposal_calls": 0,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "2d231fa1d062245f626a96dad5dca7393e5edbd41b28a32f073a042a6a6886b6",
+      "tool_checks_hash": "0cb8ee260e23781e92dbbf7a69ca62e5ad4c728ccf82c35b60d8b109afc388b0",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "21f4e4014c3124f10f141f23477b9f2943dde6a7e8f281581e83e8d86633361a",
+      "deterministic_checks_hash": "bff0b240687885380de4e32db858fcf53115894a9efce54ee9bb50e1bfa0b9ca"
+    }
+  }
+}

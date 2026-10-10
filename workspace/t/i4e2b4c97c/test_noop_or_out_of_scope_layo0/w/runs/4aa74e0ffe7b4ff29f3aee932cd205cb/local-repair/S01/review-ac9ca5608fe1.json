@@ -1,0 +1,364 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "7ce23a85e3ac2482914892a83a054db1adc5e246bb9e24d0746c667fbb054925",
+    "tool_checks_hash": "fab955de6cd03e6c9b45685ca85aa257acea05464f5fad44396aea616112c088",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "21f4e4014c3124f10f141f23477b9f2943dde6a7e8f281581e83e8d86633361a",
+    "deterministic_checks_hash": "32c6fb0b4268b4e38d138409e5d1ff5fd4b181116af8e103384d3eccd195ca7a",
+    "compile_failure_hash": "6ff3ff0d1234d13190d2e5e28ae6ec8f04e01fccf73ee37c35e6d1413bf4f032"
+  },
+  "report": {
+    "section_id": "S01",
+    "math": {
+      "schema_version": 1,
+      "status": "NEEDS_REVIEW",
+      "issues": [],
+      "evidence": [
+        {
+          "evidence_type": "not_checked",
+          "status": "NOT_RUN",
+          "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+        }
+      ],
+      "coverage": [
+        "S01.U1",
+        "S01.U2"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+      ]
+    },
+    "llm_review": {
+      "checked_unit_ids": [
+        "S01.U1",
+        "S01.U2"
+      ],
+      "issues": [],
+      "limitations": [
+        "MOCK reviewer"
+      ]
+    },
+    "issues": [],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false,
+    "local_recovery": {
+      "applied_rounds": 3,
+      "proposal_calls": 3,
+      "rejected_proposals": 0,
+      "preserved_issues": [
+        {
+          "rule_id": "OVERFULL_BOX",
+          "severity": "blocking",
+          "message": "Overfull \\hbox (0.5104pt too wide) in paragraph at lines 17--17；仅修复定位单元的换行/分段/公式组织，保持全部数学条件、结论、题解与标签；不得删除内容、缩小字号、加容差或隐藏溢出。",
+          "location": {
+            "log_line": 1,
+            "unit_id": "S01.U1",
+            "source_file": "lecture.tex",
+            "source_line": 17,
+            "source_end_line": 17
+          },
+          "unit_id": "S01.U1",
+          "compiler_message": "Overfull \\hbox (0.5104pt too wide) in paragraph at lines 17--17",
+          "evidence": {
+            "rendered_source_sha256": "648e26c7fc5042f90be9e49d36f76d7b1b278b026d217c56be5ac98a87ab7389",
+            "source_excerpt": "Long explanation before line reorganization."
+          }
+        }
+      ],
+      "review_identity": {
+        "candidate_hash": "7ce23a85e3ac2482914892a83a054db1adc5e246bb9e24d0746c667fbb054925",
+        "tool_checks_hash": "fab955de6cd03e6c9b45685ca85aa257acea05464f5fad44396aea616112c088",
+        "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+        "plan_context_hash": "21f4e4014c3124f10f141f23477b9f2943dde6a7e8f281581e83e8d86633361a",
+        "deterministic_checks_hash": "32c6fb0b4268b4e38d138409e5d1ff5fd4b181116af8e103384d3eccd195ca7a"
+      }
+    },
+    "compile": {
+      "status": "FAIL",
+      "issues": [
+        {
+          "rule_id": "OVERFULL_BOX",
+          "severity": "blocking",
+          "message": "Overfull \\hbox (0.5104pt too wide) in paragraph at lines 17--17",
+          "location": {
+            "log_line": 1
+          }
+        }
+      ],
+      "log_paths": [
+        "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\i4e2b4c97c\\test_noop_or_out_of_scope_layo0\\w\\b\\4aa74e0ffe7b4ff2\\sS01_f80fcbecd104\\compile-attempt-3\\build\\pass-2.tex.log"
+      ],
+      "pdf_path": null,
+      "passes": 2
+    },
+    "references": {
+      "status": "FAIL",
+      "pending_labels": []
+    },
+    "compile_attempts": [
+      {
+        "attempt": 0,
+        "section_id": "S01",
+        "candidate_hash": "7ce23a85e3ac2482914892a83a054db1adc5e246bb9e24d0746c667fbb054925",
+        "source_key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/source/lecture.tex",
+        "source_hash": "648e26c7fc5042f90be9e49d36f76d7b1b278b026d217c56be5ac98a87ab7389",
+        "compile_status": "FAIL",
+        "compile_key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile.json",
+        "compile_hash": "0d2efd77087b5b1b25cc0a7ad4f68b0b75917cd008943cef5fd6b57c54bfb6fb",
+        "teacher_visual_review": "NOT_RUN",
+        "mapping": {
+          "status": "MAPPED",
+          "issues": [
+            {
+              "rule_id": "OVERFULL_BOX",
+              "severity": "blocking",
+              "message": "Overfull \\hbox (0.5104pt too wide) in paragraph at lines 17--17；仅修复定位单元的换行/分段/公式组织，保持全部数学条件、结论、题解与标签；不得删除内容、缩小字号、加容差或隐藏溢出。",
+              "location": {
+                "log_line": 1,
+                "unit_id": "S01.U1",
+                "source_file": "lecture.tex",
+                "source_line": 17,
+                "source_end_line": 17
+              },
+              "unit_id": "S01.U1",
+              "compiler_message": "Overfull \\hbox (0.5104pt too wide) in paragraph at lines 17--17",
+              "evidence": {
+                "rendered_source_sha256": "648e26c7fc5042f90be9e49d36f76d7b1b278b026d217c56be5ac98a87ab7389",
+                "source_excerpt": "Long explanation before line reorganization."
+              }
+            }
+          ],
+          "unit_ids": [
+            "S01.U1"
+          ],
+          "reason": "all blocking intervals map exactly"
+        },
+        "dependencies": [
+          {
+            "key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/source/lecture.tex",
+            "hash": "648e26c7fc5042f90be9e49d36f76d7b1b278b026d217c56be5ac98a87ab7389",
+            "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+          },
+          {
+            "key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile.json",
+            "hash": "0d2efd77087b5b1b25cc0a7ad4f68b0b75917cd008943cef5fd6b57c54bfb6fb",
+            "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+          },
+          {
+            "key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/build/pass-2.tex.log",
+            "hash": "bbbcfbfe53a750d9f188062383ce4bceb59099c8b5172933c5e72fa2959a0dd2",
+            "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+          },
+          {
+            "key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile-layout-mapping.json",
+            "hash": "c6edeb802495c43181aec41c91bce94b5f74a7a9336df2689cbf0a9a9d647547",
+            "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+          }
+        ]
+      },
+      {
+        "attempt": 1,
+        "section_id": "S01",
+        "candidate_hash": "7ce23a85e3ac2482914892a83a054db1adc5e246bb9e24d0746c667fbb054925",
+        "source_key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile-attempt-1/source/lecture.tex",
+        "source_hash": "648e26c7fc5042f90be9e49d36f76d7b1b278b026d217c56be5ac98a87ab7389",
+        "compile_status": "FAIL",
+        "compile_key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile-attempt-1/compile.json",
+        "compile_hash": "aa0191fada60303c1893a9b586482112fb61f2b57599a313ba28d78ffb604575",
+        "teacher_visual_review": "NOT_RUN",
+        "mapping": {
+          "status": "MAPPED",
+          "issues": [
+            {
+              "rule_id": "OVERFULL_BOX",
+              "severity": "blocking",
+              "message": "Overfull \\hbox (0.5104pt too wide) in paragraph at lines 17--17；仅修复定位单元的换行/分段/公式组织，保持全部数学条件、结论、题解与标签；不得删除内容、缩小字号、加容差或隐藏溢出。",
+              "location": {
+                "log_line": 1,
+                "unit_id": "S01.U1",
+                "source_file": "lecture.tex",
+                "source_line": 17,
+                "source_end_line": 17
+              },
+              "unit_id": "S01.U1",
+              "compiler_message": "Overfull \\hbox (0.5104pt too wide) in paragraph at lines 17--17",
+              "evidence": {
+                "rendered_source_sha256": "648e26c7fc5042f90be9e49d36f76d7b1b278b026d217c56be5ac98a87ab7389",
+                "source_excerpt": "Long explanation before line reorganization."
+              }
+            }
+          ],
+          "unit_ids": [
+            "S01.U1"
+          ],
+          "reason": "all blocking intervals map exactly"
+        },
+        "dependencies": [
+          {
+            "key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile-attempt-1/source/lecture.tex",
+            "hash": "648e26c7fc5042f90be9e49d36f76d7b1b278b026d217c56be5ac98a87ab7389",
+            "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+          },
+          {
+            "key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile-attempt-1/compile.json",
+            "hash": "aa0191fada60303c1893a9b586482112fb61f2b57599a313ba28d78ffb604575",
+            "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+          },
+          {
+            "key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile-attempt-1/build/pass-2.tex.log",
+            "hash": "bbbcfbfe53a750d9f188062383ce4bceb59099c8b5172933c5e72fa2959a0dd2",
+            "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+          },
+          {
+            "key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile-attempt-1/compile-layout-mapping.json",
+            "hash": "c6edeb802495c43181aec41c91bce94b5f74a7a9336df2689cbf0a9a9d647547",
+            "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+          }
+        ]
+      },
+      {
+        "attempt": 2,
+        "section_id": "S01",
+        "candidate_hash": "7ce23a85e3ac2482914892a83a054db1adc5e246bb9e24d0746c667fbb054925",
+        "source_key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile-attempt-2/source/lecture.tex",
+        "source_hash": "648e26c7fc5042f90be9e49d36f76d7b1b278b026d217c56be5ac98a87ab7389",
+        "compile_status": "FAIL",
+        "compile_key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile-attempt-2/compile.json",
+        "compile_hash": "2b8902b2696d285fb496eacba2607100ec09c5c82251f8907c2e4349288fec39",
+        "teacher_visual_review": "NOT_RUN",
+        "mapping": {
+          "status": "MAPPED",
+          "issues": [
+            {
+              "rule_id": "OVERFULL_BOX",
+              "severity": "blocking",
+              "message": "Overfull \\hbox (0.5104pt too wide) in paragraph at lines 17--17；仅修复定位单元的换行/分段/公式组织，保持全部数学条件、结论、题解与标签；不得删除内容、缩小字号、加容差或隐藏溢出。",
+              "location": {
+                "log_line": 1,
+                "unit_id": "S01.U1",
+                "source_file": "lecture.tex",
+                "source_line": 17,
+                "source_end_line": 17
+              },
+              "unit_id": "S01.U1",
+              "compiler_message": "Overfull \\hbox (0.5104pt too wide) in paragraph at lines 17--17",
+              "evidence": {
+                "rendered_source_sha256": "648e26c7fc5042f90be9e49d36f76d7b1b278b026d217c56be5ac98a87ab7389",
+                "source_excerpt": "Long explanation before line reorganization."
+              }
+            }
+          ],
+          "unit_ids": [
+            "S01.U1"
+          ],
+          "reason": "all blocking intervals map exactly"
+        },
+        "dependencies": [
+          {
+            "key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile-attempt-2/source/lecture.tex",
+            "hash": "648e26c7fc5042f90be9e49d36f76d7b1b278b026d217c56be5ac98a87ab7389",
+            "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+          },
+          {
+            "key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile-attempt-2/compile.json",
+            "hash": "2b8902b2696d285fb496eacba2607100ec09c5c82251f8907c2e4349288fec39",
+            "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+          },
+          {
+            "key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile-attempt-2/build/pass-2.tex.log",
+            "hash": "bbbcfbfe53a750d9f188062383ce4bceb59099c8b5172933c5e72fa2959a0dd2",
+            "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+          },
+          {
+            "key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile-attempt-2/compile-layout-mapping.json",
+            "hash": "c6edeb802495c43181aec41c91bce94b5f74a7a9336df2689cbf0a9a9d647547",
+            "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+          }
+        ]
+      },
+      {
+        "attempt": 3,
+        "section_id": "S01",
+        "candidate_hash": "7ce23a85e3ac2482914892a83a054db1adc5e246bb9e24d0746c667fbb054925",
+        "source_key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile-attempt-3/source/lecture.tex",
+        "source_hash": "648e26c7fc5042f90be9e49d36f76d7b1b278b026d217c56be5ac98a87ab7389",
+        "compile_status": "FAIL",
+        "compile_key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile-attempt-3/compile.json",
+        "compile_hash": "bf90a6ce74d9085736edbb786c2c50fac75409d2b857170411bab96c394c6ed8",
+        "teacher_visual_review": "NOT_RUN",
+        "mapping": {
+          "status": "MAPPED",
+          "issues": [
+            {
+              "rule_id": "OVERFULL_BOX",
+              "severity": "blocking",
+              "message": "Overfull \\hbox (0.5104pt too wide) in paragraph at lines 17--17；仅修复定位单元的换行/分段/公式组织，保持全部数学条件、结论、题解与标签；不得删除内容、缩小字号、加容差或隐藏溢出。",
+              "location": {
+                "log_line": 1,
+                "unit_id": "S01.U1",
+                "source_file": "lecture.tex",
+                "source_line": 17,
+                "source_end_line": 17
+              },
+              "unit_id": "S01.U1",
+              "compiler_message": "Overfull \\hbox (0.5104pt too wide) in paragraph at lines 17--17",
+              "evidence": {
+                "rendered_source_sha256": "648e26c7fc5042f90be9e49d36f76d7b1b278b026d217c56be5ac98a87ab7389",
+                "source_excerpt": "Long explanation before line reorganization."
+              }
+            }
+          ],
+          "unit_ids": [
+            "S01.U1"
+          ],
+          "reason": "all blocking intervals map exactly"
+        },
+        "dependencies": [
+          {
+            "key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile-attempt-3/source/lecture.tex",
+            "hash": "648e26c7fc5042f90be9e49d36f76d7b1b278b026d217c56be5ac98a87ab7389",
+            "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+          },
+          {
+            "key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile-attempt-3/compile.json",
+            "hash": "bf90a6ce74d9085736edbb786c2c50fac75409d2b857170411bab96c394c6ed8",
+            "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+          },
+          {
+            "key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile-attempt-3/build/pass-2.tex.log",
+            "hash": "bbbcfbfe53a750d9f188062383ce4bceb59099c8b5172933c5e72fa2959a0dd2",
+            "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+          },
+          {
+            "key": "b/4aa74e0ffe7b4ff2/sS01_f80fcbecd104/compile-attempt-3/compile-layout-mapping.json",
+            "hash": "c6edeb802495c43181aec41c91bce94b5f74a7a9336df2689cbf0a9a9d647547",
+            "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+          }
+        ]
+      }
+    ]
+  },
+  "retained_issues": [
+    {
+      "rule_id": "OVERFULL_BOX",
+      "severity": "blocking",
+      "message": "Overfull \\hbox (0.5104pt too wide) in paragraph at lines 17--17；仅修复定位单元的换行/分段/公式组织，保持全部数学条件、结论、题解与标签；不得删除内容、缩小字号、加容差或隐藏溢出。",
+      "location": {
+        "log_line": 1,
+        "unit_id": "S01.U1",
+        "source_file": "lecture.tex",
+        "source_line": 17,
+        "source_end_line": 17
+      },
+      "unit_id": "S01.U1",
+      "compiler_message": "Overfull \\hbox (0.5104pt too wide) in paragraph at lines 17--17",
+      "evidence": {
+        "rendered_source_sha256": "648e26c7fc5042f90be9e49d36f76d7b1b278b026d217c56be5ac98a87ab7389",
+        "source_excerpt": "Long explanation before line reorganization."
+      }
+    }
+  ]
+}

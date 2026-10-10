@@ -1,0 +1,98 @@
+{
+  "prior_issues": [
+    {
+      "rule_id": "MISSING_ASSOCIATED_ANSWER",
+      "severity": "blocking",
+      "unit_id": "S01.U2",
+      "message": "例题/练习缺少显式关联答案"
+    }
+  ],
+  "review_identity": {
+    "candidate_hash": "83b891713df279acb27dd26093763faaa9ee0b4c23c722444b980ced03c98289",
+    "tool_checks_hash": "fedf0b5a14d5da636596f80de3982e89deb79626a1d60d48fd6a6d6e2a0b98ed",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "3413a290078984786bd09b1e0ddd02c2a0c47c15bd4dd8173bfc918170f607ae",
+    "deterministic_checks_hash": "32c6fb0b4268b4e38d138409e5d1ff5fd4b181116af8e103384d3eccd195ca7a"
+  },
+  "report": {
+    "section_id": "S01",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "equivalence",
+          "assumptions": {},
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "2",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "NEW.C1",
+          "unit_id": "S01.U2.answer"
+        }
+      ],
+      "coverage": [
+        "S01.U1",
+        "S01.U2",
+        "S01.U2.answer"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S01.U1",
+        "S01.U2",
+        "S01.U2.answer"
+      ],
+      "limitations": [
+        "Synthetic provider; not live or teacher acceptance."
+      ]
+    },
+    "issues": [],
+    "reference_recovery": null,
+    "answer_recovery": {
+      "schema_version": 1,
+      "operation": "append_missing_answers",
+      "status": "APPLIED_UNCHECKED",
+      "source_section_hash": "e0c554bc2269e63a48a3b5f26a8979a7d1a5fde9798a0cb6cb491943de0e1d98",
+      "patch_hash": "19a390b959373be84fbab584b9d4699da5184fa836ec340dfecd32cdb467a1ba",
+      "result_section_hash": "83b891713df279acb27dd26093763faaa9ee0b4c23c722444b980ced03c98289",
+      "target_ids": [
+        "S01.U2"
+      ],
+      "new_unit_ids": [
+        "S01.U2.answer"
+      ],
+      "new_unit_hashes": {
+        "S01.U2.answer": "5b9db10bf7832172a3ba4e724a325ad985daf543d956bbebf01404efa77e790a"
+      },
+      "original_unit_count": 2,
+      "added_unit_count": 1,
+      "original_units_preserved": true,
+      "original_calculations_preserved": true,
+      "new_calculation_count": 1,
+      "math_check": "NOT_RUN",
+      "normalization": "NOT_RUN",
+      "teacher_review": "NOT_RUN",
+      "identity": {
+        "context_hash": "0fcce111027ec33b6da294a32b7154f3603c08c2faa8df16fe1c4c522aca9b86",
+        "model": "gpt-6-astra",
+        "provider": "live",
+        "prompt_hash": "3f4beaf0cea232c9067c05d0326b08ebba71227e57fd50b283fb3401d8340da3",
+        "schema_hash": "33f1dd4a1048269d000f52f3663cc9fdac32afe07edfda814a6c018869562c33",
+        "implementation_hash": "3ec9e3ba686daea8447efbe4832827ef86797ed21965a6184dd29540d321baf8"
+      },
+      "proposal_key": "runs/f2127790e82c449da2edeaeb36e50322/answer-recovery/S01/9d38fa1a0743757bab97cb78a8cf7388080cf88425f6bc5302d1c51040dd68e8/attempt-d74fb2c96be9/proposal.json",
+      "reused_proposal": false
+    },
+    "mock": false
+  },
+  "retained_issues": []
+}
