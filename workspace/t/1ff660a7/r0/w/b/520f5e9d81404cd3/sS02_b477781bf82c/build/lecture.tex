@@ -1,0 +1,64 @@
+\documentclass[UTF8,fontset=fandol,11pt]{ctexart}
+\usepackage[a4paper,margin=24mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,graphicx,tabularx,booktabs,hyperref}
+\newtheorem{definition}{定义}[section]
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{example}[definition]{例题}
+\newtheorem{exercise}[definition]{练习}
+\hypersetup{unicode=true,colorlinks=true,linkcolor=blue}
+\title{数列极限 · 本科教学讲义}
+\date{}
+\begin{document}
+\maketitle
+\par\noindent 离线合成演示：不代表真实模型对本专题的教学验收。\par
+\section{数列极限的定义}\label{sec:S01}
+% UNIT S01.U01
+\begin{definition}
+称实数列 $a_n$ 收敛于 $a$，如果对每个 $\varepsilon>0$，存在正整数 $N$，使得所有 $n>N$ 都满足 $|a_n-a|<\varepsilon$。
+\end{definition}
+% UNIT S01.U02
+\begin{theorem}
+收敛实数列的极限唯一。
+\end{theorem}
+% UNIT S01.U03
+\begin{proof}
+若极限 $a\ne b$，取 $\varepsilon=|a-b|/3>0$。由两次收敛定义，充分大的 $n$ 同时满足 $|a_n-a|<\varepsilon$ 和 $|a_n-b|<\varepsilon$。三角不等式给出 $|a-b|<2|a-b|/3$，矛盾。
+\end{proof}
+% UNIT S01.U04
+\begin{example}
+证明 $a_n=1/n$ 收敛于 $0$。
+\end{example}
+% UNIT S01.U05
+\par\noindent\textbf{解：}任取 $\varepsilon>0$，取正整数 $N>1/\varepsilon$。当 $n>N$ 时，$|1/n-0|=1/n<1/N<\varepsilon$。故所求极限为 $0$。\par
+% UNIT S01.E01
+\begin{exercise}
+按定义证明 $3/n\to0$。
+\end{exercise}
+% UNIT S01.A01
+\par\noindent\textbf{解：}取正整数 $N>3/\varepsilon$，则 $n>N$ 时 $3/n<\varepsilon$。\par
+\section{极限的运算}\label{sec:S02}
+% UNIT S02.U01
+\begin{definition}
+若 $a_n\to a$，则 $r_n=a_n-a$ 称为余项，并且 $r_n\to0$。
+\end{definition}
+% UNIT S02.U02
+\begin{theorem}
+若实数列 $a_n\to a$ 且 $b_n\to b$，则 $a_n+b_n\to a+b$。
+\end{theorem}
+% UNIT S02.U03
+\begin{proof}
+任取 $\varepsilon>0$，分别对两个收敛数列使用 $\varepsilon/2$。充分大的 $n$ 满足 $|(a_n+b_n)-(a+b)|\leq |a_n-a|+|b_n-b|<\varepsilon$。
+\end{proof}
+% UNIT S02.U04
+\begin{example}
+求 $\lim_{n\to\infty}(2+1/n)$。
+\end{example}
+% UNIT S02.U05
+\par\noindent\textbf{解：}常数列 $2$ 的极限为 $2$，且 $1/n\to0$。由加法法则，所求极限为 $2$。\par
+% UNIT S02.E01
+\begin{exercise}
+按定义证明 $5/n\to0$。
+\end{exercise}
+% UNIT S02.A01
+\par\noindent\textbf{解：}取正整数 $N>5/\varepsilon$，则 $n>N$ 时 $5/n<\varepsilon$。\par
+\end{document}

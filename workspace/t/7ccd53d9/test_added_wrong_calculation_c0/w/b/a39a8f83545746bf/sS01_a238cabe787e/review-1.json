@@ -1,0 +1,122 @@
+{
+  "section_id": "S01",
+  "math": {
+    "schema_version": 1,
+    "status": "FAIL",
+    "issues": [
+      {
+        "rule_id": "SYMBOLIC_COUNTERCHECK_FAILED",
+        "severity": "blocking",
+        "message": "在声明假设下符号结果与预期不一致。",
+        "location": {
+          "calculation_id": "NEW.C1",
+          "unit_id": "S01.U2.answer"
+        },
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "kind": "equivalence",
+        "assumptions": {},
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "FAIL",
+        "evidence_type": "symbolic_check_failed",
+        "result": "2",
+        "message": "在声明假设下符号结果与预期不一致。",
+        "calculation_id": "NEW.C1",
+        "unit_id": "S01.U2.answer"
+      }
+    ],
+    "coverage": [
+      "S01.U1",
+      "S01.U2",
+      "S01.U2.answer"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S01.U1",
+      "S01.U2",
+      "S01.U2.answer"
+    ],
+    "limitations": [
+      "Synthetic provider; not live or teacher acceptance."
+    ]
+  },
+  "issues": [
+    {
+      "rule_id": "SYMBOLIC_COUNTERCHECK_FAILED",
+      "severity": "blocking",
+      "message": "在声明假设下符号结果与预期不一致。",
+      "location": {
+        "calculation_id": "NEW.C1",
+        "unit_id": "S01.U2.answer"
+      },
+      "resolution_status": "open"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": {
+    "schema_version": 1,
+    "operation": "append_missing_answers",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "e0c554bc2269e63a48a3b5f26a8979a7d1a5fde9798a0cb6cb491943de0e1d98",
+    "patch_hash": "e372d890668aa215b2cfd704c7df3053c81803bb4f5c29ac7d4c1b0550fe2c09",
+    "result_section_hash": "9a1548415dda8e3c567565fab23255123efb3f29db39f3e360547d5e8fcafdbf",
+    "target_ids": [
+      "S01.U2"
+    ],
+    "new_unit_ids": [
+      "S01.U2.answer"
+    ],
+    "new_unit_hashes": {
+      "S01.U2.answer": "5b9db10bf7832172a3ba4e724a325ad985daf543d956bbebf01404efa77e790a"
+    },
+    "original_unit_count": 2,
+    "added_unit_count": 1,
+    "original_units_preserved": true,
+    "original_calculations_preserved": true,
+    "new_calculation_count": 1,
+    "math_check": "NOT_RUN",
+    "normalization": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "identity": {
+      "context_hash": "0fcce111027ec33b6da294a32b7154f3603c08c2faa8df16fe1c4c522aca9b86",
+      "model": "gpt-6-astra",
+      "provider": "live",
+      "prompt_hash": "3f4beaf0cea232c9067c05d0326b08ebba71227e57fd50b283fb3401d8340da3",
+      "schema_hash": "33f1dd4a1048269d000f52f3663cc9fdac32afe07edfda814a6c018869562c33",
+      "implementation_hash": "3ec9e3ba686daea8447efbe4832827ef86797ed21965a6184dd29540d321baf8"
+    },
+    "proposal_key": "runs/a39a8f83545746bfaaebe2298fcfb6f2/answer-recovery/S01/9d38fa1a0743757bab97cb78a8cf7388080cf88425f6bc5302d1c51040dd68e8/attempt-fb75c9570a0e/proposal.json",
+    "reused_proposal": false
+  },
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 1,
+    "proposal_calls": 1,
+    "rejected_proposals": 0,
+    "preserved_issues": [
+      {
+        "rule_id": "MISSING_ASSOCIATED_ANSWER",
+        "severity": "blocking",
+        "unit_id": "S01.U2",
+        "message": "例题/练习缺少显式关联答案"
+      }
+    ],
+    "review_identity": {
+      "candidate_hash": "9a1548415dda8e3c567565fab23255123efb3f29db39f3e360547d5e8fcafdbf",
+      "tool_checks_hash": "3fa5ddb6d84da5d0364a9046766dc61329af8827c5026ea6948e56e11c4804d2",
+      "reviewer_prompt_hash": "5d38a796ccdff81f3bba09d0c48210a836e83b77be5b31c2a814f7437e1ec69a",
+      "plan_context_hash": "3413a290078984786bd09b1e0ddd02c2a0c47c15bd4dd8173bfc918170f607ae",
+      "deterministic_checks_hash": "2d98dc5b2e3ce65244d1f608933c3a95048f7e858ee16d8436e0e7a83ffe70b6"
+    }
+  }
+}

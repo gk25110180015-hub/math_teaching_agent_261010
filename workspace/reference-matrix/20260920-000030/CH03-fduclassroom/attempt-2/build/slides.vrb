@@ -1,0 +1,36 @@
+\frametitle{函数极限的基本性质}
+\small
+{\small
+% SOURCE-BEGIN U0023 0 756
+\begin{extra}
+
+\textbf{用数列刻画函数极限}
+
+\begin{theorem}[Heine定理]
+设 \(x_0\) 是函数 \(f\) 定义域的聚点。则
+\[
+\lim_{x\to x_0}f(x)=A
+\]
+当且仅当：对定义域内任意满足
+\[
+x_n\neq x_0,\qquad x_n\to x_0
+\]
+的数列 \(\{x_n\}\)，都有 \(f(x_n)\to A\)。
+\end{theorem}
+\begin{proofdetail}
+若函数极限为 \(A\)，则给定 \(\varepsilon>0\)，当 \(x\) 充分接近 \(x_0\) 时有 \(|f(x)-A|<\varepsilon\)。又因 \(x_n\to x_0\)，充分大的 \(n\) 都满足这一邻域条件，故 \(f(x_n)\to A\)。
+
+反之，若函数极限不为 \(A\)，则存在 \(\varepsilon_0>0\)，使得对每个正整数 \(n\)，都能在
+\[
+0<|x-x_0|<\frac1n
+\]
+中选到一个定义域内的点 \(x_n\)，满足 \(|f(x_n)-A|\geq\varepsilon_0\)。这样 \(x_n\to x_0\)，但 \(f(x_n)\) 不趋于 \(A\)，与条件矛盾。
+\end{proofdetail}
+
+\begin{custom}{Heine定理的用途}
+这个定理把“从所有方式趋近”转化为“考察任意趋近数列”。要证明极限不存在，只需找到两列趋向同一点的自变量，使对应函数值趋向不同结果；要证明极限存在，则不能只检查有限几条路径。
+\end{custom}
+
+\end{extra}
+% SOURCE-END U0023
+}

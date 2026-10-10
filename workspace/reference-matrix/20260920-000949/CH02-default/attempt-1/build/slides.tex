@@ -1,0 +1,1221 @@
+\documentclass[aspectratio=169,10pt,fontset=fandol]{ctexbeamer}
+\usepackage{amsmath,amssymb,mathtools,bm,mathrsfs}
+\usepackage{graphicx,booktabs,array,tabularx,multirow}
+\usepackage{tikz,pgfplots,xparse,xstring,mdframed}
+\usetikzlibrary{arrows.meta,calc,angles,positioning,shapes.geometric,graphs}
+\pgfplotsset{compat=1.18}
+
+\input{workflow_style.tex}
+\input{workflow_fonts.tex}
+\newenvironment{proofdetail}{\par\noindent\textbf{证明：}\quad}{\par}
+\newenvironment{solution}{\par\noindent\textbf{解：}\quad}{\par}
+\mdfdefinestyle{extrastyle}{%
+    linecolor=gray,
+    linewidth=0.8pt,
+    frametitlerule=true,
+    frametitlebackgroundcolor=gray!10,
+    backgroundcolor=gray!5,
+    skipabove=10pt,
+    skipbelow=10pt,
+    innertopmargin=6pt,
+    innerbottommargin=6pt
+}
+\newenvironment{extra}{\begin{mdframed}[style=extrastyle, frametitle={* 选读内容（不要求掌握）}]}{\end{mdframed}}
+\newenvironment{custom}[1]{\par\noindent\textbf{#1}\quad}{\par\vspace{0.8em}}
+\newenvironment{idea}{\par\noindent\textbf{思路}\quad}{\par\vspace{0.4em}}
+\newenvironment{warning}{\par\noindent\textbf{注：}\quad}{\par\vspace{0.8em}}
+\newenvironment{intuition}{\par\noindent\textbf{直观理解}\quad}{\par\vspace{0.8em}}
+\NewDocumentEnvironment{application}{O{}}
+{\par\noindent\textbf{应用拓展\IfStrEq{#1}{}{}{——#1}}\quad}
+{\par\vspace{0.8em}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\upcite}[1]{\textsuperscript{\textsuperscript{\cite{#1}}}}
+\DeclareMathOperator*{\argmax}{\mathrm{arg\,max}}
+\DeclareMathOperator*{\argmin}{\mathrm{arg\,min}}
+\title{第二章}
+\begin{document}
+\section{数学内容}
+% FRAME-ID F001
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{blue}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 2. 级数概念的引入\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 3. 级数的基本概念\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 4. 几何级数\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 5. 级数的基本性质\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 6. 正项级数及其判别法\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 7. 任意项级数的敛散性及其判别法\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 8. 判别法小结\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F002
+\begin{frame}[t,fragile]{数学内容}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0001 0 31
+
+\maketitle
+\vspace{-1em}
+
+
+% SOURCE-END U0001
+}
+\end{frame}
+\section{级数概念的引入}
+% FRAME-ID F003
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{black}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{blue}\normalsize 2. 级数概念的引入\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 3. 级数的基本概念\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 4. 几何级数\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 5. 级数的基本性质\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 6. 正项级数及其判别法\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 7. 任意项级数的敛散性及其判别法\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 8. 判别法小结\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F004
+\begin{frame}[t,fragile]{级数概念的引入}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0002 0 363
+\begin{custom}{芝诺悖论}
+古希腊哲学家芝诺说：阿喀琉斯永远追不上乌龟。因为阿喀琉斯每次到达乌龟之前的位置时，乌龟又向前爬了一小段。设阿喀琉斯的速度是乌龟的 10 倍，初始距离为 1。他追到乌龟原位置时，乌龟又爬了 \(0.1\)；他再追 \(0.1\)，乌龟又爬了 \(0.01\)；如此继续，他需要跑的无限段距离是：
+\[
+1 + 0.1 + 0.01 + 0.001 + \cdots = 1.111\ldots
+\]
+芝诺认为无限段长度的和是无穷大——但这是错的！
+
+事实上，\(1 + 0.1 + 0.01 + 0.001 + \cdots = \dfrac{10}{9}\) 是有限的。阿喀琉斯只需跑 \(\dfrac{10}{9}\) 的距离就能追上乌龟。
+\end{custom}
+% SOURCE-END U0002
+}
+\end{frame}
+% FRAME-ID F005
+\begin{frame}[t,fragile]{级数概念的引入}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0003 0 171
+上述悖论将追赶的总距离分解为无穷多个正数之和。按照有限项求和的经验，人们容易误认为无穷多个正数相加，其结果必然是无穷大，这也是芝诺论证看似成立的根源。然而，有限项加法所满足的运算性质不能随意移植到无穷项的情形。为了准确研究无穷多个数量依次相加是否能够得到一个有限确定的值，我们需要建立 “无穷项求和” 的严格定义，由此引出级数的概念。
+
+
+% SOURCE-END U0003
+}
+\end{frame}
+\section{级数的基本概念}
+% FRAME-ID F006
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{black}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{black}\normalsize 2. 级数概念的引入\par}\vspace{0.3em}
+{\color{blue}\normalsize 3. 级数的基本概念\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 4. 几何级数\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 5. 级数的基本性质\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 6. 正项级数及其判别法\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 7. 任意项级数的敛散性及其判别法\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 8. 判别法小结\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F007
+\begin{frame}[t,fragile]{级数的基本概念}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0004 0 108
+
+给定数列 \(\{a_n\}\)，称
+\[
+\sum_{n=1}^{\infty} a_n = a_1 + a_2 + a_3 + \cdots
+\]
+为无穷级数，简称级数，\(a_n\) 称为通项。
+
+% SOURCE-END U0004
+}
+\end{block}
+\end{frame}
+% FRAME-ID F008
+\begin{frame}[t,fragile]{级数的基本概念}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0005 0 107
+
+级数 \(\sum\limits_{n = 1}^{  \infty }  a_n\) 的前 \(n\) 项和
+\[
+S_n = a_1 + a_2 + \cdots + a_n
+\]
+称为部分和。
+
+% SOURCE-END U0005
+}
+\end{block}
+\end{frame}
+% FRAME-ID F009
+\begin{frame}[t,fragile]{级数的基本概念}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0006 0 162
+
+若部分和数列 \(\{S_n\}\) 收敛于 \(S\)，则称级数 \(\sum\limits_{n = 1}^{  \infty } a_n\) 收敛，且和为 \(S\)，记作 \(\sum\limits_{n = 1}^{  \infty } a_n = S\)；若 \(\{S_n\}\) 发散，则称级数发散。
+
+% SOURCE-END U0006
+}
+\end{block}
+\end{frame}
+% FRAME-ID F010
+\begin{frame}[t,fragile]{级数的基本概念}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0007 0 178
+\begin{custom}{注：}
+级数不是“把无穷多个数一次性相加”，而是先形成部分和数列
+\[
+S_1=a_1,\quad S_2=a_1+a_2,\quad \ldots,\quad S_n=a_1+\cdots+a_n,
+\]
+再研究 $\{S_n\}$ 是否有极限。 因此级数的敛散性完全由部分和数列决定。
+\end{custom}
+% SOURCE-END U0007
+}
+\end{frame}
+% FRAME-ID F011
+\begin{frame}[t,fragile]{级数的基本概念}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0008 0 63
+判断级数
+\[
+\sum_{n=1}^{\infty}\frac{1}{n(n+1)}
+\]
+是否收敛，并求其和。
+
+% SOURCE-END U0008
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0009 0 220
+先裂项：
+\[
+\frac{1}{n(n+1)}=\frac1n-\frac{1}{n+1}.
+\]
+第 $N$ 个部分和为
+\[
+S_N=\sum_{n=1}^{N}\left(\frac1n-\frac{1}{n+1}\right)
+=1-\frac{1}{N+1}.
+\]
+由于 $S_N\to1$，故原级数收敛，且
+\[
+\sum_{n=1}^{\infty}\frac{1}{n(n+1)}=1.
+\]
+
+% SOURCE-END U0009
+}
+\end{frame}
+\section{几何级数}
+% FRAME-ID F012
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{black}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{black}\normalsize 2. 级数概念的引入\par}\vspace{0.3em}
+{\color{black}\normalsize 3. 级数的基本概念\par}\vspace{0.3em}
+{\color{blue}\normalsize 4. 几何级数\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 5. 级数的基本性质\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 6. 正项级数及其判别法\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 7. 任意项级数的敛散性及其判别法\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 8. 判别法小结\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F013
+\begin{frame}[t,fragile]{几何级数}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0010 0 190
+
+几何级数 \(\sum\limits_{n = 1}^{  \infty } ar^n\)（\(a \neq 0\)）：
+\[
+\sum_{n=0}^{\infty} ar^n = 
+\begin{cases}
+\dfrac{a}{1-r}, & |r| < 1,\\[6pt]
+\text{发散}, & |r| \geq 1.
+\end{cases}
+\]
+
+% SOURCE-END U0010
+}
+\end{block}
+\end{frame}
+% FRAME-ID F014
+\begin{frame}[t,fragile]{几何级数}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0011 0 403
+\begin{custom}{证明}
+当 \(r \neq 1\) 时，部分和为
+\[
+S_n = a + ar + ar^2 + \cdots + ar^{n-1} = a\dfrac{1-r^n}{1-r}.
+\]
+\begin{itemize}
+\item 若 \(|r| < 1\)，则 \(r^n \to 0\)，所以 \(S_n \to \dfrac{a}{1-r}\)。
+\item 若 \(|r| > 1\)，则 \(|r^n| \to \infty\)，\(S_n\) 发散。
+\item 若 \(r=1\)，则 \(S_n=na\)，当 \(a\neq0\) 时有 \(|S_n|\to\infty\)。
+\item 若 \(r = -1\)，则 \(S_n = a, 0, a, 0, \dots\)，发散。
+\end{itemize}
+\end{custom}
+% SOURCE-END U0011
+}
+\end{frame}
+% FRAME-ID F015
+\begin{frame}[t,fragile]{几何级数}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0012 0 27
+
+将 \(0.333\ldots\) 化为分数。
+
+% SOURCE-END U0012
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0013 0 141
+\[
+0.333\ldots = \dfrac{3}{10} + \dfrac{3}{100} + \dfrac{3}{1000} + \cdots = \dfrac{3/10}{1-1/10} = \dfrac{3/10}{9/10} = \dfrac{1}{3}.
+\]
+
+% SOURCE-END U0013
+}
+\end{frame}
+\section{级数的基本性质}
+% FRAME-ID F016
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{black}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{black}\normalsize 2. 级数概念的引入\par}\vspace{0.3em}
+{\color{black}\normalsize 3. 级数的基本概念\par}\vspace{0.3em}
+{\color{black}\normalsize 4. 几何级数\par}\vspace{0.3em}
+{\color{blue}\normalsize 5. 级数的基本性质\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 6. 正项级数及其判别法\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 7. 任意项级数的敛散性及其判别法\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 8. 判别法小结\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F017
+\begin{frame}[t,fragile]{级数的基本性质}
+\normalsize
+\begin{block}{性质}
+{\normalsize
+% SOURCE-BEGIN U0014 0 110
+设 $A$ 为非零常数，则级数 $\sum\limits_{n = 1}^{  \infty } A u_n$ 与级数 $\sum\limits_{n = 1}^{  \infty } u_n$ 同时收敛或同时发散。
+
+% SOURCE-END U0014
+}
+\end{block}
+\end{frame}
+% FRAME-ID F018
+\begin{frame}[t,fragile]{级数的基本性质}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0015 0 719
+\begin{custom}{证明}
+
+设级数 $\sum\limits_{n = 1}^{  \infty } A u_n$ 与 $\sum\limits_{n = 1}^{  \infty } u_n$ 的部分和分别记为 $S_n^{\prime}$ 与 $S_n^{\prime \prime}$ ，则有
+
+$$
+\begin{aligned}
+	S_n^{\prime} & =A u_1+A u_2+\cdots+A u_n \\
+	& =A\left(u_1+u_2+\cdots+u_n\right)=A S_n^{\prime \prime}
+\end{aligned}
+$$
+
+于是，由数列极限的性质可知，极限 $\lim \limits_{n \to \infty} S_n^{\prime}$ 与 $\lim \limits_{n \to \infty} S_n^{\prime \prime}$ 同时存在或同时不存在，即级数 $\sum\limits_{n = 1}^{  \infty } A u_n$ 与 $\sum\limits_{n = 1}^{  \infty } u_n$ 同时收敛或同时发散．且当二极限同时存在时，有 $\lim \limits_{n \to \infty} S_n^{\prime}=$ $A \lim \limits_{n \to \infty} S_n^{\prime \prime}$ ，即有
+
+$$
+\sum_{n=1}^{\infty} A u_n=A \sum_{n=1}^{\infty} u_n .
+$$
+
+\end{custom}
+% SOURCE-END U0015
+}
+\end{frame}
+% FRAME-ID F019
+\begin{frame}[t,fragile]{级数的基本性质}
+\normalsize
+\begin{block}{性质}
+{\normalsize
+% SOURCE-BEGIN U0016 0 216
+
+	
+	
+	
+若级数 \(\sum\limits_{n = 1}^{  \infty } a_n\) 收敛于 \(S\)，\(\sum\limits_{n = 1}^{  \infty } b_n\) 收敛于 \(T\)，\(\alpha, \beta\) 为常数，则
+\[
+\sum_{n=1}^{\infty} (\alpha a_n + \beta b_n) = \alpha S + \beta T.
+\]
+
+% SOURCE-END U0016
+}
+\end{block}
+\end{frame}
+% FRAME-ID F020
+\begin{frame}[t,fragile]{级数的基本性质}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0017 0 336
+\begin{custom}{证明}
+记
+\[
+A_n=\sum_{k=1}^{n}a_k,\qquad B_n=\sum_{k=1}^{n}b_k.
+\]
+由条件 $A_n\to S,\ B_n\to T$。 对级数 $\sum(\alpha a_n+\beta b_n)$，其第 $n$ 个部分和为
+\[
+\sum_{k=1}^{n}(\alpha a_k+\beta b_k)=\alpha A_n+\beta B_n.
+\]
+由收敛数列四则运算法则，
+\[
+\alpha A_n+\beta B_n\to \alpha S+\beta T.
+\]
+因此该级数收敛，且和为 $\alpha S+\beta T$。
+\end{custom}
+% SOURCE-END U0017
+}
+\end{frame}
+% FRAME-ID F021
+\begin{frame}[t,fragile]{级数的基本性质}
+\normalsize
+\begin{block}{性质}
+{\normalsize
+% SOURCE-BEGIN U0018 0 45
+
+在级数中添加、删除或改变有限项，不改变级数的敛散性。但若级数收敛，其和可能会改变。
+
+% SOURCE-END U0018
+}
+\end{block}
+\end{frame}
+% FRAME-ID F022
+\begin{frame}[t,fragile]{级数的基本性质}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0019 0 278
+\begin{custom}{证明}
+以改变前 $m$ 项为例。 设原级数部分和为
+\[
+S_n=a_1+\cdots+a_n,
+\]
+改变前 $m$ 项后得到的新级数部分和记为 $T_n$。 当 $n>m$ 时，$T_n$ 与 $S_n$ 只相差一个固定常数 $C$，即
+\[
+T_n=S_n+C.
+\]
+若 $S_n$ 收敛，则 $T_n$ 也收敛；若 $S_n$ 发散而 $T_n$ 收敛，则 $S_n=T_n-C$ 收敛，矛盾。 因此二者敛散性相同。 当收敛时，极限值相差 $C$，所以级数和可能改变。
+\end{custom}
+% SOURCE-END U0019
+}
+\end{frame}
+% FRAME-ID F023
+\begin{frame}[t,fragile]{级数的基本性质}
+\normalsize
+\begin{block}{性质}
+{\normalsize
+% SOURCE-BEGIN U0020 0 165
+
+收敛级数任意加括号后所成的新级数仍然收敛，且和不变。
+
+\textbf{注意：} 逆命题不成立。即加括号后收敛的级数，原级数未必收敛。例如：
+\[
+(1-1)+(1-1)+(1-1)+\cdots = 0+0+0+\cdots = 0,
+\]
+但原级数 \(1-1+1-1+1-1+\cdots\) 是发散的。
+
+% SOURCE-END U0020
+}
+\end{block}
+\end{frame}
+% FRAME-ID F024
+\begin{frame}[t,fragile]{级数的基本性质}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0021 0 242
+\begin{custom}{证明}
+设原级数 $\sum\limits_{n = 1}^{  \infty } a_n$ 的部分和 $S_n\to S$。 任意加括号后，新级数的部分和等于原部分和数列中的一个子列：
+\[
+T_k=S_{n_k},\qquad 1\le n_1<n_2<\cdots .
+\]
+收敛数列的任意子列收敛到同一极限，因此 $T_k\to S$。 所以加括号后的级数仍收敛，且和不变。 逆命题不成立的例子如定理中所示。
+\end{custom}
+% SOURCE-END U0021
+}
+\end{frame}
+% FRAME-ID F025
+\begin{frame}[t,fragile]{级数的基本性质}
+\normalsize
+\begin{block}{性质}
+{\normalsize
+% SOURCE-BEGIN U0022 0 90
+
+若 \(\sum\limits_{n = 1}^{  \infty } a_n\) 收敛，则 \(\lim\limits_{n \to \infty} a_n = 0\)。
+
+% SOURCE-END U0022
+}
+\end{block}
+\end{frame}
+% FRAME-ID F026
+\begin{frame}[t,fragile]{级数的基本性质}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0023 0 104
+\begin{custom}{证明}
+设部分和 \(S_n \to S\)，则 \(a_n = S_n - S_{n-1} \to S - S = 0\)。\(\square\)
+\end{custom}
+% SOURCE-END U0023
+}
+\end{frame}
+% FRAME-ID F027
+\begin{frame}[t,fragile]{级数的基本性质}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0024 0 61
+\textbf{注意：} 这个条件是必要的，但不是充分的。也就是说，\(a_n \to 0\) 不能保证级数收敛。
+
+
+% SOURCE-END U0024
+}
+\end{frame}
+% FRAME-ID F028
+\begin{frame}[t,fragile]{级数的基本性质}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0025 0 93
+
+调和级数 \(\sum\limits_{n = 1}^{  \infty } \dfrac{1}{n}\) 虽然通项 \(\dfrac{1}{n} \to 0\)，但它是发散的。
+
+% SOURCE-END U0025
+}
+\end{block}
+\end{frame}
+% FRAME-ID F029
+\begin{frame}[t,fragile]{级数的基本性质}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0026 0 459
+\begin{custom}{证明}
+考虑部分和 \(S_{2^n}\)：
+\[
+S_{2^n} = 1 + \dfrac12 + \left(\dfrac13+\dfrac14\right) + \left(\dfrac15+\cdots+\dfrac18\right) + \cdots + \left(\dfrac{1}{2^{n-1}+1} + \cdots + \dfrac{1}{2^n}\right).
+\]
+$\dfrac13+\dfrac14 > \dfrac14 \times 2 =\dfrac12$,$\dfrac15+\cdots+\dfrac18>\dfrac18 \times 4 =\dfrac12$,以此类推，第 \(k\) 组有 \(2^{k-1}\) 项，每项不小于 \(1/2^k\)，每一括号的和至少为 \(\dfrac12\)，所以
+\[
+S_{2^n}\geq1+\dfrac n2\to\infty.
+\]
+故调和级数发散。
+\end{custom}
+% SOURCE-END U0026
+}
+\end{frame}
+\section{正项级数及其判别法}
+% FRAME-ID F030
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{black}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{black}\normalsize 2. 级数概念的引入\par}\vspace{0.3em}
+{\color{black}\normalsize 3. 级数的基本概念\par}\vspace{0.3em}
+{\color{black}\normalsize 4. 几何级数\par}\vspace{0.3em}
+{\color{black}\normalsize 5. 级数的基本性质\par}\vspace{0.3em}
+{\color{blue}\normalsize 6. 正项级数及其判别法\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 7. 任意项级数的敛散性及其判别法\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 8. 判别法小结\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F031
+\begin{frame}[t,fragile]{正项级数及其判别法}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0027 0 108
+设 $\sum\limits_{n = 1}^{  \infty } a_n$ 为正项级数，则 $\sum\limits_{n = 1}^{  \infty }a_n$ 收敛的充分必要条件是它的部分和数列有上界．
+
+% SOURCE-END U0027
+}
+\end{block}
+\end{frame}
+% FRAME-ID F032
+\begin{frame}[t,fragile]{正项级数及其判别法}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0028 0 485
+\begin{custom}{证明}
+由 $a_n \geqslant 0(n=1,2, \cdots)$ 可知
+
+$$
+S_{n+1}=S_n+a_{n+1} \geqslant S_n \geqslant 0, \quad n \in N .
+$$
+
+可见 $\left\{S_n\right\}$ 是单调增加数列．因此，由定理 2.7 可知，若 $\left\{S_n\right\}$ 有上界，则极限 $\lim \limits_{n \to \infty} S_n$存在，从而 $\sum\limits_{n = 1}^{  \infty } a_n$ 收敛，充分性得证；若 $\left\{S_n\right\}$ 无上界，则 $\lim \limits_{n \to \infty} S_n=+\infty$ ，从而 $\sum\limits_{n = 1}^{  \infty } a_n$ 发散，换句话说，若数列收敛，则部分和数列 $\left\{S_n\right\}$ 必有上界，必要性得证．定理得证．
+
+\end{custom}
+% SOURCE-END U0028
+}
+\end{frame}
+% FRAME-ID F033
+\begin{frame}[t,fragile]{正项级数及其判别法}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0029 0 367
+
+设 \(\sum\limits_{n = 1}^{  \infty } a_n\) 和 \(\sum\limits_{n = 1}^{  \infty } b_n\) 为正项级数，且存在 \(N\)，当 \(n > N\) 时 \(a_n \leq b_n\)。
+\begin{enumerate}
+\item 若 \(\sum\limits_{n = 1}^{  \infty } b_n\) 收敛，则 \(\sum\limits_{n = 1}^{  \infty } a_n\) 收敛；
+\item 若 \(\sum\limits_{n = 1}^{  \infty } a_n\) 发散，则 \(\sum\limits_{n = 1}^{  \infty } b_n\) 发散。
+\end{enumerate}
+
+% SOURCE-END U0029
+}
+\end{block}
+\end{frame}
+% FRAME-ID F034
+\begin{frame}[t,fragile]{正项级数及其判别法}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0030 0 554
+\begin{custom}{证明}
+只需考虑从 $N+1$ 项开始的尾级数，因为添加或删除有限项不改变敛散性。 记
+\[
+A_m=\sum_{n=N+1}^{m}a_n,\qquad B_m=\sum_{n=N+1}^{m}b_n.
+\]
+由于 $0\le a_n\le b_n$，所以对所有 $m>N$ 有
+\[
+0\le A_m\le B_m.
+\]
+若 $\sum\limits_{n = 1}^{  \infty } b_n$ 收敛，则 $\{B_m\}$ 有上界，从而 $\{A_m\}$ 是单调递增且有上界的数列，由单调有界准则知 $\{A_m\}$ 收敛，故 $\sum\limits_{n = 1}^{  \infty } a_n$ 收敛。
+
+第二个结论是第一个结论的逆否命题：若 $\sum\limits_{n = 1}^{  \infty } b_n$ 收敛，则 $\sum\limits_{n = 1}^{  \infty } a_n$ 收敛。 因此若 $\sum\limits_{n = 1}^{  \infty } a_n$ 发散，$\sum\limits_{n = 1}^{  \infty } b_n$ 不可能收敛，只能发散。
+\end{custom}
+% SOURCE-END U0030
+}
+\end{frame}
+% FRAME-ID F035
+\begin{frame}[t,fragile]{正项级数及其判别法}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0031 0 337
+比较判别法的道理很简单：想象你在往一个杯子里倒水。
+
+如果 \(b_n\) 代表“大杯子”倒进去的水量，而 \(\sum\limits_{n = 1}^{  \infty } b_n\) 收敛意味着这个大杯子里的水总量是有限的（不会溢出）。那么，比它更小的 \(a_n\)（小杯子）倒进去的水总量当然更有限——肯定也收敛。
+
+反过来，如果你知道小杯子 \(\sum\limits_{n = 1}^{  \infty } a_n\) 的水量已经无限大（发散），那么比它更大的大杯子 \(\sum\limits_{n = 1}^{  \infty } b_n\) 的水量一定也无限大。
+
+一句话总结：\textbf{大的收敛，小的必收敛；小的发散，大的必发散。}
+
+% SOURCE-END U0031
+}
+\end{frame}
+% FRAME-ID F036
+\begin{frame}[t,fragile]{正项级数及其判别法}
+\normalsize
+\begin{block}{推论}
+{\normalsize
+% SOURCE-BEGIN U0032 0 400
+设 $\sum\limits_{n = 1}^{  \infty } u_n$ 和 $\sum\limits_{n = 1}^{  \infty } v_n$ 为正项级数，且存在常数 $c>0$ 和自然数 $N$ ，使当$n>N$ 时，有
+	
+	$$
+	u_n \leqslant c v_n .
+	$$
+	
+	则有
+	\begin{itemize}
+		\item[（1）] 当 $\sum\limits_{n = 1}^{  \infty } v_n$ 收敛时，$\sum\limits_{n = 1}^{  \infty } u_n$ 收敛；
+		\item[（2）] 当 $\sum\limits_{n = 1}^{  \infty } u_n$ 发散时，$\sum\limits_{n = 1}^{  \infty } v_n$ 发散．
+	\end{itemize}
+
+% SOURCE-END U0032
+}
+\end{block}
+\end{frame}
+% FRAME-ID F037
+\begin{frame}[t,fragile]{正项级数及其判别法}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0033 0 62
+判断级数 \(\sum\limits_{n = 1}^{  \infty } \dfrac{1}{n!}\) 的敛散性。
+
+% SOURCE-END U0033
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0034 0 467
+当 \(n \geq 1\) 时，\(n! = 1 \cdot 2 \cdot 3 \cdots n \geq 1 \cdot 2 \cdot 2 \cdots 2 = 2^{n-1}\)，因此
+\[
+\dfrac{1}{n!} \leq \dfrac{1}{2^{n-1}}.
+\]
+
+而几何级数 \(\sum\limits_{n = 1}^{  \infty } \dfrac{1}{2^{n-1}} = 1 + \dfrac12 + \dfrac14 + \cdots = 2\) 是收敛的。由比较判别法，\(\sum\limits_{n = 1}^{  \infty } \dfrac{1}{n!}\) 也收敛。
+
+事实上，这个级数的和就是自然常数 \(\ee\)：
+\[
+\ee = \sum_{n=0}^{\infty} \dfrac{1}{n!} = 1 + 1 + \dfrac12 + \dfrac16 + \dfrac{1}{24} + \cdots \approx 2.71828.
+\]
+
+% SOURCE-END U0034
+}
+\end{frame}
+% FRAME-ID F038
+\begin{frame}[t,fragile]{正项级数及其判别法}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0035 0 61
+判断 \(\sum\limits_{n = 1}^{  \infty } \dfrac{1}{n^2}\) 的敛散性。
+
+% SOURCE-END U0035
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0036 0 239
+当 \(n \geq 2\) 时，\(\dfrac{1}{n^2} \leq \dfrac{1}{n(n-1)} = \dfrac{1}{n-1} - \dfrac{1}{n}\)。
+而 \(\sum\limits_{n = 2}^{  \infty } \left(\dfrac{1}{n-1} - \dfrac{1}{n}\right) = 1\) 收敛，故 \(\sum\limits_{n = 1}^{  \infty } \dfrac{1}{n^2}\) 收敛。
+
+% SOURCE-END U0036
+}
+\end{frame}
+% FRAME-ID F039
+\begin{frame}[t,fragile]{正项级数及其判别法}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0037 0 83
+
+\[
+\sum_{n=1}^{\infty} \dfrac{1}{n^p}
+\]
+当 \(p > 1\) 时收敛，当 \(p \leq 1\) 时发散。
+
+% SOURCE-END U0037
+}
+\end{block}
+\end{frame}
+% FRAME-ID F040
+\begin{frame}[t,fragile]{正项级数及其判别法}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0038 0 473
+\begin{custom}{证明}
+先设 $p>1$。 将 $n\ge2$ 的项按
+\[
+2^k\le n\le 2^{k+1}-1\qquad(k=0,1,2,\ldots)
+\]
+分组。 在第 $k$ 组中共有 $2^k$ 项，且每项不超过 $1/(2^k)^p$，故该组和不超过
+\[
+2^k\cdot \frac{1}{(2^k)^p}=2^{k(1-p)}.
+\]
+因为 $p>1$，几何级数 $\sum\limits_{k = 0}^{  \infty }2^{k(1-p)}$ 收敛，由比较判别法知 $\sum\limits_{n = 1}^{  \infty } 1/n^p$ 收敛。
+
+若 $p=1$，得到调和级数，前文已经证明其发散。 若 $p<1$，则对 $n\ge1$ 有 $n^p\le n$，从而
+\[
+\frac1{n^p}\ge \frac1n.
+\]
+由比较判别法，$\sum\limits_{n = 1}^{  \infty } 1/n^p$ 发散。
+\end{custom}
+% SOURCE-END U0038
+}
+\end{frame}
+% FRAME-ID F041
+\begin{frame}[t,fragile]{正项级数及其判别法}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0039 0 84
+\(p=1\) 是调和级数，发散；\(p=2\) 收敛；\(p=0.5\) 的项比调和级数对应项更大，因而其部分和增长得更快。参数 \(p\) 越大，通项衰减越快。
+
+% SOURCE-END U0039
+}
+\end{frame}
+% FRAME-ID F042
+\begin{frame}[t,fragile]{正项级数及其判别法}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0040 0 257
+
+设 \(\sum\limits_{n = 1}^{  \infty }a_n\) 为正项级数，若 \(\lim\limits_{n\to\infty}\dfrac{a_{n+1}}{a_n}=\rho\)，则
+\begin{itemize}
+\item 若 \(\rho < 1\)，级数收敛；
+\item 若 \(\rho > 1\)（包括 \(\rho = +\infty\)），级数发散；
+\item 若 \(\rho = 1\)，判别法失效，需用其他方法判断。
+\end{itemize}
+
+% SOURCE-END U0040
+}
+\end{block}
+\end{frame}
+% FRAME-ID F043
+\begin{frame}[t,fragile]{正项级数及其判别法}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0041 0 647
+\begin{custom}{证明}
+若 $\rho<1$，取常数 $r$ 使 $\rho<r<1$。 由极限定义，存在 $N$，当 $n\ge N$ 时
+\[
+\frac{a_{n+1}}{a_n}\le r.
+\]
+于是
+\[
+a_{N+k}\le a_N r^k\qquad(k=1,2,\ldots).
+\]
+尾级数 $\sum\limits_{k = 1}^{  \infty }a_N r^k$ 是收敛的几何级数，由比较判别法，$\sum\limits_{n = 1}^{  \infty } a_n$ 收敛。
+
+若 $\rho>1$，取 $r$ 使 $1<r<\rho$。 则存在 $N$，当 $n\ge N$ 时
+\[
+\frac{a_{n+1}}{a_n}\ge r>1.
+\]
+因此 $a_{n+1}\ge a_n$ 对充分大的 $n$ 成立，且 $a_n$ 不可能趋于 $0$。 由级数收敛的必要条件，$\sum\limits_{n = 1}^{  \infty } a_n$ 发散。 当 $\rho=+\infty$ 时同理可取任意 $r>1$。
+
+当 $\rho=1$ 时，该方法不能给出结论。 例如 $\sum\limits_{n = 1}^{  \infty } 1/n$ 发散而 $\sum\limits_{n = 1}^{  \infty } 1/n^2$ 收敛，二者的相邻项比值极限都为 $1$。
+\end{custom}
+% SOURCE-END U0041
+}
+\end{frame}
+% FRAME-ID F044
+\begin{frame}[t,fragile]{正项级数及其判别法}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0042 0 91
+比值判别法的道理是：如果相邻两项的比值趋于一个小于 1 的数，那么级数的项最终会像一个公比小于 1 的几何级数那样衰减，从而收敛；如果比值趋于大于 1，则项会越来越大，级数发散。
+
+% SOURCE-END U0042
+}
+\end{frame}
+% FRAME-ID F045
+\begin{frame}[t,fragile]{正项级数及其判别法}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0043 0 64
+判断级数 \(\sum\limits_{n = 1}^{  \infty } \dfrac{2^n}{n!}\) 的敛散性。
+
+% SOURCE-END U0043
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0044 0 120
+\[
+\dfrac{a_{n+1}}{a_n} = \dfrac{2^{n+1}}{(n+1)!} \cdot \dfrac{n!}{2^n} = \dfrac{2}{n+1} \to 0 < 1,
+\]
+由比值判别法，级数收敛。
+
+% SOURCE-END U0044
+}
+\end{frame}
+% FRAME-ID F046
+\begin{frame}[t,fragile]{正项级数及其判别法}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0045 0 245
+
+设 \(\sum\limits_{n = 1}^{  \infty } a_n\) 为正项级数，且 \(\lim\limits_{n\to\infty} \sqrt[n]{a_n} = \rho\)，则
+\begin{itemize}
+\item 若 \(\rho < 1\)，级数收敛；
+\item 若 \(\rho > 1\)（包括 \(\rho = +\infty\)），级数发散；
+\item 若 \(\rho = 1\)，判别法失效。
+\end{itemize}
+
+% SOURCE-END U0045
+}
+\end{block}
+\end{frame}
+% FRAME-ID F047
+\begin{frame}[t,fragile]{正项级数及其判别法}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0046 0 541
+\begin{custom}{证明}
+若 $\rho<1$，取 $r$ 使 $\rho<r<1$。 由极限定义，存在 $N$，当 $n\ge N$ 时
+\[
+\sqrt[n]{a_n}\le r,
+\]
+即 $a_n\le r^n$。 因 $\sum\limits_{n = 1}^{  \infty } r^n$ 收敛，由比较判别法知 $\sum\limits_{n = 1}^{  \infty } a_n$ 收敛。
+
+若 $\rho>1$，取 $r$ 使 $1<r<\rho$。 则存在 $N$，当 $n\ge N$ 时
+\[
+\sqrt[n]{a_n}\ge r,
+\]
+从而 $a_n\ge r^n>1$。 因此 $a_n$ 不趋于 $0$，由级数收敛的必要条件，$\sum\limits_{n = 1}^{  \infty } a_n$ 发散。 $\rho=+\infty$ 的情形同理。
+
+当 $\rho=1$ 时，该判别法不能区分 $\sum\limits_{n = 1}^{  \infty } 1/n$ 与 $\sum\limits_{n = 1}^{  \infty } 1/n^2$ 这类情形，因此失效。
+\end{custom}
+% SOURCE-END U0046
+}
+\end{frame}
+% FRAME-ID F048
+\begin{frame}[t,fragile]{正项级数及其判别法}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0047 0 79
+判断级数 \(\sum\limits_{n = 1}^{  \infty } \left(\dfrac{n}{2n+1}\right)^n\) 的敛散性。
+
+% SOURCE-END U0047
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0048 0 107
+\[
+\sqrt[n]{a_n} = \dfrac{n}{2n+1} = \dfrac{1}{2 + \dfrac{1}{n}} \to \dfrac{1}{2} < 1,
+\]
+由根值判别法，级数收敛。
+
+% SOURCE-END U0048
+}
+\end{frame}
+\section{任意项级数的敛散性及其判别法}
+% FRAME-ID F049
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{black}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{black}\normalsize 2. 级数概念的引入\par}\vspace{0.3em}
+{\color{black}\normalsize 3. 级数的基本概念\par}\vspace{0.3em}
+{\color{black}\normalsize 4. 几何级数\par}\vspace{0.3em}
+{\color{black}\normalsize 5. 级数的基本性质\par}\vspace{0.3em}
+{\color{black}\normalsize 6. 正项级数及其判别法\par}\vspace{0.3em}
+{\color{blue}\normalsize 7. 任意项级数的敛散性及其判别法\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 8. 判别法小结\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F050
+\begin{frame}[t,fragile]{任意项级数的敛散性及其判别法}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0049 0 102
+
+	若级数 \(\sum\limits_{n = 1}^{  \infty } |a_n|\) 收敛，则称 \(\sum\limits_{n = 1}^{  \infty } a_n\) 绝对收敛。
+
+% SOURCE-END U0049
+}
+\end{block}
+\end{frame}
+% FRAME-ID F051
+\begin{frame}[t,fragile]{任意项级数的敛散性及其判别法}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0050 0 145
+
+	若 \(\sum\limits_{n = 1}^{  \infty } a_n\) 收敛，但 \(\sum\limits_{n = 1}^{  \infty } |a_n|\) 发散，则称 \(\sum\limits_{n = 1}^{  \infty } a_n\) 条件收敛。
+
+% SOURCE-END U0050
+}
+\end{block}
+\end{frame}
+% FRAME-ID F052
+\begin{frame}[t,fragile]{任意项级数的敛散性及其判别法}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0051 0 111
+
+	绝对收敛的级数一定收敛。即若 \(\sum\limits_{n = 1}^{  \infty } |a_n|\) 收敛，则 \(\sum\limits_{n = 1}^{  \infty } a_n\) 必收敛。
+
+% SOURCE-END U0051
+}
+\end{block}
+\end{frame}
+% FRAME-ID F053
+\begin{frame}[t,fragile]{任意项级数的敛散性及其判别法}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0052 0 483
+\begin{custom}{证明}
+	定义
+	\[
+	a_n^+=\frac{|a_n|+a_n}{2},\qquad a_n^-=\frac{|a_n|-a_n}{2}.
+	\]
+	则 $a_n^+\ge0,\ a_n^-\ge0$，且
+	\[
+	a_n=a_n^+-a_n^-,\qquad 0\le a_n^+\le |a_n|,\quad 0\le a_n^-\le |a_n|.
+	\]
+	若 $\sum\limits_{n = 1}^{  \infty } |a_n|$ 收敛，由比较判别法，正项级数 $\sum\limits_{n = 1}^{  \infty } a_n^+$ 与 $\sum\limits_{n = 1}^{  \infty } a_n^-$ 都收敛。 由级数线性性质，
+	\[
+	\sum_{n=1}^{\infty} a_n=\sum_{n=1}^{\infty} a_n^+-\sum_{n=1}^{\infty} a_n^-
+	\]
+	收敛。 因此绝对收敛必推出收敛。
+\end{custom}
+% SOURCE-END U0052
+}
+\end{frame}
+% FRAME-ID F054
+\begin{frame}[t,fragile]{任意项级数的敛散性及其判别法}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0053 0 206
+\begin{itemize}
+		\item \textbf{绝对收敛：} 无论你把所有项都取正（去掉符号），总和仍然是有限的。这类级数最“乖”，可以随意重排顺序而不改变和。
+		\item \textbf{条件收敛：} 你之所以能得到有限的和，完全是因为正负项互相抵消。如果把所有项都取正，总和就会变成无穷大。这类级数很“敏感”，重排顺序可能会改变和（甚至变成发散）。
+	\end{itemize}
+
+% SOURCE-END U0053
+}
+\end{frame}
+% FRAME-ID F055
+\begin{frame}[t,fragile]{任意项级数的敛散性及其判别法}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0054 0 310
+\begin{itemize}
+		\item 级数 \(\sum\limits_{n = 1}^{  \infty } \dfrac{(-1)^{n-1}}{n^2}\) 绝对收敛，因为 \(\sum\limits_{n = 1}^{  \infty } \dfrac{1}{n^2}\) 收敛。
+		\item 交错调和级数 \(\sum\limits_{n = 1}^{  \infty } \dfrac{(-1)^{n-1}}{n}\) 条件收敛，因为它本身收敛，但 \(\sum\limits_{n = 1}^{  \infty } \dfrac{1}{n}\) 发散。
+	\end{itemize}
+
+% SOURCE-END U0054
+}
+\end{block}
+\end{frame}
+% FRAME-ID F056
+\begin{frame}[t,fragile]{任意项级数的敛散性及其判别法}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0055 0 96
+条件收敛是一个相当微妙的概念。一个著名的定理（黎曼重排定理）说：条件收敛的级数，可以通过重排使其收敛到任意实数，甚至发散！这再次提醒我们，无穷级数中的“加法”与有限和的加法有着本质的不同。
+
+% SOURCE-END U0055
+}
+\end{frame}
+% FRAME-ID F057
+\begin{frame}[t,fragile]{任意项级数的敛散性及其判别法}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0056 0 112
+
+$b_n > 0$,形如
+\[
+\sum_{n=1}^{\infty} (-1)^{n-1} b_n = b_1 - b_2 + b_3 - b_4 + \cdots \quad 
+\]
+的级数称为交错级数。
+
+% SOURCE-END U0056
+}
+\end{block}
+\end{frame}
+% FRAME-ID F058
+\begin{frame}[t,fragile]{任意项级数的敛散性及其判别法}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0057 0 282
+
+若交错级数 \(\sum_{n=1}^{\infty} (-1)^{n-1} b_n\) 满足：
+\begin{enumerate}
+\item \(b_n\) 单调递减,即 \(b_1 \geq b_2 \geq b_3 \geq \cdots\)；
+\item \(\lim\limits_{n\to\infty} b_n = 0\)，
+\end{enumerate}
+则级数收敛，且其和 \(S\) 满足 \(\boxed{0\leq S\leq b_1}\)，余项满足
+\[
+\boxed{|R_n|\le b_{n+1}}.
+\]
+
+% SOURCE-END U0057
+}
+\end{block}
+\end{frame}
+% FRAME-ID F059
+\begin{frame}[t,fragile]{任意项级数的敛散性及其判别法}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0058 0 722
+\begin{custom}{证明}
+记部分和为 $S_n=\sum\limits_{k=1}^{n}(-1)^{k-1}b_k$。 偶数项部分和满足
+\[
+S_{2m+2}-S_{2m}=b_{2m+1}-b_{2m+2}\ge0,
+\]
+故 $\{S_{2m}\}$ 单调递增。 又
+\[
+S_{2m}=(b_1-b_2)+\cdots+(b_{2m-1}-b_{2m})\ge0,
+\]
+且
+\[
+S_{2m}=b_1-(b_2-b_3)-\cdots-(b_{2m-2}-b_{2m-1})-b_{2m}\le b_1.
+\]
+因此 $\{S_{2m}\}$ 单调有界，设其极限为 $S$。
+
+奇数项部分和满足
+\[
+S_{2m+1}=S_{2m}+b_{2m+1}.
+\]
+因 $b_{2m+1}\to0$，得 $S_{2m+1}\to S$。 偶数子列和奇数子列趋于同一极限，所以 $S_n\to S$，级数收敛。 由 $0\le S_{2m}\le S\le S_{2m+1}\le b_1$ 可得 $0\le S\le b_1$。 若进一步假设 $b_n>0$ 且严格单调递减，则可进一步得到 $0<S<b_1$。
+
+余项估计来自同样的夹逼。 从第 $n+1$ 项起的尾和是首项为 $b_{n+1}$、项的绝对值单调趋零的交错和，其值位于 $0$ 与首项之间或二者相反数之间，所以
+\[
+|R_n|\le b_{n+1}.
+\]
+若进一步假设 $b_n>0$ 且严格单调递减，则可进一步得到 $|R_n|<b_{n+1}$；主定理统一采用非严格估计。
+\end{custom}
+% SOURCE-END U0058
+}
+\end{frame}
+% FRAME-ID F060
+\begin{frame}[t,fragile]{任意项级数的敛散性及其判别法}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0059 0 118
+交错级数像一个人在左右摇摆：第一步向右走 \(b_1\)，第二步向左走 \(b_2\)，第三步向右走 \(b_3\)……如果每一步的步长越来越小（单调递减），并且最终步长趋近于零，那么这个人会逐渐稳定在一个点上，而不会无限摇摆下去。
+
+% SOURCE-END U0059
+}
+\end{frame}
+% FRAME-ID F061
+\begin{frame}[t,fragile]{任意项级数的敛散性及其判别法}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0060 0 117
+判断交错调和级数 \(\sum\limits_{n=1}^{\infty} (-1)^{n-1} \dfrac{1}{n} = 1 - \dfrac12 + \dfrac13 - \dfrac14 + \cdots\) 的敛散性。
+
+% SOURCE-END U0060
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0061 0 156
+这里 \(b_n = \dfrac{1}{n}\) 单调递减趋于 0，满足莱布尼茨判别法的条件，故级数收敛。
+
+值得注意的是：调和级数 \(\sum \limits_{n=1}^{\infty}\dfrac{1}{n}\) 是发散的，但给它加上交错符号后却收敛了。这说明正负交替可以“抵消”掉部分发散性。
+
+% SOURCE-END U0061
+}
+\end{frame}
+\section{判别法小结}
+% FRAME-ID F062
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{black}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{black}\normalsize 2. 级数概念的引入\par}\vspace{0.3em}
+{\color{black}\normalsize 3. 级数的基本概念\par}\vspace{0.3em}
+{\color{black}\normalsize 4. 几何级数\par}\vspace{0.3em}
+{\color{black}\normalsize 5. 级数的基本性质\par}\vspace{0.3em}
+{\color{black}\normalsize 6. 正项级数及其判别法\par}\vspace{0.3em}
+{\color{black}\normalsize 7. 任意项级数的敛散性及其判别法\par}\vspace{0.3em}
+{\color{blue}\normalsize 8. 判别法小结\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F063
+\begin{frame}[t,fragile]{判别法小结}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0062 0 319
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{判别法} & \textbf{适用类型} & \textbf{结论} \\
+\hline
+比较判别法 & 正项级数 & 需已知一个比较级数 \\
+\hline
+比值判别法 & 正项级数（含阶乘、指数） & \(\rho < 1\) 收敛，\(\rho > 1\) 发散 \\
+\hline
+根值判别法 & 正项级数（含 \(n\) 次幂） & \(\rho < 1\) 收敛，\(\rho > 1\) 发散 \\
+\hline
+莱布尼茨判别法 & 交错级数 & 单调递减趋于 0 则收敛 \\
+\hline
+\end{tabular}
+% SOURCE-END U0062
+}
+\end{frame}
+% FRAME-ID F064
+\begin{frame}[t,fragile]{判别法小结}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0063 0 818
+\begin{application}[几何级数在金融中的运用：永续年金]
+
+假设你有一笔资金存入银行，希望每年年末都能领取固定金额 \(A\) 元，且本金永不减少（即每年只领取利息，本金保持不变）。设年利率为 \(i>0\)，问最初需要存入多少本金？
+
+\textbf{分析：}
+\begin{itemize}
+\item 要保证每年年末领取 \(A\) 元，第一年末领取的 \(A\) 元来源于本金的利息。
+\item 更一般的思路是：将未来每年领取的 \(A\) 元折算到当前，其现值之和应等于最初存入的本金。
+\item 第 \(k\) 年末领取的 \(A\) 元，折现到当前的价值为 \(\dfrac{A}{(1+i)^k}\)。
+\end{itemize}
+
+因此，最初需要存入的本金为：
+\[
+P = \frac{A}{1+i} + \frac{A}{(1+i)^2} + \frac{A}{(1+i)^3} + \cdots
+\]
+
+这是一个首项 \(a=\dfrac{A}{1+i}\)、公比 \(q=\dfrac{1}{1+i}\) 的几何级数。由于 \(0<q<1\)，级数收敛，其和为：
+\[
+P=\frac{\frac{A}{1+i}}{1-\frac{1}{1+i}}
+=\frac{A}{1+i}\cdot\frac{1+i}{i}
+=\frac{A}{i}.
+\]
+
+\textbf{结论：} 永续年金的现值公式为 \(P=\dfrac{A}{i}\)。例如，若年利率为 \(5\%\)，希望每年末领取 10000 元，则最初需要存入 \(P=\dfrac{10000}{0.05}=200000\) 元。
+
+\textbf{注：} 这个公式在养老金设计、 endowment fund（捐赠基金）等场景中广泛应用。
+\end{application}
+% SOURCE-END U0063
+}
+\end{frame}
+% FRAME-ID F065
+\begin{frame}[t,fragile]{判别法小结}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0064 0 1138
+\begin{application}[几何级数在医学中的运用：药物浓度累积]
+
+下面使用一个简化的单室、线性叠加模型说明几何级数。假设每次给药带来的浓度增量相同，药物浓度按指数规律衰减：经过时间 \(\Delta t\) 后，单次给药所贡献的浓度降至原来的 \(\ee^{-k\Delta t}\) 倍。
+
+设每次注射后体内药物的初始浓度为 \(C_0\)，每隔时间 \(T\) 注射一次。则：
+\begin{itemize}
+\item 第一次注射后，体内药物浓度为 \(C_0\)。
+\item 第二次注射前，第一次注射的药物浓度已衰减为 \(C_0\ee^{-kT}\)。第二次注射后，模型给出的峰浓度为 \(C_0+C_0\ee^{-kT}\)。
+\item 第三次注射前，前两次的药物浓度分别衰减为 \(C_0\ee^{-2kT}\) 和 \(C_0\ee^{-kT}\)。第三次注射后的峰浓度为 \(C_0+C_0\ee^{-kT}+C_0\ee^{-2kT}\)。
+\item 依此类推，第 \(n\) 次注射后的模型峰浓度为：
+\[
+C_n=C_0\left(1+\ee^{-kT}+\ee^{-2kT}+\cdots+\ee^{-(n-1)kT}\right).
+\]
+\end{itemize}
+
+这是一个首项为 \(C_0\)、公比为 \(\ee^{-kT}\) 的几何级数部分和。由于 \(0<\ee^{-kT}<1\)，当 \(n\to\infty\) 时，给药后峰浓度趋于稳态峰值：
+\[
+C_{\infty}=\lim_{n\to\infty}C_n=\frac{C_0}{1-\ee^{-kT}}.
+\]
+
+\textbf{模型说明：} 该公式只展示重复给药的累积效应，不能直接用于确定临床剂量。实际的负荷剂量与维持剂量还取决于目标浓度、分布容积、清除率、生物利用度和给药间隔等，并需由专业人员结合患者情况确定。\upcite{NCBISteadyState} 例如，若一个给药间隔恰好等于半衰期，即 \(\ee^{-kT}=1/2\)，则本模型中的稳态峰值是单次给药初始峰值的 \(1/(1-0.5)=2\) 倍。
+
+\textbf{一个小计算：} 若模型中每次给药带来的初始浓度增量为 \(10\,\text{mg/L}\)，每 8 小时给药一次，且 \(\ee^{-8k}=0.6\)，则稳态峰值为：
+\[
+C_{\infty} = \frac{10}{1 - 0.6} = \frac{10}{0.4} = 25\,\text{mg/L}.
+\]
+\end{application}
+% SOURCE-END U0064
+}
+\end{frame}
+% FRAME-ID F066
+\begin{frame}[t,fragile]{判别法小结}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0065 0 305
+\begin{application}[工程：多次反射与信号衰减]
+设初始信号能量为 $E_0$，每经过一次反射后保留固定比例 $r$，其中 $0<r<1$。若各级反射分量在接收端按能量相加，则总贡献为
+\[
+E=E_0+E_0r+E_0r^2+\cdots
+=\frac{E_0}{1-r}.
+\]
+若 $E_0=2\ \mathrm{mJ}$、$r=0.3$，则 $E=20/7\ \mathrm{mJ}$。这一几何级数结构可用于理解声学回声、光学多次反射或通信中的重复衰减分量。模型忽略了相位干涉、频率依赖和随传播路径变化的衰减，因此只用于说明级数累积。
+\end{application}
+% SOURCE-END U0065
+}
+\end{frame}
+\end{document}
