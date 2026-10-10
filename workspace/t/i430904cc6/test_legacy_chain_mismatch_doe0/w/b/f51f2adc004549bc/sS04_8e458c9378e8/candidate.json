@@ -1,0 +1,70 @@
+{
+  "section_id": "S04",
+  "units": [
+    {
+      "id": "S04.U01",
+      "kind": "definition",
+      "tex": "\\label{def:monotone-sequence}设 $\\{a_n\\}$ 是实数数列。若对所有正整数 $n$ 都有 $a_{n+1}\\geq a_n$，则称 $\\{a_n\\}$ 为单调递增数列；若对所有正整数 $n$ 都有 $a_{n+1}>a_n$，则称其为严格递增数列。若对所有正整数 $n$ 都有 $a_{n+1}\\leq a_n$，则称 $\\{a_n\\}$ 为单调递减数列；若对所有正整数 $n$ 都有 $a_{n+1}<a_n$，则称其为严格递减数列。单调递增或单调递减的数列统称为单调数列。",
+      "relates_to": null
+    },
+    {
+      "id": "S04.U02",
+      "kind": "definition",
+      "tex": "\\label{def:bounded-sequence}设 $\\{a_n\\}$ 是实数数列。若存在实数 $M$，使得对所有正整数 $n$ 都有 $a_n\\leq M$，则称 $\\{a_n\\}$ 有上界；若存在实数 $m$，使得对所有正整数 $n$ 都有 $m\\leq a_n$，则称 $\\{a_n\\}$ 有下界。若同时存在实数 $m,M$，使得对所有正整数 $n$ 都有 $m\\leq a_n\\leq M$，则称 $\\{a_n\\}$ 有界。等价地，若存在常数 $C>0$，使得对所有正整数 $n$ 都有 $|a_n|\\leq C$，则 $\\{a_n\\}$ 有界。",
+      "relates_to": null
+    },
+    {
+      "id": "S04.U03",
+      "kind": "theorem",
+      "tex": "\\label{thm:monotone-bounded}单调有界原理：若实数数列 $\\{a_n\\}$ 单调递增且有上界，则 $\\{a_n\\}$ 收敛；若 $\\{a_n\\}$ 单调递减且有下界，则 $\\{a_n\\}$ 收敛。",
+      "relates_to": null
+    },
+    {
+      "id": "S04.U04",
+      "kind": "proof",
+      "tex": "先考虑单调递增且有上界的情形。设数列的所有项组成的集合为 $A=\\{a_n:n\\in\\mathbb{N}^{+}\\}$。由于 $A$ 非空且有上界，令 $L=\\sup A$。任给 $\\varepsilon>0$，由上确界的性质，$L-\\varepsilon$ 不是 $A$ 的上界，因此存在正整数 $N$，使得 $a_N>L-\\varepsilon$。当 $n\\geq N$ 时，由数列单调递增，有 $L-\\varepsilon<a_N\\leq a_n\\leq L$。于是 $|a_n-L|<\\varepsilon$。根据数列收敛的 $\\varepsilon$--$N$ 定义，$a_n\\to L$。再考虑单调递减且有下界的情形。令 $B=\\{a_n:n\\in\\mathbb{N}^{+}\\}$，并令 $L=\\inf B$。任给 $\\varepsilon>0$，由下确界的性质，存在正整数 $N$，使得 $a_N<L+\\varepsilon$。当 $n\\geq N$ 时，由数列单调递减，有 $L\\leq a_n\\leq a_N<L+\\varepsilon$。因此 $|a_n-L|<\\varepsilon$，从而 $a_n\\to L$。",
+      "relates_to": "S04.U03"
+    },
+    {
+      "id": "S04.U05",
+      "kind": "theorem",
+      "tex": "\\label{thm:recursive-limit-method}设 $0<q<1$，$L\\in\\mathbb{R}$，并由 $a_{n+1}=q a_n+(1-q)L$，$n\\in\\mathbb{N}^{+}$，定义实数数列 $\\{a_n\\}$。若 $a_1\\leq L$，则 $\\{a_n\\}$ 单调递增且有上界 $L$，因而收敛于 $L$；若 $a_1\\geq L$，则 $\\{a_n\\}$ 单调递减且有下界 $L$，因而也收敛于 $L$。",
+      "relates_to": null
+    },
+    {
+      "id": "S04.U06",
+      "kind": "proof",
+      "tex": "先设 $a_1\\leq L$。用数学归纳法证明对所有正整数 $n$ 都有 $a_n\\leq L$。当 $n=1$ 时结论成立。若 $a_n\\leq L$，则由 $0<q<1$ 得 $a_{n+1}=q a_n+(1-q)L\\leq qL+(1-q)L=L$。所以 $a_n\\leq L$ 对所有正整数 $n$ 成立。接着，由递推关系可得 $a_{n+1}-a_n=q a_n+(1-q)L-a_n=(1-q)(L-a_n)\\geq0$。因此数列单调递增，并且由上面的归纳结论知它有上界 $L$。根据定理 \\ref{thm:monotone-bounded}，数列收敛。设其极限为 $A$。由递推关系和极限的四则运算法则，得到 $A=qA+(1-q)L$。于是 $(1-q)A=(1-q)L$。因为 $1-q\\neq0$，所以 $A=L$。当 $a_1\\geq L$ 时，同理用归纳法可得 $a_n\\geq L$ 对所有正整数 $n$ 成立，且 $a_{n+1}-a_n=(1-q)(L-a_n)\\leq0$。因此数列单调递减且有下界 $L$。再次由定理 \\ref{thm:monotone-bounded}，数列收敛。设极限为 $A$，代入递推关系仍有 $A=qA+(1-q)L$，从而 $A=L$。这里先证明了收敛，之后才可以把极限代入递推关系。",
+      "relates_to": "S04.U05"
+    },
+    {
+      "id": "S04.U07",
+      "kind": "example",
+      "tex": "某商品的价格每期向长期均衡价格调整。设均衡价格为 $40$，初始价格为 $a_1=0$，每期将当前价格与均衡价格之间差距的 $1/2$ 消除，得到递推关系 $a_{n+1}=\\frac12a_n+20$，$n\\in\\mathbb{N}^{+}$。求价格数列的极限，并说明其单调性和有界性。",
+      "relates_to": null
+    },
+    {
+      "id": "S04.U08",
+      "kind": "solution",
+      "tex": "将递推关系写成 $a_{n+1}=\\frac12a_n+\\left(1-\\frac12\\right)40$。这里 $q=1/2$，满足 $0<q<1$，且 $a_1=0\\leq40$。由定理 \\ref{thm:recursive-limit-method}，数列 $\\{a_n\\}$ 单调递增并且有上界 $40$，因此收敛，且 $\\lim_{n\\to\\infty}a_n=40$。也可以直接检查前几步：$a_2=20$，$a_3=30$，$a_4=35$，价格逐期接近 $40$。这些数值只能帮助理解趋势，不能代替对所有正整数 $n$ 的归纳证明。经济含义是：在该调整规则下，价格不会超过均衡价格，并且会逐步接近均衡价格。",
+      "relates_to": "S04.U07"
+    },
+    {
+      "id": "S04.U09",
+      "kind": "exercise",
+      "tex": "设数列 $\\{a_n\\}$ 由 $a_1=10$，$a_{n+1}=\\frac12a_n+15$，$n\\in\\mathbb{N}^{+}$，确定。证明该数列单调递增且有上界，进而求其极限。要求明确写出归纳步骤、单调性证明、有界性证明以及求极限时所列出的方程。",
+      "relates_to": null
+    },
+    {
+      "id": "S04.U10",
+      "kind": "solution",
+      "tex": "先证明对所有正整数 $n$ 都有 $a_n\\leq30$。当 $n=1$ 时，$a_1=10\\leq30$。若 $a_n\\leq30$，则 $a_{n+1}=\\frac12a_n+15\\leq\\frac12\\cdot30+15=30$。由数学归纳法，得到 $a_n\\leq30$，$n\\in\\mathbb{N}^{+}$。所以数列有上界 $30$。再由递推关系计算相邻两项之差：$a_{n+1}-a_n=\\frac12a_n+15-a_n=\\frac12(30-a_n)\\geq0$。因此 $\\{a_n\\}$ 单调递增。数列单调递增且有上界，根据定理 \\ref{thm:monotone-bounded}，它收敛。设 $\\lim_{n\\to\\infty}a_n=A$。由于已经证明数列收敛，才可以在递推关系中取极限，得到 $A=\\frac12A+15$。所以 $\\frac12A=15$，$A=30$。因此 $\\lim_{n\\to\\infty}a_n=30$。",
+      "relates_to": "S04.U09"
+    }
+  ],
+  "calculations": [],
+  "calculation_limitations": [
+    "本节结论主要涉及递推数列的归纳、有界性与单调性证明，以及由单调有界原理推出收敛。协议支持的表达式树和核算类型不能表达这些全称量词、递推关系与不等式链，因此未提交符号核算。"
+  ],
+  "uncertainties": []
+}

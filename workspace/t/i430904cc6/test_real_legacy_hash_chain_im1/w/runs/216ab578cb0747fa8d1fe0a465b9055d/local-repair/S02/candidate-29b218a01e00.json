@@ -1,0 +1,333 @@
+{
+  "section_id": "S02",
+  "units": [
+    {
+      "id": "S02.U01",
+      "kind": "explanation",
+      "tex": "本节中的级数均为实数项级数，下标从 $1$ 开始。根据定义 \\ref{def:convergence}，判断级数收敛必须考察部分和，而不能只考察通项。以下先从部分和的极限推出通项必须满足的条件，再讨论已经收敛的级数可以进行哪些运算。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U02",
+      "kind": "theorem",
+      "tex": "\\label{thm:term-test}若实数项级数 $\\sum_{n=1}^{\\infty}a_n$ 收敛，则 $\\lim_{n\\to\\infty}a_n=0$。因此，若通项的极限不存在或不等于零，则该级数发散。通项趋于零只是级数收敛的必要条件，不是充分条件。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U03",
+      "kind": "proof",
+      "tex": "设 $S_n=\\sum_{k=1}^{n}a_k$，且级数收敛于 $S\\in\\mathbb{R}$。对每个整数 $n\\geq2$，有\n\\[\na_n=S_n-S_{n-1}.\n\\]\n由 $S_n\\to S$ 可知 $S_{n-1}\\to S$，故由数列极限的运算法则，\n\\[\n\\lim_{n\\to\\infty}a_n=S-S=0.\n\\]\n其逆否命题给出上述发散判断。下面的调和级数例题将证明，通项趋于零不足以保证级数收敛。",
+      "relates_to": "S02.U02"
+    },
+    {
+      "id": "S02.U04",
+      "kind": "example",
+      "tex": "判断下列级数的敛散性，并说明必要条件在判断中起什么作用：\n\\[\n\\text{(1)}\\quad\\sum_{n=1}^{\\infty}c\\quad(c\\in\\mathbb{R});\\qquad\n\\text{(2)}\\quad\\sum_{n=1}^{\\infty}\\frac{n}{n+1};\\qquad\n\\text{(3)}\\quad\\sum_{n=1}^{\\infty}(-1)^{n-1}.\n\\]",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U05",
+      "kind": "solution",
+      "tex": "(1) 部分和为 $S_n=nc$。当 $c=0$ 时，所有部分和都为零，级数收敛且和为零；当 $c\\neq0$ 时，通项极限为 $c\\neq0$，由定理 \\ref{thm:term-test}，级数发散。此时部分和在 $c>0$ 时趋于 $+\\infty$，在 $c<0$ 时趋于 $-\\infty$。\n\n(2) 对正整数 $n$，有\n\\[\n\\frac{n}{n+1}=1-\\frac{1}{n+1}\\longrightarrow1.\n\\]\n通项不趋于零，所以级数发散。\n\n(3) 通项在 $1$ 与 $-1$ 之间交替，极限不存在，所以级数发散。也可直接观察：$S_{2m}=0$，$S_{2m-1}=1$，其中 $m$ 为任意正整数，故部分和没有极限。可见，级数发散并不一定表现为部分和趋于无穷。",
+      "relates_to": "S02.U04"
+    },
+    {
+      "id": "S02.U06",
+      "kind": "example",
+      "tex": "调和级数 $\\sum_{n=1}^{\\infty}1/n$ 的通项趋于零。仅利用部分和和有限项不等式，证明它仍然发散。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U07",
+      "kind": "solution",
+      "tex": "记 $H_n=\\sum_{k=1}^{n}1/k$。对任意正整数 $j$，从 $k=2^{j-1}+1$ 到 $k=2^j$ 共含 $2^{j-1}$ 项，每项至少为 $1/2^j$，所以\n\\[\n\\sum_{k=2^{j-1}+1}^{2^j}\\frac1k\\geq\\frac{2^{j-1}}{2^j}=\\frac12.\n\\]\n因此，对每个正整数 $m$，\n\\[\nH_{2^m}=1+\\sum_{j=1}^{m}\\sum_{k=2^{j-1}+1}^{2^j}\\frac1k\n\\geq1+\\frac m2.\n\\]\n右端随 $m$ 增大而无界，故部分和数列无界，不可能收敛于有限实数。调和级数发散。这里分组的对象始终是有限部分和，并未对尚未确定收敛的无穷和进行运算。\n\n另一方面，$\\lim_{n\\to\\infty}1/n=0$。这就给出了“通项趋于零但级数发散”的反例。实际解题时，通项趋于零意味着必要条件未能排除收敛，而不是已经证明收敛。",
+      "relates_to": "S02.U06"
+    },
+    {
+      "id": "S02.U08",
+      "kind": "theorem",
+      "tex": "\\label{thm:linearity}设实数项级数 $\\sum_{n=1}^{\\infty}a_n=A$ 和 $\\sum_{n=1}^{\\infty}b_n=B$ 均收敛。对任意实常数 $\\alpha,\\beta$，级数 $\\sum_{n=1}^{\\infty}(\\alpha a_n+\\beta b_n)$ 收敛，且\n\\[\n\\sum_{n=1}^{\\infty}(\\alpha a_n+\\beta b_n)=\\alpha A+\\beta B.\n\\]",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U09",
+      "kind": "proof",
+      "tex": "令 $A_n=\\sum_{k=1}^{n}a_k$，$B_n=\\sum_{k=1}^{n}b_k$。由有限和的运算法则，组合级数的第 $n$ 个部分和为\n\\[\nC_n=\\sum_{k=1}^{n}(\\alpha a_k+\\beta b_k)=\\alpha A_n+\\beta B_n.\n\\]\n已知 $A_n\\to A$、$B_n\\to B$，所以 $C_n\\to\\alpha A+\\beta B$。由定理 \\ref{thm:series-limit} 得到结论。",
+      "relates_to": "S02.U08"
+    },
+    {
+      "id": "S02.U10",
+      "kind": "explanation",
+      "tex": "线性运算定理的前提是两个级数都收敛。不能把发散级数当作实数相减。例如，$\\sum_{n=1}^{\\infty}1$ 与 $\\sum_{n=1}^{\\infty}(-1)$ 都发散，但逐项相加后得到的零级数收敛；这并不是两个级数的和相加，因为原来两个级数都没有有限的和。\n\n若一个级数收敛、另一个发散，则它们逐项相加的级数必发散。否则，假设相加后收敛，再减去原来收敛的级数，由定理 \\ref{thm:linearity} 将推出另一个级数也收敛，产生矛盾。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U11",
+      "kind": "definition",
+      "tex": "\\label{def:remainder}设 $\\sum_{k=1}^{\\infty}a_k$ 收敛且和为 $S$，部分和为 $S_n$。对每个正整数 $n$，定义第 $n$ 个余项为\n\\[\nR_n=S-S_n=\\sum_{k=n+1}^{\\infty}a_k.\n\\]\n这里尾级数的含义是 $\\lim_{m\\to\\infty}\\sum_{k=n+1}^{m}a_k$，其中 $n$ 固定。用 $S_n$ 近似 $S$ 时，带符号的误差为 $R_n$，绝对误差为 $|R_n|$。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U12",
+      "kind": "explanation",
+      "tex": "余项定义中的尾级数确实收敛：固定正整数 $n$，对整数 $m>n$ 有\n\\[\n\\sum_{k=n+1}^{m}a_k=S_m-S_n\\longrightarrow S-S_n.\n\\]\n又因为 $S_n\\to S$，所以 $R_n\\to0$。前一个极限固定 $n$ 而令 $m$ 增大，后一个极限才是令截断位置 $n$ 增大。若原级数发散，则不能把 $S-S_n$ 当作余项，因为此时不存在有限的级数和 $S$。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U13",
+      "kind": "theorem",
+      "tex": "\\label{thm:finite-change}设 $\\{a_n\\}$、$\\{b_n\\}$ 为两个实数列，存在正整数 $N$，使得对所有整数 $n>N$ 都有 $a_n=b_n$。则 $\\sum_{n=1}^{\\infty}a_n$ 与 $\\sum_{n=1}^{\\infty}b_n$ 同敛散。若前者收敛于 $A$，则后者的和为\n\\[\nB=A+\\sum_{k=1}^{N}(b_k-a_k).\n\\]\n因此，改变有限项不改变级数的敛散性，但可能改变级数的和。添加或删去有限项，并保持其余项的相对次序，也不改变敛散性。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U14",
+      "kind": "proof",
+      "tex": "令 $A_n=\\sum_{k=1}^{n}a_k$、$B_n=\\sum_{k=1}^{n}b_k$。对所有整数 $n\\geq N$，\n\\[\nB_n-A_n=\\sum_{k=1}^{N}(b_k-a_k)=C,\n\\]\n其中 $C$ 是与 $n$ 无关的有限实数。因此 $B_n=A_n+C$，两部分和数列同时收敛或同时发散；收敛时极限相差 $C$。\n\n对于删去前 $N$ 项所得的尾级数，其第 $m$ 个部分和为 $A_{N+m}-A_N$，其中 $m$ 为正整数，故它与原级数同敛散。一般地，添加或删去有限项后，在经过最后一个改动位置时，新旧部分和之间只相差一个固定常数和一个固定的下标平移，仍由数列极限性质得到同样结论。这里不涉及无限多项的重新排列。",
+      "relates_to": "S02.U13"
+    },
+    {
+      "id": "S02.U15",
+      "kind": "example",
+      "tex": "设实数列 $\\{b_n\\}$ 满足\n\\[\nb_1=3,\\qquad b_n=\\frac{2}{2^n}\\quad(n\\geq2).\n\\]\n求级数 $\\sum_{n=1}^{\\infty}b_n$ 的和及第 $n$ 个余项，并确定使绝对误差小于 $1/100$ 的最小正整数截断位置 $n$。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U16",
+      "kind": "solution",
+      "tex": "前节已由部分和求得 $\\sum_{k=1}^{\\infty}2^{-k}=1$，且对每个正整数 $n$，有 $\\sum_{k=1}^{n}2^{-k}=1-2^{-n}$。由定理 \\ref{thm:linearity}，$\\sum_{k=1}^{\\infty}2\\cdot2^{-k}=2$。本题将其第一项从 $1$ 改成 $3$，增加了 $2$，故由定理 \\ref{thm:finite-change}，所求级数的和为 $4$。\n\n对每个正整数 $n$，其部分和及余项分别为\n\\[\nS_n=2(1-2^{-n})+2=4-2^{1-n},\\qquad\nR_n=4-S_n=2^{1-n}.\n\\]\n所以 $|R_n|=2^{1-n}$。当 $n=7$ 时，误差为 $1/64>1/100$；当 $n=8$ 时，误差为 $1/128<1/100$。误差随正整数 $n$ 增大严格减小，故满足要求的最小截断位置是 $n=8$。",
+      "relates_to": "S02.U15"
+    },
+    {
+      "id": "S02.U17",
+      "kind": "explanation",
+      "tex": "本节的判断顺序是：先检查通项是否趋于零；若不趋于零，立即判为发散；若趋于零，还需研究部分和或使用其他适用的判别法。线性运算要求有关级数已经收敛；余项用于描述收敛级数的截断误差；有限项改变只保持敛散性，不保证和保持不变。\n\n以下为本节练习，答案统一安排在讲义末尾。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U18",
+      "kind": "exercise",
+      "tex": "分别判断下列级数能否仅用收敛的必要条件判为发散，并对不能据此判定的情形说明原因：\n\\[\n\\text{(1)}\\quad\\sum_{n=1}^{\\infty}\\frac{2n+1}{3n+2};\\qquad\n\\text{(2)}\\quad\\sum_{n=1}^{\\infty}\\frac1{n+2};\\qquad\n\\text{(3)}\\quad\\sum_{n=1}^{\\infty}\\frac{(-1)^n n}{n+1}.\n\\]\n再利用本节已知结论确定第 (2) 个级数的敛散性。\n\n答案： (1) 通项极限为 $2/3\\neq0$，因此仅用收敛的必要条件即可判定级数发散。(2) 通项极限为 $0$，必要条件不能判定其收敛性；但它是调和级数去掉前两项后的尾级数，所以由有限项改变性质可知其发散。(3) 通项 $(-1)^n n/(n+1)$ 没有极限，因而不趋于零，仅用必要条件即可判定级数发散。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U19",
+      "kind": "exercise",
+      "tex": "设实数项级数 $\\sum_{n=1}^{\\infty}a_n=2$、$\\sum_{n=1}^{\\infty}b_n=-1$ 均收敛。求 $\\sum_{n=1}^{\\infty}(3a_n-2b_n)$ 的和。若将组合级数的第一项增加 $5$，其敛散性与和各有何变化？另说明：仅知道 $\\sum_{n=1}^{\\infty}(a_n+b_n)$ 收敛，能否推出两个原级数都收敛？请给出理由或反例。\n\n答案：由线性运算定理，\n\\[\n\\sum_{n=1}^{\\infty}(3a_n-2b_n)=3\\cdot2-2\\cdot(-1)=8.\n\\]\n将第一项增加 $5$ 属于有限项改变，所以级数仍然收敛，而其和增加 $5$，变为 $13$。仅知道 $\\sum_{n=1}^{\\infty}(a_n+b_n)$ 收敛，不能推出两个原级数都收敛。例如取 $a_n=1$、$b_n=-1$，则 $\\sum(a_n+b_n)=\\sum0$ 收敛，但 $\\sum a_n$ 与 $\\sum b_n$ 均发散。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U20",
+      "kind": "exercise",
+      "tex": "对于级数 $\\sum_{n=1}^{\\infty}2^{-n}$，写出第 $n$ 个余项，求使绝对误差小于 $1/1000$ 的最小正整数 $n$。若只将该级数第一项改成 $10$，求新级数的和，并说明对每个正整数 $n$，新旧级数的第 $n$ 个余项是否相同。\n\n答案：几何级数的和为 $1$，第 $n$ 个余项为\n\\[\nR_n=\\sum_{k=n+1}^{\\infty}2^{-k}=2^{-n}.\n\\]\n要求 $2^{-n}<1/1000$。由于 $2^9=512<1000<1024=2^{10}$，最小正整数为 $n=10$。原级数第一项为 $1/2$，改为 $10$ 后增加了 $19/2$，故新级数的和为 $1+19/2=21/2$。对每个正整数 $n$，新旧级数的第 $n$ 个余项相同，均为 $2^{-n}$，因为第一项的改变同时使总和与第 $n$ 个部分和都增加相同的数。",
+      "relates_to": null
+    }
+  ],
+  "calculations": [
+    {
+      "assumptions": {
+        "n": {
+          "integer": true,
+          "positive": true
+        }
+      },
+      "direction": "-",
+      "expected": {
+        "op": "Integer",
+        "value": 1
+      },
+      "expression": {
+        "args": [
+          {
+            "name": "n",
+            "op": "Symbol"
+          },
+          {
+            "args": [
+              {
+                "args": [
+                  {
+                    "name": "n",
+                    "op": "Symbol"
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 1
+                  }
+                ],
+                "op": "Add"
+              },
+              {
+                "op": "Integer",
+                "value": -1
+              }
+            ],
+            "op": "Pow"
+          }
+        ],
+        "op": "Mul"
+      },
+      "id": "S02.C01",
+      "kind": "limit",
+      "point": {
+        "op": "Infinity"
+      },
+      "unit_id": "S02.U05",
+      "variable": "n"
+    },
+    {
+      "assumptions": {
+        "n": {
+          "integer": true,
+          "positive": true
+        }
+      },
+      "end": {
+        "op": "Infinity"
+      },
+      "expected_convergent": false,
+      "id": "S02.C02",
+      "kind": "series",
+      "start": {
+        "op": "Integer",
+        "value": 1
+      },
+      "term": {
+        "args": [
+          {
+            "name": "n",
+            "op": "Symbol"
+          },
+          {
+            "op": "Integer",
+            "value": -1
+          }
+        ],
+        "op": "Pow"
+      },
+      "unit_id": "S02.U07",
+      "variable": "n"
+    },
+    {
+      "assumptions": {
+        "n": {
+          "integer": true,
+          "positive": true
+        }
+      },
+      "id": "S02.C03",
+      "kind": "equivalence",
+      "lhs": {
+        "args": [
+          {
+            "args": [
+              {
+                "op": "Integer",
+                "value": 2
+              },
+              {
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 1
+                  },
+                  {
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      },
+                      {
+                        "args": [
+                          {
+                            "op": "Integer",
+                            "value": 2
+                          },
+                          {
+                            "args": [
+                              {
+                                "op": "Integer",
+                                "value": -1
+                              },
+                              {
+                                "name": "n",
+                                "op": "Symbol"
+                              }
+                            ],
+                            "op": "Mul"
+                          }
+                        ],
+                        "op": "Pow"
+                      }
+                    ],
+                    "op": "Mul"
+                  }
+                ],
+                "op": "Add"
+              }
+            ],
+            "op": "Mul"
+          },
+          {
+            "op": "Integer",
+            "value": 2
+          }
+        ],
+        "op": "Add"
+      },
+      "rhs": {
+        "args": [
+          {
+            "op": "Integer",
+            "value": 4
+          },
+          {
+            "args": [
+              {
+                "op": "Integer",
+                "value": -1
+              },
+              {
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  },
+                  {
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": 1
+                      },
+                      {
+                        "args": [
+                          {
+                            "op": "Integer",
+                            "value": -1
+                          },
+                          {
+                            "name": "n",
+                            "op": "Symbol"
+                          }
+                        ],
+                        "op": "Mul"
+                      }
+                    ],
+                    "op": "Add"
+                  }
+                ],
+                "op": "Pow"
+              }
+            ],
+            "op": "Mul"
+          }
+        ],
+        "op": "Add"
+      },
+      "unit_id": "S02.U16"
+    }
+  ],
+  "calculation_limitations": [
+    "核算请求覆盖一个通项极限、调和级数的敛散性及一个部分和公式的代数变形；协议不能直接表达任意实数列及其部分和之间的量化关系，因此一般必要条件、线性运算和有限项改变性质由正文证明，不由这些核算替代。"
+  ],
+  "uncertainties": []
+}

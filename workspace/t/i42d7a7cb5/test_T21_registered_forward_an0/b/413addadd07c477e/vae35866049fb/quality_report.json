@@ -1,0 +1,593 @@
+{
+  "content": {
+    "status": "PASS",
+    "evidence": [
+      "计划必需类型、题解关联及各节局部检查"
+    ],
+    "limitations": [
+      "课程难度与经济应用等语义要求需教师审核"
+    ]
+  },
+  "math": {
+    "status": "NEEDS_REVIEW",
+    "evidence": [
+      {
+        "section_id": "S01",
+        "math": {
+          "schema_version": 1,
+          "status": "NEEDS_REVIEW",
+          "issues": [],
+          "evidence": [
+            {
+              "evidence_type": "not_checked",
+              "status": "NOT_RUN",
+              "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+            }
+          ],
+          "coverage": [
+            "S01.U01",
+            "S01.U02",
+            "S01.U03",
+            "S01.U04",
+            "S01.U05",
+            "S01.E01",
+            "S01.A01",
+            "S01.XREF"
+          ],
+          "limitations": [
+            "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+            "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+          ]
+        },
+        "llm_review": {
+          "issues": [],
+          "checked_unit_ids": [
+            "S01.U01",
+            "S01.U02",
+            "S01.U03",
+            "S01.U04",
+            "S01.U05",
+            "S01.E01",
+            "S01.A01",
+            "S01.XREF"
+          ],
+          "limitations": [
+            "Mock reviewer only; no real model review performed."
+          ]
+        },
+        "issues": [],
+        "reference_recovery": null,
+        "answer_recovery": null,
+        "mock": true,
+        "local_recovery": {
+          "applied_rounds": 0,
+          "proposal_calls": 0,
+          "rejected_proposals": 0,
+          "preserved_issues": [],
+          "review_identity": {
+            "candidate_hash": "96ac428342d68221612a1655fdf524d3a9c698be8b4cf4e46ded6ff1aba7e6c9",
+            "tool_checks_hash": "0819fb3ef25326557719a3e9ea8cf833a3f77029f8024a260c5f7a94ee7b63e8",
+            "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+            "plan_context_hash": "5da9f6e0c297b2aabc86f14c82b3fb970e6c36579ba8cfdce8a5911e7c4b1f7d",
+            "deterministic_checks_hash": "42af267835f80427317f0f81b5394da8ae569c1597889023658244d4604282ef"
+          }
+        },
+        "compile": {
+          "status": "FAIL",
+          "pdf_path": null,
+          "issues": [
+            {
+              "rule_id": "UNRESOLVED_REFERENCE",
+              "severity": "blocking",
+              "message": "LaTeX Warning: Reference `sec:S02' on page 1 undefined on input line 41.",
+              "location": {
+                "log_line": 599
+              },
+              "resolution_status": "open"
+            },
+            {
+              "rule_id": "UNRESOLVED_REFERENCE",
+              "severity": "blocking",
+              "message": "LaTeX Warning: Reference `thm:later' on page 1 undefined on input line 41.",
+              "location": {
+                "log_line": 602
+              },
+              "resolution_status": "open"
+            },
+            {
+              "rule_id": "UNRESOLVED_REFERENCE",
+              "severity": "blocking",
+              "message": "LaTeX Warning: There were undefined references.",
+              "location": {
+                "log_line": 615
+              },
+              "resolution_status": "open"
+            }
+          ],
+          "log_paths": [
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\i42d7a7cb5\\test_T21_registered_forward_an0\\b\\413addadd07c477e\\sS01_8e1eb703b4e7\\build\\pass-1.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\i42d7a7cb5\\test_T21_registered_forward_an0\\b\\413addadd07c477e\\sS01_8e1eb703b4e7\\build\\pass-1.tex.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\i42d7a7cb5\\test_T21_registered_forward_an0\\b\\413addadd07c477e\\sS01_8e1eb703b4e7\\build\\pass-2.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\i42d7a7cb5\\test_T21_registered_forward_an0\\b\\413addadd07c477e\\sS01_8e1eb703b4e7\\build\\pass-2.tex.log"
+          ],
+          "engine": {
+            "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+          },
+          "passes": 2,
+          "compile_mode": "trusted_local",
+          "isolation": "NOT_IMPLEMENTED",
+          "limitations": [
+            "原生可信本机编译不是文件系统或网络隔离沙箱。"
+          ],
+          "command": [
+            "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "-interaction=nonstopmode",
+            "-halt-on-error",
+            "-file-line-error",
+            "-no-shell-escape",
+            "-recorder",
+            "-synctex=1",
+            "-jobname=lecture",
+            "-output-directory=.",
+            "lecture.tex"
+          ],
+          "elapsed_seconds": 3.219,
+          "page_count": 1
+        },
+        "references": {
+          "status": "PENDING_FULL_REFERENCE_CHECK",
+          "pending_labels": [
+            "sec:S02",
+            "thm:later"
+          ],
+          "evidence": "Only labels registered in later approved sections; original compiler FAIL retained. Full build must resolve all labels."
+        },
+        "compile_attempts": [
+          {
+            "attempt": 0,
+            "section_id": "S01",
+            "candidate_hash": "96ac428342d68221612a1655fdf524d3a9c698be8b4cf4e46ded6ff1aba7e6c9",
+            "source_key": "b/413addadd07c477e/sS01_8e1eb703b4e7/source/lecture.tex",
+            "source_hash": "6d2d473e9f3f11d517f10bf06a6b403a2a63562b54df991a274e28a33d11568b",
+            "compile_status": "FAIL",
+            "compile_key": "b/413addadd07c477e/sS01_8e1eb703b4e7/compile.json",
+            "compile_hash": "ee1c9ead209cef0e30a80e2faba2b13f00aa0719dd322eea65af37a4e31f0215",
+            "teacher_visual_review": "NOT_RUN",
+            "mapping": {
+              "status": "NOT_NEEDED",
+              "issues": []
+            },
+            "dependencies": [
+              {
+                "key": "b/413addadd07c477e/sS01_8e1eb703b4e7/source/lecture.tex",
+                "hash": "6d2d473e9f3f11d517f10bf06a6b403a2a63562b54df991a274e28a33d11568b",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/413addadd07c477e/sS01_8e1eb703b4e7/compile.json",
+                "hash": "ee1c9ead209cef0e30a80e2faba2b13f00aa0719dd322eea65af37a4e31f0215",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/413addadd07c477e/sS01_8e1eb703b4e7/build/pass-1.stdout.log",
+                "hash": "43ac5e444e223eebd9306b785dcaecd0697cfb5e8296ebc71e7b39331448c159",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/413addadd07c477e/sS01_8e1eb703b4e7/build/pass-1.tex.log",
+                "hash": "eaf3692fe4290afdd5addcff7b649149decefcf1564c1b3b948c1e965bb75a39",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/413addadd07c477e/sS01_8e1eb703b4e7/build/pass-2.stdout.log",
+                "hash": "4f85e695ab38513334bd560f2edc463195c519f92de7b2be32d2547337628063",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/413addadd07c477e/sS01_8e1eb703b4e7/build/pass-2.tex.log",
+                "hash": "e60b6e1b55c166ef90ca1724f93b6bfcd6e481c8e04b8a4f41fcc25715d8fec6",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/413addadd07c477e/sS01_8e1eb703b4e7/compile-layout-mapping.json",
+                "hash": "a9e6a95de57f3e1ef36ae65f42f0b6f781ec00824658a0130e0becba00bc4835",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section_id": "S02",
+        "math": {
+          "schema_version": 1,
+          "status": "NEEDS_REVIEW",
+          "issues": [],
+          "evidence": [
+            {
+              "evidence_type": "not_checked",
+              "status": "NOT_RUN",
+              "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+            }
+          ],
+          "coverage": [
+            "S02.U01",
+            "S02.U02",
+            "S02.U03",
+            "S02.U04",
+            "S02.U05",
+            "S02.E01",
+            "S02.A01",
+            "S02.XREF"
+          ],
+          "limitations": [
+            "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+            "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+          ]
+        },
+        "llm_review": {
+          "issues": [],
+          "checked_unit_ids": [
+            "S02.U01",
+            "S02.U02",
+            "S02.U03",
+            "S02.U04",
+            "S02.U05",
+            "S02.E01",
+            "S02.A01",
+            "S02.XREF"
+          ],
+          "limitations": [
+            "Mock reviewer only; no real model review performed."
+          ]
+        },
+        "issues": [],
+        "reference_recovery": null,
+        "answer_recovery": null,
+        "mock": true,
+        "local_recovery": {
+          "applied_rounds": 0,
+          "proposal_calls": 0,
+          "rejected_proposals": 0,
+          "preserved_issues": [],
+          "review_identity": {
+            "candidate_hash": "dd0fb457a2e50ed5b9192b6dee93ba54db5f5463288f87302bdf40ca09c5fa30",
+            "tool_checks_hash": "778501b3fca80c478a990e3674d403ebd83cca3c3ed766e3ad1c1bcbafe466d4",
+            "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+            "plan_context_hash": "dce32b975bd24cbc34fe381996b56eeab894e689fdd230e3499b606f0d47f050",
+            "deterministic_checks_hash": "826d394526cba984b658f47ad9f43afa5d129e14ed7edb907ebaa56c50cdf4ea"
+          }
+        },
+        "compile": {
+          "status": "PASS",
+          "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\i42d7a7cb5\\test_T21_registered_forward_an0\\b\\413addadd07c477e\\sS02_9e69caf89cf9\\build\\lecture.pdf",
+          "issues": [],
+          "log_paths": [
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\i42d7a7cb5\\test_T21_registered_forward_an0\\b\\413addadd07c477e\\sS02_9e69caf89cf9\\build\\pass-1.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\i42d7a7cb5\\test_T21_registered_forward_an0\\b\\413addadd07c477e\\sS02_9e69caf89cf9\\build\\pass-1.tex.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\i42d7a7cb5\\test_T21_registered_forward_an0\\b\\413addadd07c477e\\sS02_9e69caf89cf9\\build\\pass-2.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\i42d7a7cb5\\test_T21_registered_forward_an0\\b\\413addadd07c477e\\sS02_9e69caf89cf9\\build\\pass-2.tex.log"
+          ],
+          "engine": {
+            "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+          },
+          "passes": 2,
+          "compile_mode": "trusted_local",
+          "isolation": "NOT_IMPLEMENTED",
+          "limitations": [
+            "原生可信本机编译不是文件系统或网络隔离沙箱。"
+          ],
+          "command": [
+            "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "-interaction=nonstopmode",
+            "-halt-on-error",
+            "-file-line-error",
+            "-no-shell-escape",
+            "-recorder",
+            "-synctex=1",
+            "-jobname=lecture",
+            "-output-directory=.",
+            "lecture.tex"
+          ],
+          "elapsed_seconds": 3.313,
+          "page_count": 1,
+          "pdf_sha256": "967629f1667480912ca8505708cf3b0eb131ebde86a1f3aced0cc35de8f43e45",
+          "auxiliary_hashes": {
+            ".aux": "be572810757e5371d0345e9ce131a3c48d5a34cb0f9af1e77d25309617c068d3",
+            ".out": "e7ba1269d6c1d17f054f1d9374fecad73f10b3b4f5b57175722eee2bddf7d028"
+          }
+        },
+        "references": {
+          "status": "PASS",
+          "pending_labels": []
+        },
+        "compile_attempts": [
+          {
+            "attempt": 0,
+            "section_id": "S02",
+            "candidate_hash": "dd0fb457a2e50ed5b9192b6dee93ba54db5f5463288f87302bdf40ca09c5fa30",
+            "source_key": "b/413addadd07c477e/sS02_9e69caf89cf9/source/lecture.tex",
+            "source_hash": "f5734146322a9c58e499b80eb506f5891a33ea6ba32bd9b8778c87298af5e299",
+            "compile_status": "PASS",
+            "compile_key": "b/413addadd07c477e/sS02_9e69caf89cf9/compile.json",
+            "compile_hash": "a7d21df7a32278a439192d56e8c6d40314e357ccb113350fd509f33552669e76",
+            "teacher_visual_review": "NOT_RUN",
+            "mapping": {
+              "status": "NOT_NEEDED",
+              "issues": []
+            },
+            "dependencies": [
+              {
+                "key": "b/413addadd07c477e/sS02_9e69caf89cf9/source/lecture.tex",
+                "hash": "f5734146322a9c58e499b80eb506f5891a33ea6ba32bd9b8778c87298af5e299",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/413addadd07c477e/sS02_9e69caf89cf9/compile.json",
+                "hash": "a7d21df7a32278a439192d56e8c6d40314e357ccb113350fd509f33552669e76",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/413addadd07c477e/sS02_9e69caf89cf9/build/pass-1.stdout.log",
+                "hash": "9f9c11e8b87380ed3405af7b6c4cd60e1921e053f59d53554b3ca8497e3eb719",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/413addadd07c477e/sS02_9e69caf89cf9/build/pass-1.tex.log",
+                "hash": "06ef5bc865478a79074d269f158d1fcbd841e52714526ca3b53b0cda79fe5837",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/413addadd07c477e/sS02_9e69caf89cf9/build/pass-2.stdout.log",
+                "hash": "0fe0469bdb60c6017e0a1bfb9d7097f301e2b6e41eddd9bf077045d6d741fc29",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/413addadd07c477e/sS02_9e69caf89cf9/build/pass-2.tex.log",
+                "hash": "9424fd8d955d4d357e7aaf72bd09e3d3eb98b872ec0e7b9f8485446c50af691b",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/413addadd07c477e/sS02_9e69caf89cf9/build/lecture.pdf",
+                "hash": "967629f1667480912ca8505708cf3b0eb131ebde86a1f3aced0cc35de8f43e45",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/413addadd07c477e/sS02_9e69caf89cf9/compile-layout-mapping.json",
+                "hash": "a9e6a95de57f3e1ef36ae65f42f0b6f781ec00824658a0130e0becba00bc4835",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "global_interface": [
+          "S01",
+          "S02"
+        ],
+        "review": {
+          "issues": [],
+          "checked_unit_ids": [
+            "S01.U01",
+            "S01.U02",
+            "S01.U03",
+            "S01.U04",
+            "S01.U05",
+            "S01.E01",
+            "S01.A01",
+            "S01.XREF",
+            "S02.U01",
+            "S02.U02",
+            "S02.U03",
+            "S02.U04",
+            "S02.U05",
+            "S02.E01",
+            "S02.A01",
+            "S02.XREF"
+          ],
+          "limitations": [
+            "Mock reviewer only; no real model review performed."
+          ]
+        }
+      },
+      {
+        "chapter_coverage": {
+          "sections": [
+            {
+              "section_id": "S01",
+              "title": "数列极限的定义",
+              "objectives": [
+                "理解 epsilon 定义"
+              ],
+              "unit_ids": [
+                "S01.U01",
+                "S01.U02",
+                "S01.U03",
+                "S01.U04",
+                "S01.U05",
+                "S01.E01",
+                "S01.A01",
+                "S01.XREF"
+              ]
+            },
+            {
+              "section_id": "S02",
+              "title": "极限的运算",
+              "objectives": [
+                "验证极限运算"
+              ],
+              "unit_ids": [
+                "S02.U01",
+                "S02.U02",
+                "S02.U03",
+                "S02.U04",
+                "S02.U05",
+                "S02.E01",
+                "S02.A01",
+                "S02.XREF"
+              ]
+            }
+          ],
+          "objectives": [
+            "演示可恢复的讲义生成流程"
+          ],
+          "teacher_acceptance": "NOT_RUN"
+        },
+        "review": {
+          "issues": [],
+          "checked_unit_ids": [
+            "S01.U01",
+            "S01.U02",
+            "S01.U03",
+            "S01.U04",
+            "S01.U05",
+            "S01.E01",
+            "S01.A01",
+            "S01.XREF",
+            "S02.U01",
+            "S02.U02",
+            "S02.U03",
+            "S02.U04",
+            "S02.U05",
+            "S02.E01",
+            "S02.A01",
+            "S02.XREF"
+          ],
+          "limitations": [
+            "Mock reviewer only; no real model review performed."
+          ]
+        }
+      }
+    ],
+    "limitations": [
+      "同模型分角色审阅不是形式化证明；未支持或未请求的核算仍需人工复核"
+    ]
+  },
+  "fidelity": {
+    "status": "NOT_APPLICABLE",
+    "evidence": [],
+    "limitations": []
+  },
+  "compile": {
+    "status": "PASS",
+    "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\i42d7a7cb5\\test_T21_registered_forward_an0\\b\\413addadd07c477e\\vae35866049fb\\build\\lecture.pdf",
+    "issues": [],
+    "log_paths": [
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\i42d7a7cb5\\test_T21_registered_forward_an0\\b\\413addadd07c477e\\vae35866049fb\\build\\pass-1.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\i42d7a7cb5\\test_T21_registered_forward_an0\\b\\413addadd07c477e\\vae35866049fb\\build\\pass-1.tex.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\i42d7a7cb5\\test_T21_registered_forward_an0\\b\\413addadd07c477e\\vae35866049fb\\build\\pass-2.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\i42d7a7cb5\\test_T21_registered_forward_an0\\b\\413addadd07c477e\\vae35866049fb\\build\\pass-2.tex.log"
+    ],
+    "engine": {
+      "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+    },
+    "passes": 2,
+    "compile_mode": "trusted_local",
+    "isolation": "NOT_IMPLEMENTED",
+    "limitations": [
+      "原生可信本机编译不是文件系统或网络隔离沙箱。"
+    ],
+    "command": [
+      "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "-no-shell-escape",
+      "-recorder",
+      "-synctex=1",
+      "-jobname=lecture",
+      "-output-directory=.",
+      "lecture.tex"
+    ],
+    "elapsed_seconds": 3.328,
+    "page_count": 1,
+    "pdf_sha256": "501d6baf786fdbc5edbd6fb2ba58c1fea9403bbe52e267e5d7af09ef6834e22f",
+    "auxiliary_hashes": {
+      ".aux": "be572810757e5371d0345e9ce131a3c48d5a34cb0f9af1e77d25309617c068d3",
+      ".out": "e7ba1269d6c1d17f054f1d9374fecad73f10b3b4f5b57175722eee2bddf7d028"
+    }
+  },
+  "layout": {
+    "status": "PASS",
+    "evidence": {
+      "page_count": 1,
+      "all_rendered": true
+    },
+    "limitations": [
+      "几何检查是启发式，只能定位可测风险，不能证明所有正文均无裁切或遮挡。",
+      "尚未做模型视觉复核或教师人工逐页审核；每页图片及哈希供独立审核。",
+      "数学上下标的自然小字号不判为违规；PDF 文字提取不是数学内容真值。",
+      "正文安全区为未校准初始估计，实际主题区域需通过探针和人工复核校准。"
+    ]
+  },
+  "policy": {
+    "status": "NEEDS_REVIEW",
+    "evidence": {
+      "schema_version": 1,
+      "decisions": [
+        {
+          "decision_id": "063837f27c744f4bb5952de64490515d",
+          "resolved_effects": {
+            "value": "key"
+          },
+          "status": "NEEDS_REVIEW",
+          "artifact": "lecture.tex",
+          "artifact_hash": "f5734146322a9c58e499b80eb506f5891a33ea6ba32bd9b8778c87298af5e299",
+          "evidence": "需教师检查具体语义是否落实"
+        },
+        {
+          "decision_id": "49810a7b96c5469e97f5c06181914b55",
+          "resolved_effects": {
+            "value": "balanced"
+          },
+          "status": "NEEDS_REVIEW",
+          "artifact": "lecture.tex",
+          "artifact_hash": "f5734146322a9c58e499b80eb506f5891a33ea6ba32bd9b8778c87298af5e299",
+          "evidence": "需教师检查具体语义是否落实"
+        },
+        {
+          "decision_id": "bd29ac63edc84388b89ced0369df1710",
+          "resolved_effects": {
+            "value": "with_answers"
+          },
+          "status": "PASS",
+          "artifact": "lecture.tex",
+          "artifact_hash": "f5734146322a9c58e499b80eb506f5891a33ea6ba32bd9b8778c87298af5e299",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        },
+        {
+          "decision_id": "ba6fb8115cc1476a9c793656b23d52f2",
+          "resolved_effects": {
+            "value": "section"
+          },
+          "status": "PASS",
+          "artifact": "lecture.tex",
+          "artifact_hash": "f5734146322a9c58e499b80eb506f5891a33ea6ba32bd9b8778c87298af5e299",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        }
+      ],
+      "limitations": [
+        "语义自定义不能仅凭模型自评当作落实；发布前须人工审阅质量报告。"
+      ]
+    },
+    "limitations": []
+  },
+  "security": {
+    "status": "PASS",
+    "evidence": [
+      "回环服务、受控源码、编译参数及白名单子进程环境"
+    ],
+    "limitations": [
+      "trusted_local 不是文件系统/网络隔离沙箱"
+    ]
+  },
+  "schema_version": 1,
+  "provider": "mock",
+  "human_visual_review": "NOT_RUN",
+  "model_visual_review": "NOT_RUN",
+  "issues": []
+}
