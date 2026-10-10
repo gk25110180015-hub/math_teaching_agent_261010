@@ -1,0 +1,127 @@
+{
+  "before_hash": "7455ba91bf58c095bd4ad03eaa9cb5e8e22650d8d4940f5113f2363a0cc3e9ce",
+  "after_hash": "4eba810e7aec513a2f634127bccab3990b3297d9521d1be4a665b4ea4ebf1440",
+  "section": {
+    "section_id": "S03",
+    "units": [
+      {
+        "id": "S03.U01",
+        "kind": "definition",
+        "tex": "设函数 $\\alpha(x)$ 在考察点 $x_0$ 的某个去心邻域内有定义。若\n\\[\n\\lim_{x\\to x_0}\\alpha(x)=0,\n\\]\n则称 $\\alpha(x)$ 是当 $x\\to x_0$ 时的无穷小。这里的“无穷小”表示函数值趋近于零，而不表示函数在某个邻域内恒不为零。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时有\n\\[\n|\\alpha(x)|>M,\n\\]\n则称 $\\alpha(x)$ 是当 $x\\to x_0$ 时的无穷大。无穷小与无穷大都是相对于特定的极限过程而言的。\\label{def:infinitesimal}",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U02",
+        "kind": "definition",
+        "tex": "设函数 $\\alpha(x)$ 与 $\\beta(x)$ 在 $x_0$ 的某个去心邻域内有定义，且在该邻域内 $\\beta(x)\\neq0$。若\n\\[\n\\lim_{x\\to x_0}\\frac{\\alpha(x)}{\\beta(x)}=1,\n\\]\n则称 $\\alpha(x)$ 与 $\\beta(x)$ 当 $x\\to x_0$ 时等价，记为\n\\[\n\\alpha(x)\\sim\\beta(x)\\qquad(x\\to x_0).\n\\]\n等价无穷小首先要求二者都是同一极限过程下的无穷小；只有在商有定义的去心邻域内，才能使用上述比值定义。\\label{def:equivalent-infinitesimal}",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U03",
+        "kind": "theorem",
+        "tex": "在实数范围内，当 $x\\to0$ 时，有两个基本极限\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1,\n\\qquad\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]\n其中，第一式中的 $x$ 取弧度制。由此可得\n\\[\n\\sin x\\sim x,\n\\qquad\n e^x-1\\sim x\\qquad(x\\to0).\n\\]\n这些结论只适用于所写出的极限过程及其定义域条件，不能不加条件地推广到任意点或任意角度单位。\\label{thm:fundamental-limits}",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U04",
+        "kind": "proof",
+        "tex": "先证明第一个基本极限。对 $0<x<\\dfrac{\\pi}{2}$，由单位圆中的几何不等式，有\n\\[\n\\sin x<x<\\tan x.\n\\]\n由于 $\\sin x>0$，两边分别除以 $\\sin x$，得到\n\\[\n1<\\frac{x}{\\sin x}<\\frac{1}{\\cos x}.\n\\]\n取倒数可得\n\\[\n\\cos x<\\frac{\\sin x}{x}<1.\n\\]\n当 $x\\to0^+$ 时，$\\cos x\\to1$，由夹逼定理可知\n\\[\n\\lim_{x\\to0^+}\\frac{\\sin x}{x}=1.\n\\]\n又因为 $\\sin x/x$ 是偶函数，所以左极限也等于 $1$，从而\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1.\n\\]\n\n再证明第二个基本极限。这里使用指数函数的一个独立基本性质：对 $0<t<1$，有\n\\[\n1+t\\le e^t\\le\\frac{1}{1-t}.\n\\]\n该不等式是指数函数基本性质的标准推论，独立于待证的差商极限，不由导数定义推出。\n\n当 $0<x<1$ 时，由上述不等式得到\n\\[\n1\\le\\frac{e^x-1}{x}\\le\\frac{1}{1-x}.\n\\]\n令 $x\\to0^+$，夹逼定理给出\n\\[\n\\lim_{x\\to0^+}\\frac{e^x-1}{x}=1.\n\\]\n当 $x=-t<0$ 且 $0<t<1$ 时，对 $1+t\\le e^t\\le1/(1-t)$ 取倒数，得到\n\\[\n1-t\\le e^{-t}\\le\\frac{1}{1+t}.\n\\]\n因此\n\\[\n\\frac{1}{1+t}\\le\\frac{e^{-t}-1}{-t}\\le1.\n\\]\n令 $t\\to0^+$，再次由夹逼定理得到\n\\[\n\\lim_{x\\to0^-}\\frac{e^x-1}{x}=1.\n\\]\n左右极限相等，所以\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]\n整个论证只使用上述独立的指数函数不等式和夹逼定理，没有把待证极限作为指数函数在零点的导数值使用。",
+        "relates_to": "S03.U03"
+      },
+      {
+        "id": "S03.U05",
+        "kind": "theorem",
+        "tex": "设 $\\alpha(x)$ 与 $\\beta(x)$ 在 $x_0$ 的某个去心邻域内有定义，且在该邻域内均不为零。若\n\\[\n\\alpha(x)\\sim\\beta(x)\\qquad(x\\to x_0),\n\\]\n并且函数 $F(x)$ 在相应去心邻域内有定义，满足 $F(x)\\alpha(x)$ 有定义以及\n\\[\n\\lim_{x\\to x_0}F(x)\\alpha(x)=L,\n\\]\n其中 $L$ 为有限数，则\n\\[\n\\lim_{x\\to x_0}F(x)\\beta(x)=L,\n\\]\n只要 $F(x)\\beta(x)$ 在该去心邻域内有定义。特别地，在乘积或商的极限中，可以用与某个无穷小等价的无穷小替换它，但必须保持相关表达式有定义。\\label{thm:equivalent-substitution}",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U06",
+        "kind": "proof",
+        "tex": "由 $\\alpha(x)\\sim\\beta(x)$，有\n\\[\n\\lim_{x\\to x_0}\\frac{\\beta(x)}{\\alpha(x)}=1.\n\\]\n在所给去心邻域内，利用乘积的代数分解，\n\\[\nF(x)\\beta(x)=F(x)\\alpha(x)\\frac{\\beta(x)}{\\alpha(x)}.\n\\]\n由假设和极限的乘法法则，得到\n\\[\n\\lim_{x\\to x_0}F(x)\\beta(x)\n=\\left(\\lim_{x\\to x_0}F(x)\\alpha(x)\\right)\n\\left(\\lim_{x\\to x_0}\\frac{\\beta(x)}{\\alpha(x)}\\right)\n=L\\cdot1=L.\n\\]\n因此，在满足以下结构和条件时可以进行替换：原式能够写成含有因子 $F(x)\\alpha(x)$ 的乘积，并且以 $\\beta(x)/\\alpha(x)$ 替换该因子后，所得 $F(x)\\beta(x)$ 在同一去心邻域内有定义；同时 $\\lim_{x\\to x_0}F(x)\\alpha(x)$ 必须存在且为有限数。该结论适用于所证明的乘积结构，以及通过倒数改写后满足同样条件的商结构。它不表示可以在加减式中无条件逐项替换等价无穷小；例如加减项的替换必须另行检验整体极限，不能仅由等价关系和表达式有定义推出。",
+        "relates_to": "S03.U05"
+      },
+      {
+        "id": "S03.U07",
+        "kind": "example",
+        "tex": "计算\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}.\n\\]\n要求说明等价无穷小替换的依据及适用条件。",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U08",
+        "kind": "solution",
+        "tex": "当 $x\\to0$ 时，$\\sin x\\sim x$，并且 $1+x\\to1$。在 $x\\neq0$ 的去心邻域内，原式有定义，且\n\\[\n\\frac{(1+x)\\sin x}{x}=(1+x)\\frac{\\sin x}{x}.\n\\]\n由基本极限\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1,\n\\qquad\n\\lim_{x\\to0}(1+x)=1,\n\\]\n可得\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}=1\\cdot1=1.\n\\]\n这里的替换只在 $x\\to0$ 且 $x\\neq0$ 的去心邻域内进行，未将原式在 $x=0$ 处补定义。",
+        "relates_to": "S03.U07"
+      },
+      {
+        "id": "S03.U09",
+        "kind": "exercise",
+        "tex": "计算\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}\\,(1-2x),\n\\]\n并说明所使用的基本极限及乘法法则的条件。",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U10",
+        "kind": "solution",
+        "tex": "当 $x\\to0$ 且 $x\\neq0$ 时，$\\dfrac{e^x-1}{x}$ 有定义。由基本极限\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1,\n\\]\n以及\n\\[\n\\lim_{x\\to0}(1-2x)=1,\n\\]\n再由极限的乘法法则，得到\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}(1-2x)=1\\cdot1=1.\n\\]\n乘法法则要求两个因子在同一去心邻域内有定义，并且各自的有限极限存在；这些条件在本题中均满足。",
+        "relates_to": "S03.U09"
+      }
+    ],
+    "calculations": [
+      {
+        "assumptions": {
+          "x": {
+            "real": true
+          }
+        },
+        "direction": "+-",
+        "expected": {
+          "op": "Integer",
+          "value": 1
+        },
+        "expression": {
+          "args": [
+            {
+              "args": [
+                {
+                  "args": [
+                    {
+                      "name": "x",
+                      "op": "Symbol"
+                    }
+                  ],
+                  "op": "sin"
+                }
+              ]
+            },
+            {
+              "args": [
+                {
+                  "name": "x",
+                  "op": "Symbol"
+                },
+                {
+                  "op": "Integer",
+                  "value": -1
+                }
+              ],
+              "op": "Pow"
+            }
+          ],
+          "op": "Mul"
+        },
+        "id": "S03.C01",
+        "kind": "limit",
+        "point": {
+          "op": "Integer",
+          "value": 0
+        },
+        "unit_id": "S03.U03",
+        "variable": "x"
+      }
+    ],
+    "calculation_limitations": [
+      "协议支持的极限核算可以核对 $\\sin x/x$ 在 $x\\to0$ 时的代表性结论，但不能表达弧度制、三角函数的几何不等式或完整的夹逼证明。",
+      "协议中的布尔假设不能完整表达去心邻域和函数定义域条件；正文仍保留了 $x\\neq0$ 及相应表达式有定义的条件。"
+    ],
+    "uncertainties": []
+  }
+}

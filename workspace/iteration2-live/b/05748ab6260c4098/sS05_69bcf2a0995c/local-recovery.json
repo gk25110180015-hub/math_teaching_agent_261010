@@ -1,0 +1,34 @@
+{
+  "status": "UNCHECKED",
+  "state_key": "runs/05748ab6260c40989a560a98e1e2065a/local-repair/S05.json",
+  "candidate_key": "runs/05748ab6260c40989a560a98e1e2065a/local-repair/S05/candidate-ddf6321d19dc.json",
+  "candidate_hash": "101062162a823cb5bf854f55709d1e83de35338ce195fae35a4aac3028de5c37",
+  "applied_rounds": 0,
+  "proposal_calls": 1,
+  "rejected_proposals": 1,
+  "pending_issues": [
+    {
+      "rule_id": "LECTURE_FRAGMENT_AMBIGUOUS",
+      "severity": "blocking",
+      "unit_id": "S05.U02",
+      "message": "Mixed math delimiters require review",
+      "raw_hash": "7bc603dfef8dbcdbb0e15d16fe1af8aebc71bf278fc1bd9201885ea3e1b21516"
+    },
+    {
+      "rule_id": "MATH_CHECK_UNKNOWN",
+      "severity": "review",
+      "message": "ValueError: 幂指数超出受限预算。",
+      "location": {
+        "calculation_id": "S05.C01",
+        "unit_id": "S05.U05"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S05.U03",
+      "severity": "blocking",
+      "message": "把单调有界法的一种证明流程说成所有递推数列取极限前的必要条件，表述错误。递推数列必须先证明收敛，并验证递推式中所用极限运算合法，但不必先证明单调性。应将该句限定为“若选择单调有界原理证明收敛，须先验证单调性及相应方向的界”。",
+      "evidence": "正文写道：“若数列由递推式给出，必须先完成单调性和有界性的证明”。反例：a_1=1，a_{n+1}=-a_n/2，则 a_n=(-1/2)^{n-1} 不单调，但收敛于0。例如由归纳法得 2^{n-1}≥n，从而 |a_n|≤1/n→0。证明收敛后可以合法地在该递推式中取极限，无需且无法证明原数列单调。"
+    }
+  ]
+}

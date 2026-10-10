@@ -1,0 +1,16 @@
+# 质量报告
+
+- content: PASS
+- math: NEEDS_REVIEW
+- fidelity: PASS
+- compile: FAIL
+- layout: PASS
+- policy: PASS
+- security: NOT_RUN
+
+## 具体问题
+
+MISSING_GLYPH：Missing character: There is no ε (U+03B5) in font [lmsans12-regular]:mapping=tex-text;!
+
+人工视觉复核：NOT_RUN（须在界面逐页确认，并审阅此报告）。
+真实模型视觉复核：NOT_RUN。

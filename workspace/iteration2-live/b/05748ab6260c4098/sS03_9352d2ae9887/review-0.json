@@ -1,0 +1,114 @@
+{
+  "section_id": "S03",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "limit",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "0",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U12"
+      },
+      {
+        "kind": "limit",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "3/2",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S03.C02",
+        "unit_id": "S03.U14"
+      }
+    ],
+    "coverage": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10",
+      "S03.U11",
+      "S03.U12",
+      "S03.U13",
+      "S03.U14",
+      "S03.U15",
+      "S03.U16",
+      "S03.U17"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "核算请求仅覆盖根式例题和有理式例题的具体极限；协议的表达式树不能表达夹逼定理及有界数列乘无穷小定理中关于任意数列、最终不等式和任意误差的量词结构，这些一般结论由正文证明支持。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10",
+      "S03.U11",
+      "S03.U12",
+      "S03.U13",
+      "S03.U14",
+      "S03.U15",
+      "S03.U16",
+      "S03.U17"
+    ],
+    "limitations": [
+      "已逐单元核对当前提供的 S03.U01–S03.U17，未核对未生成的 S04、S05；pending_sections 不构成本节遗漏。",
+      "本次检查覆盖定义域、量词、正负号、端点条件、级数相关条件（本节未引入级数）、定理假设、先修依赖，以及公式与解释文字的一致性；未发现需要标记为 blocking、review 或 warning 的具体数学问题。",
+      "符号计算工具只复核了 S03.U12 和 S03.U14 的具体极限，不能替代对夹逼定理、有界数列乘无穷小定理及各证明中量词结构的人工数学审阅。",
+      "普通模型审阅不等于形式化证明；未进行完整的形式化验证，也未据此断言整份讲义或最终 PDF 无误。",
+      "根据 rendering_contract，练习答案位置不因独立 solution 单元的 JSON 顺序而判定违规；本次仅检查数学内容，未进行最终 PDF 渲染检查。"
+    ]
+  },
+  "issues": [
+    {
+      "rule_id": "MISSING_ASSOCIATED_ANSWER",
+      "severity": "blocking",
+      "unit_id": "S03.U16",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "rule_id": "MISSING_ASSOCIATED_ANSWER",
+      "severity": "blocking",
+      "unit_id": "S03.U17",
+      "message": "例题/练习缺少显式关联答案"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false
+}

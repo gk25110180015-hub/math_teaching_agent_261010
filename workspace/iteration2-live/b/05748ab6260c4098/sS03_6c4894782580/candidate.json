@@ -1,0 +1,367 @@
+{
+  "section_id": "S03",
+  "units": [
+    {
+      "id": "S03.U01",
+      "kind": "definition",
+      "tex": "若实数数列 $\\{a_n\\}$ 满足 $a_n\\to0$，则称它为无穷小数列。“无穷小”描述整个数列的变化趋势，并不是指某个固定的很小的正数。例如 $1/n$ 是无穷小数列，而常数数列 $a_n=10^{-6}$ 不是无穷小数列。本节将用上下界控制误差，从而处理不能直接使用四则运算法则的极限。",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U02",
+      "kind": "theorem",
+      "tex": "\\label{thm:squeeze-sequence}夹逼定理：设 $\\{a_n\\}$、$\\{b_n\\}$、$\\{c_n\\}$ 为实数数列。若存在正整数 $N_0$，使得对所有 $n\\geq N_0$ 都有\n\\[\na_n\\leq b_n\\leq c_n,\n\\]\n且 $a_n\\to L$、$c_n\\to L$，其中 $L\\in\\mathbb{R}$，则 $b_n\\to L$。",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U03",
+      "kind": "proof",
+      "tex": "任给 $\\varepsilon>0$。由 $a_n\\to L$，存在正整数 $N_1$，使得 $n\\geq N_1$ 时 $|a_n-L|<\\varepsilon$；由 $c_n\\to L$，存在正整数 $N_2$，使得 $n\\geq N_2$ 时 $|c_n-L|<\\varepsilon$。取\n\\[\nN=\\max\\{N_0,N_1,N_2\\}.\n\\]\n对每个 $n\\geq N$，有\n\\[\nL-\\varepsilon<a_n\\leq b_n\\leq c_n<L+\\varepsilon.\n\\]\n所以 $|b_n-L|<\\varepsilon$。由定义 \\ref{def:epsilon-N}，$b_n\\to L$。证明同时说明：夹逼关系只需从某个下标开始成立，有限个初始项不影响结论。",
+      "relates_to": "S03.U02"
+    },
+    {
+      "id": "S03.U04",
+      "kind": "explanation",
+      "tex": "夹逼定理常写成误差估计的形式：设 $L\\in\\mathbb{R}$，$d_n\\to0$，并且存在正整数 $N_0$，使得对所有 $n\\geq N_0$ 都有\n\\[\n|b_n-L|\\leq d_n.\n\\]\n于是这些下标上必有 $d_n\\geq0$，且\n\\[\nL-d_n\\leq b_n\\leq L+d_n.\n\\]\n由和、差法则及定理 \\ref{thm:squeeze-sequence}，可得 $b_n\\to L$。这不是预先假设 $b_n$ 收敛，而是借助误差上界证明其收敛。若两侧极限不同，则仅凭夹在两者之间不能断言中间数列收敛。",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U05",
+      "kind": "theorem",
+      "tex": "\\label{thm:basic-reciprocal-limit}对于正整数下标 $n$，有\n\\[\n\\lim_{n\\to\\infty}\\frac1n=0.\n\\]\n更一般地，对每个固定的正整数 $k$，都有\n\\[\n\\lim_{n\\to\\infty}\\frac1{n^k}=0.\n\\]",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U06",
+      "kind": "proof",
+      "tex": "任给 $\\varepsilon>0$，取正整数 $N>1/\\varepsilon$。当 $n\\geq N$ 时，$0<1/n\\leq1/N<\\varepsilon$，故 $1/n\\to0$。对任意固定的正整数 $k$，由于 $n\\geq1$ 时 $n^k\\geq n$，故\n\\[\n0<\\frac1{n^k}\\leq\\frac1n.\n\\]\n由定理 \\ref{thm:squeeze-sequence} 得 $1/n^k\\to0$。这里 $k$ 是固定的，不能把这一表述不加说明地当作关于任意变化指数的结论。",
+      "relates_to": "S03.U05"
+    },
+    {
+      "id": "S03.U07",
+      "kind": "theorem",
+      "tex": "\\label{thm:bounded-times-zero}有界数列与无穷小数列的乘积是无穷小数列。具体地，设 $\\{u_n\\}$、$\\{v_n\\}$ 为实数数列，存在常数 $M>0$，使得对每个 $n\\in\\mathbb{N}^{+}$ 都有 $|u_n|\\leq M$，且 $v_n\\to0$，则\n\\[\nu_nv_n\\to0.\n\\]\n这里不要求 $\\{u_n\\}$ 本身收敛。",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U08",
+      "kind": "proof",
+      "tex": "由 $v_n\\to0$ 的定义，对任意 $\\varepsilon>0$，存在正整数 $N$，使得 $n\\geq N$ 时 $|v_n|<\\varepsilon/M$。因此对所有 $n\\geq N$，\n\\[\n|u_nv_n|=|u_n|\\,|v_n|\\leq M|v_n|<\\varepsilon,\n\\]\n所以 $u_nv_n\\to0$。从夹逼的角度看，$|v_n|\\to0$ 直接来自极限定义，而\n\\[\n-M|v_n|\\leq u_nv_n\\leq M|v_n|\n\\]\n的两侧都趋于零。",
+      "relates_to": "S03.U07"
+    },
+    {
+      "id": "S03.U09",
+      "kind": "example",
+      "tex": "设 $n\\in\\mathbb{N}^{+}$。求数列\n\\[\na_n=\\frac{(-1)^n n}{n^2+1}\n\\]\n的极限，并说明为什么不能把 $(-1)^n$ 和 $n/(n^2+1)$ 的极限直接相乘。",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U10",
+      "kind": "solution",
+      "tex": "对每个正整数 $n$，分母 $n^2+1>0$，且\n\\[\n|a_n|=\\frac{n}{n^2+1}\\leq\\frac{n}{n^2}=\\frac1n.\n\\]\n由定理 \\ref{thm:basic-reciprocal-limit} 及误差估计形式的夹逼定理，$a_n\\to0$。\n\n因子 $(-1)^n$ 不收敛。事实上，若它收敛于某个实数 $L$，取 $\\varepsilon=1/2$，则充分大的偶数下标与奇数下标分别给出 $|1-L|<1/2$ 和 $|-1-L|<1/2$，从而\n\\[\n2=|1-(-1)|\\leq|1-L|+|L+1|<1,\n\\]\n矛盾。因此不能使用要求两个因子都收敛的乘积法则。不过 $|(-1)^n|=1$，且 $n/(n^2+1)\\to0$，所以也可用定理 \\ref{thm:bounded-times-zero} 得到答案。",
+      "relates_to": "S03.U09"
+    },
+    {
+      "id": "S03.U11",
+      "kind": "example",
+      "tex": "对 $n\\in\\mathbb{N}^{+}$，计算\n\\[\n\\sqrt{n^2+3}-n\n\\]\n的极限。要求先作代数变形，再用上下界证明，不使用函数极限或导数。",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U12",
+      "kind": "solution",
+      "tex": "由于 $n\\geq1$，根号内 $n^2+3>0$，且 $\\sqrt{n^2+3}+n>0$。乘以共轭式可得\n\\[\n\\sqrt{n^2+3}-n\n=\\frac{(n^2+3)-n^2}{\\sqrt{n^2+3}+n}\n=\\frac3{\\sqrt{n^2+3}+n}.\n\\]\n又因 $\\sqrt{n^2+3}\\geq n$，所以\n\\[\n0<\\sqrt{n^2+3}-n\\leq\\frac3{2n}.\n\\]\n由 $3/(2n)\\to0$ 和定理 \\ref{thm:squeeze-sequence}，得到\n\\[\n\\lim_{n\\to\\infty}\\bigl(\\sqrt{n^2+3}-n\\bigr)=0.\n\\]\n这里不能把原式中两项分别取实数极限再相减；两项都没有有限实数极限。共轭变形把相减的式子转化成了容易估计的正分式。",
+      "relates_to": "S03.U11"
+    },
+    {
+      "id": "S03.U13",
+      "kind": "example",
+      "tex": "对 $n\\in\\mathbb{N}^{+}$，求\n\\[\nr_n=\\frac{3n^2-n+2}{2n^2+5}\n\\]\n的极限，并解释分子、分母同除以 $n^2$ 的作用。",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U14",
+      "kind": "solution",
+      "tex": "因为 $n>0$，且 $2n^2+5>0$，所以可写成\n\\[\nr_n=\\frac{3-1/n+2/n^2}{2+5/n^2}.\n\\]\n定理 \\ref{thm:basic-reciprocal-limit} 给出 $1/n\\to0$ 和 $1/n^2\\to0$。由和、常数倍法则，分子趋于 $3$，分母趋于 $2\\neq0$；同时 $2+5/n^2>0$。故由定理 \\ref{thm:limit-quotient}，\n\\[\n\\lim_{n\\to\\infty}r_n=\\frac32.\n\\]\n同除以 $n^2$，使最高次项变成常数，其余项变成常数乘以 $1/n$ 或 $1/n^2$。这解释了本例为何由最高次项的系数决定极限，而不是把“只看最高次项”当作无需验证条件的规则。",
+      "relates_to": "S03.U13"
+    },
+    {
+      "id": "S03.U15",
+      "kind": "explanation",
+      "tex": "本节的方法选择可以概括为：遇到有界但不收敛的因子，优先估计绝对值；遇到根式相减，先考虑共轭变形；遇到有理式，先用合适的 $n$ 的幂归一化，再检查商法则的分母条件。夹逼时应写清不等式从哪些下标起成立，并说明两侧具有同一个极限。以下练习的答案统一安排在讲义末尾，本节只列题目。",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U16",
+      "kind": "exercise",
+      "tex": "对 $n\\in\\mathbb{N}^{+}$，用夹逼定理求\n\\[\nb_n=\\frac{\\sin n}{n+1}\n\\]\n的极限，其中 $\\sin n$ 按弧度理解。要求写出对所有正整数 $n$ 成立的绝对值上界，说明上界为何趋于零，并解释为什么不应未经证明就把两个因子的极限相乘。",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U17",
+      "kind": "exercise",
+      "tex": "对 $n\\in\\mathbb{N}^{+}$，求下列极限，并分别说明所用方法的关键条件：\n\\[\n(1)\\quad \\sqrt{n^2+n}-n;\n\\qquad\n(2)\\quad \\frac{2n^2+(-1)^n}{n^2+1}.\n\\]\n第 (1) 题须先作共轭变形；可通过估计 $\\sqrt{1+1/n}-1$ 证明 $\\sqrt{1+1/n}\\to1$，不要直接援引函数连续性。第 (2) 题须明确控制符号变化项产生的误差。",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U16.answer",
+      "kind": "solution",
+      "tex": "对所有正整数 $n$，由 $|\\sin n|\\leq1$ 及 $n+1>0$，有\n\\[\n|b_n|=\\frac{|\\sin n|}{n+1}\\leq\\frac1{n+1}\\leq\\frac1n.\n\\]\n由于 $1/n\\to0$，故\n\\[\n-\\frac1n\\leq b_n\\leq\\frac1n\n\\]\n两侧均趋于零。由夹逼定理，$\\displaystyle\\lim_{n\\to\\infty}b_n=0$；同时上述估计也说明上界 $1/(n+1)$ 趋于零。\n\n虽然 $b_n=(\\sin n)\\cdot1/(n+1)$，但乘积极限法则要求两个因子数列均收敛，不能仅凭 $|\\sin n|\\leq1$ 就认定 $\\{\\sin n\\}$ 收敛，因而不能未经证明就把两个因子的极限相乘。本题只需利用正弦因子的有界性，无需确定其收敛性；也可用有界数列与无穷小数列的乘积趋于零来说明。",
+      "relates_to": "S03.U16"
+    },
+    {
+      "id": "S03.U17.answer",
+      "kind": "solution",
+      "tex": "(1) 对所有正整数 $n$，根号内为正，且共轭式 $\\sqrt{n^2+n}+n>0$，所以\n\\[\n\\sqrt{n^2+n}-n\n=\\frac{n}{\\sqrt{n^2+n}+n}\n=\\frac1{\\sqrt{1+1/n}+1}.\n\\]\n这里利用了 $n>0$，从而 $\\sqrt{n^2+n}=n\\sqrt{1+1/n}$。再作共轭变形并估计：\n\\[\n0\\leq\\sqrt{1+1/n}-1\n=\\frac{1/n}{\\sqrt{1+1/n}+1}\n\\leq\\frac1{2n}.\n\\]\n由 $1/(2n)\\to0$ 和夹逼定理，$\\sqrt{1+1/n}-1\\to0$，故 $\\sqrt{1+1/n}\\to1$。变形后分母处处为正，且趋于 $2\\neq0$，由商法则得\n\\[\n\\lim_{n\\to\\infty}\\bigl(\\sqrt{n^2+n}-n\\bigr)=\\frac12.\n\\]\n关键是先用共轭变形及夹逼证明根式数列的极限，再检查商法则的分母条件，并未援引函数连续性。\n\n(2) 由于 $n^2+1>0$，将原式与 $2$ 作差得\n\\[\n\\frac{2n^2+(-1)^n}{n^2+1}-2\n=\\frac{(-1)^n-2}{n^2+1}.\n\\]\n符号变化项满足 $|(-1)^n|=1$，因此对所有正整数 $n$，\n\\[\n\\left|\\frac{2n^2+(-1)^n}{n^2+1}-2\\right|\n\\leq\\frac{|(-1)^n|+2}{n^2+1}\n=\\frac3{n^2+1}\\leq\\frac3{n^2}\\to0.\n\\]\n由误差估计形式的夹逼定理，\n\\[\n\\lim_{n\\to\\infty}\\frac{2n^2+(-1)^n}{n^2+1}=2.\n\\]\n关键是分母为正，且符号变化项造成的误差具有趋于零的绝对值上界；无需对 $(-1)^n$ 本身取极限。",
+      "relates_to": "S03.U17"
+    }
+  ],
+  "calculations": [
+    {
+      "assumptions": {
+        "n": {
+          "integer": true,
+          "positive": true
+        }
+      },
+      "direction": "-",
+      "expected": {
+        "op": "Integer",
+        "value": 0
+      },
+      "expression": {
+        "args": [
+          {
+            "args": [
+              {
+                "args": [
+                  {
+                    "args": [
+                      {
+                        "name": "n",
+                        "op": "Symbol"
+                      },
+                      {
+                        "op": "Integer",
+                        "value": 2
+                      }
+                    ],
+                    "op": "Pow"
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 3
+                  }
+                ],
+                "op": "Add"
+              }
+            ],
+            "op": "sqrt"
+          },
+          {
+            "args": [
+              {
+                "op": "Integer",
+                "value": -1
+              },
+              {
+                "name": "n",
+                "op": "Symbol"
+              }
+            ],
+            "op": "Mul"
+          }
+        ],
+        "op": "Add"
+      },
+      "id": "S03.C01",
+      "kind": "limit",
+      "point": {
+        "op": "Infinity"
+      },
+      "unit_id": "S03.U12",
+      "variable": "n"
+    },
+    {
+      "assumptions": {
+        "n": {
+          "integer": true,
+          "positive": true
+        }
+      },
+      "direction": "-",
+      "expected": {
+        "op": "Rational",
+        "p": 3,
+        "q": 2
+      },
+      "expression": {
+        "args": [
+          {
+            "args": [
+              {
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 3
+                  },
+                  {
+                    "args": [
+                      {
+                        "name": "n",
+                        "op": "Symbol"
+                      },
+                      {
+                        "op": "Integer",
+                        "value": 2
+                      }
+                    ],
+                    "op": "Pow"
+                  }
+                ],
+                "op": "Mul"
+              },
+              {
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": -1
+                  },
+                  {
+                    "name": "n",
+                    "op": "Symbol"
+                  }
+                ],
+                "op": "Mul"
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ],
+            "op": "Add"
+          },
+          {
+            "args": [
+              {
+                "args": [
+                  {
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": 2
+                      },
+                      {
+                        "args": [
+                          {
+                            "name": "n",
+                            "op": "Symbol"
+                          },
+                          {
+                            "op": "Integer",
+                            "value": 2
+                          }
+                        ],
+                        "op": "Pow"
+                      }
+                    ],
+                    "op": "Mul"
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 5
+                  }
+                ],
+                "op": "Add"
+              },
+              {
+                "op": "Integer",
+                "value": -1
+              }
+            ],
+            "op": "Pow"
+          }
+        ],
+        "op": "Mul"
+      },
+      "id": "S03.C02",
+      "kind": "limit",
+      "point": {
+        "op": "Infinity"
+      },
+      "unit_id": "S03.U14",
+      "variable": "n"
+    },
+    {
+      "assumptions": {
+        "n": {
+          "integer": true,
+          "positive": true
+        }
+      },
+      "direction": "-",
+      "expected": {
+        "op": "Rational",
+        "p": 1,
+        "q": 2
+      },
+      "expression": {
+        "args": [
+          {
+            "args": [
+              {
+                "args": [
+                  {
+                    "args": [
+                      {
+                        "name": "n",
+                        "op": "Symbol"
+                      },
+                      {
+                        "op": "Integer",
+                        "value": 2
+                      }
+                    ],
+                    "op": "Pow"
+                  },
+                  {
+                    "name": "n",
+                    "op": "Symbol"
+                  }
+                ],
+                "op": "Add"
+              }
+            ],
+            "op": "sqrt"
+          },
+          {
+            "args": [
+              {
+                "op": "Integer",
+                "value": -1
+              },
+              {
+                "name": "n",
+                "op": "Symbol"
+              }
+            ],
+            "op": "Mul"
+          }
+        ],
+        "op": "Add"
+      },
+      "id": "S03.C03",
+      "kind": "limit",
+      "point": {
+        "op": "Infinity"
+      },
+      "unit_id": "S03.U17.answer",
+      "variable": "n"
+    }
+  ],
+  "calculation_limitations": [
+    "核算请求仅覆盖根式例题和有理式例题的具体极限；协议的表达式树不能表达夹逼定理及有界数列乘无穷小定理中关于任意数列、最终不等式和任意误差的量词结构，这些一般结论由正文证明支持。",
+    "新增核算仅请求核对 S03.U17 第 (1) 题的具体极限；它不核验两个答案中对所有正整数成立的不等式链，也不替代夹逼证明及乘积、商法则适用条件的论证。协议没有用于直接核验此类全称不等式证明的请求类型。"
+  ],
+  "uncertainties": []
+}

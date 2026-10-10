@@ -1,0 +1,72 @@
+{
+  "section_id": "S02",
+  "replacements": [
+    {
+      "unit_id": "S02.U12",
+      "tex": "计算下列数列的极限，并说明所使用的运算法则：$a_n=3(1/n)+2$，$b_n=(2n+1)/(n+3)$，其中 $n\\in\\mathbb{N}^{+}$。\n\n先补充一个含绝对值的示范：求 $c_n=|3/n-2|$ 的极限。所用的绝对值极限法则是：若 $x_n\\to L$，则 $|x_n|\\to|L|$。其依据是反三角不等式\n\\[\n\\bigl||x_n|-|L|\\bigr|\\leq|x_n-L|.\n\\]\n事实上，任给 $\\varepsilon>0$，由 $x_n\\to L$，存在正整数 $N$，使得当 $n\\geq N$ 时 $|x_n-L|<\\varepsilon$，于是 $\\bigl||x_n|-|L|\\bigr|<\\varepsilon$，由极限定义即得上述法则。应用时，先由 $1/n\\to0$ 及常数倍、差法则得到 $3/n-2\\to-2$，再用绝对值极限法则得到\n\\[\n\\lim_{n\\to\\infty}|3/n-2|=|-2|=2.\n\\]\n这说明处理含绝对值的数列极限时，可以先求绝对值内部数列的极限，再对所得极限取绝对值。原题中 $a_n,b_n$ 的计算如下。"
+    }
+  ],
+  "calculation_updates": [],
+  "calculation_additions": [
+    {
+      "id": "S02.C02",
+      "unit_id": "S02.U12",
+      "kind": "limit",
+      "assumptions": {
+        "n": {
+          "integer": true,
+          "positive": true
+        }
+      },
+      "expression": {
+        "op": "Abs",
+        "args": [
+          {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 3
+                  },
+                  {
+                    "op": "Pow",
+                    "args": [
+                      {
+                        "op": "Symbol",
+                        "name": "n"
+                      },
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": -2
+              }
+            ]
+          }
+        ]
+      },
+      "variable": "n",
+      "point": {
+        "op": "Infinity"
+      },
+      "direction": "-",
+      "expected": {
+        "op": "Integer",
+        "value": 2
+      }
+    }
+  ],
+  "uncertainties_append": [],
+  "calculation_limitations_append": [
+    "新增核算仅覆盖具体数列 |3/n-2| 的极限；协议不能表达一般数列的收敛量词及反三角不等式证明，绝对值极限法则仍须依据正文中的 ε-N 论证复核。"
+  ]
+}

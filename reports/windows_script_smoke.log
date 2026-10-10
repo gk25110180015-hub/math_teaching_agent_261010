@@ -1,0 +1,51 @@
+**********************
+PowerShell transcript start
+Start time: 20260920000033
+Username: ASUNA\kuogai
+RunAs User: ASUNA\kuogai
+Configuration Name: 
+Machine: ASUNA (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\Users\kuogai\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+$projectRoot = (Get-Location).Path; $env:MATH_AGENT_WORKSPACE = Join-Path $projectRoot 'workspace\Windows 集成(恢复)'; $env:MATH_AGENT_PORT = '18765'; $env:MATH_AGENT_LIVE_API_ENABLED = 'false'; $env:MATH_AGENT_API_KEY = ''; Start-Transcript -Path (Join-Path $projectRoot 'reports\windows_script_smoke.log') -Force | Out-Null; try { & './scripts/Run-Local.ps1' -Port 18765; $sessionInfo = Invoke-RestMethod 'http://127.0.0.1:18765/api/session' -SessionVariable agentSession; $headers = @{ 'X-CSRF-Token' = $sessionInfo.csrf_token }; $body = @{ workflow_id = 'lecture.generate'; topic = 'Windows 启停恢复'; difficulty = '本科微积分'; provider = 'mock'; trusted_input = $true; theme = 'default' } | ConvertTo-Json; $created = Invoke-RestMethod 'http://127.0.0.1:18765/api/runs' -Method Post -WebSession $agentSession -Headers $headers -ContentType 'application/json; charset=utf-8' -Body ([Text.Encoding]::UTF8.GetBytes($body)); & './scripts/Stop-Local.ps1'; & './scripts/Run-Local.ps1' -Port 18765; $null = Invoke-RestMethod 'http://127.0.0.1:18765/api/session' -SessionVariable restoredSession; $restored = Invoke-RestMethod ('http://127.0.0.1:18765/api/runs/' + $created.id) -WebSession $restoredSession; if ($restored.id -ne $created.id -or $restored.input.topic -ne 'Windows 启停恢复') { throw 'Persisted run did not restore correctly.' }; $result = @{ startup = 'PASS'; stop_and_restart = 'PASS'; persistent_run = 'PASS'; chinese_path = 'PASS'; run_id = $created.id; mock_only = $true; real_api = 'NOT_RUN'; human_visual = 'NOT_RUN'; workspace = $env:MATH_AGENT_WORKSPACE }; $result | ConvertTo-Json | Set-Content -LiteralPath 'reports/windows_script_smoke.json' -Encoding UTF8; $result | ConvertTo-Json } finally { & './scripts/Stop-Local.ps1'; Stop-Transcript | Out-Null }
+Process ID: 9516
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.26200
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+PS>TerminatingError(Invoke-RestMethod): "The request was canceled due to the configured HttpClient.Timeout of 1 seconds elapsing."
+Math teaching agent: http://127.0.0.1:18765
+Process records: D:\研究生阶段\数学教学agent\math-teaching-agent\workspace\runtime\local-processes.json
+Logs: D:\研究生阶段\数学教学agent\math-teaching-agent\workspace\logs
+To stop only this project: .\scripts\Stop-Local.ps1
+
+
+Project server and worker stopped. Database, checkpoints, artifacts and logs are preserved.
+PS>TerminatingError(Invoke-RestMethod): "The request was canceled due to the configured HttpClient.Timeout of 1 seconds elapsing."
+Math teaching agent: http://127.0.0.1:18765
+Process records: D:\研究生阶段\数学教学agent\math-teaching-agent\workspace\runtime\local-processes.json
+Logs: D:\研究生阶段\数学教学agent\math-teaching-agent\workspace\logs
+To stop only this project: .\scripts\Stop-Local.ps1
+{
+  "human_visual": "NOT_RUN",
+  "mock_only": true,
+  "workspace": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\Windows 集成(恢复)",
+  "chinese_path": "PASS",
+  "real_api": "NOT_RUN",
+  "run_id": "e54cdf3eee7145838d98a72cac53930d",
+  "persistent_run": "PASS",
+  "stop_and_restart": "PASS",
+  "startup": "PASS"
+}
+
+
+Project server and worker stopped. Database, checkpoints, artifacts and logs are preserved.
+**********************
+PowerShell transcript end
+End time: 20260920000037
+**********************

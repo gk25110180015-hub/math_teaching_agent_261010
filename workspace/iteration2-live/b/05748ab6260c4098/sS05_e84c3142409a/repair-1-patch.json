@@ -1,0 +1,91 @@
+{
+  "section_id": "S05",
+  "replacements": [
+    {
+      "unit_id": "S05.U02",
+      "tex": "\\label{thm:convergence-method-selection}设 \\(\\{a_n\\}\\) 是实数数列。判断其收敛性和计算极限时，以下方法在相应条件下有效：\n\\[\n\\begin{array}{c|c|c}\n\\text{方法}&\\text{需要验证的条件}&\\text{可得到的结论}\\\\ \\hline\n\\text{$\\varepsilon$--$N$ 定义}&\\text{对任意 $\\varepsilon>0$ 构造统一的正整数 $N$}&a_n\\to L\\\\\n\\text{四则运算法则}&\\text{各相关数列的极限存在，且商的分母极限非零}&\\text{直接计算极限}\\\\\n\\text{夹逼定理}&\\text{最终成立的上下界具有相同极限}&\\text{中间数列收敛到该极限}\\\\\n\\text{单调有界原理}&\\text{数列单调且有相应方向的界}&\\text{数列收敛}.\n\\end{array}\n\\]\n其中，任何一种方法都不能省略数列的定义域条件；特别是，不能因为某个因子有界就直接把它当作收敛数列使用乘积极限法则。"
+    },
+    {
+      "unit_id": "S05.U03",
+      "tex": "对第一种方法，若按照定义对任意 \\(\\varepsilon>0\\) 找到正整数 \\(N\\)，使得所有 \\(n\\geq N\\) 都满足 \\(|a_n-L|<\\varepsilon\\)，则由数列极限的定义可知 \\(a_n\\to L\\)。\n\n对第二种方法，设 \\(a_n\\to A\\)、\\(b_n\\to B\\)，并且在商的定义域内 \\(b_n\\neq0\\)，且 \\(B\\neq0\\)。由极限的和、差、积和商法则，分别可以得到常数倍、和、差、积及商的极限。因此四则运算法则的关键不是形式上的代数变形，而是先确认相关极限存在，并在商法则中确认分母数列及其极限满足条件。\n\n对第三种方法，若存在正整数 \\(N_0\\)，使得当 \\(n\\geq N_0\\) 时有 \\(u_n\\leq a_n\\leq v_n\\)，且 \\(u_n\\to L\\)、\\(v_n\\to L\\)，则由夹逼定理得到 \\(a_n\\to L\\)。因此，夹逼法并不要求先知道 \\(a_n\\) 收敛，而是用两个具有相同极限的界证明其收敛。\n\n对第四种方法，若选择单调有界原理证明收敛，则必须先验证数列的单调性以及相应方向的界；但递推数列并不必然需要先证明单调性。若数列由递推式给出，应先用适当方法证明 \\(\\{a_n\\}\\) 收敛；只有在已经知道 \\(a_n\\to A\\) 后，才能利用移位数列也趋于 \\(A\\) 以及极限运算法则，将极限代入递推式。故上述方法分别由数列极限定义、极限运算法则、夹逼定理和单调有界原理保证。"
+    },
+    {
+      "unit_id": "S05.U05",
+      "tex": "由于 \\(n\\in\\mathbb{N}^{+}\\)，所以 \\(n+3>0\\)，数列的每一项都有定义。分子、分母同除以 \\(n\\)，得到\n\\[\na_n=\\frac{2+1/n}{1+3/n}.\n\\]\n由 \\(1/n\\to0\\)，常数倍法则与和法则给出\n\\[\n2+\\frac1n\\to2,\\qquad 1+\\frac3n\\to1.\n\\]\n分母极限为 \\(1\\neq0\\)，故可使用商法则，得到\n\\[\n\\lim_{n\\to\\infty}a_n=\\frac21=2.\n\\]\n\n若用定义验证，则应先写出误差：\n\\[\n\\left|\\frac{2n+1}{n+3}-2\\right|=\\frac5{n+3}\\leq\\frac5n.\n\\]\n给定任意 \\(\\varepsilon>0\\)，取正整数 \\(N>5/\\varepsilon\\)。当 \\(n\\geq N\\) 时，\n\\[\n\\left|a_n-2\\right|\\leq\\frac5n\\leq\\frac5N<\\varepsilon.\n\\]\n所以按照 \\(\\varepsilon\\)--\\(N\\) 定义，\\(a_n\\to2\\)。本例中，直接使用运算法则较简洁；定义法则明确给出误差如何随 \\(n\\) 减小。"
+    }
+  ],
+  "calculation_updates": [
+    {
+      "assumptions": {
+        "n": {
+          "integer": true,
+          "positive": true
+        }
+      },
+      "direction": "-",
+      "expected": {
+        "op": "Integer",
+        "value": 2
+      },
+      "expression": {
+        "op": "Mul",
+        "args": [
+          {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  },
+                  {
+                    "op": "Symbol",
+                    "name": "n"
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Symbol",
+                    "name": "n"
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 3
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": -1
+              }
+            ]
+          }
+        ]
+      },
+      "id": "S05.C01",
+      "kind": "limit",
+      "point": {
+        "op": "Infinity"
+      },
+      "unit_id": "S05.U05",
+      "variable": "n"
+    }
+  ],
+  "calculation_additions": [],
+  "uncertainties_append": [],
+  "calculation_limitations_append": []
+}

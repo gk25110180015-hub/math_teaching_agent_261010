@@ -1,0 +1,92 @@
+\documentclass[aspectratio=169,10pt,fontset=fandol]{ctexbeamer}
+\usepackage{amsmath,amssymb,mathtools,bm,mathrsfs}
+\usepackage{graphicx,booktabs,array,tabularx,multirow}
+\usepackage{tikz,pgfplots,xparse,xstring,mdframed}
+\usetikzlibrary{arrows.meta,calc,angles,positioning,shapes.geometric,graphs}
+\pgfplotsset{compat=1.18}
+
+\input{workflow_style.tex}
+\input{workflow_fonts.tex}
+\newenvironment{proofdetail}{\par\noindent\textbf{证明：}\quad}{\par}
+\renewenvironment{solution}{\par\noindent\textbf{解：}\quad}{\par}
+\makeatletter
+\@ifundefined{exercise}{\theoremstyle{definition}\newtheorem{exercise}[theorem]{练习}\theoremstyle{plain}}{}
+\makeatother
+\makeatletter
+\newcommand{\mathagentsectionlabelcontext}{%
+\protected@edef\@currentlabel{\thesection}%
+\edef\@currentHref{Outline\the\c@part.\the\c@section}%
+}
+\newcommand{\mathagentexerciselabelcontext}[1]{%
+\hypertarget<1>{#1}{}%
+\edef\@currentHref{#1}%
+}
+\makeatother
+\title{布局回归}
+\begin{document}
+\section{正文}
+% FRAME-ID F001
+\typeout{MATH-AGENT-FRAME-BEGIN F001}
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{blue}\normalsize 1. 正文\par}\vspace{0.22em}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F001}
+% FRAME-ID F002
+\typeout{MATH-AGENT-FRAME-BEGIN F002}
+\begin{frame}[t,fragile]{正文}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0001 0 12
+参见\cite{K1}。
+% SOURCE-END U0001
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F002}
+% FRAME-ID F003
+\typeout{MATH-AGENT-FRAME-BEGIN F003}
+\begin{frame}[t,fragile]{参考文献}
+\footnotesize
+{\footnotesize
+% SOURCE-BEGIN U0002 0 387
+\begin{thebibliography}{99}\bibitem{K1} 作者1。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。
+\bibitem{K2} 作者2。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。
+
+% SOURCE-END U0002
+% PRESENTATION-SCAFFOLD close continued environment
+\end{thebibliography}
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F003}
+% FRAME-ID F004
+\typeout{MATH-AGENT-FRAME-BEGIN F004}
+\begin{frame}[t,fragile]{参考文献（续1）}
+\footnotesize
+{\footnotesize
+% REPEATED-CONTEXT environment continuation
+\begin{thebibliography}{99}
+% SOURCE-BEGIN U0002 387 747
+\bibitem{K3} 作者3。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。
+\bibitem{K4} 作者4。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。
+
+% SOURCE-END U0002
+% PRESENTATION-SCAFFOLD close continued environment
+\end{thebibliography}
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F004}
+% FRAME-ID F005
+\typeout{MATH-AGENT-FRAME-BEGIN F005}
+\begin{frame}[t,fragile]{参考文献（续2）}
+\footnotesize
+{\footnotesize
+% REPEATED-CONTEXT environment continuation
+\begin{thebibliography}{99}
+% SOURCE-BEGIN U0002 747 1127
+\bibitem{K5} 作者5。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。
+\bibitem{K6} 作者6。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。真实书目完整条目。\end{thebibliography}
+% SOURCE-END U0002
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F005}
+\end{document}

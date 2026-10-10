@@ -1,0 +1,1179 @@
+\documentclass[aspectratio=169,10pt,fontset=fandol]{ctexbeamer}
+\usepackage{amsmath,amssymb,mathtools,bm,mathrsfs}
+\usepackage{graphicx,booktabs,array,tabularx,multirow}
+\usepackage{tikz,pgfplots,xparse,xstring,mdframed}
+\usetikzlibrary{arrows.meta,calc,angles,positioning,shapes.geometric,graphs}
+\pgfplotsset{compat=1.18}
+
+\input{workflow_style.tex}
+\input{workflow_fonts.tex}
+\newenvironment{proofdetail}{\par\noindent\textbf{证明：}\quad}{\par}
+\renewenvironment{solution}{\par\noindent\textbf{解：}\quad}{\par}
+\makeatletter
+\@ifundefined{exercise}{\theoremstyle{definition}\newtheorem{exercise}[theorem]{练习}\theoremstyle{plain}}{}
+\makeatother
+\makeatletter
+\newcommand{\mathagentsectionlabelcontext}{%
+\protected@edef\@currentlabel{\thesection}%
+\edef\@currentHref{Outline\the\c@part.\the\c@section}%
+}
+\newcommand{\mathagentexerciselabelcontext}[1]{%
+\hypertarget<1>{#1}{}%
+\edef\@currentHref{#1}%
+}
+\makeatother
+\title{布局回归}
+\begin{document}
+\section{主题1}
+% FRAME-ID F001
+\typeout{MATH-AGENT-FRAME-BEGIN F001}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{blue}\small 1. 主题1\par}\vspace{0.22em}
+{\color{gray!40}\small 2. 主题2\par}\vspace{0.22em}
+{\color{gray!40}\small 3. 主题3\par}\vspace{0.22em}
+{\color{gray!40}\small 4. 主题4\par}\vspace{0.22em}
+{\color{gray!40}\small 5. 主题5\par}\vspace{0.22em}
+{\color{gray!40}\small 6. 主题6\par}\vspace{0.22em}
+{\color{gray!40}\small 7. 主题7\par}\vspace{0.22em}
+{\color{gray!40}\small 8. 主题8\par}\vspace{0.22em}
+{\color{gray!40}\small 9. 主题9\par}\vspace{0.22em}
+{\color{gray!40}\small 10. 主题10\par}\vspace{0.22em}
+{\color{gray!40}\small 11. 主题11\par}\vspace{0.22em}
+{\color{gray!40}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{gray!40}\small 13. 主题13\par}\vspace{0.22em}
+{\color{gray!40}\small 14. 主题14\par}\vspace{0.22em}
+{\color{gray!40}\small 15. 主题15\par}\vspace{0.22em}
+{\color{gray!40}\small 16. 主题16\par}\vspace{0.22em}
+{\color{gray!40}\small 17. 主题17\par}\vspace{0.22em}
+{\color{gray!40}\small 18. 主题18\par}\vspace{0.22em}
+{\color{gray!40}\small 19. 主题19\par}\vspace{0.22em}
+{\color{gray!40}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F001}
+% FRAME-ID F002
+\typeout{MATH-AGENT-FRAME-BEGIN F002}
+\begin{frame}[t,fragile]{主题1}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0001 0 9
+内容 $x=1$。
+% SOURCE-END U0001
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F002}
+\section{主题2}
+% FRAME-ID F003
+\typeout{MATH-AGENT-FRAME-BEGIN F003}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{blue}\small 2. 主题2\par}\vspace{0.22em}
+{\color{gray!40}\small 3. 主题3\par}\vspace{0.22em}
+{\color{gray!40}\small 4. 主题4\par}\vspace{0.22em}
+{\color{gray!40}\small 5. 主题5\par}\vspace{0.22em}
+{\color{gray!40}\small 6. 主题6\par}\vspace{0.22em}
+{\color{gray!40}\small 7. 主题7\par}\vspace{0.22em}
+{\color{gray!40}\small 8. 主题8\par}\vspace{0.22em}
+{\color{gray!40}\small 9. 主题9\par}\vspace{0.22em}
+{\color{gray!40}\small 10. 主题10\par}\vspace{0.22em}
+{\color{gray!40}\small 11. 主题11\par}\vspace{0.22em}
+{\color{gray!40}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{gray!40}\small 13. 主题13\par}\vspace{0.22em}
+{\color{gray!40}\small 14. 主题14\par}\vspace{0.22em}
+{\color{gray!40}\small 15. 主题15\par}\vspace{0.22em}
+{\color{gray!40}\small 16. 主题16\par}\vspace{0.22em}
+{\color{gray!40}\small 17. 主题17\par}\vspace{0.22em}
+{\color{gray!40}\small 18. 主题18\par}\vspace{0.22em}
+{\color{gray!40}\small 19. 主题19\par}\vspace{0.22em}
+{\color{gray!40}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F003}
+% FRAME-ID F004
+\typeout{MATH-AGENT-FRAME-BEGIN F004}
+\begin{frame}[t,fragile]{主题2}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0002 0 9
+内容 $x=2$。
+% SOURCE-END U0002
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F004}
+\section{主题3}
+% FRAME-ID F005
+\typeout{MATH-AGENT-FRAME-BEGIN F005}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{blue}\small 3. 主题3\par}\vspace{0.22em}
+{\color{gray!40}\small 4. 主题4\par}\vspace{0.22em}
+{\color{gray!40}\small 5. 主题5\par}\vspace{0.22em}
+{\color{gray!40}\small 6. 主题6\par}\vspace{0.22em}
+{\color{gray!40}\small 7. 主题7\par}\vspace{0.22em}
+{\color{gray!40}\small 8. 主题8\par}\vspace{0.22em}
+{\color{gray!40}\small 9. 主题9\par}\vspace{0.22em}
+{\color{gray!40}\small 10. 主题10\par}\vspace{0.22em}
+{\color{gray!40}\small 11. 主题11\par}\vspace{0.22em}
+{\color{gray!40}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{gray!40}\small 13. 主题13\par}\vspace{0.22em}
+{\color{gray!40}\small 14. 主题14\par}\vspace{0.22em}
+{\color{gray!40}\small 15. 主题15\par}\vspace{0.22em}
+{\color{gray!40}\small 16. 主题16\par}\vspace{0.22em}
+{\color{gray!40}\small 17. 主题17\par}\vspace{0.22em}
+{\color{gray!40}\small 18. 主题18\par}\vspace{0.22em}
+{\color{gray!40}\small 19. 主题19\par}\vspace{0.22em}
+{\color{gray!40}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F005}
+% FRAME-ID F006
+\typeout{MATH-AGENT-FRAME-BEGIN F006}
+\begin{frame}[t,fragile]{主题3}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0003 0 9
+内容 $x=3$。
+% SOURCE-END U0003
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F006}
+\section{主题4}
+% FRAME-ID F007
+\typeout{MATH-AGENT-FRAME-BEGIN F007}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{blue}\small 4. 主题4\par}\vspace{0.22em}
+{\color{gray!40}\small 5. 主题5\par}\vspace{0.22em}
+{\color{gray!40}\small 6. 主题6\par}\vspace{0.22em}
+{\color{gray!40}\small 7. 主题7\par}\vspace{0.22em}
+{\color{gray!40}\small 8. 主题8\par}\vspace{0.22em}
+{\color{gray!40}\small 9. 主题9\par}\vspace{0.22em}
+{\color{gray!40}\small 10. 主题10\par}\vspace{0.22em}
+{\color{gray!40}\small 11. 主题11\par}\vspace{0.22em}
+{\color{gray!40}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{gray!40}\small 13. 主题13\par}\vspace{0.22em}
+{\color{gray!40}\small 14. 主题14\par}\vspace{0.22em}
+{\color{gray!40}\small 15. 主题15\par}\vspace{0.22em}
+{\color{gray!40}\small 16. 主题16\par}\vspace{0.22em}
+{\color{gray!40}\small 17. 主题17\par}\vspace{0.22em}
+{\color{gray!40}\small 18. 主题18\par}\vspace{0.22em}
+{\color{gray!40}\small 19. 主题19\par}\vspace{0.22em}
+{\color{gray!40}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F007}
+% FRAME-ID F008
+\typeout{MATH-AGENT-FRAME-BEGIN F008}
+\begin{frame}[t,fragile]{主题4}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0004 0 9
+内容 $x=4$。
+% SOURCE-END U0004
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F008}
+\section{主题5}
+% FRAME-ID F009
+\typeout{MATH-AGENT-FRAME-BEGIN F009}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{blue}\small 5. 主题5\par}\vspace{0.22em}
+{\color{gray!40}\small 6. 主题6\par}\vspace{0.22em}
+{\color{gray!40}\small 7. 主题7\par}\vspace{0.22em}
+{\color{gray!40}\small 8. 主题8\par}\vspace{0.22em}
+{\color{gray!40}\small 9. 主题9\par}\vspace{0.22em}
+{\color{gray!40}\small 10. 主题10\par}\vspace{0.22em}
+{\color{gray!40}\small 11. 主题11\par}\vspace{0.22em}
+{\color{gray!40}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{gray!40}\small 13. 主题13\par}\vspace{0.22em}
+{\color{gray!40}\small 14. 主题14\par}\vspace{0.22em}
+{\color{gray!40}\small 15. 主题15\par}\vspace{0.22em}
+{\color{gray!40}\small 16. 主题16\par}\vspace{0.22em}
+{\color{gray!40}\small 17. 主题17\par}\vspace{0.22em}
+{\color{gray!40}\small 18. 主题18\par}\vspace{0.22em}
+{\color{gray!40}\small 19. 主题19\par}\vspace{0.22em}
+{\color{gray!40}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F009}
+% FRAME-ID F010
+\typeout{MATH-AGENT-FRAME-BEGIN F010}
+\begin{frame}[t,fragile]{主题5}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0005 0 9
+内容 $x=5$。
+% SOURCE-END U0005
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F010}
+\section{主题6}
+% FRAME-ID F011
+\typeout{MATH-AGENT-FRAME-BEGIN F011}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{black}\small 5. 主题5\par}\vspace{0.22em}
+{\color{blue}\small 6. 主题6\par}\vspace{0.22em}
+{\color{gray!40}\small 7. 主题7\par}\vspace{0.22em}
+{\color{gray!40}\small 8. 主题8\par}\vspace{0.22em}
+{\color{gray!40}\small 9. 主题9\par}\vspace{0.22em}
+{\color{gray!40}\small 10. 主题10\par}\vspace{0.22em}
+{\color{gray!40}\small 11. 主题11\par}\vspace{0.22em}
+{\color{gray!40}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{gray!40}\small 13. 主题13\par}\vspace{0.22em}
+{\color{gray!40}\small 14. 主题14\par}\vspace{0.22em}
+{\color{gray!40}\small 15. 主题15\par}\vspace{0.22em}
+{\color{gray!40}\small 16. 主题16\par}\vspace{0.22em}
+{\color{gray!40}\small 17. 主题17\par}\vspace{0.22em}
+{\color{gray!40}\small 18. 主题18\par}\vspace{0.22em}
+{\color{gray!40}\small 19. 主题19\par}\vspace{0.22em}
+{\color{gray!40}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F011}
+% FRAME-ID F012
+\typeout{MATH-AGENT-FRAME-BEGIN F012}
+\begin{frame}[t,fragile]{主题6}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0006 0 9
+内容 $x=6$。
+% SOURCE-END U0006
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F012}
+\section{主题7}
+% FRAME-ID F013
+\typeout{MATH-AGENT-FRAME-BEGIN F013}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{black}\small 5. 主题5\par}\vspace{0.22em}
+{\color{black}\small 6. 主题6\par}\vspace{0.22em}
+{\color{blue}\small 7. 主题7\par}\vspace{0.22em}
+{\color{gray!40}\small 8. 主题8\par}\vspace{0.22em}
+{\color{gray!40}\small 9. 主题9\par}\vspace{0.22em}
+{\color{gray!40}\small 10. 主题10\par}\vspace{0.22em}
+{\color{gray!40}\small 11. 主题11\par}\vspace{0.22em}
+{\color{gray!40}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{gray!40}\small 13. 主题13\par}\vspace{0.22em}
+{\color{gray!40}\small 14. 主题14\par}\vspace{0.22em}
+{\color{gray!40}\small 15. 主题15\par}\vspace{0.22em}
+{\color{gray!40}\small 16. 主题16\par}\vspace{0.22em}
+{\color{gray!40}\small 17. 主题17\par}\vspace{0.22em}
+{\color{gray!40}\small 18. 主题18\par}\vspace{0.22em}
+{\color{gray!40}\small 19. 主题19\par}\vspace{0.22em}
+{\color{gray!40}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F013}
+% FRAME-ID F014
+\typeout{MATH-AGENT-FRAME-BEGIN F014}
+\begin{frame}[t,fragile]{主题7}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0007 0 9
+内容 $x=7$。
+% SOURCE-END U0007
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F014}
+\section{主题8}
+% FRAME-ID F015
+\typeout{MATH-AGENT-FRAME-BEGIN F015}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{black}\small 5. 主题5\par}\vspace{0.22em}
+{\color{black}\small 6. 主题6\par}\vspace{0.22em}
+{\color{black}\small 7. 主题7\par}\vspace{0.22em}
+{\color{blue}\small 8. 主题8\par}\vspace{0.22em}
+{\color{gray!40}\small 9. 主题9\par}\vspace{0.22em}
+{\color{gray!40}\small 10. 主题10\par}\vspace{0.22em}
+{\color{gray!40}\small 11. 主题11\par}\vspace{0.22em}
+{\color{gray!40}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{gray!40}\small 13. 主题13\par}\vspace{0.22em}
+{\color{gray!40}\small 14. 主题14\par}\vspace{0.22em}
+{\color{gray!40}\small 15. 主题15\par}\vspace{0.22em}
+{\color{gray!40}\small 16. 主题16\par}\vspace{0.22em}
+{\color{gray!40}\small 17. 主题17\par}\vspace{0.22em}
+{\color{gray!40}\small 18. 主题18\par}\vspace{0.22em}
+{\color{gray!40}\small 19. 主题19\par}\vspace{0.22em}
+{\color{gray!40}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F015}
+% FRAME-ID F016
+\typeout{MATH-AGENT-FRAME-BEGIN F016}
+\begin{frame}[t,fragile]{主题8}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0008 0 9
+内容 $x=8$。
+% SOURCE-END U0008
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F016}
+\section{主题9}
+% FRAME-ID F017
+\typeout{MATH-AGENT-FRAME-BEGIN F017}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{black}\small 5. 主题5\par}\vspace{0.22em}
+{\color{black}\small 6. 主题6\par}\vspace{0.22em}
+{\color{black}\small 7. 主题7\par}\vspace{0.22em}
+{\color{black}\small 8. 主题8\par}\vspace{0.22em}
+{\color{blue}\small 9. 主题9\par}\vspace{0.22em}
+{\color{gray!40}\small 10. 主题10\par}\vspace{0.22em}
+{\color{gray!40}\small 11. 主题11\par}\vspace{0.22em}
+{\color{gray!40}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{gray!40}\small 13. 主题13\par}\vspace{0.22em}
+{\color{gray!40}\small 14. 主题14\par}\vspace{0.22em}
+{\color{gray!40}\small 15. 主题15\par}\vspace{0.22em}
+{\color{gray!40}\small 16. 主题16\par}\vspace{0.22em}
+{\color{gray!40}\small 17. 主题17\par}\vspace{0.22em}
+{\color{gray!40}\small 18. 主题18\par}\vspace{0.22em}
+{\color{gray!40}\small 19. 主题19\par}\vspace{0.22em}
+{\color{gray!40}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F017}
+% FRAME-ID F018
+\typeout{MATH-AGENT-FRAME-BEGIN F018}
+\begin{frame}[t,fragile]{主题9}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0009 0 9
+内容 $x=9$。
+% SOURCE-END U0009
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F018}
+\section{主题10}
+% FRAME-ID F019
+\typeout{MATH-AGENT-FRAME-BEGIN F019}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{black}\small 5. 主题5\par}\vspace{0.22em}
+{\color{black}\small 6. 主题6\par}\vspace{0.22em}
+{\color{black}\small 7. 主题7\par}\vspace{0.22em}
+{\color{black}\small 8. 主题8\par}\vspace{0.22em}
+{\color{black}\small 9. 主题9\par}\vspace{0.22em}
+{\color{blue}\small 10. 主题10\par}\vspace{0.22em}
+{\color{gray!40}\small 11. 主题11\par}\vspace{0.22em}
+{\color{gray!40}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{gray!40}\small 13. 主题13\par}\vspace{0.22em}
+{\color{gray!40}\small 14. 主题14\par}\vspace{0.22em}
+{\color{gray!40}\small 15. 主题15\par}\vspace{0.22em}
+{\color{gray!40}\small 16. 主题16\par}\vspace{0.22em}
+{\color{gray!40}\small 17. 主题17\par}\vspace{0.22em}
+{\color{gray!40}\small 18. 主题18\par}\vspace{0.22em}
+{\color{gray!40}\small 19. 主题19\par}\vspace{0.22em}
+{\color{gray!40}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F019}
+% FRAME-ID F020
+\typeout{MATH-AGENT-FRAME-BEGIN F020}
+\begin{frame}[t,fragile]{主题10}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0010 0 10
+内容 $x=10$。
+% SOURCE-END U0010
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F020}
+\section{主题11}
+% FRAME-ID F021
+\typeout{MATH-AGENT-FRAME-BEGIN F021}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{black}\small 5. 主题5\par}\vspace{0.22em}
+{\color{black}\small 6. 主题6\par}\vspace{0.22em}
+{\color{black}\small 7. 主题7\par}\vspace{0.22em}
+{\color{black}\small 8. 主题8\par}\vspace{0.22em}
+{\color{black}\small 9. 主题9\par}\vspace{0.22em}
+{\color{black}\small 10. 主题10\par}\vspace{0.22em}
+{\color{blue}\small 11. 主题11\par}\vspace{0.22em}
+{\color{gray!40}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{gray!40}\small 13. 主题13\par}\vspace{0.22em}
+{\color{gray!40}\small 14. 主题14\par}\vspace{0.22em}
+{\color{gray!40}\small 15. 主题15\par}\vspace{0.22em}
+{\color{gray!40}\small 16. 主题16\par}\vspace{0.22em}
+{\color{gray!40}\small 17. 主题17\par}\vspace{0.22em}
+{\color{gray!40}\small 18. 主题18\par}\vspace{0.22em}
+{\color{gray!40}\small 19. 主题19\par}\vspace{0.22em}
+{\color{gray!40}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F021}
+% FRAME-ID F022
+\typeout{MATH-AGENT-FRAME-BEGIN F022}
+\begin{frame}[t,fragile]{主题11}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0011 0 10
+内容 $x=11$。
+% SOURCE-END U0011
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F022}
+\section{主题12}
+% FRAME-ID F023
+\typeout{MATH-AGENT-FRAME-BEGIN F023}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{black}\small 5. 主题5\par}\vspace{0.22em}
+{\color{black}\small 6. 主题6\par}\vspace{0.22em}
+{\color{black}\small 7. 主题7\par}\vspace{0.22em}
+{\color{black}\small 8. 主题8\par}\vspace{0.22em}
+{\color{black}\small 9. 主题9\par}\vspace{0.22em}
+{\color{black}\small 10. 主题10\par}\vspace{0.22em}
+{\color{black}\small 11. 主题11\par}\vspace{0.22em}
+{\color{blue}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{gray!40}\small 13. 主题13\par}\vspace{0.22em}
+{\color{gray!40}\small 14. 主题14\par}\vspace{0.22em}
+{\color{gray!40}\small 15. 主题15\par}\vspace{0.22em}
+{\color{gray!40}\small 16. 主题16\par}\vspace{0.22em}
+{\color{gray!40}\small 17. 主题17\par}\vspace{0.22em}
+{\color{gray!40}\small 18. 主题18\par}\vspace{0.22em}
+{\color{gray!40}\small 19. 主题19\par}\vspace{0.22em}
+{\color{gray!40}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F023}
+% FRAME-ID F024
+\typeout{MATH-AGENT-FRAME-BEGIN F024}
+\begin{frame}[t,fragile]{主题12}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0012 0 10
+内容 $x=12$。
+% SOURCE-END U0012
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F024}
+\section{主题13}
+% FRAME-ID F025
+\typeout{MATH-AGENT-FRAME-BEGIN F025}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{black}\small 5. 主题5\par}\vspace{0.22em}
+{\color{black}\small 6. 主题6\par}\vspace{0.22em}
+{\color{black}\small 7. 主题7\par}\vspace{0.22em}
+{\color{black}\small 8. 主题8\par}\vspace{0.22em}
+{\color{black}\small 9. 主题9\par}\vspace{0.22em}
+{\color{black}\small 10. 主题10\par}\vspace{0.22em}
+{\color{black}\small 11. 主题11\par}\vspace{0.22em}
+{\color{black}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{blue}\small 13. 主题13\par}\vspace{0.22em}
+{\color{gray!40}\small 14. 主题14\par}\vspace{0.22em}
+{\color{gray!40}\small 15. 主题15\par}\vspace{0.22em}
+{\color{gray!40}\small 16. 主题16\par}\vspace{0.22em}
+{\color{gray!40}\small 17. 主题17\par}\vspace{0.22em}
+{\color{gray!40}\small 18. 主题18\par}\vspace{0.22em}
+{\color{gray!40}\small 19. 主题19\par}\vspace{0.22em}
+{\color{gray!40}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F025}
+% FRAME-ID F026
+\typeout{MATH-AGENT-FRAME-BEGIN F026}
+\begin{frame}[t,fragile]{主题13}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0013 0 10
+内容 $x=13$。
+% SOURCE-END U0013
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F026}
+\section{主题14}
+% FRAME-ID F027
+\typeout{MATH-AGENT-FRAME-BEGIN F027}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{black}\small 5. 主题5\par}\vspace{0.22em}
+{\color{black}\small 6. 主题6\par}\vspace{0.22em}
+{\color{black}\small 7. 主题7\par}\vspace{0.22em}
+{\color{black}\small 8. 主题8\par}\vspace{0.22em}
+{\color{black}\small 9. 主题9\par}\vspace{0.22em}
+{\color{black}\small 10. 主题10\par}\vspace{0.22em}
+{\color{black}\small 11. 主题11\par}\vspace{0.22em}
+{\color{black}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{black}\small 13. 主题13\par}\vspace{0.22em}
+{\color{blue}\small 14. 主题14\par}\vspace{0.22em}
+{\color{gray!40}\small 15. 主题15\par}\vspace{0.22em}
+{\color{gray!40}\small 16. 主题16\par}\vspace{0.22em}
+{\color{gray!40}\small 17. 主题17\par}\vspace{0.22em}
+{\color{gray!40}\small 18. 主题18\par}\vspace{0.22em}
+{\color{gray!40}\small 19. 主题19\par}\vspace{0.22em}
+{\color{gray!40}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F027}
+% FRAME-ID F028
+\typeout{MATH-AGENT-FRAME-BEGIN F028}
+\begin{frame}[t,fragile]{主题14}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0014 0 10
+内容 $x=14$。
+% SOURCE-END U0014
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F028}
+\section{主题15}
+% FRAME-ID F029
+\typeout{MATH-AGENT-FRAME-BEGIN F029}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{black}\small 5. 主题5\par}\vspace{0.22em}
+{\color{black}\small 6. 主题6\par}\vspace{0.22em}
+{\color{black}\small 7. 主题7\par}\vspace{0.22em}
+{\color{black}\small 8. 主题8\par}\vspace{0.22em}
+{\color{black}\small 9. 主题9\par}\vspace{0.22em}
+{\color{black}\small 10. 主题10\par}\vspace{0.22em}
+{\color{black}\small 11. 主题11\par}\vspace{0.22em}
+{\color{black}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{black}\small 13. 主题13\par}\vspace{0.22em}
+{\color{black}\small 14. 主题14\par}\vspace{0.22em}
+{\color{blue}\small 15. 主题15\par}\vspace{0.22em}
+{\color{gray!40}\small 16. 主题16\par}\vspace{0.22em}
+{\color{gray!40}\small 17. 主题17\par}\vspace{0.22em}
+{\color{gray!40}\small 18. 主题18\par}\vspace{0.22em}
+{\color{gray!40}\small 19. 主题19\par}\vspace{0.22em}
+{\color{gray!40}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F029}
+% FRAME-ID F030
+\typeout{MATH-AGENT-FRAME-BEGIN F030}
+\begin{frame}[t,fragile]{主题15}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0015 0 10
+内容 $x=15$。
+% SOURCE-END U0015
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F030}
+\section{主题16}
+% FRAME-ID F031
+\typeout{MATH-AGENT-FRAME-BEGIN F031}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{black}\small 5. 主题5\par}\vspace{0.22em}
+{\color{black}\small 6. 主题6\par}\vspace{0.22em}
+{\color{black}\small 7. 主题7\par}\vspace{0.22em}
+{\color{black}\small 8. 主题8\par}\vspace{0.22em}
+{\color{black}\small 9. 主题9\par}\vspace{0.22em}
+{\color{black}\small 10. 主题10\par}\vspace{0.22em}
+{\color{black}\small 11. 主题11\par}\vspace{0.22em}
+{\color{black}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{black}\small 13. 主题13\par}\vspace{0.22em}
+{\color{black}\small 14. 主题14\par}\vspace{0.22em}
+{\color{black}\small 15. 主题15\par}\vspace{0.22em}
+{\color{blue}\small 16. 主题16\par}\vspace{0.22em}
+{\color{gray!40}\small 17. 主题17\par}\vspace{0.22em}
+{\color{gray!40}\small 18. 主题18\par}\vspace{0.22em}
+{\color{gray!40}\small 19. 主题19\par}\vspace{0.22em}
+{\color{gray!40}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F031}
+% FRAME-ID F032
+\typeout{MATH-AGENT-FRAME-BEGIN F032}
+\begin{frame}[t,fragile]{主题16}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0016 0 10
+内容 $x=16$。
+% SOURCE-END U0016
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F032}
+\section{主题17}
+% FRAME-ID F033
+\typeout{MATH-AGENT-FRAME-BEGIN F033}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{black}\small 5. 主题5\par}\vspace{0.22em}
+{\color{black}\small 6. 主题6\par}\vspace{0.22em}
+{\color{black}\small 7. 主题7\par}\vspace{0.22em}
+{\color{black}\small 8. 主题8\par}\vspace{0.22em}
+{\color{black}\small 9. 主题9\par}\vspace{0.22em}
+{\color{black}\small 10. 主题10\par}\vspace{0.22em}
+{\color{black}\small 11. 主题11\par}\vspace{0.22em}
+{\color{black}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{black}\small 13. 主题13\par}\vspace{0.22em}
+{\color{black}\small 14. 主题14\par}\vspace{0.22em}
+{\color{black}\small 15. 主题15\par}\vspace{0.22em}
+{\color{black}\small 16. 主题16\par}\vspace{0.22em}
+{\color{blue}\small 17. 主题17\par}\vspace{0.22em}
+{\color{gray!40}\small 18. 主题18\par}\vspace{0.22em}
+{\color{gray!40}\small 19. 主题19\par}\vspace{0.22em}
+{\color{gray!40}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F033}
+% FRAME-ID F034
+\typeout{MATH-AGENT-FRAME-BEGIN F034}
+\begin{frame}[t,fragile]{主题17}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0017 0 10
+内容 $x=17$。
+% SOURCE-END U0017
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F034}
+\section{主题18}
+% FRAME-ID F035
+\typeout{MATH-AGENT-FRAME-BEGIN F035}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{black}\small 5. 主题5\par}\vspace{0.22em}
+{\color{black}\small 6. 主题6\par}\vspace{0.22em}
+{\color{black}\small 7. 主题7\par}\vspace{0.22em}
+{\color{black}\small 8. 主题8\par}\vspace{0.22em}
+{\color{black}\small 9. 主题9\par}\vspace{0.22em}
+{\color{black}\small 10. 主题10\par}\vspace{0.22em}
+{\color{black}\small 11. 主题11\par}\vspace{0.22em}
+{\color{black}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{black}\small 13. 主题13\par}\vspace{0.22em}
+{\color{black}\small 14. 主题14\par}\vspace{0.22em}
+{\color{black}\small 15. 主题15\par}\vspace{0.22em}
+{\color{black}\small 16. 主题16\par}\vspace{0.22em}
+{\color{black}\small 17. 主题17\par}\vspace{0.22em}
+{\color{blue}\small 18. 主题18\par}\vspace{0.22em}
+{\color{gray!40}\small 19. 主题19\par}\vspace{0.22em}
+{\color{gray!40}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F035}
+% FRAME-ID F036
+\typeout{MATH-AGENT-FRAME-BEGIN F036}
+\begin{frame}[t,fragile]{主题18}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0018 0 10
+内容 $x=18$。
+% SOURCE-END U0018
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F036}
+\section{主题19}
+% FRAME-ID F037
+\typeout{MATH-AGENT-FRAME-BEGIN F037}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{black}\small 5. 主题5\par}\vspace{0.22em}
+{\color{black}\small 6. 主题6\par}\vspace{0.22em}
+{\color{black}\small 7. 主题7\par}\vspace{0.22em}
+{\color{black}\small 8. 主题8\par}\vspace{0.22em}
+{\color{black}\small 9. 主题9\par}\vspace{0.22em}
+{\color{black}\small 10. 主题10\par}\vspace{0.22em}
+{\color{black}\small 11. 主题11\par}\vspace{0.22em}
+{\color{black}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{black}\small 13. 主题13\par}\vspace{0.22em}
+{\color{black}\small 14. 主题14\par}\vspace{0.22em}
+{\color{black}\small 15. 主题15\par}\vspace{0.22em}
+{\color{black}\small 16. 主题16\par}\vspace{0.22em}
+{\color{black}\small 17. 主题17\par}\vspace{0.22em}
+{\color{black}\small 18. 主题18\par}\vspace{0.22em}
+{\color{blue}\small 19. 主题19\par}\vspace{0.22em}
+{\color{gray!40}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F037}
+% FRAME-ID F038
+\typeout{MATH-AGENT-FRAME-BEGIN F038}
+\begin{frame}[t,fragile]{主题19}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0019 0 10
+内容 $x=19$。
+% SOURCE-END U0019
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F038}
+\section{主题20}
+% FRAME-ID F039
+\typeout{MATH-AGENT-FRAME-BEGIN F039}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{black}\small 5. 主题5\par}\vspace{0.22em}
+{\color{black}\small 6. 主题6\par}\vspace{0.22em}
+{\color{black}\small 7. 主题7\par}\vspace{0.22em}
+{\color{black}\small 8. 主题8\par}\vspace{0.22em}
+{\color{black}\small 9. 主题9\par}\vspace{0.22em}
+{\color{black}\small 10. 主题10\par}\vspace{0.22em}
+{\color{black}\small 11. 主题11\par}\vspace{0.22em}
+{\color{black}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{black}\small 13. 主题13\par}\vspace{0.22em}
+{\color{black}\small 14. 主题14\par}\vspace{0.22em}
+{\color{black}\small 15. 主题15\par}\vspace{0.22em}
+{\color{black}\small 16. 主题16\par}\vspace{0.22em}
+{\color{black}\small 17. 主题17\par}\vspace{0.22em}
+{\color{black}\small 18. 主题18\par}\vspace{0.22em}
+{\color{black}\small 19. 主题19\par}\vspace{0.22em}
+{\color{blue}\small 20. 主题20\par}\vspace{0.22em}
+{\color{gray!40}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F039}
+% FRAME-ID F040
+\typeout{MATH-AGENT-FRAME-BEGIN F040}
+\begin{frame}[t,fragile]{主题20}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0020 0 10
+内容 $x=20$。
+% SOURCE-END U0020
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F040}
+\section{主题21}
+% FRAME-ID F041
+\typeout{MATH-AGENT-FRAME-BEGIN F041}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{black}\small 5. 主题5\par}\vspace{0.22em}
+{\color{black}\small 6. 主题6\par}\vspace{0.22em}
+{\color{black}\small 7. 主题7\par}\vspace{0.22em}
+{\color{black}\small 8. 主题8\par}\vspace{0.22em}
+{\color{black}\small 9. 主题9\par}\vspace{0.22em}
+{\color{black}\small 10. 主题10\par}\vspace{0.22em}
+{\color{black}\small 11. 主题11\par}\vspace{0.22em}
+{\color{black}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{black}\small 13. 主题13\par}\vspace{0.22em}
+{\color{black}\small 14. 主题14\par}\vspace{0.22em}
+{\color{black}\small 15. 主题15\par}\vspace{0.22em}
+{\color{black}\small 16. 主题16\par}\vspace{0.22em}
+{\color{black}\small 17. 主题17\par}\vspace{0.22em}
+{\color{black}\small 18. 主题18\par}\vspace{0.22em}
+{\color{black}\small 19. 主题19\par}\vspace{0.22em}
+{\color{black}\small 20. 主题20\par}\vspace{0.22em}
+{\color{blue}\small 21. 主题21\par}\vspace{0.22em}
+{\color{gray!40}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F041}
+% FRAME-ID F042
+\typeout{MATH-AGENT-FRAME-BEGIN F042}
+\begin{frame}[t,fragile]{主题21}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0021 0 10
+内容 $x=21$。
+% SOURCE-END U0021
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F042}
+\section{主题22}
+% FRAME-ID F043
+\typeout{MATH-AGENT-FRAME-BEGIN F043}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{black}\small 5. 主题5\par}\vspace{0.22em}
+{\color{black}\small 6. 主题6\par}\vspace{0.22em}
+{\color{black}\small 7. 主题7\par}\vspace{0.22em}
+{\color{black}\small 8. 主题8\par}\vspace{0.22em}
+{\color{black}\small 9. 主题9\par}\vspace{0.22em}
+{\color{black}\small 10. 主题10\par}\vspace{0.22em}
+{\color{black}\small 11. 主题11\par}\vspace{0.22em}
+{\color{black}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{black}\small 13. 主题13\par}\vspace{0.22em}
+{\color{black}\small 14. 主题14\par}\vspace{0.22em}
+{\color{black}\small 15. 主题15\par}\vspace{0.22em}
+{\color{black}\small 16. 主题16\par}\vspace{0.22em}
+{\color{black}\small 17. 主题17\par}\vspace{0.22em}
+{\color{black}\small 18. 主题18\par}\vspace{0.22em}
+{\color{black}\small 19. 主题19\par}\vspace{0.22em}
+{\color{black}\small 20. 主题20\par}\vspace{0.22em}
+{\color{black}\small 21. 主题21\par}\vspace{0.22em}
+{\color{blue}\small 22. 主题22\par}\vspace{0.22em}
+{\color{gray!40}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F043}
+% FRAME-ID F044
+\typeout{MATH-AGENT-FRAME-BEGIN F044}
+\begin{frame}[t,fragile]{主题22}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0022 0 10
+内容 $x=22$。
+% SOURCE-END U0022
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F044}
+\section{主题23}
+% FRAME-ID F045
+\typeout{MATH-AGENT-FRAME-BEGIN F045}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{black}\small 5. 主题5\par}\vspace{0.22em}
+{\color{black}\small 6. 主题6\par}\vspace{0.22em}
+{\color{black}\small 7. 主题7\par}\vspace{0.22em}
+{\color{black}\small 8. 主题8\par}\vspace{0.22em}
+{\color{black}\small 9. 主题9\par}\vspace{0.22em}
+{\color{black}\small 10. 主题10\par}\vspace{0.22em}
+{\color{black}\small 11. 主题11\par}\vspace{0.22em}
+{\color{black}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{black}\small 13. 主题13\par}\vspace{0.22em}
+{\color{black}\small 14. 主题14\par}\vspace{0.22em}
+{\color{black}\small 15. 主题15\par}\vspace{0.22em}
+{\color{black}\small 16. 主题16\par}\vspace{0.22em}
+{\color{black}\small 17. 主题17\par}\vspace{0.22em}
+{\color{black}\small 18. 主题18\par}\vspace{0.22em}
+{\color{black}\small 19. 主题19\par}\vspace{0.22em}
+{\color{black}\small 20. 主题20\par}\vspace{0.22em}
+{\color{black}\small 21. 主题21\par}\vspace{0.22em}
+{\color{black}\small 22. 主题22\par}\vspace{0.22em}
+{\color{blue}\small 23. 主题23\par}\vspace{0.22em}
+{\color{gray!40}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F045}
+% FRAME-ID F046
+\typeout{MATH-AGENT-FRAME-BEGIN F046}
+\begin{frame}[t,fragile]{主题23}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0023 0 10
+内容 $x=23$。
+% SOURCE-END U0023
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F046}
+\section{主题24}
+% FRAME-ID F047
+\typeout{MATH-AGENT-FRAME-BEGIN F047}
+\begin{frame}[t,fragile]{目录}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+{\color{black}\small 1. 主题1\par}\vspace{0.22em}
+{\color{black}\small 2. 主题2\par}\vspace{0.22em}
+{\color{black}\small 3. 主题3\par}\vspace{0.22em}
+{\color{black}\small 4. 主题4\par}\vspace{0.22em}
+{\color{black}\small 5. 主题5\par}\vspace{0.22em}
+{\color{black}\small 6. 主题6\par}\vspace{0.22em}
+{\color{black}\small 7. 主题7\par}\vspace{0.22em}
+{\color{black}\small 8. 主题8\par}\vspace{0.22em}
+{\color{black}\small 9. 主题9\par}\vspace{0.22em}
+{\color{black}\small 10. 主题10\par}\vspace{0.22em}
+{\color{black}\small 11. 主题11\par}\vspace{0.22em}
+{\color{black}\small 12. 主题12\par}\vspace{0.22em}
+\end{column}
+\begin{column}{0.48\textwidth}
+{\color{black}\small 13. 主题13\par}\vspace{0.22em}
+{\color{black}\small 14. 主题14\par}\vspace{0.22em}
+{\color{black}\small 15. 主题15\par}\vspace{0.22em}
+{\color{black}\small 16. 主题16\par}\vspace{0.22em}
+{\color{black}\small 17. 主题17\par}\vspace{0.22em}
+{\color{black}\small 18. 主题18\par}\vspace{0.22em}
+{\color{black}\small 19. 主题19\par}\vspace{0.22em}
+{\color{black}\small 20. 主题20\par}\vspace{0.22em}
+{\color{black}\small 21. 主题21\par}\vspace{0.22em}
+{\color{black}\small 22. 主题22\par}\vspace{0.22em}
+{\color{black}\small 23. 主题23\par}\vspace{0.22em}
+{\color{blue}\small 24. 主题24\par}\vspace{0.22em}
+\end{column}
+\end{columns}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F047}
+% FRAME-ID F048
+\typeout{MATH-AGENT-FRAME-BEGIN F048}
+\begin{frame}[t,fragile]{主题24}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0024 0 10
+内容 $x=24$。
+% SOURCE-END U0024
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F048}
+\end{document}

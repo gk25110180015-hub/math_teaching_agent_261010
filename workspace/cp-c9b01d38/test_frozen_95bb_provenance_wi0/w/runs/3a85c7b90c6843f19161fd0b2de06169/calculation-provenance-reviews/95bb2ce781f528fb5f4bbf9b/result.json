@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "identity_hash": "451d49dacf2d861c33c1db516d3a4b1d91866b41e3103d725bfc6c5149268022",
+  "effective_issues": [
+    {
+      "unit_id": "S03.U07",
+      "severity": "warning",
+      "message": "首次使用 ESS 时没有明确给出其作为拟合值离差平方和的定义，而是直接写成 ESS=TSS-RSS。虽然该数值可由已证明的平方和分解推出，且本节核心定义并未要求 ESS 作为独立概念，但建议明确写出 ESS=\\sum_i(\\hat y_i-\\bar y)^2，或说明本节将其定义为该名称的记号。",
+      "evidence": "S03.U04给出的是拟合值离差平方和的展开式但未命名为 ESS；S03.U07随后直接写“解释平方和为 ESS=TSS-RSS”，S03.U09也沿用该记号。"
+    },
+    {
+      "unit_id": "S03.U04",
+      "severity": "warning",
+      "message": "平方和分解定理的代数条件与最小二乘应用条件在同一单元中是分层给出的：定理先假设两个残差正交条件，证明后半段才借助上一节的列满秩含截距结论说明这些条件对最小二乘拟合成立。数学推导没有错误，但可在定理陈述中明确区分“抽象分解所需条件”和“最小二乘模型下这些条件成立的先决条件”，以免把含截距本身误读为自动足够条件。",
+      "evidence": "S03.U04的正式假设包括 \\sum_i\\hat e_i=0 与 \\sum_i\\hat e_i(\\hat y_i-\\bar y)=0；S03.U05随后才说明在上一节列满秩、含截距的最小二乘条件下可由正规方程推出这些关系。"
+    },
+    {
+      "unit_id": "S03.U09",
+      "severity": "warning",
+      "message": "练习答案中使用 ESS，但本节没有在定义单元中正式定义该记号。当前计算与题目数据一致：\\bar y=7/3、S_{xy}=3、S_{xx}=2、截距为 -2/3，且 TSS=ESS+RSS=14/3。建议与 S03.U07 一致补充 ESS 的明确含义，避免学生将 TSS-RSS 误认为未经定义的独立公式。",
+      "evidence": "S03.U09直接写 ESS=TSS-RSS=9/2，却未说明 ESS=\\sum_i(\\hat y_i-\\bar y)^2；其余计算经逐项代入核对无矛盾。"
+    }
+  ],
+  "effective_assessment": {
+    "items": [
+      {
+        "uncertainty_id": "D001-46bc3acc864ad401",
+        "unit_id": "S03.U08",
+        "disposition": "resolved_by_current_body",
+        "reason": "当前正文已明确把原先的 $-1/6$ 截距作为待检查的错误说法，并在 S03.U09 中依据该练习数据重新计算出 $\\hat b=3/2$、$\\hat a=-2/3$，随后给出拟合值、残差及残差和为零的核验。因此，原疑点所涉及的数学错误已被当前练习与答案直接修正；练习的教学意图也通过“检查说法并用数据重新计算正确直线”的任务表述得到保持。",
+        "evidence": [
+          {
+            "source_key": "current:S03.U08",
+            "source_sha256": "f0f1b74cffee2c08ecabcb822cda90b383bbed4edca1870158ff88d1423f1b49",
+            "quote": "一位同学声称含截距的一元最小二乘拟合直线为\n\\[\n\\hat y=-\\frac{1}{6}+\\frac{3}{2}x.\n\\]\n请检查这一说法，并用数据重新计算正确的最小二乘直线。然后完成下列任务："
+          },
+          {
+            "source_key": "current:S03.U09",
+            "source_sha256": "638fe5403bf8825fcdd7eeec64bcb06140b0f01f10bbf4a65580f972012aa5c8",
+            "quote": "因此正确的最小二乘斜率和截距分别为\n\\[\n\\hat b=\\frac{S_{xy}}{S_{xx}}=\\frac{3}{2},\n\\qquad\n\\hat a=\\bar y-\\hat b\\bar x\n=\\frac{7}{3}-\\frac{3}{2}\\cdot2=-\\frac{2}{3}.\n\\]\n所以正确的拟合直线为\n\\[\n\\hat y=-\\frac{2}{3}+\\frac{3}{2}x.\n\\]\n题目中给出的截距 $-1/6$ 不正确；其对应残差和不为零，因而不可能是这组含截距数据的最小二乘直线。"
+          }
+        ],
+        "remaining_dependency": false,
+        "repair_instruction": null
+      },
+      {
+        "uncertainty_id": "D002-2490c62126ff2c26",
+        "unit_id": null,
+        "disposition": "resolved_by_current_body",
+        "reason": "离线受控裁定：已逐字核对固定原始补丁、前后核算输入及当前正文，本裁定不构成教师验收。",
+        "evidence": [
+          {
+            "source_key": "current:S03.U07",
+            "source_sha256": "ff23522a1ec3c0cc4fb3cfffea4ee508cc1e75dedccb3d77fbf81cf70f17965c",
+            "quote": "样本均值为\n\\[\n\\bar y=\\frac{2+3+5}{3}=\\frac{10}{3}.\n\\]\n因此总平方和为\n\\[\n\\begin{aligned}\n\\operatorname{TSS}\n&=\\left(2-\\frac{10}{3}\\right)^2\n+\\left(3-\\frac{10}{3}\\right)^2\n+\\left(5-\\frac{10}{3}\\right)^2\\\\\n&=\\left(-\\frac{4}{3}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{5}{3}\\right)^2\n=\\frac{14}{3}.\n\\end{aligned}\n\\]\n残差为\n\\[\n\\hat e_1=2-\\frac{11}{6}=\\frac{1}{6},\n\\qquad\n\\hat e_2=3-\\frac{10}{3}=-\\frac{1}{3},\n\\qquad\n\\hat e_3=5-\\frac{29}{6}=\\frac{1}{6}.\n\\]\n它们的和为\n\\[\n\\hat e_1+\\hat e_2+\\hat e_3\n=\\frac{1}{6}-\\frac{1}{3}+\\frac{1}{6}=0.\n\\]\n残差平方和为\n\\[\n\\operatorname{RSS}\n=\\left(\\frac{1}{6}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{1}{6}\\right)^2\n=\\frac{1}{6}.\n\\]\n由平方和分解，解释平方和为\n\\[\n\\operatorname{ESS}=\\operatorname{TSS}-\\operatorname{RSS}\n=\\frac{14}{3}-\\frac{1}{6}=\\frac{9}{2}.\n\\]\n所以决定系数为\n\\[\nR^2=1-\\frac{1/6}{14/3}\n=1-\\frac{1}{28}\n=\\frac{27}{28}.\n\\]\n这表示在该样本中，广告支出与销售额的线性拟合相对于只用样本均值预测销售额，减少了 $27/28$ 的平方误差。这个数值描述的是样本内的拟合程度，不能单独证明广告支出对销售额具有因果影响，也不能保证对样本区间之外的数据同样准确。\n\n还应注意异常观测的影响：若某一年销售额明显偏离总体趋势，它可能对斜率、拟合直线和残差平方和产生较大影响，从而显著改变 $R^2$。因此，较高的 $R^2$ 不一定表示所有观测都被同样良好地解释，分析时应检查是否存在离群观测，并结合数据背景判断其原因。"
+          },
+          {
+            "source_key": "calculation:76e112fce3c5ec12cb8132ff368d94993cd3c148d6e2f5730cffb26cf16bd2c0",
+            "source_sha256": "cd4fbe38787b973015e7a81650a8c0f466ad8861559fc78a159f2dd2a0749fc9",
+            "quote": "核算修正的可复核归档证据；这不是讲义正文，也不是教师验收。\n核算编号：S03.C01；所属实际单元：S03.U07。\n下面给出产生历史结果的完整旧请求，以及当前请求；两者仅 lhs 表达式不同，其余字段相同。\n历史完整请求（JSON AST）：{\"assumptions\":{},\"id\":\"S03.C01\",\"kind\":\"equivalence\",\"lhs\":{\"args\":[{\"op\":\"Integer\",\"value\":1},{\"args\":[{\"op\":\"Rational\",\"p\":1,\"q\":6},{\"args\":[{\"op\":\"Rational\",\"p\":14,\"q\":3},{\"op\":\"Integer\",\"value\":-1}],\"op\":\"Pow\"}],\"op\":\"Mul\"}],\"op\":\"Add\"},\"rhs\":{\"op\":\"Rational\",\"p\":27,\"q\":28},\"unit_id\":\"S03.U07\"}\n历史归档核算：FAIL；结果 \"29/28\"。完整证据：{\"assumptions\":{},\"calculation_id\":\"S03.C01\",\"evidence_type\":\"symbolic_check_failed\",\"kind\":\"equivalence\",\"message\":\"在声明假设下符号结果与预期不一致。\",\"result\":\"29/28\",\"status\":\"FAIL\",\"tool\":\"SymPy\",\"tool_version\":\"1.14.0\",\"unit_id\":\"S03.U07\"}\n对该旧请求独立重放：FAIL；结果 \"29/28\"。完整证据：{\"assumptions\":{},\"calculation_id\":\"S03.C01\",\"evidence_type\":\"symbolic_check_failed\",\"kind\":\"equivalence\",\"message\":\"在声明假设下符号结果与预期不一致。\",\"result\":\"29/28\",\"status\":\"FAIL\",\"tool\":\"SymPy\",\"tool_version\":\"1.14.0\",\"unit_id\":\"S03.U07\"}\n当前完整请求（JSON AST）：{\"assumptions\":{},\"id\":\"S03.C01\",\"kind\":\"equivalence\",\"lhs\":{\"args\":[{\"op\":\"Integer\",\"value\":1},{\"args\":[{\"op\":\"Integer\",\"value\":-1},{\"args\":[{\"op\":\"Rational\",\"p\":1,\"q\":6},{\"args\":[{\"op\":\"Rational\",\"p\":14,\"q\":3},{\"op\":\"Integer\",\"value\":-1}],\"op\":\"Pow\"}],\"op\":\"Mul\"}],\"op\":\"Mul\"}],\"op\":\"Add\"},\"rhs\":{\"op\":\"Rational\",\"p\":27,\"q\":28},\"unit_id\":\"S03.U07\"}\n当前核算：PASS；结果 \"27/28\"。完整证据：{\"assumptions\":{},\"calculation_id\":\"S03.C01\",\"evidence_type\":\"symbolic_check_passed\",\"kind\":\"equivalence\",\"message\":\"在声明假设下符号结果与预期完全一致。\",\"result\":\"27/28\",\"status\":\"PASS\",\"tool\":\"SymPy\",\"tool_version\":\"1.14.0\",\"unit_id\":\"S03.U07\"}\n旧请求的冻结输入来源（归档路径、原始文件 SHA256、身份及上下文 SHA256）：{\"context_hash\":\"b4249b8a769ed15a42d7b5441a88308375387f8369c428c91d76885cc537acf0\",\"identity_hash\":\"6cf90e694a11780fdcf7e11b28f322a2450c00151b8d426d7807bd48da035de4\",\"input_key\":\"runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/6cf90e694a11780fdcf7e11b/input.json\",\"input_sha256\":\"d87d05b456786ad2a2ec0d9148f82905dfb60c70e588951038c8dfd95a19158c\"}\n历史 FAIL 记录完整保留，针对的是上述旧请求，并非当前请求的第二个核算结果。\n本记录只证明这两项具体核算的输入、结果及历史来源；不自动消除任何疑点，也不证明整份正文正确。\n保留声明的内部生成来源：以下原始补丁逐字追加了该声明；将已固定 SHA 的补丁应用于已注册的前稿，精确得到已注册的后稿。所列问题是该前稿审阅实际收到的历史未决问题与实际返回的问题。这提供声明生成时的已知输入及追加来源，不预设声明已解决，也不猜测未提供的外部记录。\n[{\"after_section_hash\":\"e77495e6aea03d35fdb25e6c42368927058049fc533ba64747b11bfd11378c59\",\"after_source\":{\"context_hash\":\"fb760e2dbf96f67201c8e528c105e28f3cdd1761f18ee03747af6e201dc3ccdb\",\"identity_hash\":\"dc62587a164569aef546752bb30dfc0ef27df6cd2120cce786cb111b2e31e5c6\",\"input_key\":\"runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/dc62587a164569aef546752b/input.json\",\"input_sha256\":\"c420a353ea6fc5b3f904ce4a99bc66bc567f806e502d28ba3f2abd35d4b47b1a\"},\"before_section_hash\":\"e3d0de0ce7eea23056024fdc7fce3e66153236d2eb8d6fdd76ca9a6016b6ed1b\",\"before_source\":{\"context_hash\":\"6c3a02c0834d7d11a7753bbe184b96fa50bb1523e08c16c2b69fbcb4ac242367\",\"identity_hash\":\"070479dfd8488adce65a251acc5aeea06150b06658bebebffe0533b35edcde9a\",\"input_key\":\"runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/070479dfd8488adce65a251a/input.json\",\"input_sha256\":\"41bbd576663b481ef4e4cfc2553cccd151b9e14d4b15537f5d1e9ca1af39455a\"},\"declaration\":{\"original_sha256\":\"2490c62126ff2c269735a9861caadc8b95c0defa23f979fccf6fd41e6069f933\",\"original_text\":\"关于 S03.U07 的决定系数，正文按 TSS=14/3、RSS=1/6 逐步计算得到 27/28，现有 S03.C01 也核对为 27/28；另有一条未提供完整表达式的记录声称结果为 29/28，无法据此定位或复现冲突，因此该核查记录的来源与预期值仍需外部确认。\",\"source_index\":1,\"uncertainty_id\":\"D002-2490c62126ff2c26\",\"unit_id\":null},\"ordinary_context_source\":{\"key\":\"runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/070479dfd8488adce65a251a/ordinary-context.json\",\"sha256\":\"5dbafe5b751dfee69cd643de5293c9f8fc17f9047ceef8a745c115ad4f1b88ba\"},\"ordinary_issues\":[{\"evidence\":\"S03.U07明确给出 TSS=14/3、RSS=1/6，并计算 R^2=1-(1/6)/(14/3)=1-1/28=27/28；当前 tool_checks 对 S03.C01 也记录 result=27/28、status=PASS。另一方面，local_recovery.unresolved_issues 保留了一条针对同一 S03.U07/S03.C01 的开放记录，称工具结果为 29/28，且未提供可复现的完整表达式。按实际正文逐步计算，27/28是正确结果，因此目前不能据此判定正文数学错误，但两份核查记录仍未统一。\",\"message\":\"正文中的决定系数计算本身一致，但提供的核查证据存在未解释的冲突，需确认所使用的完整自动核查输入或预期值。\",\"severity\":\"review\",\"unit_id\":\"S03.U07\"},{\"evidence\":\"S03.U07直接写“解释平方和为 ESS=TSS-RSS”，但 S03.U02、S03.U04 及本单元此前未单独定义 ESS；S03.U04只写出拟合值离差平方和的展开式，未将其命名为 ESS。计算结论仍可由平方和分解推出。\",\"message\":\"建议在首次使用 ESS 时明确给出其定义或说明它只是“解释平方和”这一名称的记号，以避免与本节正式定义的 TSS、RSS 和 R^2 混淆。\",\"severity\":\"warning\",\"unit_id\":\"S03.U07\"}],\"ordinary_review_source\":{\"key\":\"runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/070479dfd8488adce65a251a/ordinary-review.json\",\"sha256\":\"a79200791bd7522f5a39027e1af41317882947983af758cc8d97c71998b832a3\"},\"patch\":{\"content\":{\"calculation_additions\":[],\"calculation_limitations_append\":[\"现有受支持的等式核算只能核对 S03.C01 中明确提交的 AST（结果为 27/28），不能复现或解释未提供完整表达式的 29/28 记录；因此工具核算无法覆盖两份历史核查记录之间的 provenance 冲突。\"],\"calculation_updates\":[],\"replacements\":[{\"tex\":\"样本均值为\\n\\\\[\\n\\\\bar y=\\\\frac{2+3+5}{3}=\\\\frac{10}{3}.\\n\\\\]\\n因此总平方和为\\n\\\\[\\n\\\\begin{aligned}\\n\\\\operatorname{TSS}\\n&=\\\\left(2-\\\\frac{10}{3}\\\\right)^2\\n+\\\\left(3-\\\\frac{10}{3}\\\\right)^2\\n+\\\\left(5-\\\\frac{10}{3}\\\\right)^2\\\\\\\\\\n&=\\\\left(-\\\\frac{4}{3}\\\\right)^2\\n+\\\\left(-\\\\frac{1}{3}\\\\right)^2\\n+\\\\left(\\\\frac{5}{3}\\\\right)^2\\n=\\\\frac{14}{3}.\\n\\\\end{aligned}\\n\\\\]\\n残差为\\n\\\\[\\n\\\\hat e_1=2-\\\\frac{11}{6}=\\\\frac{1}{6},\\n\\\\qquad\\n\\\\hat e_2=3-\\\\frac{10}{3}=-\\\\frac{1}{3},\\n\\\\qquad\\n\\\\hat e_3=5-\\\\frac{29}{6}=\\\\frac{1}{6}.\\n\\\\]\\n它们的和为\\n\\\\[\\n\\\\hat e_1+\\\\hat e_2+\\\\hat e_3\\n=\\\\frac{1}{6}-\\\\frac{1}{3}+\\\\frac{1}{6}=0.\\n\\\\]\\n残差平方和为\\n\\\\[\\n\\\\operatorname{RSS}\\n=\\\\left(\\\\frac{1}{6}\\\\right)^2\\n+\\\\left(-\\\\frac{1}{3}\\\\right)^2\\n+\\\\left(\\\\frac{1}{6}\\\\right)^2\\n=\\\\frac{1}{6}.\\n\\\\]\\n由平方和分解，解释平方和为\\n\\\\[\\n\\\\operatorname{ESS}=\\\\operatorname{TSS}-\\\\operatorname{RSS}\\n=\\\\frac{14}{3}-\\\\frac{1}{6}=\\\\frac{9}{2}.\\n\\\\]\\n所以决定系数为\\n\\\\[\\nR^2=1-\\\\frac{1/6}{14/3}\\n=1-\\\\frac{1}{28}\\n=\\\\frac{27}{28}.\\n\\\\]\\n这表示在该样本中，广告支出与销售额的线性拟合相对于只用样本均值预测销售额，减少了 $27/28$ 的平方误差。这个数值描述的是样本内的拟合程度，不能单独证明广告支出对销售额具有因果影响，也不能保证对样本区间之外的数据同样准确。\\n\\n还应注意异常观测的影响：若某一年销售额明显偏离总体趋势，它可能对斜率、拟合直线和残差平方和产生较大影响，从而显著改变 $R^2$。因此，较高的 $R^2$ 不一定表示所有观测都被同样良好地解释，分析时应检查是否存在离群观测，并结合数据背景判断其原因。\",\"unit_id\":\"S03.U07\"}],\"section_id\":\"S03\",\"uncertainties_append\":[\"关于 S03.U07 的决定系数，正文按 TSS=14/3、RSS=1/6 逐步计算得到 27/28，现有 S03.C01 也核对为 27/28；另有一条未提供完整表达式的记录声称结果为 29/28，无法据此定位或复现冲突，因此该核查记录的来源与预期值仍需外部确认。\"]},\"key\":\"b/63380f6a1ebf40df/sS03_37e6e60e592e/repair-5-patch.json\",\"sha256\":\"83a8aebbb0b8c21167c60bbba596039e5f2e53cc95bba9a2043bc13f630a8245\"},\"prior_unresolved_issues\":[{\"location\":{\"calculation_id\":\"S03.C01\",\"unit_id\":\"S03.U07\"},\"message\":\"在声明假设下符号结果与预期不一致。\",\"resolution_status\":\"open\",\"rule_id\":\"SYMBOLIC_COUNTERCHECK_FAILED\",\"severity\":\"blocking\"},{\"evidence\":\"S03.U07 明确写出 $\\\\operatorname{TSS}=14/3$、$\\\\operatorname{RSS}=1/6$，并计算 $R^2=1-\\\\frac{1/6}{14/3}=1-\\\\frac{1}{28}=\\\\frac{27}{28}$。同时，tool_checks 对 S03.C01 报告 symbolic_check_failed，result 为 $29/28$，但未提供足以复现该结果的完整输入表达式。\",\"message\":\"工具检查报告的结果与正文中的决定系数计算不一致，需核对该检查所使用的完整表达式或预期值。按正文逐步计算，结论 $R^2=27/28$ 是一致的：$\\\\operatorname{TSS}=14/3$、$\\\\operatorname{RSS}=1/6$，故 $1-(1/6)/(14/3)=1-1/28=27/28$；工具报告的结果 $29/28$ 无法由正文所示公式得到。因此目前不能将其判定为正文数学错误，但该自动核查不一致尚未解释。\",\"severity\":\"review\",\"unit_id\":\"S03.U07\"}]}]"
+          }
+        ],
+        "remaining_dependency": false,
+        "repair_instruction": null
+      }
+    ],
+    "limitations": [
+      "本评估依据当前 S03.U01–S03.U09、所提供的 S02 先修材料及显式核算记录；未进行教师验收或外部 provenance 核验。",
+      "当前符号核算能够确认提交的 $27/28$ 表达式，但不能确认历史 $29/28$ 记录的完整输入、来源或预期值。",
+      "普通审阅和有限符号核算不能替代整份讲义的形式化证明。"
+    ]
+  },
+  "adjudication": {
+    "decisions": [
+      {
+        "issue_id": "I001",
+        "issue_hash": "a7fa731beacbccda5f0a369cb65ec260b00f5c8e6d343a3b60cf369b68a20792",
+        "disposition": "withdraw_provenance_only",
+        "reason": "离线受控裁定：已逐字核对固定原始补丁、前后核算输入及当前正文，本裁定不构成教师验收。",
+        "provenance_only": true,
+        "remaining_mathematical_concern": false,
+        "evidence": [
+          {
+            "source_key": "current:S03.U07",
+            "source_sha256": "ff23522a1ec3c0cc4fb3cfffea4ee508cc1e75dedccb3d77fbf81cf70f17965c",
+            "quote": "样本均值为\n\\[\n\\bar y=\\frac{2+3+5}{3}=\\frac{10}{3}.\n\\]\n因此总平方和为\n\\[\n\\begin{aligned}\n\\operatorname{TSS}\n&=\\left(2-\\frac{10}{3}\\right)^2\n+\\left(3-\\frac{10}{3}\\right)^2\n+\\left(5-\\frac{10}{3}\\right)^2\\\\\n&=\\left(-\\frac{4}{3}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{5}{3}\\right)^2\n=\\frac{14}{3}.\n\\end{aligned}\n\\]\n残差为\n\\[\n\\hat e_1=2-\\frac{11}{6}=\\frac{1}{6},\n\\qquad\n\\hat e_2=3-\\frac{10}{3}=-\\frac{1}{3},\n\\qquad\n\\hat e_3=5-\\frac{29}{6}=\\frac{1}{6}.\n\\]\n它们的和为\n\\[\n\\hat e_1+\\hat e_2+\\hat e_3\n=\\frac{1}{6}-\\frac{1}{3}+\\frac{1}{6}=0.\n\\]\n残差平方和为\n\\[\n\\operatorname{RSS}\n=\\left(\\frac{1}{6}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{1}{6}\\right)^2\n=\\frac{1}{6}.\n\\]\n由平方和分解，解释平方和为\n\\[\n\\operatorname{ESS}=\\operatorname{TSS}-\\operatorname{RSS}\n=\\frac{14}{3}-\\frac{1}{6}=\\frac{9}{2}.\n\\]\n所以决定系数为\n\\[\nR^2=1-\\frac{1/6}{14/3}\n=1-\\frac{1}{28}\n=\\frac{27}{28}.\n\\]\n这表示在该样本中，广告支出与销售额的线性拟合相对于只用样本均值预测销售额，减少了 $27/28$ 的平方误差。这个数值描述的是样本内的拟合程度，不能单独证明广告支出对销售额具有因果影响，也不能保证对样本区间之外的数据同样准确。\n\n还应注意异常观测的影响：若某一年销售额明显偏离总体趋势，它可能对斜率、拟合直线和残差平方和产生较大影响，从而显著改变 $R^2$。因此，较高的 $R^2$ 不一定表示所有观测都被同样良好地解释，分析时应检查是否存在离群观测，并结合数据背景判断其原因。"
+          },
+          {
+            "source_key": "calculation:76e112fce3c5ec12cb8132ff368d94993cd3c148d6e2f5730cffb26cf16bd2c0",
+            "source_sha256": "cd4fbe38787b973015e7a81650a8c0f466ad8861559fc78a159f2dd2a0749fc9",
+            "quote": "核算修正的可复核归档证据；这不是讲义正文，也不是教师验收。\n核算编号：S03.C01；所属实际单元：S03.U07。\n下面给出产生历史结果的完整旧请求，以及当前请求；两者仅 lhs 表达式不同，其余字段相同。\n历史完整请求（JSON AST）：{\"assumptions\":{},\"id\":\"S03.C01\",\"kind\":\"equivalence\",\"lhs\":{\"args\":[{\"op\":\"Integer\",\"value\":1},{\"args\":[{\"op\":\"Rational\",\"p\":1,\"q\":6},{\"args\":[{\"op\":\"Rational\",\"p\":14,\"q\":3},{\"op\":\"Integer\",\"value\":-1}],\"op\":\"Pow\"}],\"op\":\"Mul\"}],\"op\":\"Add\"},\"rhs\":{\"op\":\"Rational\",\"p\":27,\"q\":28},\"unit_id\":\"S03.U07\"}\n历史归档核算：FAIL；结果 \"29/28\"。完整证据：{\"assumptions\":{},\"calculation_id\":\"S03.C01\",\"evidence_type\":\"symbolic_check_failed\",\"kind\":\"equivalence\",\"message\":\"在声明假设下符号结果与预期不一致。\",\"result\":\"29/28\",\"status\":\"FAIL\",\"tool\":\"SymPy\",\"tool_version\":\"1.14.0\",\"unit_id\":\"S03.U07\"}\n对该旧请求独立重放：FAIL；结果 \"29/28\"。完整证据：{\"assumptions\":{},\"calculation_id\":\"S03.C01\",\"evidence_type\":\"symbolic_check_failed\",\"kind\":\"equivalence\",\"message\":\"在声明假设下符号结果与预期不一致。\",\"result\":\"29/28\",\"status\":\"FAIL\",\"tool\":\"SymPy\",\"tool_version\":\"1.14.0\",\"unit_id\":\"S03.U07\"}\n当前完整请求（JSON AST）：{\"assumptions\":{},\"id\":\"S03.C01\",\"kind\":\"equivalence\",\"lhs\":{\"args\":[{\"op\":\"Integer\",\"value\":1},{\"args\":[{\"op\":\"Integer\",\"value\":-1},{\"args\":[{\"op\":\"Rational\",\"p\":1,\"q\":6},{\"args\":[{\"op\":\"Rational\",\"p\":14,\"q\":3},{\"op\":\"Integer\",\"value\":-1}],\"op\":\"Pow\"}],\"op\":\"Mul\"}],\"op\":\"Mul\"}],\"op\":\"Add\"},\"rhs\":{\"op\":\"Rational\",\"p\":27,\"q\":28},\"unit_id\":\"S03.U07\"}\n当前核算：PASS；结果 \"27/28\"。完整证据：{\"assumptions\":{},\"calculation_id\":\"S03.C01\",\"evidence_type\":\"symbolic_check_passed\",\"kind\":\"equivalence\",\"message\":\"在声明假设下符号结果与预期完全一致。\",\"result\":\"27/28\",\"status\":\"PASS\",\"tool\":\"SymPy\",\"tool_version\":\"1.14.0\",\"unit_id\":\"S03.U07\"}\n旧请求的冻结输入来源（归档路径、原始文件 SHA256、身份及上下文 SHA256）：{\"context_hash\":\"b4249b8a769ed15a42d7b5441a88308375387f8369c428c91d76885cc537acf0\",\"identity_hash\":\"6cf90e694a11780fdcf7e11b28f322a2450c00151b8d426d7807bd48da035de4\",\"input_key\":\"runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/6cf90e694a11780fdcf7e11b/input.json\",\"input_sha256\":\"d87d05b456786ad2a2ec0d9148f82905dfb60c70e588951038c8dfd95a19158c\"}\n历史 FAIL 记录完整保留，针对的是上述旧请求，并非当前请求的第二个核算结果。\n本记录只证明这两项具体核算的输入、结果及历史来源；不自动消除任何疑点，也不证明整份正文正确。\n保留声明的内部生成来源：以下原始补丁逐字追加了该声明；将已固定 SHA 的补丁应用于已注册的前稿，精确得到已注册的后稿。所列问题是该前稿审阅实际收到的历史未决问题与实际返回的问题。这提供声明生成时的已知输入及追加来源，不预设声明已解决，也不猜测未提供的外部记录。\n[{\"after_section_hash\":\"e77495e6aea03d35fdb25e6c42368927058049fc533ba64747b11bfd11378c59\",\"after_source\":{\"context_hash\":\"fb760e2dbf96f67201c8e528c105e28f3cdd1761f18ee03747af6e201dc3ccdb\",\"identity_hash\":\"dc62587a164569aef546752bb30dfc0ef27df6cd2120cce786cb111b2e31e5c6\",\"input_key\":\"runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/dc62587a164569aef546752b/input.json\",\"input_sha256\":\"c420a353ea6fc5b3f904ce4a99bc66bc567f806e502d28ba3f2abd35d4b47b1a\"},\"before_section_hash\":\"e3d0de0ce7eea23056024fdc7fce3e66153236d2eb8d6fdd76ca9a6016b6ed1b\",\"before_source\":{\"context_hash\":\"6c3a02c0834d7d11a7753bbe184b96fa50bb1523e08c16c2b69fbcb4ac242367\",\"identity_hash\":\"070479dfd8488adce65a251acc5aeea06150b06658bebebffe0533b35edcde9a\",\"input_key\":\"runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/070479dfd8488adce65a251a/input.json\",\"input_sha256\":\"41bbd576663b481ef4e4cfc2553cccd151b9e14d4b15537f5d1e9ca1af39455a\"},\"declaration\":{\"original_sha256\":\"2490c62126ff2c269735a9861caadc8b95c0defa23f979fccf6fd41e6069f933\",\"original_text\":\"关于 S03.U07 的决定系数，正文按 TSS=14/3、RSS=1/6 逐步计算得到 27/28，现有 S03.C01 也核对为 27/28；另有一条未提供完整表达式的记录声称结果为 29/28，无法据此定位或复现冲突，因此该核查记录的来源与预期值仍需外部确认。\",\"source_index\":1,\"uncertainty_id\":\"D002-2490c62126ff2c26\",\"unit_id\":null},\"ordinary_context_source\":{\"key\":\"runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/070479dfd8488adce65a251a/ordinary-context.json\",\"sha256\":\"5dbafe5b751dfee69cd643de5293c9f8fc17f9047ceef8a745c115ad4f1b88ba\"},\"ordinary_issues\":[{\"evidence\":\"S03.U07明确给出 TSS=14/3、RSS=1/6，并计算 R^2=1-(1/6)/(14/3)=1-1/28=27/28；当前 tool_checks 对 S03.C01 也记录 result=27/28、status=PASS。另一方面，local_recovery.unresolved_issues 保留了一条针对同一 S03.U07/S03.C01 的开放记录，称工具结果为 29/28，且未提供可复现的完整表达式。按实际正文逐步计算，27/28是正确结果，因此目前不能据此判定正文数学错误，但两份核查记录仍未统一。\",\"message\":\"正文中的决定系数计算本身一致，但提供的核查证据存在未解释的冲突，需确认所使用的完整自动核查输入或预期值。\",\"severity\":\"review\",\"unit_id\":\"S03.U07\"},{\"evidence\":\"S03.U07直接写“解释平方和为 ESS=TSS-RSS”，但 S03.U02、S03.U04 及本单元此前未单独定义 ESS；S03.U04只写出拟合值离差平方和的展开式，未将其命名为 ESS。计算结论仍可由平方和分解推出。\",\"message\":\"建议在首次使用 ESS 时明确给出其定义或说明它只是“解释平方和”这一名称的记号，以避免与本节正式定义的 TSS、RSS 和 R^2 混淆。\",\"severity\":\"warning\",\"unit_id\":\"S03.U07\"}],\"ordinary_review_source\":{\"key\":\"runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/070479dfd8488adce65a251a/ordinary-review.json\",\"sha256\":\"a79200791bd7522f5a39027e1af41317882947983af758cc8d97c71998b832a3\"},\"patch\":{\"content\":{\"calculation_additions\":[],\"calculation_limitations_append\":[\"现有受支持的等式核算只能核对 S03.C01 中明确提交的 AST（结果为 27/28），不能复现或解释未提供完整表达式的 29/28 记录；因此工具核算无法覆盖两份历史核查记录之间的 provenance 冲突。\"],\"calculation_updates\":[],\"replacements\":[{\"tex\":\"样本均值为\\n\\\\[\\n\\\\bar y=\\\\frac{2+3+5}{3}=\\\\frac{10}{3}.\\n\\\\]\\n因此总平方和为\\n\\\\[\\n\\\\begin{aligned}\\n\\\\operatorname{TSS}\\n&=\\\\left(2-\\\\frac{10}{3}\\\\right)^2\\n+\\\\left(3-\\\\frac{10}{3}\\\\right)^2\\n+\\\\left(5-\\\\frac{10}{3}\\\\right)^2\\\\\\\\\\n&=\\\\left(-\\\\frac{4}{3}\\\\right)^2\\n+\\\\left(-\\\\frac{1}{3}\\\\right)^2\\n+\\\\left(\\\\frac{5}{3}\\\\right)^2\\n=\\\\frac{14}{3}.\\n\\\\end{aligned}\\n\\\\]\\n残差为\\n\\\\[\\n\\\\hat e_1=2-\\\\frac{11}{6}=\\\\frac{1}{6},\\n\\\\qquad\\n\\\\hat e_2=3-\\\\frac{10}{3}=-\\\\frac{1}{3},\\n\\\\qquad\\n\\\\hat e_3=5-\\\\frac{29}{6}=\\\\frac{1}{6}.\\n\\\\]\\n它们的和为\\n\\\\[\\n\\\\hat e_1+\\\\hat e_2+\\\\hat e_3\\n=\\\\frac{1}{6}-\\\\frac{1}{3}+\\\\frac{1}{6}=0.\\n\\\\]\\n残差平方和为\\n\\\\[\\n\\\\operatorname{RSS}\\n=\\\\left(\\\\frac{1}{6}\\\\right)^2\\n+\\\\left(-\\\\frac{1}{3}\\\\right)^2\\n+\\\\left(\\\\frac{1}{6}\\\\right)^2\\n=\\\\frac{1}{6}.\\n\\\\]\\n由平方和分解，解释平方和为\\n\\\\[\\n\\\\operatorname{ESS}=\\\\operatorname{TSS}-\\\\operatorname{RSS}\\n=\\\\frac{14}{3}-\\\\frac{1}{6}=\\\\frac{9}{2}.\\n\\\\]\\n所以决定系数为\\n\\\\[\\nR^2=1-\\\\frac{1/6}{14/3}\\n=1-\\\\frac{1}{28}\\n=\\\\frac{27}{28}.\\n\\\\]\\n这表示在该样本中，广告支出与销售额的线性拟合相对于只用样本均值预测销售额，减少了 $27/28$ 的平方误差。这个数值描述的是样本内的拟合程度，不能单独证明广告支出对销售额具有因果影响，也不能保证对样本区间之外的数据同样准确。\\n\\n还应注意异常观测的影响：若某一年销售额明显偏离总体趋势，它可能对斜率、拟合直线和残差平方和产生较大影响，从而显著改变 $R^2$。因此，较高的 $R^2$ 不一定表示所有观测都被同样良好地解释，分析时应检查是否存在离群观测，并结合数据背景判断其原因。\",\"unit_id\":\"S03.U07\"}],\"section_id\":\"S03\",\"uncertainties_append\":[\"关于 S03.U07 的决定系数，正文按 TSS=14/3、RSS=1/6 逐步计算得到 27/28，现有 S03.C01 也核对为 27/28；另有一条未提供完整表达式的记录声称结果为 29/28，无法据此定位或复现冲突，因此该核查记录的来源与预期值仍需外部确认。\"]},\"key\":\"b/63380f6a1ebf40df/sS03_37e6e60e592e/repair-5-patch.json\",\"sha256\":\"83a8aebbb0b8c21167c60bbba596039e5f2e53cc95bba9a2043bc13f630a8245\"},\"prior_unresolved_issues\":[{\"location\":{\"calculation_id\":\"S03.C01\",\"unit_id\":\"S03.U07\"},\"message\":\"在声明假设下符号结果与预期不一致。\",\"resolution_status\":\"open\",\"rule_id\":\"SYMBOLIC_COUNTERCHECK_FAILED\",\"severity\":\"blocking\"},{\"evidence\":\"S03.U07 明确写出 $\\\\operatorname{TSS}=14/3$、$\\\\operatorname{RSS}=1/6$，并计算 $R^2=1-\\\\frac{1/6}{14/3}=1-\\\\frac{1}{28}=\\\\frac{27}{28}$。同时，tool_checks 对 S03.C01 报告 symbolic_check_failed，result 为 $29/28$，但未提供足以复现该结果的完整输入表达式。\",\"message\":\"工具检查报告的结果与正文中的决定系数计算不一致，需核对该检查所使用的完整表达式或预期值。按正文逐步计算，结论 $R^2=27/28$ 是一致的：$\\\\operatorname{TSS}=14/3$、$\\\\operatorname{RSS}=1/6$，故 $1-(1/6)/(14/3)=1-1/28=27/28$；工具报告的结果 $29/28$ 无法由正文所示公式得到。因此目前不能将其判定为正文数学错误，但该自动核查不一致尚未解释。\",\"severity\":\"review\",\"unit_id\":\"S03.U07\"}]}]"
+          }
+        ]
+      },
+      {
+        "issue_id": "I005",
+        "issue_hash": "29fd7c10d3a4af30457fa22257a89691045a3b34750d375247cbb28de1bd65a7",
+        "disposition": "withdraw_provenance_only",
+        "reason": "离线受控裁定：已逐字核对固定原始补丁、前后核算输入及当前正文，本裁定不构成教师验收。",
+        "provenance_only": true,
+        "remaining_mathematical_concern": false,
+        "evidence": [
+          {
+            "source_key": "current:S03.U07",
+            "source_sha256": "ff23522a1ec3c0cc4fb3cfffea4ee508cc1e75dedccb3d77fbf81cf70f17965c",
+            "quote": "样本均值为\n\\[\n\\bar y=\\frac{2+3+5}{3}=\\frac{10}{3}.\n\\]\n因此总平方和为\n\\[\n\\begin{aligned}\n\\operatorname{TSS}\n&=\\left(2-\\frac{10}{3}\\right)^2\n+\\left(3-\\frac{10}{3}\\right)^2\n+\\left(5-\\frac{10}{3}\\right)^2\\\\\n&=\\left(-\\frac{4}{3}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{5}{3}\\right)^2\n=\\frac{14}{3}.\n\\end{aligned}\n\\]\n残差为\n\\[\n\\hat e_1=2-\\frac{11}{6}=\\frac{1}{6},\n\\qquad\n\\hat e_2=3-\\frac{10}{3}=-\\frac{1}{3},\n\\qquad\n\\hat e_3=5-\\frac{29}{6}=\\frac{1}{6}.\n\\]\n它们的和为\n\\[\n\\hat e_1+\\hat e_2+\\hat e_3\n=\\frac{1}{6}-\\frac{1}{3}+\\frac{1}{6}=0.\n\\]\n残差平方和为\n\\[\n\\operatorname{RSS}\n=\\left(\\frac{1}{6}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{1}{6}\\right)^2\n=\\frac{1}{6}.\n\\]\n由平方和分解，解释平方和为\n\\[\n\\operatorname{ESS}=\\operatorname{TSS}-\\operatorname{RSS}\n=\\frac{14}{3}-\\frac{1}{6}=\\frac{9}{2}.\n\\]\n所以决定系数为\n\\[\nR^2=1-\\frac{1/6}{14/3}\n=1-\\frac{1}{28}\n=\\frac{27}{28}.\n\\]\n这表示在该样本中，广告支出与销售额的线性拟合相对于只用样本均值预测销售额，减少了 $27/28$ 的平方误差。这个数值描述的是样本内的拟合程度，不能单独证明广告支出对销售额具有因果影响，也不能保证对样本区间之外的数据同样准确。\n\n还应注意异常观测的影响：若某一年销售额明显偏离总体趋势，它可能对斜率、拟合直线和残差平方和产生较大影响，从而显著改变 $R^2$。因此，较高的 $R^2$ 不一定表示所有观测都被同样良好地解释，分析时应检查是否存在离群观测，并结合数据背景判断其原因。"
+          },
+          {
+            "source_key": "calculation:76e112fce3c5ec12cb8132ff368d94993cd3c148d6e2f5730cffb26cf16bd2c0",
+            "source_sha256": "cd4fbe38787b973015e7a81650a8c0f466ad8861559fc78a159f2dd2a0749fc9",
+            "quote": "核算修正的可复核归档证据；这不是讲义正文，也不是教师验收。\n核算编号：S03.C01；所属实际单元：S03.U07。\n下面给出产生历史结果的完整旧请求，以及当前请求；两者仅 lhs 表达式不同，其余字段相同。\n历史完整请求（JSON AST）：{\"assumptions\":{},\"id\":\"S03.C01\",\"kind\":\"equivalence\",\"lhs\":{\"args\":[{\"op\":\"Integer\",\"value\":1},{\"args\":[{\"op\":\"Rational\",\"p\":1,\"q\":6},{\"args\":[{\"op\":\"Rational\",\"p\":14,\"q\":3},{\"op\":\"Integer\",\"value\":-1}],\"op\":\"Pow\"}],\"op\":\"Mul\"}],\"op\":\"Add\"},\"rhs\":{\"op\":\"Rational\",\"p\":27,\"q\":28},\"unit_id\":\"S03.U07\"}\n历史归档核算：FAIL；结果 \"29/28\"。完整证据：{\"assumptions\":{},\"calculation_id\":\"S03.C01\",\"evidence_type\":\"symbolic_check_failed\",\"kind\":\"equivalence\",\"message\":\"在声明假设下符号结果与预期不一致。\",\"result\":\"29/28\",\"status\":\"FAIL\",\"tool\":\"SymPy\",\"tool_version\":\"1.14.0\",\"unit_id\":\"S03.U07\"}\n对该旧请求独立重放：FAIL；结果 \"29/28\"。完整证据：{\"assumptions\":{},\"calculation_id\":\"S03.C01\",\"evidence_type\":\"symbolic_check_failed\",\"kind\":\"equivalence\",\"message\":\"在声明假设下符号结果与预期不一致。\",\"result\":\"29/28\",\"status\":\"FAIL\",\"tool\":\"SymPy\",\"tool_version\":\"1.14.0\",\"unit_id\":\"S03.U07\"}\n当前完整请求（JSON AST）：{\"assumptions\":{},\"id\":\"S03.C01\",\"kind\":\"equivalence\",\"lhs\":{\"args\":[{\"op\":\"Integer\",\"value\":1},{\"args\":[{\"op\":\"Integer\",\"value\":-1},{\"args\":[{\"op\":\"Rational\",\"p\":1,\"q\":6},{\"args\":[{\"op\":\"Rational\",\"p\":14,\"q\":3},{\"op\":\"Integer\",\"value\":-1}],\"op\":\"Pow\"}],\"op\":\"Mul\"}],\"op\":\"Mul\"}],\"op\":\"Add\"},\"rhs\":{\"op\":\"Rational\",\"p\":27,\"q\":28},\"unit_id\":\"S03.U07\"}\n当前核算：PASS；结果 \"27/28\"。完整证据：{\"assumptions\":{},\"calculation_id\":\"S03.C01\",\"evidence_type\":\"symbolic_check_passed\",\"kind\":\"equivalence\",\"message\":\"在声明假设下符号结果与预期完全一致。\",\"result\":\"27/28\",\"status\":\"PASS\",\"tool\":\"SymPy\",\"tool_version\":\"1.14.0\",\"unit_id\":\"S03.U07\"}\n旧请求的冻结输入来源（归档路径、原始文件 SHA256、身份及上下文 SHA256）：{\"context_hash\":\"b4249b8a769ed15a42d7b5441a88308375387f8369c428c91d76885cc537acf0\",\"identity_hash\":\"6cf90e694a11780fdcf7e11b28f322a2450c00151b8d426d7807bd48da035de4\",\"input_key\":\"runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/6cf90e694a11780fdcf7e11b/input.json\",\"input_sha256\":\"d87d05b456786ad2a2ec0d9148f82905dfb60c70e588951038c8dfd95a19158c\"}\n历史 FAIL 记录完整保留，针对的是上述旧请求，并非当前请求的第二个核算结果。\n本记录只证明这两项具体核算的输入、结果及历史来源；不自动消除任何疑点，也不证明整份正文正确。\n保留声明的内部生成来源：以下原始补丁逐字追加了该声明；将已固定 SHA 的补丁应用于已注册的前稿，精确得到已注册的后稿。所列问题是该前稿审阅实际收到的历史未决问题与实际返回的问题。这提供声明生成时的已知输入及追加来源，不预设声明已解决，也不猜测未提供的外部记录。\n[{\"after_section_hash\":\"e77495e6aea03d35fdb25e6c42368927058049fc533ba64747b11bfd11378c59\",\"after_source\":{\"context_hash\":\"fb760e2dbf96f67201c8e528c105e28f3cdd1761f18ee03747af6e201dc3ccdb\",\"identity_hash\":\"dc62587a164569aef546752bb30dfc0ef27df6cd2120cce786cb111b2e31e5c6\",\"input_key\":\"runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/dc62587a164569aef546752b/input.json\",\"input_sha256\":\"c420a353ea6fc5b3f904ce4a99bc66bc567f806e502d28ba3f2abd35d4b47b1a\"},\"before_section_hash\":\"e3d0de0ce7eea23056024fdc7fce3e66153236d2eb8d6fdd76ca9a6016b6ed1b\",\"before_source\":{\"context_hash\":\"6c3a02c0834d7d11a7753bbe184b96fa50bb1523e08c16c2b69fbcb4ac242367\",\"identity_hash\":\"070479dfd8488adce65a251acc5aeea06150b06658bebebffe0533b35edcde9a\",\"input_key\":\"runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/070479dfd8488adce65a251a/input.json\",\"input_sha256\":\"41bbd576663b481ef4e4cfc2553cccd151b9e14d4b15537f5d1e9ca1af39455a\"},\"declaration\":{\"original_sha256\":\"2490c62126ff2c269735a9861caadc8b95c0defa23f979fccf6fd41e6069f933\",\"original_text\":\"关于 S03.U07 的决定系数，正文按 TSS=14/3、RSS=1/6 逐步计算得到 27/28，现有 S03.C01 也核对为 27/28；另有一条未提供完整表达式的记录声称结果为 29/28，无法据此定位或复现冲突，因此该核查记录的来源与预期值仍需外部确认。\",\"source_index\":1,\"uncertainty_id\":\"D002-2490c62126ff2c26\",\"unit_id\":null},\"ordinary_context_source\":{\"key\":\"runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/070479dfd8488adce65a251a/ordinary-context.json\",\"sha256\":\"5dbafe5b751dfee69cd643de5293c9f8fc17f9047ceef8a745c115ad4f1b88ba\"},\"ordinary_issues\":[{\"evidence\":\"S03.U07明确给出 TSS=14/3、RSS=1/6，并计算 R^2=1-(1/6)/(14/3)=1-1/28=27/28；当前 tool_checks 对 S03.C01 也记录 result=27/28、status=PASS。另一方面，local_recovery.unresolved_issues 保留了一条针对同一 S03.U07/S03.C01 的开放记录，称工具结果为 29/28，且未提供可复现的完整表达式。按实际正文逐步计算，27/28是正确结果，因此目前不能据此判定正文数学错误，但两份核查记录仍未统一。\",\"message\":\"正文中的决定系数计算本身一致，但提供的核查证据存在未解释的冲突，需确认所使用的完整自动核查输入或预期值。\",\"severity\":\"review\",\"unit_id\":\"S03.U07\"},{\"evidence\":\"S03.U07直接写“解释平方和为 ESS=TSS-RSS”，但 S03.U02、S03.U04 及本单元此前未单独定义 ESS；S03.U04只写出拟合值离差平方和的展开式，未将其命名为 ESS。计算结论仍可由平方和分解推出。\",\"message\":\"建议在首次使用 ESS 时明确给出其定义或说明它只是“解释平方和”这一名称的记号，以避免与本节正式定义的 TSS、RSS 和 R^2 混淆。\",\"severity\":\"warning\",\"unit_id\":\"S03.U07\"}],\"ordinary_review_source\":{\"key\":\"runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/070479dfd8488adce65a251a/ordinary-review.json\",\"sha256\":\"a79200791bd7522f5a39027e1af41317882947983af758cc8d97c71998b832a3\"},\"patch\":{\"content\":{\"calculation_additions\":[],\"calculation_limitations_append\":[\"现有受支持的等式核算只能核对 S03.C01 中明确提交的 AST（结果为 27/28），不能复现或解释未提供完整表达式的 29/28 记录；因此工具核算无法覆盖两份历史核查记录之间的 provenance 冲突。\"],\"calculation_updates\":[],\"replacements\":[{\"tex\":\"样本均值为\\n\\\\[\\n\\\\bar y=\\\\frac{2+3+5}{3}=\\\\frac{10}{3}.\\n\\\\]\\n因此总平方和为\\n\\\\[\\n\\\\begin{aligned}\\n\\\\operatorname{TSS}\\n&=\\\\left(2-\\\\frac{10}{3}\\\\right)^2\\n+\\\\left(3-\\\\frac{10}{3}\\\\right)^2\\n+\\\\left(5-\\\\frac{10}{3}\\\\right)^2\\\\\\\\\\n&=\\\\left(-\\\\frac{4}{3}\\\\right)^2\\n+\\\\left(-\\\\frac{1}{3}\\\\right)^2\\n+\\\\left(\\\\frac{5}{3}\\\\right)^2\\n=\\\\frac{14}{3}.\\n\\\\end{aligned}\\n\\\\]\\n残差为\\n\\\\[\\n\\\\hat e_1=2-\\\\frac{11}{6}=\\\\frac{1}{6},\\n\\\\qquad\\n\\\\hat e_2=3-\\\\frac{10}{3}=-\\\\frac{1}{3},\\n\\\\qquad\\n\\\\hat e_3=5-\\\\frac{29}{6}=\\\\frac{1}{6}.\\n\\\\]\\n它们的和为\\n\\\\[\\n\\\\hat e_1+\\\\hat e_2+\\\\hat e_3\\n=\\\\frac{1}{6}-\\\\frac{1}{3}+\\\\frac{1}{6}=0.\\n\\\\]\\n残差平方和为\\n\\\\[\\n\\\\operatorname{RSS}\\n=\\\\left(\\\\frac{1}{6}\\\\right)^2\\n+\\\\left(-\\\\frac{1}{3}\\\\right)^2\\n+\\\\left(\\\\frac{1}{6}\\\\right)^2\\n=\\\\frac{1}{6}.\\n\\\\]\\n由平方和分解，解释平方和为\\n\\\\[\\n\\\\operatorname{ESS}=\\\\operatorname{TSS}-\\\\operatorname{RSS}\\n=\\\\frac{14}{3}-\\\\frac{1}{6}=\\\\frac{9}{2}.\\n\\\\]\\n所以决定系数为\\n\\\\[\\nR^2=1-\\\\frac{1/6}{14/3}\\n=1-\\\\frac{1}{28}\\n=\\\\frac{27}{28}.\\n\\\\]\\n这表示在该样本中，广告支出与销售额的线性拟合相对于只用样本均值预测销售额，减少了 $27/28$ 的平方误差。这个数值描述的是样本内的拟合程度，不能单独证明广告支出对销售额具有因果影响，也不能保证对样本区间之外的数据同样准确。\\n\\n还应注意异常观测的影响：若某一年销售额明显偏离总体趋势，它可能对斜率、拟合直线和残差平方和产生较大影响，从而显著改变 $R^2$。因此，较高的 $R^2$ 不一定表示所有观测都被同样良好地解释，分析时应检查是否存在离群观测，并结合数据背景判断其原因。\",\"unit_id\":\"S03.U07\"}],\"section_id\":\"S03\",\"uncertainties_append\":[\"关于 S03.U07 的决定系数，正文按 TSS=14/3、RSS=1/6 逐步计算得到 27/28，现有 S03.C01 也核对为 27/28；另有一条未提供完整表达式的记录声称结果为 29/28，无法据此定位或复现冲突，因此该核查记录的来源与预期值仍需外部确认。\"]},\"key\":\"b/63380f6a1ebf40df/sS03_37e6e60e592e/repair-5-patch.json\",\"sha256\":\"83a8aebbb0b8c21167c60bbba596039e5f2e53cc95bba9a2043bc13f630a8245\"},\"prior_unresolved_issues\":[{\"location\":{\"calculation_id\":\"S03.C01\",\"unit_id\":\"S03.U07\"},\"message\":\"在声明假设下符号结果与预期不一致。\",\"resolution_status\":\"open\",\"rule_id\":\"SYMBOLIC_COUNTERCHECK_FAILED\",\"severity\":\"blocking\"},{\"evidence\":\"S03.U07 明确写出 $\\\\operatorname{TSS}=14/3$、$\\\\operatorname{RSS}=1/6$，并计算 $R^2=1-\\\\frac{1/6}{14/3}=1-\\\\frac{1}{28}=\\\\frac{27}{28}$。同时，tool_checks 对 S03.C01 报告 symbolic_check_failed，result 为 $29/28$，但未提供足以复现该结果的完整输入表达式。\",\"message\":\"工具检查报告的结果与正文中的决定系数计算不一致，需核对该检查所使用的完整表达式或预期值。按正文逐步计算，结论 $R^2=27/28$ 是一致的：$\\\\operatorname{TSS}=14/3$、$\\\\operatorname{RSS}=1/6$，故 $1-(1/6)/(14/3)=1-1/28=27/28$；工具报告的结果 $29/28$ 无法由正文所示公式得到。因此目前不能将其判定为正文数学错误，但该自动核查不一致尚未解释。\",\"severity\":\"review\",\"unit_id\":\"S03.U07\"}]}]"
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "Offline injected provenance judgment only."
+    ]
+  },
+  "original_issues": [
+    {
+      "unit_id": "S03.U07",
+      "severity": "review",
+      "message": "当前正文的决定系数计算是正确且内部一致的，但历史核查记录仍保留一个结果为 29/28 的冲突记录。现有证据只能复现缺少负号的旧 AST 得到 29/28，并不能确认该旧 AST 就是那条未提供完整表达式的记录。因此数学正文目前没有由该记录直接证明的错误，但该核查来源冲突仍未在本节材料内消除。",
+      "evidence": "S03.U07逐步给出 TSS=14/3、RSS=1/6，并计算 R^2=1-(1/6)/(14/3)=27/28；当前 S03.C01 的完整 AST 也通过并得到 27/28。历史 AST 少了负号，独立重放得到 29/28；材料明确说明无法据此确认未定位记录的来源。"
+    },
+    {
+      "unit_id": "S03.U07",
+      "severity": "warning",
+      "message": "首次使用 ESS 时没有明确给出其作为拟合值离差平方和的定义，而是直接写成 ESS=TSS-RSS。虽然该数值可由已证明的平方和分解推出，且本节核心定义并未要求 ESS 作为独立概念，但建议明确写出 ESS=\\sum_i(\\hat y_i-\\bar y)^2，或说明本节将其定义为该名称的记号。",
+      "evidence": "S03.U04给出的是拟合值离差平方和的展开式但未命名为 ESS；S03.U07随后直接写“解释平方和为 ESS=TSS-RSS”，S03.U09也沿用该记号。"
+    },
+    {
+      "unit_id": "S03.U04",
+      "severity": "warning",
+      "message": "平方和分解定理的代数条件与最小二乘应用条件在同一单元中是分层给出的：定理先假设两个残差正交条件，证明后半段才借助上一节的列满秩含截距结论说明这些条件对最小二乘拟合成立。数学推导没有错误，但可在定理陈述中明确区分“抽象分解所需条件”和“最小二乘模型下这些条件成立的先决条件”，以免把含截距本身误读为自动足够条件。",
+      "evidence": "S03.U04的正式假设包括 \\sum_i\\hat e_i=0 与 \\sum_i\\hat e_i(\\hat y_i-\\bar y)=0；S03.U05随后才说明在上一节列满秩、含截距的最小二乘条件下可由正规方程推出这些关系。"
+    },
+    {
+      "unit_id": "S03.U09",
+      "severity": "warning",
+      "message": "练习答案中使用 ESS，但本节没有在定义单元中正式定义该记号。当前计算与题目数据一致：\\bar y=7/3、S_{xy}=3、S_{xx}=2、截距为 -2/3，且 TSS=ESS+RSS=14/3。建议与 S03.U07 一致补充 ESS 的明确含义，避免学生将 TSS-RSS 误认为未经定义的独立公式。",
+      "evidence": "S03.U09直接写 ESS=TSS-RSS=9/2，却未说明 ESS=\\sum_i(\\hat y_i-\\bar y)^2；其余计算经逐项代入核对无矛盾。"
+    },
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "关于 S03.U07 的决定系数，正文按 TSS=14/3、RSS=1/6 逐步计算得到 27/28，现有 S03.C01 也核对为 27/28；另有一条未提供完整表达式的记录声称结果为 29/28，无法据此定位或复现冲突，因此该核查记录的来源与预期值仍需外部确认。\n显式裁定：当前 S03.U07 已逐步给出 $\\operatorname{TSS}=14/3$、$\\operatorname{RSS}=1/6$ 以及 $R^2=27/28$，且当前核算请求与该表达式一致；因此正文中的决定系数计算缺口已补足。但历史材料仍保留一条声称结果为 $29/28$ 的记录，其完整输入或来源无法由当前正文、先修材料或当前核算请求定位。该 provenance 冲突需要外部核对或新的授权材料，现有批准范围不能合法补足，且没有可归属的当前正文单元。",
+      "location": {},
+      "uncertainty_id": "D002-2490c62126ff2c26",
+      "original_sha256": "2490c62126ff2c269735a9861caadc8b95c0defa23f979fccf6fd41e6069f933",
+      "resolution_status": "open",
+      "disposition": "open_dependency",
+      "disposition_evidence": [
+        {
+          "source_key": "current:S03.U07",
+          "source_sha256": "ff23522a1ec3c0cc4fb3cfffea4ee508cc1e75dedccb3d77fbf81cf70f17965c",
+          "quote": "残差平方和为\n\\[\n\\operatorname{RSS}\n=\\left(\\frac{1}{6}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{1}{6}\\right)^2\n=\\frac{1}{6}.\n\\]\n由平方和分解，解释平方和为\n\\[\n\\operatorname{ESS}=\\operatorname{TSS}-\\operatorname{RSS}\n=\\frac{14}{3}-\\frac{1}{6}=\\frac{9}{2}.\n\\]\n所以决定系数为\n\\[\nR^2=1-\\frac{1/6}{14/3}\n=1-\\frac{1}{28}\n=\\frac{27}{28}.\n\\]"
+        },
+        {
+          "source_key": "calculation:76e112fce3c5ec12cb8132ff368d94993cd3c148d6e2f5730cffb26cf16bd2c0",
+          "source_sha256": "cd4fbe38787b973015e7a81650a8c0f466ad8861559fc78a159f2dd2a0749fc9",
+          "quote": "历史归档核算：FAIL；结果 \"29/28\"。完整证据：{\"assumptions\":{},\"calculation_id\":\"S03.C01\",\"evidence_type\":\"symbolic_check_failed\",\"kind\":\"equivalence\",\"message\":\"在声明假设下符号结果与预期不一致。\",\"result\":\"29/28\",\"status\":\"FAIL\",\"tool\":\"SymPy\",\"tool_version\":\"1.14.0\",\"unit_id\":\"S03.U07\"}\n对该旧请求独立重放：FAIL；结果 \"29/28\"。完整证据：{\"assumptions\":{},\"calculation_id\":\"S03.C01\",\"evidence_type\":\"symbolic_check_failed\",\"kind\":\"equivalence\",\"message\":\"在声明假设下符号结果与预期不一致。\",\"result\":\"29/28\",\"status\":\"FAIL\",\"tool\":\"SymPy\",\"tool_version\":\"1.14.0\",\"unit_id\":\"S03.U07\"}"
+        },
+        {
+          "source_key": "calculation:76e112fce3c5ec12cb8132ff368d94993cd3c148d6e2f5730cffb26cf16bd2c0",
+          "source_sha256": "cd4fbe38787b973015e7a81650a8c0f466ad8861559fc78a159f2dd2a0749fc9",
+          "quote": "当前核算：PASS；结果 \"27/28\"。完整证据：{\"assumptions\":{},\"calculation_id\":\"S03.C01\",\"evidence_type\":\"symbolic_check_passed\",\"kind\":\"equivalence\",\"message\":\"在声明假设下符号结果与预期完全一致。\",\"result\":\"27/28\",\"status\":\"PASS\",\"tool\":\"SymPy\",\"tool_version\":\"1.14.0\",\"unit_id\":\"S03.U07\"}\n旧请求的冻结输入来源"
+        }
+      ]
+    }
+  ],
+  "original_assessment": {
+    "items": [
+      {
+        "uncertainty_id": "D001-46bc3acc864ad401",
+        "unit_id": "S03.U08",
+        "disposition": "resolved_by_current_body",
+        "reason": "当前正文已明确把原先的 $-1/6$ 截距作为待检查的错误说法，并在 S03.U09 中依据该练习数据重新计算出 $\\hat b=3/2$、$\\hat a=-2/3$，随后给出拟合值、残差及残差和为零的核验。因此，原疑点所涉及的数学错误已被当前练习与答案直接修正；练习的教学意图也通过“检查说法并用数据重新计算正确直线”的任务表述得到保持。",
+        "evidence": [
+          {
+            "source_key": "current:S03.U08",
+            "source_sha256": "f0f1b74cffee2c08ecabcb822cda90b383bbed4edca1870158ff88d1423f1b49",
+            "quote": "一位同学声称含截距的一元最小二乘拟合直线为\n\\[\n\\hat y=-\\frac{1}{6}+\\frac{3}{2}x.\n\\]\n请检查这一说法，并用数据重新计算正确的最小二乘直线。然后完成下列任务："
+          },
+          {
+            "source_key": "current:S03.U09",
+            "source_sha256": "638fe5403bf8825fcdd7eeec64bcb06140b0f01f10bbf4a65580f972012aa5c8",
+            "quote": "因此正确的最小二乘斜率和截距分别为\n\\[\n\\hat b=\\frac{S_{xy}}{S_{xx}}=\\frac{3}{2},\n\\qquad\n\\hat a=\\bar y-\\hat b\\bar x\n=\\frac{7}{3}-\\frac{3}{2}\\cdot2=-\\frac{2}{3}.\n\\]\n所以正确的拟合直线为\n\\[\n\\hat y=-\\frac{2}{3}+\\frac{3}{2}x.\n\\]\n题目中给出的截距 $-1/6$ 不正确；其对应残差和不为零，因而不可能是这组含截距数据的最小二乘直线。"
+          }
+        ],
+        "remaining_dependency": false,
+        "repair_instruction": null
+      },
+      {
+        "uncertainty_id": "D002-2490c62126ff2c26",
+        "unit_id": null,
+        "disposition": "open_dependency",
+        "reason": "当前 S03.U07 已逐步给出 $\\operatorname{TSS}=14/3$、$\\operatorname{RSS}=1/6$ 以及 $R^2=27/28$，且当前核算请求与该表达式一致；因此正文中的决定系数计算缺口已补足。但历史材料仍保留一条声称结果为 $29/28$ 的记录，其完整输入或来源无法由当前正文、先修材料或当前核算请求定位。该 provenance 冲突需要外部核对或新的授权材料，现有批准范围不能合法补足，且没有可归属的当前正文单元。",
+        "evidence": [
+          {
+            "source_key": "current:S03.U07",
+            "source_sha256": "ff23522a1ec3c0cc4fb3cfffea4ee508cc1e75dedccb3d77fbf81cf70f17965c",
+            "quote": "残差平方和为\n\\[\n\\operatorname{RSS}\n=\\left(\\frac{1}{6}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{1}{6}\\right)^2\n=\\frac{1}{6}.\n\\]\n由平方和分解，解释平方和为\n\\[\n\\operatorname{ESS}=\\operatorname{TSS}-\\operatorname{RSS}\n=\\frac{14}{3}-\\frac{1}{6}=\\frac{9}{2}.\n\\]\n所以决定系数为\n\\[\nR^2=1-\\frac{1/6}{14/3}\n=1-\\frac{1}{28}\n=\\frac{27}{28}.\n\\]"
+          },
+          {
+            "source_key": "calculation:76e112fce3c5ec12cb8132ff368d94993cd3c148d6e2f5730cffb26cf16bd2c0",
+            "source_sha256": "cd4fbe38787b973015e7a81650a8c0f466ad8861559fc78a159f2dd2a0749fc9",
+            "quote": "历史归档核算：FAIL；结果 \"29/28\"。完整证据：{\"assumptions\":{},\"calculation_id\":\"S03.C01\",\"evidence_type\":\"symbolic_check_failed\",\"kind\":\"equivalence\",\"message\":\"在声明假设下符号结果与预期不一致。\",\"result\":\"29/28\",\"status\":\"FAIL\",\"tool\":\"SymPy\",\"tool_version\":\"1.14.0\",\"unit_id\":\"S03.U07\"}\n对该旧请求独立重放：FAIL；结果 \"29/28\"。完整证据：{\"assumptions\":{},\"calculation_id\":\"S03.C01\",\"evidence_type\":\"symbolic_check_failed\",\"kind\":\"equivalence\",\"message\":\"在声明假设下符号结果与预期不一致。\",\"result\":\"29/28\",\"status\":\"FAIL\",\"tool\":\"SymPy\",\"tool_version\":\"1.14.0\",\"unit_id\":\"S03.U07\"}"
+          },
+          {
+            "source_key": "calculation:76e112fce3c5ec12cb8132ff368d94993cd3c148d6e2f5730cffb26cf16bd2c0",
+            "source_sha256": "cd4fbe38787b973015e7a81650a8c0f466ad8861559fc78a159f2dd2a0749fc9",
+            "quote": "当前核算：PASS；结果 \"27/28\"。完整证据：{\"assumptions\":{},\"calculation_id\":\"S03.C01\",\"evidence_type\":\"symbolic_check_passed\",\"kind\":\"equivalence\",\"message\":\"在声明假设下符号结果与预期完全一致。\",\"result\":\"27/28\",\"status\":\"PASS\",\"tool\":\"SymPy\",\"tool_version\":\"1.14.0\",\"unit_id\":\"S03.U07\"}\n旧请求的冻结输入来源"
+          }
+        ],
+        "remaining_dependency": true,
+        "repair_instruction": null
+      }
+    ],
+    "limitations": [
+      "本评估依据当前 S03.U01–S03.U09、所提供的 S02 先修材料及显式核算记录；未进行教师验收或外部 provenance 核验。",
+      "当前符号核算能够确认提交的 $27/28$ 表达式，但不能确认历史 $29/28$ 记录的完整输入、来源或预期值。",
+      "普通审阅和有限符号核算不能替代整份讲义的形式化证明。"
+    ]
+  },
+  "teacher_review": "NOT_RUN"
+}

@@ -1,0 +1,135 @@
+{
+  "section_id": "S01",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "limit",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "0",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S01.C01",
+        "unit_id": "S01.U07"
+      }
+    ],
+    "coverage": [
+      "S01.U01",
+      "S01.U02",
+      "S01.U03",
+      "S01.U04",
+      "S01.U05",
+      "S01.U06",
+      "S01.U07",
+      "S01.U08",
+      "S01.U09",
+      "S01.U10"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+    ]
+  },
+  "llm_review": {
+    "issues": [
+      {
+        "unit_id": "S01.U03",
+        "severity": "review",
+        "message": "核心定义的公式正确表达了“不收敛于给定的 L”，但标题式文字存在双重否定歧义，末句又省略“于 L”，容易将其误读为数列发散。应改为“‘收敛于 L’的否定形式，即‘不收敛于 L’，是……”，并将末句明确限定为“不收敛于这个给定的 L”。若要定义数列发散，还须在现有条件外增加“对每个 L∈ℝ”的量词；其中 ε₀ 可以依赖于 L。",
+        "evidence": "原文开头为“数列 {a_n} 不收敛于 L 的否定形式是”，随后给出 ∃ε₀>0，∀N∈ℕ⁺，∃n≥N，|a_n−L|≥ε₀。这是“收敛于 L”的否定，而不是“不收敛于 L”的否定。末句“不收敛则表示……”未保留给定 L 的限定。例如 a_n=1 对 L=0 满足该公式，却收敛于 1，并不发散。"
+      }
+    ],
+    "checked_unit_ids": [
+      "S01.U01",
+      "S01.U02",
+      "S01.U03",
+      "S01.U04",
+      "S01.U05",
+      "S01.U06",
+      "S01.U07",
+      "S01.U08",
+      "S01.U09",
+      "S01.U10"
+    ],
+    "limitations": [
+      "本次仅逐单元核对所提供的 S01 正文及本节锁定条件；未审阅尚未生成的 S02—S05，也未将其视为本节遗漏。",
+      "除所列定义措辞问题外，未发现本节正整数定义域、误差不等式、阈值选择、唯一性定理假设及证明、例题和练习解答中的确定数学错误。三个定义标签与唯一性定理标签均对应实际正文；本节推导未依赖后续章节定理。",
+      "依据 rendering_contract，S01.U10 是关联 S01.U09 的独立练习答案，将被移至末尾；S01.U07 是保留在例题后的解答。S01.U09 给出的极限等式是要求证明的命题，不是内嵌解答。未检查实际排版结果或最终 PDF。",
+      "本次结论来自普通模型对正文的数学审阅，不是形式化证明；未以作者自评、标签恢复说明或符号工具的通过状态代替逐单元判断。"
+    ]
+  },
+  "issues": [
+    {
+      "unit_id": "S01.U03",
+      "severity": "review",
+      "message": "核心定义的公式正确表达了“不收敛于给定的 L”，但标题式文字存在双重否定歧义，末句又省略“于 L”，容易将其误读为数列发散。应改为“‘收敛于 L’的否定形式，即‘不收敛于 L’，是……”，并将末句明确限定为“不收敛于这个给定的 L”。若要定义数列发散，还须在现有条件外增加“对每个 L∈ℝ”的量词；其中 ε₀ 可以依赖于 L。",
+      "evidence": "原文开头为“数列 {a_n} 不收敛于 L 的否定形式是”，随后给出 ∃ε₀>0，∀N∈ℕ⁺，∃n≥N，|a_n−L|≥ε₀。这是“收敛于 L”的否定，而不是“不收敛于 L”的否定。末句“不收敛则表示……”未保留给定 L 的限定。例如 a_n=1 对 L=0 满足该公式，却收敛于 1，并不发散。"
+    }
+  ],
+  "reference_recovery": {
+    "schema_version": 1,
+    "status": "INSERTED_PENDING_RECHECK",
+    "section_id": "S01",
+    "bindings": [
+      {
+        "label": "def:sequence",
+        "unit_id": "S01.U01",
+        "quote": "数列是定义在正整数集 $\\mathbb{N}^{+}=\\{1,2,3,\\ldots\\}$ 上、取实数值的函数。若该函数在 $n\\in\\mathbb{N}^{+}$ 处的值为 $a_n$，则称 $a_n$ 为数列 $\\{a_n\\}$ 的第 $n$ 项，通常写作\n\\[\na_1,a_2,\\ldots,a_n,\\ldots,\n\\qquad a_n=f(n),\\quad n\\in\\mathbb{N}^{+}.\n\\]\n数列的下标只能取正整数，且项的排列顺序是数列定义的一部分。",
+        "rationale": "该引文明确把数列定义为定义在正整数集上并取实数值的函数，同时定义第 n 项及其记法，完整对应数列概念。"
+      },
+      {
+        "label": "def:sequence-limit",
+        "unit_id": "S01.U02",
+        "quote": "设 $\\{a_n\\}$ 是实数数列，$L\\in\\mathbb{R}$。若对于任意 $\\varepsilon>0$，都存在正整数 $N$，使得当 $n\\geq N$ 时有\n\\[\n|a_n-L|<\\varepsilon,\n\\]\n则称数列 $\\{a_n\\}$ 收敛于 $L$，记为\n\\[\n\\lim_{n\\to\\infty}a_n=L.\n\\]\n其中，$\\varepsilon$ 先任意给定，而 $N$ 可以依赖于 $\\varepsilon$，但不能依赖于 $n$。",
+        "rationale": "该引文直接定义数列收敛于 L，并完整给出任意 ε、存在 N 及 n≥N 时误差小于 ε 的条件；它是收敛概念本身而非其否定形式。"
+      },
+      {
+        "label": "def:epsilon-N",
+        "unit_id": "S01.U02",
+        "quote": "设 $\\{a_n\\}$ 是实数数列，$L\\in\\mathbb{R}$。若对于任意 $\\varepsilon>0$，都存在正整数 $N$，使得当 $n\\geq N$ 时有\n\\[\n|a_n-L|<\\varepsilon,\n\\]\n则称数列 $\\{a_n\\}$ 收敛于 $L$，记为\n\\[\n\\lim_{n\\to\\infty}a_n=L.\n\\]\n其中，$\\varepsilon$ 先任意给定，而 $N$ 可以依赖于 $\\varepsilon$，但不能依赖于 $n$。",
+        "rationale": "该引文完整呈现 ε–N 定义的量化关系、误差条件以及 N 对 ε 的依赖限制，因此明确对应 epsilon-N 标签；同一完整定义也定义了数列极限。"
+      }
+    ],
+    "insertions": {
+      "S01.U01": "\\label{def:sequence}",
+      "S01.U02": "\\label{def:sequence-limit}\\label{def:epsilon-N}"
+    },
+    "before_hash": "9ac89c7631f23b860d662aea2b77252a966200cdb4641cbc4c675a3d84a95d80",
+    "after_hash": "4eb75165cb8bacbb8850cb3a2c2f437f1751850595af4ea301262921e69d70ca",
+    "preserved_fields": [
+      "unit IDs/order/kinds/relates_to",
+      "all original TeX bytes after inserted prefixes",
+      "calculations",
+      "calculation_limitations",
+      "uncertainties"
+    ],
+    "limitations": [
+      "语义定位来自模型提议；精确引文验证不构成数学证明，必须重新进行单元/引用/数学/模型审阅/编译检查。"
+    ],
+    "teacher_visual_review": "NOT_RUN",
+    "identity": {
+      "context_hash": "2d917ea704a985a1ce717267ed5934c7c3935547d1b9ead1050d0eb7021d5e32",
+      "preceding_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "model": "gpt-6-astra",
+      "provider": "live",
+      "prompt_hash": "0b967bf320e6d35e1f145a07a1ee0bd1e6fdd6c6627866a8a4a13a2ea8626f15",
+      "schema_hash": "c19c2bead5c4972e0d4a638e7aea9a23807f8a4c165aa65a07515038e8bb384b",
+      "implementation_hash": "71f0787701e59f0b33b1dc2fd2f72337cc963379a408894d7a8b406d8e62370b"
+    },
+    "proposal_key": "runs/05748ab6260c40989a560a98e1e2065a/label-recovery/S01/476b64b02d551b9adb2d0f6f089ca5b3295075954af15cb43c47bea4f4188498/attempt-1ba92eb9d4d8/proposal.json",
+    "reused_proposal": false,
+    "review_instruction": "必须核对标签是否对应其引用定义和批准小节目标；精确引文不代表概念正确。否定形式不能代替正面定义。定位不当须报告实际 unit_id，不能只因标签存在而放行。"
+  },
+  "answer_recovery": null,
+  "mock": false
+}

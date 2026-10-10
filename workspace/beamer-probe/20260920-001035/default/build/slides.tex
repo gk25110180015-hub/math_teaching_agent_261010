@@ -1,0 +1,75 @@
+\documentclass[aspectratio=169,10pt,fontset=fandol]{ctexbeamer}
+\usepackage{amsmath,amssymb,mathtools,bm,mathrsfs}
+\usepackage{graphicx,booktabs,array,tabularx,multirow}
+\usepackage{tikz,pgfplots,xparse,xstring,mdframed}
+\usetikzlibrary{arrows.meta,calc,angles,positioning,shapes.geometric,graphs}
+\pgfplotsset{compat=1.18}
+
+\input{workflow_style.tex}
+\input{workflow_fonts.tex}
+\newenvironment{proofdetail}{\par\noindent\textbf{证明：}\quad}{\par}
+\renewenvironment{solution}{\par\noindent\textbf{解：}\quad}{\par}
+\title{数列极限}
+\begin{document}
+\section{数列极限}
+% FRAME-ID F001
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{blue}\normalsize 1. 数列极限\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 2. 极限唯一性\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F002
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0001 0 86
+若对每个 $\varepsilon>0$，存在 $N\in\mathbb{N}$，当 $n>N$ 时有 $|a_n-a|<\varepsilon$，则称数列收敛于 $a$。
+% SOURCE-END U0001
+}
+\end{block}
+\end{frame}
+% FRAME-ID F003
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0002 0 30
+计算 $\lim_{n\to\infty}\frac1n$。
+% SOURCE-END U0002
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0003 0 79
+任取 $\varepsilon>0$，取 $N>1/\varepsilon$，当 $n>N$ 时 $|1/n|<\varepsilon$，所以极限为 $0$。
+% SOURCE-END U0003
+}
+\end{frame}
+\section{极限唯一性}
+% FRAME-ID F004
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{black}\normalsize 1. 数列极限\par}\vspace{0.3em}
+{\color{blue}\normalsize 2. 极限唯一性\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F005
+\begin{frame}[t,fragile]{极限唯一性}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0004 0 10
+收敛数列的极限唯一。
+% SOURCE-END U0004
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{证明：}
+% SOURCE-BEGIN U0005 0 68
+若两个极限为 $a\ne b$，取 $\varepsilon=|a-b|/3$，由三角不等式得 $|a-b|<2|a-b|/3$，矛盾。
+% SOURCE-END U0005
+}
+\end{frame}
+\end{document}

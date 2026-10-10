@@ -1,0 +1,121 @@
+{
+  "content": {
+    "status": "PASS",
+    "evidence": [
+      "实际 TeX 与保留源单元对照"
+    ],
+    "limitations": []
+  },
+  "math": {
+    "status": "NEEDS_REVIEW",
+    "evidence": [
+      "原文保真；未自动修正源讲义数学结论"
+    ],
+    "limitations": [
+      "教师须复核原文的具体数学疑点"
+    ]
+  },
+  "fidelity": {
+    "status": "PASS",
+    "issues": [],
+    "evidence": "Independent comparison of actual source payload strings and exact contiguous original intervals; scaffold fingerprint checked when supplied",
+    "checked_units": 104,
+    "limitations": [
+      "Whitespace/comments ignored; no claim of semantic equivalence for rewritten mathematics"
+    ]
+  },
+  "compile": {
+    "status": "FAIL",
+    "pdf_path": null,
+    "issues": [
+      {
+        "rule_id": "TEX_FATAL",
+        "severity": "blocking",
+        "message": "Runaway argument?",
+        "location": {
+          "log_line": 1032
+        },
+        "resolution_status": "open"
+      }
+    ],
+    "log_paths": [
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-full-beamer-app\\b\\ebb23af8d8d54fe4\\vda8ac02e91b0\\build-1\\pass-1.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-full-beamer-app\\b\\ebb23af8d8d54fe4\\vda8ac02e91b0\\build-1\\pass-1.tex.log"
+    ],
+    "engine": {
+      "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+    },
+    "passes": 1,
+    "compile_mode": "trusted_local",
+    "isolation": "NOT_IMPLEMENTED",
+    "limitations": [
+      "原生可信本机编译不是文件系统或网络隔离沙箱。"
+    ],
+    "command": [
+      "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "-no-shell-escape",
+      "-recorder",
+      "-synctex=1",
+      "-jobname=slides",
+      "-output-directory=.",
+      "slides.tex"
+    ],
+    "elapsed_seconds": 1.594
+  },
+  "layout": {
+    "status": "NOT_RUN",
+    "evidence": [],
+    "limitations": []
+  },
+  "policy": {
+    "status": "PASS",
+    "evidence": {
+      "schema_version": 1,
+      "decisions": [],
+      "limitations": [
+        "语义自定义不能仅凭模型自评当作落实；发布前须人工审阅质量报告。"
+      ]
+    },
+    "limitations": []
+  },
+  "security": {
+    "status": "NOT_RUN",
+    "evidence": [
+      "回环服务、受控源码、编译参数及白名单子进程环境"
+    ],
+    "limitations": [
+      "trusted_local 不是文件系统/网络隔离沙箱"
+    ]
+  },
+  "schema_version": 1,
+  "provider": "mock",
+  "human_visual_review": "NOT_RUN",
+  "model_visual_review": "NOT_RUN",
+  "issues": [
+    {
+      "rule_id": "LAYOUT-ESTIMATE",
+      "severity": "review",
+      "unit_id": "U0040",
+      "message": "A complete statement/formula has high uncalibrated geometric score; preserve it and use actual compile/geometry measurements"
+    },
+    {
+      "rule_id": "LAYOUT-ESTIMATE",
+      "severity": "review",
+      "unit_id": "U0058",
+      "message": "A complete statement/formula has high uncalibrated geometric score; preserve it and use actual compile/geometry measurements"
+    },
+    {
+      "rule_id": "TEX_FATAL",
+      "severity": "blocking",
+      "message": "Runaway argument?",
+      "location": {
+        "log_line": 1032
+      },
+      "resolution_status": "open"
+    }
+  ]
+}

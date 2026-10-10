@@ -1,0 +1,55 @@
+\documentclass[aspectratio=169,10pt,fontset=fandol]{ctexbeamer}
+\usepackage{amsmath,amssymb,mathtools,bm,mathrsfs}
+\usepackage{graphicx,booktabs,array,tabularx,multirow}
+\usepackage{tikz,pgfplots,xparse,xstring,mdframed}
+\usetikzlibrary{arrows.meta,calc,angles,positioning,shapes.geometric,graphs}
+\pgfplotsset{compat=1.18}
+
+\input{workflow_style.tex}
+\input{workflow_fonts.tex}
+\newenvironment{proofdetail}{\par\noindent\textbf{证明：}\quad}{\par}
+\renewenvironment{solution}{\par\noindent\textbf{解：}\quad}{\par}
+\makeatletter
+\@ifundefined{exercise}{\theoremstyle{definition}\newtheorem{exercise}[theorem]{练习}\theoremstyle{plain}}{}
+\makeatother
+\makeatletter
+\newcommand{\mathagentsectionlabelcontext}{%
+\protected@edef\@currentlabel{\thesection}%
+\edef\@currentHref{Outline\the\c@part.\the\c@section}%
+}
+\newcommand{\mathagentexerciselabelcontext}[1]{%
+\hypertarget<1>{#1}{}%
+\edef\@currentHref{#1}%
+}
+\makeatother
+\title{课堂}
+\begin{document}
+\section{课堂}
+% FRAME-ID F001
+\typeout{MATH-AGENT-FRAME-BEGIN F001}
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{blue}\normalsize 1. 课堂\par}\vspace{0.22em}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F001}
+% FRAME-ID F002
+\typeout{MATH-AGENT-FRAME-BEGIN F002}
+\begin{frame}[t,fragile]{课堂}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0001 0 6
+$a=a$。
+% SOURCE-END U0001
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{证明：}
+% SOURCE-BEGIN U0002 0 4
+恒等式。
+% SOURCE-END U0002
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F002}
+\end{document}

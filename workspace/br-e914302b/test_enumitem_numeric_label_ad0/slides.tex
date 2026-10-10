@@ -1,0 +1,45 @@
+\documentclass[aspectratio=169,10pt,fontset=fandol]{ctexbeamer}
+\usepackage{amsmath,amssymb,mathtools,bm,mathrsfs}
+\usepackage{graphicx,booktabs,array,tabularx,multirow}
+\usepackage{tikz,pgfplots,xparse,xstring,mdframed}
+\usetikzlibrary{arrows.meta,calc,angles,positioning,shapes.geometric,graphs}
+\pgfplotsset{compat=1.18}
+
+\input{workflow_style.tex}
+\input{workflow_fonts.tex}
+\newenvironment{proofdetail}{\par\noindent\textbf{证明：}\quad}{\par}
+\renewenvironment{solution}{\par\noindent\textbf{解：}\quad}{\par}
+\makeatletter
+\@ifundefined{exercise}{\theoremstyle{definition}\newtheorem{exercise}[theorem]{练习}\theoremstyle{plain}}{}
+\makeatother
+\makeatletter
+\newcommand{\mathagentsectionlabelcontext}{%
+\protected@edef\@currentlabel{\thesection}%
+\edef\@currentHref{Outline\the\c@part.\the\c@section}%
+}
+\makeatother
+\title{数列}
+\begin{document}
+\section{数学内容}
+% FRAME-ID F001
+\typeout{MATH-AGENT-FRAME-BEGIN F001}
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{blue}\normalsize 1. 数学内容\par}\vspace{0.22em}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F001}
+% FRAME-ID F002
+\typeout{MATH-AGENT-FRAME-BEGIN F002}
+\begin{frame}[t,fragile]{数学内容}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+\setbeamertemplate{enumerate mini template}[default]
+% SOURCE-BEGIN U0001 0 67
+分类：\begin{enumerate}[(1)]\item $x<1$；\item $x\geq1$。\end{enumerate}
+% SOURCE-END U0001
+}
+\end{block}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F002}
+\end{document}

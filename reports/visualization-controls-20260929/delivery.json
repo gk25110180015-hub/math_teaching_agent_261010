@@ -1,0 +1,5060 @@
+{
+  "status": "PASS",
+  "run_id": "43a4bc7fcb564b7dbd156b482bab5aa7",
+  "run_status": "COMPLETED_WITH_WARNINGS",
+  "plan_hash": "735b15da3d279fb8e4a3bc17d071f04a7033a478785b8334eb0afe7abeae2249",
+  "plan_revision": 5,
+  "request_count": 31,
+  "artifacts": [
+    {
+      "name": "README.txt",
+      "sha256": "0dc58e56e71a1ecc86889d19dd275955894ad01a5e0d73d1807ec82ce61d9ec3",
+      "bytes": 243
+    },
+    {
+      "name": "frame-000.png",
+      "sha256": "938adb1f4af279b0ab2994978940625a8a2ebc5e46fd88a20cd8f1335bf1f48c",
+      "bytes": 102497
+    },
+    {
+      "name": "frame-050.png",
+      "sha256": "6b4d17742b8a1e6446180e7d5b61dc68aea499f3e795e45e5d30b494e228afd7",
+      "bytes": 110049
+    },
+    {
+      "name": "frame-100.png",
+      "sha256": "eb07eb0957d98465410b0b0d2cadd68e392783b9a28b54b1d4d8ae6e139baa63",
+      "bytes": 98953
+    },
+    {
+      "name": "interactive.html",
+      "sha256": "0dbdb71cf7cf61abcaa6123b28743a478b95bc461577b0c5e1e3820dba56cdda",
+      "bytes": 30371
+    },
+    {
+      "name": "plan.json",
+      "sha256": "0eae2e443db68d1c248f541bf04b7486b83d663cab5e62d3d918ecbccd3afd42",
+      "bytes": 33860
+    },
+    {
+      "name": "project.json",
+      "sha256": "452a35c542c705bfc87ed1d07e9035642d3eae69eeba2c15f4f0bf24c02018ac",
+      "bytes": 16175
+    },
+    {
+      "name": "quality_report.json",
+      "sha256": "96533ed0b843e5dd7c810eafca724c36348d03876f339322bd905cb5c48c867c",
+      "bytes": 183686
+    },
+    {
+      "name": "scene.js",
+      "sha256": "e06655628d86498c813f0d20e282665616cd92b9f8b4d6260ba00a70507ac410",
+      "bytes": 8697
+    },
+    {
+      "name": "source_bundle.zip",
+      "sha256": "d8f80e109500c0dbc037a632e660d1822c1daa63e25dc41a75038874e3cd4319",
+      "bytes": 4821320
+    },
+    {
+      "name": "video.webm",
+      "sha256": "6410ce52d84c74fb0d52258d020aa320dcae65c04808fedc30a00c6eda4a1ce6",
+      "bytes": 5113049
+    }
+  ],
+  "quality": {
+    "status": "PASS_WITH_REVIEW_REQUIRED",
+    "created_at": "2026-09-28T16:49:38.025679+00:00",
+    "plan_hash": "735b15da3d279fb8e4a3bc17d071f04a7033a478785b8334eb0afe7abeae2249",
+    "provider": "live",
+    "code_review": {
+      "approved": true,
+      "issues": [],
+      "limitations": [
+        "本轮仅做了代码解析与 runtime_evidence 采样核对，未进行人工逐帧视觉审阅，也未获得视频；因此对实际字形、线条遮挡、颜色可分辨度等只能给出估计。",
+        "顶部自绘大标题位于 y=42、图例基线位于 y=82，处在宿主统一标题覆盖带（y<68）或推荐绘图区（y≥85）之外/边缘；宿主已用返回的 title/caption 取代标题字幕，这两处自绘文字可能被覆盖或显得贴边（不影响数学内容）。",
+        "explore 模式下当 example=1（|x|）、x₀=0 且 t∈[50,64)（si===4，both 成立）时，右栏会同时输出 9 行数值（含 m(±|h|) 三行与 |h|、r(h)、r(h)/|h| 三行），最下一行与公式区首行纵向间距很小，属布局拥挤而非数值错误。",
+        "both 场景（si===3、si===5 且 |x|、si===4 且 |x| 原点）中两条割线画成 P–Q 线段而非延续到绘图区边界，且该场景图例只写“绿/红：两侧割线”，未单独说明同时存在的紫色虚线切线。",
+        "explore 中 side 在 both 场景只改变被高亮的一侧与 metrics.slope、行“当前选中侧”，不改变右栏两个单侧差商数值；非 both 场景它才真正翻转 h 的符号。",
+        "|x| 在非原点且 Q 与 P 同属一个线性分支时残差恒为 0，红色误差条长度为 0，只剩“r(h)”文字标签（数值行 r(h)=0 正确）。",
+        "presentation 分镜在 S3 末 h→0.02、S4 起又重置为 1，S4 末→S5 起回到默认 0.5，存在步长视觉跳变；这是分镜重置，不代表极限过程。",
+        "有限帧数值动画（h 最小 0.02）不能证明极限存在，程序已在 math_notes/explanation 中声明，属本片固有限制。"
+      ]
+    },
+    "render": {
+      "status": "PASS",
+      "samples": [
+        {
+          "time": 0.0,
+          "metrics": {
+            "scene": 1,
+            "elapsedSeconds": 0,
+            "example": "x²",
+            "x0": 1,
+            "h": 0.5,
+            "slope": 2.5,
+            "rightSlope": 2.5,
+            "leftSlope": 1.5,
+            "derivative": 2,
+            "residual": 0.25,
+            "errorRatio": 0.5
+          },
+          "plot_signature": "2006259552",
+          "plot_text": [
+            "割线旋转成切线：导数的极限定义",
+            "h ≠ 0 · 总时长 78 秒",
+            "x",
+            "y",
+            "Q",
+            "P",
+            "蓝：曲线",
+            "橙：增量",
+            "紫：割线/切线",
+            "S1 固定点与附近的动点",
+            "f(x)=x²，x₀ = 1.00",
+            "h = +0.500",
+            "m(h) = 2.5000",
+            "当前导数 = 2.00",
+            "m(h)=[f(x₀+h)−f(x₀)]/h",
+            "[(x₀+h)²−x₀²]/h=2x₀+h",
+            "L(x)=x₀²+2x₀(x−x₀)"
+          ],
+          "title": "固定点与附近的动点",
+          "caption": "固定平方函数上的点 P，取附近点 Q，观察割线。",
+          "controls": {
+            "h": 0.5,
+            "side": 1,
+            "x0": 1,
+            "example": 0
+          },
+          "disabled": {
+            "example": "演示主线固定使用平方函数",
+            "x0": "演示前五镜固定 x₀=1"
+          },
+          "mode": "presentation",
+          "scene_id": "S1"
+        },
+        {
+          "time": 0.25,
+          "metrics": {
+            "scene": 2,
+            "elapsedSeconds": 19.5,
+            "example": "x²",
+            "x0": 1,
+            "h": 0.5,
+            "slope": 2.5,
+            "rightSlope": 2.5,
+            "leftSlope": 1.5,
+            "derivative": 2,
+            "residual": 0.25,
+            "errorRatio": 0.5
+          },
+          "plot_signature": "4167504645",
+          "plot_text": [
+            "割线旋转成切线：导数的极限定义",
+            "h ≠ 0 · 总时长 78 秒",
+            "x",
+            "y",
+            "Q",
+            "P",
+            "蓝：曲线",
+            "橙：增量",
+            "紫：割线/切线",
+            "S2 用增量构造割线斜率",
+            "f(x)=x²，x₀ = 1.00",
+            "h = +0.500",
+            "m(h) = 2.5000",
+            "当前导数 = 2.00",
+            "m(h)=[f(x₀+h)−f(x₀)]/h",
+            "[(x₀+h)²−x₀²]/h=2x₀+h",
+            "L(x)=x₀²+2x₀(x−x₀)"
+          ],
+          "title": "用增量构造割线斜率",
+          "caption": "差商就是割线斜率；平方函数化简为 m(h)=2x₀+h。",
+          "controls": {
+            "h": 0.5,
+            "side": 1,
+            "x0": 1,
+            "example": 0
+          },
+          "disabled": {
+            "example": "演示主线固定使用平方函数",
+            "x0": "演示前五镜固定 x₀=1"
+          },
+          "mode": "presentation",
+          "scene_id": "S2"
+        },
+        {
+          "time": 0.5,
+          "metrics": {
+            "scene": 4,
+            "elapsedSeconds": 39,
+            "example": "x²",
+            "x0": 1,
+            "h": 0.79,
+            "slope": 2.79,
+            "rightSlope": 2.79,
+            "leftSlope": 1.21,
+            "derivative": 2,
+            "residual": 0.6241,
+            "errorRatio": 0.79
+          },
+          "plot_signature": "194249173",
+          "plot_text": [
+            "割线旋转成切线：导数的极限定义",
+            "h ≠ 0 · 总时长 78 秒",
+            "x",
+            "y",
+            "Q(+|h|)",
+            "Q(−|h|)",
+            "P",
+            "蓝：曲线",
+            "橙：增量",
+            "绿/红：两侧割线",
+            "S4 左右极限必须一致",
+            "f(x)=x²，x₀ = 1.00",
+            "h = +0.790",
+            "m(+|h|) = 2.7900",
+            "m(−|h|) = 1.2100",
+            "当前选中侧 = +",
+            "当前导数 = 2.00",
+            "m(h)=[f(x₀+h)−f(x₀)]/h",
+            "[(x₀+h)²−x₀²]/h=2x₀+h",
+            "L(x)=x₀²+2x₀(x−x₀)"
+          ],
+          "title": "左右极限必须一致",
+          "caption": "同时比较两侧差商；平方函数都趋向同一个有限数 2x₀。",
+          "controls": {
+            "h": 0.79,
+            "side": 1,
+            "x0": 1,
+            "example": 0
+          },
+          "disabled": {
+            "example": "演示主线固定使用平方函数",
+            "x0": "演示前五镜固定 x₀=1",
+            "h": "本镜步长由时间轴从 1 缩小至 0.02"
+          },
+          "mode": "presentation",
+          "scene_id": "S4"
+        },
+        {
+          "time": 0.75,
+          "metrics": {
+            "scene": 5,
+            "elapsedSeconds": 58.5,
+            "example": "x²",
+            "x0": 1,
+            "h": 0.5,
+            "slope": 2.5,
+            "rightSlope": 2.5,
+            "leftSlope": 1.5,
+            "derivative": 2,
+            "residual": 0.25,
+            "errorRatio": 0.5
+          },
+          "plot_signature": "1856687467",
+          "plot_text": [
+            "割线旋转成切线：导数的极限定义",
+            "h ≠ 0 · 总时长 78 秒",
+            "x",
+            "y",
+            "Q",
+            "r(h)",
+            "P",
+            "蓝：曲线",
+            "橙：增量",
+            "紫：割线/切线",
+            "S5 切线为何能近似曲线",
+            "f(x)=x²，x₀ = 1.00",
+            "h = +0.500",
+            "m(h) = 2.5000",
+            "当前导数 = 2.00",
+            "|h| = 0.5000",
+            "r(h) = 0.250000",
+            "r(h)/|h| = 0.500000",
+            "m(h)=[f(x₀+h)−f(x₀)]/h",
+            "[(x₀+h)²−x₀²]/h=2x₀+h",
+            "L(x)=x₀²+2x₀(x−x₀)"
+          ],
+          "title": "切线为何能近似曲线",
+          "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+          "controls": {
+            "h": 0.5,
+            "side": 1,
+            "x0": 1,
+            "example": 0
+          },
+          "disabled": {
+            "example": "演示主线固定使用平方函数",
+            "x0": "演示前五镜固定 x₀=1"
+          },
+          "mode": "presentation",
+          "scene_id": "S5"
+        },
+        {
+          "time": 1.0,
+          "metrics": {
+            "scene": 6,
+            "elapsedSeconds": 78,
+            "example": "|x|",
+            "x0": 0,
+            "h": 0.5,
+            "slope": 1,
+            "rightSlope": 1,
+            "leftSlope": -1,
+            "derivative": "不存在",
+            "residual": "不适用",
+            "errorRatio": "不适用"
+          },
+          "plot_signature": "2633129497",
+          "plot_text": [
+            "割线旋转成切线：导数的极限定义",
+            "h ≠ 0 · 总时长 78 秒",
+            "x",
+            "y",
+            "Q(+|h|)",
+            "Q(−|h|)",
+            "P",
+            "蓝：曲线",
+            "橙：增量",
+            "绿/红：两侧割线",
+            "S6 连续的尖点为何不可导",
+            "f(x)=|x|，x₀ = 0.00",
+            "h = +0.500",
+            "m(+|h|) = 1.0000",
+            "m(−|h|) = -1.0000",
+            "当前选中侧 = +",
+            "原点双侧极限不相等",
+            "m(h)=(|x₀+h|−|x₀|)/h",
+            "h>0→1，h<0→−1"
+          ],
+          "title": "连续的尖点为何不可导",
+          "caption": "绝对值函数在原点连续，但左右差商不相等，导数不存在。",
+          "controls": {
+            "h": 0.5,
+            "side": 1,
+            "x0": 0,
+            "example": 1
+          },
+          "disabled": {
+            "example": "演示固定展示绝对值原点反例",
+            "x0": "演示固定在绝对值原点"
+          },
+          "mode": "presentation",
+          "scene_id": "S6"
+        }
+      ],
+      "scenes": [
+        {
+          "time": 0.05128205128205128,
+          "metrics": {
+            "scene": 1,
+            "elapsedSeconds": 4,
+            "example": "x²",
+            "x0": 1,
+            "h": 0.5,
+            "slope": 2.5,
+            "rightSlope": 2.5,
+            "leftSlope": 1.5,
+            "derivative": 2,
+            "residual": 0.25,
+            "errorRatio": 0.5
+          },
+          "plot_signature": "2006259552",
+          "plot_text": [
+            "割线旋转成切线：导数的极限定义",
+            "h ≠ 0 · 总时长 78 秒",
+            "x",
+            "y",
+            "Q",
+            "P",
+            "蓝：曲线",
+            "橙：增量",
+            "紫：割线/切线",
+            "S1 固定点与附近的动点",
+            "f(x)=x²，x₀ = 1.00",
+            "h = +0.500",
+            "m(h) = 2.5000",
+            "当前导数 = 2.00",
+            "m(h)=[f(x₀+h)−f(x₀)]/h",
+            "[(x₀+h)²−x₀²]/h=2x₀+h",
+            "L(x)=x₀²+2x₀(x−x₀)"
+          ],
+          "title": "固定点与附近的动点",
+          "caption": "固定平方函数上的点 P，取附近点 Q，观察割线。",
+          "controls": {
+            "h": 0.5,
+            "side": 1,
+            "x0": 1,
+            "example": 0
+          },
+          "disabled": {
+            "example": "演示主线固定使用平方函数",
+            "x0": "演示前五镜固定 x₀=1"
+          },
+          "mode": "presentation",
+          "scene_id": "S1"
+        },
+        {
+          "time": 0.19230769230769232,
+          "metrics": {
+            "scene": 2,
+            "elapsedSeconds": 15,
+            "example": "x²",
+            "x0": 1,
+            "h": 0.5,
+            "slope": 2.5,
+            "rightSlope": 2.5,
+            "leftSlope": 1.5,
+            "derivative": 2,
+            "residual": 0.25,
+            "errorRatio": 0.5
+          },
+          "plot_signature": "4167504645",
+          "plot_text": [
+            "割线旋转成切线：导数的极限定义",
+            "h ≠ 0 · 总时长 78 秒",
+            "x",
+            "y",
+            "Q",
+            "P",
+            "蓝：曲线",
+            "橙：增量",
+            "紫：割线/切线",
+            "S2 用增量构造割线斜率",
+            "f(x)=x²，x₀ = 1.00",
+            "h = +0.500",
+            "m(h) = 2.5000",
+            "当前导数 = 2.00",
+            "m(h)=[f(x₀+h)−f(x₀)]/h",
+            "[(x₀+h)²−x₀²]/h=2x₀+h",
+            "L(x)=x₀²+2x₀(x−x₀)"
+          ],
+          "title": "用增量构造割线斜率",
+          "caption": "差商就是割线斜率；平方函数化简为 m(h)=2x₀+h。",
+          "controls": {
+            "h": 0.5,
+            "side": 1,
+            "x0": 1,
+            "example": 0
+          },
+          "disabled": {
+            "example": "演示主线固定使用平方函数",
+            "x0": "演示前五镜固定 x₀=1"
+          },
+          "mode": "presentation",
+          "scene_id": "S2"
+        },
+        {
+          "time": 0.37,
+          "metrics": {
+            "scene": 3,
+            "elapsedSeconds": 28.86,
+            "example": "x²",
+            "x0": 1,
+            "h": 0.5198,
+            "slope": 2.5198,
+            "rightSlope": 2.5198,
+            "leftSlope": 1.4802,
+            "derivative": 2,
+            "residual": 0.270192,
+            "errorRatio": 0.5198
+          },
+          "plot_signature": "512799161",
+          "plot_text": [
+            "割线旋转成切线：导数的极限定义",
+            "h ≠ 0 · 总时长 78 秒",
+            "x",
+            "y",
+            "Q",
+            "P",
+            "蓝：曲线",
+            "橙：增量",
+            "紫：割线/切线",
+            "S3 从右侧逼近切线",
+            "f(x)=x²，x₀ = 1.00",
+            "h = +0.520",
+            "m(h) = 2.5198",
+            "当前导数 = 2.00",
+            "m(h)=[f(x₀+h)−f(x₀)]/h",
+            "[(x₀+h)²−x₀²]/h=2x₀+h",
+            "L(x)=x₀²+2x₀(x−x₀)"
+          ],
+          "title": "从右侧逼近切线",
+          "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+          "controls": {
+            "h": 0.5198,
+            "side": 1,
+            "x0": 1,
+            "example": 0
+          },
+          "disabled": {
+            "example": "演示主线固定使用平方函数",
+            "x0": "演示前五镜固定 x₀=1",
+            "h": "本镜步长由时间轴从 1 缩小至 0.02",
+            "side": "本镜按方案从右侧逼近"
+          },
+          "mode": "presentation",
+          "scene_id": "S3"
+        },
+        {
+          "time": 0.3717948717948718,
+          "metrics": {
+            "scene": 3,
+            "elapsedSeconds": 29,
+            "example": "x²",
+            "x0": 1,
+            "h": 0.51,
+            "slope": 2.51,
+            "rightSlope": 2.51,
+            "leftSlope": 1.49,
+            "derivative": 2,
+            "residual": 0.2601,
+            "errorRatio": 0.51
+          },
+          "plot_signature": "3877745940",
+          "plot_text": [
+            "割线旋转成切线：导数的极限定义",
+            "h ≠ 0 · 总时长 78 秒",
+            "x",
+            "y",
+            "Q",
+            "P",
+            "蓝：曲线",
+            "橙：增量",
+            "紫：割线/切线",
+            "S3 从右侧逼近切线",
+            "f(x)=x²，x₀ = 1.00",
+            "h = +0.510",
+            "m(h) = 2.5100",
+            "当前导数 = 2.00",
+            "m(h)=[f(x₀+h)−f(x₀)]/h",
+            "[(x₀+h)²−x₀²]/h=2x₀+h",
+            "L(x)=x₀²+2x₀(x−x₀)"
+          ],
+          "title": "从右侧逼近切线",
+          "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+          "controls": {
+            "h": 0.51,
+            "side": 1,
+            "x0": 1,
+            "example": 0
+          },
+          "disabled": {
+            "example": "演示主线固定使用平方函数",
+            "x0": "演示前五镜固定 x₀=1",
+            "h": "本镜步长由时间轴从 1 缩小至 0.02",
+            "side": "本镜按方案从右侧逼近"
+          },
+          "mode": "presentation",
+          "scene_id": "S3"
+        },
+        {
+          "time": 0.5512820512820513,
+          "metrics": {
+            "scene": 4,
+            "elapsedSeconds": 43,
+            "example": "x²",
+            "x0": 1,
+            "h": 0.51,
+            "slope": 2.51,
+            "rightSlope": 2.51,
+            "leftSlope": 1.49,
+            "derivative": 2,
+            "residual": 0.2601,
+            "errorRatio": 0.51
+          },
+          "plot_signature": "1840688552",
+          "plot_text": [
+            "割线旋转成切线：导数的极限定义",
+            "h ≠ 0 · 总时长 78 秒",
+            "x",
+            "y",
+            "Q(+|h|)",
+            "Q(−|h|)",
+            "P",
+            "蓝：曲线",
+            "橙：增量",
+            "绿/红：两侧割线",
+            "S4 左右极限必须一致",
+            "f(x)=x²，x₀ = 1.00",
+            "h = +0.510",
+            "m(+|h|) = 2.5100",
+            "m(−|h|) = 1.4900",
+            "当前选中侧 = +",
+            "当前导数 = 2.00",
+            "m(h)=[f(x₀+h)−f(x₀)]/h",
+            "[(x₀+h)²−x₀²]/h=2x₀+h",
+            "L(x)=x₀²+2x₀(x−x₀)"
+          ],
+          "title": "左右极限必须一致",
+          "caption": "同时比较两侧差商；平方函数都趋向同一个有限数 2x₀。",
+          "controls": {
+            "h": 0.51,
+            "side": 1,
+            "x0": 1,
+            "example": 0
+          },
+          "disabled": {
+            "example": "演示主线固定使用平方函数",
+            "x0": "演示前五镜固定 x₀=1",
+            "h": "本镜步长由时间轴从 1 缩小至 0.02"
+          },
+          "mode": "presentation",
+          "scene_id": "S4"
+        },
+        {
+          "time": 0.73,
+          "metrics": {
+            "scene": 5,
+            "elapsedSeconds": 56.94,
+            "example": "x²",
+            "x0": 1,
+            "h": 0.5,
+            "slope": 2.5,
+            "rightSlope": 2.5,
+            "leftSlope": 1.5,
+            "derivative": 2,
+            "residual": 0.25,
+            "errorRatio": 0.5
+          },
+          "plot_signature": "1856687467",
+          "plot_text": [
+            "割线旋转成切线：导数的极限定义",
+            "h ≠ 0 · 总时长 78 秒",
+            "x",
+            "y",
+            "Q",
+            "r(h)",
+            "P",
+            "蓝：曲线",
+            "橙：增量",
+            "紫：割线/切线",
+            "S5 切线为何能近似曲线",
+            "f(x)=x²，x₀ = 1.00",
+            "h = +0.500",
+            "m(h) = 2.5000",
+            "当前导数 = 2.00",
+            "|h| = 0.5000",
+            "r(h) = 0.250000",
+            "r(h)/|h| = 0.500000",
+            "m(h)=[f(x₀+h)−f(x₀)]/h",
+            "[(x₀+h)²−x₀²]/h=2x₀+h",
+            "L(x)=x₀²+2x₀(x−x₀)"
+          ],
+          "title": "切线为何能近似曲线",
+          "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+          "controls": {
+            "h": 0.5,
+            "side": 1,
+            "x0": 1,
+            "example": 0
+          },
+          "disabled": {
+            "example": "演示主线固定使用平方函数",
+            "x0": "演示前五镜固定 x₀=1"
+          },
+          "mode": "presentation",
+          "scene_id": "S5"
+        },
+        {
+          "time": 0.7307692307692307,
+          "metrics": {
+            "scene": 5,
+            "elapsedSeconds": 57,
+            "example": "x²",
+            "x0": 1,
+            "h": 0.5,
+            "slope": 2.5,
+            "rightSlope": 2.5,
+            "leftSlope": 1.5,
+            "derivative": 2,
+            "residual": 0.25,
+            "errorRatio": 0.5
+          },
+          "plot_signature": "1856687467",
+          "plot_text": [
+            "割线旋转成切线：导数的极限定义",
+            "h ≠ 0 · 总时长 78 秒",
+            "x",
+            "y",
+            "Q",
+            "r(h)",
+            "P",
+            "蓝：曲线",
+            "橙：增量",
+            "紫：割线/切线",
+            "S5 切线为何能近似曲线",
+            "f(x)=x²，x₀ = 1.00",
+            "h = +0.500",
+            "m(h) = 2.5000",
+            "当前导数 = 2.00",
+            "|h| = 0.5000",
+            "r(h) = 0.250000",
+            "r(h)/|h| = 0.500000",
+            "m(h)=[f(x₀+h)−f(x₀)]/h",
+            "[(x₀+h)²−x₀²]/h=2x₀+h",
+            "L(x)=x₀²+2x₀(x−x₀)"
+          ],
+          "title": "切线为何能近似曲线",
+          "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+          "controls": {
+            "h": 0.5,
+            "side": 1,
+            "x0": 1,
+            "example": 0
+          },
+          "disabled": {
+            "example": "演示主线固定使用平方函数",
+            "x0": "演示前五镜固定 x₀=1"
+          },
+          "mode": "presentation",
+          "scene_id": "S5"
+        },
+        {
+          "time": 0.9102564102564102,
+          "metrics": {
+            "scene": 6,
+            "elapsedSeconds": 71,
+            "example": "|x|",
+            "x0": 0,
+            "h": 0.5,
+            "slope": 1,
+            "rightSlope": 1,
+            "leftSlope": -1,
+            "derivative": "不存在",
+            "residual": "不适用",
+            "errorRatio": "不适用"
+          },
+          "plot_signature": "2633129497",
+          "plot_text": [
+            "割线旋转成切线：导数的极限定义",
+            "h ≠ 0 · 总时长 78 秒",
+            "x",
+            "y",
+            "Q(+|h|)",
+            "Q(−|h|)",
+            "P",
+            "蓝：曲线",
+            "橙：增量",
+            "绿/红：两侧割线",
+            "S6 连续的尖点为何不可导",
+            "f(x)=|x|，x₀ = 0.00",
+            "h = +0.500",
+            "m(+|h|) = 1.0000",
+            "m(−|h|) = -1.0000",
+            "当前选中侧 = +",
+            "原点双侧极限不相等",
+            "m(h)=(|x₀+h|−|x₀|)/h",
+            "h>0→1，h<0→−1"
+          ],
+          "title": "连续的尖点为何不可导",
+          "caption": "绝对值函数在原点连续，但左右差商不相等，导数不存在。",
+          "controls": {
+            "h": 0.5,
+            "side": 1,
+            "x0": 0,
+            "example": 1
+          },
+          "disabled": {
+            "example": "演示固定展示绝对值原点反例",
+            "x0": "演示固定在绝对值原点"
+          },
+          "mode": "presentation",
+          "scene_id": "S6"
+        }
+      ],
+      "controls": [
+        {
+          "id": "h",
+          "status": "PASS",
+          "probes": [
+            {
+              "time": 0.05128205128205128,
+              "values": [
+                {
+                  "value": 0.02,
+                  "metrics": {
+                    "scene": 1,
+                    "elapsedSeconds": 4,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.02,
+                    "slope": 2.02,
+                    "rightSlope": 2.02,
+                    "leftSlope": 1.98,
+                    "derivative": 2,
+                    "residual": 0.0004,
+                    "errorRatio": 0.02
+                  },
+                  "plot_signature": "854483422",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S1 固定点与附近的动点",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.020",
+                    "m(h) = 2.0200",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "固定点与附近的动点",
+                  "caption": "固定平方函数上的点 P，取附近点 Q，观察割线。",
+                  "controls": {
+                    "h": 0.02,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S1"
+                },
+                {
+                  "value": 1.01,
+                  "metrics": {
+                    "scene": 1,
+                    "elapsedSeconds": 4,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 1.01,
+                    "slope": 3.01,
+                    "rightSlope": 3.01,
+                    "leftSlope": 0.99,
+                    "derivative": 2,
+                    "residual": 1.0201,
+                    "errorRatio": 1.01
+                  },
+                  "plot_signature": "4001952503",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S1 固定点与附近的动点",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +1.010",
+                    "m(h) = 3.0100",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "固定点与附近的动点",
+                  "caption": "固定平方函数上的点 P，取附近点 Q，观察割线。",
+                  "controls": {
+                    "h": 1.01,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S1"
+                },
+                {
+                  "value": 2.0,
+                  "metrics": {
+                    "scene": 1,
+                    "elapsedSeconds": 4,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 2,
+                    "slope": 4,
+                    "rightSlope": 4,
+                    "leftSlope": 0,
+                    "derivative": 2,
+                    "residual": 4,
+                    "errorRatio": 2
+                  },
+                  "plot_signature": "4245046558",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S1 固定点与附近的动点",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +2.000",
+                    "m(h) = 4.0000",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "固定点与附近的动点",
+                  "caption": "固定平方函数上的点 P，取附近点 Q，观察割线。",
+                  "controls": {
+                    "h": 2,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S1"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.19230769230769232,
+              "values": [
+                {
+                  "value": 0.02,
+                  "metrics": {
+                    "scene": 2,
+                    "elapsedSeconds": 15,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.02,
+                    "slope": 2.02,
+                    "rightSlope": 2.02,
+                    "leftSlope": 1.98,
+                    "derivative": 2,
+                    "residual": 0.0004,
+                    "errorRatio": 0.02
+                  },
+                  "plot_signature": "2681776059",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S2 用增量构造割线斜率",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.020",
+                    "m(h) = 2.0200",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "用增量构造割线斜率",
+                  "caption": "差商就是割线斜率；平方函数化简为 m(h)=2x₀+h。",
+                  "controls": {
+                    "h": 0.02,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S2"
+                },
+                {
+                  "value": 1.01,
+                  "metrics": {
+                    "scene": 2,
+                    "elapsedSeconds": 15,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 1.01,
+                    "slope": 3.01,
+                    "rightSlope": 3.01,
+                    "leftSlope": 0.99,
+                    "derivative": 2,
+                    "residual": 1.0201,
+                    "errorRatio": 1.01
+                  },
+                  "plot_signature": "484408794",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S2 用增量构造割线斜率",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +1.010",
+                    "m(h) = 3.0100",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "用增量构造割线斜率",
+                  "caption": "差商就是割线斜率；平方函数化简为 m(h)=2x₀+h。",
+                  "controls": {
+                    "h": 1.01,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S2"
+                },
+                {
+                  "value": 2.0,
+                  "metrics": {
+                    "scene": 2,
+                    "elapsedSeconds": 15,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 2,
+                    "slope": 4,
+                    "rightSlope": 4,
+                    "leftSlope": 0,
+                    "derivative": 2,
+                    "residual": 4,
+                    "errorRatio": 2
+                  },
+                  "plot_signature": "608065147",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S2 用增量构造割线斜率",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +2.000",
+                    "m(h) = 4.0000",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "用增量构造割线斜率",
+                  "caption": "差商就是割线斜率；平方函数化简为 m(h)=2x₀+h。",
+                  "controls": {
+                    "h": 2,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S2"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.37,
+              "values": [
+                {
+                  "value": 0.02,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 28.86,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.02,
+                    "slope": 2.02,
+                    "rightSlope": 2.02,
+                    "leftSlope": 1.98,
+                    "derivative": 2,
+                    "residual": 0.0004,
+                    "errorRatio": 0.02
+                  },
+                  "plot_signature": "1561805605",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从右侧逼近切线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.020",
+                    "m(h) = 2.0200",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "从右侧逼近切线",
+                  "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 0.02,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                },
+                {
+                  "value": 1.01,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 28.86,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 1.01,
+                    "slope": 3.01,
+                    "rightSlope": 3.01,
+                    "leftSlope": 0.99,
+                    "derivative": 2,
+                    "residual": 1.0201,
+                    "errorRatio": 1.01
+                  },
+                  "plot_signature": "2612031042",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从右侧逼近切线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +1.010",
+                    "m(h) = 3.0100",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "从右侧逼近切线",
+                  "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 1.01,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                },
+                {
+                  "value": 2.0,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 28.86,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 2,
+                    "slope": 4,
+                    "rightSlope": 4,
+                    "leftSlope": 0,
+                    "derivative": 2,
+                    "residual": 4,
+                    "errorRatio": 2
+                  },
+                  "plot_signature": "4075047819",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从右侧逼近切线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +2.000",
+                    "m(h) = 4.0000",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "从右侧逼近切线",
+                  "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 2,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.3717948717948718,
+              "values": [
+                {
+                  "value": 0.02,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 29,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.02,
+                    "slope": 2.02,
+                    "rightSlope": 2.02,
+                    "leftSlope": 1.98,
+                    "derivative": 2,
+                    "residual": 0.0004,
+                    "errorRatio": 0.02
+                  },
+                  "plot_signature": "1561805605",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从右侧逼近切线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.020",
+                    "m(h) = 2.0200",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "从右侧逼近切线",
+                  "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 0.02,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                },
+                {
+                  "value": 1.01,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 29,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 1.01,
+                    "slope": 3.01,
+                    "rightSlope": 3.01,
+                    "leftSlope": 0.99,
+                    "derivative": 2,
+                    "residual": 1.0201,
+                    "errorRatio": 1.01
+                  },
+                  "plot_signature": "2612031042",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从右侧逼近切线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +1.010",
+                    "m(h) = 3.0100",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "从右侧逼近切线",
+                  "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 1.01,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                },
+                {
+                  "value": 2.0,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 29,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 2,
+                    "slope": 4,
+                    "rightSlope": 4,
+                    "leftSlope": 0,
+                    "derivative": 2,
+                    "residual": 4,
+                    "errorRatio": 2
+                  },
+                  "plot_signature": "4075047819",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从右侧逼近切线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +2.000",
+                    "m(h) = 4.0000",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "从右侧逼近切线",
+                  "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 2,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.5512820512820513,
+              "values": [
+                {
+                  "value": 0.02,
+                  "metrics": {
+                    "scene": 4,
+                    "elapsedSeconds": 43,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.02,
+                    "slope": 2.02,
+                    "rightSlope": 2.02,
+                    "leftSlope": 1.98,
+                    "derivative": 2,
+                    "residual": 0.0004,
+                    "errorRatio": 0.02
+                  },
+                  "plot_signature": "939713220",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q(+|h|)",
+                    "Q(−|h|)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "绿/红：两侧割线",
+                    "S4 左右极限必须一致",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.020",
+                    "m(+|h|) = 2.0200",
+                    "m(−|h|) = 1.9800",
+                    "当前选中侧 = +",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "左右极限必须一致",
+                  "caption": "同时比较两侧差商；平方函数都趋向同一个有限数 2x₀。",
+                  "controls": {
+                    "h": 0.02,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S4"
+                },
+                {
+                  "value": 1.01,
+                  "metrics": {
+                    "scene": 4,
+                    "elapsedSeconds": 43,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 1.01,
+                    "slope": 3.01,
+                    "rightSlope": 3.01,
+                    "leftSlope": 0.99,
+                    "derivative": 2,
+                    "residual": 1.0201,
+                    "errorRatio": 1.01
+                  },
+                  "plot_signature": "818397127",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q(+|h|)",
+                    "Q(−|h|)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "绿/红：两侧割线",
+                    "S4 左右极限必须一致",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +1.010",
+                    "m(+|h|) = 3.0100",
+                    "m(−|h|) = 0.9900",
+                    "当前选中侧 = +",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "左右极限必须一致",
+                  "caption": "同时比较两侧差商；平方函数都趋向同一个有限数 2x₀。",
+                  "controls": {
+                    "h": 1.01,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S4"
+                },
+                {
+                  "value": 2.0,
+                  "metrics": {
+                    "scene": 4,
+                    "elapsedSeconds": 43,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 2,
+                    "slope": 4,
+                    "rightSlope": 4,
+                    "leftSlope": 0,
+                    "derivative": 2,
+                    "residual": 4,
+                    "errorRatio": 2
+                  },
+                  "plot_signature": "301198119",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q(+|h|)",
+                    "Q(−|h|)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "绿/红：两侧割线",
+                    "S4 左右极限必须一致",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +2.000",
+                    "m(+|h|) = 4.0000",
+                    "m(−|h|) = 0.0000",
+                    "当前选中侧 = +",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "左右极限必须一致",
+                  "caption": "同时比较两侧差商；平方函数都趋向同一个有限数 2x₀。",
+                  "controls": {
+                    "h": 2,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S4"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.73,
+              "values": [
+                {
+                  "value": 0.02,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 56.94,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.02,
+                    "slope": 2.02,
+                    "rightSlope": 2.02,
+                    "leftSlope": 1.98,
+                    "derivative": 2,
+                    "residual": 0.0004,
+                    "errorRatio": 0.02
+                  },
+                  "plot_signature": "2942598225",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 切线为何能近似曲线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.020",
+                    "m(h) = 2.0200",
+                    "当前导数 = 2.00",
+                    "|h| = 0.0200",
+                    "r(h) = 0.000400",
+                    "r(h)/|h| = 0.020000",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "切线为何能近似曲线",
+                  "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+                  "controls": {
+                    "h": 0.02,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                },
+                {
+                  "value": 1.01,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 56.94,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 1.01,
+                    "slope": 3.01,
+                    "rightSlope": 3.01,
+                    "leftSlope": 0.99,
+                    "derivative": 2,
+                    "residual": 1.0201,
+                    "errorRatio": 1.01
+                  },
+                  "plot_signature": "3588066963",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 切线为何能近似曲线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +1.010",
+                    "m(h) = 3.0100",
+                    "当前导数 = 2.00",
+                    "|h| = 1.0100",
+                    "r(h) = 1.020100",
+                    "r(h)/|h| = 1.010000",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "切线为何能近似曲线",
+                  "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+                  "controls": {
+                    "h": 1.01,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                },
+                {
+                  "value": 2.0,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 56.94,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 2,
+                    "slope": 4,
+                    "rightSlope": 4,
+                    "leftSlope": 0,
+                    "derivative": 2,
+                    "residual": 4,
+                    "errorRatio": 2
+                  },
+                  "plot_signature": "2667896758",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 切线为何能近似曲线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +2.000",
+                    "m(h) = 4.0000",
+                    "当前导数 = 2.00",
+                    "|h| = 2.0000",
+                    "r(h) = 4.000000",
+                    "r(h)/|h| = 2.000000",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "切线为何能近似曲线",
+                  "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+                  "controls": {
+                    "h": 2,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.7307692307692307,
+              "values": [
+                {
+                  "value": 0.02,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 57,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.02,
+                    "slope": 2.02,
+                    "rightSlope": 2.02,
+                    "leftSlope": 1.98,
+                    "derivative": 2,
+                    "residual": 0.0004,
+                    "errorRatio": 0.02
+                  },
+                  "plot_signature": "2942598225",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 切线为何能近似曲线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.020",
+                    "m(h) = 2.0200",
+                    "当前导数 = 2.00",
+                    "|h| = 0.0200",
+                    "r(h) = 0.000400",
+                    "r(h)/|h| = 0.020000",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "切线为何能近似曲线",
+                  "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+                  "controls": {
+                    "h": 0.02,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                },
+                {
+                  "value": 1.01,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 57,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 1.01,
+                    "slope": 3.01,
+                    "rightSlope": 3.01,
+                    "leftSlope": 0.99,
+                    "derivative": 2,
+                    "residual": 1.0201,
+                    "errorRatio": 1.01
+                  },
+                  "plot_signature": "3588066963",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 切线为何能近似曲线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +1.010",
+                    "m(h) = 3.0100",
+                    "当前导数 = 2.00",
+                    "|h| = 1.0100",
+                    "r(h) = 1.020100",
+                    "r(h)/|h| = 1.010000",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "切线为何能近似曲线",
+                  "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+                  "controls": {
+                    "h": 1.01,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                },
+                {
+                  "value": 2.0,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 57,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 2,
+                    "slope": 4,
+                    "rightSlope": 4,
+                    "leftSlope": 0,
+                    "derivative": 2,
+                    "residual": 4,
+                    "errorRatio": 2
+                  },
+                  "plot_signature": "2667896758",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 切线为何能近似曲线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +2.000",
+                    "m(h) = 4.0000",
+                    "当前导数 = 2.00",
+                    "|h| = 2.0000",
+                    "r(h) = 4.000000",
+                    "r(h)/|h| = 2.000000",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "切线为何能近似曲线",
+                  "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+                  "controls": {
+                    "h": 2,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.9102564102564102,
+              "values": [
+                {
+                  "value": 0.02,
+                  "metrics": {
+                    "scene": 6,
+                    "elapsedSeconds": 71,
+                    "example": "|x|",
+                    "x0": 0,
+                    "h": 0.02,
+                    "slope": 1,
+                    "rightSlope": 1,
+                    "leftSlope": -1,
+                    "derivative": "不存在",
+                    "residual": "不适用",
+                    "errorRatio": "不适用"
+                  },
+                  "plot_signature": "2367081045",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q(+|h|)",
+                    "Q(−|h|)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "绿/红：两侧割线",
+                    "S6 连续的尖点为何不可导",
+                    "f(x)=|x|，x₀ = 0.00",
+                    "h = +0.020",
+                    "m(+|h|) = 1.0000",
+                    "m(−|h|) = -1.0000",
+                    "当前选中侧 = +",
+                    "原点双侧极限不相等",
+                    "m(h)=(|x₀+h|−|x₀|)/h",
+                    "h>0→1，h<0→−1"
+                  ],
+                  "title": "连续的尖点为何不可导",
+                  "caption": "绝对值函数在原点连续，但左右差商不相等，导数不存在。",
+                  "controls": {
+                    "h": 0.02,
+                    "side": 1,
+                    "x0": 0,
+                    "example": 1
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S6"
+                },
+                {
+                  "value": 1.01,
+                  "metrics": {
+                    "scene": 6,
+                    "elapsedSeconds": 71,
+                    "example": "|x|",
+                    "x0": 0,
+                    "h": 1.01,
+                    "slope": 1,
+                    "rightSlope": 1,
+                    "leftSlope": -1,
+                    "derivative": "不存在",
+                    "residual": "不适用",
+                    "errorRatio": "不适用"
+                  },
+                  "plot_signature": "2344800449",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q(+|h|)",
+                    "Q(−|h|)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "绿/红：两侧割线",
+                    "S6 连续的尖点为何不可导",
+                    "f(x)=|x|，x₀ = 0.00",
+                    "h = +1.010",
+                    "m(+|h|) = 1.0000",
+                    "m(−|h|) = -1.0000",
+                    "当前选中侧 = +",
+                    "原点双侧极限不相等",
+                    "m(h)=(|x₀+h|−|x₀|)/h",
+                    "h>0→1，h<0→−1"
+                  ],
+                  "title": "连续的尖点为何不可导",
+                  "caption": "绝对值函数在原点连续，但左右差商不相等，导数不存在。",
+                  "controls": {
+                    "h": 1.01,
+                    "side": 1,
+                    "x0": 0,
+                    "example": 1
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S6"
+                },
+                {
+                  "value": 2.0,
+                  "metrics": {
+                    "scene": 6,
+                    "elapsedSeconds": 71,
+                    "example": "|x|",
+                    "x0": 0,
+                    "h": 2,
+                    "slope": 1,
+                    "rightSlope": 1,
+                    "leftSlope": -1,
+                    "derivative": "不存在",
+                    "residual": "不适用",
+                    "errorRatio": "不适用"
+                  },
+                  "plot_signature": "3633135414",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q(+|h|)",
+                    "Q(−|h|)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "绿/红：两侧割线",
+                    "S6 连续的尖点为何不可导",
+                    "f(x)=|x|，x₀ = 0.00",
+                    "h = +2.000",
+                    "m(+|h|) = 1.0000",
+                    "m(−|h|) = -1.0000",
+                    "当前选中侧 = +",
+                    "原点双侧极限不相等",
+                    "m(h)=(|x₀+h|−|x₀|)/h",
+                    "h>0→1，h<0→−1"
+                  ],
+                  "title": "连续的尖点为何不可导",
+                  "caption": "绝对值函数在原点连续，但左右差商不相等，导数不存在。",
+                  "controls": {
+                    "h": 2,
+                    "side": 1,
+                    "x0": 0,
+                    "example": 1
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S6"
+                }
+              ],
+              "issue": null
+            }
+          ]
+        },
+        {
+          "id": "side",
+          "status": "PASS",
+          "probes": [
+            {
+              "time": 0.05128205128205128,
+              "values": [
+                {
+                  "value": -1.0,
+                  "metrics": {
+                    "scene": 1,
+                    "elapsedSeconds": 4,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": -0.5,
+                    "slope": 1.5,
+                    "rightSlope": 2.5,
+                    "leftSlope": 1.5,
+                    "derivative": 2,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "1639160087",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S1 固定点与附近的动点",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = −0.500",
+                    "m(h) = 1.5000",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "固定点与附近的动点",
+                  "caption": "固定平方函数上的点 P，取附近点 Q，观察割线。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": -1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S1"
+                },
+                {
+                  "value": 1.0,
+                  "metrics": {
+                    "scene": 1,
+                    "elapsedSeconds": 4,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.5,
+                    "slope": 2.5,
+                    "rightSlope": 2.5,
+                    "leftSlope": 1.5,
+                    "derivative": 2,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "2006259552",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S1 固定点与附近的动点",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.500",
+                    "m(h) = 2.5000",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "固定点与附近的动点",
+                  "caption": "固定平方函数上的点 P，取附近点 Q，观察割线。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S1"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.19230769230769232,
+              "values": [
+                {
+                  "value": -1.0,
+                  "metrics": {
+                    "scene": 2,
+                    "elapsedSeconds": 15,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": -0.5,
+                    "slope": 1.5,
+                    "rightSlope": 2.5,
+                    "leftSlope": 1.5,
+                    "derivative": 2,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "2970459690",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S2 用增量构造割线斜率",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = −0.500",
+                    "m(h) = 1.5000",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "用增量构造割线斜率",
+                  "caption": "差商就是割线斜率；平方函数化简为 m(h)=2x₀+h。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": -1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S2"
+                },
+                {
+                  "value": 1.0,
+                  "metrics": {
+                    "scene": 2,
+                    "elapsedSeconds": 15,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.5,
+                    "slope": 2.5,
+                    "rightSlope": 2.5,
+                    "leftSlope": 1.5,
+                    "derivative": 2,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "4167504645",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S2 用增量构造割线斜率",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.500",
+                    "m(h) = 2.5000",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "用增量构造割线斜率",
+                  "caption": "差商就是割线斜率；平方函数化简为 m(h)=2x₀+h。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S2"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.37,
+              "values": [
+                {
+                  "value": -1.0,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 28.86,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": -0.5198,
+                    "slope": 1.4802,
+                    "rightSlope": 2.5198,
+                    "leftSlope": 1.4802,
+                    "derivative": 2,
+                    "residual": 0.270192,
+                    "errorRatio": 0.5198
+                  },
+                  "plot_signature": "1691415549",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从左侧逼近切线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = −0.520",
+                    "m(h) = 1.4802",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "从左侧逼近切线",
+                  "caption": "从左侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 0.5198,
+                    "side": -1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                },
+                {
+                  "value": 1.0,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 28.86,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.5198,
+                    "slope": 2.5198,
+                    "rightSlope": 2.5198,
+                    "leftSlope": 1.4802,
+                    "derivative": 2,
+                    "residual": 0.270192,
+                    "errorRatio": 0.5198
+                  },
+                  "plot_signature": "512799161",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从右侧逼近切线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.520",
+                    "m(h) = 2.5198",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "从右侧逼近切线",
+                  "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 0.5198,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.3717948717948718,
+              "values": [
+                {
+                  "value": -1.0,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 29,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": -0.51,
+                    "slope": 1.49,
+                    "rightSlope": 2.51,
+                    "leftSlope": 1.49,
+                    "derivative": 2,
+                    "residual": 0.2601,
+                    "errorRatio": 0.51
+                  },
+                  "plot_signature": "4288884358",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从左侧逼近切线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = −0.510",
+                    "m(h) = 1.4900",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "从左侧逼近切线",
+                  "caption": "从左侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 0.51,
+                    "side": -1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                },
+                {
+                  "value": 1.0,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 29,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.51,
+                    "slope": 2.51,
+                    "rightSlope": 2.51,
+                    "leftSlope": 1.49,
+                    "derivative": 2,
+                    "residual": 0.2601,
+                    "errorRatio": 0.51
+                  },
+                  "plot_signature": "3877745940",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从右侧逼近切线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.510",
+                    "m(h) = 2.5100",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "从右侧逼近切线",
+                  "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 0.51,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.5512820512820513,
+              "values": [
+                {
+                  "value": -1.0,
+                  "metrics": {
+                    "scene": 4,
+                    "elapsedSeconds": 43,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": -0.51,
+                    "slope": 1.49,
+                    "rightSlope": 2.51,
+                    "leftSlope": 1.49,
+                    "derivative": 2,
+                    "residual": 0.2601,
+                    "errorRatio": 0.51
+                  },
+                  "plot_signature": "2070361913",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q(+|h|)",
+                    "Q(−|h|)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "绿/红：两侧割线",
+                    "S4 左右极限必须一致",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = −0.510",
+                    "m(+|h|) = 2.5100",
+                    "m(−|h|) = 1.4900",
+                    "当前选中侧 = −",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "左右极限必须一致",
+                  "caption": "同时比较两侧差商；平方函数都趋向同一个有限数 2x₀。",
+                  "controls": {
+                    "h": 0.51,
+                    "side": -1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S4"
+                },
+                {
+                  "value": 1.0,
+                  "metrics": {
+                    "scene": 4,
+                    "elapsedSeconds": 43,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.51,
+                    "slope": 2.51,
+                    "rightSlope": 2.51,
+                    "leftSlope": 1.49,
+                    "derivative": 2,
+                    "residual": 0.2601,
+                    "errorRatio": 0.51
+                  },
+                  "plot_signature": "1840688552",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q(+|h|)",
+                    "Q(−|h|)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "绿/红：两侧割线",
+                    "S4 左右极限必须一致",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.510",
+                    "m(+|h|) = 2.5100",
+                    "m(−|h|) = 1.4900",
+                    "当前选中侧 = +",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "左右极限必须一致",
+                  "caption": "同时比较两侧差商；平方函数都趋向同一个有限数 2x₀。",
+                  "controls": {
+                    "h": 0.51,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S4"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.73,
+              "values": [
+                {
+                  "value": -1.0,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 56.94,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": -0.5,
+                    "slope": 1.5,
+                    "rightSlope": 2.5,
+                    "leftSlope": 1.5,
+                    "derivative": 2,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "3398455652",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 切线为何能近似曲线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = −0.500",
+                    "m(h) = 1.5000",
+                    "当前导数 = 2.00",
+                    "|h| = 0.5000",
+                    "r(h) = 0.250000",
+                    "r(h)/|h| = 0.500000",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "切线为何能近似曲线",
+                  "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": -1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                },
+                {
+                  "value": 1.0,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 56.94,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.5,
+                    "slope": 2.5,
+                    "rightSlope": 2.5,
+                    "leftSlope": 1.5,
+                    "derivative": 2,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "1856687467",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 切线为何能近似曲线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.500",
+                    "m(h) = 2.5000",
+                    "当前导数 = 2.00",
+                    "|h| = 0.5000",
+                    "r(h) = 0.250000",
+                    "r(h)/|h| = 0.500000",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "切线为何能近似曲线",
+                  "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.7307692307692307,
+              "values": [
+                {
+                  "value": -1.0,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 57,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": -0.5,
+                    "slope": 1.5,
+                    "rightSlope": 2.5,
+                    "leftSlope": 1.5,
+                    "derivative": 2,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "3398455652",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 切线为何能近似曲线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = −0.500",
+                    "m(h) = 1.5000",
+                    "当前导数 = 2.00",
+                    "|h| = 0.5000",
+                    "r(h) = 0.250000",
+                    "r(h)/|h| = 0.500000",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "切线为何能近似曲线",
+                  "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": -1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                },
+                {
+                  "value": 1.0,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 57,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.5,
+                    "slope": 2.5,
+                    "rightSlope": 2.5,
+                    "leftSlope": 1.5,
+                    "derivative": 2,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "1856687467",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 切线为何能近似曲线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.500",
+                    "m(h) = 2.5000",
+                    "当前导数 = 2.00",
+                    "|h| = 0.5000",
+                    "r(h) = 0.250000",
+                    "r(h)/|h| = 0.500000",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "切线为何能近似曲线",
+                  "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.9102564102564102,
+              "values": [
+                {
+                  "value": -1.0,
+                  "metrics": {
+                    "scene": 6,
+                    "elapsedSeconds": 71,
+                    "example": "|x|",
+                    "x0": 0,
+                    "h": -0.5,
+                    "slope": -1,
+                    "rightSlope": 1,
+                    "leftSlope": -1,
+                    "derivative": "不存在",
+                    "residual": "不适用",
+                    "errorRatio": "不适用"
+                  },
+                  "plot_signature": "2294482822",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q(+|h|)",
+                    "Q(−|h|)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "绿/红：两侧割线",
+                    "S6 连续的尖点为何不可导",
+                    "f(x)=|x|，x₀ = 0.00",
+                    "h = −0.500",
+                    "m(+|h|) = 1.0000",
+                    "m(−|h|) = -1.0000",
+                    "当前选中侧 = −",
+                    "原点双侧极限不相等",
+                    "m(h)=(|x₀+h|−|x₀|)/h",
+                    "h>0→1，h<0→−1"
+                  ],
+                  "title": "连续的尖点为何不可导",
+                  "caption": "绝对值函数在原点连续，但左右差商不相等，导数不存在。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": -1,
+                    "x0": 0,
+                    "example": 1
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S6"
+                },
+                {
+                  "value": 1.0,
+                  "metrics": {
+                    "scene": 6,
+                    "elapsedSeconds": 71,
+                    "example": "|x|",
+                    "x0": 0,
+                    "h": 0.5,
+                    "slope": 1,
+                    "rightSlope": 1,
+                    "leftSlope": -1,
+                    "derivative": "不存在",
+                    "residual": "不适用",
+                    "errorRatio": "不适用"
+                  },
+                  "plot_signature": "2633129497",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q(+|h|)",
+                    "Q(−|h|)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "绿/红：两侧割线",
+                    "S6 连续的尖点为何不可导",
+                    "f(x)=|x|，x₀ = 0.00",
+                    "h = +0.500",
+                    "m(+|h|) = 1.0000",
+                    "m(−|h|) = -1.0000",
+                    "当前选中侧 = +",
+                    "原点双侧极限不相等",
+                    "m(h)=(|x₀+h|−|x₀|)/h",
+                    "h>0→1，h<0→−1"
+                  ],
+                  "title": "连续的尖点为何不可导",
+                  "caption": "绝对值函数在原点连续，但左右差商不相等，导数不存在。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 0,
+                    "example": 1
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S6"
+                }
+              ],
+              "issue": null
+            }
+          ]
+        },
+        {
+          "id": "x0",
+          "status": "PASS",
+          "probes": [
+            {
+              "time": 0.05128205128205128,
+              "values": [
+                {
+                  "value": -2.0,
+                  "metrics": {
+                    "scene": 1,
+                    "elapsedSeconds": 4,
+                    "example": "x²",
+                    "x0": -2,
+                    "h": 0.5,
+                    "slope": -3.5,
+                    "rightSlope": -3.5,
+                    "leftSlope": -4.5,
+                    "derivative": -4,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "3752850512",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S1 固定点与附近的动点",
+                    "f(x)=x²，x₀ = -2.00",
+                    "h = +0.500",
+                    "m(h) = -3.5000",
+                    "当前导数 = -4.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "固定点与附近的动点",
+                  "caption": "固定平方函数上的点 P，取附近点 Q，观察割线。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": -2,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S1"
+                },
+                {
+                  "value": 0.0,
+                  "metrics": {
+                    "scene": 1,
+                    "elapsedSeconds": 4,
+                    "example": "x²",
+                    "x0": 0,
+                    "h": 0.5,
+                    "slope": 0.5,
+                    "rightSlope": 0.5,
+                    "leftSlope": -0.5,
+                    "derivative": 0,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "1385667595",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S1 固定点与附近的动点",
+                    "f(x)=x²，x₀ = 0.00",
+                    "h = +0.500",
+                    "m(h) = 0.5000",
+                    "当前导数 = 0.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "固定点与附近的动点",
+                  "caption": "固定平方函数上的点 P，取附近点 Q，观察割线。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 0,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S1"
+                },
+                {
+                  "value": 2.0,
+                  "metrics": {
+                    "scene": 1,
+                    "elapsedSeconds": 4,
+                    "example": "x²",
+                    "x0": 2,
+                    "h": 0.5,
+                    "slope": 4.5,
+                    "rightSlope": 4.5,
+                    "leftSlope": 3.5,
+                    "derivative": 4,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "112343393",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S1 固定点与附近的动点",
+                    "f(x)=x²，x₀ = 2.00",
+                    "h = +0.500",
+                    "m(h) = 4.5000",
+                    "当前导数 = 4.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "固定点与附近的动点",
+                  "caption": "固定平方函数上的点 P，取附近点 Q，观察割线。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 2,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S1"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.19230769230769232,
+              "values": [
+                {
+                  "value": -2.0,
+                  "metrics": {
+                    "scene": 2,
+                    "elapsedSeconds": 15,
+                    "example": "x²",
+                    "x0": -2,
+                    "h": 0.5,
+                    "slope": -3.5,
+                    "rightSlope": -3.5,
+                    "leftSlope": -4.5,
+                    "derivative": -4,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "3279332853",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S2 用增量构造割线斜率",
+                    "f(x)=x²，x₀ = -2.00",
+                    "h = +0.500",
+                    "m(h) = -3.5000",
+                    "当前导数 = -4.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "用增量构造割线斜率",
+                  "caption": "差商就是割线斜率；平方函数化简为 m(h)=2x₀+h。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": -2,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S2"
+                },
+                {
+                  "value": 0.0,
+                  "metrics": {
+                    "scene": 2,
+                    "elapsedSeconds": 15,
+                    "example": "x²",
+                    "x0": 0,
+                    "h": 0.5,
+                    "slope": 0.5,
+                    "rightSlope": 0.5,
+                    "leftSlope": -0.5,
+                    "derivative": 0,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "1668369838",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S2 用增量构造割线斜率",
+                    "f(x)=x²，x₀ = 0.00",
+                    "h = +0.500",
+                    "m(h) = 0.5000",
+                    "当前导数 = 0.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "用增量构造割线斜率",
+                  "caption": "差商就是割线斜率；平方函数化简为 m(h)=2x₀+h。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 0,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S2"
+                },
+                {
+                  "value": 2.0,
+                  "metrics": {
+                    "scene": 2,
+                    "elapsedSeconds": 15,
+                    "example": "x²",
+                    "x0": 2,
+                    "h": 0.5,
+                    "slope": 4.5,
+                    "rightSlope": 4.5,
+                    "leftSlope": 3.5,
+                    "derivative": 4,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "3421540964",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S2 用增量构造割线斜率",
+                    "f(x)=x²，x₀ = 2.00",
+                    "h = +0.500",
+                    "m(h) = 4.5000",
+                    "当前导数 = 4.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "用增量构造割线斜率",
+                  "caption": "差商就是割线斜率；平方函数化简为 m(h)=2x₀+h。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 2,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S2"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.37,
+              "values": [
+                {
+                  "value": -2.0,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 28.86,
+                    "example": "x²",
+                    "x0": -2,
+                    "h": 0.5198,
+                    "slope": -3.4802,
+                    "rightSlope": -3.4802,
+                    "leftSlope": -4.5198,
+                    "derivative": -4,
+                    "residual": 0.270192,
+                    "errorRatio": 0.5198
+                  },
+                  "plot_signature": "2422277574",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从右侧逼近切线",
+                    "f(x)=x²，x₀ = -2.00",
+                    "h = +0.520",
+                    "m(h) = -3.4802",
+                    "当前导数 = -4.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "从右侧逼近切线",
+                  "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 0.5198,
+                    "side": 1,
+                    "x0": -2,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                },
+                {
+                  "value": 0.0,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 28.86,
+                    "example": "x²",
+                    "x0": 0,
+                    "h": 0.5198,
+                    "slope": 0.5198,
+                    "rightSlope": 0.5198,
+                    "leftSlope": -0.5198,
+                    "derivative": 0,
+                    "residual": 0.270192,
+                    "errorRatio": 0.5198
+                  },
+                  "plot_signature": "1681473756",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从右侧逼近切线",
+                    "f(x)=x²，x₀ = 0.00",
+                    "h = +0.520",
+                    "m(h) = 0.5198",
+                    "当前导数 = 0.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "从右侧逼近切线",
+                  "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 0.5198,
+                    "side": 1,
+                    "x0": 0,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                },
+                {
+                  "value": 2.0,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 28.86,
+                    "example": "x²",
+                    "x0": 2,
+                    "h": 0.5198,
+                    "slope": 4.5198,
+                    "rightSlope": 4.5198,
+                    "leftSlope": 3.4802,
+                    "derivative": 4,
+                    "residual": 0.270192,
+                    "errorRatio": 0.5198
+                  },
+                  "plot_signature": "233843288",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从右侧逼近切线",
+                    "f(x)=x²，x₀ = 2.00",
+                    "h = +0.520",
+                    "m(h) = 4.5198",
+                    "当前导数 = 4.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "从右侧逼近切线",
+                  "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 0.5198,
+                    "side": 1,
+                    "x0": 2,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.3717948717948718,
+              "values": [
+                {
+                  "value": -2.0,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 29,
+                    "example": "x²",
+                    "x0": -2,
+                    "h": 0.51,
+                    "slope": -3.49,
+                    "rightSlope": -3.49,
+                    "leftSlope": -4.51,
+                    "derivative": -4,
+                    "residual": 0.2601,
+                    "errorRatio": 0.51
+                  },
+                  "plot_signature": "3975497665",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从右侧逼近切线",
+                    "f(x)=x²，x₀ = -2.00",
+                    "h = +0.510",
+                    "m(h) = -3.4900",
+                    "当前导数 = -4.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "从右侧逼近切线",
+                  "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 0.51,
+                    "side": 1,
+                    "x0": -2,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                },
+                {
+                  "value": 0.0,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 29,
+                    "example": "x²",
+                    "x0": 0,
+                    "h": 0.51,
+                    "slope": 0.51,
+                    "rightSlope": 0.51,
+                    "leftSlope": -0.51,
+                    "derivative": 0,
+                    "residual": 0.2601,
+                    "errorRatio": 0.51
+                  },
+                  "plot_signature": "1927825151",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从右侧逼近切线",
+                    "f(x)=x²，x₀ = 0.00",
+                    "h = +0.510",
+                    "m(h) = 0.5100",
+                    "当前导数 = 0.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "从右侧逼近切线",
+                  "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 0.51,
+                    "side": 1,
+                    "x0": 0,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                },
+                {
+                  "value": 2.0,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 29,
+                    "example": "x²",
+                    "x0": 2,
+                    "h": 0.51,
+                    "slope": 4.51,
+                    "rightSlope": 4.51,
+                    "leftSlope": 3.49,
+                    "derivative": 4,
+                    "residual": 0.2601,
+                    "errorRatio": 0.51
+                  },
+                  "plot_signature": "1804447081",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从右侧逼近切线",
+                    "f(x)=x²，x₀ = 2.00",
+                    "h = +0.510",
+                    "m(h) = 4.5100",
+                    "当前导数 = 4.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "从右侧逼近切线",
+                  "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 0.51,
+                    "side": 1,
+                    "x0": 2,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.5512820512820513,
+              "values": [
+                {
+                  "value": -2.0,
+                  "metrics": {
+                    "scene": 4,
+                    "elapsedSeconds": 43,
+                    "example": "x²",
+                    "x0": -2,
+                    "h": 0.51,
+                    "slope": -3.49,
+                    "rightSlope": -3.49,
+                    "leftSlope": -4.51,
+                    "derivative": -4,
+                    "residual": 0.2601,
+                    "errorRatio": 0.51
+                  },
+                  "plot_signature": "361750289",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q(+|h|)",
+                    "Q(−|h|)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "绿/红：两侧割线",
+                    "S4 左右极限必须一致",
+                    "f(x)=x²，x₀ = -2.00",
+                    "h = +0.510",
+                    "m(+|h|) = -3.4900",
+                    "m(−|h|) = -4.5100",
+                    "当前选中侧 = +",
+                    "当前导数 = -4.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "左右极限必须一致",
+                  "caption": "同时比较两侧差商；平方函数都趋向同一个有限数 2x₀。",
+                  "controls": {
+                    "h": 0.51,
+                    "side": 1,
+                    "x0": -2,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S4"
+                },
+                {
+                  "value": 0.0,
+                  "metrics": {
+                    "scene": 4,
+                    "elapsedSeconds": 43,
+                    "example": "x²",
+                    "x0": 0,
+                    "h": 0.51,
+                    "slope": 0.51,
+                    "rightSlope": 0.51,
+                    "leftSlope": -0.51,
+                    "derivative": 0,
+                    "residual": 0.2601,
+                    "errorRatio": 0.51
+                  },
+                  "plot_signature": "345993068",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q(+|h|)",
+                    "Q(−|h|)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "绿/红：两侧割线",
+                    "S4 左右极限必须一致",
+                    "f(x)=x²，x₀ = 0.00",
+                    "h = +0.510",
+                    "m(+|h|) = 0.5100",
+                    "m(−|h|) = -0.5100",
+                    "当前选中侧 = +",
+                    "当前导数 = 0.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "左右极限必须一致",
+                  "caption": "同时比较两侧差商；平方函数都趋向同一个有限数 2x₀。",
+                  "controls": {
+                    "h": 0.51,
+                    "side": 1,
+                    "x0": 0,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S4"
+                },
+                {
+                  "value": 2.0,
+                  "metrics": {
+                    "scene": 4,
+                    "elapsedSeconds": 43,
+                    "example": "x²",
+                    "x0": 2,
+                    "h": 0.51,
+                    "slope": 4.51,
+                    "rightSlope": 4.51,
+                    "leftSlope": 3.49,
+                    "derivative": 4,
+                    "residual": 0.2601,
+                    "errorRatio": 0.51
+                  },
+                  "plot_signature": "106981546",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q(+|h|)",
+                    "Q(−|h|)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "绿/红：两侧割线",
+                    "S4 左右极限必须一致",
+                    "f(x)=x²，x₀ = 2.00",
+                    "h = +0.510",
+                    "m(+|h|) = 4.5100",
+                    "m(−|h|) = 3.4900",
+                    "当前选中侧 = +",
+                    "当前导数 = 4.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "左右极限必须一致",
+                  "caption": "同时比较两侧差商；平方函数都趋向同一个有限数 2x₀。",
+                  "controls": {
+                    "h": 0.51,
+                    "side": 1,
+                    "x0": 2,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S4"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.73,
+              "values": [
+                {
+                  "value": -2.0,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 56.94,
+                    "example": "x²",
+                    "x0": -2,
+                    "h": 0.5,
+                    "slope": -3.5,
+                    "rightSlope": -3.5,
+                    "leftSlope": -4.5,
+                    "derivative": -4,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "1818457791",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 切线为何能近似曲线",
+                    "f(x)=x²，x₀ = -2.00",
+                    "h = +0.500",
+                    "m(h) = -3.5000",
+                    "当前导数 = -4.00",
+                    "|h| = 0.5000",
+                    "r(h) = 0.250000",
+                    "r(h)/|h| = 0.500000",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "切线为何能近似曲线",
+                  "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": -2,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                },
+                {
+                  "value": 0.0,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 56.94,
+                    "example": "x²",
+                    "x0": 0,
+                    "h": 0.5,
+                    "slope": 0.5,
+                    "rightSlope": 0.5,
+                    "leftSlope": -0.5,
+                    "derivative": 0,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "2751190691",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 切线为何能近似曲线",
+                    "f(x)=x²，x₀ = 0.00",
+                    "h = +0.500",
+                    "m(h) = 0.5000",
+                    "当前导数 = 0.00",
+                    "|h| = 0.5000",
+                    "r(h) = 0.250000",
+                    "r(h)/|h| = 0.500000",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "切线为何能近似曲线",
+                  "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 0,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                },
+                {
+                  "value": 2.0,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 56.94,
+                    "example": "x²",
+                    "x0": 2,
+                    "h": 0.5,
+                    "slope": 4.5,
+                    "rightSlope": 4.5,
+                    "leftSlope": 3.5,
+                    "derivative": 4,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "599533469",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 切线为何能近似曲线",
+                    "f(x)=x²，x₀ = 2.00",
+                    "h = +0.500",
+                    "m(h) = 4.5000",
+                    "当前导数 = 4.00",
+                    "|h| = 0.5000",
+                    "r(h) = 0.250000",
+                    "r(h)/|h| = 0.500000",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "切线为何能近似曲线",
+                  "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 2,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.7307692307692307,
+              "values": [
+                {
+                  "value": -2.0,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 57,
+                    "example": "x²",
+                    "x0": -2,
+                    "h": 0.5,
+                    "slope": -3.5,
+                    "rightSlope": -3.5,
+                    "leftSlope": -4.5,
+                    "derivative": -4,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "1818457791",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 切线为何能近似曲线",
+                    "f(x)=x²，x₀ = -2.00",
+                    "h = +0.500",
+                    "m(h) = -3.5000",
+                    "当前导数 = -4.00",
+                    "|h| = 0.5000",
+                    "r(h) = 0.250000",
+                    "r(h)/|h| = 0.500000",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "切线为何能近似曲线",
+                  "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": -2,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                },
+                {
+                  "value": 0.0,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 57,
+                    "example": "x²",
+                    "x0": 0,
+                    "h": 0.5,
+                    "slope": 0.5,
+                    "rightSlope": 0.5,
+                    "leftSlope": -0.5,
+                    "derivative": 0,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "2751190691",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 切线为何能近似曲线",
+                    "f(x)=x²，x₀ = 0.00",
+                    "h = +0.500",
+                    "m(h) = 0.5000",
+                    "当前导数 = 0.00",
+                    "|h| = 0.5000",
+                    "r(h) = 0.250000",
+                    "r(h)/|h| = 0.500000",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "切线为何能近似曲线",
+                  "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 0,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                },
+                {
+                  "value": 2.0,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 57,
+                    "example": "x²",
+                    "x0": 2,
+                    "h": 0.5,
+                    "slope": 4.5,
+                    "rightSlope": 4.5,
+                    "leftSlope": 3.5,
+                    "derivative": 4,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "599533469",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 切线为何能近似曲线",
+                    "f(x)=x²，x₀ = 2.00",
+                    "h = +0.500",
+                    "m(h) = 4.5000",
+                    "当前导数 = 4.00",
+                    "|h| = 0.5000",
+                    "r(h) = 0.250000",
+                    "r(h)/|h| = 0.500000",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "切线为何能近似曲线",
+                  "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 2,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.9102564102564102,
+              "values": [
+                {
+                  "value": -2.0,
+                  "metrics": {
+                    "scene": 6,
+                    "elapsedSeconds": 71,
+                    "example": "|x|",
+                    "x0": -2,
+                    "h": 0.5,
+                    "slope": -1,
+                    "rightSlope": -1,
+                    "leftSlope": -1,
+                    "derivative": -1,
+                    "residual": 0,
+                    "errorRatio": 0
+                  },
+                  "plot_signature": "1677241313",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q(+|h|)",
+                    "Q(−|h|)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "绿/红：两侧割线",
+                    "S6 绝对值函数在当前点可导",
+                    "f(x)=|x|，x₀ = -2.00",
+                    "h = +0.500",
+                    "m(+|h|) = -1.0000",
+                    "m(−|h|) = -1.0000",
+                    "当前选中侧 = +",
+                    "当前导数 = -1.00",
+                    "m(h)=(|x₀+h|−|x₀|)/h",
+                    "非原点处导数为 −1"
+                  ],
+                  "title": "绝对值函数在当前点可导",
+                  "caption": "绝对值函数在当前非尖点可导，切线斜率为 −1。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": -2,
+                    "example": 1
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S6"
+                },
+                {
+                  "value": 0.0,
+                  "metrics": {
+                    "scene": 6,
+                    "elapsedSeconds": 71,
+                    "example": "|x|",
+                    "x0": 0,
+                    "h": 0.5,
+                    "slope": 1,
+                    "rightSlope": 1,
+                    "leftSlope": -1,
+                    "derivative": "不存在",
+                    "residual": "不适用",
+                    "errorRatio": "不适用"
+                  },
+                  "plot_signature": "2633129497",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q(+|h|)",
+                    "Q(−|h|)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "绿/红：两侧割线",
+                    "S6 连续的尖点为何不可导",
+                    "f(x)=|x|，x₀ = 0.00",
+                    "h = +0.500",
+                    "m(+|h|) = 1.0000",
+                    "m(−|h|) = -1.0000",
+                    "当前选中侧 = +",
+                    "原点双侧极限不相等",
+                    "m(h)=(|x₀+h|−|x₀|)/h",
+                    "h>0→1，h<0→−1"
+                  ],
+                  "title": "连续的尖点为何不可导",
+                  "caption": "绝对值函数在原点连续，但左右差商不相等，导数不存在。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 0,
+                    "example": 1
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S6"
+                },
+                {
+                  "value": 2.0,
+                  "metrics": {
+                    "scene": 6,
+                    "elapsedSeconds": 71,
+                    "example": "|x|",
+                    "x0": 2,
+                    "h": 0.5,
+                    "slope": 1,
+                    "rightSlope": 1,
+                    "leftSlope": 1,
+                    "derivative": 1,
+                    "residual": 0,
+                    "errorRatio": 0
+                  },
+                  "plot_signature": "2586526384",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q(+|h|)",
+                    "Q(−|h|)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "绿/红：两侧割线",
+                    "S6 绝对值函数在当前点可导",
+                    "f(x)=|x|，x₀ = 2.00",
+                    "h = +0.500",
+                    "m(+|h|) = 1.0000",
+                    "m(−|h|) = 1.0000",
+                    "当前选中侧 = +",
+                    "当前导数 = 1.00",
+                    "m(h)=(|x₀+h|−|x₀|)/h",
+                    "非原点处导数为 1"
+                  ],
+                  "title": "绝对值函数在当前点可导",
+                  "caption": "绝对值函数在当前非尖点可导，切线斜率为 1。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 2,
+                    "example": 1
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S6"
+                }
+              ],
+              "issue": null
+            }
+          ]
+        },
+        {
+          "id": "example",
+          "status": "PASS",
+          "probes": [
+            {
+              "time": 0.05128205128205128,
+              "values": [
+                {
+                  "value": 0.0,
+                  "metrics": {
+                    "scene": 1,
+                    "elapsedSeconds": 4,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.5,
+                    "slope": 2.5,
+                    "rightSlope": 2.5,
+                    "leftSlope": 1.5,
+                    "derivative": 2,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "2006259552",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S1 固定点与附近的动点",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.500",
+                    "m(h) = 2.5000",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "固定点与附近的动点",
+                  "caption": "固定平方函数上的点 P，取附近点 Q，观察割线。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S1"
+                },
+                {
+                  "value": 1.0,
+                  "metrics": {
+                    "scene": 1,
+                    "elapsedSeconds": 4,
+                    "example": "|x|",
+                    "x0": 1,
+                    "h": 0.5,
+                    "slope": 1,
+                    "rightSlope": 1,
+                    "leftSlope": 1,
+                    "derivative": 1,
+                    "residual": 0,
+                    "errorRatio": 0
+                  },
+                  "plot_signature": "162424691",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S1 绝对值曲线与固定点",
+                    "f(x)=|x|，x₀ = 1.00",
+                    "h = +0.500",
+                    "m(h) = 1.0000",
+                    "当前导数 = 1.00",
+                    "m(h)=(|x₀+h|−|x₀|)/h",
+                    "非原点处导数为 1"
+                  ],
+                  "title": "绝对值曲线与固定点",
+                  "caption": "固定绝对值函数上的点 P，取附近点 Q，观察割线。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 1
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S1"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.19230769230769232,
+              "values": [
+                {
+                  "value": 0.0,
+                  "metrics": {
+                    "scene": 2,
+                    "elapsedSeconds": 15,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.5,
+                    "slope": 2.5,
+                    "rightSlope": 2.5,
+                    "leftSlope": 1.5,
+                    "derivative": 2,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "4167504645",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S2 用增量构造割线斜率",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.500",
+                    "m(h) = 2.5000",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "用增量构造割线斜率",
+                  "caption": "差商就是割线斜率；平方函数化简为 m(h)=2x₀+h。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S2"
+                },
+                {
+                  "value": 1.0,
+                  "metrics": {
+                    "scene": 2,
+                    "elapsedSeconds": 15,
+                    "example": "|x|",
+                    "x0": 1,
+                    "h": 0.5,
+                    "slope": 1,
+                    "rightSlope": 1,
+                    "leftSlope": 1,
+                    "derivative": 1,
+                    "residual": 0,
+                    "errorRatio": 0
+                  },
+                  "plot_signature": "2732053455",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S2 绝对值的割线斜率",
+                    "f(x)=|x|，x₀ = 1.00",
+                    "h = +0.500",
+                    "m(h) = 1.0000",
+                    "当前导数 = 1.00",
+                    "m(h)=(|x₀+h|−|x₀|)/h",
+                    "非原点处导数为 1"
+                  ],
+                  "title": "绝对值的割线斜率",
+                  "caption": "差商是绝对值函数的割线斜率，h 始终非零。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 1
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S2"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.37,
+              "values": [
+                {
+                  "value": 0.0,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 28.86,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.5198,
+                    "slope": 2.5198,
+                    "rightSlope": 2.5198,
+                    "leftSlope": 1.4802,
+                    "derivative": 2,
+                    "residual": 0.270192,
+                    "errorRatio": 0.5198
+                  },
+                  "plot_signature": "512799161",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从右侧逼近切线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.520",
+                    "m(h) = 2.5198",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "从右侧逼近切线",
+                  "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 0.5198,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                },
+                {
+                  "value": 1.0,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 28.86,
+                    "example": "|x|",
+                    "x0": 1,
+                    "h": 0.5198,
+                    "slope": 1,
+                    "rightSlope": 1,
+                    "leftSlope": 1,
+                    "derivative": 1,
+                    "residual": 0,
+                    "errorRatio": 0
+                  },
+                  "plot_signature": "83761594",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从右侧逼近切线",
+                    "f(x)=|x|，x₀ = 1.00",
+                    "h = +0.520",
+                    "m(h) = 1.0000",
+                    "当前导数 = 1.00",
+                    "m(h)=(|x₀+h|−|x₀|)/h",
+                    "非原点处导数为 1"
+                  ],
+                  "title": "从右侧逼近切线",
+                  "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 0.5198,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 1
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.3717948717948718,
+              "values": [
+                {
+                  "value": 0.0,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 29,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.51,
+                    "slope": 2.51,
+                    "rightSlope": 2.51,
+                    "leftSlope": 1.49,
+                    "derivative": 2,
+                    "residual": 0.2601,
+                    "errorRatio": 0.51
+                  },
+                  "plot_signature": "3877745940",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从右侧逼近切线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.510",
+                    "m(h) = 2.5100",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "从右侧逼近切线",
+                  "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 0.51,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                },
+                {
+                  "value": 1.0,
+                  "metrics": {
+                    "scene": 3,
+                    "elapsedSeconds": 29,
+                    "example": "|x|",
+                    "x0": 1,
+                    "h": 0.51,
+                    "slope": 1,
+                    "rightSlope": 1,
+                    "leftSlope": 1,
+                    "derivative": 1,
+                    "residual": 0,
+                    "errorRatio": 0
+                  },
+                  "plot_signature": "1726577388",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S3 从右侧逼近切线",
+                    "f(x)=|x|，x₀ = 1.00",
+                    "h = +0.510",
+                    "m(h) = 1.0000",
+                    "当前导数 = 1.00",
+                    "m(h)=(|x₀+h|−|x₀|)/h",
+                    "非原点处导数为 1"
+                  ],
+                  "title": "从右侧逼近切线",
+                  "caption": "从右侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+                  "controls": {
+                    "h": 0.51,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 1
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S3"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.5512820512820513,
+              "values": [
+                {
+                  "value": 0.0,
+                  "metrics": {
+                    "scene": 4,
+                    "elapsedSeconds": 43,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.51,
+                    "slope": 2.51,
+                    "rightSlope": 2.51,
+                    "leftSlope": 1.49,
+                    "derivative": 2,
+                    "residual": 0.2601,
+                    "errorRatio": 0.51
+                  },
+                  "plot_signature": "1840688552",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q(+|h|)",
+                    "Q(−|h|)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "绿/红：两侧割线",
+                    "S4 左右极限必须一致",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.510",
+                    "m(+|h|) = 2.5100",
+                    "m(−|h|) = 1.4900",
+                    "当前选中侧 = +",
+                    "当前导数 = 2.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "左右极限必须一致",
+                  "caption": "同时比较两侧差商；平方函数都趋向同一个有限数 2x₀。",
+                  "controls": {
+                    "h": 0.51,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S4"
+                },
+                {
+                  "value": 1.0,
+                  "metrics": {
+                    "scene": 4,
+                    "elapsedSeconds": 43,
+                    "example": "|x|",
+                    "x0": 1,
+                    "h": 0.51,
+                    "slope": 1,
+                    "rightSlope": 1,
+                    "leftSlope": 1,
+                    "derivative": 1,
+                    "residual": 0,
+                    "errorRatio": 0
+                  },
+                  "plot_signature": "558830637",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q(+|h|)",
+                    "Q(−|h|)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "绿/红：两侧割线",
+                    "S4 绝对值在当前点的左右极限",
+                    "f(x)=|x|，x₀ = 1.00",
+                    "h = +0.510",
+                    "m(+|h|) = 1.0000",
+                    "m(−|h|) = 1.0000",
+                    "当前选中侧 = +",
+                    "当前导数 = 1.00",
+                    "m(h)=(|x₀+h|−|x₀|)/h",
+                    "非原点处导数为 1"
+                  ],
+                  "title": "绝对值在当前点的左右极限",
+                  "caption": "绝对值在当前非原点可导；左右差商趋向同一个值 1。",
+                  "controls": {
+                    "h": 0.51,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 1
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S4"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.73,
+              "values": [
+                {
+                  "value": 0.0,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 56.94,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.5,
+                    "slope": 2.5,
+                    "rightSlope": 2.5,
+                    "leftSlope": 1.5,
+                    "derivative": 2,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "1856687467",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 切线为何能近似曲线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.500",
+                    "m(h) = 2.5000",
+                    "当前导数 = 2.00",
+                    "|h| = 0.5000",
+                    "r(h) = 0.250000",
+                    "r(h)/|h| = 0.500000",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "切线为何能近似曲线",
+                  "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                },
+                {
+                  "value": 1.0,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 56.94,
+                    "example": "|x|",
+                    "x0": 1,
+                    "h": 0.5,
+                    "slope": 1,
+                    "rightSlope": 1,
+                    "leftSlope": 1,
+                    "derivative": 1,
+                    "residual": 0,
+                    "errorRatio": 0
+                  },
+                  "plot_signature": "4049511051",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 绝对值的局部线性",
+                    "f(x)=|x|，x₀ = 1.00",
+                    "h = +0.500",
+                    "m(h) = 1.0000",
+                    "当前导数 = 1.00",
+                    "|h| = 0.5000",
+                    "r(h) = 0.000000",
+                    "r(h)/|h| = 0.000000",
+                    "m(h)=(|x₀+h|−|x₀|)/h",
+                    "非原点处导数为 1"
+                  ],
+                  "title": "绝对值的局部线性",
+                  "caption": "当前点位于绝对值的单一线性分支，误差为 0。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 1
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.7307692307692307,
+              "values": [
+                {
+                  "value": 0.0,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 57,
+                    "example": "x²",
+                    "x0": 1,
+                    "h": 0.5,
+                    "slope": 2.5,
+                    "rightSlope": 2.5,
+                    "leftSlope": 1.5,
+                    "derivative": 2,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "1856687467",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 切线为何能近似曲线",
+                    "f(x)=x²，x₀ = 1.00",
+                    "h = +0.500",
+                    "m(h) = 2.5000",
+                    "当前导数 = 2.00",
+                    "|h| = 0.5000",
+                    "r(h) = 0.250000",
+                    "r(h)/|h| = 0.500000",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "切线为何能近似曲线",
+                  "caption": "平方函数的切线误差为 h²，误差比 r(h)/|h|=|h| 随步长缩小而趋于 0。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                },
+                {
+                  "value": 1.0,
+                  "metrics": {
+                    "scene": 5,
+                    "elapsedSeconds": 57,
+                    "example": "|x|",
+                    "x0": 1,
+                    "h": 0.5,
+                    "slope": 1,
+                    "rightSlope": 1,
+                    "leftSlope": 1,
+                    "derivative": 1,
+                    "residual": 0,
+                    "errorRatio": 0
+                  },
+                  "plot_signature": "4049511051",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "r(h)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S5 绝对值的局部线性",
+                    "f(x)=|x|，x₀ = 1.00",
+                    "h = +0.500",
+                    "m(h) = 1.0000",
+                    "当前导数 = 1.00",
+                    "|h| = 0.5000",
+                    "r(h) = 0.000000",
+                    "r(h)/|h| = 0.000000",
+                    "m(h)=(|x₀+h|−|x₀|)/h",
+                    "非原点处导数为 1"
+                  ],
+                  "title": "绝对值的局部线性",
+                  "caption": "当前点位于绝对值的单一线性分支，误差为 0。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 1,
+                    "example": 1
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S5"
+                }
+              ],
+              "issue": null
+            },
+            {
+              "time": 0.9102564102564102,
+              "values": [
+                {
+                  "value": 0.0,
+                  "metrics": {
+                    "scene": 6,
+                    "elapsedSeconds": 71,
+                    "example": "x²",
+                    "x0": 0,
+                    "h": 0.5,
+                    "slope": 0.5,
+                    "rightSlope": 0.5,
+                    "leftSlope": -0.5,
+                    "derivative": 0,
+                    "residual": 0.25,
+                    "errorRatio": 0.5
+                  },
+                  "plot_signature": "1094849787",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "紫：割线/切线",
+                    "S6 平方函数的可导性与切线",
+                    "f(x)=x²，x₀ = 0.00",
+                    "h = +0.500",
+                    "m(h) = 0.5000",
+                    "当前导数 = 0.00",
+                    "m(h)=[f(x₀+h)−f(x₀)]/h",
+                    "[(x₀+h)²−x₀²]/h=2x₀+h",
+                    "L(x)=x₀²+2x₀(x−x₀)"
+                  ],
+                  "title": "平方函数的可导性与切线",
+                  "caption": "平方函数在当前点可导，切线斜率为 2x₀。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 0,
+                    "example": 0
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S6"
+                },
+                {
+                  "value": 1.0,
+                  "metrics": {
+                    "scene": 6,
+                    "elapsedSeconds": 71,
+                    "example": "|x|",
+                    "x0": 0,
+                    "h": 0.5,
+                    "slope": 1,
+                    "rightSlope": 1,
+                    "leftSlope": -1,
+                    "derivative": "不存在",
+                    "residual": "不适用",
+                    "errorRatio": "不适用"
+                  },
+                  "plot_signature": "2633129497",
+                  "plot_text": [
+                    "割线旋转成切线：导数的极限定义",
+                    "h ≠ 0 · 总时长 78 秒",
+                    "x",
+                    "y",
+                    "Q(+|h|)",
+                    "Q(−|h|)",
+                    "P",
+                    "蓝：曲线",
+                    "橙：增量",
+                    "绿/红：两侧割线",
+                    "S6 连续的尖点为何不可导",
+                    "f(x)=|x|，x₀ = 0.00",
+                    "h = +0.500",
+                    "m(+|h|) = 1.0000",
+                    "m(−|h|) = -1.0000",
+                    "当前选中侧 = +",
+                    "原点双侧极限不相等",
+                    "m(h)=(|x₀+h|−|x₀|)/h",
+                    "h>0→1，h<0→−1"
+                  ],
+                  "title": "连续的尖点为何不可导",
+                  "caption": "绝对值函数在原点连续，但左右差商不相等，导数不存在。",
+                  "controls": {
+                    "h": 0.5,
+                    "side": 1,
+                    "x0": 0,
+                    "example": 1
+                  },
+                  "disabled": {},
+                  "mode": "explore",
+                  "scene_id": "S6"
+                }
+              ],
+              "issue": null
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "network_requests_blocked": 0,
+      "human_visual_review": "NOT_RUN",
+      "code_execution": "browser_web_worker",
+      "video": {
+        "mime": "video/webm;codecs=vp9",
+        "frames": 1265,
+        "duration_seconds": 78,
+        "recorded_seconds": 78.22459999999404,
+        "width": 960,
+        "height": 540,
+        "bytes": 5113049
+      }
+    },
+    "runtime_contract_version": 2,
+    "contract_hash": "354d83a615296507f77cd939ff77d950dd919573c0887223657ae4a6d7179a38",
+    "repair_history": [
+      {
+        "issues": [
+          "切线绘制用 `safeY` 把超出 y∈[-1,9] 的 y 压到边界，导致切线出现虚假水平段。默认 x0=1 时 L(x)=2x−1 在 x<0 应低于 y=−1，但代码会把它画成 y=−1 的水平虚线。应改为用绘图区矩形裁剪，而不是 clamp y。",
+          "x 轴只到 ±3、y 轴只到 9，但 x0∈[-2,2] 与 |h|≤2 可使 qx=x0+h 达 ±4，f(qx) 达 16。此时 Q 被画到右侧面板/画布外，或 y 被 clamp，割线、误差条与显示的差商/误差不一致。应扩大坐标范围或限制 h 使 x0+h 与 f(x0+h) 落在绘图区内，并正确裁剪。",
+          "S4 未实现方案中的并排左右对照：代码只用全局 `side` 画一条割线，右侧也不并列显示 h=+|h| 与 h=−|h| 的差商/割线，无法同时比较左右极限。应并排绘制两条单侧割线或两栏数值。",
+          "S6 未实现方案中的左右两栏单侧割线：代码只画由 `side` 选择的一条从原点出发的割线；虽然面板文字列出 −1/1，但图像没有同时展示左右斜率。应并排画两条单侧割线且不合成切线。",
+          "关键公式 `ctx.fillText(formula, 780, 430)` 从 x=780 起且无换行/缩放，长公式会超出 960 右边界被裁切（如差商公式和切线公式）。应左移、缩小字号或分成多行。",
+          "S3 标题和讲解指定“从右侧逼近”，但 `h = side * lerp(1,0.02,local)` 仍受全局 `side` 控制；side=−1 时该镜头会显示左侧逼近，图像与标题/字幕不一致。应在 S3 强制 h>0，或把标题改为中性的“单侧逼近”并同步字幕。",
+          "在 S3 中 `h` 滑杆完全不生效（h 被时间轴覆盖），暂停后拖动“步长 |h|”不会改变步长，与控件预期不符。应允许暂停时用滑杆覆盖动画值，或在 S3 禁用/隐藏该控件并说明由时间轴控制。",
+          "`example` 控件在 S6 被 `si === 5` 覆盖：开关为 x² 时 S6 仍显示 |x|；开关为 |x| 时又会改变 S1–S5 的主例。控件与当前场景函数不一致。应在 S6 明确同步示例状态，或让开关只控制非强制场景。"
+        ]
+      },
+      {
+        "issues": [
+          "示例开关 example≥0.5（|x|）时，第1–5镜也全部改用 f(x)=|x| 并把 x₀ 强制为 0，但宿主字幕按 story 固定讲平方函数：第2镜字幕“对平方函数，差商化简为 2x₀+h”时画面面板却显示 m(h)=|h|/h，第3镜字幕“斜率越来越接近 2x₀”时 |x| 在 0 点的单侧差商恒为 ±1，旁白与图像直接矛盾。应把 example 开关限制为只在第6镜生效（或在第1–5镜忽略 example=1），否则字幕与图形不一致。",
+          "side 控件在第3镜（h=lerp(mag,0.02,local) 强制为正、完全忽略 side）、第4镜与第6镜（固定同时画 h=−|h| 与 h=+|h| 两条割线）都不改变任何数学量，6 镜中有 3 镜该控件失效，不满足“每个控件都影响相应数学过程”。建议第3镜按 side 决定从哪一侧缩小 h，第4/6镜用 side 高亮被选中的那一侧割线。",
+          "第4镜（si===3）面板只算单侧数值（h=side·|h|、m(h)=2x₀+side·|h|、行“2x₀+h”），而画面同时画出 h=+|h| 与 h=−|h| 两条割线，斜率分别为 2x₀+|h| 与 2x₀−|h|，面板数字与画面两条割线对不上，也未实现 explanation 所称的“并列给出两侧差商”。建议在面板同时列出 m(+|h|)=2x₀+|h| 与 m(−|h|)=2x₀−|h|。",
+          "第6镜强制 isAbs 并把 x₀ 置 0，但控件 example/x0 仍保留用户值，滑块位置与画面实际使用的函数和取点不一致（选 x² 的第6镜仍显示 |x|，x₀ 滑块位置与 0 不同）。建议在第6镜禁用这两个控件，或把有效值回写到控件。",
+          "第3镜步长起点完全等于 |h| 滑杆值，若用户把滑杆设为下限 0.02，h 全程恒为 0.02，时间轴不再产生任何可见动画；同时该镜面板显示的实时 h 与滑杆位置不同步。建议为第3镜设固定起始步长（如 1.0）或在面板中同时标注滑杆设定值。",
+          "第5镜（si===4）误差讨论中，面板只给“h² 误差 = |residual|”与文字“h²/|h|=|h|→0”，没有把当前 |h| 与 |h| 的数值并列显示，用户难以在同一处核对比值确实随 |h| 缩小。建议在该镜面板增列“|h|”与“r(h)/|h|”两个数值。",
+          "第1–5镜在 |x| 示例下仍显示“m=[f(x₀+h)−f(x₀)]/h =[(x₀+h)²−x₀²]/h =2x₀+h”的公式分支被替换为绝对值分支，但该镜标题与 narrations 仍属平方函数主线，切换示例后教学内容丢失；第6镜的“连续但不可导”结论也因此提前出现在第1–5镜。"
+        ]
+      },
+      {
+        "issues": [
+          "`example` 控件完全未生效：代码中 `const example=...` 之后从未使用，`isAbs` 仅由 `si===5` 决定，因此用户无法用整数切换选择 f(x)=x² 或 f(x)=|x|，与方案交互目标“用固定示例整数切换选择 f(x)=x² 或 f(x)=|x|”不符。修复：让 `example` 影响当前镜头的函数、公式、切线与反例显示，或至少在前五镜可切换并在第六镜可切回。",
+          "S3 标题固定为“从右侧逼近切线”，但 `side` 控件可设为 -1，此时 h<0、Q 从左侧靠近，标题与图像不一致。修复：标题随 `side` 动态显示“从左侧/右侧逼近切线”，或限制 S3 的 `side` 为 +1。",
+          "S3 中 `|h|` 滑杆不控制实际步长（实际 h 由时间轴 local 从 1 到 0.02 决定），但右侧数值表仍用滑杆 `mag` 显示 `m(+|h|)`、`m(−|h|)`，可能与当前动画 h 不一致。修复：在 S3 隐藏这两行，或让滑杆覆盖时间轴动画。"
+        ]
+      },
+      {
+        "issues": [
+          "explore 模式下 `title` 未随示例/取点联动：当 `mode='explore'`、`si===5`（t∈[64,78]）且 `example=0`（x²）时，`title` 仍为 `titles[5]='连续的尖点为何不可导'`，但 `isAbs=false`，`caption` 落入平方函数误差分支，画面画 x² 与切线，标题与内容矛盾。触发参数：explore、t=0.9、example=0、x0=1。修复：根据 `isAbs` 与 `|x0|` 动态设置 `title`，例如 si=5 且 !isAbs 时改为“平方函数的可导性与切线”等。",
+          "explore 模式下 S5（`si===4`）当 `example=1`、`x0=0` 时，`title` 仍为 `'切线为何能近似曲线'`，但 `derivative=NaN`、不画切线，`caption/formulas` 变成“f′(0) 不存在”。触发参数：explore、t=0.7、example=1、x0=0。修复：在 `derivative` 不存在时动态改为不可导反例标题，或让 S5 的 `title` 与 `isAbs`、`x0` 联动。",
+          "explore 模式下 S1–S3、S5 当 `example=1` 且 `x0=0` 时，`caption` 被统一设为“绝对值在原点连续，但左、右差商分别为 −1 与 1…”，但 `showBoth` 仅在 `si===3||si===5` 为真，这些场景只画由 `side` 决定的一条单侧割线，字幕说左右差商而画面没有左侧割线。触发参数：explore、t=0.1/0.3、example=1、x0=0、side=1。修复：在这些场景让 `caption` 只描述当前单侧差商，或强制同时绘制左右割线。",
+          "S5 的误差竖条缺失：`si===4` 时面板和公式给出 `r(h)=h²`、`r(h)/|h|`，但代码没有在 `x0+h` 处绘制从切线高度 `L(x0+h)=fp+derivative*h` 到曲线高度 `fq` 的竖直误差线段，与确认方案 S5 visual“在 x0+h 处标出曲线高度和切线预测高度的差”不符。触发参数：任意进入 S5 的 h。修复：在 S5 用红色线段连接 `(x0+h, L(x0+h))` 与 `(x0+h, f(x0+h))` 并标注 `r(h)`。",
+          "S2/S3 割线未延长：代码 `line(x0,fp,qx,fq,'#7a4aa8',3)` 只画 P 到 Q 的线段，未按确认方案 S2 visual“连接 P、Q 并延长为割线”绘制。触发参数：S2/S3 任意参数。修复：将割线沿 `(qx-x0, fq-fp)` 方向延长到绘图区边界或至少更长。",
+          "S4/S6（`showBoth` 为 true）图例颜色与图形不符：图例固定写“紫：割线/切线”，但割线在 `showBoth` 分支使用绿色/红色（`sel`/`other`），紫色只用于切线。触发参数：si===3 或 si===5。修复：根据 `showBoth` 动态更新图例，或统一割线颜色。"
+        ]
+      },
+      {
+        "issues": [
+          "explore 模式（以及 presentation 前五镜，因 example 在最后一镜前未被禁用）在 t∈[22,36)、example=1、x0=0 时，si=2 分支的 title 仍为 `(side>0?'从右侧':'从左侧')+'逼近切线'`；但此时 deriv=null、L=null，|x| 在原点不可导、画面不画切线，面板还显示“原点双侧极限不相等”，标题与数学事实及画面矛盾。修复：si===2 且 deriv===null 时改为“从右侧/左侧逼近原点：差商恒为 1 或 −1”，并在 caption 中说明无切线。",
+          "formulas 中绝对值差商写作 `'m(h)=|x₀+h|−|x₀| / h'`，按文本优先级会被读成 |x₀+h| − (|x₀|/h)，不是差商。触发：example=1（含 presentation 第六镜与 explore 的 |x|）。修复：写成 `m(h)=(|x₀+h|−|x₀|)/h`，或分子分母分两行绘制。",
+          "S4（si===3）面板在 `m(+|h|)`、`m(−|h|)` 两行之后，还由 `else rows.push('m(h) = 2x₀+h = '+slope.toFixed(4))` 固定追加一行单侧值：side=1 时它等于 m(+|h|)，side=-1 时等于 m(−|h|)，而画面同时有两条割线，该行未标明“当前选中侧”，易让观众误以为存在第三条割线。修复：both 场景省略该行，或加“当前选中侧：”前缀。",
+          "both 分支（si===3、si===5 以及 |x| 原点且 si===4）只画 `line(x0,fp,x0±rh,f(x0±rh))` 两条 P–Q 线段，未标注 Q 点；非 both 分支有 'Q' 标签，both 时两个动点没有任何标识，观众无法确认动点身份。修复：为两侧动点加 Q(+|h|)、Q(−|h|) 或至少保留一个 Q 标注。",
+          "explore 下 example=1、x0≠0 时 caption 被 `else if(isAbs)` 统一覆盖为“当前点不在尖点，绝对值函数在此处可导；选取方向会改变所显示的差商”，导致 si===4 的误差面板（r(h)、r(h)/|h|）没有字幕对应说明；且当 |h|<|x0| 时两侧差商都等于同号 ±1，“选取方向会改变”不成立。修复：按 si 与是否跨过原点细化 caption，例如 si===4 说明 |x| 在非原点局部误差为 0。",
+          "presentation 模式下 si===2 的 h 被时间轴覆盖并给出 disabled 说明是正确的，但 controls 仍把动画中的 |h| 回传给宿主；若宿主据此同步被禁用的滑杆，滑杆位置会随动画变化而不是保持用户设值。这不影响数学量，但建议在禁用时保留用户原值或明确标注“当前动画步长”。"
+        ]
+      },
+      {
+        "issues": [
+          "presentation 模式 si===3（S4）仍使用 `mag=si===2?1-.98*local:inputH`，因此 t∈[50,64) 时 h 固定为 inputH（默认 0.5），左右割线不随时间轴旋转；面板显示 m(+|h|)=2x0+|h|、m(−|h|)=2x0−|h|，而字幕称“两侧都趋向同一个有限数 2x₀”。触发：presentation、t=0.55、p.h=0.5。修复：在 si===3 让 |h| 随 local 从 1 缩小到 0.02（并同步 disabled/controls），或修改字幕为当前固定步长下的对比。",
+          "explore 模式 si===4（S5）且 example=1、x0≠0 时，caption 固定说“在不跨过原点的局部区间内……误差为 0”，但未判断 Q 是否与 P 同侧；当 |h|>|x0| 时 residual=f(x0+h)-L(x0+h)≠0，面板和 metrics 显示 r(h) 与 r(h)/|h| 非零。触发：explore、t=0.7、example=1、x0=1、side=-1、h=2（qx=-1），面板显示 r(h)=2、r(h)/|h|=1，字幕仍说误差为 0。修复：在 si===4 且 isAbs 时判断 `x0*(x0+h)>0`（或 `Math.abs(h)<Math.abs(x0)`），跨过时动态修改 caption/公式说明当前割线跨过尖点、不适用局部线性结论，或限制 |h| 使 Q 与 P 在同一分支。"
+        ]
+      },
+      {
+        "issues": [
+          "explore 模式在 S4（si===3，t∈[36,50)）选择绝对值示例且 x0≠0 时，caption 仍走 abs 分支写成“同时比较左右差商；在尖点两侧极限不相等。”。例如 t=0.55、example=1、x0=1、side=1、h=0.5 时，该点不是尖点，绝对值函数在 x0=1 可导，左右差商极限都为 1，面板也会显示 m(+|h|)=m(−|h|)=1，标题“左右极限必须一致”与字幕自相矛盾。修复：在 si===3 的 abs 分支按 Math.abs(x0)<1e-9 区分原点与非原点；非原点改为说明“绝对值在当前点可导，左右差商趋于同一值 1/−1”。"
+        ]
+      }
+    ],
+    "human_math_review": "NOT_RUN",
+    "human_visual_review": "NOT_RUN",
+    "limitations": [
+      "有限动画只能展示数值趋近，不能替代极限存在性的严格证明；h 始终非零。",
+      "绝对值原点导数不存在，因此不绘制唯一切线或导数误差。",
+      "Canvas 中文字形依赖运行环境提供的 sans-serif 字体。"
+    ],
+    "covered_decision_ids": [
+      "ef80e9169fd64af685004a20aeb7274f",
+      "5c9563c276f242c8905c942a42455e44"
+    ],
+    "format": "WebM VP8/VP9, 960x540, silent animation with Chinese captions"
+  },
+  "web_video": {
+    "width": 960,
+    "height": 540,
+    "played_seconds": 0.205804
+  },
+  "web_controls": {
+    "status": "PASS",
+    "s3_left": {
+      "metrics": {
+        "scene": 3,
+        "elapsedSeconds": 29.016,
+        "example": "x²",
+        "x0": 1,
+        "h": -0.3,
+        "slope": 1.7,
+        "rightSlope": 2.3,
+        "leftSlope": 1.7,
+        "derivative": 2,
+        "residual": 0.09,
+        "errorRatio": 0.3
+      },
+      "plot_signature": "673112005",
+      "plot_text": [
+        "割线旋转成切线：导数的极限定义",
+        "h ≠ 0 · 总时长 78 秒",
+        "x",
+        "y",
+        "Q",
+        "P",
+        "蓝：曲线",
+        "橙：增量",
+        "紫：割线/切线",
+        "S3 从左侧逼近切线",
+        "f(x)=x²，x₀ = 1.00",
+        "h = −0.300",
+        "m(h) = 1.7000",
+        "当前导数 = 2.00",
+        "m(h)=[f(x₀+h)−f(x₀)]/h",
+        "[(x₀+h)²−x₀²]/h=2x₀+h",
+        "L(x)=x₀²+2x₀(x−x₀)"
+      ],
+      "title": "从左侧逼近切线",
+      "caption": "从左侧缩小 h，差商趋近当前切线斜率；有限动画不取 h=0。",
+      "controls": {
+        "h": 0.3,
+        "side": -1,
+        "x0": 1,
+        "example": 0
+      },
+      "disabled": {},
+      "mode": "explore",
+      "scene_id": "S3"
+    },
+    "s6_switch_back": {
+      "metrics": {
+        "scene": 6,
+        "elapsedSeconds": 70.98,
+        "example": "x²",
+        "x0": 1,
+        "h": 0.5,
+        "slope": 2.5,
+        "rightSlope": 2.5,
+        "leftSlope": 1.5,
+        "derivative": 2,
+        "residual": 0.25,
+        "errorRatio": 0.5
+      },
+      "plot_signature": "1352214212",
+      "plot_text": [
+        "割线旋转成切线：导数的极限定义",
+        "h ≠ 0 · 总时长 78 秒",
+        "x",
+        "y",
+        "Q",
+        "P",
+        "蓝：曲线",
+        "橙：增量",
+        "紫：割线/切线",
+        "S6 平方函数的可导性与切线",
+        "f(x)=x²，x₀ = 1.00",
+        "h = +0.500",
+        "m(h) = 2.5000",
+        "当前导数 = 2.00",
+        "m(h)=[f(x₀+h)−f(x₀)]/h",
+        "[(x₀+h)²−x₀²]/h=2x₀+h",
+        "L(x)=x₀²+2x₀(x−x₀)"
+      ],
+      "title": "平方函数的可导性与切线",
+      "caption": "平方函数在当前点可导，切线斜率为 2x₀。",
+      "controls": {
+        "h": 0.5,
+        "side": 1,
+        "x0": 1,
+        "example": 0
+      },
+      "disabled": {},
+      "mode": "explore",
+      "scene_id": "S6"
+    },
+    "sandbox_origin": "null"
+  }
+}

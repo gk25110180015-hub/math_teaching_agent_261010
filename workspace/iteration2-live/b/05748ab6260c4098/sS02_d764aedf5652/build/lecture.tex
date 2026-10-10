@@ -1,0 +1,168 @@
+\documentclass[UTF8,fontset=fandol,11pt]{ctexart}
+\usepackage[a4paper,margin=24mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,graphicx,tabularx,booktabs,hyperref}
+\newtheorem{definition}{定义}[section]
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{example}[definition]{例题}
+\newtheorem{exercise}[definition]{练习}
+\hypersetup{unicode=true,colorlinks=true,linkcolor=blue}
+\title{数列与数列极限：经济学本科一年级微积分讲义计划}
+\date{}
+\begin{document}
+\maketitle
+\section{数列与数列极限的定义}\label{sec:S01}
+% UNIT S01.U01
+\begin{definition}
+\label{def:sequence}数列是定义在正整数集 $\mathbb{N}^{+}=\{1,2,3,\ldots\}$ 上、取实数值的函数。若该函数在 $n\in\mathbb{N}^{+}$ 处的值为 $a_n$，则称 $a_n$ 为数列 $\{a_n\}$ 的第 $n$ 项，通常写作
+\[
+a_1,a_2,\ldots,a_n,\ldots,
+\qquad a_n=f(n),\quad n\in\mathbb{N}^{+}.
+\]
+数列的下标只能取正整数，且项的排列顺序是数列定义的一部分。
+\end{definition}
+% UNIT S01.U02
+\begin{definition}
+\label{def:sequence-limit}\label{def:epsilon-N}设 $\{a_n\}$ 是实数数列，$L\in\mathbb{R}$。若对于任意 $\varepsilon>0$，都存在正整数 $N$，使得当 $n\geq N$ 时有
+\[
+|a_n-L|<\varepsilon,
+\]
+则称数列 $\{a_n\}$ 收敛于 $L$，记为
+\[
+\lim_{n\to\infty}a_n=L.
+\]
+其中，$\varepsilon$ 先任意给定，而 $N$ 可以依赖于 $\varepsilon$，但不能依赖于 $n$。
+\end{definition}
+% UNIT S01.U03
+\begin{definition}
+“收敛于给定的 $L$”的否定形式，即“不收敛于给定的 $L$”，是：存在某个 $\varepsilon_0>0$，使得对每一个正整数 $N$，都存在 $n\geq N$，满足
+\[
+|a_n-L|\geq\varepsilon_0.
+\]
+因此，收敛于这个给定的 $L$ 要求从某个下标开始的所有项都落在区间 $(L-\varepsilon,L+\varepsilon)$ 内；不收敛于这个给定的 $L$ 则表示无论下标取得多大，总能找到一项落在某个固定误差范围之外。
+\end{definition}
+% UNIT S01.U04
+\begin{theorem}
+\label{thm:limit-unique}若数列 $\{a_n\}$ 收敛于 $L$，又收敛于 $M$，其中 $L,M\in\mathbb{R}$，则
+\[
+L=M.
+\]
+\end{theorem}
+% UNIT S01.U05
+\begin{proof}
+设 $L\ne M$，取
+\[
+\varepsilon=\frac{|L-M|}{3}>0.
+\]
+由 $a_n\to L$，存在正整数 $N_1$，使得当 $n\geq N_1$ 时，$|a_n-L|<\varepsilon$。同理由 $a_n\to M$，存在正整数 $N_2$，使得当 $n\geq N_2$ 时，$|a_n-M|<\varepsilon$。令 $N=\max\{N_1,N_2\}$，则对任意 $n\geq N$，三角不等式给出
+\[
+|L-M|\leq |L-a_n|+|a_n-M|<2\varepsilon=\frac{2}{3}|L-M|.
+\]
+这与 $|L-M|>0$ 矛盾。因此 $L=M$。
+\end{proof}
+% UNIT S01.U06
+\begin{example}
+验证数列
+\[
+a_n=\frac{1}{n},\qquad n\in\mathbb{N}^{+},
+\]
+是否收敛，并判断其极限。
+\end{example}
+% UNIT S01.U07
+\par\noindent\textbf{解：}要证明 $a_n\to0$，需验证对任意 $\varepsilon>0$，存在正整数 $N$，使得 $n\geq N$ 时
+\[
+\left|\frac{1}{n}-0\right|<\varepsilon.
+\]
+给定 $\varepsilon>0$，取正整数 $N>\frac{1}{\varepsilon}$。当 $n\geq N$ 时，由 $n>0$ 得
+\[
+\left|\frac{1}{n}-0\right|=\frac{1}{n}\leq\frac{1}{N}<\varepsilon.
+\]
+所以按照 $\varepsilon$--$N$ 定义，
+\[
+\lim_{n\to\infty}\frac{1}{n}=0.
+\]\par
+% UNIT S01.U08
+极限描述的是下标充分大时数列项的接近趋势，而不是某一项必须等于极限。例如，对 $a_n=1/n$，没有正整数 $n$ 使得 $a_n=0$，但当 $n$ 足够大时，$a_n$ 可以小于任意预先给定的正数 $\varepsilon$。因此，有限项的取值与数列的极限需要区分。\par
+% UNIT S01.U09
+\begin{exercise}
+\label{mathagent:exercise:41706b9e371cbf8283a4f1192e660b4426644ffb8f650af52f47cef5491b1ca0}
+用 $\varepsilon$--$N$ 定义证明
+\[
+\lim_{n\to\infty}\frac{2n+1}{n}=2.
+\]
+要求明确写出给定的 $\varepsilon$、所取的 $N$，以及当 $n\geq N$ 时的误差估计。
+\end{exercise}
+\section{收敛数列的基本性质与极限运算法则}\label{sec:S02}
+% UNIT S02.U01
+\begin{definition}
+设数列 $\{a_n\}$。若存在常数 $M>0$，使得对所有 $n\in\mathbb{N}^{+}$ 都有 $|a_n|\leq M$，则称数列 $\{a_n\}$ 有界。
+\end{definition}
+% UNIT S02.U02
+\begin{theorem}
+\label{thm:convergent-bounded}若数列 $\{a_n\}$ 收敛于实数 $L$，则数列 $\{a_n\}$ 有界。
+\end{theorem}
+% UNIT S02.U03
+\begin{proof}
+由 $a_n\to L$，取 $\varepsilon=1$。则存在正整数 $N$，使得当 $n\geq N$ 时，$|a_n-L|<1$。于是当 $n\geq N$ 时，$|a_n|\leq|a_n-L|+|L|<1+|L|$。令 $M$ 为有限数集 $\{|a_1|,\ldots,|a_{N-1}|,1+|L|\}$ 的最大值；若 $N=1$，则取 $M=1+|L|$。于是对所有 $n\in\mathbb{N}^{+}$ 都有 $|a_n|\leq M$，所以数列有界。
+\end{proof}
+% UNIT S02.U04
+\begin{theorem}
+\label{thm:limit-sign}设 $a_n\to L$。若 $L>0$，则存在正整数 $N$，使得当 $n\geq N$ 时 $a_n>0$；若 $L<0$，则存在正整数 $N$，使得当 $n\geq N$ 时 $a_n<0$。特别地，若 $a_n\geq0$ 对所有 $n$ 成立，则 $L\geq0$；若 $a_n\leq0$ 对所有 $n$ 成立，则 $L\leq0$。
+\end{theorem}
+% UNIT S02.U05
+\begin{proof}
+当 $L>0$ 时，取 $\varepsilon=L/2$。由极限定义，存在正整数 $N$，使得 $n\geq N$ 时 $|a_n-L|<L/2$。因此 $a_n>L/2>0$。当 $L<0$ 时，取 $\varepsilon=|L|/2$，则当 $n$ 足够大时，$a_n<L+|L|/2=L/2<0$。若 $a_n\geq0$ 且 $L<0$，则这与充分大的 $n$ 满足 $a_n<0$ 矛盾，所以 $L\geq0$。另一种情形同理。
+\end{proof}
+% UNIT S02.U06
+\begin{theorem}
+\label{thm:limit-order}设 $a_n\to L$，$b_n\to M$，且存在正整数 $N_0$，使得对所有 $n\geq N_0$ 都有 $a_n\leq b_n$，则 $L\leq M$。
+\end{theorem}
+% UNIT S02.U07
+\begin{proof}
+反设 $L>M$，取 $\varepsilon=(L-M)/3>0$。由 $a_n\to L$ 和 $b_n\to M$，存在正整数 $N_1,N_2$，使得当 $n\geq N_1$ 时 $|a_n-L|<\varepsilon$，当 $n\geq N_2$ 时 $|b_n-M|<\varepsilon$。当 $n\geq\max\{N_0,N_1,N_2\}$ 时，$a_n>L-\varepsilon$ 且 $b_n<M+\varepsilon$。所以 $a_n-b_n>L-M-2\varepsilon=(L-M)/3>0$，即 $a_n>b_n$，与题设矛盾。因此 $L\leq M$。
+\end{proof}
+% UNIT S02.U08
+\begin{theorem}
+\label{thm:limit-sum-product}设 $a_n\to L$，$b_n\to M$，且 $c\in\mathbb{R}$ 为常数，则 $ca_n\to cL$，$a_n+b_n\to L+M$，以及 $a_nb_n\to LM$。从而 $a_n-b_n\to L-M$。
+\end{theorem}
+% UNIT S02.U09
+\begin{proof}
+先证常数倍法则。若 $c=0$，则对任意 $\varepsilon>0$，取 $N=1$，当 $n\geq N$ 时有 $|ca_n-cL|=0<\varepsilon$。若 $c\neq0$，则对任意 $\varepsilon>0$，由 $a_n\to L$ 可取正整数 $N$，使得当 $n\geq N$ 时 $|a_n-L|<\varepsilon/|c|$，于是 $|ca_n-cL|=|c|\,|a_n-L|<\varepsilon$。所以 $ca_n\to cL$。
+再证和法则。任给 $\varepsilon>0$，由两个数列的收敛性，分别取正整数 $N_1,N_2$，使得当 $n\geq N_1$ 时 $|a_n-L|<\varepsilon/2$，当 $n\geq N_2$ 时 $|b_n-M|<\varepsilon/2$。取 $N=\max\{N_1,N_2\}$，则当 $n\geq N$ 时，由三角不等式，$|(a_n+b_n)-(L+M)|\leq|a_n-L|+|b_n-M|<\varepsilon/2+\varepsilon/2=\varepsilon$。故 $a_n+b_n\to L+M$。由已证的常数倍法则，$-b_n\to-M$，再用和法则即得 $a_n-b_n\to L-M$。
+对乘积，先由 \ref{thm:convergent-bounded} 知道收敛数列有界，取常数 $K>0$，使得对所有 $n$ 都有 $|a_n|\leq K$。利用恒等式 $a_nb_n-LM=a_n(b_n-M)+M(a_n-L)$，有 $|a_nb_n-LM|\leq K|b_n-M|+|M|\,|a_n-L|$。任给 $\varepsilon>0$，由收敛性可分别取正整数 $N_3,N_4$，使得当 $n\geq N_3$ 时 $|b_n-M|<\varepsilon/(2K)$，当 $n\geq N_4$ 时 $|a_n-L|<\varepsilon/[2(|M|+1)]$。取 $N=\max\{N_3,N_4\}$，则当 $n\geq N$ 时，$|a_nb_n-LM|<\varepsilon/2+|M|\varepsilon/[2(|M|+1)]<\varepsilon$。因此由极限定义，$a_nb_n\to LM$。
+\end{proof}
+% UNIT S02.U10
+\begin{theorem}
+\label{thm:limit-quotient}设 $a_n\to L$，$b_n\to M$，且 $M\neq0$。若对所有 $n\in\mathbb{N}^{+}$ 都有 $b_n\neq0$，则 $a_n/b_n\to L/M$。
+\end{theorem}
+% UNIT S02.U11
+\begin{proof}
+由 $b_n\to M$ 且 $M\neq0$，取 $\varepsilon=|M|/2$。根据极限定义，当 $n$ 足够大时，$|b_n-M|<|M|/2$，从而 $|b_n|\geq|M|-|b_n-M|>|M|/2$。于是 $|1/b_n-1/M|=|b_n-M|/(|M|\,|b_n|)\leq2|b_n-M|/|M|^2\to0$。所以 $1/b_n\to1/M$。再由乘积法则，$a_n/b_n=a_n(1/b_n)\to L(1/M)=L/M$。
+\end{proof}
+% UNIT S02.U12
+\begin{example}
+计算下列数列的极限，并说明所使用的运算法则：$a_n=3(1/n)+2$，$b_n=(2n+1)/(n+3)$，其中 $n\in\mathbb{N}^{+}$。
+\end{example}
+% UNIT S02.U13
+\par\noindent\textbf{解：}由前一节的基本极限 $1/n\to0$，利用常数倍法则与和法则，$\lim_{n\to\infty}a_n=3\cdot0+2=2$。对于 $b_n$，由于 $n\in\mathbb{N}^{+}$，可将分子、分母同除以 $n$，得到 $b_n=(2+1/n)/(1+3/n)$。由 $1/n\to0$，有 $2+1/n\to2$，且 $1+3/n\to1\neq0$。另外，$1+3/n>0$，所以商式有定义。由商法则，$\lim_{n\to\infty}b_n=2/1=2$。使用商法则前必须确认分母极限非零。\par
+% UNIT S02.U14
+\begin{exercise}
+\label{mathagent:exercise:8760977b7c41a7ab2d82304ea81f33749e9976ddafc1f87583b542c4b8793254}
+设 $a_n\to2$，$b_n\to-1$，且对所有 $n\in\mathbb{N}^{+}$ 都有 $b_n\neq0$。求下列极限，并说明所使用的定理及关键条件：$(1)\ 4a_n-3b_n$；$(2)\ a_nb_n$；$(3)\ (a_n+1)/b_n$。
+\end{exercise}
+\section*{练习答案}
+% UNIT S01.U10
+\par\noindent\textbf{\hyperref[mathagent:exercise:41706b9e371cbf8283a4f1192e660b4426644ffb8f650af52f47cef5491b1ca0]{练习 \ref*{mathagent:exercise:41706b9e371cbf8283a4f1192e660b4426644ffb8f650af52f47cef5491b1ca0} 的解答：}}给定任意 $\varepsilon>0$，注意到
+\[
+\left|\frac{2n+1}{n}-2\right|=\left|\frac{1}{n}\right|=\frac{1}{n}.
+\]
+取正整数 $N>\frac{1}{\varepsilon}$。当 $n\geq N$ 时，$n>0$，从而
+\[
+\left|\frac{2n+1}{n}-2\right|=\frac{1}{n}\leq\frac{1}{N}<\varepsilon.
+\]
+因此根据 $\varepsilon$--$N$ 定义，
+\[
+\lim_{n\to\infty}\frac{2n+1}{n}=2.
+\]\par
+% UNIT S02.U15
+\par\noindent\textbf{\hyperref[mathagent:exercise:8760977b7c41a7ab2d82304ea81f33749e9976ddafc1f87583b542c4b8793254]{练习 \ref*{mathagent:exercise:8760977b7c41a7ab2d82304ea81f33749e9976ddafc1f87583b542c4b8793254} 的解答：}}由常数倍法则与差法则，$4a_n-3b_n\to4\cdot2-3\cdot(-1)=11$。由乘积法则，$a_nb_n\to2\cdot(-1)=-2$。又由和法则，$a_n+1\to3$。由于 $b_n\to-1\neq0$，且题设保证 $b_n\neq0$，可使用商法则，得到 $(a_n+1)/b_n\to3/(-1)=-3$。关键条件是分母数列的极限非零，并且商式在所讨论的下标上有定义。\par
+\end{document}

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "operation": "independent_calculation_expression_repair",
+  "status": "VERIFIED_CALCULATION_REPAIR_PENDING_FULL_RECHECK",
+  "before_hash": "04d92eb3e517de5c38c16a6a5954845be1972d3b9ee85de2e00bcf94d027ba5f",
+  "after_hash": "ca809b009f2e928b97f0194fa5bd607e023149a3f3e07203994bc4c63dfda931",
+  "repair_issues_hash": "11670673459601348ecd229467feaabe83b8c718f1de995f8e70e97511a3004d",
+  "tool_checks_hash": "f66611f96698e08e45b5e1058b46d0653271a6d7361107173ec9b8adc787d882",
+  "changed_calculation_ids": [
+    "S01.C01"
+  ],
+  "target_unit_ids": [
+    "S01.U1"
+  ],
+  "matched_issues": [
+    {
+      "rule_id": "SYMBOLIC_COUNTERCHECK_FAILED",
+      "severity": "blocking",
+      "message": "在声明假设下符号结果与预期不一致。",
+      "location": {
+        "calculation_id": "S01.C01",
+        "unit_id": "S01.U1"
+      },
+      "resolution_status": "open"
+    }
+  ],
+  "original_evidence": [
+    {
+      "kind": "equivalence",
+      "assumptions": {},
+      "tool": "SymPy",
+      "tool_version": "1.14.0",
+      "status": "FAIL",
+      "evidence_type": "symbolic_check_failed",
+      "result": "29/28",
+      "message": "在声明假设下符号结果与预期不一致。",
+      "calculation_id": "S01.C01",
+      "unit_id": "S01.U1"
+    }
+  ],
+  "checks": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "equivalence",
+        "assumptions": {},
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "27/28",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S01.C01",
+        "unit_id": "S01.U1"
+      }
+    ],
+    "coverage": [
+      "S01.U1",
+      "S01.U2"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+    ]
+  },
+  "body_changed": false,
+  "requires_full_recheck": true,
+  "teacher_review": "NOT_RUN"
+}

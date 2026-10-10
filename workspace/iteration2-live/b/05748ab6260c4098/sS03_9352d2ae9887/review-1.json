@@ -1,0 +1,160 @@
+{
+  "section_id": "S03",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "limit",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "0",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U12"
+      },
+      {
+        "kind": "limit",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "3/2",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S03.C02",
+        "unit_id": "S03.U14"
+      },
+      {
+        "kind": "limit",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "1/2",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S03.C03",
+        "unit_id": "S03.U17.answer"
+      }
+    ],
+    "coverage": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10",
+      "S03.U11",
+      "S03.U12",
+      "S03.U13",
+      "S03.U14",
+      "S03.U15",
+      "S03.U16",
+      "S03.U17",
+      "S03.U16.answer",
+      "S03.U17.answer"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "核算请求仅覆盖根式例题和有理式例题的具体极限；协议的表达式树不能表达夹逼定理及有界数列乘无穷小定理中关于任意数列、最终不等式和任意误差的量词结构，这些一般结论由正文证明支持。",
+      "新增核算仅请求核对 S03.U17 第 (1) 题的具体极限；它不核验两个答案中对所有正整数成立的不等式链，也不替代夹逼证明及乘积、商法则适用条件的论证。协议没有用于直接核验此类全称不等式证明的请求类型。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10",
+      "S03.U11",
+      "S03.U12",
+      "S03.U13",
+      "S03.U14",
+      "S03.U15",
+      "S03.U16",
+      "S03.U16.answer",
+      "S03.U17",
+      "S03.U17.answer"
+    ],
+    "limitations": [
+      "本次已逐单元核对所提供的 S03 正文、练习及独立答案单元，并检查了定义域、量词、正负号、端点条件、级数相关条件（本节未引入级数）、定理假设、先修依赖以及公式与解释文字的一致性。",
+      "审阅确认不等于形式化证明；对夹逼定理、量词结构和不等式链进行了文字与推理检查，但未用定理证明器验证全部一般性论证。",
+      "工具核算仅覆盖所列具体表达式，不能替代对所有符号条件、全称不等式和任意误差量词的完整形式化验证。",
+      "本次范围为 section_local 的 S03；S04、S05 等 pending_sections 未纳入审阅，因此不能据此判断整份讲义或后续章节无误。",
+      "答案单元的位置按 rendering_contract 解释为由渲染器集中放入最终答案区；本次未将独立答案单元的 JSON 顺序误判为位置问题。"
+    ]
+  },
+  "issues": [],
+  "reference_recovery": null,
+  "answer_recovery": {
+    "schema_version": 1,
+    "operation": "append_missing_answers",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "7dbd0e0f1f4cf3ac3f713477ed9e9adc9e1c13e2d2fb34202ddd70f04a54e02e",
+    "patch_hash": "09ce56e0c9e2c63799ff1dedfbe731eaff4abde2bd6573a6ad802aa7a4365824",
+    "result_section_hash": "6e5e8c24f9761326a9a9cfab675fdc3c67822a864f11dd5fd804f9d77240db13",
+    "target_ids": [
+      "S03.U16",
+      "S03.U17"
+    ],
+    "new_unit_ids": [
+      "S03.U16.answer",
+      "S03.U17.answer"
+    ],
+    "new_unit_hashes": {
+      "S03.U16.answer": "299f6b6dee0b9ead22828ce7bced6f6e7ee21261b8060b9df7e1223a981f0e11",
+      "S03.U17.answer": "7680c5ee8144058125f1514b161646f787bab723a37313338b47e7919a330ed2"
+    },
+    "original_unit_count": 17,
+    "added_unit_count": 2,
+    "original_units_preserved": true,
+    "original_calculations_preserved": true,
+    "new_calculation_count": 1,
+    "math_check": "NOT_RUN",
+    "normalization": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "identity": {
+      "context_hash": "8c0bf3e1254aa7914365305a3256d69ef5733e8aee86716d571396390a2d4ff4",
+      "model": "gpt-6-astra",
+      "provider": "live",
+      "prompt_hash": "3f4beaf0cea232c9067c05d0326b08ebba71227e57fd50b283fb3401d8340da3",
+      "schema_hash": "33f1dd4a1048269d000f52f3663cc9fdac32afe07edfda814a6c018869562c33",
+      "implementation_hash": "3ec9e3ba686daea8447efbe4832827ef86797ed21965a6184dd29540d321baf8"
+    },
+    "proposal_key": "runs/05748ab6260c40989a560a98e1e2065a/answer-recovery/S03/8b4b70545dfb34b1067cebcf10312b4d1cca9414967226444d56902f42654a8a/attempt-2bd93e6e1d2d/proposal.json",
+    "reused_proposal": false
+  },
+  "mock": false
+}

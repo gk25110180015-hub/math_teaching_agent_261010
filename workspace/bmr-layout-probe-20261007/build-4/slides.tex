@@ -1,0 +1,996 @@
+\documentclass[aspectratio=169,10pt,fontset=fandol]{ctexbeamer}
+\usepackage{amsmath,amssymb,mathtools,bm,mathrsfs}
+\usepackage{graphicx,booktabs,array,tabularx,multirow}
+\usepackage{tikz,pgfplots,xparse,xstring,mdframed}
+\usetikzlibrary{arrows.meta,calc,angles,positioning,shapes.geometric,graphs}
+\pgfplotsset{compat=1.18}
+\usetheme{fduclassroom}
+\input{workflow_style.tex}
+\input{workflow_fonts.tex}
+\newenvironment{proofdetail}{\par\noindent\textbf{证明：}\quad}{\par}
+\renewenvironment{solution}{\par\noindent\textbf{解：}\quad}{\par}
+\newtheorem{exercise}{Exercise}
+\title{最小二乘法}
+\begin{document}
+\section{误差如何度量：从残差到常数拟合}
+% FRAME-ID F001
+\typeout{MATH-AGENT-FRAME-BEGIN F001}
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{blue}\normalsize 1. 误差如何度量：从残差到常数拟合\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 2. 直线最小二乘：消去截距并求解正规方程\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 3. 结果检验、退化情形与工程解释\par}\vspace{0.22em}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F001}
+% FRAME-ID F002
+\typeout{MATH-AGENT-FRAME-BEGIN F002}
+\begin{frame}[t,fragile]{误差如何度量：从残差到常数拟合}
+\small
+{\small
+% SOURCE-BEGIN U0002 0 31
+\label{sec:S01}
+% UNIT S01.U01
+
+% SOURCE-END U0002
+}
+{\small
+% SOURCE-BEGIN U0003 0 120
+对同一个量重复测量时，读数往往并不完全相同。如果要用一个数代表这些读数，应当如何选择？最小二乘法先规定误差的度量，再寻找使这种误差最小的模型参数。本节从常数拟合入手，只使用有限求和、一元求导和配方法。\par
+% UNIT S01.U02
+
+% SOURCE-END U0003
+}
+\begin{block}{定义}
+{\small
+% SOURCE-BEGIN U0004 0 413
+设 $n\geq 1$ 为整数，$y_i\in\mathbb{R}$ 是第 $i$ 次观测的响应值，$i=1,\ldots,n$。若记录中还有自变量，则用 $x_i\in\mathbb{R}$ 表示第 $i$ 次观测的输入。给定模型及其参数后，模型对第 $i$ 次观测给出的数值记为 $\hat{y}_i$，称为拟合值。
+
+约定残差为观测值减去拟合值：
+\[
+r_i=y_i-\hat{y}_i,\qquad i=1,\ldots,n.
+\]
+因此，$r_i>0$ 表示模型低估了该观测值，$r_i<0$ 表示模型高估了该观测值。残差平方和定义为
+\[
+Q=\sum_{i=1}^{n}r_i^2=\sum_{i=1}^{n}(y_i-\hat{y}_i)^2.
+\]
+最小二乘准则是：在选定模型的允许参数范围内，寻找使 $Q$ 取得最小值的参数。这里最小化的是所选模型对已有数据的残差平方和，而不是保证每个残差都分别最小。
+
+% SOURCE-END U0004
+}
+\end{block}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F002}
+% FRAME-ID F003
+\typeout{MATH-AGENT-FRAME-BEGIN F003}
+\begin{frame}[t,fragile]{误差如何度量：从残差到常数拟合}
+\footnotesize
+{\footnotesize
+% SOURCE-BEGIN U0005 0 290
+为什么不直接用残差之和度量拟合误差？正负残差可能互相抵消。例如，两个残差为 $1$ 与 $-1$ 时，残差之和为零，但两个拟合值都没有命中观测值。平方后各项非负，不能发生这种抵消；并且
+\[
+\sum_{i=1}^{n}r_i^2=0\quad\Longleftrightarrow\quad r_i=0\ \text{对所有 }i=1,\ldots,n.
+\]
+平方也会使较大的残差更显著地影响目标函数。如果响应值有计量单位，残差与响应值同单位，而残差平方和具有该单位的平方。比较不同候选模型的平方和时，本节始终使用同一组数据和相同单位。\par
+% UNIT S01.U04
+
+% SOURCE-END U0005
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F003}
+% FRAME-ID F004
+\typeout{MATH-AGENT-FRAME-BEGIN F004}
+\begin{frame}[t,fragile]{误差如何度量：从残差到常数拟合}
+\footnotesize
+\begin{block}{定义}
+{\footnotesize
+% SOURCE-BEGIN U0006 0 315
+设 $n\geq1$ 为整数，观测值为 $y_1,\ldots,y_n\in\mathbb{R}$。常数模型用同一个待定实数 $c$ 拟合所有观测值，即
+\[
+\hat{y}_i=c,\qquad i=1,\ldots,n,\qquad c\in\mathbb{R}.
+\]
+相应的目标函数是
+\[
+Q(c)=\sum_{i=1}^{n}(y_i-c)^2,\qquad c\in\mathbb{R}.
+\]
+这些观测值的样本算术平均数记为
+\[
+\bar{y}=\frac{1}{n}\sum_{i=1}^{n}y_i.
+\]
+在优化过程中，观测值以及由它们算出的 $\bar{y}$ 都是固定的，只有参数 $c$ 发生变化。
+
+% SOURCE-END U0006
+}
+\end{block}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F004}
+% FRAME-ID F005
+\typeout{MATH-AGENT-FRAME-BEGIN F005}
+\begin{frame}[t,fragile]{误差如何度量：从残差到常数拟合}
+\footnotesize
+\begin{block}{定理}
+{\footnotesize
+% SOURCE-BEGIN U0007 0 269
+设 $n\geq1$ 为整数，$y_1,\ldots,y_n\in\mathbb{R}$，并令 $\bar{y}=\frac{1}{n}\sum_{i=1}^{n}y_i$。则常数模型的残差平方和满足：对每个 $c\in\mathbb{R}$，
+\[
+Q(c)=\sum_{i=1}^{n}(y_i-\bar{y})^2+n(c-\bar{y})^2.
+\]
+因此，$Q(c)$ 在且仅在 $c=\bar{y}$ 时取得全局最小值，最小值为
+\[
+Q(\bar{y})=\sum_{i=1}^{n}(y_i-\bar{y})^2.
+\]
+
+% SOURCE-END U0007
+}
+\end{block}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F005}
+% FRAME-ID F006
+\typeout{MATH-AGENT-FRAME-BEGIN F006}
+\begin{frame}[t,fragile]{误差如何度量：从残差到常数拟合}
+\footnotesize
+{\footnotesize
+\textbf{证明：}
+% SOURCE-BEGIN U0008 0 184
+先用一元求导寻找候选参数。对任意 $c\in\mathbb{R}$，有限项逐项求导得
+\[
+Q'(c)=2\sum_{i=1}^{n}(c-y_i)=2n(c-\bar{y}).
+\]
+所以 $Q'(c)=0$ 当且仅当 $c=\bar{y}$。由于参数范围是整个实数轴，可微函数若在某点取得最小值，该点必须满足导数为零。不过，求出驻点本身还不是全局最小性的证明。
+
+
+% SOURCE-END U0008
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F006}
+% FRAME-ID F007
+\typeout{MATH-AGENT-FRAME-BEGIN F007}
+\begin{frame}[t,fragile]{误差如何度量：从残差到常数拟合（续1）}
+\footnotesize
+{\footnotesize
+\textbf{证明：}
+% SOURCE-BEGIN U0008 184 596
+下面直接比较所有参数对应的函数值。由平均数的定义，
+\[
+\sum_{i=1}^{n}(y_i-\bar{y})=\sum_{i=1}^{n}y_i-n\bar{y}=0.
+\]
+于是，对任意 $c\in\mathbb{R}$，平方展开得到
+\[
+\begin{aligned}
+Q(c)&=\sum_{i=1}^{n}\bigl((y_i-\bar{y})+(\bar{y}-c)\bigr)^2\\
+&=\sum_{i=1}^{n}(y_i-\bar{y})^2
+ +2(\bar{y}-c)\sum_{i=1}^{n}(y_i-\bar{y})
+ +n(\bar{y}-c)^2\\
+&=Q(\bar{y})+n(c-\bar{y})^2.
+\end{aligned}
+\]
+因为 $n>0$，最后一项对所有实数 $c$ 都非负，且仅在 $c=\bar{y}$ 时为零。这既证明了最小值存在，也证明了全局最小点唯一。
+
+% SOURCE-END U0008
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F007}
+% FRAME-ID F008
+\typeout{MATH-AGENT-FRAME-BEGIN F008}
+\begin{frame}[t,fragile]{误差如何度量：从残差到常数拟合}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0009 0 84
+某个保持不变的量经过三次测量，读数依次为 $2,3,7$，单位相同。用常数模型拟合这些读数：写出目标函数，求最优常数及最小残差平方和，并与候选常数 $c=3$ 比较。
+
+% SOURCE-END U0009
+}
+\end{block}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F008}
+% FRAME-ID F009
+\typeout{MATH-AGENT-FRAME-BEGIN F009}
+\begin{frame}[t,fragile]{误差如何度量：从残差到常数拟合}
+\footnotesize
+{\footnotesize
+% SOURCE-BEGIN U0010 0 225
+\par\noindent\textbf{解：}对 $c\in\mathbb{R}$，目标函数为
+\[
+\begin{aligned}
+Q(c)&=(2-c)^2+(3-c)^2+(7-c)^2\\
+&=3c^2-24c+62\\
+&=3(c-4)^2+14.
+\end{aligned}
+\]
+三个读数的平均数是 $\bar{y}=(2+3+7)/3=4$，所以唯一最优常数为 $c=4$。这也可从 $Q'(c)=6c-24$ 和上述配方看出。
+
+
+% SOURCE-END U0010
+}
+{\footnotesize
+% SOURCE-BEGIN U0011 0 272
+将两个候选常数的残差列在一起：
+\[
+\begin{array}{c|rrr|r}
+\text{候选常数}&r_1&r_2&r_3&Q(c)\\ \hline
+c=3&-1&0&4&17\\
+c=4&-2&-1&3&14
+\end{array}
+\]
+因此最小平方和为 $Q(4)=4+1+9=14$，而 $Q(3)=1+0+16=17$。从 $c=3$ 改为 $c=4$ 后，前两个残差的绝对值反而增大，但总平方和减小了 $3$。这说明最小二乘法优化的是整体指标，并不要求每次测量的拟合误差都同时减小。\par
+% UNIT S01.U09
+
+% SOURCE-END U0011
+}
+{\footnotesize
+% SOURCE-BEGIN U0012 0 109
+常数拟合给出了一个可重复使用的思路：先明确参数与目标函数，再求导寻找候选点，最后用平方和分解证明全局最优性。恒等式 $Q(c)-Q(\bar{y})=n(c-\bar{y})^2$ 还定量说明了偏离最优参数的代价。
+
+
+% SOURCE-END U0012
+}
+{\footnotesize
+% SOURCE-BEGIN U0013 0 138
+最优常数模型的残差之和为 $\sum_{i=1}^{n}(y_i-\bar{y})=0$，但残差平方和不一定为零；它为零当且仅当所有观测值相同。第\ref{sec:S02}节将把这里的常数拟合结论用于直线拟合，仍然只需要一元求导与配方。\par
+% UNIT S01.U10
+
+% SOURCE-END U0013
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F009}
+% FRAME-ID F010
+\typeout{MATH-AGENT-FRAME-BEGIN F010}
+\begin{frame}[t,fragile]{误差如何度量：从残差到常数拟合}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0014 0 226
+\begin{exercise}
+\label{mathagent:exercise:79e91357ee05b8b9aa4c657d553157f1ef411624d282c3f2337dd0e01453ce2d}
+对同单位的四次测量值 $1,2,4,5$ 作常数拟合。写出 $Q(c)$ 的平方和形式，求最优常数、各个残差及最小平方和；再计算 $Q(2)$，并用平方和分解解释它与最小值之差。本题答案统一置于讲义末尾。
+\end{exercise}
+% SOURCE-END U0014
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F010}
+% FRAME-ID F011
+\typeout{MATH-AGENT-FRAME-BEGIN F011}
+\begin{frame}[t,fragile]{误差如何度量：从残差到常数拟合}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0015 0 350
+\begin{exercise}
+\label{mathagent:exercise:9e7dbf7ef17df1506f236bbf1ad6ff8c14ff13065df89e12b796d18475228be7}
+设 $n\geq1$ 为整数，$y_1,\ldots,y_n\in\mathbb{R}$，常数模型的残差为 $r_i=y_i-c$，其中 $c\in\mathbb{R}$。判断并说明理由：
+
+（1）若 $\sum_{i=1}^{n}r_i=0$，则 $c$ 是该常数模型的唯一最优参数。
+
+（2）若 $\sum_{i=1}^{n}r_i=0$，则每一个残差都等于零。
+
+（3）当 $n=1$ 时，常数模型仍有唯一最优参数。
+
+本题答案统一置于讲义末尾。
+\end{exercise}
+% SOURCE-END U0015
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F011}
+\section{直线最小二乘：消去截距并求解正规方程}
+% FRAME-ID F012
+\typeout{MATH-AGENT-FRAME-BEGIN F012}
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{black}\normalsize 1. 误差如何度量：从残差到常数拟合\par}\vspace{0.22em}
+{\color{blue}\normalsize 2. 直线最小二乘：消去截距并求解正规方程\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 3. 结果检验、退化情形与工程解释\par}\vspace{0.22em}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F012}
+% FRAME-ID F013
+\typeout{MATH-AGENT-FRAME-BEGIN F013}
+\begin{frame}[t,fragile]{直线最小二乘：消去截距并求解正规方程}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0016 0 31
+\label{sec:S02}
+% UNIT S02.U01
+
+% SOURCE-END U0016
+}
+{\normalsize
+% SOURCE-BEGIN U0017 0 132
+第\ref{sec:S01}节用一个常数代表一组观测值。本节允许拟合值随输入作线性变化，用直线描述数据的整体趋势。虽然有截距和斜率两个参数，我们仍只用一元微积分：先固定斜率求最佳截距，再求最佳斜率，最后用配方证明全局最优性。\par
+% UNIT S02.U02
+
+% SOURCE-END U0017
+}
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0018 0 285
+设 $n\geq1$ 为整数，给定数据点 $(x_i,y_i)\in\mathbb{R}^2$，$i=1,\ldots,n$。带截距的直线拟合模型为
+\[
+\hat{y}_i=a+bx_i,\qquad a,b\in\mathbb{R},
+\]
+其中 $a$ 是截距，$b$ 是斜率。残差与目标函数分别为
+\[
+r_i=y_i-a-bx_i,\qquad
+Q(a,b)=\sum_{i=1}^{n}(y_i-a-bx_i)^2.
+\]
+最小二乘直线指使 $Q(a,b)$ 在所有实参数对 $(a,b)$ 中取得最小值的直线。这里截距也是待定参数，并未要求直线经过原点。
+
+% SOURCE-END U0018
+}
+\end{block}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F013}
+% FRAME-ID F014
+\typeout{MATH-AGENT-FRAME-BEGIN F014}
+\begin{frame}[t,fragile]{直线最小二乘：消去截距并求解正规方程}
+\small
+\begin{block}{定义}
+{\small
+% SOURCE-BEGIN U0019 0 387
+对上述数据，定义均值
+\[
+\bar{x}=\frac1n\sum_{i=1}^{n}x_i,\qquad
+\bar{y}=\frac1n\sum_{i=1}^{n}y_i.
+\]
+中心化数据是 $x_i-\bar{x}$ 与 $y_i-\bar{y}$，其各自的和均为零。定义
+\[
+S_{xx}=\sum_{i=1}^{n}(x_i-\bar{x})^2,\qquad
+S_{xy}=\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y}).
+\]
+平方展开并利用均值定义，可得便于手算的形式
+\[
+S_{xx}=\sum_{i=1}^{n}x_i^2-n\bar{x}^2,\qquad
+S_{xy}=\sum_{i=1}^{n}x_i y_i-n\bar{x}\bar{y}.
+\]
+这些量都只由观测数据决定，与待定参数 $a,b$ 无关。
+
+% SOURCE-END U0019
+}
+\end{block}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F014}
+% FRAME-ID F015
+\typeout{MATH-AGENT-FRAME-BEGIN F015}
+\begin{frame}[t,fragile]{直线最小二乘：消去截距并求解正规方程}
+\footnotesize
+{\footnotesize
+% SOURCE-BEGIN U0020 0 430
+固定任意 $b\in\mathbb{R}$，把 $y_i-bx_i$ 看作新的观测值。它们的平均数是 $\bar{y}-b\bar{x}$。由第\ref{sec:S01}节的常数拟合结论，此时唯一最优截距是
+\[
+a=\bar{y}-b\bar{x}.
+\]
+更具体地，对所有 $a,b\in\mathbb{R}$，有分解
+\[
+Q(a,b)=F(b)+n(a+b\bar{x}-\bar{y})^2,
+\]
+其中
+\[
+\begin{aligned}
+F(b)&=Q(\bar{y}-b\bar{x},b)\\
+&=\sum_{i=1}^{n}\bigl((y_i-\bar{y})-b(x_i-\bar{x})\bigr)^2\\
+&=\sum_{i=1}^{n}(y_i-\bar{y})^2-2bS_{xy}+b^2S_{xx}.
+\end{aligned}
+\]
+因此，先把截距选为对应斜率下的最优值，再最小化一元函数 $F$，不会漏掉更好的参数对。
+% SOURCE-END U0020
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F015}
+% FRAME-ID F016
+\typeout{MATH-AGENT-FRAME-BEGIN F016}
+\begin{frame}[t,fragile]{直线最小二乘：消去截距并求解正规方程（续1）}
+\footnotesize
+{\footnotesize
+% SOURCE-BEGIN U0020 430 544
+若 $S_{xx}>0$，则
+\[
+F'(b)=2S_{xx}b-2S_{xy},
+\]
+导数为零给出候选斜率 $b=S_{xy}/S_{xx}$。下面用配方说明它确实给出唯一全局最优解。\par
+% UNIT S02.U05
+
+% SOURCE-END U0020
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F016}
+% FRAME-ID F017
+\typeout{MATH-AGENT-FRAME-BEGIN F017}
+\begin{frame}[t,fragile]{直线最小二乘：消去截距并求解正规方程}
+\footnotesize
+\begin{block}{定义}
+{\footnotesize
+% SOURCE-BEGIN U0021 0 399
+对给定的 $n$ 个实数据点，本模型关于未知参数 $a,b\in\mathbb{R}$ 的正规方程是二元一次方程组
+\[
+\begin{cases}
+na+b\displaystyle\sum_{i=1}^{n}x_i=\displaystyle\sum_{i=1}^{n}y_i,\\
+a\displaystyle\sum_{i=1}^{n}x_i+b\displaystyle\sum_{i=1}^{n}x_i^2=\displaystyle\sum_{i=1}^{n}x_i y_i.
+\end{cases}
+\]
+按残差 $r_i=y_i-a-bx_i$ 的约定，这也就是
+\[
+\sum_{i=1}^{n}r_i=0,\qquad \sum_{i=1}^{n}x_i r_i=0.
+\]
+这两个等式不表示每个残差分别为零。它们与最小二乘解的联系将在下面通过消元与配方建立，不需要偏导数。
+
+% SOURCE-END U0021
+}
+\end{block}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F017}
+% FRAME-ID F018
+\typeout{MATH-AGENT-FRAME-BEGIN F018}
+\begin{frame}[t,fragile]{直线最小二乘：消去截距并求解正规方程}
+\footnotesize
+\begin{block}{定理}
+{\footnotesize
+% SOURCE-BEGIN U0022 0 396
+设 $n\geq1$ 为整数，$(x_i,y_i)\in\mathbb{R}^2$，$i=1,\ldots,n$。条件 $S_{xx}>0$ 等价于 $x_1,\ldots,x_n$ 不全相同。在此条件下，$Q(a,b)$ 在 $\mathbb{R}^2$ 上有唯一全局最小点
+\[
+b_* =\frac{S_{xy}}{S_{xx}},\qquad a_* =\bar{y}-b_*\bar{x}.
+\]
+参数对 $(a_*,b_*)$ 也是正规方程的唯一解。对任意 $a,b\in\mathbb{R}$，有
+\[
+Q(a,b)=Q(a_*,b_*)+S_{xx}(b-b_*)^2+n(a+b\bar{x}-\bar{y})^2,
+\]
+其中
+\[
+Q(a_*,b_*)=\sum_{i=1}^{n}(y_i-\bar{y})^2-\frac{S_{xy}^2}{S_{xx}}.
+\]
+
+% SOURCE-END U0022
+}
+\end{block}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F018}
+% FRAME-ID F019
+\typeout{MATH-AGENT-FRAME-BEGIN F019}
+\begin{frame}[t,fragile]{直线最小二乘：消去截距并求解正规方程}
+\footnotesize
+{\footnotesize
+\textbf{证明：}
+% SOURCE-BEGIN U0023 0 522
+由于 $S_{xx}$ 是非负项之和，$S_{xx}=0$ 当且仅当每个 $x_i-\bar{x}=0$，也就是所有 $x_i$ 相同。因此 $S_{xx}>0$ 当且仅当自变量观测值不全相同。
+
+以下设 $S_{xx}>0$。对消去截距后的一元二次函数配方，得到对所有实数 $b$ 成立的恒等式
+\[
+\begin{aligned}
+F(b)
+&=\sum_{i=1}^{n}(y_i-\bar{y})^2-2bS_{xy}+b^2S_{xx}\\
+&=\sum_{i=1}^{n}(y_i-\bar{y})^2-\frac{S_{xy}^2}{S_{xx}}
+  +S_{xx}\left(b-\frac{S_{xy}}{S_{xx}}\right)^2.
+\end{aligned}
+\]
+令 $b_*=S_{xy}/S_{xx}$、$a_*=\bar{y}-b_*\bar{x}$，再代入前面的截距分解，便得到定理中的 $Q(a,b)$ 分解式。右侧两个附加平方项都非负；它们同时为零当且仅当 $b=b_*$ 且 $a+b\bar{x}-\bar{y}=0$，即 $(a,b)=(a_*,b_*)$。故最小值存在，且全局最小点唯一。
+
+
+% SOURCE-END U0023
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F019}
+% FRAME-ID F020
+\typeout{MATH-AGENT-FRAME-BEGIN F020}
+\begin{frame}[t,fragile]{直线最小二乘：消去截距并求解正规方程（续1）}
+\footnotesize
+{\footnotesize
+\textbf{证明：}
+% SOURCE-BEGIN U0023 522 885
+最后用消元联系正规方程。第一条正规方程除以 $n>0$ 后等价于
+\[
+a+b\bar{x}=\bar{y}.
+\]
+将第二条正规方程减去第一条的 $\bar{x}$ 倍，利用 $\sum x_i=n\bar{x}$，得到
+\[
+b\left(\sum_{i=1}^{n}x_i^2-n\bar{x}^2\right)
+=\sum_{i=1}^{n}x_i y_i-n\bar{x}\bar{y},
+\]
+也就是 $bS_{xx}=S_{xy}$。上述消元可逆，所以正规方程等价于
+\[
+a+b\bar{x}=\bar{y},\qquad bS_{xx}=S_{xy}.
+\]
+由于 $S_{xx}>0$，其唯一解正是 $(a_*,b_*)$。这同时证明了最优参数满足正规方程，以及在本条件下解正规方程足以求得唯一最优参数。
+
+% SOURCE-END U0023
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F020}
+% FRAME-ID F021
+\typeout{MATH-AGENT-FRAME-BEGIN F021}
+\begin{frame}[t,fragile]{直线最小二乘：消去截距并求解正规方程}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0024 0 81
+对数据点 $(0,1)$、$(1,2)$、$(2,2)$ 求带截距的最小二乘直线。列出均值、中心化求和、最优参数、各个残差及最小残差平方和，并核对两条正规方程。
+
+% SOURCE-END U0024
+}
+\end{block}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F021}
+% FRAME-ID F022
+\typeout{MATH-AGENT-FRAME-BEGIN F022}
+\begin{frame}[t,fragile]{直线最小二乘：消去截距并求解正规方程}
+\footnotesize
+{\footnotesize
+% SOURCE-BEGIN U0025 0 402
+\par\noindent\textbf{解：}均值为
+\[
+\bar{x}=\frac{0+1+2}{3}=1,\qquad
+\bar{y}=\frac{1+2+2}{3}=\frac53.
+\]
+中心化计算如下：
+\[
+\begin{array}{c|r|r|r|r}
+i&x_i-\bar{x}&y_i-\bar{y}&(x_i-\bar{x})^2&(x_i-\bar{x})(y_i-\bar{y})\\ \hline
+1&-1&-2/3&1&2/3\\
+2&0&1/3&0&0\\
+3&1&1/3&1&1/3
+\end{array}
+\]
+因此 $S_{xx}=2>0$、$S_{xy}=1$，唯一最优参数为
+\[
+b_* =\frac12,\qquad a_* =\frac53-\frac12=\frac76.
+\]
+最小二乘直线是 $\hat{y}=\frac76+\frac12x$。
+% SOURCE-END U0025
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F022}
+% FRAME-ID F023
+\typeout{MATH-AGENT-FRAME-BEGIN F023}
+\begin{frame}[t,fragile]{直线最小二乘：消去截距并求解正规方程（续1）}
+\footnotesize
+{\footnotesize
+% SOURCE-BEGIN U0025 402 743
+逐点计算拟合值和残差：
+\[
+\begin{array}{c|r|r|r|r}
+i&x_i&y_i&\hat{y}_i&r_i\\ \hline
+1&0&1&7/6&-1/6\\
+2&1&2&5/3&1/3\\
+3&2&2&13/6&-1/6
+\end{array}
+\]
+故最小平方和为
+\[
+Q(a_*,b_*)=\frac1{36}+\frac19+\frac1{36}=\frac16.
+\]
+原始数据给出 $\sum x_i=3$、$\sum y_i=5$、$\sum x_i^2=5$、$\sum x_i y_i=6$，所以正规方程为
+\[
+3a+3b=5,\qquad 3a+5b=6.
+\]
+代入最优参数，分别有 $7/2+3/2=5$ 与 $7/2+5/2=6$。
+% SOURCE-END U0025
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F023}
+% FRAME-ID F024
+\typeout{MATH-AGENT-FRAME-BEGIN F024}
+\begin{frame}[t,fragile]{直线最小二乘：消去截距并求解正规方程（续2）}
+\footnotesize
+{\footnotesize
+% SOURCE-BEGIN U0025 743 1111
+等价地，残差满足
+\[
+-\frac16+\frac13-\frac16=0,\qquad
+0\left(-\frac16\right)+1\left(\frac13\right)+2\left(-\frac16\right)=0.
+\]
+还可以把全局最优性具体写为：对所有 $a,b\in\mathbb{R}$，
+\[
+\begin{aligned}
+Q(a,b)&=(1-a)^2+(2-a-b)^2+(2-a-2b)^2\\
+&=\frac16+2\left(b-\frac12\right)^2+3\left(a+b-\frac53\right)^2.
+\end{aligned}
+\]
+本例中三个点不在同一条直线上，因而最优残差也不全为零；最小二乘拟合并不是强行让直线通过每一个数据点。\par
+% UNIT S02.U10
+
+% SOURCE-END U0025
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F024}
+% FRAME-ID F025
+\typeout{MATH-AGENT-FRAME-BEGIN F025}
+\begin{frame}[t,fragile]{直线最小二乘：消去截距并求解正规方程}
+\footnotesize
+{\footnotesize
+% SOURCE-BEGIN U0026 0 112
+手算时可按以下顺序进行：先算 $\bar{x},\bar{y}$，再算 $S_{xx},S_{xy}$；确认 $S_{xx}>0$ 后才作除法求 $b_*$，随后求 $a_*$；最后计算残差平方和，并用正规方程核对参数。
+
+
+% SOURCE-END U0026
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F025}
+% FRAME-ID F026
+\typeout{MATH-AGENT-FRAME-BEGIN F026}
+\begin{frame}[t,fragile]{直线最小二乘：消去截距并求解正规方程}
+\footnotesize
+{\footnotesize
+% SOURCE-BEGIN U0027 0 165
+注意，$S_{xy}=0$ 并不意味着公式失效：只要 $S_{xx}>0$，最优斜率就是零，最优直线为水平线 $\hat{y}=\bar{y}$。真正不能直接使用除法公式的是 $S_{xx}=0$ 的情形。它的参数唯一性问题，以及残差和均值点的解释，将在第\ref{sec:S03}节讨论。\par
+% UNIT S02.U11
+
+% SOURCE-END U0027
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F026}
+% FRAME-ID F027
+\typeout{MATH-AGENT-FRAME-BEGIN F027}
+\begin{frame}[t,fragile]{直线最小二乘：消去截距并求解正规方程}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0028 0 230
+\begin{exercise}
+\label{mathagent:exercise:332ae2e99c79cf97370ba4732967ff23f2a2c4a4b36b98eda8e910755bf43b8b}
+对数据点 $(0,1)$、$(1,1)$、$(2,3)$ 求带截距的最小二乘直线。计算 $\bar{x},\bar{y},S_{xx},S_{xy}$，列出残差及最小平方和，并核对正规方程。答案统一置于讲义末尾。
+\end{exercise}
+% SOURCE-END U0028
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F027}
+% FRAME-ID F028
+\typeout{MATH-AGENT-FRAME-BEGIN F028}
+\begin{frame}[t,fragile]{直线最小二乘：消去截距并求解正规方程}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0029 0 340
+\begin{exercise}
+\label{mathagent:exercise:b4c9c9a1fb82bcef052fdbf6e1539831ed88cee016dbcbf83a50e5e8d2311be0}
+设 $n\geq2$ 为整数，给定实数据点 $(x_i,y_i)$，$i=1,\ldots,n$，且 $S_{xx}>0$。判断下列说法并说明理由。
+
+（1）若 $S_{xy}=0$，则所有 $y_i$ 必须相同。
+
+（2）任意满足 $\sum_{i=1}^{n}(y_i-a-bx_i)=0$ 的实参数对 $(a,b)$，都是最小二乘解。
+
+（3）若某实参数对同时满足两条正规方程，则它是唯一最小二乘解。
+
+答案统一置于讲义末尾。
+\end{exercise}
+% SOURCE-END U0029
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F028}
+\section{结果检验、退化情形与工程解释}
+% FRAME-ID F029
+\typeout{MATH-AGENT-FRAME-BEGIN F029}
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{black}\normalsize 1. 误差如何度量：从残差到常数拟合\par}\vspace{0.22em}
+{\color{black}\normalsize 2. 直线最小二乘：消去截距并求解正规方程\par}\vspace{0.22em}
+{\color{blue}\normalsize 3. 结果检验、退化情形与工程解释\par}\vspace{0.22em}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F029}
+% FRAME-ID F030
+\typeout{MATH-AGENT-FRAME-BEGIN F030}
+\begin{frame}[t,fragile]{结果检验、退化情形与工程解释}
+\small
+{\small
+% SOURCE-BEGIN U0030 0 31
+\label{sec:S03}
+% UNIT S03.U01
+
+% SOURCE-END U0030
+}
+{\small
+% SOURCE-BEGIN U0031 0 143
+第\ref{sec:S02}节给出了带截距直线的求解方法。本节进一步回答三个问题：怎样利用残差检验计算结果？当自变量观测值全相同时还能确定什么？把拟合直线用于工程预测时，哪些结论不能仅由平方和最小推出？以下仍只使用有限求和、二元一次方程和配方法。\par
+% UNIT S03.U02
+
+% SOURCE-END U0031
+}
+\begin{block}{定义}
+{\small
+% SOURCE-BEGIN U0032 0 630
+设 $n\geq1$ 为整数，观测数据为 $(x_i,y_i)\in\mathbb{R}^2$，$i=1,\ldots,n$。选定拟合函数 $f$ 后，令 $\hat{y}_i=f(x_i)$、$r_i=y_i-\hat{y}_i$。残差表是按观测编号列出 $x_i,y_i,\hat{y}_i,r_i$ 的表格，也可以增加 $r_i^2$ 一列，以便求出残差平方和。
+
+插值要求函数在每个观测位置都准确命中观测值，即 $f(x_i)=y_i$ 对所有 $i$ 成立。拟合则是在指定函数模型内按某种整体准则选择参数，不要求逐点命中。本讲义采用的准则是最小化 $\sum_{i=1}^{n}r_i^2$。若同一个输入对应不同的观测输出，就不存在同时命中这些记录的单值插值函数；最小二乘拟合仍有意义。
+
+记 $x_{\min}=\min\{x_1,\ldots,x_n\}$、$x_{\max}=\max\{x_1,\ldots,x_n\}$。将拟合模型用于输入 $x_0\in[x_{\min},x_{\max}]$ 的输出估计，称为区间内预测；用于 $x_0<x_{\min}$ 或 $x_0>x_{\max}$ 的估计，称为外推。区间内预测并不等于要求逐点命中的插值。
+
+预测所用的 $\hat{y}(x_0)=f(x_0)$ 是模型计算值。即使 $x_0$ 位于已有观测位置，它也不一定等于该处已有的观测值，更不能保证等于以后在同一输入下测得的实际输出。
+
+% SOURCE-END U0032
+}
+\end{block}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F030}
+% FRAME-ID F031
+\typeout{MATH-AGENT-FRAME-BEGIN F031}
+\begin{frame}[t,fragile]{结果检验、退化情形与工程解释}
+\footnotesize
+\begin{block}{定理}
+{\footnotesize
+% SOURCE-BEGIN U0033 0 405
+设 $n\geq1$ 为整数，$(x_i,y_i)\in\mathbb{R}^2$，$i=1,\ldots,n$，且 $\bar{x}=\frac1n\sum_{i=1}^{n}x_i$、$\bar{y}=\frac1n\sum_{i=1}^{n}y_i$。若 $(a_*,b_*)$ 是目标函数
+\[
+Q(a,b)=\sum_{i=1}^{n}(y_i-a-bx_i)^2,\qquad (a,b)\in\mathbb{R}^2,
+\]
+的一个全局最小点，则其残差 $r_i=y_i-a_*-b_*x_i$ 满足
+\[
+\sum_{i=1}^{n}r_i=0,\qquad a_*+b_*\bar{x}=\bar{y}.
+\]
+因此最小二乘直线经过数据均值点 $(\bar{x},\bar{y})$。这些结论不要求 $S_{xx}>0$，但要求这里的模型包含可自由选择的截距，且使用上述未加权的残差平方和。
+
+% SOURCE-END U0033
+}
+\end{block}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F031}
+% FRAME-ID F032
+\typeout{MATH-AGENT-FRAME-BEGIN F032}
+\begin{frame}[t,fragile]{结果检验、退化情形与工程解释}
+\footnotesize
+{\footnotesize
+\textbf{证明：}
+% SOURCE-BEGIN U0034 0 366
+固定最优参数中的斜率 $b_*$。由第\ref{sec:S01}节的常数拟合结论，数据 $y_i-b_*x_i$ 的唯一最优常数是其平均数 $\bar{y}-b_*\bar{x}$。如果 $a_*$ 不等于这个数，仅改变截距就会严格减小平方和，与全局最优性矛盾。因此
+\[
+a_* =\bar{y}-b_*\bar{x}.
+\]
+这就是第\ref{sec:S02}节第一条正规方程除以 $n$ 后的形式，也直接说明拟合直线经过均值点。再按残差定义求和，得到
+\[
+\sum_{i=1}^{n}r_i
+=\sum_{i=1}^{n}y_i-na_*-b_*\sum_{i=1}^{n}x_i
+=n(\bar{y}-a_*-b_*\bar{x})=0.
+\]
+整个论证没有除以 $S_{xx}$，因而也适用于自变量观测值全相同的情形。
+
+% SOURCE-END U0034
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F032}
+% FRAME-ID F033
+\typeout{MATH-AGENT-FRAME-BEGIN F033}
+\begin{frame}[t,fragile]{结果检验、退化情形与工程解释}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0035 0 161
+残差和为零与通过均值点实际上是同一个等式的两种表达，不能把它们当作两项独立的最优性条件。残差和为零也不表示每个残差都为零。若 $S_{xx}>0$，还可以检验第二条正规方程，即 $\sum_{i=1}^{n}x_i r_i=0$；由第\ref{sec:S02}节的结论，同时满足两条正规方程的参数对才是唯一最小二乘解。
+
+
+% SOURCE-END U0035
+}
+{\normalsize
+% SOURCE-BEGIN U0036 0 100
+这些代数条件用于检验是否求对了指定模型的最优参数，并不证明模型适合工程对象。若按输入从小到大观察残差，发现它们呈现有规律的变化，可将其作为重新考虑直线模型的线索；但少量残差本身不足以确定变化原因。
+
+
+% SOURCE-END U0036
+}
+{\normalsize
+% SOURCE-BEGIN U0037 0 189
+截距的前提不能省略。例如，仅允许过原点的模型 $\hat{y}=bx$ 时，对数据 $(0,1)$、$(1,1)$ 有
+\[
+Q(b)=1+(1-b)^2,\qquad b\in\mathbb{R}.
+\]
+唯一最优斜率为 $b=1$，残差为 $1,0$，其和不为零；直线 $\hat{y}=x$ 也不经过数据均值点 $(1/2,1)$。\par
+% UNIT S03.U06
+
+% SOURCE-END U0037
+}
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0038 0 160
+把第\ref{sec:S02}节的数据 $(0,1)$、$(1,2)$、$(2,2)$ 看成某传感器的三组输入输出记录，输入和输出均按各自固定单位记数。已求得最小二乘直线 $\hat{y}=7/6+x/2$。列出残差表，核验残差和与均值点性质；估计输入 $1.5$ 时的输出，并讨论把模型用于输入 $10$ 时的局限。
+
+% SOURCE-END U0038
+}
+\end{block}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F033}
+% FRAME-ID F034
+\typeout{MATH-AGENT-FRAME-BEGIN F034}
+\begin{frame}[t,fragile]{结果检验、退化情形与工程解释}
+\footnotesize
+{\footnotesize
+% SOURCE-BEGIN U0039 0 364
+\par\noindent\textbf{解：}对实数输入 $x$，拟合模型为 $\hat{y}(x)=7/6+x/2$。在已有观测处，残差表为
+\[
+\begin{array}{c|r|r|r|r|r}
+i&x_i&y_i&\hat{y}_i&r_i&r_i^2\\ \hline
+1&0&1&7/6&-1/6&1/36\\
+2&1&2&5/3&1/3&1/9\\
+3&2&2&13/6&-1/6&1/36
+\end{array}
+\]
+因此
+\[
+\sum_{i=1}^{3}r_i=-\frac16+\frac13-\frac16=0,
+\qquad Q(a_*,b_*)=\frac16.
+\]
+负残差表示模型高估了该次观测输出，正残差表示模型低估了该次观测输出。这里模型没有命中任何一个观测点，却仍使总平方和最小。
+
+
+% SOURCE-END U0039
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F034}
+% FRAME-ID F035
+\typeout{MATH-AGENT-FRAME-BEGIN F035}
+\begin{frame}[t,fragile]{结果检验、退化情形与工程解释}
+\footnotesize
+{\footnotesize
+% SOURCE-BEGIN U0040 0 134
+均值点为 $(\bar{x},\bar{y})=(1,5/3)$，且
+\[
+\hat{y}(1)=\frac76+\frac12=\frac53=\bar{y}.
+\]
+第二条残差关系也成立：$\sum_{i=1}^{3}x_i r_i=0+1/3-2/6=0$。
+
+
+% SOURCE-END U0040
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F035}
+% FRAME-ID F036
+\typeout{MATH-AGENT-FRAME-BEGIN F036}
+\begin{frame}[t,fragile]{结果检验、退化情形与工程解释}
+\footnotesize
+{\footnotesize
+% SOURCE-BEGIN U0041 0 152
+输入 $1.5=3/2$ 位于观测输入区间 $[0,2]$ 内，模型给出的区间内预测为
+\[
+\hat{y}\left(\frac32\right)=\frac76+\frac12\cdot\frac32
+=\frac{23}{12}.
+\]
+这是按输出单位记数的模型估计，不是对未来实际读数的保证。
+
+
+% SOURCE-END U0041
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F036}
+% FRAME-ID F037
+\typeout{MATH-AGENT-FRAME-BEGIN F037}
+\begin{frame}[t,fragile]{结果检验、退化情形与工程解释}
+\footnotesize
+{\footnotesize
+% SOURCE-BEGIN U0042 0 246
+若输入为 $10$，代入同一直线得到
+\[
+\hat{y}(10)=\frac76+\frac12\cdot10=\frac{37}{6}.
+\]
+但 $10$ 远在 $[0,2]$ 之外，这属于外推。传感器在较大输入处可能不再近似线性，例如可能出现饱和；现有三组记录不能排除这些情况。平方和最小只描述模型对已有记录的整体误差，既不保证外推可靠，也不能单凭这次拟合赋予模型因果含义。即使在观测区间内使用，也应结合传感器工作条件与新的测量记录判断适用性。\par
+% UNIT S03.U08
+
+% SOURCE-END U0042
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F037}
+% FRAME-ID F038
+\typeout{MATH-AGENT-FRAME-BEGIN F038}
+\begin{frame}[t,fragile]{结果检验、退化情形与工程解释}
+\footnotesize
+\begin{block}{定理}
+{\footnotesize
+% SOURCE-BEGIN U0043 0 399
+设 $n\geq1$ 为整数，$x_0,y_1,\ldots,y_n\in\mathbb{R}$，且所有自变量观测值均为 $x_i=x_0$。令 $\bar{y}=\frac1n\sum_{i=1}^{n}y_i$。对带截距直线模型，有
+\[
+Q(a,b)=\sum_{i=1}^{n}(y_i-\bar{y})^2+n(a+bx_0-\bar{y})^2,
+\qquad (a,b)\in\mathbb{R}^2.
+\]
+全部最优参数对恰为
+\[
+a=\bar{y}-bx_0,\qquad b\in\mathbb{R}.
+\]
+因此最优参数对不唯一，最小平方和为 $\sum_{i=1}^{n}(y_i-\bar{y})^2$，但所有最优直线在共同输入 $x_0$ 处的拟合值唯一，等于 $\bar{y}$。对每一个固定的实数 $x\ne x_0$，这些最优直线在 $x$ 处的拟合值不唯一。
+
+% SOURCE-END U0043
+}
+\end{block}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F038}
+% FRAME-ID F039
+\typeout{MATH-AGENT-FRAME-BEGIN F039}
+\begin{frame}[t,fragile]{结果检验、退化情形与工程解释}
+\footnotesize
+{\footnotesize
+\textbf{证明：}
+% SOURCE-BEGIN U0044 0 494
+因为每个 $x_i=x_0$，数据处的拟合值都是同一个数 $c=a+bx_0$，所以
+\[
+Q(a,b)=\sum_{i=1}^{n}(y_i-c)^2.
+\]
+任意实数 $c$ 都可通过取 $a=c,b=0$ 实现。由第\ref{sec:S01}节的常数拟合平方和分解，立刻得到本定理的分解式。由于 $n>0$，该式在且仅在 $a+bx_0=\bar{y}$ 时取到最小值。
+
+对每个 $b\in\mathbb{R}$，取 $a=\bar{y}-bx_0$ 就得到一个最优参数对；不同的 $b$ 给出不同的参数对，故共有无穷多个。它们在 $x_0$ 处的拟合值都是 $\bar{y}$。而在任意固定的 $x\ne x_0$ 处，
+\[
+\hat{y}(x)=\bar{y}-bx_0+bx=\bar{y}+b(x-x_0).
+\]
+因为 $x-x_0\ne0$，改变 $b$ 会改变该拟合值。事实上，对任意给定的 $t\in\mathbb{R}$，取 $b=(t-\bar{y})/(x-x_0)$ 就有 $\hat{y}(x)=t$。因此这些数据并未唯一确定其他输入位置的拟合输出。
+
+% SOURCE-END U0044
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F039}
+% FRAME-ID F040
+\typeout{MATH-AGENT-FRAME-BEGIN F040}
+\begin{frame}[t,fragile]{结果检验、退化情形与工程解释}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0045 0 90
+对数据点 $(2,1)$、$(2,3)$、$(2,5)$ 作带截距的直线最小二乘拟合。求全部最优参数对、残差和最小平方和。能否唯一确定输入 $2$ 与输入 $3$ 时的拟合输出？
+
+% SOURCE-END U0045
+}
+\end{block}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F040}
+% FRAME-ID F041
+\typeout{MATH-AGENT-FRAME-BEGIN F041}
+\begin{frame}[t,fragile]{结果检验、退化情形与工程解释}
+\footnotesize
+{\footnotesize
+% SOURCE-BEGIN U0046 0 389
+\par\noindent\textbf{解：}三个自变量观测值均为 $2$，所以 $\bar{x}=2$、$S_{xx}=0$，不能使用 $b_*=S_{xy}/S_{xx}$ 的除法公式。响应平均数为 $\bar{y}=(1+3+5)/3=3$。对所有 $a,b\in\mathbb{R}$，
+\[
+\begin{aligned}
+Q(a,b)&=(1-a-2b)^2+(3-a-2b)^2+(5-a-2b)^2\\
+&=8+3(a+2b-3)^2.
+\end{aligned}
+\]
+因此全部最优参数满足
+\[
+a+2b=3,
+\quad\text{即}\quad (a,b)=(3-2b,b),\qquad b\in\mathbb{R}.
+\]
+每组最优参数在输入 $2$ 处都给出拟合值 $3$，对应残差依次为 $-2,0,2$，最小平方和为 $4+0+4=8$。
+
+
+% SOURCE-END U0046
+}
+{\footnotesize
+% SOURCE-BEGIN U0047 0 235
+例如 $\hat{y}=3$ 与 $\hat{y}=1+x$ 都是最优直线。它们在输入 $3$ 处分别给出 $3$ 与 $4$。一般地，最优直线在实数输入 $x$ 处的值为
+\[
+\hat{y}(x)=3+b(x-2),\qquad b\in\mathbb{R}.
+\]
+所以输入 $2$ 时的拟合输出唯一，输入 $3$ 时的拟合输出却随斜率改变。本例并不是没有最小二乘解，而是数据只约束了直线在一个输入位置的高度，无法确定斜率。\par
+% UNIT S03.U12
+
+% SOURCE-END U0047
+}
+{\footnotesize
+% SOURCE-BEGIN U0048 0 137
+处理一组数据时，应区分三个层次：先确认参数是否使指定目标函数最小，再看残差反映了怎样的逐点误差，最后判断模型是否适合预定用途。参数唯一性也必须单独考虑：$S_{xx}>0$ 时带截距的最小二乘直线唯一；$S_{xx}=0$ 时最优参数不唯一，但观测输入处的拟合值仍唯一。
+
+
+% SOURCE-END U0048
+}
+{\footnotesize
+% SOURCE-BEGIN U0049 0 91
+工程报告宜同时交代观测输入范围、所用模型、参数、残差平方和以及预测是否属于外推。拟合公式不是物理规律的自动证明，残差和为零也不是误差已经消失。\par
+% UNIT S03.U13
+
+% SOURCE-END U0049
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F041}
+% FRAME-ID F042
+\typeout{MATH-AGENT-FRAME-BEGIN F042}
+\begin{frame}[t,fragile]{结果检验、退化情形与工程解释}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0050 0 283
+\begin{exercise}
+\label{mathagent:exercise:792316d6ae426af3441a87022eb342411ffcb273e3da7957f4be83fb59518d0a}
+某装置的三组输入输出记录为 $(0,1)$、$(1,1)$、$(2,3)$，其带截距最小二乘直线为 $\hat{y}=2/3+x$。列出拟合值和残差，核验残差和与均值点性质；求输入 $3/2$ 与输入 $4$ 时的模型输出，分别说明属于区间内预测还是外推，并解释这些数值是否必然等于未来实测输出。答案统一置于讲义末尾。
+\end{exercise}
+% SOURCE-END U0050
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F042}
+% FRAME-ID F043
+\typeout{MATH-AGENT-FRAME-BEGIN F043}
+\begin{frame}[t,fragile]{结果检验、退化情形与工程解释}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0051 0 255
+\begin{exercise}
+\label{mathagent:exercise:2a86525c0362bd6004ffb20b570bb82a80598d07bb305d4bd130c7cd7cc87533}
+对数据点 $(1,2)$、$(1,4)$ 作带截距直线最小二乘拟合。求全部最优参数、最小平方和以及输入 $1$ 处的拟合值，并给出两条在输入 $0$ 处输出不同的最优直线。由此判断：“只要最优参数不唯一，已有观测位置的拟合值就一定不唯一。”答案统一置于讲义末尾。
+\end{exercise}
+% SOURCE-END U0051
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F043}
+\end{document}
