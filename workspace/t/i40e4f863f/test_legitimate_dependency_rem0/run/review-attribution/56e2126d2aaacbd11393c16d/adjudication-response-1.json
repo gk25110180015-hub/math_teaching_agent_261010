@@ -1,0 +1,31 @@
+{
+  "decisions": [
+    {
+      "issue_index": 0,
+      "issue_hash": "77028c88abf690cdd62f4692097535c25267e939ae7ea75d1b740d076f2ac889",
+      "disposition": "dependency_supported",
+      "reason": "依据当前目标的逐字正文和真实来源重新核对原指称；目标与来源不得混为同一个单元。",
+      "target_spans": [
+        {
+          "unit_id": "S04.U05",
+          "quote": "令 $f(x)=x$、$g(x)=x^2$，当 $x\\to0$ 时二者极限都是 $0$。直接用商的极限法则得 $\\lim_{x\\to0}f(x)/g(x)=0$。"
+        }
+      ],
+      "source_spans": [
+        {
+          "unit_id": "S02.U01",
+          "quote": "应用商的极限法则时必须保证分母的极限存在且为非零实数。"
+        }
+      ],
+      "remaining_issue": {
+        "unit_id": "S04.U05",
+        "severity": "blocking",
+        "message": "目标在分母极限为零时错误使用商法则，所称极限为0不成立；同时引用归属需核对。",
+        "evidence": "S04.U05：『应用商的极限法则时必须保证分母的极限存在且为非零实数。』；目标给出的分母极限是0，不能应用该先修商法则。"
+      }
+    }
+  ],
+  "limitations": [
+    "Synthetic verdict for workflow testing; not a mathematical model evaluation."
+  ]
+}
