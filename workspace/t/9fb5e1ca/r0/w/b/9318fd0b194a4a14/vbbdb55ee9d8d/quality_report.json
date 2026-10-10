@@ -1,0 +1,125 @@
+{
+  "content": {
+    "status": "PASS",
+    "evidence": [
+      "实际 TeX 与保留源单元对照"
+    ],
+    "limitations": []
+  },
+  "math": {
+    "status": "NEEDS_REVIEW",
+    "evidence": [
+      "原文保真；未自动修正源讲义数学结论"
+    ],
+    "limitations": [
+      "教师须复核原文的具体数学疑点"
+    ]
+  },
+  "fidelity": {
+    "status": "PASS",
+    "issues": [],
+    "evidence": "Independent comparison of actual source payload strings and exact contiguous original intervals; scaffold fingerprint checked when supplied",
+    "checked_units": 3,
+    "limitations": [
+      "Whitespace/comments ignored; no claim of semantic equivalence for rewritten mathematics"
+    ]
+  },
+  "compile": {
+    "status": "PASS",
+    "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\9fb5e1ca\\r0\\w\\b\\9318fd0b194a4a14\\vbbdb55ee9d8d\\build-1\\slides.pdf",
+    "issues": [],
+    "log_paths": [
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\9fb5e1ca\\r0\\w\\b\\9318fd0b194a4a14\\vbbdb55ee9d8d\\build-1\\pass-1.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\9fb5e1ca\\r0\\w\\b\\9318fd0b194a4a14\\vbbdb55ee9d8d\\build-1\\pass-1.tex.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\9fb5e1ca\\r0\\w\\b\\9318fd0b194a4a14\\vbbdb55ee9d8d\\build-1\\pass-2.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\9fb5e1ca\\r0\\w\\b\\9318fd0b194a4a14\\vbbdb55ee9d8d\\build-1\\pass-2.tex.log"
+    ],
+    "engine": {
+      "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+    },
+    "passes": 2,
+    "compile_mode": "trusted_local",
+    "isolation": "NOT_IMPLEMENTED",
+    "limitations": [
+      "原生可信本机编译不是文件系统或网络隔离沙箱。"
+    ],
+    "command": [
+      "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "-no-shell-escape",
+      "-recorder",
+      "-synctex=1",
+      "-jobname=slides",
+      "-output-directory=.",
+      "slides.tex"
+    ],
+    "elapsed_seconds": 4.813,
+    "page_count": 4,
+    "pdf_sha256": "9cd1de10eea9b0a5f27f18617670f092e168ad300e985826ba28ee488e7fd4c1",
+    "auxiliary_hashes": {
+      ".aux": "c6010efb4e78d5d8768cd927eff7e0c4b7f00024dc50fe796f4a97ae651baf1d",
+      ".toc": "0929876fdcd4126e78a14170afc13b688936c9e94226a179cd5b54fb6b872a5c",
+      ".nav": "919d2fc29c09ae4f214af8aeb40456619d3289766dd0af8b60c6c6cc7abb2772",
+      ".snm": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      ".out": "5d04e7badc0e3d3dc4177c2c43e85b51b9045848fe294424dc1d842924268bc4"
+    }
+  },
+  "layout": {
+    "status": "PASS",
+    "evidence": {
+      "page_count": 4,
+      "all_rendered": true
+    },
+    "limitations": [
+      "几何检查是启发式，只能定位可测风险，不能证明所有正文均无裁切或遮挡。",
+      "尚未做模型视觉复核或教师人工逐页审核；每页图片及哈希供独立审核。",
+      "数学上下标的自然小字号不判为违规；PDF 文字提取不是数学内容真值。",
+      "正文安全区来自匹配模板的实际 measured_probe；仍是单个探针估计，不是完整版式校准。"
+    ]
+  },
+  "policy": {
+    "status": "PASS",
+    "evidence": {
+      "schema_version": 1,
+      "decisions": [
+        {
+          "decision_id": "448ffb60a9744249baaf2f62e6fc24ed",
+          "resolved_effects": [],
+          "status": "PASS",
+          "artifact": "slides.tex",
+          "artifact_hash": "9080cd1554748016b00159e6fc10abab36712f8fe2d375309d27690fd9169e90",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        },
+        {
+          "decision_id": "39ced0c7bfb440a5813a80977bf77e8b",
+          "resolved_effects": [],
+          "status": "PASS",
+          "artifact": "slides.tex",
+          "artifact_hash": "9080cd1554748016b00159e6fc10abab36712f8fe2d375309d27690fd9169e90",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        }
+      ],
+      "limitations": [
+        "语义自定义不能仅凭模型自评当作落实；发布前须人工审阅质量报告。"
+      ]
+    },
+    "limitations": []
+  },
+  "security": {
+    "status": "PASS",
+    "evidence": [
+      "回环服务、受控源码、编译参数及白名单子进程环境"
+    ],
+    "limitations": [
+      "trusted_local 不是文件系统/网络隔离沙箱"
+    ]
+  },
+  "schema_version": 1,
+  "provider": "mock",
+  "human_visual_review": "NOT_RUN",
+  "model_visual_review": "NOT_RUN",
+  "issues": []
+}

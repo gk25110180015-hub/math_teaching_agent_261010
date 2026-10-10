@@ -1,0 +1,976 @@
+{
+  "source_directory": "workspace/iteration2-live/b/a45be503af594ce8/sS03_4e86629a0d4a",
+  "captured_files": {
+    "candidate.json": {
+      "section_id": "S03",
+      "units": [
+        {
+          "id": "S03.U01",
+          "kind": "definition",
+          "tex": "设函数 $\\alpha(x)$ 在考察点 $x_0$ 的某个去心邻域内有定义。若\n\\[\n\\lim_{x\\to x_0}\\alpha(x)=0,\n\\]\n则称 $\\alpha(x)$ 是当 $x\\to x_0$ 时的无穷小。这里的“无穷小”表示函数值趋近于零，而不表示函数在某个邻域内恒不为零。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时有\n\\[\n|\\alpha(x)|>M,\n\\]\n则称 $\\alpha(x)$ 是当 $x\\to x_0$ 时的无穷大。无穷小与无穷大都是相对于特定的极限过程而言的。\\label{def:infinitesimal}",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U02",
+          "kind": "definition",
+          "tex": "设函数 $\\alpha(x)$ 与 $\\beta(x)$ 在 $x_0$ 的某个去心邻域内有定义，且在该邻域内 $\\beta(x)\\neq0$。若\n\\[\n\\lim_{x\\to x_0}\\frac{\\alpha(x)}{\\beta(x)}=1,\n\\]\n则称 $\\alpha(x)$ 与 $\\beta(x)$ 当 $x\\to x_0$ 时等价，记为\n\\[\n\\alpha(x)\\sim\\beta(x)\\qquad(x\\to x_0).\n\\]\n等价无穷小首先要求二者都是同一极限过程下的无穷小；只有在商有定义的去心邻域内，才能使用上述比值定义。\\label{def:equivalent-infinitesimal}",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U03",
+          "kind": "theorem",
+          "tex": "在实数范围内，当 $x\\to0$ 时，有两个基本极限\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1,\n\\qquad\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]\n其中，第一式中的 $x$ 取弧度制。由此可得\n\\[\n\\sin x\\sim x,\n\\qquad\n e^x-1\\sim x\\qquad(x\\to0).\n\\]\n这些结论只适用于所写出的极限过程及其定义域条件，不能不加条件地推广到任意点或任意角度单位。\\label{thm:fundamental-limits}",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U04",
+          "kind": "proof",
+          "tex": "先证明第一个基本极限。对 $0<x<\\dfrac{\\pi}{2}$，由单位圆中的几何不等式，有\n\\[\n\\sin x<x<\\tan x.\n\\]\n由于 $\\sin x>0$，两边分别除以 $\\sin x$，得到\n\\[\n1<\\frac{x}{\\sin x}<\\frac{1}{\\cos x}.\n\\]\n取倒数可得\n\\[\n\\cos x<\\frac{\\sin x}{x}<1.\n\\]\n当 $x\\to0^+$ 时，$\\cos x\\to1$，由夹逼定理可知\n\\[\n\\lim_{x\\to0^+}\\frac{\\sin x}{x}=1.\n\\]\n又因为 $\\sin x/x$ 是偶函数，所以左极限也等于 $1$，从而\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1.\n\\]\n\n第二个基本极限可由指数函数的连续性与其在零点的导数定义得到。按导数定义，指数函数在 $0$ 点的导数满足\n\\[\n(e^x)'\\big|_{x=0}=\\lim_{x\\to0}\\frac{e^x-e^0}{x}=\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]\n因此\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]",
+          "relates_to": "S03.U03"
+        },
+        {
+          "id": "S03.U05",
+          "kind": "theorem",
+          "tex": "设 $\\alpha(x)$ 与 $\\beta(x)$ 在 $x_0$ 的某个去心邻域内有定义，且在该邻域内均不为零。若\n\\[\n\\alpha(x)\\sim\\beta(x)\\qquad(x\\to x_0),\n\\]\n并且函数 $F(x)$ 在相应去心邻域内有定义，满足 $F(x)\\alpha(x)$ 有定义以及\n\\[\n\\lim_{x\\to x_0}F(x)\\alpha(x)=L,\n\\]\n其中 $L$ 为有限数，则\n\\[\n\\lim_{x\\to x_0}F(x)\\beta(x)=L,\n\\]\n只要 $F(x)\\beta(x)$ 在该去心邻域内有定义。特别地，在乘积或商的极限中，可以用与某个无穷小等价的无穷小替换它，但必须保持相关表达式有定义。\\label{thm:equivalent-substitution}",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U06",
+          "kind": "proof",
+          "tex": "由 $\\alpha(x)\\sim\\beta(x)$，有\n\\[\n\\lim_{x\\to x_0}\\frac{\\beta(x)}{\\alpha(x)}=1.\n\\]\n在所给去心邻域内，利用乘积的代数分解，\n\\[\nF(x)\\beta(x)=F(x)\\alpha(x)\\frac{\\beta(x)}{\\alpha(x)}.\n\\]\n由假设和极限的乘法法则，得到\n\\[\n\\lim_{x\\to x_0}F(x)\\beta(x)\n=\\left(\\lim_{x\\to x_0}F(x)\\alpha(x)\\right)\n\\left(\\lim_{x\\to x_0}\\frac{\\beta(x)}{\\alpha(x)}\\right)\n=L\\cdot1=L.\n\\]\n因此，在表达式有定义且相应商存在的条件下，等价无穷小可以进行替换。",
+          "relates_to": "S03.U05"
+        },
+        {
+          "id": "S03.U07",
+          "kind": "example",
+          "tex": "计算\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}.\n\\]\n要求说明等价无穷小替换的依据及适用条件。",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U08",
+          "kind": "solution",
+          "tex": "当 $x\\to0$ 时，$\\sin x\\sim x$，并且 $1+x\\to1$。在 $x\\neq0$ 的去心邻域内，原式有定义，且\n\\[\n\\frac{(1+x)\\sin x}{x}=(1+x)\\frac{\\sin x}{x}.\n\\]\n由基本极限\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1,\n\\qquad\n\\lim_{x\\to0}(1+x)=1,\n\\]\n可得\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}=1\\cdot1=1.\n\\]\n这里的替换只在 $x\\to0$ 且 $x\\neq0$ 的去心邻域内进行，未将原式在 $x=0$ 处补定义。",
+          "relates_to": "S03.U07"
+        },
+        {
+          "id": "S03.U09",
+          "kind": "exercise",
+          "tex": "计算\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}\\,(1-2x),\n\\]\n并说明所使用的基本极限及乘法法则的条件。",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U10",
+          "kind": "solution",
+          "tex": "当 $x\\to0$ 且 $x\\neq0$ 时，$\\dfrac{e^x-1}{x}$ 有定义。由基本极限\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1,\n\\]\n以及\n\\[\n\\lim_{x\\to0}(1-2x)=1,\n\\]\n再由极限的乘法法则，得到\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}(1-2x)=1\\cdot1=1.\n\\]\n乘法法则要求两个因子在同一去心邻域内有定义，并且各自的有限极限存在；这些条件在本题中均满足。",
+          "relates_to": "S03.U09"
+        }
+      ],
+      "calculations": [
+        {
+          "id": "S03.C01",
+          "unit_id": "S03.U03",
+          "kind": "limit",
+          "assumptions": {
+            "x": {
+              "real": true
+            }
+          },
+          "variable": "x",
+          "point": {
+            "op": "Integer",
+            "value": 0
+          },
+          "direction": "+-",
+          "expression": {
+            "args": [
+              {
+                "args": [
+                  {
+                    "op": "sin",
+                    "args": [
+                      {
+                        "op": "Symbol",
+                        "name": "x"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "args": [
+                  {
+                    "op": "Symbol",
+                    "name": "x"
+                  },
+                  {
+                    "op": "Integer",
+                    "value": -1
+                  }
+                ],
+                "op": "Pow"
+              }
+            ],
+            "op": "Mul"
+          },
+          "expected": {
+            "op": "Integer",
+            "value": 1
+          }
+        }
+      ],
+      "calculation_limitations": [
+        "协议支持的极限核算可以核对 $\\sin x/x$ 在 $x\\to0$ 时的代表性结论，但不能表达弧度制、三角函数的几何不等式或完整的夹逼证明。",
+        "协议中的布尔假设不能完整表达去心邻域和函数定义域条件；正文仍保留了 $x\\neq0$ 及相应表达式有定义的条件。"
+      ],
+      "uncertainties": []
+    },
+    "candidate-normalization.json": {
+      "schema_version": 3,
+      "status": "PASS",
+      "raw_hash": "7455ba91bf58c095bd4ad03eaa9cb5e8e22650d8d4940f5113f2363a0cc3e9ce",
+      "normalized_hash": "7455ba91bf58c095bd4ad03eaa9cb5e8e22650d8d4940f5113f2363a0cc3e9ce",
+      "units": [
+        {
+          "unit_id": "S03.U01",
+          "kind": "definition",
+          "raw_hash": "a096efb93a26678379cfdddd9c8551c48b585da783565c7a312b97843c3cfbb1",
+          "normalized_hash": "a096efb93a26678379cfdddd9c8551c48b585da783565c7a312b97843c3cfbb1",
+          "action": "unchanged",
+          "removed_spans": [],
+          "equation_normalizations": [],
+          "punctuation_normalizations": [],
+          "display_normalization_input_hash": "a096efb93a26678379cfdddd9c8551c48b585da783565c7a312b97843c3cfbb1",
+          "punctuation_normalization_input_hash": "a096efb93a26678379cfdddd9c8551c48b585da783565c7a312b97843c3cfbb1"
+        },
+        {
+          "unit_id": "S03.U02",
+          "kind": "definition",
+          "raw_hash": "35fb2c6fc28224d03a77e408aeaa201cfa72aa6a3f35ded215277489b28fdad5",
+          "normalized_hash": "35fb2c6fc28224d03a77e408aeaa201cfa72aa6a3f35ded215277489b28fdad5",
+          "action": "unchanged",
+          "removed_spans": [],
+          "equation_normalizations": [],
+          "punctuation_normalizations": [],
+          "display_normalization_input_hash": "35fb2c6fc28224d03a77e408aeaa201cfa72aa6a3f35ded215277489b28fdad5",
+          "punctuation_normalization_input_hash": "35fb2c6fc28224d03a77e408aeaa201cfa72aa6a3f35ded215277489b28fdad5"
+        },
+        {
+          "unit_id": "S03.U03",
+          "kind": "theorem",
+          "raw_hash": "ebe15c387981e76c27fe8bacc1933881aafa0f236aca7926865fe9e8b6e609ab",
+          "normalized_hash": "ebe15c387981e76c27fe8bacc1933881aafa0f236aca7926865fe9e8b6e609ab",
+          "action": "unchanged",
+          "removed_spans": [],
+          "equation_normalizations": [],
+          "punctuation_normalizations": [],
+          "display_normalization_input_hash": "ebe15c387981e76c27fe8bacc1933881aafa0f236aca7926865fe9e8b6e609ab",
+          "punctuation_normalization_input_hash": "ebe15c387981e76c27fe8bacc1933881aafa0f236aca7926865fe9e8b6e609ab"
+        },
+        {
+          "unit_id": "S03.U04",
+          "kind": "proof",
+          "raw_hash": "06da7b4a96c7564623e9ec22fc002c97b0f84187d322448dfd7dbda8883072b8",
+          "normalized_hash": "06da7b4a96c7564623e9ec22fc002c97b0f84187d322448dfd7dbda8883072b8",
+          "action": "unchanged",
+          "removed_spans": [],
+          "equation_normalizations": [],
+          "punctuation_normalizations": [],
+          "display_normalization_input_hash": "06da7b4a96c7564623e9ec22fc002c97b0f84187d322448dfd7dbda8883072b8",
+          "punctuation_normalization_input_hash": "06da7b4a96c7564623e9ec22fc002c97b0f84187d322448dfd7dbda8883072b8"
+        },
+        {
+          "unit_id": "S03.U05",
+          "kind": "theorem",
+          "raw_hash": "bb4b4375ba28f6672cc657e69630b8dcaefb4c28ce4c052d3b621bc66973255f",
+          "normalized_hash": "bb4b4375ba28f6672cc657e69630b8dcaefb4c28ce4c052d3b621bc66973255f",
+          "action": "unchanged",
+          "removed_spans": [],
+          "equation_normalizations": [],
+          "punctuation_normalizations": [],
+          "display_normalization_input_hash": "bb4b4375ba28f6672cc657e69630b8dcaefb4c28ce4c052d3b621bc66973255f",
+          "punctuation_normalization_input_hash": "bb4b4375ba28f6672cc657e69630b8dcaefb4c28ce4c052d3b621bc66973255f"
+        },
+        {
+          "unit_id": "S03.U06",
+          "kind": "proof",
+          "raw_hash": "580832c0070230ed94d58e6f4555893d9332e5e88df85e20e25c59be0850e956",
+          "normalized_hash": "580832c0070230ed94d58e6f4555893d9332e5e88df85e20e25c59be0850e956",
+          "action": "unchanged",
+          "removed_spans": [],
+          "equation_normalizations": [],
+          "punctuation_normalizations": [],
+          "display_normalization_input_hash": "580832c0070230ed94d58e6f4555893d9332e5e88df85e20e25c59be0850e956",
+          "punctuation_normalization_input_hash": "580832c0070230ed94d58e6f4555893d9332e5e88df85e20e25c59be0850e956"
+        },
+        {
+          "unit_id": "S03.U07",
+          "kind": "example",
+          "raw_hash": "9b3b420ad62ff6724ad0fee13f43ae5a3dd8cf5fc928b4f64756121baae15c27",
+          "normalized_hash": "9b3b420ad62ff6724ad0fee13f43ae5a3dd8cf5fc928b4f64756121baae15c27",
+          "action": "unchanged",
+          "removed_spans": [],
+          "equation_normalizations": [],
+          "punctuation_normalizations": [],
+          "display_normalization_input_hash": "9b3b420ad62ff6724ad0fee13f43ae5a3dd8cf5fc928b4f64756121baae15c27",
+          "punctuation_normalization_input_hash": "9b3b420ad62ff6724ad0fee13f43ae5a3dd8cf5fc928b4f64756121baae15c27"
+        },
+        {
+          "unit_id": "S03.U08",
+          "kind": "solution",
+          "raw_hash": "92003deff4054a564bc2265517f53c8a331944fc9a3a1d801082f9bdef7cf14a",
+          "normalized_hash": "92003deff4054a564bc2265517f53c8a331944fc9a3a1d801082f9bdef7cf14a",
+          "action": "unchanged",
+          "removed_spans": [],
+          "equation_normalizations": [],
+          "punctuation_normalizations": [],
+          "display_normalization_input_hash": "92003deff4054a564bc2265517f53c8a331944fc9a3a1d801082f9bdef7cf14a",
+          "punctuation_normalization_input_hash": "92003deff4054a564bc2265517f53c8a331944fc9a3a1d801082f9bdef7cf14a"
+        },
+        {
+          "unit_id": "S03.U09",
+          "kind": "exercise",
+          "raw_hash": "f69c13a7101376306eea3f727d3b06d4cd88f79791d15229498056e1509a3297",
+          "normalized_hash": "f69c13a7101376306eea3f727d3b06d4cd88f79791d15229498056e1509a3297",
+          "action": "unchanged",
+          "removed_spans": [],
+          "equation_normalizations": [],
+          "punctuation_normalizations": [],
+          "display_normalization_input_hash": "f69c13a7101376306eea3f727d3b06d4cd88f79791d15229498056e1509a3297",
+          "punctuation_normalization_input_hash": "f69c13a7101376306eea3f727d3b06d4cd88f79791d15229498056e1509a3297"
+        },
+        {
+          "unit_id": "S03.U10",
+          "kind": "solution",
+          "raw_hash": "4302acedf3d6689519918ec8399678c206fa7b4e58ed45a67d1df0cd0eb341f6",
+          "normalized_hash": "4302acedf3d6689519918ec8399678c206fa7b4e58ed45a67d1df0cd0eb341f6",
+          "action": "unchanged",
+          "removed_spans": [],
+          "equation_normalizations": [],
+          "punctuation_normalizations": [],
+          "display_normalization_input_hash": "4302acedf3d6689519918ec8399678c206fa7b4e58ed45a67d1df0cd0eb341f6",
+          "punctuation_normalization_input_hash": "4302acedf3d6689519918ec8399678c206fa7b4e58ed45a67d1df0cd0eb341f6"
+        }
+      ],
+      "issues": [],
+      "mathematical_content_rewritten": false,
+      "limitations": [
+        "只处理单个明确匹配的顶层教学环境外壳；不推断自定义环境语义。",
+        "可选标题保留为正文加粗标题，不改变内部数学或环境外解释。",
+        "带唯一合法标签且无显式编号、无嵌套显示数学的无编号公式仅替换定界符为 equation；数学正文逐字保留。",
+        "标签唯一性在当前节检查，跨节标签由独立交叉引用检查负责；已有显式 tag 不改写。",
+        "仅明确数学域顶层的裸中文标点改用 text 字体，原字符保留；文本/未知宏参数、注释、verb、上下标与定界符位置不处理，仍须编译检查。",
+        "归一化不是数学核验、安全预检或教师验收。"
+      ],
+      "unit_ids_preserved": true,
+      "relations_preserved": true
+    },
+    "candidate-normalized.json": {
+      "section_id": "S03",
+      "units": [
+        {
+          "id": "S03.U01",
+          "kind": "definition",
+          "tex": "设函数 $\\alpha(x)$ 在考察点 $x_0$ 的某个去心邻域内有定义。若\n\\[\n\\lim_{x\\to x_0}\\alpha(x)=0,\n\\]\n则称 $\\alpha(x)$ 是当 $x\\to x_0$ 时的无穷小。这里的“无穷小”表示函数值趋近于零，而不表示函数在某个邻域内恒不为零。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时有\n\\[\n|\\alpha(x)|>M,\n\\]\n则称 $\\alpha(x)$ 是当 $x\\to x_0$ 时的无穷大。无穷小与无穷大都是相对于特定的极限过程而言的。\\label{def:infinitesimal}",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U02",
+          "kind": "definition",
+          "tex": "设函数 $\\alpha(x)$ 与 $\\beta(x)$ 在 $x_0$ 的某个去心邻域内有定义，且在该邻域内 $\\beta(x)\\neq0$。若\n\\[\n\\lim_{x\\to x_0}\\frac{\\alpha(x)}{\\beta(x)}=1,\n\\]\n则称 $\\alpha(x)$ 与 $\\beta(x)$ 当 $x\\to x_0$ 时等价，记为\n\\[\n\\alpha(x)\\sim\\beta(x)\\qquad(x\\to x_0).\n\\]\n等价无穷小首先要求二者都是同一极限过程下的无穷小；只有在商有定义的去心邻域内，才能使用上述比值定义。\\label{def:equivalent-infinitesimal}",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U03",
+          "kind": "theorem",
+          "tex": "在实数范围内，当 $x\\to0$ 时，有两个基本极限\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1,\n\\qquad\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]\n其中，第一式中的 $x$ 取弧度制。由此可得\n\\[\n\\sin x\\sim x,\n\\qquad\n e^x-1\\sim x\\qquad(x\\to0).\n\\]\n这些结论只适用于所写出的极限过程及其定义域条件，不能不加条件地推广到任意点或任意角度单位。\\label{thm:fundamental-limits}",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U04",
+          "kind": "proof",
+          "tex": "先证明第一个基本极限。对 $0<x<\\dfrac{\\pi}{2}$，由单位圆中的几何不等式，有\n\\[\n\\sin x<x<\\tan x.\n\\]\n由于 $\\sin x>0$，两边分别除以 $\\sin x$，得到\n\\[\n1<\\frac{x}{\\sin x}<\\frac{1}{\\cos x}.\n\\]\n取倒数可得\n\\[\n\\cos x<\\frac{\\sin x}{x}<1.\n\\]\n当 $x\\to0^+$ 时，$\\cos x\\to1$，由夹逼定理可知\n\\[\n\\lim_{x\\to0^+}\\frac{\\sin x}{x}=1.\n\\]\n又因为 $\\sin x/x$ 是偶函数，所以左极限也等于 $1$，从而\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1.\n\\]\n\n第二个基本极限可由指数函数的连续性与其在零点的导数定义得到。按导数定义，指数函数在 $0$ 点的导数满足\n\\[\n(e^x)'\\big|_{x=0}=\\lim_{x\\to0}\\frac{e^x-e^0}{x}=\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]\n因此\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]",
+          "relates_to": "S03.U03"
+        },
+        {
+          "id": "S03.U05",
+          "kind": "theorem",
+          "tex": "设 $\\alpha(x)$ 与 $\\beta(x)$ 在 $x_0$ 的某个去心邻域内有定义，且在该邻域内均不为零。若\n\\[\n\\alpha(x)\\sim\\beta(x)\\qquad(x\\to x_0),\n\\]\n并且函数 $F(x)$ 在相应去心邻域内有定义，满足 $F(x)\\alpha(x)$ 有定义以及\n\\[\n\\lim_{x\\to x_0}F(x)\\alpha(x)=L,\n\\]\n其中 $L$ 为有限数，则\n\\[\n\\lim_{x\\to x_0}F(x)\\beta(x)=L,\n\\]\n只要 $F(x)\\beta(x)$ 在该去心邻域内有定义。特别地，在乘积或商的极限中，可以用与某个无穷小等价的无穷小替换它，但必须保持相关表达式有定义。\\label{thm:equivalent-substitution}",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U06",
+          "kind": "proof",
+          "tex": "由 $\\alpha(x)\\sim\\beta(x)$，有\n\\[\n\\lim_{x\\to x_0}\\frac{\\beta(x)}{\\alpha(x)}=1.\n\\]\n在所给去心邻域内，利用乘积的代数分解，\n\\[\nF(x)\\beta(x)=F(x)\\alpha(x)\\frac{\\beta(x)}{\\alpha(x)}.\n\\]\n由假设和极限的乘法法则，得到\n\\[\n\\lim_{x\\to x_0}F(x)\\beta(x)\n=\\left(\\lim_{x\\to x_0}F(x)\\alpha(x)\\right)\n\\left(\\lim_{x\\to x_0}\\frac{\\beta(x)}{\\alpha(x)}\\right)\n=L\\cdot1=L.\n\\]\n因此，在表达式有定义且相应商存在的条件下，等价无穷小可以进行替换。",
+          "relates_to": "S03.U05"
+        },
+        {
+          "id": "S03.U07",
+          "kind": "example",
+          "tex": "计算\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}.\n\\]\n要求说明等价无穷小替换的依据及适用条件。",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U08",
+          "kind": "solution",
+          "tex": "当 $x\\to0$ 时，$\\sin x\\sim x$，并且 $1+x\\to1$。在 $x\\neq0$ 的去心邻域内，原式有定义，且\n\\[\n\\frac{(1+x)\\sin x}{x}=(1+x)\\frac{\\sin x}{x}.\n\\]\n由基本极限\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1,\n\\qquad\n\\lim_{x\\to0}(1+x)=1,\n\\]\n可得\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}=1\\cdot1=1.\n\\]\n这里的替换只在 $x\\to0$ 且 $x\\neq0$ 的去心邻域内进行，未将原式在 $x=0$ 处补定义。",
+          "relates_to": "S03.U07"
+        },
+        {
+          "id": "S03.U09",
+          "kind": "exercise",
+          "tex": "计算\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}\\,(1-2x),\n\\]\n并说明所使用的基本极限及乘法法则的条件。",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U10",
+          "kind": "solution",
+          "tex": "当 $x\\to0$ 且 $x\\neq0$ 时，$\\dfrac{e^x-1}{x}$ 有定义。由基本极限\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1,\n\\]\n以及\n\\[\n\\lim_{x\\to0}(1-2x)=1,\n\\]\n再由极限的乘法法则，得到\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}(1-2x)=1\\cdot1=1.\n\\]\n乘法法则要求两个因子在同一去心邻域内有定义，并且各自的有限极限存在；这些条件在本题中均满足。",
+          "relates_to": "S03.U09"
+        }
+      ],
+      "calculations": [
+        {
+          "id": "S03.C01",
+          "unit_id": "S03.U03",
+          "kind": "limit",
+          "assumptions": {
+            "x": {
+              "real": true
+            }
+          },
+          "variable": "x",
+          "point": {
+            "op": "Integer",
+            "value": 0
+          },
+          "direction": "+-",
+          "expression": {
+            "args": [
+              {
+                "args": [
+                  {
+                    "op": "sin",
+                    "args": [
+                      {
+                        "op": "Symbol",
+                        "name": "x"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "args": [
+                  {
+                    "op": "Symbol",
+                    "name": "x"
+                  },
+                  {
+                    "op": "Integer",
+                    "value": -1
+                  }
+                ],
+                "op": "Pow"
+              }
+            ],
+            "op": "Mul"
+          },
+          "expected": {
+            "op": "Integer",
+            "value": 1
+          }
+        }
+      ],
+      "calculation_limitations": [
+        "协议支持的极限核算可以核对 $\\sin x/x$ 在 $x\\to0$ 时的代表性结论，但不能表达弧度制、三角函数的几何不等式或完整的夹逼证明。",
+        "协议中的布尔假设不能完整表达去心邻域和函数定义域条件；正文仍保留了 $x\\neq0$ 及相应表达式有定义的条件。"
+      ],
+      "uncertainties": []
+    },
+    "review-0.json": {
+      "section_id": "S03",
+      "math": {
+        "schema_version": 1,
+        "status": "NEEDS_REVIEW",
+        "issues": [
+          {
+            "rule_id": "MATH_CHECK_UNKNOWN",
+            "severity": "review",
+            "message": "ValueError: 只接受受限表达式 JSON 树；不解析字符串代码。",
+            "location": {
+              "calculation_id": "S03.C01",
+              "unit_id": "S03.U03"
+            },
+            "resolution_status": "open"
+          }
+        ],
+        "evidence": [
+          {
+            "status": "UNKNOWN",
+            "evidence_type": "not_checked",
+            "message": "ValueError: 只接受受限表达式 JSON 树；不解析字符串代码。",
+            "calculation_id": "S03.C01",
+            "unit_id": "S03.U03"
+          }
+        ],
+        "coverage": [
+          "S03.U01",
+          "S03.U02",
+          "S03.U03",
+          "S03.U04",
+          "S03.U05",
+          "S03.U06",
+          "S03.U07",
+          "S03.U08",
+          "S03.U09",
+          "S03.U10"
+        ],
+        "limitations": [
+          "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+          "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+          "协议支持的极限核算可以核对 $\\sin x/x$ 在 $x\\to0$ 时的代表性结论，但不能表达弧度制、三角函数的几何不等式或完整的夹逼证明。",
+          "协议中的布尔假设不能完整表达去心邻域和函数定义域条件；正文仍保留了 $x\\neq0$ 及相应表达式有定义的条件。"
+        ]
+      },
+      "llm_review": {
+        "issues": [
+          {
+            "unit_id": "S03.U04",
+            "severity": "blocking",
+            "message": "第二个基本极限的证明存在实质性先修缺口：导数定义只能把待求极限识别为指数函数在零点的导数，不能推出该导数等于1。正文没有独立建立或明确作为已知基础引入这一导数值，因而所写内容不是该基本极限的完整证明；若指数函数导数公式本来依赖此基本极限，还会构成循环论证。应采用不依赖该极限的论证，或明确交代独立基础及其来源，并与锁定的证明深度保持一致。",
+            "evidence": "正文称“第二个基本极限可由指数函数的连续性与其在零点的导数定义得到”，随后直接写“(e^x)'|_{x=0}=lim_{x→0}(e^x−1)/x=1”。最后的“=1”并非导数定义的结论，连续性也不能确定差商极限。锁定先修列出指数函数的基本性质，但没有导数及指数函数导数公式；所提供前置正文也未建立这一公式。计划要求“关键定理完整证明，其余说明”。此处问题是具体证明依据缺失，而不是把任何提及导数都视为违反“不系统讲授导数”的排除项。"
+          },
+          {
+            "unit_id": "S03.U06",
+            "severity": "review",
+            "message": "证明末尾的文字总结比所证明的定理宽，容易被理解为只要表达式有定义、比值存在，就可以在任意位置替换等价无穷小。应保留S03.U05的乘积或商结构及有限极限假设，并明确不能在加减项中无条件逐项替换。主体代数分解与极限运算正确，问题在于核心使用规则的文字范围不清。",
+            "evidence": "S03.U05假设lim F(x)α(x)=L且L有限，S03.U06也只通过Fβ=(Fα)(β/α)证明这一结论；但结尾改称“在表达式有定义且相应商存在的条件下，等价无穷小可以进行替换”。这句话没有保留乘积或商的结构限制。例如x+x²∼x，但在[(x+x²)−x]/x²中把x+x²替换为x会把极限从1改为0，尽管相关表达式与等价比值都在去心邻域内有定义。"
+          }
+        ],
+        "checked_unit_ids": [
+          "S03.U01",
+          "S03.U02",
+          "S03.U03",
+          "S03.U04",
+          "S03.U05",
+          "S03.U06",
+          "S03.U07",
+          "S03.U08",
+          "S03.U09",
+          "S03.U10"
+        ],
+        "limitations": [
+          "本次为section_local审阅，逐项阅读并核对了所列10个S03实际单元；前置材料仅用于检查本节依赖，不构成对其他章节的完整审阅。尚未生成的S04、S05不作为本节遗漏。",
+          "S03.U01、U02的极限过程、量词和非零条件，以及U05、U06主体证明的有限极限条件已核对；例题与练习的计算结果均为1。练习解答S03.U10正确关联S03.U09，按给定组装规则移至末尾，不能因其JSON顺序判定答案位置违规。",
+          "工具对S03.C01返回UNKNOWN，原因是表达式协议不匹配，并未完成符号核算。本次没有将工具覆盖列表或作者说明当作数学正确性证据；三角基本极限依据正文不等式和夹逼推理作普通数学审阅。",
+          "当前正文不含级数判别或数列收敛否定命题，不对这些未出现的内容作通过判断。指数基本极限及依赖它的练习结果本身正确，但不消除S03.U04的证明缺口。",
+          "本报告是普通模型数学审阅，不是形式化证明，不能保证发现全部错误；未检查最终PDF的排版、交叉引用呈现或答案实际组装效果。"
+        ]
+      },
+      "issues": [
+        {
+          "rule_id": "MATH_CHECK_UNKNOWN",
+          "severity": "review",
+          "message": "ValueError: 只接受受限表达式 JSON 树；不解析字符串代码。",
+          "location": {
+            "calculation_id": "S03.C01",
+            "unit_id": "S03.U03"
+          },
+          "resolution_status": "open"
+        },
+        {
+          "unit_id": "S03.U04",
+          "severity": "blocking",
+          "message": "第二个基本极限的证明存在实质性先修缺口：导数定义只能把待求极限识别为指数函数在零点的导数，不能推出该导数等于1。正文没有独立建立或明确作为已知基础引入这一导数值，因而所写内容不是该基本极限的完整证明；若指数函数导数公式本来依赖此基本极限，还会构成循环论证。应采用不依赖该极限的论证，或明确交代独立基础及其来源，并与锁定的证明深度保持一致。",
+          "evidence": "正文称“第二个基本极限可由指数函数的连续性与其在零点的导数定义得到”，随后直接写“(e^x)'|_{x=0}=lim_{x→0}(e^x−1)/x=1”。最后的“=1”并非导数定义的结论，连续性也不能确定差商极限。锁定先修列出指数函数的基本性质，但没有导数及指数函数导数公式；所提供前置正文也未建立这一公式。计划要求“关键定理完整证明，其余说明”。此处问题是具体证明依据缺失，而不是把任何提及导数都视为违反“不系统讲授导数”的排除项。"
+        },
+        {
+          "unit_id": "S03.U06",
+          "severity": "review",
+          "message": "证明末尾的文字总结比所证明的定理宽，容易被理解为只要表达式有定义、比值存在，就可以在任意位置替换等价无穷小。应保留S03.U05的乘积或商结构及有限极限假设，并明确不能在加减项中无条件逐项替换。主体代数分解与极限运算正确，问题在于核心使用规则的文字范围不清。",
+          "evidence": "S03.U05假设lim F(x)α(x)=L且L有限，S03.U06也只通过Fβ=(Fα)(β/α)证明这一结论；但结尾改称“在表达式有定义且相应商存在的条件下，等价无穷小可以进行替换”。这句话没有保留乘积或商的结构限制。例如x+x²∼x，但在[(x+x²)−x]/x²中把x+x²替换为x会把极限从1改为0，尽管相关表达式与等价比值都在去心邻域内有定义。"
+        }
+      ],
+      "reference_recovery": null,
+      "answer_recovery": null,
+      "mock": false
+    },
+    "review-1.json": {
+      "section_id": "S03",
+      "math": {
+        "schema_version": 1,
+        "status": "NEEDS_REVIEW",
+        "issues": [
+          {
+            "rule_id": "MATH_CHECK_UNKNOWN",
+            "severity": "review",
+            "message": "ValueError: 只接受受限表达式 JSON 树；不解析字符串代码。",
+            "location": {
+              "calculation_id": "S03.C01",
+              "unit_id": "S03.U03"
+            },
+            "resolution_status": "open"
+          }
+        ],
+        "evidence": [
+          {
+            "status": "UNKNOWN",
+            "evidence_type": "not_checked",
+            "message": "ValueError: 只接受受限表达式 JSON 树；不解析字符串代码。",
+            "calculation_id": "S03.C01",
+            "unit_id": "S03.U03"
+          }
+        ],
+        "coverage": [
+          "S03.U01",
+          "S03.U02",
+          "S03.U03",
+          "S03.U04",
+          "S03.U05",
+          "S03.U06",
+          "S03.U07",
+          "S03.U08",
+          "S03.U09",
+          "S03.U10"
+        ],
+        "limitations": [
+          "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+          "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+          "协议支持的极限核算可以核对 $\\sin x/x$ 在 $x\\to0$ 时的代表性结论，但不能表达弧度制、三角函数的几何不等式或完整的夹逼证明。",
+          "协议中的布尔假设不能完整表达去心邻域和函数定义域条件；正文仍保留了 $x\\neq0$ 及相应表达式有定义的条件。"
+        ]
+      },
+      "llm_review": {
+        "issues": [
+          {
+            "unit_id": "S03.U06",
+            "severity": "review",
+            "message": "证明后的替换规则说明与前面的正确恒等式不一致，容易把“乘以修正比值”误读为“用比值替换原因子”。应改为：在整体 F(x)α(x) 中将因子 α(x) 替换为 β(x)，等价于将整体乘以 β(x)/α(x)，从而得到 F(x)β(x)。前面的证明本身成立，但作为操作规则的解释文字需要修正。",
+            "evidence": "正文先正确写出 F(x)β(x)=F(x)α(x)·β(x)/α(x)，随后却说“以 β(x)/α(x) 替换该因子后，所得 F(x)β(x)”。若“该因子”指 α(x)，替换结果是 F(x)β(x)/α(x)；若指 F(x)α(x)，替换结果是 β(x)/α(x)，均不是所称的 F(x)β(x)。"
+          }
+        ],
+        "checked_unit_ids": [
+          "S03.U01",
+          "S03.U02",
+          "S03.U03",
+          "S03.U04",
+          "S03.U05",
+          "S03.U06",
+          "S03.U07",
+          "S03.U08",
+          "S03.U09",
+          "S03.U10"
+        ],
+        "limitations": [
+          "本次为 section_local 审阅，仅对所提供的 S03 十个正文单元作出结论；先前章节仅作为依赖背景，不代表重新核验这些章节。尚未生成的 S04、S05 不作为本节遗漏。",
+          "S03.U04 的指数极限证明依赖正文明确列出的基础不等式 1+t≤e^t≤1/(1-t)（0<t<1）。该不等式真实，正、负两侧的夹逼推理均成立，且未发现违反锁定排除项；但本单元未推导该基础不等式，因此这里核验的是以该已声明性质为基础的证明，而不是指数函数基础理论的独立构建。",
+          "所提供的工具记录显示 S03.C01 因输入协议问题未执行成功，不能视为计算验证证据。本次对基本极限证明与例题、练习结果的判断来自正文推理核对，不声称已完成工具复算。",
+          "依照 rendering_contract，S03.U10 是关联 S03.U09 的独立练习答案单元，将由程序移至末尾；未因其 JSON 顺序认定答案位置违规。本次未检查最终 PDF 或实际渲染结果。",
+          "本节没有级数必要或充分条件的陈述，未对该类内容作出结论。普通模型审阅不等于形式化证明，也不能保证穷尽所有潜在问题。"
+        ]
+      },
+      "issues": [
+        {
+          "rule_id": "MATH_CHECK_UNKNOWN",
+          "severity": "review",
+          "message": "ValueError: 只接受受限表达式 JSON 树；不解析字符串代码。",
+          "location": {
+            "calculation_id": "S03.C01",
+            "unit_id": "S03.U03"
+          },
+          "resolution_status": "open"
+        },
+        {
+          "unit_id": "S03.U06",
+          "severity": "review",
+          "message": "证明后的替换规则说明与前面的正确恒等式不一致，容易把“乘以修正比值”误读为“用比值替换原因子”。应改为：在整体 F(x)α(x) 中将因子 α(x) 替换为 β(x)，等价于将整体乘以 β(x)/α(x)，从而得到 F(x)β(x)。前面的证明本身成立，但作为操作规则的解释文字需要修正。",
+          "evidence": "正文先正确写出 F(x)β(x)=F(x)α(x)·β(x)/α(x)，随后却说“以 β(x)/α(x) 替换该因子后，所得 F(x)β(x)”。若“该因子”指 α(x)，替换结果是 F(x)β(x)/α(x)；若指 F(x)α(x)，替换结果是 β(x)/α(x)，均不是所称的 F(x)β(x)。"
+        }
+      ],
+      "reference_recovery": null,
+      "answer_recovery": null,
+      "mock": false
+    },
+    "repair-1-raw.json": {
+      "section_id": "S03",
+      "units": [
+        {
+          "id": "S03.U01",
+          "kind": "definition",
+          "tex": "设函数 $\\alpha(x)$ 在考察点 $x_0$ 的某个去心邻域内有定义。若\n\\[\n\\lim_{x\\to x_0}\\alpha(x)=0,\n\\]\n则称 $\\alpha(x)$ 是当 $x\\to x_0$ 时的无穷小。这里的“无穷小”表示函数值趋近于零，而不表示函数在某个邻域内恒不为零。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时有\n\\[\n|\\alpha(x)|>M,\n\\]\n则称 $\\alpha(x)$ 是当 $x\\to x_0$ 时的无穷大。无穷小与无穷大都是相对于特定的极限过程而言的。\\label{def:infinitesimal}",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U02",
+          "kind": "definition",
+          "tex": "设函数 $\\alpha(x)$ 与 $\\beta(x)$ 在 $x_0$ 的某个去心邻域内有定义，且在该邻域内 $\\beta(x)\\neq0$。若\n\\[\n\\lim_{x\\to x_0}\\frac{\\alpha(x)}{\\beta(x)}=1,\n\\]\n则称 $\\alpha(x)$ 与 $\\beta(x)$ 当 $x\\to x_0$ 时等价，记为\n\\[\n\\alpha(x)\\sim\\beta(x)\\qquad(x\\to x_0).\n\\]\n等价无穷小首先要求二者都是同一极限过程下的无穷小；只有在商有定义的去心邻域内，才能使用上述比值定义。\\label{def:equivalent-infinitesimal}",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U03",
+          "kind": "theorem",
+          "tex": "在实数范围内，当 $x\\to0$ 时，有两个基本极限\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1,\n\\qquad\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]\n其中，第一式中的 $x$ 取弧度制。由此可得\n\\[\n\\sin x\\sim x,\n\\qquad\n e^x-1\\sim x\\qquad(x\\to0).\n\\]\n这些结论只适用于所写出的极限过程及其定义域条件，不能不加条件地推广到任意点或任意角度单位。\\label{thm:fundamental-limits}",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U04",
+          "kind": "proof",
+          "tex": "先证明第一个基本极限。对 $0<x<\\dfrac{\\pi}{2}$，由单位圆中的几何不等式，有\n\\[\n\\sin x<x<\\tan x.\n\\]\n由于 $\\sin x>0$，两边分别除以 $\\sin x$，得到\n\\[\n1<\\frac{x}{\\sin x}<\\frac{1}{\\cos x}.\n\\]\n取倒数可得\n\\[\n\\cos x<\\frac{\\sin x}{x}<1.\n\\]\n当 $x\\to0^+$ 时，$\\cos x\\to1$，由夹逼定理可知\n\\[\n\\lim_{x\\to0^+}\\frac{\\sin x}{x}=1.\n\\]\n又因为 $\\sin x/x$ 是偶函数，所以左极限也等于 $1$，从而\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1.\n\\]\n\n再证明第二个基本极限。这里使用指数函数的一个独立基本性质：对 $0<t<1$，有\n\\[\n1+t\\le e^t\\le\\frac{1}{1-t}.\n\\]\n该不等式是指数函数基本性质的标准推论，独立于待证的差商极限，不由导数定义推出。\n\n当 $0<x<1$ 时，由上述不等式得到\n\\[\n1\\le\\frac{e^x-1}{x}\\le\\frac{1}{1-x}.\n\\]\n令 $x\\to0^+$，夹逼定理给出\n\\[\n\\lim_{x\\to0^+}\\frac{e^x-1}{x}=1.\n\\]\n当 $x=-t<0$ 且 $0<t<1$ 时，对 $1+t\\le e^t\\le1/(1-t)$ 取倒数，得到\n\\[\n1-t\\le e^{-t}\\le\\frac{1}{1+t}.\n\\]\n因此\n\\[\n\\frac{1}{1+t}\\le\\frac{e^{-t}-1}{-t}\\le1.\n\\]\n令 $t\\to0^+$，再次由夹逼定理得到\n\\[\n\\lim_{x\\to0^-}\\frac{e^x-1}{x}=1.\n\\]\n左右极限相等，所以\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]\n整个论证只使用上述独立的指数函数不等式和夹逼定理，没有把待证极限作为指数函数在零点的导数值使用。",
+          "relates_to": "S03.U03"
+        },
+        {
+          "id": "S03.U05",
+          "kind": "theorem",
+          "tex": "设 $\\alpha(x)$ 与 $\\beta(x)$ 在 $x_0$ 的某个去心邻域内有定义，且在该邻域内均不为零。若\n\\[\n\\alpha(x)\\sim\\beta(x)\\qquad(x\\to x_0),\n\\]\n并且函数 $F(x)$ 在相应去心邻域内有定义，满足 $F(x)\\alpha(x)$ 有定义以及\n\\[\n\\lim_{x\\to x_0}F(x)\\alpha(x)=L,\n\\]\n其中 $L$ 为有限数，则\n\\[\n\\lim_{x\\to x_0}F(x)\\beta(x)=L,\n\\]\n只要 $F(x)\\beta(x)$ 在该去心邻域内有定义。特别地，在乘积或商的极限中，可以用与某个无穷小等价的无穷小替换它，但必须保持相关表达式有定义。\\label{thm:equivalent-substitution}",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U06",
+          "kind": "proof",
+          "tex": "由 $\\alpha(x)\\sim\\beta(x)$，有\n\\[\n\\lim_{x\\to x_0}\\frac{\\beta(x)}{\\alpha(x)}=1.\n\\]\n在所给去心邻域内，利用乘积的代数分解，\n\\[\nF(x)\\beta(x)=F(x)\\alpha(x)\\frac{\\beta(x)}{\\alpha(x)}.\n\\]\n由假设和极限的乘法法则，得到\n\\[\n\\lim_{x\\to x_0}F(x)\\beta(x)\n=\\left(\\lim_{x\\to x_0}F(x)\\alpha(x)\\right)\n\\left(\\lim_{x\\to x_0}\\frac{\\beta(x)}{\\alpha(x)}\\right)\n=L\\cdot1=L.\n\\]\n因此，在满足以下结构和条件时可以进行替换：原式能够写成含有因子 $F(x)\\alpha(x)$ 的乘积，并且以 $\\beta(x)/\\alpha(x)$ 替换该因子后，所得 $F(x)\\beta(x)$ 在同一去心邻域内有定义；同时 $\\lim_{x\\to x_0}F(x)\\alpha(x)$ 必须存在且为有限数。该结论适用于所证明的乘积结构，以及通过倒数改写后满足同样条件的商结构。它不表示可以在加减式中无条件逐项替换等价无穷小；例如加减项的替换必须另行检验整体极限，不能仅由等价关系和表达式有定义推出。",
+          "relates_to": "S03.U05"
+        },
+        {
+          "id": "S03.U07",
+          "kind": "example",
+          "tex": "计算\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}.\n\\]\n要求说明等价无穷小替换的依据及适用条件。",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U08",
+          "kind": "solution",
+          "tex": "当 $x\\to0$ 时，$\\sin x\\sim x$，并且 $1+x\\to1$。在 $x\\neq0$ 的去心邻域内，原式有定义，且\n\\[\n\\frac{(1+x)\\sin x}{x}=(1+x)\\frac{\\sin x}{x}.\n\\]\n由基本极限\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1,\n\\qquad\n\\lim_{x\\to0}(1+x)=1,\n\\]\n可得\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}=1\\cdot1=1.\n\\]\n这里的替换只在 $x\\to0$ 且 $x\\neq0$ 的去心邻域内进行，未将原式在 $x=0$ 处补定义。",
+          "relates_to": "S03.U07"
+        },
+        {
+          "id": "S03.U09",
+          "kind": "exercise",
+          "tex": "计算\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}\\,(1-2x),\n\\]\n并说明所使用的基本极限及乘法法则的条件。",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U10",
+          "kind": "solution",
+          "tex": "当 $x\\to0$ 且 $x\\neq0$ 时，$\\dfrac{e^x-1}{x}$ 有定义。由基本极限\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1,\n\\]\n以及\n\\[\n\\lim_{x\\to0}(1-2x)=1,\n\\]\n再由极限的乘法法则，得到\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}(1-2x)=1\\cdot1=1.\n\\]\n乘法法则要求两个因子在同一去心邻域内有定义，并且各自的有限极限存在；这些条件在本题中均满足。",
+          "relates_to": "S03.U09"
+        }
+      ],
+      "calculations": [
+        {
+          "assumptions": {
+            "x": {
+              "real": true
+            }
+          },
+          "direction": "+-",
+          "expected": {
+            "op": "Integer",
+            "value": 1
+          },
+          "expression": {
+            "args": [
+              {
+                "args": [
+                  {
+                    "args": [
+                      {
+                        "name": "x",
+                        "op": "Symbol"
+                      }
+                    ],
+                    "op": "sin"
+                  }
+                ]
+              },
+              {
+                "args": [
+                  {
+                    "name": "x",
+                    "op": "Symbol"
+                  },
+                  {
+                    "op": "Integer",
+                    "value": -1
+                  }
+                ],
+                "op": "Pow"
+              }
+            ],
+            "op": "Mul"
+          },
+          "id": "S03.C01",
+          "kind": "limit",
+          "point": {
+            "op": "Integer",
+            "value": 0
+          },
+          "unit_id": "S03.U03",
+          "variable": "x"
+        }
+      ],
+      "calculation_limitations": [
+        "协议支持的极限核算可以核对 $\\sin x/x$ 在 $x\\to0$ 时的代表性结论，但不能表达弧度制、三角函数的几何不等式或完整的夹逼证明。",
+        "协议中的布尔假设不能完整表达去心邻域和函数定义域条件；正文仍保留了 $x\\neq0$ 及相应表达式有定义的条件。"
+      ],
+      "uncertainties": []
+    },
+    "repair-1.json": {
+      "before_hash": "7455ba91bf58c095bd4ad03eaa9cb5e8e22650d8d4940f5113f2363a0cc3e9ce",
+      "after_hash": "4eba810e7aec513a2f634127bccab3990b3297d9521d1be4a665b4ea4ebf1440",
+      "section": {
+        "section_id": "S03",
+        "units": [
+          {
+            "id": "S03.U01",
+            "kind": "definition",
+            "tex": "设函数 $\\alpha(x)$ 在考察点 $x_0$ 的某个去心邻域内有定义。若\n\\[\n\\lim_{x\\to x_0}\\alpha(x)=0,\n\\]\n则称 $\\alpha(x)$ 是当 $x\\to x_0$ 时的无穷小。这里的“无穷小”表示函数值趋近于零，而不表示函数在某个邻域内恒不为零。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时有\n\\[\n|\\alpha(x)|>M,\n\\]\n则称 $\\alpha(x)$ 是当 $x\\to x_0$ 时的无穷大。无穷小与无穷大都是相对于特定的极限过程而言的。\\label{def:infinitesimal}",
+            "relates_to": null
+          },
+          {
+            "id": "S03.U02",
+            "kind": "definition",
+            "tex": "设函数 $\\alpha(x)$ 与 $\\beta(x)$ 在 $x_0$ 的某个去心邻域内有定义，且在该邻域内 $\\beta(x)\\neq0$。若\n\\[\n\\lim_{x\\to x_0}\\frac{\\alpha(x)}{\\beta(x)}=1,\n\\]\n则称 $\\alpha(x)$ 与 $\\beta(x)$ 当 $x\\to x_0$ 时等价，记为\n\\[\n\\alpha(x)\\sim\\beta(x)\\qquad(x\\to x_0).\n\\]\n等价无穷小首先要求二者都是同一极限过程下的无穷小；只有在商有定义的去心邻域内，才能使用上述比值定义。\\label{def:equivalent-infinitesimal}",
+            "relates_to": null
+          },
+          {
+            "id": "S03.U03",
+            "kind": "theorem",
+            "tex": "在实数范围内，当 $x\\to0$ 时，有两个基本极限\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1,\n\\qquad\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]\n其中，第一式中的 $x$ 取弧度制。由此可得\n\\[\n\\sin x\\sim x,\n\\qquad\n e^x-1\\sim x\\qquad(x\\to0).\n\\]\n这些结论只适用于所写出的极限过程及其定义域条件，不能不加条件地推广到任意点或任意角度单位。\\label{thm:fundamental-limits}",
+            "relates_to": null
+          },
+          {
+            "id": "S03.U04",
+            "kind": "proof",
+            "tex": "先证明第一个基本极限。对 $0<x<\\dfrac{\\pi}{2}$，由单位圆中的几何不等式，有\n\\[\n\\sin x<x<\\tan x.\n\\]\n由于 $\\sin x>0$，两边分别除以 $\\sin x$，得到\n\\[\n1<\\frac{x}{\\sin x}<\\frac{1}{\\cos x}.\n\\]\n取倒数可得\n\\[\n\\cos x<\\frac{\\sin x}{x}<1.\n\\]\n当 $x\\to0^+$ 时，$\\cos x\\to1$，由夹逼定理可知\n\\[\n\\lim_{x\\to0^+}\\frac{\\sin x}{x}=1.\n\\]\n又因为 $\\sin x/x$ 是偶函数，所以左极限也等于 $1$，从而\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1.\n\\]\n\n再证明第二个基本极限。这里使用指数函数的一个独立基本性质：对 $0<t<1$，有\n\\[\n1+t\\le e^t\\le\\frac{1}{1-t}.\n\\]\n该不等式是指数函数基本性质的标准推论，独立于待证的差商极限，不由导数定义推出。\n\n当 $0<x<1$ 时，由上述不等式得到\n\\[\n1\\le\\frac{e^x-1}{x}\\le\\frac{1}{1-x}.\n\\]\n令 $x\\to0^+$，夹逼定理给出\n\\[\n\\lim_{x\\to0^+}\\frac{e^x-1}{x}=1.\n\\]\n当 $x=-t<0$ 且 $0<t<1$ 时，对 $1+t\\le e^t\\le1/(1-t)$ 取倒数，得到\n\\[\n1-t\\le e^{-t}\\le\\frac{1}{1+t}.\n\\]\n因此\n\\[\n\\frac{1}{1+t}\\le\\frac{e^{-t}-1}{-t}\\le1.\n\\]\n令 $t\\to0^+$，再次由夹逼定理得到\n\\[\n\\lim_{x\\to0^-}\\frac{e^x-1}{x}=1.\n\\]\n左右极限相等，所以\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]\n整个论证只使用上述独立的指数函数不等式和夹逼定理，没有把待证极限作为指数函数在零点的导数值使用。",
+            "relates_to": "S03.U03"
+          },
+          {
+            "id": "S03.U05",
+            "kind": "theorem",
+            "tex": "设 $\\alpha(x)$ 与 $\\beta(x)$ 在 $x_0$ 的某个去心邻域内有定义，且在该邻域内均不为零。若\n\\[\n\\alpha(x)\\sim\\beta(x)\\qquad(x\\to x_0),\n\\]\n并且函数 $F(x)$ 在相应去心邻域内有定义，满足 $F(x)\\alpha(x)$ 有定义以及\n\\[\n\\lim_{x\\to x_0}F(x)\\alpha(x)=L,\n\\]\n其中 $L$ 为有限数，则\n\\[\n\\lim_{x\\to x_0}F(x)\\beta(x)=L,\n\\]\n只要 $F(x)\\beta(x)$ 在该去心邻域内有定义。特别地，在乘积或商的极限中，可以用与某个无穷小等价的无穷小替换它，但必须保持相关表达式有定义。\\label{thm:equivalent-substitution}",
+            "relates_to": null
+          },
+          {
+            "id": "S03.U06",
+            "kind": "proof",
+            "tex": "由 $\\alpha(x)\\sim\\beta(x)$，有\n\\[\n\\lim_{x\\to x_0}\\frac{\\beta(x)}{\\alpha(x)}=1.\n\\]\n在所给去心邻域内，利用乘积的代数分解，\n\\[\nF(x)\\beta(x)=F(x)\\alpha(x)\\frac{\\beta(x)}{\\alpha(x)}.\n\\]\n由假设和极限的乘法法则，得到\n\\[\n\\lim_{x\\to x_0}F(x)\\beta(x)\n=\\left(\\lim_{x\\to x_0}F(x)\\alpha(x)\\right)\n\\left(\\lim_{x\\to x_0}\\frac{\\beta(x)}{\\alpha(x)}\\right)\n=L\\cdot1=L.\n\\]\n因此，在满足以下结构和条件时可以进行替换：原式能够写成含有因子 $F(x)\\alpha(x)$ 的乘积，并且以 $\\beta(x)/\\alpha(x)$ 替换该因子后，所得 $F(x)\\beta(x)$ 在同一去心邻域内有定义；同时 $\\lim_{x\\to x_0}F(x)\\alpha(x)$ 必须存在且为有限数。该结论适用于所证明的乘积结构，以及通过倒数改写后满足同样条件的商结构。它不表示可以在加减式中无条件逐项替换等价无穷小；例如加减项的替换必须另行检验整体极限，不能仅由等价关系和表达式有定义推出。",
+            "relates_to": "S03.U05"
+          },
+          {
+            "id": "S03.U07",
+            "kind": "example",
+            "tex": "计算\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}.\n\\]\n要求说明等价无穷小替换的依据及适用条件。",
+            "relates_to": null
+          },
+          {
+            "id": "S03.U08",
+            "kind": "solution",
+            "tex": "当 $x\\to0$ 时，$\\sin x\\sim x$，并且 $1+x\\to1$。在 $x\\neq0$ 的去心邻域内，原式有定义，且\n\\[\n\\frac{(1+x)\\sin x}{x}=(1+x)\\frac{\\sin x}{x}.\n\\]\n由基本极限\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1,\n\\qquad\n\\lim_{x\\to0}(1+x)=1,\n\\]\n可得\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}=1\\cdot1=1.\n\\]\n这里的替换只在 $x\\to0$ 且 $x\\neq0$ 的去心邻域内进行，未将原式在 $x=0$ 处补定义。",
+            "relates_to": "S03.U07"
+          },
+          {
+            "id": "S03.U09",
+            "kind": "exercise",
+            "tex": "计算\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}\\,(1-2x),\n\\]\n并说明所使用的基本极限及乘法法则的条件。",
+            "relates_to": null
+          },
+          {
+            "id": "S03.U10",
+            "kind": "solution",
+            "tex": "当 $x\\to0$ 且 $x\\neq0$ 时，$\\dfrac{e^x-1}{x}$ 有定义。由基本极限\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1,\n\\]\n以及\n\\[\n\\lim_{x\\to0}(1-2x)=1,\n\\]\n再由极限的乘法法则，得到\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}(1-2x)=1\\cdot1=1.\n\\]\n乘法法则要求两个因子在同一去心邻域内有定义，并且各自的有限极限存在；这些条件在本题中均满足。",
+            "relates_to": "S03.U09"
+          }
+        ],
+        "calculations": [
+          {
+            "assumptions": {
+              "x": {
+                "real": true
+              }
+            },
+            "direction": "+-",
+            "expected": {
+              "op": "Integer",
+              "value": 1
+            },
+            "expression": {
+              "args": [
+                {
+                  "args": [
+                    {
+                      "args": [
+                        {
+                          "name": "x",
+                          "op": "Symbol"
+                        }
+                      ],
+                      "op": "sin"
+                    }
+                  ]
+                },
+                {
+                  "args": [
+                    {
+                      "name": "x",
+                      "op": "Symbol"
+                    },
+                    {
+                      "op": "Integer",
+                      "value": -1
+                    }
+                  ],
+                  "op": "Pow"
+                }
+              ],
+              "op": "Mul"
+            },
+            "id": "S03.C01",
+            "kind": "limit",
+            "point": {
+              "op": "Integer",
+              "value": 0
+            },
+            "unit_id": "S03.U03",
+            "variable": "x"
+          }
+        ],
+        "calculation_limitations": [
+          "协议支持的极限核算可以核对 $\\sin x/x$ 在 $x\\to0$ 时的代表性结论，但不能表达弧度制、三角函数的几何不等式或完整的夹逼证明。",
+          "协议中的布尔假设不能完整表达去心邻域和函数定义域条件；正文仍保留了 $x\\neq0$ 及相应表达式有定义的条件。"
+        ],
+        "uncertainties": []
+      }
+    },
+    "repair-2-raw.json": {
+      "section_id": "S03",
+      "units": [
+        {
+          "id": "S03.U01",
+          "kind": "definition",
+          "tex": "设函数 $\\alpha(x)$ 在考察点 $x_0$ 的某个去心邻域内有定义。若\n\\[\n\\lim_{x\\to x_0}\\alpha(x)=0,\n\\]\n则称 $\\alpha(x)$ 是当 $x\\to x_0$ 时的无穷小。这里的“无穷小”表示函数值趋近于零，而不表示函数在某个邻域内恒不为零。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时有\n\\[\n|\\alpha(x)|>M,\n\\]\n则称 $\\alpha(x)$ 是当 $x\\to x_0$ 时的无穷大。无穷小与无穷大都是相对于特定的极限过程而言的。\\label{def:infinitesimal}",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U02",
+          "kind": "definition",
+          "tex": "设函数 $\\alpha(x)$ 与 $\\beta(x)$ 在 $x_0$ 的某个去心邻域内有定义，且在该邻域内 $\\beta(x)\\neq0$。若\n\\[\n\\lim_{x\\to x_0}\\frac{\\alpha(x)}{\\beta(x)}=1,\n\\]\n则称 $\\alpha(x)$ 与 $\\beta(x)$ 当 $x\\to x_0$ 时等价，记为\n\\[\n\\alpha(x)\\sim\\beta(x)\\qquad(x\\to x_0).\n\\]\n等价无穷小首先要求二者都是同一极限过程下的无穷小；只有在商有定义的去心邻域内，才能使用上述比值定义。\\label{def:equivalent-infinitesimal}",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U03",
+          "kind": "theorem",
+          "tex": "在实数范围内，当 $x\\to0$ 时，有两个基本极限\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1,\n\\qquad\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]\n其中，第一式中的 $x$ 取弧度制。由此可得\n\\[\n\\sin x\\sim x,\n\\qquad\n e^x-1\\sim x\\qquad(x\\to0).\n\\]\n这些结论只适用于所写出的极限过程及其定义域条件，不能不加条件地推广到任意点或任意角度单位。\\label{thm:fundamental-limits}",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U04",
+          "kind": "proof",
+          "tex": "先证明第一个基本极限。对 $0<x<\\dfrac{\\pi}{2}$，由单位圆中的几何不等式，有\n\\[\n\\sin x<x<\\tan x.\n\\]\n由于 $\\sin x>0$，两边分别除以 $\\sin x$，得到\n\\[\n1<\\frac{x}{\\sin x}<\\frac{1}{\\cos x}.\n\\]\n取倒数可得\n\\[\n\\cos x<\\frac{\\sin x}{x}<1.\n\\]\n当 $x\\to0^+$ 时，$\\cos x\\to1$，由夹逼定理可知\n\\[\n\\lim_{x\\to0^+}\\frac{\\sin x}{x}=1.\n\\]\n又因为 $\\sin x/x$ 是偶函数，所以左极限也等于 $1$，从而\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1.\n\\]\n\n再证明第二个基本极限。这里使用指数函数的一个独立基本性质：对 $0<t<1$，有\n\\[\n1+t\\le e^t\\le\\frac{1}{1-t}.\n\\]\n该不等式是指数函数基本性质的标准推论，独立于待证的差商极限，不由导数定义推出。\n\n当 $0<x<1$ 时，由上述不等式得到\n\\[\n1\\le\\frac{e^x-1}{x}\\le\\frac{1}{1-x}.\n\\]\n令 $x\\to0^+$，夹逼定理给出\n\\[\n\\lim_{x\\to0^+}\\frac{e^x-1}{x}=1.\n\\]\n当 $x=-t<0$ 且 $0<t<1$ 时，对 $1+t\\le e^t\\le1/(1-t)$ 取倒数，得到\n\\[\n1-t\\le e^{-t}\\le\\frac{1}{1+t}.\n\\]\n因此\n\\[\n\\frac{1}{1+t}\\le\\frac{e^{-t}-1}{-t}\\le1.\n\\]\n令 $t\\to0^+$，再次由夹逼定理得到\n\\[\n\\lim_{x\\to0^-}\\frac{e^x-1}{x}=1.\n\\]\n左右极限相等，所以\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]\n整个论证只使用上述独立的指数函数不等式和夹逼定理，没有把待证极限作为指数函数在零点的导数值使用。",
+          "relates_to": "S03.U03"
+        },
+        {
+          "id": "S03.U05",
+          "kind": "theorem",
+          "tex": "设 $\\alpha(x)$ 与 $\\beta(x)$ 在 $x_0$ 的某个去心邻域内有定义，且在该邻域内均不为零。若\n\\[\n\\alpha(x)\\sim\\beta(x)\\qquad(x\\to x_0),\n\\]\n并且函数 $F(x)$ 在相应去心邻域内有定义，满足 $F(x)\\alpha(x)$ 有定义以及\n\\[\n\\lim_{x\\to x_0}F(x)\\alpha(x)=L,\n\\]\n其中 $L$ 为有限数，则\n\\[\n\\lim_{x\\to x_0}F(x)\\beta(x)=L,\n\\]\n只要 $F(x)\\beta(x)$ 在该去心邻域内有定义。特别地，在乘积或商的极限中，可以用与某个无穷小等价的无穷小替换它，但必须保持相关表达式有定义。\\label{thm:equivalent-substitution}",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U06",
+          "kind": "proof",
+          "tex": "由 $\\alpha(x)\\sim\\beta(x)$，有\n\\[\n\\lim_{x\\to x_0}\\frac{\\beta(x)}{\\alpha(x)}=1.\n\\]\n在所给去心邻域内，利用乘积的代数分解，\n\\[\nF(x)\\beta(x)=F(x)\\alpha(x)\\frac{\\beta(x)}{\\alpha(x)}.\n\\]\n由假设和极限的乘法法则，得到\n\\[\n\\lim_{x\\to x_0}F(x)\\beta(x)\n=\\left(\\lim_{x\\to x_0}F(x)\\alpha(x)\\right)\n\\left(\\lim_{x\\to x_0}\\frac{\\beta(x)}{\\alpha(x)}\\right)\n=L\\cdot1=L.\n\\]\n因此，在满足以下结构和条件时可以进行替换：在整体 $F(x)\\alpha(x)$ 中将因子 $\\alpha(x)$ 替换为 $\\beta(x)$，等价于将整体乘以修正比值 $\\beta(x)/\\alpha(x)$，从而得到 $F(x)\\beta(x)$；并且所得表达式在同一去心邻域内有定义。同时，$\\lim_{x\\to x_0}F(x)\\alpha(x)$ 必须存在且为有限数。该结论适用于所证明的乘积结构，以及通过倒数改写后满足同样条件的商结构。它不表示可以在加减式中无条件逐项替换等价无穷小；例如加减项的替换必须另行检验整体极限，不能仅由等价关系和表达式有定义推出。",
+          "relates_to": "S03.U05"
+        },
+        {
+          "id": "S03.U07",
+          "kind": "example",
+          "tex": "计算\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}.\n\\]\n要求说明等价无穷小替换的依据及适用条件。",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U08",
+          "kind": "solution",
+          "tex": "当 $x\\to0$ 时，$\\sin x\\sim x$，并且 $1+x\\to1$。在 $x\\neq0$ 的去心邻域内，原式有定义，且\n\\[\n\\frac{(1+x)\\sin x}{x}=(1+x)\\frac{\\sin x}{x}.\n\\]\n由基本极限\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1,\n\\qquad\n\\lim_{x\\to0}(1+x)=1,\n\\]\n可得\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}=1\\cdot1=1.\n\\]\n这里的替换只在 $x\\to0$ 且 $x\\neq0$ 的去心邻域内进行，未将原式在 $x=0$ 处补定义。",
+          "relates_to": "S03.U07"
+        },
+        {
+          "id": "S03.U09",
+          "kind": "exercise",
+          "tex": "计算\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}\\,(1-2x),\n\\]\n并说明所使用的基本极限及乘法法则的条件。",
+          "relates_to": null
+        },
+        {
+          "id": "S03.U10",
+          "kind": "solution",
+          "tex": "当 $x\\to0$ 且 $x\\neq0$ 时，$\\dfrac{e^x-1}{x}$ 有定义。由基本极限\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1，\n\\]\n以及\n\\[\n\\lim_{x\\to0}(1-2x)=1，\n\\]\n再由极限的乘法法则，得到\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}(1-2x)=1\\cdot1=1。\n\\]\n乘法法则要求两个因子在同一去心邻域内有定义，并且各自的有限极限存在；这些条件在本题中均满足。",
+          "relates_to": "S03.U09"
+        }
+      ],
+      "calculations": [
+        {
+          "assumptions": {
+            "x": {
+              "real": true
+            }
+          },
+          "direction": "+-",
+          "expected": {
+            "op": "Integer",
+            "value": 1
+          },
+          "expression": {
+            "args": [
+              {
+                "args": [
+                  {
+                    "name": "x",
+                    "op": "Symbol"
+                  }
+                ],
+                "op": "sin"
+              },
+              {
+                "args": [
+                  {
+                    "name": "x",
+                    "op": "Symbol"
+                  },
+                  {
+                    "op": "Integer",
+                    "value": -1
+                  }
+                ],
+                "op": "Pow"
+              }
+            ],
+            "op": "Mul"
+          },
+          "id": "S03.C01",
+          "kind": "limit",
+          "point": {
+            "op": "Integer",
+            "value": 0
+          },
+          "unit_id": "S03.U03",
+          "variable": "x"
+        }
+      ],
+      "calculation_limitations": [
+        "协议支持的极限核算可以核对 $\\sin x/x$ 在 $x\\to0$ 时的代表性结论，但不能表达弧度制、三角函数的几何不等式或完整的夹逼证明。",
+        "协议中的布尔假设不能完整表达去心邻域和函数定义域条件；正文仍保留了 $x\\neq0$ 及相应表达式有定义的条件。"
+      ],
+      "uncertainties": []
+    }
+  },
+  "original_byte_hashes": {
+    "candidate.json": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+    "candidate-normalization.json": "7a16722e222b0f53d7139bbf141bf65d8fa4d5031ca800197ad8e03124d69907",
+    "candidate-normalized.json": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+    "review-0.json": "82d99330205c20d3ef65c42bdfcb6ad2e98447a870236770e6030a67e461a9df",
+    "review-1.json": "36fcaca67eeb744e502668fb685bd5d874d153e91a31aaefee9a404413167658",
+    "repair-1-raw.json": "f83fb0ad488a76716c1035b4227e264228a769263ed65df8cb1c2e64bcf5fc31",
+    "repair-1.json": "27ab613ba344ae302646d8292dcdfdc5e5b1c40609653ffee3aba85ea6c6aa9c",
+    "repair-2-raw.json": "a6450eb8ea431009ed23e2b766d73056e57cd17608549d4bb9c5c58578df9c23"
+  },
+  "teacher_visual_review": "NOT_RUN",
+  "source_status": "API_CAPTURED_FAILURE_NOT_ADOPTED"
+}

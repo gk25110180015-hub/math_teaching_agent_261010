@@ -1,0 +1,102 @@
+{
+  "section_id": "S01",
+  "units": [
+    {
+      "id": "S01.U01",
+      "kind": "definition",
+      "tex": "数列是定义在正整数集 $\\mathbb{N}^{+}=\\{1,2,3,\\ldots\\}$ 上、取实数值的函数。若该函数在 $n\\in\\mathbb{N}^{+}$ 处的值为 $a_n$，则称 $a_n$ 为数列 $\\{a_n\\}$ 的第 $n$ 项，通常写作\n\\[\na_1,a_2,\\ldots,a_n,\\ldots,\n\\qquad a_n=f(n),\\quad n\\in\\mathbb{N}^{+}.\n\\]\n数列的下标只能取正整数，且项的排列顺序是数列定义的一部分。",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U02",
+      "kind": "definition",
+      "tex": "设 $\\{a_n\\}$ 是实数数列，$L\\in\\mathbb{R}$。若对于任意 $\\varepsilon>0$，都存在正整数 $N$，使得当 $n\\geq N$ 时有\n\\[\n|a_n-L|<\\varepsilon,\n\\]\n则称数列 $\\{a_n\\}$ 收敛于 $L$，记为\n\\[\n\\lim_{n\\to\\infty}a_n=L.\n\\]\n其中，$\\varepsilon$ 先任意给定，而 $N$ 可以依赖于 $\\varepsilon$，但不能依赖于 $n$。",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U03",
+      "kind": "definition",
+      "tex": "数列 $\\{a_n\\}$ 不收敛于 $L$ 的否定形式是：存在某个 $\\varepsilon_0>0$，使得对每一个正整数 $N$，都存在 $n\\geq N$，满足\n\\[\n|a_n-L|\\geq\\varepsilon_0.\n\\]\n因此，收敛的定义要求从某个下标开始的所有项都落在区间 $(L-\\varepsilon,L+\\varepsilon)$ 内；不收敛则表示无论下标取得多大，总能找到一项落在某个固定误差范围之外。",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U04",
+      "kind": "theorem",
+      "tex": "\\label{thm:limit-unique}若数列 $\\{a_n\\}$ 收敛于 $L$，又收敛于 $M$，其中 $L,M\\in\\mathbb{R}$，则\n\\[\nL=M.\n\\]",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U05",
+      "kind": "proof",
+      "tex": "设 $L\\ne M$，取\n\\[\n\\varepsilon=\\frac{|L-M|}{3}>0.\n\\]\n由 $a_n\\to L$，存在正整数 $N_1$，使得当 $n\\geq N_1$ 时，$|a_n-L|<\\varepsilon$。同理由 $a_n\\to M$，存在正整数 $N_2$，使得当 $n\\geq N_2$ 时，$|a_n-M|<\\varepsilon$。令 $N=\\max\\{N_1,N_2\\}$，则对任意 $n\\geq N$，三角不等式给出\n\\[\n|L-M|\\leq |L-a_n|+|a_n-M|<2\\varepsilon=\\frac{2}{3}|L-M|.\n\\]\n这与 $|L-M|>0$ 矛盾。因此 $L=M$。",
+      "relates_to": "S01.U04"
+    },
+    {
+      "id": "S01.U06",
+      "kind": "example",
+      "tex": "验证数列\n\\[\na_n=\\frac{1}{n},\\qquad n\\in\\mathbb{N}^{+},\n\\]\n是否收敛，并判断其极限。",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U07",
+      "kind": "solution",
+      "tex": "要证明 $a_n\\to0$，需验证对任意 $\\varepsilon>0$，存在正整数 $N$，使得 $n\\geq N$ 时\n\\[\n\\left|\\frac{1}{n}-0\\right|<\\varepsilon.\n\\]\n给定 $\\varepsilon>0$，取正整数 $N>\\frac{1}{\\varepsilon}$。当 $n\\geq N$ 时，由 $n>0$ 得\n\\[\n\\left|\\frac{1}{n}-0\\right|=\\frac{1}{n}\\leq\\frac{1}{N}<\\varepsilon.\n\\]\n所以按照 $\\varepsilon$--$N$ 定义，\n\\[\n\\lim_{n\\to\\infty}\\frac{1}{n}=0.\n\\]",
+      "relates_to": "S01.U06"
+    },
+    {
+      "id": "S01.U08",
+      "kind": "explanation",
+      "tex": "极限描述的是下标充分大时数列项的接近趋势，而不是某一项必须等于极限。例如，对 $a_n=1/n$，没有正整数 $n$ 使得 $a_n=0$，但当 $n$ 足够大时，$a_n$ 可以小于任意预先给定的正数 $\\varepsilon$。因此，有限项的取值与数列的极限需要区分。",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U09",
+      "kind": "exercise",
+      "tex": "用 $\\varepsilon$--$N$ 定义证明\n\\[\n\\lim_{n\\to\\infty}\\frac{2n+1}{n}=2.\n\\]\n要求明确写出给定的 $\\varepsilon$、所取的 $N$，以及当 $n\\geq N$ 时的误差估计。",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U10",
+      "kind": "solution",
+      "tex": "给定任意 $\\varepsilon>0$，注意到\n\\[\n\\left|\\frac{2n+1}{n}-2\\right|=\\left|\\frac{1}{n}\\right|=\\frac{1}{n}.\n\\]\n取正整数 $N>\\frac{1}{\\varepsilon}$。当 $n\\geq N$ 时，$n>0$，从而\n\\[\n\\left|\\frac{2n+1}{n}-2\\right|=\\frac{1}{n}\\leq\\frac{1}{N}<\\varepsilon.\n\\]\n因此根据 $\\varepsilon$--$N$ 定义，\n\\[\n\\lim_{n\\to\\infty}\\frac{2n+1}{n}=2.\n\\]",
+      "relates_to": "S01.U09"
+    }
+  ],
+  "calculations": [
+    {
+      "id": "S01.C01",
+      "unit_id": "S01.U07",
+      "kind": "limit",
+      "assumptions": {
+        "n": {
+          "integer": true,
+          "positive": true
+        }
+      },
+      "variable": "n",
+      "point": {
+        "op": "Infinity"
+      },
+      "direction": "-",
+      "expression": {
+        "args": [
+          {
+            "name": "n",
+            "op": "Symbol"
+          },
+          {
+            "op": "Integer",
+            "value": -1
+          }
+        ],
+        "op": "Pow"
+      },
+      "expected": {
+        "op": "Integer",
+        "value": 0
+      }
+    }
+  ],
+  "calculation_limitations": [],
+  "uncertainties": []
+}

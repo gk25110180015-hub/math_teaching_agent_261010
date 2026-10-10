@@ -1,0 +1,1303 @@
+\documentclass[aspectratio=169,10pt,fontset=fandol]{ctexbeamer}
+\usepackage{amsmath,amssymb,mathtools,bm,mathrsfs}
+\usepackage{graphicx,booktabs,array,tabularx,multirow}
+\usepackage{tikz,pgfplots,xparse,xstring,mdframed}
+\usetikzlibrary{arrows.meta,calc,angles,positioning,shapes.geometric,graphs}
+\pgfplotsset{compat=1.18}
+\usetheme{fduclassroom}
+\input{workflow_style.tex}
+\input{workflow_fonts.tex}
+\newenvironment{proofdetail}{\par\noindent\textbf{证明：}\quad}{\par}
+\renewenvironment{solution}{\par\noindent\textbf{解：}\quad}{\par}
+\mdfdefinestyle{extrastyle}{%
+    linecolor=gray,
+    linewidth=0.8pt,
+    frametitlerule=true,
+    frametitlebackgroundcolor=gray!10,
+    backgroundcolor=gray!5,
+    skipabove=10pt,
+    skipbelow=10pt,
+    innertopmargin=6pt,
+    innerbottommargin=6pt
+}
+\newenvironment{extra}{\begin{mdframed}[style=extrastyle, frametitle={* 选读内容（不要求掌握）}]}{\end{mdframed}}
+\newenvironment{custom}[1]{\par\noindent\textbf{#1}\quad}{\par\vspace{0.8em}}
+\newenvironment{idea}{\par\noindent\textbf{思路}\quad}{\par\vspace{0.4em}}
+\newenvironment{warning}{\par\noindent\textbf{注：}\quad}{\par\vspace{0.8em}}
+\newenvironment{intuition}{\par\noindent\textbf{直观理解}\quad}{\par\vspace{0.8em}}
+\NewDocumentEnvironment{application}{O{}}
+{\par\noindent\textbf{应用拓展\IfStrEq{#1}{}{}{——#1}}\quad}
+{\par\vspace{0.8em}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\upcite}[1]{\textsuperscript{\textsuperscript{\cite{#1}}}}
+\DeclareMathOperator*{\argmax}{\mathrm{arg\,max}}
+\DeclareMathOperator*{\argmin}{\mathrm{arg\,min}}
+\title{第一章}
+\begin{document}
+\section{数列的一般定义}
+% FRAME-ID F001
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{blue}\normalsize 1. 数列的一般定义\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 2. 拓展阅读：数列的应用\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 3. 差分及其应用\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 4. 数列极限\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 5. 收敛数列的基本性质\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 6. 极限存在性定理\par}\vspace{0.22em}
+\end{frame}
+% FRAME-ID F002
+\begin{frame}[t,fragile]{数列的一般定义}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0002 0 87
+数列是以正整数集为定义域的特殊函数，用以刻画有序离散数量变化。作为初等与高等数学的过渡概念，它提供了理解无穷、极限的直观载体，能够有效建模分期、迭代、时序等现实问题。
+
+
+% SOURCE-END U0002
+}
+\end{frame}
+% FRAME-ID F003
+\begin{frame}[t,fragile]{数列的一般定义}
+\footnotesize
+\begin{block}{定义}
+{\footnotesize
+% SOURCE-BEGIN U0003 0 393
+\textbf{数列}\par
+
+无穷多个数按下列顺序排列：
+
+$$
+a_1, a_2, \cdots, a_n, \cdots
+$$
+
+称为数列，记为 $\left\{a_n\right\}$ ,其中 $a_n$ 称为数列的通项或一般项；正整数 $n$ 称为 $a_n$ 的下标。
+
+数列也可以看作定义在正整数集 $\mathbb{N}^+=\{1,2,3,\cdots\}$ 上、取实数值的函数。因此，数列既有函数的本质，又有离散变量的特点。 函数 $y=f(x)$ 的自变量可以在区间中连续取值，而数列只在 $n=1,2,\ldots$ 这些正整数处取值。 因此，数列可以看作一种特殊函数：
+\[
+a_n=f(n),\qquad n\in\mathbb{N}^+.
+\]
+讨论数列时，项的顺序不可随意改变；同一组数字若排列顺序不同，通常就是不同数列。
+
+% SOURCE-END U0003
+}
+\end{block}
+\end{frame}
+% FRAME-ID F004
+\begin{frame}[t,fragile]{数列的一般定义}
+\footnotesize
+{\footnotesize
+% SOURCE-BEGIN U0004 0 308
+\begin{custom}{由递推关系表示数列}
+	
+	$k$阶递推的含义是将数列自第$k+1$项起的每一项由前k项表示：
+	
+	\begin{equation*}
+		\begin{cases}
+			a_1 = c_1, \\
+			a_2 = c_2, \\
+			\quad \vdots \\
+			a_k = c_k, \\
+			a_n = f(a_{n-1}, a_{n-2}, \dots, a_{n-k}), & \forall n > k, \; n \in \mathbb{N}^*
+		\end{cases}
+	\end{equation*}
+	例如：
+	
+
+% SOURCE-END U0004
+% PRESENTATION-SCAFFOLD close continued environment
+\end{custom}
+}
+\end{frame}
+% FRAME-ID F005
+\begin{frame}[t,fragile]{数列的一般定义（续1）}
+\footnotesize
+{\footnotesize
+% REPEATED-CONTEXT environment continuation
+\begin{custom}{由递推关系表示数列}
+% SOURCE-BEGIN U0004 308 657
+	一阶递推：
+	\begin{equation*}
+		\begin{cases}
+			a_1 = 1, \\
+			a_n = 2 a_{n-1} + 3, & (n \ge 2, \; n \in \mathbb{N}^+)
+		\end{cases}
+	\end{equation*}
+	
+	二阶递推：
+	\[
+	a_1 = 1,\ a_2 = 1,\ a_n = a_{n-1} + a_{n-2}\ (n \geq 3),
+	\]
+	这就是著名的\textbf{斐波那契数列}：\(1,1,2,3,5,8,13,21,\dots\)
+	
+	斐波那契数列既来自兔子繁殖等理想化模型，也常出现在向日葵花盘、松果鳞片等植物的螺旋计数中。
+\end{custom}
+% SOURCE-END U0004
+}
+\end{frame}
+% FRAME-ID F006
+\begin{frame}[t,fragile]{数列的一般定义}
+\small
+\begin{block}{例题}
+{\small
+% SOURCE-BEGIN U0005 0 122
+判断下列对象能否确定一个数列，并说明理由。
+\[
+(1)\ a_n=\frac{n+1}{2n-1};\qquad
+(2)\ a_1=1,\ a_{n+1}=2a_n+1;\qquad
+(3)\ 1,2,4,\ldots .
+\]
+
+% SOURCE-END U0005
+}
+\end{block}
+\pause
+{\small
+\textbf{解：}
+% SOURCE-BEGIN U0006 0 263
+(1) 给出了通项公式，对每个正整数 $n$ 都能唯一确定 $a_n$，因此确定一个数列。
+
+(2) 给出了初值和递推关系。 由 $a_1=1$ 可依次得到
+\[
+a_2=3,\quad a_3=7,\quad a_4=15,\ldots
+\]
+因此也确定一个数列。
+
+(3) 只列出前三项，不能唯一确定一个数列。 例如 $a_n=2^{n-1}$ 的前三项为 $1,2,4$；但 $b_1=1,b_2=2,b_3=4,b_n=0(n\ge4)$ 也有同样前三项。 因此仅凭有限项通常不能严格确定无穷数列。
+
+% SOURCE-END U0006
+}
+\end{frame}
+% FRAME-ID F007
+\begin{frame}[t,fragile]{数列的一般定义}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0007 0 137
+设某药物每隔固定时间给药一次，每次给药后体内新增浓度 $C_0$，两次给药之间保留比例为 $q$，其中 $0<q<1$。 若 $A_n$ 表示第 $n$ 次给药后体内药物浓度，则可建立递推模型
+\[
+A_{n+1}=qA_n+C_0.
+\]
+求该模型的稳定浓度。
+
+% SOURCE-END U0007
+}
+\end{block}
+\end{frame}
+% FRAME-ID F008
+\begin{frame}[t,fragile]{数列的一般定义}
+\footnotesize
+{\footnotesize
+\textbf{解：}
+% SOURCE-BEGIN U0008 0 298
+若 $A_n$ 收敛到稳定浓度 $A$，则在极限状态下应满足
+\[
+A=qA+C_0.
+\]
+解得
+\[
+A=\frac{C_0}{1-q}.
+\]
+为了说明这一步不是形式猜测，令 $B_n=A_n-A$。 由 $A=qA+C_0$ 及 $A_{n+1}=qA_n+C_0$ 得
+\[
+B_{n+1}=A_{n+1}-A=q(A_n-A)=qB_n.
+\]
+因此
+\[
+B_n=q^{n-1}B_1.
+\]
+由于 $0<q<1$，有 $q^{n-1}\to0$，所以 $B_n\to0$，即
+\[
+A_n\to A=\frac{C_0}{1-q}.
+\]
+
+% SOURCE-END U0008
+}
+\end{frame}
+% FRAME-ID F009
+\begin{frame}[t,fragile]{数列的一般定义}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0009 0 92
+本例先使用高中阶段熟悉的等比数列极限 $q^n\to0\ (0<q<1)$ 来说明递推模型的稳定状态。本章后半部分将用 $\varepsilon$--$N$ 语言严格定义数列收敛。
+
+% SOURCE-END U0009
+}
+\end{frame}
+\section{拓展阅读：数列的应用}
+% FRAME-ID F010
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{black}\normalsize 1. 数列的一般定义\par}\vspace{0.22em}
+{\color{blue}\normalsize 2. 拓展阅读：数列的应用\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 3. 差分及其应用\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 4. 数列极限\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 5. 收敛数列的基本性质\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 6. 极限存在性定理\par}\vspace{0.22em}
+\end{frame}
+% FRAME-ID F011
+\begin{frame}[t,fragile]{拓展阅读：数列的应用}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0010 0 54
+数列不仅仅是课本上的抽象概念，它在我们的日常生活和现代生产中有着广泛的应用。下面介绍几个有趣的实例。
+
+
+% SOURCE-END U0010
+}
+{\normalsize
+% SOURCE-BEGIN U0011 0 23
+\textbf{算法分析与计算机科学}
+
+
+% SOURCE-END U0011
+}
+{\normalsize
+% SOURCE-BEGIN U0012 0 59
+在计算机科学中，算法的\textbf{时间复杂度}经常用数列来描述。例如，考虑一个在有序数组中查找元素的算法：
+
+
+% SOURCE-END U0012
+}
+\end{frame}
+% FRAME-ID F012
+\begin{frame}[t,fragile]{拓展阅读：数列的应用}
+\footnotesize
+{\footnotesize
+% SOURCE-BEGIN U0013 0 497
+\begin{itemize}
+\item \textbf{二分查找}：每次将搜索范围缩小一半。在最坏情况下，需要查找的次数满足递推关系：
+\[
+T(n) = T\left(\dfrac{n}{2}\right) + 1,\quad T(1) = 1\qquad(n=2^m).
+\]
+解这个递推，得到 \(T(n)=\log_2 n+1\)。对一般的数组长度，最坏查找次数随 $n$ 按对数级增长，常记为 \(O(\log n)\)。这里先把 \(O(\log n)\) 理解为“增长量级不超过对数函数的常数倍”，Landau 大 \(O\) 记号将在第 3.10 节正式定义。
+
+
+一个著名的例子是\textbf{汉诺塔}问题：把 \(n\) 个圆盘从一根柱子移到另一根，最少需要移动的次数满足：
+\[
+H_n = 2H_{n-1} + 1,\quad H_1 = 1.
+\]
+解这个递推得 \(H_n = 2^n - 1\)——指数增长！64 个圆盘需要移动 \(2^{64}-1\) 次，即使每秒移动一次，也需要约 5849 亿年。
+\end{itemize}
+% SOURCE-END U0013
+}
+\end{frame}
+% FRAME-ID F013
+\begin{frame}[t,fragile]{拓展阅读：数列的应用}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0014 0 24
+\textbf{自然界中的斐波那契数列}
+
+
+% SOURCE-END U0014
+}
+{\normalsize
+% SOURCE-BEGIN U0015 0 72
+斐波那契数列 \(1, 1, 2, 3, 5, 8, 13, 21, 34, 55, \ldots\) 在一些植物结构的计数中经常出现：
+
+
+% SOURCE-END U0015
+}
+\end{frame}
+% FRAME-ID F014
+\begin{frame}[t,fragile]{拓展阅读：数列的应用}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0016 0 410
+\begin{itemize}
+\item \textbf{向日葵的花盘}：种子排列成两组螺旋线，一组顺时针，一组逆时针，数量通常是相邻的斐波那契数（如 34 和 55，或 55 和 89）。
+\item \textbf{松果的鳞片}：排列也呈现斐波那契螺旋。
+\item \textbf{螺壳的形状}：许多螺壳可近似为对数螺线，但通常不能据此断言它们是黄金螺线或满足斐波那契比例。黄金分割与斐波那契数列之间的严格联系是 \(\lim\limits_{n \to \infty} \dfrac{F_{n+1}}{F_n}=\varphi\)。
+\item \textbf{蜜蜂的家族树}：雄蜂（由未受精卵发育而来）的祖先数量构成斐波那契数列。
+\item \textbf{花瓣数}：许多花的花瓣数是 3（百合）、5（飞燕草）、8（翠雀）、13（金盏花）、21（紫菀）等斐波那契数。
+\end{itemize}
+% SOURCE-END U0016
+}
+\end{frame}
+% FRAME-ID F015
+\begin{frame}[t,fragile]{拓展阅读：数列的应用}
+\normalsize
+{\normalsize
+% PRESENTATION-SCAFFOLD isotropic coordinates; node font size unchanged
+\tikzset{every picture/.append style={scale=0.75}}
+% SOURCE-BEGIN U0017 0 283
+\begin{center}
+\begin{tikzpicture}
+% 简单的向日葵螺旋示意图
+\foreach \i in {1,...,50} {
+    \pgfmathsetmacro{\r}{0.3*sqrt(\i)}
+    \pgfmathsetmacro{\theta}{137.5*\i}
+    \filldraw[orange] (\theta:\r) circle (1.5pt);
+}
+\node at (0, -3) {向日葵种子的螺旋排列（示意图）};
+\end{tikzpicture}
+\end{center}
+% SOURCE-END U0017
+}
+\end{frame}
+% FRAME-ID F016
+\begin{frame}[t,fragile]{拓展阅读：数列的应用}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0018 0 72
+这类计数与植物生长点的旋转角、局部拥挤和空间利用有关。具体数目会随物种与个体变化，因此应把它们理解为常见模式，而不是没有例外的自然定律。
+
+
+% SOURCE-END U0018
+}
+{\normalsize
+% SOURCE-BEGIN U0019 0 26
+
+\textbf{工程中的递归设计与分形}
+
+
+% SOURCE-END U0019
+}
+{\normalsize
+% SOURCE-BEGIN U0020 0 64
+在工程和建筑设计领域，许多结构采用\textbf{自相似}的设计——即整体与局部形状相似。这种递归结构可以用数列来描述。
+
+
+% SOURCE-END U0020
+}
+\end{frame}
+% FRAME-ID F017
+\begin{frame}[t,fragile]{拓展阅读：数列的应用}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0021 0 296
+\begin{itemize}
+\item \textbf{分形天线}：手机天线采用分形设计，可以在有限空间内获得更长的有效长度，从而接收更多频段的信号。
+\item \textbf{谢尔宾斯基三角形}：一个不断“挖空”的三角形图案，它的面积随迭代次数构成一个等比数列：\(A_n = \left(\dfrac{3}{4}\right)^n A_0\)。
+\item \textbf{科赫雪花}：一条不断“加尖”的曲线，它的周长随迭代次数无限增长（\(L_n = \left(\dfrac{4}{3}\right)^n L_0\)），但面积却收敛到有限值。
+\end{itemize}
+% SOURCE-END U0021
+}
+\end{frame}
+% FRAME-ID F018
+\begin{frame}[t,fragile]{拓展阅读：数列的应用}
+\footnotesize
+{\footnotesize
+% SOURCE-BEGIN U0022 0 423
+
+\textbf{农业：养分逐期残留}
+设 $N_n$ 为第 $n$ 个种植周期施肥后的有效养分量，单位为 $\mathrm{kg/ha}$；每周期新增有效养分为 $F$，上一周期养分保留比例为 $q$，其中 $0<q<1$。在忽略作物类型和天气变化的线性教学模型中，
+\[
+N_{n+1}=qN_n+F.
+\]
+若系统趋于稳定值 $N_*$，则
+\[
+N_*=qN_*+F,\qquad N_*=\frac{F}{1-q}.
+\]
+令 $B_n=N_n-N_*$，可得 $B_{n+1}=qB_n$，从而
+\[
+B_n=q^{n-1}B_1\to0,\qquad N_n\to N_*.
+\]
+它与重复给药模型具有相同的递推结构：一个描述养分逐期残留，一个描述药物逐次残留。真实土壤养分还受作物吸收、淋失、固定、微生物和天气影响，本例只用于展示可跨学科复用的线性递推模型。\upcite{BradyWeil}
+
+
+% SOURCE-END U0022
+}
+\end{frame}
+% FRAME-ID F019
+\begin{frame}[t,fragile]{拓展阅读：数列的应用}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0023 0 38
+这些例子展示了：数列不仅是描述离散过程的工具，还连接着几何、物理和工程。
+
+% SOURCE-END U0023
+}
+\end{frame}
+\section{差分及其应用}
+% FRAME-ID F020
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{black}\normalsize 1. 数列的一般定义\par}\vspace{0.22em}
+{\color{black}\normalsize 2. 拓展阅读：数列的应用\par}\vspace{0.22em}
+{\color{blue}\normalsize 3. 差分及其应用\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 4. 数列极限\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 5. 收敛数列的基本性质\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 6. 极限存在性定理\par}\vspace{0.22em}
+\end{frame}
+% FRAME-ID F021
+\begin{frame}[t,fragile]{差分及其应用}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0024 0 21
+差分是刻画离散变量变化速率的工具。
+
+
+% SOURCE-END U0024
+}
+\end{frame}
+% FRAME-ID F022
+\begin{frame}[t,fragile]{差分及其应用}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0025 0 256
+\textbf{差分}\par
+
+对于数列 \(\{a_n\}\)，定义：
+\begin{itemize}
+\item 一阶差分：\(\Delta a_n = a_{n+1} - a_n\)；
+\item 二阶差分：\(\Delta^2 a_n = \Delta(\Delta a_n) = a_{n+2} - 2a_{n+1} + a_n\)；
+\item \(k\) 阶差分：\(\Delta^k a_n = \Delta(\Delta^{k-1} a_n)\)。
+\end{itemize}
+
+% SOURCE-END U0025
+}
+\end{block}
+\end{frame}
+% FRAME-ID F023
+\begin{frame}[t,fragile]{差分及其应用}
+\normalsize
+\begin{block}{命题}
+{\normalsize
+% SOURCE-BEGIN U0026 0 190
+\textbf{差分的性质}\par
+
+\begin{enumerate}
+\item \(\Delta C = 0\)（\(C\) 为常数）；
+\item \(\Delta(C a_n) = C \Delta a_n\)；
+\item \(\Delta(a_n + b_n) = \Delta a_n + \Delta b_n\)。
+\end{enumerate}
+
+% SOURCE-END U0026
+}
+\end{block}
+\end{frame}
+% FRAME-ID F024
+\begin{frame}[t,fragile]{差分及其应用}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0027 0 19
+差分的一个核心应用是数列求和。
+
+
+% SOURCE-END U0027
+}
+\end{frame}
+% FRAME-ID F025
+\begin{frame}[t,fragile]{差分及其应用}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0028 0 129
+\textbf{离散牛顿--莱布尼茨公式}\par
+
+\[
+\sum _{k=m}^{n-1} \Delta a_k = a_n - a_m.
+\]
+特别地，\(\sum_{k=1}^{n-1} \Delta a_k = a_n - a_1\)。
+
+% SOURCE-END U0028
+}
+\end{block}
+\end{frame}
+% FRAME-ID F026
+\begin{frame}[t,fragile]{差分及其应用}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0029 0 112
+换而言之，如果能找到一个数列 \(b_k\) 使得 \(\Delta b_k=a_k\)，就可以得到
+\[
+\sum_{k=m}^{n-1}a_k=b_n-b_m.
+\]
+这可以理解为“差分是求和的逆运算”。
+
+
+% SOURCE-END U0029
+}
+\end{frame}
+% FRAME-ID F027
+\begin{frame}[t,fragile]{差分及其应用}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0030 0 48
+\textbf{求自然数平方和}\par
+
+求 \(\sum_{k=1}^n k^2\)。
+
+% SOURCE-END U0030
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0031 0 410
+观察发现 \(\Delta k^3 = (k+1)^3 - k^3 = 3k^2 + 3k + 1\)，所以
+\[
+3\sum_{k=1}^n k^2 = \sum_{k=1}^n \Delta k^3 - 3\sum_{k=1}^n k - \sum_{k=1}^n 1.
+\]
+利用 \(\sum_{k=1}^n  k = \dfrac{n(n+1)}{2}\) 和 \(\sum_{k=1}^n  1 = n\)，以及 \(\sum_{k=1}^n  \Delta k^3 = (n+1)^3 - 1\)，可得
+\[
+3\sum_{k=1}^n  k^2 = (n+1)^3 - 1 - \dfrac{3n(n+1)}{2} - n = \dfrac{n(n+1)(2n+1)}{2},
+\]
+所以 \(\sum_{k=1}^n k^2 = \dfrac{n(n+1)(2n+1)}{6}\)。
+
+% SOURCE-END U0031
+}
+\end{frame}
+\section{数列极限}
+% FRAME-ID F028
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{black}\normalsize 1. 数列的一般定义\par}\vspace{0.22em}
+{\color{black}\normalsize 2. 拓展阅读：数列的应用\par}\vspace{0.22em}
+{\color{black}\normalsize 3. 差分及其应用\par}\vspace{0.22em}
+{\color{blue}\normalsize 4. 数列极限\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 5. 收敛数列的基本性质\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 6. 极限存在性定理\par}\vspace{0.22em}
+\end{frame}
+% FRAME-ID F029
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0034 0 154
+考虑数列 \(a_n = \dfrac{1}{n}\)：
+\[
+a_1=1,\ a_2=0.5,\ a_3\approx 0.333,\ a_{10}=0.1,\ a_{100}=0.01,\ a_{1000}=0.001.
+\]
+当 \(n\) 越来越大时，\(a_n\) 越来越接近 0。
+
+
+% SOURCE-END U0034
+}
+{\normalsize
+% SOURCE-BEGIN U0035 0 28
+那么，如何用数学语言精确刻画这种“越来越接近”？
+
+
+% SOURCE-END U0035
+}
+\end{frame}
+% FRAME-ID F030
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0036 0 234
+\textbf{数列单调性}\par
+
+	数列 $\left(a_n\right)$ 称为递增（或者递减），如果对任何 $n \geqslant 1$ ，有 $a_{n+1} \geqslant$（或者 $\leqslant$ ）$a_n$ 。
+	一个递增或者递减的数列称为是单调数列．如果把定义中的 $\geqslant$ 改为 $>$（ $\leqslant$ 改为 $<$ ），那么数列 $\left(a_n\right)$ 被称为严格递增（严格递减）．
+
+% SOURCE-END U0036
+}
+\end{block}
+\end{frame}
+% FRAME-ID F031
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0037 0 127
+\textbf{数列有界性}\par
+
+	 一个数列 $\left(a_n\right)$ 被称为是有界的，如果存在常数 $C>0$ ，使得对任何$n \geqslant 1$ ，有 $\left|a_n\right| \leqslant C$ ．
+
+% SOURCE-END U0037
+}
+\end{block}
+\end{frame}
+% FRAME-ID F032
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0038 0 41
+特别要注意有限和有界的区别．有限是对一个数而言，而有界是对于一个数集而言．
+
+
+% SOURCE-END U0038
+}
+{\normalsize
+% SOURCE-BEGIN U0039 0 79
+
+\textbf{通过\texorpdfstring{\(\varepsilon\)-\(N\)语言定义数列的收敛性}{epsilon-N 定义}}
+
+
+% SOURCE-END U0039
+}
+\end{frame}
+% FRAME-ID F033
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0040 0 199
+\textbf{数列极限}\par
+
+设 $a_n$ 是一个数列．说它收敛于 $L$ ，记为 $a_n \rightarrow L$ ，或者 $\lim \limits_{n \to \infty} a_n=L$ ，如果对如何正数 $\varepsilon$ ，存在 $N$ 使得当 $n \geqslant N$ 时，有 $\left|a_n-L\right|<\varepsilon$ ．
+
+% SOURCE-END U0040
+}
+\end{block}
+\end{frame}
+% FRAME-ID F034
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0042 0 20
+\textbf{用定义证明极限}
+
+
+% SOURCE-END U0042
+}
+\end{frame}
+% FRAME-ID F035
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0043 0 51
+证明 \(\lim\limits_{n\to\infty} \dfrac{1}{n} = 0\)。
+
+% SOURCE-END U0043
+}
+\end{block}
+\end{frame}
+% FRAME-ID F036
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0044 0 276
+\begin{custom}{证}
+对任意正数 \(\varepsilon \)，要使 \(\left|\dfrac{1}{n} - 0\right| = \dfrac{1}{n} < \varepsilon\)，只需 \(n > \dfrac{1}{\varepsilon}\)。
+取 \(N = \left[ \dfrac{1}{\varepsilon} \right] + 1\)，则当 \(n > N\) 时，有 \(\dfrac{1}{n} < \varepsilon\)。故极限为 0。\(\square\)
+\end{custom}
+% SOURCE-END U0044
+}
+\end{frame}
+% FRAME-ID F037
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0045 0 68
+证明 \(\lim\limits_{n\to\infty} \dfrac{2n+1}{3n-2} = \dfrac{2}{3}\)。
+
+% SOURCE-END U0045
+}
+\end{block}
+\end{frame}
+% FRAME-ID F038
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0046 0 415
+\begin{custom}{证}
+\[
+\left|\dfrac{2n+1}{3n-2} - \dfrac{2}{3}\right| = \left|\dfrac{3(2n+1)-2(3n-2)}{3(3n-2)}\right| = \dfrac{7}{3(3n-2)}.
+\]
+对 \(\varepsilon > 0\)，要使 \(\dfrac{7}{3(3n-2)} < \varepsilon\)，只需 \(3n-2 > \dfrac{7}{3\varepsilon}\)，即 \(n > \dfrac{7}{9\varepsilon} + \dfrac{2}{3}\)。
+取 \(N = \left\lceil \dfrac{7}{9\varepsilon} + \dfrac{2}{3} \right\rceil\)，则当 \(n > N\) 时不等式成立。\(\square\)
+\end{custom}
+% SOURCE-END U0046
+}
+\end{frame}
+% FRAME-ID F039
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0047 0 73
+证明 \(\lim\limits_{n\to\infty} \left(\sqrt{n+1} - \sqrt{n}\right) = 0\)。
+
+% SOURCE-END U0047
+}
+\end{block}
+\end{frame}
+% FRAME-ID F040
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0048 0 526
+\begin{custom}{证}
+先进行分子有理化：
+\[
+\left|\sqrt{n+1} - \sqrt{n} - 0\right| = \dfrac{(\sqrt{n+1} - \sqrt{n})(\sqrt{n+1} + \sqrt{n})}{\sqrt{n+1} + \sqrt{n}} = \dfrac{1}{\sqrt{n+1} + \sqrt{n}} < \dfrac{1}{2\sqrt{n}}.
+\]
+对任意 \(\varepsilon > 0\)，要使 \(\dfrac{1}{2\sqrt{n}} < \varepsilon\)，只需 \(\sqrt{n} > \dfrac{1}{2\varepsilon}\)，即 \(n > \dfrac{1}{4\varepsilon^2}\)。
+取 \(N = \left\lceil \dfrac{1}{4\varepsilon^2} \right\rceil\)，则当 \(n > N\) 时，有 \(\left|\sqrt{n+1} - \sqrt{n}\right| < \varepsilon\)。故极限为 0。\(\square\)
+\end{custom}
+% SOURCE-END U0048
+}
+\end{frame}
+% FRAME-ID F041
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0049 0 47
+这个例子说明：当直接处理表达式困难时，可以通过分子有理化、放缩等技巧转化为容易处理的形式。
+
+% SOURCE-END U0049
+}
+\end{frame}
+% FRAME-ID F042
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0050 0 64
+证明 \(\lim\limits_{n\to\infty} \dfrac{n \sin n}{n^2 + 1} = 0\)。
+
+% SOURCE-END U0050
+}
+\end{block}
+\end{frame}
+% FRAME-ID F043
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0051 0 399
+\begin{custom}{证}
+注意到 \(|\sin n| \leq 1\)，因此
+\[
+\left|\dfrac{n \sin n}{n^2 + 1} - 0\right| = \dfrac{n |\sin n|}{n^2 + 1} \leq \dfrac{n}{n^2 + 1} < \dfrac{n}{n^2} = \dfrac{1}{n}.
+\]
+对任意 \(\varepsilon > 0\)，取 \(N = \left\lceil \dfrac{1}{\varepsilon} \right\rceil\)，则当 \(n > N\) 时，有
+\[
+\left|\dfrac{n \sin n}{n^2 + 1}\right| \leq \dfrac{1}{n} < \varepsilon.
+\]
+故极限为 0。\(\square\)
+\end{custom}
+% SOURCE-END U0051
+}
+\end{frame}
+% FRAME-ID F044
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0052 0 105
+这个例子展示了“放缩法”的核心思想：将复杂的表达式放大成一个简单形式（如 \(\dfrac{1}{n}\)），再对简单形式估计 \(N\)。这里的关键是 \(|\sin n| \leq 1\) 这个有界性。
+
+% SOURCE-END U0052
+}
+\end{frame}
+% FRAME-ID F045
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0053 0 69
+证明 \(\lim\limits_{n\to\infty} \dfrac{3n^2 + 2n - 1}{n^2 + 5} = 3\)。
+
+% SOURCE-END U0053
+}
+\end{block}
+\end{frame}
+% FRAME-ID F046
+\begin{frame}[t,fragile]{数列极限}
+\small
+{\small
+% SOURCE-BEGIN U0054 0 636
+\begin{custom}{证}
+\[
+\left|\dfrac{3n^2 + 2n - 1}{n^2 + 5} - 3\right| = \left|\dfrac{3n^2 + 2n - 1 - 3(n^2 + 5)}{n^2 + 5}\right| = \left|\dfrac{2n - 16}{n^2 + 5}\right|.
+\]
+当 \(n \geq 16\) 时，\(2n - 16 \leq 2n\)，因此
+\[
+\left|\dfrac{2n - 16}{n^2 + 5}\right| \leq \dfrac{2n}{n^2 + 5} < \dfrac{2n}{n^2} = \dfrac{2}{n}.
+\]
+对任意 \(\varepsilon > 0\)，要使 \(\dfrac{2}{n} < \varepsilon\)，只需 \(n > \dfrac{2}{\varepsilon}\)。
+取 \(N = \max\left\{16, \left\lceil \dfrac{2}{\varepsilon} \right\rceil\right\}\)，则当 \(n > N\) 时，有
+\[
+\left|\dfrac{3n^2 + 2n - 1}{n^2 + 5} - 3\right| < \dfrac{2}{n} < \varepsilon.
+\]
+故极限为 3。\(\square\)
+\end{custom}
+% SOURCE-END U0054
+}
+\end{frame}
+% FRAME-ID F047
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0055 0 95
+有时分子在 \(n\) 较小时可能为负或零，需要先确保 \(n\) 足够大（如 \(n \geq 16\) 时分子为正），再进行放缩。因此 \(N\) 要同时满足两个条件，取最大值即可。
+
+% SOURCE-END U0055
+}
+\end{frame}
+% FRAME-ID F048
+\begin{frame}[t,fragile]{数列极限}
+\small
+{\small
+% SOURCE-BEGIN U0056 0 481
+\begin{custom}{注：抓大头法}
+对于分式极限 \(\lim_{n\to\infty} \frac{3n^2 + 2n - 1}{n^2 + 5}\)，当 \(n\) 很大时，分子分母中起主导作用的是最高次项 \(3n^2\) 和 \(n^2\)，其他项可以忽略。因此：
+\[
+\lim\limits_{n \to \infty} \frac{3n^2 + 2n - 1}{n^2 + 5} = \lim\limits_{n \to \infty} \frac{3n^2}{n^2} = 3.
+\]
+更严谨的做法是分子分母同时除以 \(n^2\)：
+\[
+\frac{3n^2 + 2n - 1}{n^2 + 5} = \frac{3 + \frac{2}{n} - \frac{1}{n^2}}{1 + \frac{5}{n^2}} \to \frac{3}{1} = 3.
+\]
+这种方法称为“抓大头”，即只保留分子分母的最高次项，其他项在 \(n\to\infty\) 时趋于 0，不影响极限结果。
+\end{custom}
+% SOURCE-END U0056
+}
+\end{frame}
+% FRAME-ID F049
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0057 0 37
+
+如果极限定义中的 \(A = 0\)，我们得到一种特殊的数列。
+
+
+% SOURCE-END U0057
+}
+\end{frame}
+% FRAME-ID F050
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0058 0 83
+\textbf{无穷小量}\par
+
+	若 \(\lim\limits_{n\to\infty} a_n = 0\)，则称 \(\{a_n\}\) 为无穷小量。
+
+% SOURCE-END U0058
+}
+\end{block}
+\end{frame}
+% FRAME-ID F051
+\begin{frame}[t,fragile]{数列极限}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0059 0 227
+\textbf{无穷大量}\par
+
+	若对任意 \(M>0\)，存在 \(N\)，当 \(n>N\) 时 \(|a_n|>M\)，则称 \(\{a_n\}\) 的绝对值趋于无穷，记作 \(|a_n|\to\infty\)。
+	若对任意 \(M>0\)，充分大的 \(n\) 都满足 \(a_n>M\)，则记作 \(a_n\to+\infty\)；若充分大的 \(n\) 都满足 \(a_n<-M\)，则记作 \(a_n\to-\infty\)。
+
+% SOURCE-END U0059
+}
+\end{block}
+\end{frame}
+\section{收敛数列的基本性质}
+% FRAME-ID F052
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{black}\normalsize 1. 数列的一般定义\par}\vspace{0.22em}
+{\color{black}\normalsize 2. 拓展阅读：数列的应用\par}\vspace{0.22em}
+{\color{black}\normalsize 3. 差分及其应用\par}\vspace{0.22em}
+{\color{black}\normalsize 4. 数列极限\par}\vspace{0.22em}
+{\color{blue}\normalsize 5. 收敛数列的基本性质\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 6. 极限存在性定理\par}\vspace{0.22em}
+\end{frame}
+% FRAME-ID F053
+\begin{frame}[t,fragile]{收敛数列的基本性质}
+\normalsize
+\begin{block}{命题}
+{\normalsize
+% SOURCE-BEGIN U0061 0 171
+\textbf{数列的收敛与发散}\par
+
+如果存在 L 使得数列 $\left\{\mathrm{a}_{\mathrm{n}}\right\}$ 收敛于 L，那么称 $\left\{\mathrm{a}_{\mathrm{n}}\right\}$ 收敛或者有极限，否则称数列 $\left\{a_n\right\}$ 发散．
+	
+
+% SOURCE-END U0061
+}
+\end{block}
+\end{frame}
+% FRAME-ID F054
+\begin{frame}[t,fragile]{收敛数列的基本性质}
+\normalsize
+\begin{block}{命题}
+{\normalsize
+% SOURCE-BEGIN U0062 0 49
+\textbf{极限的唯一性}\par
+
+	
+	
+	收敛数列极限唯一。
+	
+	
+	
+
+% SOURCE-END U0062
+}
+\end{block}
+\end{frame}
+% FRAME-ID F055
+\begin{frame}[t,fragile]{收敛数列的基本性质}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0063 0 380
+\begin{custom}{唯一性的证明}
+	假设 \(a_n \to L_1\) 且 \(a_n \to L_2\)。对任意 \(\varepsilon > 0\)，存在 \(N_1, N_2\) 使当 \(n > \max(N_1, N_2)\) 时，
+	\[
+	|a_n - L_1| < \varepsilon,\quad |a_n - L_2| < \varepsilon.
+	\]
+	于是，由绝对值的三角不等式：
+	\[
+	|L_1 - L_2| \leq |L_1 - a_n| + |a_n - L_2| < 2\varepsilon.
+	\]
+	由于 \(\varepsilon\) 可以任意小，而 \(|L_1 - L_2|\) 是常数，故 \(L_1 = L_2\)。\(\square\)
+\end{custom}
+% SOURCE-END U0063
+}
+\end{frame}
+% FRAME-ID F056
+\begin{frame}[t,fragile]{收敛数列的基本性质}
+\normalsize
+\begin{block}{命题}
+{\normalsize
+% SOURCE-BEGIN U0064 0 57
+\textbf{收敛数列有界}\par
+
+	若数列 $\{a_n\}$ 收敛，则 $\{a_n\}$ 有界。
+
+% SOURCE-END U0064
+}
+\end{block}
+\end{frame}
+% FRAME-ID F057
+\begin{frame}[t,fragile]{收敛数列的基本性质}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0065 0 316
+\begin{custom}{证明}
+	设 $a_n\to A$。 取 $\varepsilon=1$，存在 $N$，当 $n>N$ 时
+	\[
+	|a_n-A|<1,
+	\]
+	从而，由绝对值的三角不等式，$\left| {{a_n}} \right| - \left| A \right| < \left| {{a_n} - A} \right| < 1$,即 $|a_n|<|A|+1$。 前 $N$ 项只有有限个，令
+	\[
+	M=\max\{|a_1|,\ldots,|a_N|,|A|+1\}.
+	\]
+	则对任意正整数 $n$ 都有 $|a_n|\le M$，故数列有界。
+\end{custom}
+% SOURCE-END U0065
+}
+\end{frame}
+% FRAME-ID F058
+\begin{frame}[t,fragile]{收敛数列的基本性质}
+\small
+{\small
+% SOURCE-BEGIN U0066 0 343
+绝对值三角不等式描述两个数之和的绝对值与它们各自绝对值之和之间的关系。
+	
+	\textbf{定理 (三角不等式)：} 对于任意实数$x$ 和 $y$，均有以下不等式成立：
+	\begin{equation*}
+		|x + y| \le |x| + |y|
+	\end{equation*}
+	
+	等号成立的充要条件是 $x$ 和 $y$ 同号（或者至少有一个为零），即 $xy \ge 0$。
+	
+	\textbf{反向三角不等式：} 由三角不等式，我们还可以推导出两数之差的绝对值的下界：
+	\begin{equation*}
+		||x| - |y|| \le |x - y|
+	\end{equation*}
+	这在估算误差和证明极限时非常有用。
+
+% SOURCE-END U0066
+}
+\end{frame}
+% FRAME-ID F059
+\begin{frame}[t,fragile]{收敛数列的基本性质}
+\small
+\begin{block}{命题}
+{\small
+% SOURCE-BEGIN U0067 0 497
+\textbf{数列极限的四则运算法则}\par
+
+
+
+设数列 $\{a_n\}$ 和 $\{b_n\}$ 均收敛，且其极限分别为：
+\begin{equation*}
+	\lim\limits_{n \to \infty} a_n = A, \quad \lim\limits_{n \to \infty} b_n = B
+\end{equation*}
+则数列 $\{a_n \pm b_n\}$，$\{a_n \cdot b_n\}$，以及 $\left\{\frac{a_n}{b_n}\right\}$（当分母不为零时）也均收敛，且满足以下运算法则：
+
+\begin{enumerate}
+	\item \textbf{加减法则：}
+	\begin{equation*}
+		\lim\limits_{n \to \infty} (a_n \pm b_n) = \lim\limits_{n \to \infty} a_n \pm \lim\limits_{n \to \infty} b_n = A \pm B
+	\end{equation*}
+	
+	
+% SOURCE-END U0067
+% PRESENTATION-SCAFFOLD close continued environment
+\end{enumerate}
+}
+\end{block}
+\end{frame}
+% FRAME-ID F060
+\begin{frame}[t,fragile]{收敛数列的基本性质（续1）}
+\small
+\begin{block}{命题}
+{\small
+% REPEATED-CONTEXT environment continuation
+\textbf{数列极限的四则运算法则}\par
+
+
+
+设数列 $\{a_n\}$ 和 $\{b_n\}$ 均收敛，且其极限分别为：
+\begin{equation*}
+	\lim\limits_{n \to \infty} a_n = A, \quad \lim\limits_{n \to \infty} b_n = B
+\end{equation*}
+则数列 $\{a_n \pm b_n\}$，$\{a_n \cdot b_n\}$，以及 $\left\{\frac{a_n}{b_n}\right\}$（当分母不为零时）也均收敛，且满足以下运算法则：
+
+\begin{enumerate}
+	\setcounter{enumi}{1}
+% SOURCE-BEGIN U0067 497 665
+\item \textbf{数乘法则}（作为常数 $c$ 的特例）：
+	\begin{equation*}
+		\lim\limits_{n \to \infty} (c \cdot a_n) = c \cdot \lim\limits_{n \to \infty} a_n = cA
+	\end{equation*}
+	
+	
+% SOURCE-END U0067
+% PRESENTATION-SCAFFOLD close continued environment
+\end{enumerate}
+}
+\end{block}
+\end{frame}
+% FRAME-ID F061
+\begin{frame}[t,fragile]{收敛数列的基本性质（续2）}
+\footnotesize
+\begin{block}{命题}
+{\footnotesize
+% REPEATED-CONTEXT environment continuation
+\textbf{数列极限的四则运算法则}\par
+
+
+
+设数列 $\{a_n\}$ 和 $\{b_n\}$ 均收敛，且其极限分别为：
+\begin{equation*}
+	\lim\limits_{n \to \infty} a_n = A, \quad \lim\limits_{n \to \infty} b_n = B
+\end{equation*}
+则数列 $\{a_n \pm b_n\}$，$\{a_n \cdot b_n\}$，以及 $\left\{\frac{a_n}{b_n}\right\}$（当分母不为零时）也均收敛，且满足以下运算法则：
+
+\begin{enumerate}
+	\setcounter{enumi}{2}
+% SOURCE-BEGIN U0067 665 1131
+\item \textbf{乘法法则：}
+	\begin{equation*}
+		\lim_{n \to \infty} (a_n \cdot b_n) = \lim_{n \to \infty} a_n \cdot \lim_{n \to \infty} b_n = A \cdot B
+	\end{equation*}
+	
+	\item \textbf{除法法则：}
+	若对任意 $n \in \mathbb{N}^*$ 均有 $b_n \neq 0$，且 $\lim\limits_{n \to \infty} b_n = B \neq 0$，则：
+	\begin{equation*}
+		\lim_{n \to \infty} \frac{a_n}{b_n} = \frac{\lim\limits_{n \to \infty} a_n}{\lim\limits_{n \to \infty} b_n} = \frac{A}{B}
+	\end{equation*}
+\end{enumerate}
+
+% SOURCE-END U0067
+}
+\end{block}
+\end{frame}
+% FRAME-ID F062
+\begin{frame}[t,fragile]{收敛数列的基本性质}
+\normalsize
+\begin{block}{命题}
+{\normalsize
+% SOURCE-BEGIN U0068 0 111
+\textbf{极限的保号性}\par
+
+	 若当 \(n\) 充分大时 \(a_n \geq 0\)，且 \(\lim\limits_{n \to \infty} a_n = L\)，则 \(L \geq 0\)。
+
+% SOURCE-END U0068
+}
+\end{block}
+\end{frame}
+% FRAME-ID F063
+\begin{frame}[t,fragile]{收敛数列的基本性质}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0069 0 204
+\begin{custom}{保号性的证明}
+	假设 \(\lim a_n = L < 0\)。取 \(\varepsilon = -L/2 > 0\)，则存在 \(N\)，当 \(n > N\) 时 \(|a_n - L| < -L/2\)，从而 \(a_n < L/2 < 0\)，与 \(a_n \geq 0\) 矛盾。故 \(L \geq 0\)。\(\square\)
+\end{custom}
+% SOURCE-END U0069
+}
+\end{frame}
+% FRAME-ID F064
+\begin{frame}[t,fragile]{收敛数列的基本性质}
+\normalsize
+\begin{block}{命题}
+{\normalsize
+% SOURCE-BEGIN U0070 0 178
+\textbf{夹逼准则}\par
+
+	若 \(b_n \leq a_n \leq c_n\)（当 \(n\) 充分大）且 \(\lim\limits_{n \to \infty} b_n = \lim\limits_{n \to \infty} c_n = L\)，则 \(\lim\limits_{n \to \infty} a_n = L\)。
+
+% SOURCE-END U0070
+}
+\end{block}
+\end{frame}
+% FRAME-ID F065
+\begin{frame}[t,fragile]{收敛数列的基本性质}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0071 0 489
+\begin{custom}{夹逼准则的证明}
+	由 \(\lim \limits_{n \to \infty} b_n = L\)，对 \(\varepsilon > 0\)，存在 \(N_1\) 使 \(n > N_1\) 时 \(L - \varepsilon < b_n < L + \varepsilon\)。
+	由 \(\lim\limits_{n \to \infty} c_n = L\)，存在 \(N_2\) 使 \(n > N_2\) 时 \(L - \varepsilon < c_n < L + \varepsilon\)。
+	取 \(N = \max(N_1, N_2)\)，则当 \(n > N\) 时，
+	\[
+	L - \varepsilon < b_n \leq a_n \leq c_n < L + \varepsilon,
+	\]
+	故 \(|a_n - L| < \varepsilon\)，即 \(\lim \limits_{n \to \infty}a_n = L\)。\(\square\)
+\end{custom}
+% SOURCE-END U0071
+}
+\end{frame}
+\section{极限存在性定理}
+% FRAME-ID F066
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{black}\normalsize 1. 数列的一般定义\par}\vspace{0.22em}
+{\color{black}\normalsize 2. 拓展阅读：数列的应用\par}\vspace{0.22em}
+{\color{black}\normalsize 3. 差分及其应用\par}\vspace{0.22em}
+{\color{black}\normalsize 4. 数列极限\par}\vspace{0.22em}
+{\color{black}\normalsize 5. 收敛数列的基本性质\par}\vspace{0.22em}
+{\color{blue}\normalsize 6. 极限存在性定理\par}\vspace{0.22em}
+\end{frame}
+% FRAME-ID F067
+\begin{frame}[t,fragile]{极限存在性定理}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0072 0 28
+有时候我们不知道极限值，但仍能判断极限是否存在。
+
+
+% SOURCE-END U0072
+}
+\end{frame}
+% FRAME-ID F068
+\begin{frame}[t,fragile]{极限存在性定理}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0073 0 54
+\textbf{单调有界准则}\par
+
+单调递增且有上界的数列必收敛；单调递减且有下界的数列必收敛。
+
+% SOURCE-END U0073
+}
+\end{block}
+\end{frame}
+% FRAME-ID F069
+\begin{frame}[t,fragile]{极限存在性定理}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0074 0 186
+\begin{custom}{证明}
+只证明单调递增且有上界的情形，单调递减且有下界的情形可令 $b_n=-a_n$ 化为前一情形。
+
+设 $\{a_n\}$ 单调递增且有上界。 由实数完备性，集合
+\[
+A=\{a_n:n=1,2,\ldots\}
+\]
+存在上确界，记为 $\alpha=\sup A$。 下面证明 $a_n\to\alpha$。
+
+
+% SOURCE-END U0074
+% PRESENTATION-SCAFFOLD close continued environment
+\end{custom}
+}
+\end{frame}
+% FRAME-ID F070
+\begin{frame}[t,fragile]{极限存在性定理（续1）}
+\small
+{\small
+% REPEATED-CONTEXT environment continuation
+\begin{custom}{证明}
+% SOURCE-BEGIN U0074 186 557
+任取 $\varepsilon>0$。 因 $\alpha$ 是 $A$ 的上确界，$\alpha-\varepsilon$ 不是 $A$ 的上界，否则它会小于上确界却仍为上界，与上确界定义矛盾。 因此存在某个正整数 $N$，使得
+\[
+a_N>\alpha-\varepsilon.
+\]
+又因数列单调递增，当 $n\ge N$ 时有
+\[
+a_n\ge a_N>\alpha-\varepsilon.
+\]
+同时 $\alpha$ 是上界，故 $a_n\le \alpha$。 于是当 $n\ge N$ 时，
+\[
+0\le \alpha-a_n<\varepsilon,
+\]
+即 $|a_n-\alpha|<\varepsilon$。 由数列极限定义，$a_n\to\alpha$。
+\end{custom}
+% SOURCE-END U0074
+}
+\end{frame}
+% FRAME-ID F071
+\begin{frame}[t,fragile]{极限存在性定理}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0075 0 60
+想象一个人在数轴上向右走（单调递增），但前面有一堵墙（上界）。他不能无限向右，只能越来越靠近某个点。这个点就是极限。
+
+% SOURCE-END U0075
+}
+\end{frame}
+% FRAME-ID F072
+\begin{frame}[t,fragile]{极限存在性定理}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0076 0 82
+\textbf{重要例子}\par
+
+证明数列 \(a_1 = \sqrt{2}\)，\(a_{n+1} = \sqrt{2 + a_n}\) 收敛并求极限。
+
+% SOURCE-END U0076
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0077 0 448
+\textbf{有界性：} \(a_1=\sqrt{2}<2\)，假设 \(a_k<2\)，则 \(a_{k+1}=\sqrt{2+a_k}<\sqrt4=2\)，故 \(a_n<2\) 对所有 \(n\) 成立。
+\textbf{单调性：} \(a_2 = \sqrt{2+\sqrt{2}} > \sqrt{2} = a_1\)，假设 \(a_k > a_{k-1}\)，则 \(a_{k+1} = \sqrt{2 + a_k} > \sqrt{2 + a_{k-1}} = a_k\)，故 \(\{a_n\}\) 严格递增。
+由单调有界准则，极限存在。设 \(\lim \limits_{n \to \infty}a_n = L\)，在递推式两边取极限：
+\[
+L = \sqrt{2 + L} \quad\Longrightarrow\quad L^2 = L + 2 \quad\Longrightarrow\quad L = 2\ (\text{舍去 } -1).
+\]
+
+% SOURCE-END U0077
+}
+\end{frame}
+% FRAME-ID F073
+\begin{frame}[t,fragile]{极限存在性定理}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0080 0 250
+\begin{extra}
+\subsection*{柯西收敛准则（选读）}
+
+\begin{definition}[柯西列]
+若对任意 \(\varepsilon > 0\)，存在 \(N\)，当 \(m,n > N\) 时 \(|a_m - a_n| < \varepsilon\)，则称 \(\{a_n\}\) 为柯西列。
+\end{definition}
+在实数集中，柯西列必收敛（这等价于实数的完备性）。柯西准则的好处是：判断收敛性时不需要知道极限值。
+\end{extra}
+% SOURCE-END U0080
+}
+\end{frame}
+% FRAME-ID F074
+\begin{frame}[t,fragile]{参考文献}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0083 0 170
+\begin{thebibliography}{99}
+\bibitem{BradyWeil} WEIL R R, BRADY N C. \emph{The Nature and Properties of Soils}（15th ed.）[M]. Harlow: Pearson, 2017.
+\end{thebibliography}
+% SOURCE-END U0083
+}
+\end{frame}
+\end{document}

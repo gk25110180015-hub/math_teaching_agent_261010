@@ -1,0 +1,327 @@
+{
+  "section_id": "S01",
+  "math": {
+    "schema_version": 1,
+    "status": "NEEDS_REVIEW",
+    "issues": [
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "S01.U2 原数学疑点仍需对照完整正文进行独立核查。",
+        "location": {},
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "kind": "equivalence",
+        "assumptions": {},
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "27/28",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S01.C01",
+        "unit_id": "S01.U1"
+      },
+      {
+        "kind": "equivalence",
+        "assumptions": {},
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "9/2",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S01.C02",
+        "unit_id": "S01.U1"
+      }
+    ],
+    "coverage": [
+      "S01.U1",
+      "S01.U2"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S01.U1",
+      "S01.U2"
+    ],
+    "limitations": [
+      "Injected offline review; not teacher approval."
+    ]
+  },
+  "issues": [
+    {
+      "unit_id": "S01.U2",
+      "severity": "review",
+      "message": "另一单元的证明前提仍缺少依据，不能由核算配置修复消解。",
+      "evidence": "Unrelated independent proof concern."
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "uncertainty_review": {
+    "identity_hash": "4a3dbb3241ea69147314b936b730e7e7e49b862fa79474828acceceb6b5d2e02",
+    "assessment": {
+      "items": [
+        {
+          "uncertainty_id": "D001-3503f8cde03e4d36",
+          "unit_id": "S01.U2",
+          "disposition": "resolved_by_current_body",
+          "reason": "这是离线受控裁定，仍须依据完整正文核对原数学疑点且不代表教师批准。",
+          "evidence": [
+            {
+              "source_key": "current:S01.U2",
+              "source_sha256": "818f35b8701c40115bfcbc754f3853f63cb9be032a14714bb4a9daa762ec39a2",
+              "quote": "原数学疑点必须在完整审阅后才能消解，核算不是最终数学验收。"
+            }
+          ],
+          "remaining_dependency": false,
+          "repair_instruction": null
+        }
+      ],
+      "limitations": [
+        "Injected offline judgment; no teacher approval."
+      ]
+    },
+    "evidence_key": "runs/3dfdf82657cc4387b2adc27294186c73/uncertainty-reviews/4a3dbb3241ea69147314b936/state.json",
+    "evidence_sha256": "a15fcbf702556297b836c1dc72a9fc5ce3933ff599ef971a5585880a8286620f",
+    "teacher_review": "NOT_RUN"
+  },
+  "uncertainty_legacy_mapping": [],
+  "calculation_recovery_evidence": {
+    "schema_version": 1,
+    "status": "HISTORICAL_FAILURE_REPRODUCED_CURRENT_CHECK_PASSED",
+    "section_id": "S01",
+    "corrections": [
+      {
+        "calculation_id": "S01.C01",
+        "unit_id": "S01.U1",
+        "expression_field": "lhs",
+        "previous_request": {
+          "assumptions": {},
+          "id": "S01.C01",
+          "kind": "equivalence",
+          "lhs": {
+            "args": [
+              {
+                "op": "Integer",
+                "value": 1
+              },
+              {
+                "args": [
+                  {
+                    "op": "Rational",
+                    "p": 1,
+                    "q": 6
+                  },
+                  {
+                    "args": [
+                      {
+                        "op": "Rational",
+                        "p": 14,
+                        "q": 3
+                      },
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      }
+                    ],
+                    "op": "Pow"
+                  }
+                ],
+                "op": "Mul"
+              }
+            ],
+            "op": "Add"
+          },
+          "rhs": {
+            "op": "Rational",
+            "p": 27,
+            "q": 28
+          },
+          "unit_id": "S01.U1"
+        },
+        "current_request": {
+          "assumptions": {},
+          "id": "S01.C01",
+          "kind": "equivalence",
+          "lhs": {
+            "args": [
+              {
+                "op": "Integer",
+                "value": 1
+              },
+              {
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": -1
+                  },
+                  {
+                    "args": [
+                      {
+                        "op": "Rational",
+                        "p": 1,
+                        "q": 6
+                      },
+                      {
+                        "args": [
+                          {
+                            "op": "Rational",
+                            "p": 14,
+                            "q": 3
+                          },
+                          {
+                            "op": "Integer",
+                            "value": -1
+                          }
+                        ],
+                        "op": "Pow"
+                      }
+                    ],
+                    "op": "Mul"
+                  }
+                ],
+                "op": "Mul"
+              }
+            ],
+            "op": "Add"
+          },
+          "rhs": {
+            "op": "Rational",
+            "p": 27,
+            "q": 28
+          },
+          "unit_id": "S01.U1"
+        },
+        "previous_evidence": {
+          "kind": "equivalence",
+          "assumptions": {},
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "FAIL",
+          "evidence_type": "symbolic_check_failed",
+          "result": "29/28",
+          "message": "在声明假设下符号结果与预期不一致。",
+          "calculation_id": "S01.C01",
+          "unit_id": "S01.U1"
+        },
+        "current_evidence": {
+          "kind": "equivalence",
+          "assumptions": {},
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "27/28",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S01.C01",
+          "unit_id": "S01.U1"
+        },
+        "source": {
+          "input_key": "runs/3dfdf82657cc4387b2adc27294186c73/uncertainty-reviews/a903de64030afe0e645ed3a0/input.json",
+          "input_sha256": "9a17423c2ac6d22e324ceee91ea9e7894561f87a62c58fd8f9101e6f64fea543",
+          "identity_hash": "a903de64030afe0e645ed3a09998ee555d1d723ad4a4cd431f58d7a2f7c14979",
+          "context_hash": "538d6d8a13f22abe19ef665213b6594a9560b6cd01f59339ee76722affeb6df3"
+        },
+        "reproduced_previous_evidence": {
+          "kind": "equivalence",
+          "assumptions": {},
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "FAIL",
+          "evidence_type": "symbolic_check_failed",
+          "result": "29/28",
+          "message": "在声明假设下符号结果与预期不一致。",
+          "calculation_id": "S01.C01",
+          "unit_id": "S01.U1"
+        }
+      }
+    ],
+    "instruction": "These are different frozen calculation requests for the same calculation ID. Compare the exact previous and current ASTs and their results. The previous failure remains historical evidence; it is not a second result for the current request. Reconsider retained issues using these actual inputs without deleting them automatically. This packet neither proves the whole section correct nor grants teacher approval.",
+    "teacher_review": "NOT_RUN"
+  },
+  "calculation_reconsidered_prior_issues": [
+    {
+      "unit_id": "S01.U1",
+      "severity": "review",
+      "message": "当前值27/28与历史29/28记录冲突，缺少旧表达式，不能确认。",
+      "evidence": "Current tool passed but the retained historical failure lacks its old expression."
+    },
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "S01.U2 原数学疑点仍需对照完整正文进行独立核查。\n显式裁定：这是离线受控裁定，仍须依据完整正文核对原数学疑点且不代表教师批准。",
+      "location": {
+        "unit_id": "S01.U2"
+      },
+      "uncertainty_id": "D001-3503f8cde03e4d36",
+      "original_sha256": "3503f8cde03e4d36253173d0dcb74c3843c54b316977f09fc8ecd9681f197bbe",
+      "resolution_status": "open",
+      "disposition": "open_dependency",
+      "disposition_evidence": [
+        {
+          "source_key": "current:S01.U2",
+          "source_sha256": "818f35b8701c40115bfcbc754f3853f63cb9be032a14714bb4a9daa762ec39a2",
+          "quote": "原数学疑点必须在完整审阅后才能消解，核算不是最终数学验收。"
+        }
+      ]
+    }
+  ],
+  "local_recovery": {
+    "applied_rounds": 1,
+    "proposal_calls": 1,
+    "rejected_proposals": 0,
+    "preserved_issues": [
+      {
+        "unit_id": "S01.U1",
+        "severity": "review",
+        "message": "当前值27/28与历史29/28记录冲突，缺少旧表达式，不能确认。",
+        "evidence": "Current tool passed but the retained historical failure lacks its old expression."
+      },
+      {
+        "unit_id": "S01.U2",
+        "severity": "review",
+        "message": "另一单元的证明前提仍缺少依据，不能由核算配置修复消解。",
+        "evidence": "Unrelated independent proof concern."
+      },
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "S01.U2 原数学疑点仍需对照完整正文进行独立核查。\n显式裁定：这是离线受控裁定，仍须依据完整正文核对原数学疑点且不代表教师批准。",
+        "location": {
+          "unit_id": "S01.U2"
+        },
+        "uncertainty_id": "D001-3503f8cde03e4d36",
+        "original_sha256": "3503f8cde03e4d36253173d0dcb74c3843c54b316977f09fc8ecd9681f197bbe",
+        "resolution_status": "open",
+        "disposition": "open_dependency",
+        "disposition_evidence": [
+          {
+            "source_key": "current:S01.U2",
+            "source_sha256": "818f35b8701c40115bfcbc754f3853f63cb9be032a14714bb4a9daa762ec39a2",
+            "quote": "原数学疑点必须在完整审阅后才能消解，核算不是最终数学验收。"
+          }
+        ]
+      }
+    ],
+    "review_identity": {
+      "candidate_hash": "ca809b009f2e928b97f0194fa5bd607e023149a3f3e07203994bc4c63dfda931",
+      "tool_checks_hash": "6fc6156303a0bff729e15f562c78a0bd7670dee1088f487bd9226a56bf249a2f",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "21f4e4014c3124f10f141f23477b9f2943dde6a7e8f281581e83e8d86633361a",
+      "deterministic_checks_hash": "acfd5520973cface73582376f545d54fff60330a04803a889649a1332618b0ec",
+      "uncertainty_identity": "4a3dbb3241ea69147314b936b730e7e7e49b862fa79474828acceceb6b5d2e02",
+      "uncertainty_assessment_hash": "f4e82f2b789d7703e667ce705375b270cf79fa80adb9900a1026189eb0b90a28"
+    }
+  }
+}

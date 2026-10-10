@@ -1,0 +1,52 @@
+{
+  "result": {
+    "schema_version": 1,
+    "status": "NEEDS_REVIEW",
+    "issues": [
+      {
+        "rule_id": "MATH_CHECK_UNKNOWN",
+        "severity": "review",
+        "message": "受限数学子进程失败。",
+        "location": {
+          "calculation_id": "S04.C01",
+          "unit_id": "S04.U05"
+        },
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "status": "UNKNOWN",
+        "evidence_type": "not_checked",
+        "message": "受限数学子进程失败。",
+        "calculation_id": "S04.C01",
+        "unit_id": "S04.U05"
+      }
+    ],
+    "coverage": [
+      "S04.U05",
+      "S04.U06"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "协议的数值核算只能抽查交错项在指定整数处的取值，不能表达对所有正整数的单调性、极限或余项不等式；交错级数判别法及余项估计仍由正文证明。",
+      "既有核算 S04.C01 仅比较 n=3 时的通项值与 1/3，覆盖范围限于该单点等式；不提供对所有正整数的结论，也不构成交错调和级数收敛性或截断误差界的证明。这些结论依赖正文中的判别条件核实与定理证明。"
+    ]
+  },
+  "child_diagnostics": [
+    {
+      "command": [
+        "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\.venv\\Scripts\\python.exe",
+        "-m",
+        "math_agent.mathcheck",
+        "--child"
+      ],
+      "timeout": 8,
+      "input": "{\"assumptions\": {\"n\": {\"integer\": true, \"positive\": true}}, \"id\": \"S04.C01\", \"kind\": \"numeric_spotcheck\", \"lhs\": {\"args\": [{\"args\": [{\"op\": \"Integer\", \"value\": -1}, {\"args\": [{\"name\": \"n\", \"op\": \"Symbol\"}, {\"op\": \"Integer\", \"value\": -1}], \"op\": \"Add\"}], \"op\": \"Pow\"}, {\"args\": [{\"name\": \"n\", \"op\": \"Symbol\"}, {\"op\": \"Integer\", \"value\": -1}], \"op\": \"Pow\"}], \"op\": \"Mul\"}, \"rhs\": {\"op\": \"Rational\", \"p\": 1, \"q\": 3}, \"points\": [{\"n\": 3}], \"unit_id\": \"S04.U05\"}",
+      "returncode": 3221225477,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

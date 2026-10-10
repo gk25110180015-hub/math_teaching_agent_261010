@@ -1,0 +1,42 @@
+{
+  "status": "UNCHECKED_REPAIRED",
+  "state_key": "runs/3dfdf82657cc4387b2adc27294186c73/local-repair/S01.json",
+  "candidate_key": "runs/3dfdf82657cc4387b2adc27294186c73/local-repair/S01/candidate-ca97c39517b5.json",
+  "candidate_hash": "554a0d6385e96db0beffbc80d7d3520bb9027ce588192242b216085ecf71a585",
+  "applied_rounds": 1,
+  "proposal_calls": 1,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "unit_id": "S01.U1",
+      "severity": "review",
+      "message": "当前值27/28与历史29/28记录冲突，缺少旧表达式，不能确认。",
+      "evidence": "Current tool passed but the retained historical failure lacks its old expression."
+    },
+    {
+      "unit_id": "S01.U2",
+      "severity": "review",
+      "message": "另一单元的证明前提仍缺少依据，不能由核算配置修复消解。",
+      "evidence": "Unrelated independent proof concern."
+    },
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "S01.U2 原数学疑点仍需对照完整正文进行独立核查。\n显式裁定：这是离线受控裁定，仍须依据完整正文核对原数学疑点且不代表教师批准。",
+      "location": {
+        "unit_id": "S01.U2"
+      },
+      "uncertainty_id": "D001-3503f8cde03e4d36",
+      "original_sha256": "3503f8cde03e4d36253173d0dcb74c3843c54b316977f09fc8ecd9681f197bbe",
+      "resolution_status": "open",
+      "disposition": "open_dependency",
+      "disposition_evidence": [
+        {
+          "source_key": "current:S01.U2",
+          "source_sha256": "818f35b8701c40115bfcbc754f3853f63cb9be032a14714bb4a9daa762ec39a2",
+          "quote": "原数学疑点必须在完整审阅后才能消解，核算不是最终数学验收。"
+        }
+      ]
+    }
+  ]
+}

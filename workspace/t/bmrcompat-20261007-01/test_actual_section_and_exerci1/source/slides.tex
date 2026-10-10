@@ -1,0 +1,124 @@
+\documentclass[aspectratio=169,10pt,fontset=fandol]{ctexbeamer}
+\usepackage{amsmath,amssymb,mathtools,bm,mathrsfs}
+\usepackage{graphicx,booktabs,array,tabularx,multirow}
+\usepackage{tikz,pgfplots,xparse,xstring,mdframed}
+\usetikzlibrary{arrows.meta,calc,angles,positioning,shapes.geometric,graphs}
+\pgfplotsset{compat=1.18}
+
+\input{workflow_style.tex}
+\input{workflow_fonts.tex}
+\newenvironment{proofdetail}{\par\noindent\textbf{证明：}\quad}{\par}
+\renewenvironment{solution}{\par\noindent\textbf{解：}\quad}{\par}
+\makeatletter
+\@ifundefined{definition}{\newtheorem{definition}{定义}[section]}{}
+\@ifundefined{theorem}{\@ifundefined{c@definition}{\newtheorem{theorem}[theorem]{定理}}{\newtheorem{theorem}[definition]{定理}}}{}
+\@ifundefined{exercise}{\theoremstyle{definition}\@ifundefined{c@definition}{\newtheorem{exercise}[theorem]{练习}}{\newtheorem{exercise}[definition]{练习}}\theoremstyle{plain}}{}
+\@ifundefined{exercise}{\theoremstyle{definition}\newtheorem{exercise}[theorem]{练习}\theoremstyle{plain}}{}
+\makeatother
+\makeatletter
+\newcommand{\mathagentsectionlabelcontext}{%
+\protected@edef\@currentlabel{\thesection}%
+\edef\@currentHref{Outline\the\c@part.\the\c@section}%
+}
+\makeatother
+\title{讲义兼容}
+\begin{document}
+\section{第一节}
+% FRAME-ID F001
+\typeout{MATH-AGENT-FRAME-BEGIN F001}
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{blue}\normalsize 1. 第一节\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 2. 第二节\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 3. 练习答案\par}\vspace{0.22em}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F001}
+% FRAME-ID F002
+\typeout{MATH-AGENT-FRAME-BEGIN F002}
+\begin{frame}[t,fragile]{第一节}
+\normalsize
+{\normalsize
+% PRESENTATION-SCAFFOLD original heading label binds to section
+\mathagentsectionlabelcontext
+% SOURCE-BEGIN U0002 0 49
+
+\label{sec:first}
+第一节内容；第二节见第\ref{sec:second}节。
+
+% SOURCE-END U0002
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F002}
+% FRAME-ID F003
+\typeout{MATH-AGENT-FRAME-BEGIN F003}
+\begin{frame}[t,fragile]{第一节}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0003 0 59
+\begin{exercise}[求和]\label{ex:first}计算 $1+1$。\end{exercise}
+% SOURCE-END U0003
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F003}
+\section{第二节}
+% FRAME-ID F004
+\typeout{MATH-AGENT-FRAME-BEGIN F004}
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{black}\normalsize 1. 第一节\par}\vspace{0.22em}
+{\color{blue}\normalsize 2. 第二节\par}\vspace{0.22em}
+{\color{gray!40}\normalsize 3. 练习答案\par}\vspace{0.22em}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F004}
+% FRAME-ID F005
+\typeout{MATH-AGENT-FRAME-BEGIN F005}
+\begin{frame}[t,fragile]{第二节}
+\normalsize
+{\normalsize
+% PRESENTATION-SCAFFOLD original heading label binds to section
+\mathagentsectionlabelcontext
+% SOURCE-BEGIN U0004 0 49
+
+\label{sec:second}
+第二节内容；第一节见第\ref{sec:first}节。
+
+% SOURCE-END U0004
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F005}
+% FRAME-ID F006
+\typeout{MATH-AGENT-FRAME-BEGIN F006}
+\begin{frame}[t,fragile]{第二节}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0005 0 56
+\begin{exercise}\label{ex:second}计算 $2+2$。\end{exercise}
+% SOURCE-END U0005
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F006}
+\section{练习答案}
+% FRAME-ID F007
+\typeout{MATH-AGENT-FRAME-BEGIN F007}
+\begin{frame}[t,fragile]{目录}
+\normalsize
+{\color{black}\normalsize 1. 第一节\par}\vspace{0.22em}
+{\color{black}\normalsize 2. 第二节\par}\vspace{0.22em}
+{\color{blue}\normalsize 3. 练习答案\par}\vspace{0.22em}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F007}
+% FRAME-ID F008
+\typeout{MATH-AGENT-FRAME-BEGIN F008}
+\begin{frame}[t,fragile]{练习答案}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0006 0 97
+
+\hyperref[ex:first]{练习\ref*{ex:first}的解答：}$2$。
+\hyperref[ex:second]{练习\ref*{ex:second}的解答：}$4$。
+
+% SOURCE-END U0006
+}
+\end{frame}
+\typeout{MATH-AGENT-FRAME-END F008}
+\end{document}

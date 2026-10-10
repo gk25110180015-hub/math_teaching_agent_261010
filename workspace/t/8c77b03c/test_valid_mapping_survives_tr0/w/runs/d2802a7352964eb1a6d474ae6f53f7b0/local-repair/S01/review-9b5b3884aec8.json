@@ -1,0 +1,145 @@
+{
+  "prior_issues": [
+    {
+      "rule_id": "PLANNED_LABEL_MISSING",
+      "severity": "blocking",
+      "message": "本节缺少计划标签：def:sequence"
+    },
+    {
+      "rule_id": "PLANNED_LABEL_MISSING",
+      "severity": "blocking",
+      "message": "本节缺少计划标签：def:sequence-limit"
+    },
+    {
+      "rule_id": "PLANNED_LABEL_MISSING",
+      "severity": "blocking",
+      "message": "本节缺少计划标签：def:epsilon-N"
+    }
+  ],
+  "review_identity": {
+    "candidate_hash": "4eb75165cb8bacbb8850cb3a2c2f437f1751850595af4ea301262921e69d70ca",
+    "tool_checks_hash": "fe13021c7c269182ea5232efdc40b7371148e9717304e611b8bbdb11dfcf0a42",
+    "reviewer_prompt_hash": "86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc",
+    "plan_context_hash": "1b81744d647cec2eebd0194aaeb23d8a054a3af9cc19e14e6f08dd5ec3175245",
+    "deterministic_checks_hash": "5d820d647e5bd6131d1f3bdecef83604b47318c06603c54595a238d082d5e4a8"
+  },
+  "report": {
+    "section_id": "S01",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "0",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S01.C01",
+          "unit_id": "S01.U07"
+        }
+      ],
+      "coverage": [
+        "S01.U01",
+        "S01.U02",
+        "S01.U03",
+        "S01.U04",
+        "S01.U05",
+        "S01.U06",
+        "S01.U07",
+        "S01.U08",
+        "S01.U09",
+        "S01.U10"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S01.U01",
+        "S01.U02",
+        "S01.U03",
+        "S01.U04",
+        "S01.U05",
+        "S01.U06",
+        "S01.U07",
+        "S01.U08",
+        "S01.U09",
+        "S01.U10"
+      ],
+      "limitations": [
+        "Synthetic reviewer, not mathematical acceptance."
+      ]
+    },
+    "issues": [],
+    "reference_recovery": {
+      "schema_version": 1,
+      "status": "INSERTED_PENDING_RECHECK",
+      "section_id": "S01",
+      "bindings": [
+        {
+          "label": "def:sequence",
+          "unit_id": "S01.U01",
+          "quote": "数列是定义在正整数集 $\\mathbb{N}^{+}=\\{1,2,3,\\ldots\\}$ 上、取实数值的函数。若该函数在 $n\\in\\mathbb{N}^{+}$ 处的值为 $a_n$，则称 $a_n$ 为数列 $\\{a_n\\}$ 的第 $n$ 项，通常写作\n\\[\na_1,a_2,\\ldots,a_n,\\ldots,\n\\qquad a_n=f(n),\\quad n\\in\\mathbb{N}^{+}.\n\\]\n数列的下标只能取正整数，且项的排列顺序是数列定义的一部分。",
+          "rationale": "该引文给出此标签对应的正面定义及其条件。"
+        },
+        {
+          "label": "def:sequence-limit",
+          "unit_id": "S01.U02",
+          "quote": "设 $\\{a_n\\}$ 是实数数列，$L\\in\\mathbb{R}$。若对于任意 $\\varepsilon>0$，都存在正整数 $N$，使得当 $n\\geq N$ 时有\n\\[\n|a_n-L|<\\varepsilon,\n\\]\n则称数列 $\\{a_n\\}$ 收敛于 $L$，记为\n\\[\n\\lim_{n\\to\\infty}a_n=L.\n\\]\n其中，$\\varepsilon$ 先任意给定，而 $N$ 可以依赖于 $\\varepsilon$，但不能依赖于 $n$。",
+          "rationale": "该引文给出此标签对应的正面定义及其条件。"
+        },
+        {
+          "label": "def:epsilon-N",
+          "unit_id": "S01.U02",
+          "quote": "设 $\\{a_n\\}$ 是实数数列，$L\\in\\mathbb{R}$。若对于任意 $\\varepsilon>0$，都存在正整数 $N$，使得当 $n\\geq N$ 时有\n\\[\n|a_n-L|<\\varepsilon,\n\\]\n则称数列 $\\{a_n\\}$ 收敛于 $L$，记为\n\\[\n\\lim_{n\\to\\infty}a_n=L.\n\\]\n其中，$\\varepsilon$ 先任意给定，而 $N$ 可以依赖于 $\\varepsilon$，但不能依赖于 $n$。",
+          "rationale": "该引文给出此标签对应的正面定义及其条件。"
+        }
+      ],
+      "insertions": {
+        "S01.U01": "\\label{def:sequence}",
+        "S01.U02": "\\label{def:sequence-limit}\\label{def:epsilon-N}"
+      },
+      "before_hash": "9ac89c7631f23b860d662aea2b77252a966200cdb4641cbc4c675a3d84a95d80",
+      "after_hash": "4eb75165cb8bacbb8850cb3a2c2f437f1751850595af4ea301262921e69d70ca",
+      "preserved_fields": [
+        "unit IDs/order/kinds/relates_to",
+        "all original TeX bytes after inserted prefixes",
+        "calculations",
+        "calculation_limitations",
+        "uncertainties"
+      ],
+      "limitations": [
+        "语义定位来自模型提议；精确引文验证不构成数学证明，必须重新进行单元/引用/数学/模型审阅/编译检查。"
+      ],
+      "teacher_visual_review": "NOT_RUN",
+      "identity": {
+        "context_hash": "11e16628a24310a7850635c79486485f6ae218b7d2d05ebe0c67b9558a709fe6",
+        "preceding_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "model": "gpt-6-astra",
+        "provider": "mock",
+        "prompt_hash": "0b967bf320e6d35e1f145a07a1ee0bd1e6fdd6c6627866a8a4a13a2ea8626f15",
+        "schema_hash": "c19c2bead5c4972e0d4a638e7aea9a23807f8a4c165aa65a07515038e8bb384b",
+        "implementation_hash": "71f0787701e59f0b33b1dc2fd2f72337cc963379a408894d7a8b406d8e62370b"
+      },
+      "proposal_key": "runs/d2802a7352964eb1a6d474ae6f53f7b0/label-recovery/S01/f37d65bed5486f543af3effcb11c35535d37b9c61ebab56cf89c71307459df4a/attempt-47d01d32cefd/proposal.json",
+      "reused_proposal": false,
+      "review_instruction": "必须核对标签是否对应其引用定义和批准小节目标；精确引文不代表概念正确。否定形式不能代替正面定义。定位不当须报告实际 unit_id，不能只因标签存在而放行。"
+    },
+    "answer_recovery": null,
+    "mock": true
+  },
+  "retained_issues": []
+}

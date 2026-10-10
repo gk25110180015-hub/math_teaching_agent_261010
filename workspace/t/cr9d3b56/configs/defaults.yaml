@@ -1,0 +1,26 @@
+schema_version: 1
+runtime:
+  host: 127.0.0.1
+  port: 8765
+  worker_concurrency: 1
+llm:
+  model: gpt-6-astra
+  api_key_env: MATH_AGENT_API_KEY
+  live_enabled: false
+  max_requests_per_run: 120
+  max_network_retries: 2
+  max_schema_repair_attempts: 2
+beamer:
+  allowed_text_sizes: [footnotesize, small, normalsize, large]
+  solution_prefixes: ['\textbf{解：}', '\textbf{证明：}']
+  summary_frames: false
+  text_budget:
+    calibration_status: uncalibrated
+    large: {soft: 100, hard: 160}
+    normalsize: {soft: 180, hard: 260}
+    small: {soft: 240, hard: 330}
+    footnotesize: {soft: 300, hard: 400}
+security:
+  compile_mode: trusted_local
+  isolated_implemented: false
+  key_from_environment_only: true
