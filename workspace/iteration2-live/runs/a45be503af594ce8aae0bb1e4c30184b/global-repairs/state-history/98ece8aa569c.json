@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+    "model": "gpt-6-astra",
+    "provider": "live",
+    "repair_prompt_hash": "46c1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9",
+    "written_schema_hash": "4e9b07e27f359212c0460381e3cbd6e548d18a48490e553e60b0c56d30d9ada7",
+    "normalizer_hash": "25d2fff448b21fcad71b5e7aae512cf6ab27f66bdeefd9e459ca57652a1fd74c"
+  },
+  "rounds_used": 3,
+  "phase": "checking",
+  "sections": {
+    "S03": {
+      "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r3-b62b4971/S03-locally-checked-c9b3b79c.json",
+      "candidate_hash": "cdd11e2e28699cf3ab21e14e789561c310540a842c6dba320029c1be6d97c7cf"
+    },
+    "S04": {
+      "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r3-b62b4971/S04-locally-checked-50329e70.json",
+      "candidate_hash": "3d3aede5baa12a9bf4cd7cc36ec8cc102f4e69d11746483eb60d8e0c1a30fbac"
+    },
+    "S05": {
+      "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r3-b62b4971/S05-before.json",
+      "candidate_hash": "966e8bf52a7460b18680d6427b5a685a653ec269f32221b1645c9139a6a272dc"
+    }
+  },
+  "pending": [],
+  "teacher_visual_review": "NOT_RUN",
+  "round_directory": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r3-b62b4971",
+  "issues": [
+    {
+      "unit_id": "S04.U03",
+      "severity": "review",
+      "message": "单侧无穷极限的定义强制了双侧去心邻域条件，范围窄于一般单侧极限。右极限或左极限的无穷极限应分别只要求在相应单侧去心邻域内有定义；当前写法会漏掉函数只在区间端点一侧有定义时的基本情形。",
+      "evidence": "单元开头设定“设函数 f 在点 x0 的某个去心邻域内有定义”，随后定义右、左无穷极限时仍说“在上述去心邻域条件下”。例如 f(x)=1/x 定义在 (0,+∞) 上时，在 x=0 处的右极限本应可为 +∞，但该定义不直接适用于此。后文“这里的 δ 均可取小到使相应单侧去心邻域包含在函数的定义域内”不能取消最初的双侧去心邻域要求。"
+    },
+    {
+      "unit_id": "S03.U02",
+      "severity": "review",
+      "message": "总体目标要求“理解无穷小及其阶的基本思想”，但当前无穷小部分只定义了无穷小、无穷大和等价无穷小，没有给出高阶、低阶、同阶或 o(1) 等阶的比较定义，也未在后续内容中说明这些阶关系。等价无穷小只是其中一种特殊关系，不足以覆盖“阶”的一般思想。",
+      "evidence": "S03.U01 定义无穷小与无穷大，S03.U02 仅定义 α∼β 为比值极限为 1，S03.U03 至 S03.U06 讲基本极限与等价替换。计划符号中的 o(1) 在正文未展开，实际单元中没有给出“阶”的一般定义或比较规则。"
+    }
+  ]
+}

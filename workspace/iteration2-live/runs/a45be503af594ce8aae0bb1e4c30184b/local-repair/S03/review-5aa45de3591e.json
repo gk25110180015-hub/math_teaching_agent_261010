@@ -1,0 +1,84 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "32408204e767af03f00e93f9121ba4e56d3992a0e49c7093bcae576860901d2e",
+    "tool_checks_hash": "423fadec3ef019103c617c85b96da8b3a170628a80cc13931879bf355c5ebf6e",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "a4d06cc76f262758db1ff242c5fd51be5e0ec521a3f5534fd7396ab4038e1315",
+    "deterministic_checks_hash": "c6cbd5914b55563703a846e10e524d28bb71fd480fe949073253faa77e962639"
+  },
+  "report": {
+    "section_id": "S03",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "limit",
+          "assumptions": {
+            "x": {
+              "real": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "1",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S03.C01",
+          "unit_id": "S03.U03"
+        }
+      ],
+      "coverage": [
+        "S03.U01",
+        "S03.U02",
+        "S03.U03",
+        "S03.U04",
+        "S03.U05",
+        "S03.U06",
+        "S03.U07",
+        "S03.U08",
+        "S03.U09",
+        "S03.U10"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "协议支持的极限核算可以核对 $\\sin x/x$ 在 $x\\to0$ 时的代表性结论，但不能表达弧度制、三角函数的几何不等式或完整的夹逼证明。",
+        "协议中的布尔假设不能完整表达去心邻域和函数定义域条件；正文仍保留了 $x\\neq0$ 及相应表达式有定义的条件。",
+        "本次修正 S03.C01 的表达式树格式并重新提交请求，不将此前 UNKNOWN 记录视为核验通过。该请求仅覆盖 S03.U03 中的正弦基本极限，不覆盖指数基本极限及 S03.U06 中一般函数的等价替换证明。",
+        "S03.U01 的修订涉及一般函数的量词定义，以及绝对值趋于无穷与正、负无穷极限的区别；现有有界核算协议不能表达一般函数及其去心邻域量词条件，故不为该定义新增符号核算请求。",
+        "本次仅将证明中的内部单元标识改为定理的自然名称，不改变数学结论；一般函数的等价关系、去心邻域条件及极限乘法推理不能由现有 JSON AST 完整表达，本次不新增核算请求。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S03.U01",
+        "S03.U02",
+        "S03.U03",
+        "S03.U04",
+        "S03.U05",
+        "S03.U06",
+        "S03.U07",
+        "S03.U08",
+        "S03.U09",
+        "S03.U10"
+      ],
+      "limitations": [
+        "本次按 section_local 范围审阅 S03 的全部十个实际单元，并使用已提供的 S01、S02 正文核对先修依赖；未对先修章节作独立的完整复审，也未审阅尚未生成的 S04、S05。",
+        "已逐项核对本节三个锁定目标，以及相关定义的量词、定义域、符号方向、基本极限的适用条件和等价替换的有限极限假设。未发现本次范围内有证据支持的 blocking、review 或 warning 问题；这一结果不代表整份课程的教学覆盖结论。",
+        "S03.U04 明确引用了单位圆几何不等式及独立的指数函数不等式作为基础。所引用不等式成立，正负两侧的夹逼推理正确；本次未从实数或指数函数的底层构造重新证明这些基础性质。",
+        "按 rendering_contract，S03.U10 是关联练习的独立答案单元，由程序移至末尾；未将其 JSON 顺序视为答案位置违规。本次未检查最终 PDF 的实际排版和引用呈现。",
+        "这是普通模型的数学正文审阅，不是形式化证明。所提供的符号核算仅覆盖正弦基本极限的代表性表达式，不能替代对一般函数量词、定义域条件和证明依赖的审查。"
+      ]
+    },
+    "issues": [],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": []
+}

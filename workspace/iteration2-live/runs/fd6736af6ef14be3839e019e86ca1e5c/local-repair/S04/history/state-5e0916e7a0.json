@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227",
+    "section_id": "S04",
+    "context_hash": "d594d5962e767f3be7499bfbe76faf41c48d7586841588100516b510408d6af5",
+    "base_hash": "40643e3b5cfda7956700cc7f43db493f40b0f2f4f91b4400f53468d389ef80b7",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "PROPOSAL_PENDING",
+  "applied_rounds": 3,
+  "proposal_calls": 4,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "unit_id": "S04.U07",
+      "severity": "blocking",
+      "message": "实际正文存在确定的 TeX 转义层级错误：公式命令前保留了两个反斜杠，而不是一个。该问题会破坏数学环境、关系符号及定理引用的渲染，必须修复正文后才能可靠检查最终数学排版。",
+      "evidence": "JSON 解码后的 S04.U07 含有 `\\\\[`、`\\\\geq`、`\\\\ref`、`\\\\leq` 等双反斜杠序列；rendering_contract 只规定单元组装和答案搬移，没有规定再次解码或自动修复 TeX。"
+    },
+    {
+      "unit_id": "S04.U08",
+      "severity": "blocking",
+      "message": "实际正文存在确定的 TeX 转义层级错误，导致该解释单元中的显示公式和级数表达式可能无法按合法 TeX 渲染。",
+      "evidence": "JSON 解码后的 S04.U08 含有 `\\\\[`、`\\\\sum` 等双反斜杠序列；不能仅按推测出的单反斜杠公式视为已修复。"
+    },
+    {
+      "unit_id": "S04.U09",
+      "severity": "blocking",
+      "message": "练习正文存在确定的 TeX 转义层级错误，多个显示公式和求和命令使用了双反斜杠，必须修复实际正文。",
+      "evidence": "JSON 解码后的 S04.U09 含有 `\\\\[`、`\\\\text`、`\\\\sum` 等双反斜杠序列；rendering_contract 不包含对练习题正文的 TeX 修复规则。"
+    },
+    {
+      "unit_id": "S04.U10",
+      "severity": "blocking",
+      "message": "练习正文存在确定的 TeX 转义层级错误，公式环境、定理引用所需的数学命令可能无法正确渲染。",
+      "evidence": "JSON 解码后的 S04.U10 含有 `\\\\[`、`\\\\sum` 等双反斜杠序列；答案位置的自动搬移不改变该单元正文的 TeX 错误。"
+    },
+    {
+      "unit_id": "S04.U11",
+      "severity": "blocking",
+      "message": "独立解答单元存在确定的 TeX 转义层级错误，包含平方根、绝对值、求和等命令的公式不能按当前实际字符串可靠渲染。",
+      "evidence": "JSON 解码后的 S04.U11 含有 `\\\\sqrt`、`\\\\left`、`\\\\right`、`\\\\sum` 等双反斜杠序列；即使该单元会被搬移到最终答案区，rendering_contract 也没有再次解码或修复 TeX 的规则。"
+    },
+    {
+      "unit_id": "S04.U12",
+      "severity": "blocking",
+      "message": "独立解答单元存在确定的 TeX 转义层级错误，余项不等式和定理引用的公式可能无法正确渲染。",
+      "evidence": "JSON 解码后的 S04.U12 含有 `\\\\ref`、`\\\\[`、`\\\\leq` 等双反斜杠序列；答案搬移规则不能免除实际正文中的 TeX 错误。"
+    },
+    {
+      "unit_id": "S04.U13",
+      "severity": "blocking",
+      "message": "证明单元存在确定的 TeX 转义层级错误，夹逼关系及不等式公式使用了双反斜杠，必须修复后重新检查。",
+      "evidence": "JSON 解码后的 S04.U13 含有 `\\\\[`、`\\\\leq`、`\\\\geq` 等双反斜杠序列；该问题影响实际数学正文的渲染，不是答案位置问题。"
+    }
+  ],
+  "unit_applied_counts": {
+    "S04.U01": 1,
+    "S04.U05": 1,
+    "S04.U06": 1,
+    "S04.U02": 1,
+    "S04.U04": 1,
+    "S04.U03": 1
+  },
+  "proposal_counts_by_key": {
+    "unit:S04.U01": 1,
+    "unit:S04.U05": 3,
+    "unit:S04.U02": 1,
+    "unit:S04.U06": 1,
+    "unit:S04.U03": 1,
+    "unit:S04.U04": 1,
+    "unit:S04.U07": 1,
+    "unit:S04.U08": 1,
+    "unit:S04.U09": 1,
+    "unit:S04.U10": 1,
+    "unit:S04.U11": 1,
+    "unit:S04.U12": 1,
+    "unit:S04.U13": 1
+  },
+  "rejected_counts_by_key": {},
+  "evidence_dependencies": [
+    {
+      "key": "b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-1-patch.json",
+      "hash": "fc4b1fe4fdb05f9c0d41cabde751d13c07047849b6c61ae6fc3bdc4805fe052c",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-2-patch.json",
+      "hash": "9c0eaad9696aecfba9429f6141c5623db0eca1b617d2a1491b65d32906615a0a",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-3-patch.json",
+      "hash": "98d54dbc8b547e7d2de8f640d3802cf8b136b0fa2befe52c44ef41870690d538",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "4b97335a435fde25e3667eb12557864578883ca1511d722ac3077cfa84a35155",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1; tolerate one rejection per key, stop after another; retain aggregate calls and run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S04/candidate-1f19b7a36820.json",
+  "candidate_hash": "450cfef26fc136001da77831e8b0d7eb77a7ae3b1e510ddc42c8dad27b7cbc46",
+  "last_review_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S04/review-a9d24c171d14.json",
+  "pending_operation": "strict_local_patch",
+  "pending_keys": [
+    "unit:S04.U07",
+    "unit:S04.U08",
+    "unit:S04.U09",
+    "unit:S04.U10",
+    "unit:S04.U11",
+    "unit:S04.U12",
+    "unit:S04.U13"
+  ],
+  "request_count_before": 34,
+  "patch_evidence": {
+    "schema_version": 1,
+    "operation": "strict_local_patch",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "0310a2e4ce6eda2c875ff290b03964029e469bcd38a802cd43e1e4616df40ac4",
+    "patch_hash": "211d63a42096ef109768337d929c06799ae0dd5ee6701f9731424d27831079ec",
+    "result_section_hash": "5a8184a19f6e133970fe8ec4700d2e7c1fd67eb1dc31d4f0e7dbb1e8f09ad356",
+    "allowed_unit_ids": [
+      "S04.U03",
+      "S04.U04",
+      "S04.U05"
+    ],
+    "changed_unit_ids": [
+      "S04.U03",
+      "S04.U04"
+    ],
+    "unit_order_preserved": true,
+    "unit_identity_and_metadata_preserved": true,
+    "non_target_units_preserved": true,
+    "original_calculation_count": 1,
+    "calculation_updates": [],
+    "calculation_additions": [],
+    "non_target_calculations_preserved": true,
+    "old_uncertainties_preserved": true,
+    "old_calculation_limitations_preserved": true,
+    "normalization": "NOT_RUN",
+    "math_check": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "proposal_key": "b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-3-patch.json"
+  }
+}

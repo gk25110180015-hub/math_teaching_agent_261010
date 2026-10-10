@@ -1,0 +1,72 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "6d8c928e2a71a1c49f079d2959df67c0288caa1e47bec7775b70ba816fdb963d",
+    "tool_checks_hash": "0ad9158bf9fb06cc215b2f3494108602fb8039a74641edf698937ed3b86c8461",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "bf94e3252564494fa95f7fd39aa573ed572572050bbaa93d8f20d300133e6b51",
+    "deterministic_checks_hash": "f16908ed6837b2656f809f1c662970a095819a8fc3e6faf1843d5c886de2e2f4"
+  },
+  "report": {
+    "section_id": "S01",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "equivalence",
+          "assumptions": {},
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "7/8",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S01.C01",
+          "unit_id": "S01.U07"
+        }
+      ],
+      "coverage": [
+        "S01.U01",
+        "S01.U02",
+        "S01.U03",
+        "S01.U04",
+        "S01.U05",
+        "S01.U06",
+        "S01.U07",
+        "S01.U08",
+        "S01.U09"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S01.U01",
+        "S01.U02",
+        "S01.U03",
+        "S01.U04",
+        "S01.U05",
+        "S01.U06",
+        "S01.U07",
+        "S01.U08",
+        "S01.U09"
+      ],
+      "limitations": [
+        "本次仅核对当前提供的 S01 实际单元；S02–S05 尚未生成，不属于本节遗漏，也未纳入本次结论。",
+        "已逐项检查当前正文中的定义域、量词、正负号、端点、部分和初值、定理条件、证明依赖及公式与文字的一致性；未发现需报告为 blocking、review 或 warning 的具体问题。",
+        "S01.U09 是独立的 solution 单元，答案置于最终答案区符合 rendering_contract；本次未将其 JSON 位置误判为答案位置错误。",
+        "普通模型审阅和工具抽查不等于形式化证明；本次结论不能替代对所有可能输入、排版后 PDF 及整份课程的完整验证。"
+      ]
+    },
+    "issues": [],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": []
+}

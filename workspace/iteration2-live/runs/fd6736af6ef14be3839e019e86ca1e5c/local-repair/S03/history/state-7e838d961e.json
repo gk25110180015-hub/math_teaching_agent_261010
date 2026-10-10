@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227",
+    "section_id": "S03",
+    "context_hash": "025f95eac8d7c39ad421ba73e5d5cde9ebe99234a78ff75f4b370320b6723cd1",
+    "base_hash": "a3eb0cd47799d28bc3e2c9e1768e6b8a4668faa0ad62951f71dae1dee6984071",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "NEEDS_REPAIR",
+  "applied_rounds": 5,
+  "proposal_calls": 5,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "unit_id": "S03.U12",
+      "severity": "review",
+      "message": "积分判别法的正文目前只给出相邻矩形面积的不等式和使用条件，没有证明由该估计推出级数与反常积分双向同敛散。锁定计划一方面将“掌握积分判别法的使用条件”列为目标，并明确排除“不系统展开高等数学中的积分判别法证明细节”；另一方面 proof_policy=key 要求关键定理完整证明。由于积分判别法同时出现在本节 reference_labels 的关键定理列表中，当前正文是否已满足“关键定理完整证明”存在范围不确定，需按锁定条件明确取舍；不能仅以工具检查通过视为已完成证明。",
+      "evidence": "S03.U11 陈述了连续、正值、单调递减且满足 f(n)=a_n 时的积分判别法双向等价。S03.U12 明确写道“这里只说明积分判别法的比较思路，不展开两方向的完整证明”，随后只证明/陈述 f(n+1)≤∫_n^{n+1}f(x)dx≤f(n) 这一局部估计及应用核对条件。plan.exclusions 明确排除系统展开该证明细节，而 lecture.proof_policy=key 又要求关键定理完整证明；现有正文未解决这两项锁定条件的适用边界。"
+    }
+  ],
+  "unit_applied_counts": {
+    "S03.U12": 2,
+    "S03.U10": 2,
+    "S03.U09": 1,
+    "S03.U13": 1,
+    "S03.U06": 1,
+    "S03.U14": 1
+  },
+  "proposal_counts_by_key": {
+    "unit:S03.U12": 2,
+    "unit:S03.U06": 1,
+    "unit:S03.U09": 1,
+    "unit:S03.U10": 2,
+    "unit:S03.U13": 1,
+    "unit:S03.U14": 1
+  },
+  "rejected_counts_by_key": {},
+  "evidence_dependencies": [
+    {
+      "key": "b/fd6736af6ef14be3/sS03_4728b49f0563/repair-1-patch.json",
+      "hash": "cacd37612ef1ba13547390e276d862288be82b005e44e15b238a7aff1d9f542e",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS03_e7b31f3b94c5/repair-2-patch.json",
+      "hash": "48cce58975f1b7ee3e3345508a4be2e15ae83ef1e76db471069d269829bd4c77",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS03_e7b31f3b94c5/repair-3-patch.json",
+      "hash": "e63cc6af2217fd029ee85d01037ddc4c0641e1d0b25459601cca248c322c6d8e",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS03_2df6bfc3c18e/repair-4-patch.json",
+      "hash": "e615d569ef082720ddc799091e67d97827045723efe2483dcd74223440044d48",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS03_c4b8f8d619f6/repair-5-patch.json",
+      "hash": "028c9d3304765b2cd9e5c1fdcfbb1743e58f13536192f4dd98849dd87cac15fa",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "490e107628ec13951a1470f57142e273403333f21b5e588c430ac543ffd54a16",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S03/candidate-cd8db96ee92f.json",
+  "candidate_hash": "cba60baa76a2669d61c3caa1121a6b15c1e36b9a6e2d4ff8f34b9243488ca580",
+  "last_review_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S03/review-cfdd533b052a.json",
+  "pending_operation": "strict_local_patch",
+  "pending_keys": [
+    "unit:S03.U12"
+  ],
+  "request_count_before": 105,
+  "patch_evidence": {
+    "schema_version": 1,
+    "operation": "strict_local_patch",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "a3eb0cd47799d28bc3e2c9e1768e6b8a4668faa0ad62951f71dae1dee6984071",
+    "patch_hash": "77c3909c6898f5dfd5d167df8c076e0cdb0892eada60eddcdc335bf779e0487c",
+    "result_section_hash": "d60b00c32f1c3e985ec02cf7a800a06fc1ed8dc47f2df5bb800cd8e1b7312695",
+    "allowed_unit_ids": [
+      "S03.U12"
+    ],
+    "changed_unit_ids": [
+      "S03.U12"
+    ],
+    "unit_order_preserved": true,
+    "unit_identity_and_metadata_preserved": true,
+    "non_target_units_preserved": true,
+    "original_calculation_count": 3,
+    "calculation_updates": [],
+    "calculation_additions": [],
+    "non_target_calculations_preserved": true,
+    "old_uncertainties_preserved": true,
+    "old_calculation_limitations_preserved": true,
+    "normalization": "NOT_RUN",
+    "math_check": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "proposal_key": "b/fd6736af6ef14be3/sS03_c4b8f8d619f6/repair-5-patch.json"
+  },
+  "reason": "Explicit global-repair seed; existing local counters retained"
+}

@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227",
+    "section_id": "S03",
+    "context_hash": "1f32866035f7eb263bff9c7dbf77bb5b544301cd5c93cc6e0eaf2ad117b42d10",
+    "base_hash": "0c7512748b63c42f3963cbaf8be05b4931b8483b563f537680da163318fba1ac",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "NEEDS_REPAIR",
+  "applied_rounds": 1,
+  "proposal_calls": 1,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "rule_id": "SERIES_FIRST_TERM_DOMAIN_REVIEW",
+      "severity": "review",
+      "message": "所列级数起点 n=1 时对数因子为零，分母为零；请核对公式、起点说明和教学语境是否一致。此扫描不自动修改正文。",
+      "location": {
+        "unit_id": "S03.U13",
+        "start": 162,
+        "end": 197,
+        "index_variable": "n",
+        "at_index": 1
+      },
+      "resolution_status": "open",
+      "evidence_type": "bounded_notation_review"
+    },
+    {
+      "unit_id": "S03.U06",
+      "severity": "review",
+      "message": "比较判别法证明在允许的边界 N=1 使用了尚未声明含义的空和。应明确空和为零的约定，或将 N=1 单独处理；也可说明不失一般性取 N≥2。定理本身及比较方向正确。",
+      "evidence": "S03.U05 允许 N 为任意正整数。S03.U06 在 n≥N 时写出 A_n=Σ_{k=1}^{N-1}a_k+Σ_{k=N}^{n}a_k；取最小合法指标 N=n=1，第一项成为 Σ_{k=1}^{0}a_k，并参与等式及上界论证。已核对本节及提供的 S01、S02 正文：部分和仅对正整数定义，未声明空和约定。"
+    },
+    {
+      "unit_id": "S03.U10",
+      "severity": "review",
+      "message": "p>1 情形的求和估计声称适用于任意正整数 m，但 m=1 时使用未声明的空和。请将该步范围改为 m≥2，并单独指出首个部分和有限，或统一明确空和为零。",
+      "evidence": "正文先对 n≥2 建立积分比较，随后写“对任意正整数 m”，并使用 Σ_{n=2}^{m}1/n^p≤∫_1^m x^{-p}dx。最小合法值 m=1 给出 Σ_{n=2}^{1}1/n^p；当前节及提供的先修正文没有空和约定。采用空和为零后此式成立，且一般收敛结论正确，但该约定不能视为已经明示。"
+    },
+    {
+      "unit_id": "S03.U09",
+      "severity": "review",
+      "message": "锁定目标中的一般几何参照级数尚未落实。应在本节基本参照级数的相关单元补充几何级数的一般形式、起点、公比适用范围及边界敛散结论，并从有限等比求和说明依据；不能仅以公比 1/2 的先前例题替代。无需因此扩展到本节不需要的任意符号级数理论。",
+      "evidence": "S03 锁定目标明确要求“掌握几何级数和p级数等基本参照级数”。S03.U09 及 U10 给出并证明了一般实参数 p 的分类，但本节 U01—U16 没有一般几何级数的陈述。已提供的 S01.U07 只处理 Σ2^{-n}，S02 的有关例练也限于该公比及有限项改变；有限等比数列求和虽列为先修知识，却不等于正文已落实一般无穷几何级数的敛散结论。"
+    }
+  ],
+  "unit_applied_counts": {
+    "S03.U12": 1
+  },
+  "proposal_counts_by_key": {
+    "unit:S03.U12": 1
+  },
+  "rejected_counts_by_key": {},
+  "evidence_dependencies": [
+    {
+      "key": "b/fd6736af6ef14be3/sS03_4728b49f0563/repair-1-patch.json",
+      "hash": "cacd37612ef1ba13547390e276d862288be82b005e44e15b238a7aff1d9f542e",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "17ea57b878e6d4b4cc30fcaa96cb5a15195e87f0c94ca1ccd896daaf84a6f75d",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1; tolerate one rejection per key, stop after another; retain aggregate calls and run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S03/candidate-9664e0913b08.json",
+  "candidate_hash": "78a3d27a2c852a22cb467d3aed39bd18ad027ed6809c7d0d7ca4bdd5db77c2bd",
+  "last_review_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S03/review-1dbf931385b9.json",
+  "pending_operation": "strict_local_patch",
+  "pending_keys": [
+    "unit:S03.U12"
+  ],
+  "request_count_before": 22,
+  "patch_evidence": {
+    "schema_version": 1,
+    "operation": "strict_local_patch",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "ebdfc86d801277480a98634c72a99248da531e95830f1575ee30f4df4b050427",
+    "patch_hash": "782b380ca30c1eb84d667700404676374b04f11d829c8f78ae7784d3a98e126f",
+    "result_section_hash": "0c7512748b63c42f3963cbaf8be05b4931b8483b563f537680da163318fba1ac",
+    "allowed_unit_ids": [
+      "S03.U12"
+    ],
+    "changed_unit_ids": [
+      "S03.U12"
+    ],
+    "unit_order_preserved": true,
+    "unit_identity_and_metadata_preserved": true,
+    "non_target_units_preserved": true,
+    "original_calculation_count": 2,
+    "calculation_updates": [],
+    "calculation_additions": [],
+    "non_target_calculations_preserved": true,
+    "old_uncertainties_preserved": true,
+    "old_calculation_limitations_preserved": true,
+    "normalization": "NOT_RUN",
+    "math_check": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "proposal_key": "b/fd6736af6ef14be3/sS03_4728b49f0563/repair-1-patch.json"
+  },
+  "reason": "Explicit global-repair seed; existing local counters retained"
+}

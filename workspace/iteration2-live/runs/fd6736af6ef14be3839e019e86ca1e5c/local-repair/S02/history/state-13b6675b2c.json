@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227",
+    "section_id": "S02",
+    "context_hash": "0827c9bc231d0ae64b5ca96dbc16b1569e35e94ba56f382a61b6bc4a736aacc1",
+    "base_hash": "4fad8be2d0e6cecdf09506795c71435528aa5cb4941334d05314b6073e3bcb01",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "NEEDS_REPAIR",
+  "applied_rounds": 1,
+  "proposal_calls": 2,
+  "rejected_proposals": 1,
+  "pending_issues": [
+    {
+      "rule_id": "MISSING_ASSOCIATED_ANSWER",
+      "severity": "blocking",
+      "unit_id": "S02.U18",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "rule_id": "MISSING_ASSOCIATED_ANSWER",
+      "severity": "blocking",
+      "unit_id": "S02.U19",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "rule_id": "MISSING_ASSOCIATED_ANSWER",
+      "severity": "blocking",
+      "unit_id": "S02.U20",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "unit_id": "S02.U18",
+      "severity": "blocking",
+      "message": "练习答案直接嵌入题目正文，违反锁定的练习答案位置条件。应保留题目作为本节练习，并将“答案：”及其解答移至讲义末尾；这不是由 JSON 单元顺序造成的误判，因为答案实际写在 exercise.tex 正文中。",
+      "evidence": "锁定计划 lecture.answers_location=\"end\"，且 S02.U17 明确写道“以下为本节练习，答案统一安排在讲义末尾”。但 S02.U18 的 tex 在题目后直接包含“答案：”及三小题的完整解答；rendering_contract 明确规定嵌入 exercise.tex 的答案不会被自动移至末尾。"
+    },
+    {
+      "unit_id": "S02.U19",
+      "severity": "blocking",
+      "message": "练习答案直接嵌入题目正文，违反锁定的练习答案位置条件。应将题目与答案分离，并把答案移至讲义末尾；答案中的数学计算本身未发现错误。",
+      "evidence": "锁定计划 lecture.answers_location=\"end\"。S02.U19 的 tex 在练习题后直接包含“答案：”和完整线性运算、有限项改变及反例解答；rendering_contract 明确说明嵌入 exercise.tex 的答案不会被自动 relocated。"
+    },
+    {
+      "unit_id": "S02.U20",
+      "severity": "blocking",
+      "message": "练习答案直接嵌入题目正文，违反锁定的练习答案位置条件。应将题目与答案分离，并把答案移至讲义末尾；答案中的余项、误差阈值和新级数求和计算本身未发现错误。",
+      "evidence": "锁定计划 lecture.answers_location=\"end\"。S02.U20 的 tex 在题目后直接包含“答案：”及完整解答；rendering_contract 明确规定题干内嵌答案不会被自动移至讲义末尾。"
+    }
+  ],
+  "unit_applied_counts": {
+    "S02.U18": 1,
+    "S02.U19": 1,
+    "S02.U20": 1
+  },
+  "proposal_counts_by_key": {
+    "unit:S02.U18": 2,
+    "unit:S02.U19": 2,
+    "unit:S02.U20": 2
+  },
+  "rejected_counts_by_key": {
+    "unit:S02.U18": 1,
+    "unit:S02.U19": 1,
+    "unit:S02.U20": 1
+  },
+  "evidence_dependencies": [
+    {
+      "key": "b/fd6736af6ef14be3/sS02_a3c5b831b6c6/candidate.json",
+      "hash": "fbe0234a6255d1dbb6d9a5aea13b907475df12024956309f831901516e14140b",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS02_a3c5b831b6c6/candidate-normalization.json",
+      "hash": "78f0734e4689b793d55392d277019214da48dd70f6f132fa13ba86bda6ebcf6a",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS02_a3c5b831b6c6/candidate-normalized.json",
+      "hash": "fbe0234a6255d1dbb6d9a5aea13b907475df12024956309f831901516e14140b",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS02_a3c5b831b6c6/repair-1-raw.json",
+      "hash": "220ba35b59bd1ea1e371bcb4beb32f96645d1943037a53fbf4c4b54fc09dbaf6",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS02_a3c5b831b6c6/review-0.json",
+      "hash": "fd85fb79636d32843618f11745fa1f1198e434a75a36bee21552c2e7a7c94ae3",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS02_a3c5b831b6c6/repair-1.json",
+      "hash": "1b65848900f3f9cef4d0380d44168bc7cdd736d2d9743dafacb21ac56cae531f",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS02_a3c5b831b6c6/review-1.json",
+      "hash": "cbce5ce7de39de4601cae96df6e872b7111cb800b0be5454e19f0d6296c92242",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS02_a3c5b831b6c6/repair-2-raw.json",
+      "hash": "8f57a746c5ce748722eed33db7d3882cf7e9a32a4900c2ee81f4294139ebc19c",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS02_a3c5b831b6c6/review-1.json",
+      "hash": "cbce5ce7de39de4601cae96df6e872b7111cb800b0be5454e19f0d6296c92242",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    }
+  ],
+  "last_review_context_hash": "3d53632f8ef09ddc98d17514a0a6c78b823f31e64f041de54f29770dc6f42262",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1; tolerate one rejection per key, stop after another; retain aggregate calls and run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S02/candidate-176b42adfb51.json",
+  "candidate_hash": "220ba35b59bd1ea1e371bcb4beb32f96645d1943037a53fbf4c4b54fc09dbaf6",
+  "legacy_import": {
+    "origin_candidate_key": "b/fd6736af6ef14be3/sS02_a3c5b831b6c6/candidate.json",
+    "origin_candidate_hash": "fbe0234a6255d1dbb6d9a5aea13b907475df12024956309f831901516e14140b",
+    "records": [
+      {
+        "number": 1,
+        "raw_key": "b/fd6736af6ef14be3/sS02_a3c5b831b6c6/repair-1-raw.json",
+        "raw_hash": "220ba35b59bd1ea1e371bcb4beb32f96645d1943037a53fbf4c4b54fc09dbaf6",
+        "review_key": "b/fd6736af6ef14be3/sS02_a3c5b831b6c6/review-0.json",
+        "review_hash": "fd85fb79636d32843618f11745fa1f1198e434a75a36bee21552c2e7a7c94ae3",
+        "status": "VERIFIED_APPLIED",
+        "applied_hash": "1b65848900f3f9cef4d0380d44168bc7cdd736d2d9743dafacb21ac56cae531f"
+      },
+      {
+        "number": 2,
+        "raw_key": "b/fd6736af6ef14be3/sS02_a3c5b831b6c6/repair-2-raw.json",
+        "raw_hash": "8f57a746c5ce748722eed33db7d3882cf7e9a32a4900c2ee81f4294139ebc19c",
+        "review_key": "b/fd6736af6ef14be3/sS02_a3c5b831b6c6/review-1.json",
+        "review_hash": "cbce5ce7de39de4601cae96df6e872b7111cb800b0be5454e19f0d6296c92242",
+        "status": "REJECTED_NOT_ADOPTED"
+      }
+    ],
+    "total_request_count_at_import": 11,
+    "old_reviewer_prompt_hash": "UNKNOWN_NOT_ARCHIVED",
+    "migration_policy": "Explicit patch-protocol migration: retain applied/rejected/proposal counters and all existing total requests; no budget reset."
+  },
+  "last_review_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S02/review-b6bd5022079b.json"
+}

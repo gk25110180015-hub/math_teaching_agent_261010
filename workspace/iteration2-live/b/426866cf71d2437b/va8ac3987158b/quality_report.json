@@ -1,0 +1,437 @@
+{
+  "content": {
+    "status": "PASS",
+    "evidence": [
+      "计划必需类型、题解关联及各节局部检查"
+    ],
+    "limitations": [
+      "课程难度与经济应用等语义要求需教师审核"
+    ]
+  },
+  "math": {
+    "status": "PASS",
+    "evidence": [
+      {
+        "section_id": "S01",
+        "math": {
+          "schema_version": 1,
+          "status": "PASS",
+          "issues": [],
+          "evidence": [
+            {
+              "kind": "limit",
+              "assumptions": {
+                "n": {
+                  "integer": true,
+                  "positive": true
+                }
+              },
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "status": "PASS",
+              "evidence_type": "symbolic_check_passed",
+              "result": "0",
+              "message": "在声明假设下符号结果与预期完全一致。",
+              "calculation_id": "S01.C01",
+              "unit_id": "S01.U05"
+            }
+          ],
+          "coverage": [
+            "S01.U01",
+            "S01.U02",
+            "S01.U03",
+            "S01.U04",
+            "S01.U05",
+            "S01.U06",
+            "S01.U07"
+          ],
+          "limitations": [
+            "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+            "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+          ]
+        },
+        "llm_review": {
+          "issues": [
+            {
+              "unit_id": "S01.U05",
+              "severity": "warning",
+              "message": "例题解答正确，但证明显式依赖实数的阿基米德性质；该性质未在当前节的 prerequisites 中列出。正文已将其声明为基础实数性质，因此不构成当前证明的错误，但正式讲义可在先修说明中补充这一依赖。",
+              "evidence": "U05 中写明“采用实数的阿基米德性质作为基础实数性质”，并据此对任意 ε>0 选择正整数 N>1/ε；该选择及随后 n>N⇒1/n<ε 均成立。"
+            }
+          ],
+          "checked_unit_ids": [
+            "S01.U01",
+            "S01.U02",
+            "S01.U03",
+            "S01.U04",
+            "S01.U05",
+            "S01.U06",
+            "S01.U07"
+          ],
+          "limitations": [
+            "本次仅核对 scope.scope=current_section 所提供的 S01 实际单元，checked_unit_ids 已覆盖 S01.U01–S01.U07；未核对待生成的 S02。",
+            "逐单元检查了定义域、量词顺序、正负号、端点条件以及唯一性证明和两个 ε–N 验证；未发现 blocking 或 review 级数学错误。",
+            "工具检查仅覆盖 S01.U05 中显式请求的极限表达式；工具通过不等于对整节内容的形式化证明。普通模型审阅同样不能替代形式化证明。"
+          ]
+        },
+        "issues": [
+          {
+            "unit_id": "S01.U05",
+            "severity": "warning",
+            "message": "例题解答正确，但证明显式依赖实数的阿基米德性质；该性质未在当前节的 prerequisites 中列出。正文已将其声明为基础实数性质，因此不构成当前证明的错误，但正式讲义可在先修说明中补充这一依赖。",
+            "evidence": "U05 中写明“采用实数的阿基米德性质作为基础实数性质”，并据此对任意 ε>0 选择正整数 N>1/ε；该选择及随后 n>N⇒1/n<ε 均成立。"
+          }
+        ],
+        "mock": false,
+        "compile": {
+          "status": "PASS",
+          "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\426866cf71d2437b\\sS01_9a17873d92ed\\build\\lecture.pdf",
+          "issues": [],
+          "log_paths": [
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\426866cf71d2437b\\sS01_9a17873d92ed\\build\\pass-1.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\426866cf71d2437b\\sS01_9a17873d92ed\\build\\pass-1.tex.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\426866cf71d2437b\\sS01_9a17873d92ed\\build\\pass-2.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\426866cf71d2437b\\sS01_9a17873d92ed\\build\\pass-2.tex.log"
+          ],
+          "engine": {
+            "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+          },
+          "passes": 2,
+          "compile_mode": "trusted_local",
+          "isolation": "NOT_IMPLEMENTED",
+          "limitations": [
+            "原生可信本机编译不是文件系统或网络隔离沙箱。"
+          ],
+          "command": [
+            "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "-interaction=nonstopmode",
+            "-halt-on-error",
+            "-file-line-error",
+            "-no-shell-escape",
+            "-recorder",
+            "-synctex=1",
+            "-jobname=lecture",
+            "-output-directory=.",
+            "lecture.tex"
+          ],
+          "elapsed_seconds": 3.531,
+          "page_count": 2,
+          "pdf_sha256": "f746dc7bfc57b8948065a0d2690eda4068bb8a723ca1d4b8f8e60efafeba280c",
+          "auxiliary_hashes": {
+            ".aux": "749ec1c53b03b6a905726212988615c53a3bab18a31b84271988747c8d6ece95",
+            ".out": "6175b3a46b3c4f1ef55630afdf15767978275de12d950cb1d521d297a7bc7595"
+          }
+        },
+        "references": {
+          "status": "PASS",
+          "pending_labels": []
+        }
+      },
+      {
+        "section_id": "S02",
+        "math": {
+          "schema_version": 1,
+          "status": "PASS",
+          "issues": [],
+          "evidence": [
+            {
+              "kind": "limit",
+              "assumptions": {
+                "n": {
+                  "integer": true,
+                  "positive": true
+                }
+              },
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "status": "PASS",
+              "evidence_type": "symbolic_check_passed",
+              "result": "3/2",
+              "message": "在声明假设下符号结果与预期完全一致。",
+              "calculation_id": "S02.C01",
+              "unit_id": "S02.U09"
+            },
+            {
+              "kind": "limit",
+              "assumptions": {
+                "n": {
+                  "integer": true,
+                  "positive": true
+                }
+              },
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "status": "PASS",
+              "evidence_type": "symbolic_check_passed",
+              "result": "2",
+              "message": "在声明假设下符号结果与预期完全一致。",
+              "calculation_id": "S02.C02",
+              "unit_id": "S02.U12"
+            }
+          ],
+          "coverage": [
+            "S02.U01",
+            "S02.U02",
+            "S02.U03",
+            "S02.U04",
+            "S02.U05",
+            "S02.U06",
+            "S02.U07",
+            "S02.U08",
+            "S02.U09",
+            "S02.U10",
+            "S02.U11",
+            "S02.U12"
+          ],
+          "limitations": [
+            "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+            "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+            "所提交核算仅覆盖例题与练习的具体极限；协议不能表达任意数列的量词条件及其误差估计，因此不覆盖常数数列与四则运算法则的一般证明，也不覆盖有限个初始项不影响极限的论证。"
+          ]
+        },
+        "llm_review": {
+          "issues": [],
+          "checked_unit_ids": [
+            "S02.U01",
+            "S02.U02",
+            "S02.U03",
+            "S02.U04",
+            "S02.U05",
+            "S02.U06",
+            "S02.U07",
+            "S02.U08",
+            "S02.U09",
+            "S02.U10",
+            "S02.U11",
+            "S02.U12"
+          ],
+          "limitations": [
+            "本次按 section_local 范围逐单元审阅 S02 正文；S01 所提供内容仅用于确认本节引用的定义、唯一性与基本极限的先修依赖，不构成对 S01 或整份讲义的审阅结论。",
+            "已核对本节的定义域、量词、符号、下标阈值、运算法则假设及例题和练习的推导，未发现需报告的问题。本节不涉及级数，未作级数必要或充分条件的审查。",
+            "乘法与商法则仅提供误差估计和证明说明，未逐项展开完整的 ε–N 证明；这符合本节锁定的证明安排，相关估计及非零条件已核对。",
+            "练习解答在所提供本节单元末尾；其在最终整份讲义中的实际排版位置不属于本次局部正文能够确认的事项。",
+            "本结论来自普通模型对正文的数学审阅，不等于形式化证明；未将作者自评或工具 PASS 作为正文正确性的替代证据，也不能据此保证不存在遗漏错误。"
+          ]
+        },
+        "issues": [],
+        "mock": false,
+        "compile": {
+          "status": "PASS",
+          "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\426866cf71d2437b\\sS02_285d9ce0988b\\build\\lecture.pdf",
+          "issues": [],
+          "log_paths": [
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\426866cf71d2437b\\sS02_285d9ce0988b\\build\\pass-1.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\426866cf71d2437b\\sS02_285d9ce0988b\\build\\pass-1.tex.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\426866cf71d2437b\\sS02_285d9ce0988b\\build\\pass-2.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\426866cf71d2437b\\sS02_285d9ce0988b\\build\\pass-2.tex.log"
+          ],
+          "engine": {
+            "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+          },
+          "passes": 2,
+          "compile_mode": "trusted_local",
+          "isolation": "NOT_IMPLEMENTED",
+          "limitations": [
+            "原生可信本机编译不是文件系统或网络隔离沙箱。"
+          ],
+          "command": [
+            "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "-interaction=nonstopmode",
+            "-halt-on-error",
+            "-file-line-error",
+            "-no-shell-escape",
+            "-recorder",
+            "-synctex=1",
+            "-jobname=lecture",
+            "-output-directory=.",
+            "lecture.tex"
+          ],
+          "elapsed_seconds": 3.75,
+          "page_count": 5,
+          "pdf_sha256": "3fd249acb73ce4fc6dc04f875e4b2e53290b74ee09e067bd2f235d00766164fd",
+          "auxiliary_hashes": {
+            ".aux": "bf4b94d7c30a7e88b44e1690fc624704b158887fafbff031ffdbfb1a429db563",
+            ".out": "6c5b58b90d4d035beb25c68314083e811a423908db3fc8fddc5fc1ade9af6459"
+          }
+        },
+        "references": {
+          "status": "PASS",
+          "pending_labels": []
+        }
+      },
+      {
+        "global_interface": [
+          "S01",
+          "S02"
+        ],
+        "review": {
+          "issues": [
+            {
+              "unit_id": "S01.U07",
+              "severity": "warning",
+              "message": "按所提供的正文单元顺序，第一节练习解答位于第二节之前，未体现锁定的“练习答案统一置于讲义末尾”要求。这不影响数学正确性；若排版阶段会统一移动解答，则需以最终顺序复核。",
+              "evidence": "lecture.answers_location 锁定为 end；S01.U07 已给出 S01.U06 的完整参考解答，随后仍有 S02.U01—S02.U12。只有 S02.U12 标有“讲义末尾练习参考解答（本节）”，当前正文未显示 S01.U07 也被移至末尾。"
+            }
+          ],
+          "checked_unit_ids": [
+            "S01.U01",
+            "S01.U02",
+            "S01.U03",
+            "S01.U04",
+            "S01.U05",
+            "S01.U06",
+            "S01.U07",
+            "S02.U01",
+            "S02.U02",
+            "S02.U03",
+            "S02.U04",
+            "S02.U05",
+            "S02.U06",
+            "S02.U07",
+            "S02.U08",
+            "S02.U09",
+            "S02.U10",
+            "S02.U11",
+            "S02.U12"
+          ],
+          "limitations": [
+            "本次仅核对所提供的 S01、S02 相邻正文及其依赖接口，未对范围外内容作结论，也未依据作者自评判定正确性。",
+            "已核对上述单元的实数与正整数定义域、ε–N 量词顺序、严格不等式及阈值选择、唯一性证明、四则运算法则假设、最终非零分母与有限初始项处理，以及例题和练习计算；未发现确定的数学错误。正文不涉及级数或区间端点，未对这些未出现的内容作额外结论。",
+            "S01.U05 明确陈述并采用阿基米德性质，S01.U07 据此选择阈值；该基础实数性质未在正文中证明。乘法与商法则提供的是误差估计说明而非完整逐量词证明，符合锁定的证明深度安排。",
+            "未提供最终排版结果，无法确认练习解答是否会在组装时统一移至讲义末尾。",
+            "这是普通模型的数学正文审阅，不等于形式化证明或机器验证；未发现其他问题不保证不存在遗漏。"
+          ]
+        }
+      }
+    ],
+    "limitations": [
+      "同模型分角色审阅不是形式化证明；未支持或未请求的核算仍需人工复核"
+    ]
+  },
+  "fidelity": {
+    "status": "NOT_APPLICABLE",
+    "evidence": [],
+    "limitations": []
+  },
+  "compile": {
+    "status": "PASS",
+    "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\426866cf71d2437b\\va8ac3987158b\\build\\lecture.pdf",
+    "issues": [],
+    "log_paths": [
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\426866cf71d2437b\\va8ac3987158b\\build\\pass-1.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\426866cf71d2437b\\va8ac3987158b\\build\\pass-1.tex.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\426866cf71d2437b\\va8ac3987158b\\build\\pass-2.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\426866cf71d2437b\\va8ac3987158b\\build\\pass-2.tex.log"
+    ],
+    "engine": {
+      "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+    },
+    "passes": 2,
+    "compile_mode": "trusted_local",
+    "isolation": "NOT_IMPLEMENTED",
+    "limitations": [
+      "原生可信本机编译不是文件系统或网络隔离沙箱。"
+    ],
+    "command": [
+      "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "-no-shell-escape",
+      "-recorder",
+      "-synctex=1",
+      "-jobname=lecture",
+      "-output-directory=.",
+      "lecture.tex"
+    ],
+    "elapsed_seconds": 3.719,
+    "page_count": 5,
+    "pdf_sha256": "da08307ba65b8cee1ae259fade77d05d2e2195412ea9bdae3684a58aa8df7605",
+    "auxiliary_hashes": {
+      ".aux": "bf4b94d7c30a7e88b44e1690fc624704b158887fafbff031ffdbfb1a429db563",
+      ".out": "6c5b58b90d4d035beb25c68314083e811a423908db3fc8fddc5fc1ade9af6459"
+    }
+  },
+  "layout": {
+    "status": "PASS",
+    "evidence": {
+      "page_count": 5,
+      "all_rendered": true
+    },
+    "limitations": [
+      "几何检查是启发式，只能定位可测风险，不能证明所有正文均无裁切或遮挡。",
+      "尚未做模型视觉复核或教师人工逐页审核；每页图片及哈希供独立审核。",
+      "数学上下标的自然小字号不判为违规；PDF 文字提取不是数学内容真值。",
+      "正文安全区为未校准初始估计，实际主题区域需通过探针和人工复核校准。"
+    ]
+  },
+  "policy": {
+    "status": "NEEDS_REVIEW",
+    "evidence": {
+      "schema_version": 1,
+      "decisions": [
+        {
+          "decision_id": "3fdf52991075453ea3a00fcc080019ee",
+          "resolved_effects": {
+            "value": "key"
+          },
+          "status": "NEEDS_REVIEW",
+          "artifact": "lecture.tex",
+          "artifact_hash": "7be34a8bb53c0ab9d7c88def7297489e11137f4939b82eca725753a12258d933",
+          "evidence": "需教师检查具体语义是否落实"
+        },
+        {
+          "decision_id": "d9f2e3f756a04b4487b75f42792cc8c7",
+          "resolved_effects": {
+            "value": "balanced"
+          },
+          "status": "NEEDS_REVIEW",
+          "artifact": "lecture.tex",
+          "artifact_hash": "7be34a8bb53c0ab9d7c88def7297489e11137f4939b82eca725753a12258d933",
+          "evidence": "需教师检查具体语义是否落实"
+        },
+        {
+          "decision_id": "c1e3a2c6030e409c8325984b27cb3030",
+          "resolved_effects": {
+            "value": "with_answers"
+          },
+          "status": "PASS",
+          "artifact": "lecture.tex",
+          "artifact_hash": "7be34a8bb53c0ab9d7c88def7297489e11137f4939b82eca725753a12258d933",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        },
+        {
+          "decision_id": "d27351cb49aa4167bb567fc01bd4b130",
+          "resolved_effects": {
+            "value": "end"
+          },
+          "status": "PASS",
+          "artifact": "lecture.tex",
+          "artifact_hash": "7be34a8bb53c0ab9d7c88def7297489e11137f4939b82eca725753a12258d933",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        }
+      ],
+      "limitations": [
+        "语义自定义不能仅凭模型自评当作落实；发布前须人工审阅质量报告。"
+      ]
+    },
+    "limitations": []
+  },
+  "security": {
+    "status": "PASS",
+    "evidence": [
+      "回环服务、受控源码、编译参数及白名单子进程环境"
+    ],
+    "limitations": [
+      "trusted_local 不是文件系统/网络隔离沙箱"
+    ]
+  },
+  "schema_version": 1,
+  "provider": "live",
+  "human_visual_review": "NOT_RUN",
+  "model_visual_review": "NOT_RUN",
+  "issues": []
+}

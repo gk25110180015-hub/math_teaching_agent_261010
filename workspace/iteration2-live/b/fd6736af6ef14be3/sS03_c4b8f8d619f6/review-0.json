@@ -1,0 +1,153 @@
+{
+  "section_id": "S03",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "series",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "domain_scope": "supported_tail_guards",
+        "limitations": [
+          "以起点加非负整数代入，检查已保留的受支持运算定义域约束；不是通用定义域证明器。"
+        ],
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": true,
+        "message": "级数收敛性核算与声明一致。",
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U09"
+      },
+      {
+        "kind": "series",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "domain_scope": "supported_tail_guards",
+        "limitations": [
+          "以起点加非负整数代入，检查已保留的受支持运算定义域约束；不是通用定义域证明器。"
+        ],
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": false,
+        "message": "级数收敛性核算与声明一致。",
+        "calculation_id": "S03.C02",
+        "unit_id": "S03.U09"
+      },
+      {
+        "kind": "limit",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "3",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S03.C03",
+        "unit_id": "S03.U14"
+      }
+    ],
+    "coverage": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10",
+      "S03.U11",
+      "S03.U12",
+      "S03.U13",
+      "S03.U14",
+      "S03.U15",
+      "S03.U16"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "协议的 series 核算只能对给定的具体幂指数核对收敛性，不能直接表达定理中对所有实数 $p$ 的量词；比较判别法、极限比较判别法和积分判别法的普遍证明由正文完成。",
+      "S03.U12 使用一般连续正值单调递减函数的积分比较及部分和有界性；现有核算协议不支持一般函数、定积分或不等式证明，不能直接核算本次修复中的两向推理。",
+      "新增的几何级数说明涉及有限求和及公比区间 0<r<1、r>1 的分类。现有 JSON AST 不支持有限求和表达式，布尔假设也不能直接表示这些区间约束；本次未对该一般参数结论新增符号核算，依据在正文中以有限等比求和和数列极限给出。原有两项具体 p-级数核算保持不变。",
+      "新增核算仅覆盖 S03.U14 中第 (1) 项极限比较解法的比值极限。正项性、比较判别法及 $p=2$ 级数收敛性由正文结论承担，现有核算协议不能替代这些一般论证。"
+    ]
+  },
+  "llm_review": {
+    "issues": [
+      {
+        "unit_id": "S03.U12",
+        "severity": "review",
+        "message": "S03.U12 完整证明了积分判别法的两个方向：由积分夹逼推出部分和有界，以及由级数收敛推出截断积分有界。锁定计划的排除项明确写有“不系统展开高等数学中的积分判别法证明细节”，而 S03 目标只要求“掌握积分判别法的使用条件”。若按该排除项，应只保留定理条件与应用说明，或大幅压缩证明；但 proof_policy=key 又可能被解读为关键定理完整证明，二者存在范围冲突，需按锁定条件处理。",
+        "evidence": "plan.exclusions 包含“不系统展开高等数学中的积分判别法证明细节”；S03 objectives 包含“掌握比较判别法、极限比较判别法和积分判别法的使用条件”；S03.U12 正文给出从 f(n+1)≤∫_n^{n+1}f≤f(n) 到两方向收敛等价的完整证明。"
+      }
+    ],
+    "checked_unit_ids": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10",
+      "S03.U11",
+      "S03.U12",
+      "S03.U13",
+      "S03.U14",
+      "S03.U15",
+      "S03.U16"
+    ],
+    "limitations": [
+      "本次仅审阅当前范围 S03 的实际单元 S03.U01–S03.U16，未评估尚未生成的 S04、S05。",
+      "工具检查 PASS 只覆盖显式核算表达式，不构成一般数学证明或形式化验证。",
+      "未对最终 PDF 组装或答案位置作最终验收；按 rendering_contract，S03.U16 是独立 solution 单元，不应仅因 JSON 顺序推断答案位置错误。",
+      "除上述积分判别法证明范围冲突外，未发现其他数学错误或必要推理缺口。"
+    ]
+  },
+  "issues": [
+    {
+      "unit_id": "S03.U12",
+      "severity": "review",
+      "message": "S03.U12 完整证明了积分判别法的两个方向：由积分夹逼推出部分和有界，以及由级数收敛推出截断积分有界。锁定计划的排除项明确写有“不系统展开高等数学中的积分判别法证明细节”，而 S03 目标只要求“掌握积分判别法的使用条件”。若按该排除项，应只保留定理条件与应用说明，或大幅压缩证明；但 proof_policy=key 又可能被解读为关键定理完整证明，二者存在范围冲突，需按锁定条件处理。",
+      "evidence": "plan.exclusions 包含“不系统展开高等数学中的积分判别法证明细节”；S03 objectives 包含“掌握比较判别法、极限比较判别法和积分判别法的使用条件”；S03.U12 正文给出从 f(n+1)≤∫_n^{n+1}f≤f(n) 到两方向收敛等价的完整证明。"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 4,
+    "proposal_calls": 4,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "a3eb0cd47799d28bc3e2c9e1768e6b8a4668faa0ad62951f71dae1dee6984071",
+      "tool_checks_hash": "3c9c6a8f9a3953d951132e159a8d1cea47004c57577def25e065c68e3cfedae3",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "025f95eac8d7c39ad421ba73e5d5cde9ebe99234a78ff75f4b370320b6723cd1",
+      "deterministic_checks_hash": "9a2a8a625e6ac42c47bbb9e07c1794b98b61906c6c1814bc4eecd387e4f3cdfd"
+    }
+  }
+}

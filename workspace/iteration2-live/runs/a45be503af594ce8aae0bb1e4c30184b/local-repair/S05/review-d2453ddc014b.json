@@ -1,0 +1,105 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "aa5062cf9f770f3f4eb56e3dfe29bbb040011a9e277de69ec00c6853386e13a4",
+    "tool_checks_hash": "16a761fe656ccc5a95f9b1bfa7dbf221feb86587c52cb1cdfd70654f0f0256b3",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "35220bc4d2e29a31596d39b0ef4aae6c189f0855a1caa72e08e47eba7c32b036",
+    "deterministic_checks_hash": "cfac747d3e7d4648e63f818c35384c5d794b7f0c97201028d1e86d4b3fc6ed39"
+  },
+  "report": {
+    "section_id": "S05",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "equivalence",
+          "assumptions": {
+            "x": {
+              "real": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "x**2 - 4*x + 5",
+          "message": "在声明假设下符号差为零。",
+          "calculation_id": "S05.C01",
+          "unit_id": "S05.U12"
+        }
+      ],
+      "coverage": [
+        "S05.U01",
+        "S05.U02",
+        "S05.U03",
+        "S05.U04",
+        "S05.U05",
+        "S05.U06",
+        "S05.U07",
+        "S05.U08",
+        "S05.U09",
+        "S05.U10",
+        "S05.U11",
+        "S05.U12",
+        "S05.U13",
+        "S05.U14",
+        "S05.U15",
+        "S05.U16",
+        "S05.U17",
+        "S05.U18",
+        "S05.U19",
+        "S05.U20",
+        "S05.U21",
+        "S05.U22"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "代表核算仅覆盖 S05.U12 明示对所有实数成立的配方恒等式，不覆盖区间上的不等式、最值取得及根的个数判断。",
+        "协议没有表示一般连续函数、闭区间套、上确界及存在量词的操作，不能核算本节一般定理的证明；其布尔假设也不能完整表达经济模型中的有限价格区间与一般函数单调性条件。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S05.U01",
+        "S05.U02",
+        "S05.U03",
+        "S05.U04",
+        "S05.U05",
+        "S05.U06",
+        "S05.U07",
+        "S05.U08",
+        "S05.U09",
+        "S05.U10",
+        "S05.U11",
+        "S05.U12",
+        "S05.U13",
+        "S05.U14",
+        "S05.U15",
+        "S05.U16",
+        "S05.U17",
+        "S05.U18",
+        "S05.U19",
+        "S05.U20",
+        "S05.U21",
+        "S05.U22"
+      ],
+      "limitations": [
+        "本次为普通模型逐单元审阅，不是形式化证明；未进行最终 PDF 渲染、教学验收或教师审批。",
+        "已核对 S05 当前节全部单元定义、定理陈述、证明、例题、练习与解答；未发现需报告的 blocking/review 数学问题。",
+        "工具核算仅覆盖 S05.U12 的配方恒等式，未形式化验证一般闭区间连续函数定理及经济模型一般性结论。",
+        "S05.U01 明确将上确界性质与闭区间套性质作为实数基础性质使用，且不展开完备性证明；本次按范围说明未视为违规，但该依赖仍属正文未证明的基础。",
+        "未核验最终答案重定位后的 PDF 排版；S05.U19 中“练习答案（讲义末尾）”标题与 S05.U20-S05.U22 经 rendering_contract 重定位后的衔接需由最终渲染确认。"
+      ]
+    },
+    "issues": [],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": []
+}

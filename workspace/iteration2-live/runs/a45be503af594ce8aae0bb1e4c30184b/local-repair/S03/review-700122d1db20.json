@@ -1,0 +1,84 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "5a5f65201e874f0094205dc5e6ccf83fa6a66ebb12c6e36ec6ea99f3a696e923",
+    "tool_checks_hash": "423fadec3ef019103c617c85b96da8b3a170628a80cc13931879bf355c5ebf6e",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "4a8d8fc48ad7c063d2d0df37834764296a396c654057b6fe7fd4bccdbb9d0a76",
+    "deterministic_checks_hash": "c6cbd5914b55563703a846e10e524d28bb71fd480fe949073253faa77e962639"
+  },
+  "report": {
+    "section_id": "S03",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "limit",
+          "assumptions": {
+            "x": {
+              "real": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "1",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S03.C01",
+          "unit_id": "S03.U03"
+        }
+      ],
+      "coverage": [
+        "S03.U01",
+        "S03.U02",
+        "S03.U03",
+        "S03.U04",
+        "S03.U05",
+        "S03.U06",
+        "S03.U07",
+        "S03.U08",
+        "S03.U09",
+        "S03.U10"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "协议支持的极限核算可以核对 $\\sin x/x$ 在 $x\\to0$ 时的代表性结论，但不能表达弧度制、三角函数的几何不等式或完整的夹逼证明。",
+        "协议中的布尔假设不能完整表达去心邻域和函数定义域条件；正文仍保留了 $x\\neq0$ 及相应表达式有定义的条件。",
+        "本次修正 S03.C01 的表达式树格式并重新提交请求，不将此前 UNKNOWN 记录视为核验通过。该请求仅覆盖 S03.U03 中的正弦基本极限，不覆盖指数基本极限及 S03.U06 中一般函数的等价替换证明。",
+        "S03.U01 的修订涉及一般函数的量词定义，以及绝对值趋于无穷与正、负无穷极限的区别；现有有界核算协议不能表达一般函数及其去心邻域量词条件，故不为该定义新增符号核算请求。",
+        "本次仅将证明中的内部单元标识改为定理的自然名称，不改变数学结论；一般函数的等价关系、去心邻域条件及极限乘法推理不能由现有 JSON AST 完整表达，本次不新增核算请求。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S03.U01",
+        "S03.U02",
+        "S03.U03",
+        "S03.U04",
+        "S03.U05",
+        "S03.U06",
+        "S03.U07",
+        "S03.U08",
+        "S03.U09",
+        "S03.U10"
+      ],
+      "limitations": [
+        "本次为 section_local 审阅，仅覆盖 S03 的 units 及提供的 S01/S02 先修正文；未审阅尚未生成的 S04/S05，也未进行最终 PDF 组装检查。",
+        "未从实数公理、指数函数或三角函数的严格解析构造出发验证正文引用的单位圆几何不等式 sin x < x < tan x 与指数不等式 1+t ≤ e^t ≤ 1/(1-t)；这些在正文中作为基本性质使用。",
+        "S03.U04 对单侧极限使用夹逼定理，虽为常规适配，但未在本节重述单侧版本；本次按常规推论接受，不构成形式化证明。",
+        "S03.U06 引用‘倒数极限定理’未给出独立 label，但该结论可由已提供的 S02.U02 商法则直接推出，本次不判为数学错误。",
+        "工具检查仅覆盖 S03.U03 的符号极限核算，不构成整节或整份讲义的形式化证明。"
+      ]
+    },
+    "issues": [],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": []
+}

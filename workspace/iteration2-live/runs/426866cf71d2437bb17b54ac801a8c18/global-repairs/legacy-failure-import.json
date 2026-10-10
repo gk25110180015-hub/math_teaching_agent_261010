@@ -1,0 +1,41 @@
+{
+  "source_key": "runs/426866cf71d2437bb17b54ac801a8c18/global_review_failure.json",
+  "source_hash": "7f3359e8de6d091ff38288b54364c41e7dec5e841be3258432b8a97fd3a71024",
+  "body_hashes_available": false,
+  "checkpoint_evidence": [
+    {
+      "section_id": "S01",
+      "output_hash": "d27e124f068afa548055df617588426312dea96c54b18843f7afd6d18ae4d0e8",
+      "source_key": "b/426866cf71d2437b/sS01_0064c951a9c7/source/lecture.tex",
+      "source_hash": "9b83ee1762d523078493a574e3bc88954660ac6b3d036c137c871d7ed7970475",
+      "generated_hash": "f76a4af0a1d117d267189c52ab61120315af8117132b5aeb4d3dc41cb9aac75b",
+      "status": "UNCHECKED_SEED"
+    },
+    {
+      "section_id": "S02",
+      "output_hash": "97314cd554e20a72553139af9b6c3b76195a89b43ef679752a4d959c11709410",
+      "source_key": "b/426866cf71d2437b/sS02_47cd465849aa/source/lecture.tex",
+      "source_hash": "4b28b3c61accbc9c02d7d33aa154de47f41121fb6e0de318b14e32b719fcc596",
+      "generated_hash": "bcc61db69b90113cf00d56b63331b3d06d74176e5fc21f4518beabadf78cf32a",
+      "status": "UNCHECKED_SEED"
+    }
+  ],
+  "issues": [
+    {
+      "unit_id": "S01.U05",
+      "severity": "review",
+      "message": "证明中断言对任意 ε>0 都存在正整数 N 满足 N>1/ε，但当前节正文没有说明或证明实数的阿基米德性质；在锁定先修条件中也未明确列出该性质。若要求证明严格闭合，应补充这一假设、引用可用结果，或将其明确作为基础实数性质采用。",
+      "evidence": "S01.U05 写道“这样的 N 对每个给定的 ε>0 都存在”，该存在性正是由阿基米德性质保证的，而已提供单元只给出 ε–N 定义及 1/n 的验证。"
+    },
+    {
+      "unit_id": "S01.U07",
+      "severity": "review",
+      "message": "练习解答同样使用了对任意 ε>0 存在正整数 N>3/ε 的结论，但未说明其依据。若不把阿基米德性质视为未声明的实数基础公理，则该证明的 N 的存在性仍缺少依赖说明。",
+      "evidence": "S01.U07 写道“取正整数 N 满足 N>3/ε”，但当前提供的先修条件和 S01 正文均未声明阿基米德性质或相应的整数逼近结论。"
+    }
+  ],
+  "teacher_visual_review": "NOT_RUN",
+  "limitations": [
+    "旧审阅没有正文哈希；按实际单元ID保守继承疑点，已验证checkpoint及源文件哈希，所有受影响内容仍须重新检查。"
+  ]
+}

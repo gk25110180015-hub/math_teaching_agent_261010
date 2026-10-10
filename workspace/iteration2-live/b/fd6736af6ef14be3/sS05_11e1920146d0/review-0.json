@@ -1,0 +1,142 @@
+{
+  "section_id": "S05",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "limit",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "1/2",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S05.C01",
+        "unit_id": "S05.U11"
+      },
+      {
+        "kind": "series",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "domain_scope": "supported_tail_guards",
+        "limitations": [
+          "以起点加非负整数代入，检查已保留的受支持运算定义域约束；不是通用定义域证明器。"
+        ],
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": false,
+        "message": "级数收敛性核算与声明一致。",
+        "calculation_id": "S05.C02",
+        "unit_id": "S05.U11"
+      },
+      {
+        "kind": "limit",
+        "assumptions": {
+          "m": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "1/2",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S05.C03",
+        "unit_id": "S05.U20"
+      }
+    ],
+    "coverage": [
+      "S05.U01",
+      "S05.U02",
+      "S05.U03",
+      "S05.U04",
+      "S05.U05",
+      "S05.U06",
+      "S05.U07",
+      "S05.U08",
+      "S05.U09",
+      "S05.U10",
+      "S05.U11",
+      "S05.U12",
+      "S05.U13",
+      "S05.U14",
+      "S05.U15",
+      "S05.U16",
+      "S05.U17",
+      "S05.U18",
+      "S05.U19",
+      "S05.U20",
+      "S05.U21"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "核算请求覆盖具体通项极限、具体绝对值级数的发散性与几何部分和的极限；协议不支持任意实数列的量化关系及一般不等式证明，因此绝对收敛蕴含收敛、三类划分和一般余项界由正文论证，不由这些核算替代。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S05.U01",
+      "S05.U02",
+      "S05.U03",
+      "S05.U04",
+      "S05.U05",
+      "S05.U06",
+      "S05.U07",
+      "S05.U08",
+      "S05.U09",
+      "S05.U10",
+      "S05.U11",
+      "S05.U12",
+      "S05.U13",
+      "S05.U14",
+      "S05.U15",
+      "S05.U16",
+      "S05.U17",
+      "S05.U18",
+      "S05.U19",
+      "S05.U20",
+      "S05.U21"
+    ],
+    "limitations": [
+      "本审阅为 S05 节内局部数学复核；S01-S04 仅作为已提供先修依据核对 S05 的引用条件，未重新完整证明其定理。",
+      "未执行形式化证明或最终 PDF/TeX 编译检查；label/ref 的有效性依据上下文 reference_registry 与已提供正文判断。",
+      "部分证明采用紧凑的标准比较论证，例如 S05.U07 未逐步展开极限比较判别法的两个方向，但所需不等式与条件均已给出，未发现数学缺口。",
+      "未将独立 solution 单元的 JSON 顺序视为答案位置错误；最终答案区与实际排版位置需由最终 PDF 检查另行确认。"
+    ]
+  },
+  "issues": [],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 1,
+    "proposal_calls": 1,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "7203b25274d95c4822a4a4c7b91eaf554795b4fc91ff2515d5377b049a67460a",
+      "tool_checks_hash": "b4370d47f0908781002a77b0c2f8f279b8b9a35751845167231c2553d5714b87",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "900b10d5b34abe8b81241d72b6eaeb8458cda8a77249425dbf0b6d22e0d6b175",
+      "deterministic_checks_hash": "ce7f449416a47260036030fdbadd5c393356a0c07a3bbc372daeca97091623bd"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+    "model": "gpt-6-astra",
+    "provider": "live",
+    "repair_prompt_hash": "46c1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9",
+    "written_schema_hash": "4e9b07e27f359212c0460381e3cbd6e548d18a48490e553e60b0c56d30d9ada7",
+    "normalizer_hash": "25d2fff448b21fcad71b5e7aae512cf6ab27f66bdeefd9e459ca57652a1fd74c"
+  },
+  "rounds_used": 1,
+  "phase": "checking",
+  "sections": {
+    "S03": {
+      "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r1-37ae927f/S03-locally-checked-2b2e2057.json",
+      "candidate_hash": "6432ef291a5fa5092a6dc4e1731b17a9da7f7f19c78849cb7e80caeeb041e5b3"
+    },
+    "S04": {
+      "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r1-37ae927f/S04-locally-checked-c30ac4fa.json",
+      "candidate_hash": "fa8a07176b0d4cbc1fd5a427619c463d135d3f48b9aacded8cf670c3fb87e00b"
+    },
+    "S05": {
+      "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r1-37ae927f/S05-before.json",
+      "candidate_hash": "966e8bf52a7460b18680d6427b5a685a653ec269f32221b1645c9139a6a272dc"
+    }
+  },
+  "pending": [],
+  "teacher_visual_review": "NOT_RUN",
+  "round_directory": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r1-37ae927f",
+  "issues": [
+    {
+      "unit_id": "S04.U03",
+      "severity": "review",
+      "message": "无穷间断点的分类依赖单侧无穷极限，但当前正文未定义 lim_{x→x_0^+} f(x)=+∞ 等量词条件：S03.U01 只定义了双侧去心邻域下的绝对值无穷大和带符号无穷极限，S01.U02 只定义了单侧有限极限。因此该分类条件缺少形式化定义，建议在 S03.U01 或 S04 中明确单侧无穷极限后再使用。",
+      "evidence": "S04.U03 写：'若至少有一个单侧极限为 +∞ 或 -∞，即函数值沿相应方向趋于正无穷或负无穷，则称 x0 为无穷间断点。' 但 S03.U01 的无穷大与 +∞/-∞ 定义均用 '0<|x-x0|<δ'（双侧去心邻域），S01.U02 只把左、右极限定义为有限常数 A_-、A_+。"
+    },
+    {
+      "unit_id": "S03.U05",
+      "severity": "review",
+      "message": "等价无穷小替换定理的正式陈述和证明只处理乘积结构 F(x)α(x)；商情形的替换只在结尾用'通过倒数改写后满足同样条件的商结构'一句带过，没有给出商极限替换的精确条件、量词或证明，也没有商结构例题/练习。S03 的锁定目标要求'在乘积和商的极限中进行规范替换'，因此商替换这一核心目标尚未规范落实。",
+      "evidence": "S03.U05 定理：'若 ... lim F(x)α(x)=L ... 则 lim F(x)β(x)=L'；S03.U06 的证明只推出 F(x)β(x)=F(x)α(x)·β/α 的乘积极限，并末尾称'该结论适用于...通过倒数改写后满足同样条件的商结构'。S03.U07/U08、S03.U09/U10 均为乘积型例子/练习。"
+    },
+    {
+      "unit_id": "S04.U03",
+      "severity": "review",
+      "message": "间断点定义存在逻辑范围不一致：首句以“f 在 x0 处不连续”界定间断点，但连续性按 S04.U01 要求 f(x0) 有定义；同一单元又把“f(x0) 未定义”列为可去间断点，导致 x0 是否必须属于定义域不清楚。建议明确“不连续”包含 f(x0) 未定义，或改写为：f 在 x0 的去心邻域有定义，且 f(x0) 未定义或 f 在该点不连续（当有定义时），则称 x0 为间断点。",
+      "evidence": "原文：“设函数 f 在点 x0 的某个去心邻域内有定义。若 f 在 x0 处不连续，则称 x0 为 f 的间断点。”随后：“若极限 lim_{x→x0} f(x) 存在且为有限数，但 f(x0) 未定义或 f(x0)≠lim_{x→x0} f(x)，则称 x0 为可去间断点。”"
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227",
+    "section_id": "S04",
+    "context_hash": "d594d5962e767f3be7499bfbe76faf41c48d7586841588100516b510408d6af5",
+    "base_hash": "40643e3b5cfda7956700cc7f43db493f40b0f2f4f91b4400f53468d389ef80b7",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "PROPOSAL_PENDING",
+  "applied_rounds": 1,
+  "proposal_calls": 2,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "rule_id": "NUMERIC_IS_NOT_PROOF",
+      "severity": "review",
+      "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+      "location": {
+        "calculation_id": "S04.C01",
+        "unit_id": "S04.U05"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S04.U02",
+      "severity": "blocking",
+      "message": "实际 tex 中存在成批的双反斜杠命令，不能按正常 LaTeX 数学命令解释。这不是 JSON 显示时正常的一层转义：解析 JSON 后，此处仍是两个反斜杠。应统一修复受影响正文的转义层级，否则判别法及后续公式、引用不能可靠呈现。",
+      "evidence": "S04.U02 的 JSON 写作 b_n\\\\geq0、\\\\[、\\\\sum 和 \\\\label，解析后分别成为双反斜杠开头的文本，而正常命令应为单反斜杠开头。S04.U01 和 S04.U05 的对应命令只有正常的一层 JSON 转义，可直接对照。相同问题出现在 S04.U03、U04 及 U06—U13。提供的 rendering_contract 说明答案搬移规则，没有声明会再解码或归一化这些 tex 命令。"
+    },
+    {
+      "unit_id": "S04.U06",
+      "severity": "review",
+      "message": "本节实际正文尚未落实锁定的“区分收敛性与绝对收敛性、通过例题判断条件收敛”目标。交错调和级数已经证明收敛，但没有比较绝对值级数并得出条件收敛结论；另一处直接使用“绝对收敛性”也未在当前正文解释该术语。可在本例补充简短的术语说明与分类，无需提前展开下一节的一般理论。",
+      "evidence": "S04.U06 仅得出交错调和级数收敛及 |S-S_n|≤1/(n+1)，没有结合已知调和级数发散说明其不绝对收敛、因而条件收敛。S04.U11(3) 写出绝对值级数收敛后称“还具有绝对收敛性”，但本节没有说明绝对收敛与条件收敛的含义，也没有任何条件收敛的实际分类。锁定 S04 目标明确包含这些内容；本问题针对当前例题与当前目标，不要求提供尚未生成的 S05。"
+    }
+  ],
+  "unit_applied_counts": {
+    "S04.U01": 1,
+    "S04.U05": 1
+  },
+  "proposal_counts_by_key": {
+    "unit:S04.U01": 1,
+    "unit:S04.U05": 2,
+    "unit:S04.U02": 1,
+    "unit:S04.U06": 1
+  },
+  "rejected_counts_by_key": {},
+  "evidence_dependencies": [
+    {
+      "key": "b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-1-patch.json",
+      "hash": "fc4b1fe4fdb05f9c0d41cabde751d13c07047849b6c61ae6fc3bdc4805fe052c",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "ba4b3e8a23d5ff3dc5b1c09b4c9a3bd682b532ac5539cdbece74d1183d1e1a0b",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1; tolerate one rejection per key, stop after another; retain aggregate calls and run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S04/candidate-f6741c9915e3.json",
+  "candidate_hash": "26a2b8ccc2ec0678c7a21be547093b69715bc58db9674a05962298c81454510d",
+  "last_review_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S04/review-36643e28bcb0.json",
+  "pending_operation": "strict_local_patch",
+  "pending_keys": [
+    "unit:S04.U02",
+    "unit:S04.U05",
+    "unit:S04.U06"
+  ],
+  "request_count_before": 29,
+  "patch_evidence": {
+    "schema_version": 1,
+    "operation": "strict_local_patch",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "40643e3b5cfda7956700cc7f43db493f40b0f2f4f91b4400f53468d389ef80b7",
+    "patch_hash": "234a39b2e77c2b767af093a0ccc694da54e935baa5dab899e0e6d3f9882dad15",
+    "result_section_hash": "17b379a1c5cd1c71d800dc42ae71fb1df2ab3431ae9f75827dce95381f8a4702",
+    "allowed_unit_ids": [
+      "S04.U01",
+      "S04.U05"
+    ],
+    "changed_unit_ids": [
+      "S04.U01",
+      "S04.U05"
+    ],
+    "unit_order_preserved": true,
+    "unit_identity_and_metadata_preserved": true,
+    "non_target_units_preserved": true,
+    "original_calculation_count": 1,
+    "calculation_updates": [],
+    "calculation_additions": [],
+    "non_target_calculations_preserved": true,
+    "old_uncertainties_preserved": true,
+    "old_calculation_limitations_preserved": true,
+    "normalization": "NOT_RUN",
+    "math_check": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "proposal_key": "b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-1-patch.json"
+  }
+}

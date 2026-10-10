@@ -1,0 +1,27 @@
+{
+  "status": "UNCHECKED_REPAIRED",
+  "state_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S04.json",
+  "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S04/candidate-1f19b7a36820.json",
+  "candidate_hash": "450cfef26fc136001da77831e8b0d7eb77a7ae3b1e510ddc42c8dad27b7cbc46",
+  "applied_rounds": 3,
+  "proposal_calls": 3,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "rule_id": "NUMERIC_IS_NOT_PROOF",
+      "severity": "review",
+      "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+      "location": {
+        "calculation_id": "S04.C01",
+        "unit_id": "S04.U05"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S04.U07",
+      "severity": "blocking",
+      "message": "余项估计证明及多个后续单元仍存在确定的 TeX 转义层级错误：JSON 解码后，公式命令前保留两个反斜杠，而不是一个。这会破坏数学环境、运算符或交叉引用，必须修复实际正文，不能仅按猜测出的公式阅读。",
+      "evidence": "S04.U07 的 tex 在 JSON 解码后含有两个反斜杠后接 [、geq、ref、leq 等形式。相同问题仍出现在 S04.U08、S04.U09、S04.U10、S04.U11、S04.U12、S04.U13；例如 S04.U11 的平方根命令、S04.U12 的余项不等式及定理引用均受影响。rendering_contract 仅规定独立解答的组装与搬移，没有规定再次解码或修复 TeX。与保留问题中的旧证据不同，当前 S04.U03、S04.U04 已使用正常的单反斜杠命令，不再属于该错误。"
+    }
+  ]
+}

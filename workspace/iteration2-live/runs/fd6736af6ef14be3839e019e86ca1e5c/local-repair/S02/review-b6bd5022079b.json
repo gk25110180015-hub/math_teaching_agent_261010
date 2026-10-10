@@ -1,0 +1,259 @@
+{
+  "prior_issues": [
+    {
+      "severity": "blocking",
+      "unit_id": "S02.U18",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "severity": "blocking",
+      "unit_id": "S02.U19",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "severity": "blocking",
+      "unit_id": "S02.U20",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "unit_id": "S02.U18",
+      "severity": "blocking",
+      "message": "练习答案直接嵌在本节题目正文中，违反已锁定的“答案统一放在讲义末尾”条件。同样的问题见 S02.U19、S02.U20。应保留本节练习题目，将答案正文移至讲义末尾；这些答案的数学内容本身未发现错误。",
+      "evidence": "锁定配置为 lecture.answers_location=\"end\"。S02.U17 也明确写道“以下为本节练习，答案统一安排在讲义末尾”，但 S02.U18 的同一 tex 正文紧随题目包含“答案：(1) 通项极限为 2/3…”及全部解答；S02.U19、S02.U20 同样在题目后直接包含“答案：”和完整计算。当前提供的正文没有将这些答案与本节题目分离。"
+    }
+  ],
+  "review_identity": {
+    "candidate_hash": "db46e9427174364b657889cb04f2ccd9748fdd0c72e357472020c259892ebaa4",
+    "tool_checks_hash": "67b9a1aba7098999d13753f849fa969b83ecab3c997e19b1342a792e05b0ef92",
+    "reviewer_prompt_hash": "86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc",
+    "plan_context_hash": "0827c9bc231d0ae64b5ca96dbc16b1569e35e94ba56f382a61b6bc4a736aacc1"
+  },
+  "report": {
+    "section_id": "S02",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "1",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S02.C01",
+          "unit_id": "S02.U05"
+        },
+        {
+          "kind": "series",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": false,
+          "message": "级数收敛性核算与声明一致。",
+          "calculation_id": "S02.C02",
+          "unit_id": "S02.U07"
+        },
+        {
+          "kind": "equivalence",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "4 - 2/2**n",
+          "message": "在声明假设下符号差为零。",
+          "calculation_id": "S02.C03",
+          "unit_id": "S02.U16"
+        }
+      ],
+      "coverage": [
+        "S02.U01",
+        "S02.U02",
+        "S02.U03",
+        "S02.U04",
+        "S02.U05",
+        "S02.U06",
+        "S02.U07",
+        "S02.U08",
+        "S02.U09",
+        "S02.U10",
+        "S02.U11",
+        "S02.U12",
+        "S02.U13",
+        "S02.U14",
+        "S02.U15",
+        "S02.U16",
+        "S02.U17",
+        "S02.U18",
+        "S02.U19",
+        "S02.U20"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "核算请求覆盖一个通项极限、调和级数的敛散性及一个部分和公式的代数变形；协议不能直接表达任意实数列及其部分和之间的量化关系，因此一般必要条件、线性运算和有限项改变性质由正文证明，不由这些核算替代。"
+      ]
+    },
+    "llm_review": {
+      "issues": [
+        {
+          "unit_id": "S02.U14",
+          "severity": "warning",
+          "message": "有限项改变定理的证明中存在端点量词偏差：定理假设仅保证对所有 n>N 有 a_n=b_n，但正文写成“对所有整数 n≥N”，并据此断言 B_n-A_n=∑_{k=1}^N(b_k-a_k)。当 n=N 时，a_N=b_N 未必成立；应将该处改为 n>N，或把假设改写为对所有 n≥N+1。该偏差不影响取极限的核心结论，但公式的适用端点需一致。",
+          "evidence": "S02.U13 的假设是“存在正整数 N，使得对所有整数 n>N 都有 a_n=b_n”；S02.U14 却写“对所有整数 n≥N，B_n-A_n=∑_{k=1}^{N}(b_k-a_k)”。若 a_N≠b_N，则 n=N 时左侧包含 b_N-a_N，右侧不包含该项。"
+        },
+        {
+          "unit_id": "S02.U18",
+          "severity": "blocking",
+          "message": "练习答案直接嵌入题目正文，违反锁定的练习答案位置条件。应保留题目作为本节练习，并将“答案：”及其解答移至讲义末尾；这不是由 JSON 单元顺序造成的误判，因为答案实际写在 exercise.tex 正文中。",
+          "evidence": "锁定计划 lecture.answers_location=\"end\"，且 S02.U17 明确写道“以下为本节练习，答案统一安排在讲义末尾”。但 S02.U18 的 tex 在题目后直接包含“答案：”及三小题的完整解答；rendering_contract 明确规定嵌入 exercise.tex 的答案不会被自动移至末尾。"
+        },
+        {
+          "unit_id": "S02.U19",
+          "severity": "blocking",
+          "message": "练习答案直接嵌入题目正文，违反锁定的练习答案位置条件。应将题目与答案分离，并把答案移至讲义末尾；答案中的数学计算本身未发现错误。",
+          "evidence": "锁定计划 lecture.answers_location=\"end\"。S02.U19 的 tex 在练习题后直接包含“答案：”和完整线性运算、有限项改变及反例解答；rendering_contract 明确说明嵌入 exercise.tex 的答案不会被自动 relocated。"
+        },
+        {
+          "unit_id": "S02.U20",
+          "severity": "blocking",
+          "message": "练习答案直接嵌入题目正文，违反锁定的练习答案位置条件。应将题目与答案分离，并把答案移至讲义末尾；答案中的余项、误差阈值和新级数求和计算本身未发现错误。",
+          "evidence": "锁定计划 lecture.answers_location=\"end\"。S02.U20 的 tex 在题目后直接包含“答案：”及完整解答；rendering_contract 明确规定题干内嵌答案不会被自动移至讲义末尾。"
+        }
+      ],
+      "checked_unit_ids": [
+        "S02.U01",
+        "S02.U02",
+        "S02.U03",
+        "S02.U04",
+        "S02.U05",
+        "S02.U06",
+        "S02.U07",
+        "S02.U08",
+        "S02.U09",
+        "S02.U10",
+        "S02.U11",
+        "S02.U12",
+        "S02.U13",
+        "S02.U14",
+        "S02.U15",
+        "S02.U16",
+        "S02.U17",
+        "S02.U18",
+        "S02.U19",
+        "S02.U20"
+      ],
+      "limitations": [
+        "本次审阅范围为 section_local，仅核对 S02 的 20 个实际单元及其对已提供 S01 内容的依赖；pending 的 S03、S04、S05 未纳入本节遗漏判断。",
+        "已结合显式工具核算证据检查部分极限、级数敛散性和代数变形，但工具抽查不能替代对一般量词、定理假设和完整证明的形式化验证。",
+        "普通模型逐单元审阅不是形式化证明；除所列问题外，仍不能据此断言整节或最终 PDF 在所有排版、引用和数学细节上均无误。"
+      ]
+    },
+    "issues": [
+      {
+        "rule_id": "MISSING_ASSOCIATED_ANSWER",
+        "severity": "blocking",
+        "unit_id": "S02.U18",
+        "message": "例题/练习缺少显式关联答案"
+      },
+      {
+        "rule_id": "MISSING_ASSOCIATED_ANSWER",
+        "severity": "blocking",
+        "unit_id": "S02.U19",
+        "message": "例题/练习缺少显式关联答案"
+      },
+      {
+        "rule_id": "MISSING_ASSOCIATED_ANSWER",
+        "severity": "blocking",
+        "unit_id": "S02.U20",
+        "message": "例题/练习缺少显式关联答案"
+      },
+      {
+        "unit_id": "S02.U14",
+        "severity": "warning",
+        "message": "有限项改变定理的证明中存在端点量词偏差：定理假设仅保证对所有 n>N 有 a_n=b_n，但正文写成“对所有整数 n≥N”，并据此断言 B_n-A_n=∑_{k=1}^N(b_k-a_k)。当 n=N 时，a_N=b_N 未必成立；应将该处改为 n>N，或把假设改写为对所有 n≥N+1。该偏差不影响取极限的核心结论，但公式的适用端点需一致。",
+        "evidence": "S02.U13 的假设是“存在正整数 N，使得对所有整数 n>N 都有 a_n=b_n”；S02.U14 却写“对所有整数 n≥N，B_n-A_n=∑_{k=1}^{N}(b_k-a_k)”。若 a_N≠b_N，则 n=N 时左侧包含 b_N-a_N，右侧不包含该项。"
+      },
+      {
+        "unit_id": "S02.U18",
+        "severity": "blocking",
+        "message": "练习答案直接嵌入题目正文，违反锁定的练习答案位置条件。应保留题目作为本节练习，并将“答案：”及其解答移至讲义末尾；这不是由 JSON 单元顺序造成的误判，因为答案实际写在 exercise.tex 正文中。",
+        "evidence": "锁定计划 lecture.answers_location=\"end\"，且 S02.U17 明确写道“以下为本节练习，答案统一安排在讲义末尾”。但 S02.U18 的 tex 在题目后直接包含“答案：”及三小题的完整解答；rendering_contract 明确规定嵌入 exercise.tex 的答案不会被自动移至末尾。"
+      },
+      {
+        "unit_id": "S02.U19",
+        "severity": "blocking",
+        "message": "练习答案直接嵌入题目正文，违反锁定的练习答案位置条件。应将题目与答案分离，并把答案移至讲义末尾；答案中的数学计算本身未发现错误。",
+        "evidence": "锁定计划 lecture.answers_location=\"end\"。S02.U19 的 tex 在练习题后直接包含“答案：”和完整线性运算、有限项改变及反例解答；rendering_contract 明确说明嵌入 exercise.tex 的答案不会被自动 relocated。"
+      },
+      {
+        "unit_id": "S02.U20",
+        "severity": "blocking",
+        "message": "练习答案直接嵌入题目正文，违反锁定的练习答案位置条件。应将题目与答案分离，并把答案移至讲义末尾；答案中的余项、误差阈值和新级数求和计算本身未发现错误。",
+        "evidence": "锁定计划 lecture.answers_location=\"end\"。S02.U20 的 tex 在题目后直接包含“答案：”及完整解答；rendering_contract 明确规定题干内嵌答案不会被自动移至讲义末尾。"
+      }
+    ],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": [
+    {
+      "rule_id": "MISSING_ASSOCIATED_ANSWER",
+      "severity": "blocking",
+      "unit_id": "S02.U18",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "rule_id": "MISSING_ASSOCIATED_ANSWER",
+      "severity": "blocking",
+      "unit_id": "S02.U19",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "rule_id": "MISSING_ASSOCIATED_ANSWER",
+      "severity": "blocking",
+      "unit_id": "S02.U20",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "unit_id": "S02.U18",
+      "severity": "blocking",
+      "message": "练习答案直接嵌入题目正文，违反锁定的练习答案位置条件。应保留题目作为本节练习，并将“答案：”及其解答移至讲义末尾；这不是由 JSON 单元顺序造成的误判，因为答案实际写在 exercise.tex 正文中。",
+      "evidence": "锁定计划 lecture.answers_location=\"end\"，且 S02.U17 明确写道“以下为本节练习，答案统一安排在讲义末尾”。但 S02.U18 的 tex 在题目后直接包含“答案：”及三小题的完整解答；rendering_contract 明确规定嵌入 exercise.tex 的答案不会被自动移至末尾。"
+    },
+    {
+      "unit_id": "S02.U19",
+      "severity": "blocking",
+      "message": "练习答案直接嵌入题目正文，违反锁定的练习答案位置条件。应将题目与答案分离，并把答案移至讲义末尾；答案中的数学计算本身未发现错误。",
+      "evidence": "锁定计划 lecture.answers_location=\"end\"。S02.U19 的 tex 在练习题后直接包含“答案：”和完整线性运算、有限项改变及反例解答；rendering_contract 明确说明嵌入 exercise.tex 的答案不会被自动 relocated。"
+    },
+    {
+      "unit_id": "S02.U20",
+      "severity": "blocking",
+      "message": "练习答案直接嵌入题目正文，违反锁定的练习答案位置条件。应将题目与答案分离，并把答案移至讲义末尾；答案中的余项、误差阈值和新级数求和计算本身未发现错误。",
+      "evidence": "锁定计划 lecture.answers_location=\"end\"。S02.U20 的 tex 在题目后直接包含“答案：”及完整解答；rendering_contract 明确规定题干内嵌答案不会被自动移至讲义末尾。"
+    }
+  ]
+}

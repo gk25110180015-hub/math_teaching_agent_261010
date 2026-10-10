@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "9e57a417de22ea8854850c2e7554dbb6603347d7547f552813e76f6cca122a2d",
+    "model": "gpt-6-astra",
+    "provider": "live",
+    "repair_prompt_hash": "46c1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9",
+    "written_schema_hash": "4e9b07e27f359212c0460381e3cbd6e548d18a48490e553e60b0c56d30d9ada7",
+    "normalizer_hash": "b15aa5b8543b0fd27a711e483be5c06d1064e4ca1083d30a6571c92689e63ddc"
+  },
+  "rounds_used": 1,
+  "phase": "validated",
+  "sections": {
+    "S01": {
+      "candidate_key": "runs/426866cf71d2437bb17b54ac801a8c18/global-repairs/r1-49fdf171/S01-locally-checked-632698c3.json",
+      "candidate_hash": "092acf31b5f64cf2e2f0cc5e04d39b05b1d89e68d5f53212dba4fc070143cbeb"
+    },
+    "S02": {
+      "candidate_key": "runs/426866cf71d2437bb17b54ac801a8c18/global-repairs/r1-49fdf171/S02-locally-checked-0a8db0d1.json",
+      "candidate_hash": "027b3c0f5b3e3543c8879dd6970efdab5e90cb676b302c0eff3d12253343be77"
+    }
+  },
+  "pending": [],
+  "teacher_visual_review": "NOT_RUN",
+  "round_directory": "runs/426866cf71d2437bb17b54ac801a8c18/global-repairs/r1-49fdf171",
+  "issues": [
+    {
+      "unit_id": "S01.U05",
+      "severity": "review",
+      "message": "证明中断言对任意 ε>0 都存在正整数 N 满足 N>1/ε，但当前节正文没有说明或证明实数的阿基米德性质；在锁定先修条件中也未明确列出该性质。若要求证明严格闭合，应补充这一假设、引用可用结果，或将其明确作为基础实数性质采用。",
+      "evidence": "S01.U05 写道“这样的 N 对每个给定的 ε>0 都存在”，该存在性正是由阿基米德性质保证的，而已提供单元只给出 ε–N 定义及 1/n 的验证。"
+    },
+    {
+      "unit_id": "S01.U07",
+      "severity": "review",
+      "message": "练习解答同样使用了对任意 ε>0 存在正整数 N>3/ε 的结论，但未说明其依据。若不把阿基米德性质视为未声明的实数基础公理，则该证明的 N 的存在性仍缺少依赖说明。",
+      "evidence": "S01.U07 写道“取正整数 N 满足 N>3/ε”，但当前提供的先修条件和 S01 正文均未声明阿基米德性质或相应的整数逼近结论。"
+    }
+  ]
+}

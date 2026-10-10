@@ -1,0 +1,133 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "6e5e8c24f9761326a9a9cfab675fdc3c67822a864f11dd5fd804f9d77240db13",
+    "tool_checks_hash": "282a1f53ec1d8c2c73724b16651c257635a40e5574e1811a812cabe2284f2d0b",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "875ccb9ee4867f93cf9dee01dac47273fe2ea81f29a6050e6388698a011c0f68",
+    "deterministic_checks_hash": "48f12ec92dc3230ab7988d90d58125d67f1efb4e2df479b1328293b19572eb79"
+  },
+  "report": {
+    "section_id": "S03",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "0",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S03.C01",
+          "unit_id": "S03.U12"
+        },
+        {
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "3/2",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S03.C02",
+          "unit_id": "S03.U14"
+        },
+        {
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "1/2",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S03.C03",
+          "unit_id": "S03.U17.answer"
+        }
+      ],
+      "coverage": [
+        "S03.U01",
+        "S03.U02",
+        "S03.U03",
+        "S03.U04",
+        "S03.U05",
+        "S03.U06",
+        "S03.U07",
+        "S03.U08",
+        "S03.U09",
+        "S03.U10",
+        "S03.U11",
+        "S03.U12",
+        "S03.U13",
+        "S03.U14",
+        "S03.U15",
+        "S03.U16",
+        "S03.U17",
+        "S03.U16.answer",
+        "S03.U17.answer"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "核算请求仅覆盖根式例题和有理式例题的具体极限；协议的表达式树不能表达夹逼定理及有界数列乘无穷小定理中关于任意数列、最终不等式和任意误差的量词结构，这些一般结论由正文证明支持。",
+        "新增核算仅请求核对 S03.U17 第 (1) 题的具体极限；它不核验两个答案中对所有正整数成立的不等式链，也不替代夹逼证明及乘积、商法则适用条件的论证。协议没有用于直接核验此类全称不等式证明的请求类型。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S03.U01",
+        "S03.U02",
+        "S03.U03",
+        "S03.U04",
+        "S03.U05",
+        "S03.U06",
+        "S03.U07",
+        "S03.U08",
+        "S03.U09",
+        "S03.U10",
+        "S03.U11",
+        "S03.U12",
+        "S03.U13",
+        "S03.U14",
+        "S03.U15",
+        "S03.U16",
+        "S03.U16.answer",
+        "S03.U17",
+        "S03.U17.answer"
+      ],
+      "limitations": [
+        "本次仅审查 section_local 范围内实际提供的 S03 单元，并使用所提供的 S01、S02 正文作为先修依据；S04、S05 尚未生成，不构成本节遗漏。",
+        "已核对定义域、量词、正负号、端点与最小正整数下标；未发现当前单元引用未定义项或首项公式失效的情形。",
+        "普通模型审阅不是形式化证明；工具核算仅覆盖列出的具体表达式，不能替代对一般量词、不等式链及全部证明步骤的形式化验证。",
+        "未发现需要报告的数学错误、重大不确定性或非阻塞限制；此结论不等同于最终排版、PDF 或整份课程计划验收。"
+      ]
+    },
+    "issues": [],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": []
+}

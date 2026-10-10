@@ -1,0 +1,1808 @@
+{
+  "content": {
+    "status": "PASS",
+    "evidence": [
+      "计划必需类型、题解关联及各节局部检查"
+    ],
+    "limitations": [
+      "课程难度与经济应用等语义要求需教师审核"
+    ]
+  },
+  "math": {
+    "status": "NEEDS_REVIEW",
+    "evidence": [
+      {
+        "section_id": "S01",
+        "math": {
+          "schema_version": 1,
+          "status": "PASS",
+          "issues": [],
+          "evidence": [
+            {
+              "kind": "equivalence",
+              "assumptions": {},
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "status": "PASS",
+              "evidence_type": "symbolic_check_passed",
+              "result": "7/8",
+              "message": "在声明假设下符号结果与预期完全一致。",
+              "calculation_id": "S01.C01",
+              "unit_id": "S01.U07"
+            }
+          ],
+          "coverage": [
+            "S01.U01",
+            "S01.U02",
+            "S01.U03",
+            "S01.U04",
+            "S01.U05",
+            "S01.U06",
+            "S01.U07",
+            "S01.U08",
+            "S01.U09"
+          ],
+          "limitations": [
+            "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+            "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+          ]
+        },
+        "llm_review": {
+          "issues": [],
+          "checked_unit_ids": [
+            "S01.U01",
+            "S01.U02",
+            "S01.U03",
+            "S01.U04",
+            "S01.U05",
+            "S01.U06",
+            "S01.U07",
+            "S01.U08",
+            "S01.U09"
+          ],
+          "limitations": [
+            "本次仅审阅 S01 所提供的全部九个单元，并逐项核对本节锁定目标；未审阅尚未生成的 S02—S05，也未作整份讲义的教学覆盖结论。",
+            "已核对定义与解释文字、收敛和发散的逻辑关系、部分和的指标起点、例练计算及证明依赖。本节以部分和数列的有限实数极限定义级数收敛；两道例练的计算与条件一致，未发现需要报告的具体问题。所用有限等比求和及数列极限性质属于已声明先修。",
+            "按 rendering_contract，S01.U09 是关联练习的独立答案单元，将移至讲义末尾；未因其 JSON 排列位置判定答案位置违规。本次未检查最终 PDF 的实际组装、编号与交叉引用显示。",
+            "本次为普通模型数学审阅，不是形式化证明；未将工具对单个算式的复算或作者自评作为整体正确性的依据，无问题记录不保证不存在遗漏。"
+          ]
+        },
+        "issues": [],
+        "reference_recovery": null,
+        "answer_recovery": null,
+        "mock": false,
+        "local_recovery": {
+          "applied_rounds": 0,
+          "proposal_calls": 0,
+          "rejected_proposals": 0,
+          "preserved_issues": [],
+          "review_identity": {
+            "candidate_hash": "6d8c928e2a71a1c49f079d2959df67c0288caa1e47bec7775b70ba816fdb963d",
+            "tool_checks_hash": "0ad9158bf9fb06cc215b2f3494108602fb8039a74641edf698937ed3b86c8461",
+            "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+            "plan_context_hash": "bf94e3252564494fa95f7fd39aa573ed572572050bbaa93d8f20d300133e6b51",
+            "deterministic_checks_hash": "f16908ed6837b2656f809f1c662970a095819a8fc3e6faf1843d5c886de2e2f4"
+          }
+        },
+        "compile": {
+          "status": "PASS",
+          "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS01_af9035c9bf57\\build\\lecture.pdf",
+          "issues": [],
+          "log_paths": [
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS01_af9035c9bf57\\build\\pass-1.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS01_af9035c9bf57\\build\\pass-1.tex.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS01_af9035c9bf57\\build\\pass-2.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS01_af9035c9bf57\\build\\pass-2.tex.log"
+          ],
+          "engine": {
+            "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+          },
+          "passes": 2,
+          "compile_mode": "trusted_local",
+          "isolation": "NOT_IMPLEMENTED",
+          "limitations": [
+            "原生可信本机编译不是文件系统或网络隔离沙箱。"
+          ],
+          "command": [
+            "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "-interaction=nonstopmode",
+            "-halt-on-error",
+            "-file-line-error",
+            "-no-shell-escape",
+            "-recorder",
+            "-synctex=1",
+            "-jobname=lecture",
+            "-output-directory=.",
+            "lecture.tex"
+          ],
+          "elapsed_seconds": 3.672,
+          "page_count": 2,
+          "pdf_sha256": "08040c592424efed09cfb860c7986979d45a695b512a002ea7aa78bfb3ec149f",
+          "auxiliary_hashes": {
+            ".aux": "6e1a88f856932f63c6ae0059daa6bd1c524a499c2f30115870a05b29a6637a7b",
+            ".out": "a4234e1a28e3935586d3e019035dfa95cd3633181a2829730099fba298a94776"
+          }
+        },
+        "references": {
+          "status": "PASS",
+          "pending_labels": []
+        },
+        "compile_attempts": [
+          {
+            "attempt": 0,
+            "section_id": "S01",
+            "candidate_hash": "6d8c928e2a71a1c49f079d2959df67c0288caa1e47bec7775b70ba816fdb963d",
+            "source_key": "b/fd6736af6ef14be3/sS01_af9035c9bf57/source/lecture.tex",
+            "source_hash": "82c2f5be416656f0ebcea2bf801b80ced3ee9fd27ec9eae9619a7d39d693911d",
+            "compile_status": "PASS",
+            "compile_key": "b/fd6736af6ef14be3/sS01_af9035c9bf57/compile.json",
+            "compile_hash": "058812d9c16ba15d3c0a085e71aacdb8ff598a89635516fccdb806a9436d7f68",
+            "teacher_visual_review": "NOT_RUN",
+            "mapping": {
+              "status": "NOT_NEEDED",
+              "issues": []
+            },
+            "dependencies": [
+              {
+                "key": "b/fd6736af6ef14be3/sS01_af9035c9bf57/source/lecture.tex",
+                "hash": "82c2f5be416656f0ebcea2bf801b80ced3ee9fd27ec9eae9619a7d39d693911d",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS01_af9035c9bf57/compile.json",
+                "hash": "058812d9c16ba15d3c0a085e71aacdb8ff598a89635516fccdb806a9436d7f68",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS01_af9035c9bf57/build/pass-1.stdout.log",
+                "hash": "1e0ec2c49273fce9e306a06853beb2383f59292e2b6e2d47abae0362b281a27a",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS01_af9035c9bf57/build/pass-1.tex.log",
+                "hash": "7efd67e1dd4210642304c7115837b5cc08e9a6d9b026651f96b2e07366084235",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS01_af9035c9bf57/build/pass-2.stdout.log",
+                "hash": "2dc41de9e7b44d9cc324a38a664be5dcab5ee9cff99937b6eaaca7dd4f6cc643",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS01_af9035c9bf57/build/pass-2.tex.log",
+                "hash": "4cad8bd34480854120d9c0bd435e9c104f48ae7ef087f8e0005a9e230d0dcd13",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS01_af9035c9bf57/build/lecture.pdf",
+                "hash": "08040c592424efed09cfb860c7986979d45a695b512a002ea7aa78bfb3ec149f",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS01_af9035c9bf57/compile-layout-mapping.json",
+                "hash": "a9e6a95de57f3e1ef36ae65f42f0b6f781ec00824658a0130e0becba00bc4835",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section_id": "S02",
+        "math": {
+          "schema_version": 1,
+          "status": "PASS",
+          "issues": [],
+          "evidence": [
+            {
+              "kind": "limit",
+              "assumptions": {
+                "n": {
+                  "integer": true,
+                  "positive": true
+                }
+              },
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "status": "PASS",
+              "evidence_type": "symbolic_check_passed",
+              "result": "1",
+              "message": "在声明假设下符号结果与预期完全一致。",
+              "calculation_id": "S02.C01",
+              "unit_id": "S02.U05"
+            },
+            {
+              "kind": "series",
+              "assumptions": {
+                "n": {
+                  "integer": true,
+                  "positive": true
+                }
+              },
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "domain_scope": "supported_tail_guards",
+              "limitations": [
+                "以起点加非负整数代入，检查已保留的受支持运算定义域约束；不是通用定义域证明器。"
+              ],
+              "status": "PASS",
+              "evidence_type": "symbolic_check_passed",
+              "result": false,
+              "message": "级数收敛性核算与声明一致。",
+              "calculation_id": "S02.C02",
+              "unit_id": "S02.U07"
+            },
+            {
+              "kind": "equivalence",
+              "assumptions": {
+                "n": {
+                  "integer": true,
+                  "positive": true
+                }
+              },
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "status": "PASS",
+              "evidence_type": "symbolic_check_passed",
+              "result": "4 - 2/2**n",
+              "message": "在声明假设下符号差为零。",
+              "calculation_id": "S02.C03",
+              "unit_id": "S02.U16"
+            },
+            {
+              "kind": "limit",
+              "assumptions": {
+                "n": {
+                  "integer": true,
+                  "positive": true
+                }
+              },
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "status": "PASS",
+              "evidence_type": "symbolic_check_passed",
+              "result": "2/3",
+              "message": "在声明假设下符号结果与预期完全一致。",
+              "calculation_id": "S02.AC01",
+              "unit_id": "S02.U18.answer"
+            }
+          ],
+          "coverage": [
+            "S02.U01",
+            "S02.U02",
+            "S02.U03",
+            "S02.U04",
+            "S02.U05",
+            "S02.U06",
+            "S02.U07",
+            "S02.U08",
+            "S02.U09",
+            "S02.U10",
+            "S02.U11",
+            "S02.U12",
+            "S02.U13",
+            "S02.U14",
+            "S02.U15",
+            "S02.U16",
+            "S02.U17",
+            "S02.U18",
+            "S02.U19",
+            "S02.U20",
+            "S02.U18.answer",
+            "S02.U19.answer",
+            "S02.U20.answer"
+          ],
+          "limitations": [
+            "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+            "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+            "核算请求覆盖一个通项极限、调和级数的敛散性及一个部分和公式的代数变形；协议不能直接表达任意实数列及其部分和之间的量化关系，因此一般必要条件、线性运算和有限项改变性质由正文证明，不由这些核算替代。",
+            "新增核算仅覆盖 S02.U18.answer 中第 (1) 项的通项极限。任意实数列的线性运算、有限项改变与余项相等的量化论证不由此核算覆盖；截断位置的最小性由答案中的整数比较和单调性说明。"
+          ]
+        },
+        "llm_review": {
+          "issues": [],
+          "checked_unit_ids": [
+            "S02.U01",
+            "S02.U02",
+            "S02.U03",
+            "S02.U04",
+            "S02.U05",
+            "S02.U06",
+            "S02.U07",
+            "S02.U08",
+            "S02.U09",
+            "S02.U10",
+            "S02.U11",
+            "S02.U12",
+            "S02.U13",
+            "S02.U14",
+            "S02.U15",
+            "S02.U16",
+            "S02.U17",
+            "S02.U18",
+            "S02.U18.answer",
+            "S02.U19",
+            "S02.U19.answer",
+            "S02.U20",
+            "S02.U20.answer"
+          ],
+          "limitations": [
+            "本次仅审阅 section_local 范围内提供的 S02 全部23个实际单元，并使用已提供的 S01 正文核对先修依据；未对其他章节作出审阅结论，尚未生成的 S03—S05 不计为本节遗漏。",
+            "已逐项核对本节四项锁定目标及对应正文，包括必要条件证明、线性运算、余项、有限项改变、常数项与调和型级数例练；同时核对公式与解释、条件与量词、求和起点、奇偶子列指标和截断误差的严格不等式。本次未发现需要报告的具体数学错误或核心目标缺口。",
+            "按 rendering_contract，三个独立练习答案单元由程序集中至讲义末尾，不因其 JSON 位置判定答案位置违规；已核对其 relates_to 均指向实际练习，题干未内嵌答案。未执行实际排版或最终 PDF 检查。",
+            "本结果是普通模型对所提供正文的数学审阅，不是形式化证明，也不保证不存在遗漏。所附符号核算仅作为有限辅助证据，不能替代一般定理及其条件的正文核查。"
+          ]
+        },
+        "issues": [],
+        "reference_recovery": null,
+        "answer_recovery": {
+          "schema_version": 1,
+          "operation": "append_missing_answers",
+          "status": "APPLIED_UNCHECKED",
+          "source_section_hash": "db46e9427174364b657889cb04f2ccd9748fdd0c72e357472020c259892ebaa4",
+          "patch_hash": "a93941cf61163d4dafb9dfcd8b38a7c8cfa7506d00f419e46c41b6d4c37a1429",
+          "result_section_hash": "ae68f99d5dcbf8c2cebefe48f8a735d8b7b484fbec86698dfd149f57677e000c",
+          "target_ids": [
+            "S02.U18",
+            "S02.U19",
+            "S02.U20"
+          ],
+          "new_unit_ids": [
+            "S02.U18.answer",
+            "S02.U19.answer",
+            "S02.U20.answer"
+          ],
+          "new_unit_hashes": {
+            "S02.U18.answer": "97bf450d131d9e67ec7a9db038d1878e4148e408482bb882134c5c46501c9390",
+            "S02.U19.answer": "6ca12cbf30641e4e2f0641131f367205d474d8ece28321d43cb56eef9abec988",
+            "S02.U20.answer": "dc1919a67a7b7c0101c45ddcfc63c318f2d5d61e8567e47f0dcef96a10e391a2"
+          },
+          "original_unit_count": 20,
+          "added_unit_count": 3,
+          "original_units_preserved": true,
+          "original_calculations_preserved": true,
+          "new_calculation_count": 1,
+          "math_check": "NOT_RUN",
+          "normalization": "NOT_RUN",
+          "teacher_review": "NOT_RUN",
+          "identity": {
+            "context_hash": "3f9f680007b1540ced449739aa1e373347577afdd839b58f67be47ebf740ca74",
+            "model": "gpt-6-astra",
+            "provider": "live",
+            "prompt_hash": "3f4beaf0cea232c9067c05d0326b08ebba71227e57fd50b283fb3401d8340da3",
+            "schema_hash": "33f1dd4a1048269d000f52f3663cc9fdac32afe07edfda814a6c018869562c33",
+            "implementation_hash": "3ec9e3ba686daea8447efbe4832827ef86797ed21965a6184dd29540d321baf8"
+          },
+          "proposal_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/answer-recovery/S02/ee59068e61ea64cad830cbdbab69eecdcb2f9e79d8963e3ba0bec13e4ca7c53c/attempt-640d65eb3f89/proposal.json",
+          "reused_proposal": false
+        },
+        "mock": false,
+        "local_recovery": {
+          "applied_rounds": 3,
+          "proposal_calls": 4,
+          "rejected_proposals": 1,
+          "preserved_issues": [],
+          "review_identity": {
+            "candidate_hash": "118ed3ed4fd67fc595963483bd8ba6f1a65c8e87ae5ab12007f9b246a124a071",
+            "tool_checks_hash": "d1e9a50703dfb1b0274c260a8c12aaff085295f3f4f448d9e04b74dcd971eb71",
+            "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+            "plan_context_hash": "0827c9bc231d0ae64b5ca96dbc16b1569e35e94ba56f382a61b6bc4a736aacc1",
+            "deterministic_checks_hash": "55ea67c3f402117ffe10cc55ab583c01383b99694426426c1896e83198e88ccb"
+          }
+        },
+        "compile": {
+          "status": "PASS",
+          "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS02_85747db0548e\\build\\lecture.pdf",
+          "issues": [],
+          "log_paths": [
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS02_85747db0548e\\build\\pass-1.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS02_85747db0548e\\build\\pass-1.tex.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS02_85747db0548e\\build\\pass-2.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS02_85747db0548e\\build\\pass-2.tex.log"
+          ],
+          "engine": {
+            "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+          },
+          "passes": 2,
+          "compile_mode": "trusted_local",
+          "isolation": "NOT_IMPLEMENTED",
+          "limitations": [
+            "原生可信本机编译不是文件系统或网络隔离沙箱。"
+          ],
+          "command": [
+            "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "-interaction=nonstopmode",
+            "-halt-on-error",
+            "-file-line-error",
+            "-no-shell-escape",
+            "-recorder",
+            "-synctex=1",
+            "-jobname=lecture",
+            "-output-directory=.",
+            "lecture.tex"
+          ],
+          "elapsed_seconds": 3.969,
+          "page_count": 6,
+          "pdf_sha256": "28b9353a40fff38d92652ab35afbc46f5331b3026ac5d0e0e196181bc329a65b",
+          "auxiliary_hashes": {
+            ".aux": "23ec819600bb30fe9c70b678d81f248b456f60476b493a5736b68cd880464deb",
+            ".out": "c3ad64c3ea45acaf6cd49086febe2137775ec13e6cddf5aa6483b3fc6998fcfe"
+          }
+        },
+        "references": {
+          "status": "PASS",
+          "pending_labels": []
+        },
+        "compile_attempts": [
+          {
+            "attempt": 0,
+            "section_id": "S02",
+            "candidate_hash": "118ed3ed4fd67fc595963483bd8ba6f1a65c8e87ae5ab12007f9b246a124a071",
+            "source_key": "b/fd6736af6ef14be3/sS02_85747db0548e/source/lecture.tex",
+            "source_hash": "d7af57b7fddd57d20bfae5df5c9198f2a396ecbca33a43dbc7c6a738ff968a81",
+            "compile_status": "PASS",
+            "compile_key": "b/fd6736af6ef14be3/sS02_85747db0548e/compile.json",
+            "compile_hash": "5103b02ee9497ead36fd8371cd84ba3a192213c0523b854449047f5e70472ffc",
+            "teacher_visual_review": "NOT_RUN",
+            "mapping": {
+              "status": "NOT_NEEDED",
+              "issues": []
+            },
+            "dependencies": [
+              {
+                "key": "b/fd6736af6ef14be3/sS02_85747db0548e/source/lecture.tex",
+                "hash": "d7af57b7fddd57d20bfae5df5c9198f2a396ecbca33a43dbc7c6a738ff968a81",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS02_85747db0548e/compile.json",
+                "hash": "5103b02ee9497ead36fd8371cd84ba3a192213c0523b854449047f5e70472ffc",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS02_85747db0548e/build/pass-1.stdout.log",
+                "hash": "1c8185a6d45d98bfce50ad8069e5a2a153706377dca7008fab67759e665fc481",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS02_85747db0548e/build/pass-1.tex.log",
+                "hash": "4fe6464e288a10d29a10721f722f7869f315d58d7dcbc10d90629832323d96fd",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS02_85747db0548e/build/pass-2.stdout.log",
+                "hash": "aaf0fd82520c651151dd20d8b5dc1a971ea70d7b13923640dfe84ffa3b63d8cd",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS02_85747db0548e/build/pass-2.tex.log",
+                "hash": "85a49cd85af1f84ed4f9790bc1e5dcd8ec2d142acdd784a5125cf1e1fd3def9b",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS02_85747db0548e/build/lecture.pdf",
+                "hash": "28b9353a40fff38d92652ab35afbc46f5331b3026ac5d0e0e196181bc329a65b",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS02_85747db0548e/compile-layout-mapping.json",
+                "hash": "a9e6a95de57f3e1ef36ae65f42f0b6f781ec00824658a0130e0becba00bc4835",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section_id": "S03",
+        "math": {
+          "schema_version": 1,
+          "status": "PASS",
+          "issues": [],
+          "evidence": [
+            {
+              "kind": "series",
+              "assumptions": {
+                "n": {
+                  "integer": true,
+                  "positive": true
+                }
+              },
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "domain_scope": "supported_tail_guards",
+              "limitations": [
+                "以起点加非负整数代入，检查已保留的受支持运算定义域约束；不是通用定义域证明器。"
+              ],
+              "status": "PASS",
+              "evidence_type": "symbolic_check_passed",
+              "result": true,
+              "message": "级数收敛性核算与声明一致。",
+              "calculation_id": "S03.C01",
+              "unit_id": "S03.U09"
+            },
+            {
+              "kind": "series",
+              "assumptions": {
+                "n": {
+                  "integer": true,
+                  "positive": true
+                }
+              },
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "domain_scope": "supported_tail_guards",
+              "limitations": [
+                "以起点加非负整数代入，检查已保留的受支持运算定义域约束；不是通用定义域证明器。"
+              ],
+              "status": "PASS",
+              "evidence_type": "symbolic_check_passed",
+              "result": false,
+              "message": "级数收敛性核算与声明一致。",
+              "calculation_id": "S03.C02",
+              "unit_id": "S03.U09"
+            }
+          ],
+          "coverage": [
+            "S03.U01",
+            "S03.U02",
+            "S03.U03",
+            "S03.U04",
+            "S03.U05",
+            "S03.U06",
+            "S03.U07",
+            "S03.U08",
+            "S03.U09",
+            "S03.U10",
+            "S03.U11",
+            "S03.U12",
+            "S03.U13",
+            "S03.U14",
+            "S03.U15",
+            "S03.U16"
+          ],
+          "limitations": [
+            "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+            "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+            "协议的 series 核算只能对给定的具体幂指数核对收敛性，不能直接表达定理中对所有实数 $p$ 的量词；比较判别法、极限比较判别法和积分判别法的普遍证明由正文完成。",
+            "S03.U12 使用一般连续正值单调递减函数的积分比较及部分和有界性；现有核算协议不支持一般函数、定积分或不等式证明，不能直接核算本次修复中的两向推理。",
+            "新增的几何级数说明涉及有限求和及公比区间 0<r<1、r>1 的分类。现有 JSON AST 不支持有限求和表达式，布尔假设也不能直接表示这些区间约束；本次未对该一般参数结论新增符号核算，依据在正文中以有限等比求和和数列极限给出。原有两项具体 p-级数核算保持不变。"
+          ]
+        },
+        "llm_review": {
+          "issues": [],
+          "checked_unit_ids": [
+            "S03.U01",
+            "S03.U02",
+            "S03.U03",
+            "S03.U04",
+            "S03.U05",
+            "S03.U06",
+            "S03.U07",
+            "S03.U08",
+            "S03.U09",
+            "S03.U10",
+            "S03.U11",
+            "S03.U12",
+            "S03.U13",
+            "S03.U14",
+            "S03.U15",
+            "S03.U16"
+          ],
+          "limitations": [
+            "本次为 section_local 审阅，已阅读并核对列出的全部当前节单元，并使用已提供的前两节正文核查先修依赖；未对其他章节作覆盖结论，也未将尚未生成的章节视为遗漏。",
+            "已按实际正文重新核查保留的 S03.U10 疑点：该单元明确说明通项趋零不是充分条件，并对 0<p≤1 使用分组下界证明发散、对 p>1 使用积分估计证明部分和有界。因此，原先关于误用必要条件推出收敛的 blocking 判断不适用于当前正文。",
+            "本节四项锁定目标均已结合实际定义、定理、证明和例练核查。几何级数明确限定为本节的非负项情形；积分判别法在例题中从 2 起算，可通过变量平移直接归入已陈述的定理，不构成缺失必要假设。",
+            "根据 rendering_contract，S03.U16 是关联到练习 S03.U15 的独立答案单元，由程序移至讲义末尾；未以 JSON 中的位置判定答案位置违规。未检查最终 PDF 的实际排版、引用解析或答案搬移结果。",
+            "这是普通模型数学审阅，不是形式化证明。工具提供的两个具体 p 级数核算不能证明一般参数结论或一般函数定理；本次对此类内容的判断依据是正文推理，仍存在人工式审阅可能遗漏问题的局限。"
+          ]
+        },
+        "issues": [],
+        "reference_recovery": null,
+        "answer_recovery": null,
+        "mock": false,
+        "local_recovery": {
+          "applied_rounds": 3,
+          "proposal_calls": 3,
+          "rejected_proposals": 0,
+          "preserved_issues": [
+            {
+              "rule_id": "ZERO_TERM_NOT_SUFFICIENT",
+              "severity": "blocking",
+              "message": "通项趋零只是级数收敛的必要条件，不能据此推出收敛。",
+              "location": {
+                "unit_id": "S03.U10"
+              },
+              "resolution_status": "open"
+            }
+          ],
+          "review_identity": {
+            "candidate_hash": "0cd42cafc96e9c4394c7091d4edde95be8f0e3b3cab5dc515a7494b629e625ec",
+            "tool_checks_hash": "b85ed54688bc31696ce3a3b7c46a4dd14cd1376860988d3b5f0f8a5554877e1a",
+            "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+            "plan_context_hash": "1f32866035f7eb263bff9c7dbf77bb5b544301cd5c93cc6e0eaf2ad117b42d10",
+            "deterministic_checks_hash": "9a2a8a625e6ac42c47bbb9e07c1794b98b61906c6c1814bc4eecd387e4f3cdfd"
+          }
+        },
+        "compile": {
+          "status": "PASS",
+          "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS03_e7b31f3b94c5\\compile-attempt-2\\build\\lecture.pdf",
+          "issues": [],
+          "log_paths": [
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS03_e7b31f3b94c5\\compile-attempt-2\\build\\pass-1.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS03_e7b31f3b94c5\\compile-attempt-2\\build\\pass-1.tex.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS03_e7b31f3b94c5\\compile-attempt-2\\build\\pass-2.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS03_e7b31f3b94c5\\compile-attempt-2\\build\\pass-2.tex.log"
+          ],
+          "engine": {
+            "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+          },
+          "passes": 2,
+          "compile_mode": "trusted_local",
+          "isolation": "NOT_IMPLEMENTED",
+          "limitations": [
+            "原生可信本机编译不是文件系统或网络隔离沙箱。"
+          ],
+          "command": [
+            "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "-interaction=nonstopmode",
+            "-halt-on-error",
+            "-file-line-error",
+            "-no-shell-escape",
+            "-recorder",
+            "-synctex=1",
+            "-jobname=lecture",
+            "-output-directory=.",
+            "lecture.tex"
+          ],
+          "elapsed_seconds": 4.156,
+          "page_count": 10,
+          "pdf_sha256": "c9ace3402d6d5d9e681d70ff2d989a433537ecbab8ff9297f79eba3c7b65af78",
+          "auxiliary_hashes": {
+            ".aux": "abaf230f95dbbc7ee9afb29625911d5769e6f79075c72bf7207b72c6c4af6579",
+            ".out": "32d3e9736f3695133bd4748d7eca1b5cff68dc3ed14f6cfe70e7895312ad1996"
+          }
+        },
+        "references": {
+          "status": "PASS",
+          "pending_labels": []
+        },
+        "compile_attempts": [
+          {
+            "attempt": 2,
+            "section_id": "S03",
+            "candidate_hash": "0cd42cafc96e9c4394c7091d4edde95be8f0e3b3cab5dc515a7494b629e625ec",
+            "source_key": "b/fd6736af6ef14be3/sS03_e7b31f3b94c5/compile-attempt-2/source/lecture.tex",
+            "source_hash": "3dced48dd368dc8fba1ff3ef606e30d51cd8a4f3528777f9da764ee8f87416b1",
+            "compile_status": "PASS",
+            "compile_key": "b/fd6736af6ef14be3/sS03_e7b31f3b94c5/compile-attempt-2/compile.json",
+            "compile_hash": "73637ab1b95e691d6fd07b1c96ad4b82b87315b2778c35b7ffe79c2f767f10f9",
+            "teacher_visual_review": "NOT_RUN",
+            "mapping": {
+              "status": "NOT_NEEDED",
+              "issues": []
+            },
+            "dependencies": [
+              {
+                "key": "b/fd6736af6ef14be3/sS03_e7b31f3b94c5/compile-attempt-2/source/lecture.tex",
+                "hash": "3dced48dd368dc8fba1ff3ef606e30d51cd8a4f3528777f9da764ee8f87416b1",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS03_e7b31f3b94c5/compile-attempt-2/compile.json",
+                "hash": "73637ab1b95e691d6fd07b1c96ad4b82b87315b2778c35b7ffe79c2f767f10f9",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS03_e7b31f3b94c5/compile-attempt-2/build/pass-1.stdout.log",
+                "hash": "6233ae0f5d07ea916453cfca9aa00b270787e8ab6d3372a96b8a0abae371ba8d",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS03_e7b31f3b94c5/compile-attempt-2/build/pass-1.tex.log",
+                "hash": "5bf3716dd25a19d76de5c11cf23f5a185bf8795ab9ecb73c56d40de629c9a9f7",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS03_e7b31f3b94c5/compile-attempt-2/build/pass-2.stdout.log",
+                "hash": "590739fa63bd24eaa406d3ffa1fdf92f043258d210ef8b41db3f2999d8263934",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS03_e7b31f3b94c5/compile-attempt-2/build/pass-2.tex.log",
+                "hash": "4e7a6cf5d789f563d2bd6626c2d578b0048076922a9b498737a09703ab200421",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS03_e7b31f3b94c5/compile-attempt-2/build/lecture.pdf",
+                "hash": "c9ace3402d6d5d9e681d70ff2d989a433537ecbab8ff9297f79eba3c7b65af78",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS03_e7b31f3b94c5/compile-attempt-2/compile-layout-mapping.json",
+                "hash": "a9e6a95de57f3e1ef36ae65f42f0b6f781ec00824658a0130e0becba00bc4835",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section_id": "S04",
+        "math": {
+          "schema_version": 1,
+          "status": "NEEDS_REVIEW",
+          "issues": [
+            {
+              "rule_id": "NUMERIC_IS_NOT_PROOF",
+              "severity": "warning",
+              "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+              "location": {
+                "calculation_id": "S04.C01",
+                "unit_id": "S04.U05"
+              },
+              "resolution_status": "open"
+            }
+          ],
+          "evidence": [
+            {
+              "kind": "numeric_spotcheck",
+              "assumptions": {
+                "n": {
+                  "integer": true,
+                  "positive": true
+                }
+              },
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "status": "PASS",
+              "evidence_type": "numeric_spotcheck_passed",
+              "point_count": 1,
+              "message": "仅在指定点数值一致，不是一般性证明。",
+              "calculation_id": "S04.C01",
+              "unit_id": "S04.U05"
+            }
+          ],
+          "coverage": [
+            "S04.U01",
+            "S04.U02",
+            "S04.U03",
+            "S04.U04",
+            "S04.U05",
+            "S04.U06",
+            "S04.U07",
+            "S04.U08",
+            "S04.U09",
+            "S04.U10",
+            "S04.U11",
+            "S04.U12",
+            "S04.U13"
+          ],
+          "limitations": [
+            "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+            "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+            "协议的数值核算只能抽查交错项在指定整数处的取值，不能表达对所有正整数的单调性、极限或余项不等式；交错级数判别法及余项估计仍由正文证明。",
+            "既有核算 S04.C01 仅比较 n=3 时的通项值与 1/3，覆盖范围限于该单点等式；不提供对所有正整数的结论，也不构成交错调和级数收敛性或截断误差界的证明。这些结论依赖正文中的判别条件核实与定理证明。",
+            "本次仅修复目标正文的 TeX 反斜杠转义层级，不改变数学结论，不新增核算请求。该转义问题及公式环境、引用的实际渲染不属于有界数学核算协议的检查范围，须由后续 TeX 编译与交叉引用检查验证。"
+          ]
+        },
+        "llm_review": {
+          "issues": [],
+          "checked_unit_ids": [
+            "S04.U01",
+            "S04.U02",
+            "S04.U03",
+            "S04.U04",
+            "S04.U05",
+            "S04.U06",
+            "S04.U07",
+            "S04.U08",
+            "S04.U09",
+            "S04.U10",
+            "S04.U11",
+            "S04.U12",
+            "S04.U13"
+          ],
+          "limitations": [
+            "本次为 section_local 审阅，逐一读取了所列当前节单元，并依据提供的先修正文核对依赖及本节四项目标；不对其他章节作完整复核，也不将尚未生成的 S05 视为本节遗漏。",
+            "已重新核对保留的索引问题：S04.U07 现明确将差分公式限定为整数 m≥2，最小指标只使用已定义的 S4 与 S2，不再引用 S0；该范围足以证明偶数部分和单调不减。后续奇偶分类对正整数 n 分别使用正整数 m，包含 n=1 的余项估计，未发现原索引缺口仍然存在。",
+            "正文核对涵盖非负项及零项约定、判别法的充分条件、奇偶部分和的单调性与极限、余项的符号与上界、绝对收敛与条件收敛的区分，以及截断位置的整数边界。S04.U12 的 n=999 是满足所选误差上界条件的最小正整数，并非实际误差要求的必要截断位置。",
+            "按 rendering_contract，S04.U11 和 S04.U12 是关联练习的独立解答，将由程序集中至末尾，不能由 JSON 顺序推断答案位置违规。本次未执行最终 TeX 编译、交叉引用解析或 PDF 版面检查。",
+            "这是普通模型对正文的数学与教学覆盖审阅，不是形式化证明。提供的工具结果仅核对了一个通项的单点数值，不证明一般收敛性或余项界；本次未进行额外工具核算，未发现问题也不保证不存在遗漏。"
+          ]
+        },
+        "issues": [
+          {
+            "rule_id": "NUMERIC_IS_NOT_PROOF",
+            "severity": "warning",
+            "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+            "location": {
+              "calculation_id": "S04.C01",
+              "unit_id": "S04.U05"
+            },
+            "resolution_status": "open"
+          }
+        ],
+        "reference_recovery": null,
+        "answer_recovery": null,
+        "mock": false,
+        "local_recovery": {
+          "applied_rounds": 5,
+          "proposal_calls": 5,
+          "rejected_proposals": 0,
+          "preserved_issues": [
+            {
+              "unit_id": "S04.U07",
+              "severity": "review",
+              "message": "余项估计证明的首个差分公式在所声称的最小指标处引用了未定义的部分和 S_0。请将该公式的适用范围改为 m≥2（已足以证明偶数部分和数列单调不减），或明确补充 S_0=0 的约定。这是证明中的索引定义缺口，不影响余项估计定理本身的正确性。",
+              "evidence": "本单元写道“对任意正整数 m”，随后使用 S_{2m}-S_{2m-2}=b_{2m-1}-b_{2m}≥0；代入 m=1 即需要 S_2-S_0=b_1-b_2。已核对当前节全部正文及提供的先修正文：S01.U02 仅为 n=1,2,3,… 定义 S_n，S04.U03 以相同的有限求和形式定义部分和，未声明 S_0 或空和约定。S04.U03 的配对求和论证及 S04.U13 的夹逼论证可以支持相关数学结论，但并未定义 S04.U07 此处实际使用的 S_0。"
+            }
+          ],
+          "review_identity": {
+            "candidate_hash": "970de279785e5d37c0dbfa42425e9a5a72e27f42ae1b09a0d62e5365089a1e67",
+            "tool_checks_hash": "09b2b814ed9fe8ac778a9113b80cdb5db9e6286a4f75362e753eceace1c025bf",
+            "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+            "plan_context_hash": "91e937ea7cc2667fffd29fd0cf377e2c9969268da5d3eef32ee3fd1c96c3088d",
+            "deterministic_checks_hash": "62a616f548840d8f9f63157fdc022b223ef9f83b78c559f5aa75f46bed081e65"
+          }
+        },
+        "compile": {
+          "status": "PASS",
+          "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS04_60f55db3d67d\\compile-attempt-1\\build\\lecture.pdf",
+          "issues": [],
+          "log_paths": [
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS04_60f55db3d67d\\compile-attempt-1\\build\\pass-1.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS04_60f55db3d67d\\compile-attempt-1\\build\\pass-1.tex.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS04_60f55db3d67d\\compile-attempt-1\\build\\pass-2.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS04_60f55db3d67d\\compile-attempt-1\\build\\pass-2.tex.log"
+          ],
+          "engine": {
+            "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+          },
+          "passes": 2,
+          "compile_mode": "trusted_local",
+          "isolation": "NOT_IMPLEMENTED",
+          "limitations": [
+            "原生可信本机编译不是文件系统或网络隔离沙箱。"
+          ],
+          "command": [
+            "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "-interaction=nonstopmode",
+            "-halt-on-error",
+            "-file-line-error",
+            "-no-shell-escape",
+            "-recorder",
+            "-synctex=1",
+            "-jobname=lecture",
+            "-output-directory=.",
+            "lecture.tex"
+          ],
+          "elapsed_seconds": 3.953,
+          "page_count": 14,
+          "pdf_sha256": "a2aa19ca83f2942f055f0f76fb62015f3424d23760ef699b05fa704efe72842d",
+          "auxiliary_hashes": {
+            ".aux": "1f0cffd830abe6bc8cd05d6fe0666d6bbc599e271a4b59c74028c834dd36ab96",
+            ".out": "df5dd396379a8fd67cd19323c844db1f51f92e6acc7ec1c46efb0e5724e1c461"
+          }
+        },
+        "references": {
+          "status": "PASS",
+          "pending_labels": []
+        },
+        "compile_attempts": [
+          {
+            "attempt": 1,
+            "section_id": "S04",
+            "candidate_hash": "970de279785e5d37c0dbfa42425e9a5a72e27f42ae1b09a0d62e5365089a1e67",
+            "source_key": "b/fd6736af6ef14be3/sS04_60f55db3d67d/compile-attempt-1/source/lecture.tex",
+            "source_hash": "ac8ebcb9f30e64d1e438b84658b1ebf90bdb262a5d19502d0b097182039813e1",
+            "compile_status": "PASS",
+            "compile_key": "b/fd6736af6ef14be3/sS04_60f55db3d67d/compile-attempt-1/compile.json",
+            "compile_hash": "0352765cdc303324622c68617cd56c11b39bda958d05401a3f0927bc59118616",
+            "teacher_visual_review": "NOT_RUN",
+            "mapping": {
+              "status": "NOT_NEEDED",
+              "issues": []
+            },
+            "dependencies": [
+              {
+                "key": "b/fd6736af6ef14be3/sS04_60f55db3d67d/compile-attempt-1/source/lecture.tex",
+                "hash": "ac8ebcb9f30e64d1e438b84658b1ebf90bdb262a5d19502d0b097182039813e1",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS04_60f55db3d67d/compile-attempt-1/compile.json",
+                "hash": "0352765cdc303324622c68617cd56c11b39bda958d05401a3f0927bc59118616",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS04_60f55db3d67d/compile-attempt-1/build/pass-1.stdout.log",
+                "hash": "261e545f1691cca2396746eb92cc74e9e1c95f3d4cf7b5250b4f60bf14c297aa",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS04_60f55db3d67d/compile-attempt-1/build/pass-1.tex.log",
+                "hash": "19ff158f653332a8140adbe81c99fedb36fa34f43d8d9c81fff9500928420d27",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS04_60f55db3d67d/compile-attempt-1/build/pass-2.stdout.log",
+                "hash": "a03d1ce91db3b42fd1afaf591ca8fdc8f4588516f57edefd3e2ea8ea6323c221",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS04_60f55db3d67d/compile-attempt-1/build/pass-2.tex.log",
+                "hash": "a89429950db6654722106e023f35c297ff6b153c6bc311e489bb89539d9e5d54",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS04_60f55db3d67d/compile-attempt-1/build/lecture.pdf",
+                "hash": "a2aa19ca83f2942f055f0f76fb62015f3424d23760ef699b05fa704efe72842d",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS04_60f55db3d67d/compile-attempt-1/compile-layout-mapping.json",
+                "hash": "a9e6a95de57f3e1ef36ae65f42f0b6f781ec00824658a0130e0becba00bc4835",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section_id": "S05",
+        "math": {
+          "schema_version": 1,
+          "status": "PASS",
+          "issues": [],
+          "evidence": [
+            {
+              "kind": "limit",
+              "assumptions": {
+                "n": {
+                  "integer": true,
+                  "positive": true
+                }
+              },
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "status": "PASS",
+              "evidence_type": "symbolic_check_passed",
+              "result": "1/2",
+              "message": "在声明假设下符号结果与预期完全一致。",
+              "calculation_id": "S05.C01",
+              "unit_id": "S05.U11"
+            },
+            {
+              "kind": "series",
+              "assumptions": {
+                "n": {
+                  "integer": true,
+                  "positive": true
+                }
+              },
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "domain_scope": "supported_tail_guards",
+              "limitations": [
+                "以起点加非负整数代入，检查已保留的受支持运算定义域约束；不是通用定义域证明器。"
+              ],
+              "status": "PASS",
+              "evidence_type": "symbolic_check_passed",
+              "result": false,
+              "message": "级数收敛性核算与声明一致。",
+              "calculation_id": "S05.C02",
+              "unit_id": "S05.U11"
+            },
+            {
+              "kind": "limit",
+              "assumptions": {
+                "m": {
+                  "integer": true,
+                  "positive": true
+                }
+              },
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "status": "PASS",
+              "evidence_type": "symbolic_check_passed",
+              "result": "1/2",
+              "message": "在声明假设下符号结果与预期完全一致。",
+              "calculation_id": "S05.C03",
+              "unit_id": "S05.U20"
+            }
+          ],
+          "coverage": [
+            "S05.U01",
+            "S05.U02",
+            "S05.U03",
+            "S05.U04",
+            "S05.U05",
+            "S05.U06",
+            "S05.U07",
+            "S05.U08",
+            "S05.U09",
+            "S05.U10",
+            "S05.U11",
+            "S05.U12",
+            "S05.U13",
+            "S05.U14",
+            "S05.U15",
+            "S05.U16",
+            "S05.U17",
+            "S05.U18",
+            "S05.U19",
+            "S05.U20",
+            "S05.U21"
+          ],
+          "limitations": [
+            "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+            "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+            "核算请求覆盖具体通项极限、具体绝对值级数的发散性与几何部分和的极限；协议不支持任意实数列的量化关系及一般不等式证明，因此绝对收敛蕴含收敛、三类划分和一般余项界由正文论证，不由这些核算替代。"
+          ]
+        },
+        "llm_review": {
+          "issues": [],
+          "checked_unit_ids": [
+            "S05.U01",
+            "S05.U02",
+            "S05.U03",
+            "S05.U04",
+            "S05.U05",
+            "S05.U06",
+            "S05.U07",
+            "S05.U08",
+            "S05.U09",
+            "S05.U10",
+            "S05.U11",
+            "S05.U12",
+            "S05.U13",
+            "S05.U14",
+            "S05.U15",
+            "S05.U16",
+            "S05.U17",
+            "S05.U18",
+            "S05.U19",
+            "S05.U20",
+            "S05.U21"
+          ],
+          "limitations": [
+            "本次仅审阅 context 中实际提供的 S05 正文及可见先修结论，不覆盖最终 PDF 渲染、交叉引用实际编号或答案最终落位；这些由后续 PDF 检查处理。",
+            "普通模型审阅不等同于形式化证明；已给出的符号/数值核算也只覆盖具体极限与级数，不构成一般量词、分类定理或一般不等式证明的完整形式化验证。",
+            "未重新证明 S01–S04 中全部先修定理，只按已提供的先修正文结论检查 S05 的引用与推理衔接。",
+            "未发现需要报告的 S05 数学错误或重大不确定；本结论限于上述已读正文和审阅范围。"
+          ]
+        },
+        "issues": [],
+        "reference_recovery": null,
+        "answer_recovery": null,
+        "mock": false,
+        "local_recovery": {
+          "applied_rounds": 0,
+          "proposal_calls": 0,
+          "rejected_proposals": 0,
+          "preserved_issues": [],
+          "review_identity": {
+            "candidate_hash": "0a323170280b0bbdce2b6e6f2fb2f7e33d205c1a59dac87894259b3f540da18b",
+            "tool_checks_hash": "b4370d47f0908781002a77b0c2f8f279b8b9a35751845167231c2553d5714b87",
+            "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+            "plan_context_hash": "2520b25a984559a9fc4aed1ef78d7bd4307a998fd74977997860f3983db6fff7",
+            "deterministic_checks_hash": "ce7f449416a47260036030fdbadd5c393356a0c07a3bbc372daeca97091623bd"
+          }
+        },
+        "compile": {
+          "status": "PASS",
+          "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS05_ab6d0bae1f9e\\build\\lecture.pdf",
+          "issues": [],
+          "log_paths": [
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS05_ab6d0bae1f9e\\build\\pass-1.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS05_ab6d0bae1f9e\\build\\pass-1.tex.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS05_ab6d0bae1f9e\\build\\pass-2.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\sS05_ab6d0bae1f9e\\build\\pass-2.tex.log"
+          ],
+          "engine": {
+            "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+          },
+          "passes": 2,
+          "compile_mode": "trusted_local",
+          "isolation": "NOT_IMPLEMENTED",
+          "limitations": [
+            "原生可信本机编译不是文件系统或网络隔离沙箱。"
+          ],
+          "command": [
+            "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "-interaction=nonstopmode",
+            "-halt-on-error",
+            "-file-line-error",
+            "-no-shell-escape",
+            "-recorder",
+            "-synctex=1",
+            "-jobname=lecture",
+            "-output-directory=.",
+            "lecture.tex"
+          ],
+          "elapsed_seconds": 3.75,
+          "page_count": 17,
+          "pdf_sha256": "533a53367ff0b12a78f2815243bb24a0b6b663becde96c5003988c68a5abb3d8",
+          "auxiliary_hashes": {
+            ".aux": "5934cbb6322ee2183b1080a3f6d22dc1be7930157a2a1c73775359ded382b938",
+            ".out": "366a26ddbffec549fe3722be988088b4afc8fe63b2406773952ebb1f60b55220"
+          }
+        },
+        "references": {
+          "status": "PASS",
+          "pending_labels": []
+        },
+        "compile_attempts": [
+          {
+            "attempt": 0,
+            "section_id": "S05",
+            "candidate_hash": "0a323170280b0bbdce2b6e6f2fb2f7e33d205c1a59dac87894259b3f540da18b",
+            "source_key": "b/fd6736af6ef14be3/sS05_ab6d0bae1f9e/source/lecture.tex",
+            "source_hash": "0eeff02f2258d9b398ff7a1a8c7a63316cab863c955f6f8ad97fd7bf61431496",
+            "compile_status": "PASS",
+            "compile_key": "b/fd6736af6ef14be3/sS05_ab6d0bae1f9e/compile.json",
+            "compile_hash": "e8c332000e2ed2ed17f7596622eae941c28395ed775fca0869ebaf9e0dd00c93",
+            "teacher_visual_review": "NOT_RUN",
+            "mapping": {
+              "status": "NOT_NEEDED",
+              "issues": []
+            },
+            "dependencies": [
+              {
+                "key": "b/fd6736af6ef14be3/sS05_ab6d0bae1f9e/source/lecture.tex",
+                "hash": "0eeff02f2258d9b398ff7a1a8c7a63316cab863c955f6f8ad97fd7bf61431496",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS05_ab6d0bae1f9e/compile.json",
+                "hash": "e8c332000e2ed2ed17f7596622eae941c28395ed775fca0869ebaf9e0dd00c93",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS05_ab6d0bae1f9e/build/pass-1.stdout.log",
+                "hash": "e5682845860bdd69714ca2942dfe720c5cf113afe079348a1e08c890f4b23945",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS05_ab6d0bae1f9e/build/pass-1.tex.log",
+                "hash": "ec02b01c7cff2e04e601409d9e379e67604a23daf541f19263304a61e028965b",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS05_ab6d0bae1f9e/build/pass-2.stdout.log",
+                "hash": "c5ba88461878f8d1778a75dd9b8eda061246fd4b037df82e79af5d2909f0444e",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS05_ab6d0bae1f9e/build/pass-2.tex.log",
+                "hash": "0566deff87cf2807d55acad38af5a961f16a411be2eedeea7cebc56322565112",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS05_ab6d0bae1f9e/build/lecture.pdf",
+                "hash": "533a53367ff0b12a78f2815243bb24a0b6b663becde96c5003988c68a5abb3d8",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/fd6736af6ef14be3/sS05_ab6d0bae1f9e/compile-layout-mapping.json",
+                "hash": "a9e6a95de57f3e1ef36ae65f42f0b6f781ec00824658a0130e0becba00bc4835",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "global_interface": [
+          "S01",
+          "S02"
+        ],
+        "review": {
+          "issues": [],
+          "checked_unit_ids": [
+            "S01.U01",
+            "S01.U02",
+            "S01.U03",
+            "S01.U04",
+            "S01.U05",
+            "S01.U06",
+            "S01.U07",
+            "S01.U08",
+            "S01.U09",
+            "S02.U01",
+            "S02.U02",
+            "S02.U03",
+            "S02.U04",
+            "S02.U05",
+            "S02.U06",
+            "S02.U07",
+            "S02.U08",
+            "S02.U09",
+            "S02.U10",
+            "S02.U11",
+            "S02.U12",
+            "S02.U13",
+            "S02.U14",
+            "S02.U15",
+            "S02.U16",
+            "S02.U17",
+            "S02.U18",
+            "S02.U18.answer",
+            "S02.U19",
+            "S02.U19.answer",
+            "S02.U20",
+            "S02.U20.answer"
+          ],
+          "limitations": [
+            "本审阅仅覆盖所提供 S01 与 S02 的正文及其相邻依赖；S03-S05、完整课程覆盖与最终 PDF 渲染不在本次范围。",
+            "按 rendering_contract，独立 answer 单元的顺序不作为答案错置问题；已检查当前题干未内嵌答案。",
+            "本结论是逐项数学一致性审阅，不构成形式化证明、教师验收或最终 PDF 批准。",
+            "未发现需要报告的 blocking/review/warning；若后续单元或先修正文变更，相邻接口需重新核对。"
+          ]
+        }
+      },
+      {
+        "global_interface": [
+          "S02",
+          "S03"
+        ],
+        "review": {
+          "issues": [],
+          "checked_unit_ids": [
+            "S02.U01",
+            "S02.U02",
+            "S02.U03",
+            "S02.U04",
+            "S02.U05",
+            "S02.U06",
+            "S02.U07",
+            "S02.U08",
+            "S02.U09",
+            "S02.U10",
+            "S02.U11",
+            "S02.U12",
+            "S02.U13",
+            "S02.U14",
+            "S02.U15",
+            "S02.U16",
+            "S02.U17",
+            "S02.U18",
+            "S02.U18.answer",
+            "S02.U19",
+            "S02.U19.answer",
+            "S02.U20",
+            "S02.U20.answer",
+            "S03.U01",
+            "S03.U02",
+            "S03.U03",
+            "S03.U04",
+            "S03.U05",
+            "S03.U06",
+            "S03.U07",
+            "S03.U08",
+            "S03.U09",
+            "S03.U10",
+            "S03.U11",
+            "S03.U12",
+            "S03.U13",
+            "S03.U14",
+            "S03.U15",
+            "S03.U16"
+          ],
+          "limitations": [
+            "本次仅审阅 adjacent_interface 范围内 S02、S03 的全部实际正文及其依赖接口，并逐项对照这两节的锁定目标；所提供的 S01 正文仅作为先修依据使用。不对其他章节或整份讲义的教学覆盖作结论。",
+            "已核对必要条件与充分条件、比较方向、参数范围、积分定义域、余项符号及截断误差，并检查最小合法指标。S02.U03 明确限制 n≥2；S03.U06 明确将 N 取为至少 2；S03.U10 单独处理首个部分和。这些处理未引用未定义的零下标部分和。",
+            "S03.U14 将积分判别法用于从 2 起始的级数，可对 S03.U11 作变量平移、令 g(x)=f(x+1) 直接得到，条件仍然成立，不构成新增假设缺失。S03.U08 及后续比较中所需的正实常数倍同敛散性质，可由 S02 已提供的线性运算定理及其逆向应用推出。",
+            "几何级数正文明确限定本节讨论非负项情形，给出了正首项、一般非负公比的结论及 r=0、r=1 的边界处理；未将该限定结论误当作任意实公比的分类。",
+            "依据 rendering_contract，独立且正确关联的练习 solution 单元会移至讲义末尾，其 JSON 顺序不作为答案位置问题。本次未执行渲染，也未核验最终 PDF 的公式显示、引用编号和答案位置。",
+            "本次为普通模型对所提供正文的数学与教学一致性审阅，未发现需要列入 issues 的具体问题，但不等同于形式化证明或对全部潜在错误的排除。"
+          ]
+        }
+      },
+      {
+        "global_interface": [
+          "S03",
+          "S04"
+        ],
+        "review": {
+          "issues": [
+            {
+              "unit_id": "S03.U14",
+              "severity": "warning",
+              "message": "积分判别法在 S03.U11 中的假设是 f 在 [1,∞) 上连续、正值、单调递减，且 f(n)=a_n (n=1,2,3,...)。本例对从 n=2 开始的级数直接令 f(x)=1/(x ln x)，其中 x≥2，并应用积分判别法；f 在 x=1 无定义，不能直接满足 S03.U11 的逐 n 条件。结论正确，但应补充尾部/下标平移说明：删除首项不影响收敛性，可将积分判别法用于尾级数，或把定理的适用区间写成 [N,∞)。",
+              "evidence": "S03.U11 表述为“设函数 f 在区间 [1,∞) 上连续、正值且单调递减，并满足 f(n)=a_n (n=1,2,3,...)”。S03.U14 第 (3) 项写“令 f(x)=1/(x ln x)，其中 x≥2……由积分判别法，级数 ∑_{n=2}^∞ 1/(n ln n) 发散。”这里函数不在 [1,∞) 上定义，定理原表述不能直接覆盖该应用。"
+            }
+          ],
+          "checked_unit_ids": [
+            "S03.U01",
+            "S03.U02",
+            "S03.U03",
+            "S03.U04",
+            "S03.U05",
+            "S03.U06",
+            "S03.U07",
+            "S03.U08",
+            "S03.U09",
+            "S03.U10",
+            "S03.U11",
+            "S03.U12",
+            "S03.U13",
+            "S03.U14",
+            "S03.U15",
+            "S03.U16",
+            "S04.U01",
+            "S04.U02",
+            "S04.U03",
+            "S04.U04",
+            "S04.U05",
+            "S04.U06",
+            "S04.U07",
+            "S04.U08",
+            "S04.U09",
+            "S04.U10",
+            "S04.U11",
+            "S04.U12",
+            "S04.U13"
+          ],
+          "limitations": [
+            "本次仅按 adjacent_interface 范围审阅 S03 与 S04 的实际正文及其对 S01、S02 先修内容的依赖；未生成章节 S05 的完整覆盖不构成本节遗漏。",
+            "未进行形式化证明或最终 PDF 渲染检查；rendering_contract 仅用于理解独立 solution 单元与最终答案位置，不用于数学正确性判断。",
+            "对单调有界收敛等先修性质的引用按已声明基础处理，未要求在本节重新证明。"
+          ]
+        }
+      },
+      {
+        "global_interface": [
+          "S04",
+          "S05"
+        ],
+        "review": {
+          "issues": [
+            {
+              "unit_id": "S04.U13",
+              "severity": "warning",
+              "message": "交错余项估计的证明重复出现。建议保留 S04.U07 的完整证明，将本单元改为简短的自然语言回顾，或合并重复内容；这不影响现有数学结论的正确性。",
+              "evidence": "S04.U07 已分偶数、奇数下标证明 S_{2m}≤S≤S_{2m+1}、S_{2m}≤S≤S_{2m-1}，并推出误差界和余项符号。S04.U13 再次以相同夹逼关系证明同一结论，且两个 proof 单元均关联 S04.U04。"
+            }
+          ],
+          "checked_unit_ids": [
+            "S04.U01",
+            "S04.U02",
+            "S04.U03",
+            "S04.U04",
+            "S04.U05",
+            "S04.U06",
+            "S04.U07",
+            "S04.U08",
+            "S04.U09",
+            "S04.U10",
+            "S04.U11",
+            "S04.U12",
+            "S04.U13",
+            "S05.U01",
+            "S05.U02",
+            "S05.U03",
+            "S05.U04",
+            "S05.U05",
+            "S05.U06",
+            "S05.U07",
+            "S05.U08",
+            "S05.U09",
+            "S05.U10",
+            "S05.U11",
+            "S05.U12",
+            "S05.U13",
+            "S05.U14",
+            "S05.U15",
+            "S05.U16",
+            "S05.U17",
+            "S05.U18",
+            "S05.U19",
+            "S05.U20",
+            "S05.U21"
+          ],
+          "limitations": [
+            "本次范围为 adjacent_interface：核对了 S04、S05 的全部实际正文、两节各项锁定目标及其依赖衔接。所提供的 S01—S03 正文仅作为先修依据使用，不构成对其他章节或整份讲义的完整覆盖复核。",
+            "本次未发现确定的数学错误或需要 review 的重大缺口。已核对非负幅度和零项约定、交错判别的充分条件、余项符号、绝对收敛与条件收敛的分类、比较条件、相关首项及截断误差边界；这一结论只适用于列出的已读单元。",
+            "依据 rendering_contract，关联练习的独立 solution 单元由程序移至末尾，未将其 JSON 顺序视为答案位置违规；关联目标均实际存在。未执行渲染或最终 PDF 检查，无法确认最终分页、引用编号及答案区的实际显示。",
+            "本次为普通模型对数学正文和教学依赖的审阅，不是形式化证明，也未将输入中的作者自评或计算记录当作正确性证明。"
+          ]
+        }
+      },
+      {
+        "chapter_coverage": {
+          "sections": [
+            {
+              "section_id": "S01",
+              "title": "级数与部分和的基本概念",
+              "objectives": [
+                "定义无穷级数及其部分和数列",
+                "说明级数收敛与部分和数列极限之间的关系",
+                "掌握级数收敛、发散和级数和的基本表述",
+                "通过基础例题计算部分和或判断简单级数的收敛性"
+              ],
+              "unit_ids": [
+                "S01.U01",
+                "S01.U02",
+                "S01.U03",
+                "S01.U04",
+                "S01.U05",
+                "S01.U06",
+                "S01.U07",
+                "S01.U08",
+                "S01.U09"
+              ]
+            },
+            {
+              "section_id": "S02",
+              "title": "收敛的必要条件与级数的基本性质",
+              "objectives": [
+                "证明级数收敛时通项必须趋于零",
+                "掌握级数的线性运算、余项和有限项改变性质",
+                "利用必要条件快速判断典型发散级数",
+                "通过例题分析调和型和常数项级数的基本行为"
+              ],
+              "unit_ids": [
+                "S02.U01",
+                "S02.U02",
+                "S02.U03",
+                "S02.U04",
+                "S02.U05",
+                "S02.U06",
+                "S02.U07",
+                "S02.U08",
+                "S02.U09",
+                "S02.U10",
+                "S02.U11",
+                "S02.U12",
+                "S02.U13",
+                "S02.U14",
+                "S02.U15",
+                "S02.U16",
+                "S02.U17",
+                "S02.U18",
+                "S02.U19",
+                "S02.U20",
+                "S02.U18.answer",
+                "S02.U19.answer",
+                "S02.U20.answer"
+              ]
+            },
+            {
+              "section_id": "S03",
+              "title": "正项级数及其判别法",
+              "objectives": [
+                "理解正项级数部分和单调性的作用",
+                "掌握比较判别法、极限比较判别法和积分判别法的使用条件",
+                "掌握几何级数和p级数等基本参照级数",
+                "能够选择合适判别法判断正项级数的收敛性"
+              ],
+              "unit_ids": [
+                "S03.U01",
+                "S03.U02",
+                "S03.U03",
+                "S03.U04",
+                "S03.U05",
+                "S03.U06",
+                "S03.U07",
+                "S03.U08",
+                "S03.U09",
+                "S03.U10",
+                "S03.U11",
+                "S03.U12",
+                "S03.U13",
+                "S03.U14",
+                "S03.U15",
+                "S03.U16"
+              ]
+            },
+            {
+              "section_id": "S04",
+              "title": "交错级数与条件收敛",
+              "objectives": [
+                "定义交错级数并识别其符号交替结构",
+                "掌握交错级数判别法及其余项估计",
+                "区分交错级数的收敛性与绝对收敛性",
+                "通过例题估计截断误差并判断条件收敛"
+              ],
+              "unit_ids": [
+                "S04.U01",
+                "S04.U02",
+                "S04.U03",
+                "S04.U04",
+                "S04.U05",
+                "S04.U06",
+                "S04.U07",
+                "S04.U08",
+                "S04.U09",
+                "S04.U10",
+                "S04.U11",
+                "S04.U12",
+                "S04.U13"
+              ]
+            },
+            {
+              "section_id": "S05",
+              "title": "绝对收敛、条件收敛与判别法综合",
+              "objectives": [
+                "定义绝对收敛和条件收敛",
+                "证明绝对收敛蕴含收敛",
+                "综合使用必要条件、比较判别法、交错级数判别法和绝对收敛判别法",
+                "建立面向本科入门题目的判别法选择流程并完成综合练习"
+              ],
+              "unit_ids": [
+                "S05.U01",
+                "S05.U02",
+                "S05.U03",
+                "S05.U04",
+                "S05.U05",
+                "S05.U06",
+                "S05.U07",
+                "S05.U08",
+                "S05.U09",
+                "S05.U10",
+                "S05.U11",
+                "S05.U12",
+                "S05.U13",
+                "S05.U14",
+                "S05.U15",
+                "S05.U16",
+                "S05.U17",
+                "S05.U18",
+                "S05.U19",
+                "S05.U20",
+                "S05.U21"
+              ]
+            }
+          ],
+          "objectives": [
+            "建立无穷级数、部分和与收敛的基本概念",
+            "掌握级数收敛的必要条件及基本运算性质",
+            "能够使用正项级数、交错级数和绝对收敛判别法分析级数",
+            "区分绝对收敛、条件收敛与发散，并完成基础证明与计算题"
+          ],
+          "teacher_acceptance": "NOT_RUN"
+        },
+        "review": {
+          "issues": [
+            {
+              "unit_id": "S03.U12",
+              "severity": "warning",
+              "message": "排除项写明“不系统展开高等数学中的积分判别法证明细节”，但本单元给出了积分判别法的完整两个方向证明。数学推导本身未发现问题；若按该排除项字面执行，此单元可能超出锁定范围，宜改为简要说明或仅陈述使用条件。",
+              "evidence": "S03.U12 从“若积分收敛”和“若级数收敛”两个方向完整证明积分判别法，包含不等式夹逼与截断积分极限的存在性论证。"
+            },
+            {
+              "unit_id": "S03.U14",
+              "severity": "warning",
+              "message": "积分判别法在 S03.U11 只陈述为从 n=1、区间 [1,∞) 的版本；本单元对从 n=2 开始的级数直接使用该判别法，并将 f 定义在 [2,∞)。结论正确，但应显式说明可平移到任意起始指标 N，或通过删去有限项处理，否则严格按 S03.U11 的条件不完全匹配。",
+              "evidence": "S03.U14：“令 f(x)=1/(x ln x)，其中 x≥2……由积分判别法，级数 ∑_{n=2}^{∞}1/(n ln n) 发散。”"
+            }
+          ],
+          "checked_unit_ids": [
+            "S01.U01",
+            "S01.U02",
+            "S01.U03",
+            "S01.U04",
+            "S01.U05",
+            "S01.U06",
+            "S01.U07",
+            "S01.U08",
+            "S01.U09",
+            "S02.U01",
+            "S02.U02",
+            "S02.U03",
+            "S02.U04",
+            "S02.U05",
+            "S02.U06",
+            "S02.U07",
+            "S02.U08",
+            "S02.U09",
+            "S02.U10",
+            "S02.U11",
+            "S02.U12",
+            "S02.U13",
+            "S02.U14",
+            "S02.U15",
+            "S02.U16",
+            "S02.U17",
+            "S02.U18",
+            "S02.U19",
+            "S02.U20",
+            "S02.U18.answer",
+            "S02.U19.answer",
+            "S02.U20.answer",
+            "S03.U01",
+            "S03.U02",
+            "S03.U03",
+            "S03.U04",
+            "S03.U05",
+            "S03.U06",
+            "S03.U07",
+            "S03.U08",
+            "S03.U09",
+            "S03.U10",
+            "S03.U11",
+            "S03.U12",
+            "S03.U13",
+            "S03.U14",
+            "S03.U15",
+            "S03.U16",
+            "S04.U01",
+            "S04.U02",
+            "S04.U03",
+            "S04.U04",
+            "S04.U05",
+            "S04.U06",
+            "S04.U07",
+            "S04.U08",
+            "S04.U09",
+            "S04.U10",
+            "S04.U11",
+            "S04.U12",
+            "S04.U13",
+            "S05.U01",
+            "S05.U02",
+            "S05.U03",
+            "S05.U04",
+            "S05.U05",
+            "S05.U06",
+            "S05.U07",
+            "S05.U08",
+            "S05.U09",
+            "S05.U10",
+            "S05.U11",
+            "S05.U12",
+            "S05.U13",
+            "S05.U14",
+            "S05.U15",
+            "S05.U16",
+            "S05.U17",
+            "S05.U18",
+            "S05.U19",
+            "S05.U20",
+            "S05.U21"
+          ],
+          "limitations": [
+            "本审阅基于提供的 units 正文与计划元数据，未独立形式化证明所有定理；单调有界数列收敛定理等基础性质按先修知识处理。",
+            "未检查最终 PDF 排版、交叉引用实际解析结果或渲染后的答案位置。",
+            "未评估教学风格、难度分布或经济应用比例等非数学质量。",
+            "对排除项按给定字面作课程范围核验，不构成授权、审批或教师验收结论。"
+          ]
+        }
+      }
+    ],
+    "limitations": [
+      "同模型分角色审阅不是形式化证明；未支持或未请求的核算仍需人工复核"
+    ]
+  },
+  "fidelity": {
+    "status": "NOT_APPLICABLE",
+    "evidence": [],
+    "limitations": []
+  },
+  "compile": {
+    "status": "PASS",
+    "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\v0f9edde58ac0\\build\\lecture.pdf",
+    "issues": [],
+    "log_paths": [
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\v0f9edde58ac0\\build\\pass-1.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\v0f9edde58ac0\\build\\pass-1.tex.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\v0f9edde58ac0\\build\\pass-2.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\iteration2-live\\b\\fd6736af6ef14be3\\v0f9edde58ac0\\build\\pass-2.tex.log"
+    ],
+    "engine": {
+      "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+    },
+    "passes": 2,
+    "compile_mode": "trusted_local",
+    "isolation": "NOT_IMPLEMENTED",
+    "limitations": [
+      "原生可信本机编译不是文件系统或网络隔离沙箱。"
+    ],
+    "command": [
+      "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "-no-shell-escape",
+      "-recorder",
+      "-synctex=1",
+      "-jobname=lecture",
+      "-output-directory=.",
+      "lecture.tex"
+    ],
+    "elapsed_seconds": 3.75,
+    "page_count": 17,
+    "pdf_sha256": "694d3b6783a984a65164ff3217fd19037c0333a25dac8603e70850b201115382",
+    "auxiliary_hashes": {
+      ".aux": "5934cbb6322ee2183b1080a3f6d22dc1be7930157a2a1c73775359ded382b938",
+      ".out": "366a26ddbffec549fe3722be988088b4afc8fe63b2406773952ebb1f60b55220"
+    }
+  },
+  "layout": {
+    "status": "PASS",
+    "evidence": {
+      "page_count": 17,
+      "all_rendered": true
+    },
+    "limitations": [
+      "几何检查是启发式，只能定位可测风险，不能证明所有正文均无裁切或遮挡。",
+      "尚未做模型视觉复核或教师人工逐页审核；每页图片及哈希供独立审核。",
+      "数学上下标的自然小字号不判为违规；PDF 文字提取不是数学内容真值。",
+      "正文安全区为未校准初始估计，实际主题区域需通过探针和人工复核校准。"
+    ]
+  },
+  "policy": {
+    "status": "NEEDS_REVIEW",
+    "evidence": {
+      "schema_version": 1,
+      "decisions": [
+        {
+          "decision_id": "dbde55a67c6144ce89263342b374f0ec",
+          "resolved_effects": {
+            "value": "key"
+          },
+          "status": "NEEDS_REVIEW",
+          "artifact": "lecture.tex",
+          "artifact_hash": "0eeff02f2258d9b398ff7a1a8c7a63316cab863c955f6f8ad97fd7bf61431496",
+          "evidence": "需教师检查具体语义是否落实"
+        },
+        {
+          "decision_id": "b2dfa936727f45eaa04d3693772c83d4",
+          "resolved_effects": {
+            "value": "balanced"
+          },
+          "status": "NEEDS_REVIEW",
+          "artifact": "lecture.tex",
+          "artifact_hash": "0eeff02f2258d9b398ff7a1a8c7a63316cab863c955f6f8ad97fd7bf61431496",
+          "evidence": "需教师检查具体语义是否落实"
+        },
+        {
+          "decision_id": "53b60707cba94067953a43625e4ee791",
+          "resolved_effects": {
+            "value": "with_answers"
+          },
+          "status": "PASS",
+          "artifact": "lecture.tex",
+          "artifact_hash": "0eeff02f2258d9b398ff7a1a8c7a63316cab863c955f6f8ad97fd7bf61431496",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        },
+        {
+          "decision_id": "3a0b619387ce425ab35e31d9aa0faaf1",
+          "resolved_effects": {
+            "value": "end"
+          },
+          "status": "PASS",
+          "artifact": "lecture.tex",
+          "artifact_hash": "0eeff02f2258d9b398ff7a1a8c7a63316cab863c955f6f8ad97fd7bf61431496",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        }
+      ],
+      "limitations": [
+        "语义自定义不能仅凭模型自评当作落实；发布前须人工审阅质量报告。"
+      ]
+    },
+    "limitations": []
+  },
+  "security": {
+    "status": "PASS",
+    "evidence": [
+      "回环服务、受控源码、编译参数及白名单子进程环境"
+    ],
+    "limitations": [
+      "trusted_local 不是文件系统/网络隔离沙箱"
+    ]
+  },
+  "schema_version": 1,
+  "provider": "live",
+  "human_visual_review": "NOT_RUN",
+  "model_visual_review": "NOT_RUN",
+  "issues": []
+}

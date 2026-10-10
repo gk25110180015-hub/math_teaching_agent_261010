@@ -1,0 +1,135 @@
+{
+  "section_id": "S04",
+  "math": {
+    "schema_version": 1,
+    "status": "NEEDS_REVIEW",
+    "issues": [
+      {
+        "rule_id": "NUMERIC_IS_NOT_PROOF",
+        "severity": "review",
+        "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+        "location": {
+          "calculation_id": "S04.C01",
+          "unit_id": "S04.U05"
+        },
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "kind": "numeric_spotcheck",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "numeric_spotcheck_passed",
+        "point_count": 1,
+        "message": "仅在指定点数值一致，不是一般性证明。",
+        "calculation_id": "S04.C01",
+        "unit_id": "S04.U05"
+      }
+    ],
+    "coverage": [
+      "S04.U01",
+      "S04.U02",
+      "S04.U03",
+      "S04.U04",
+      "S04.U05",
+      "S04.U06",
+      "S04.U07",
+      "S04.U08",
+      "S04.U09",
+      "S04.U10",
+      "S04.U11",
+      "S04.U12",
+      "S04.U13"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "协议的数值核算只能抽查交错项在指定整数处的取值，不能表达对所有正整数的单调性、极限或余项不等式；交错级数判别法及余项估计仍由正文证明。"
+    ]
+  },
+  "llm_review": {
+    "issues": [
+      {
+        "unit_id": "S04.U01",
+        "severity": "review",
+        "message": "交错级数的核心定义存在表述范围不一致：公式只要求 b_n\\geq0，允许某些 b_n=0；但随后称“各项的符号正负交替”，这通常暗示非零项严格交替，且将 b_n 称为“正项序列”也容易被理解为 b_n>0。应明确采用“具有交错符号形式”还是要求 b_n>0；若允许零项，应说明零项不破坏后续判别法，并避免把该条件表述为严格正负交替。",
+        "evidence": "S04.U01 同时写出“b_n\\geq0”与“其中各项的符号正负交替”，两者对零项的允许范围不同。后续 S04.U02 的条件也沿用 b_n\\geq0，因此这是核心定义与实际假设范围的歧义，而非仅文字风格问题。"
+      },
+      {
+        "unit_id": "S04.U05",
+        "severity": "warning",
+        "message": "该例的数值抽查不能单独证明对所有正整数 n 的单调性、极限和余项估计；结论是否成立依赖 S04.U06 对 b_n=1/n 的一般性论证。",
+        "evidence": "工具检查仅在 S04.U05 指定点进行了数值抽查，并明确标注“不是一般性证明”。正文 S04.U06 虽给出了符号化的 b_{n+1}<b_n、b_n\\to0 论证，因此此项是核查局限而非已确认的数学错误。"
+      }
+    ],
+    "checked_unit_ids": [
+      "S04.U01",
+      "S04.U02",
+      "S04.U03",
+      "S04.U04",
+      "S04.U05",
+      "S04.U06",
+      "S04.U07",
+      "S04.U08",
+      "S04.U09",
+      "S04.U10",
+      "S04.U11",
+      "S04.U12",
+      "S04.U13"
+    ],
+    "limitations": [
+      "本次审阅仅覆盖 section_local 范围内的 S04.U01–S04.U13；pending 的 S05 未审阅，不构成本节遗漏。",
+      "已核对定义、量词、正负号、端点/下标、判别法条件、证明假设及练习答案的数学一致性；未发现除所列问题外的确定性数学错误。",
+      "普通模型审阅不是形式化证明；尤其交错级数判别法和余项估计中的一般量词、单调性与极限推理未由形式化验证器证明。",
+      "未据单元 JSON 顺序判断答案位置；根据 rendering_contract，S04.U11 与 S04.U12 作为独立 solution 单元会被移至最终答案区。未检查最终 PDF 的排版或渲染结果。"
+    ]
+  },
+  "issues": [
+    {
+      "rule_id": "NUMERIC_IS_NOT_PROOF",
+      "severity": "review",
+      "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+      "location": {
+        "calculation_id": "S04.C01",
+        "unit_id": "S04.U05"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S04.U01",
+      "severity": "review",
+      "message": "交错级数的核心定义存在表述范围不一致：公式只要求 b_n\\geq0，允许某些 b_n=0；但随后称“各项的符号正负交替”，这通常暗示非零项严格交替，且将 b_n 称为“正项序列”也容易被理解为 b_n>0。应明确采用“具有交错符号形式”还是要求 b_n>0；若允许零项，应说明零项不破坏后续判别法，并避免把该条件表述为严格正负交替。",
+      "evidence": "S04.U01 同时写出“b_n\\geq0”与“其中各项的符号正负交替”，两者对零项的允许范围不同。后续 S04.U02 的条件也沿用 b_n\\geq0，因此这是核心定义与实际假设范围的歧义，而非仅文字风格问题。"
+    },
+    {
+      "unit_id": "S04.U05",
+      "severity": "warning",
+      "message": "该例的数值抽查不能单独证明对所有正整数 n 的单调性、极限和余项估计；结论是否成立依赖 S04.U06 对 b_n=1/n 的一般性论证。",
+      "evidence": "工具检查仅在 S04.U05 指定点进行了数值抽查，并明确标注“不是一般性证明”。正文 S04.U06 虽给出了符号化的 b_{n+1}<b_n、b_n\\to0 论证，因此此项是核查局限而非已确认的数学错误。"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 0,
+    "proposal_calls": 0,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "40643e3b5cfda7956700cc7f43db493f40b0f2f4f91b4400f53468d389ef80b7",
+      "tool_checks_hash": "15421d7bd3126f29c0e94e6d17af2206dfd8a971637c77c4e74b6d3ffab53e8a",
+      "reviewer_prompt_hash": "86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc",
+      "plan_context_hash": "d594d5962e767f3be7499bfbe76faf41c48d7586841588100516b510408d6af5",
+      "deterministic_checks_hash": "9d57beebee55828fd1211d726f03c6409fab55901b82735524888c0782b9812e"
+    }
+  }
+}

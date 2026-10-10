@@ -1,0 +1,106 @@
+{
+  "section_id": "S02",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "limit",
+        "assumptions": {
+          "x": {
+            "real": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "2",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S02.C01",
+        "unit_id": "S02.U09"
+      },
+      {
+        "kind": "limit",
+        "assumptions": {
+          "x": {
+            "real": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "0",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S02.C02",
+        "unit_id": "S02.U04"
+      }
+    ],
+    "coverage": [
+      "S02.U01",
+      "S02.U02",
+      "S02.U03",
+      "S02.U04",
+      "S02.U05",
+      "S02.U06",
+      "S02.U07",
+      "S02.U08",
+      "S02.U09",
+      "S02.U10",
+      "S02.U11",
+      "S02.U12",
+      "S02.U13"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "协议支持的极限核算不能表达约分所需的条件 $x\\neq1$；核算仅针对约分后在相应去心邻域内等价的表达式 $x+1$。",
+      "该核算请求不覆盖一般函数的局部有界性、四则运算法则与复合极限定理的量词条件及证明；这些内容由正文的极限定义与估计说明。此处只提交核算请求，不报告执行结果。",
+      "新增核算仅覆盖夹逼应用中上界 x^2 在 x 趋于 0 时的极限。协议没有一般不等式验证请求，不能核验去心邻域 0<|x|<1 上的上下界构造及夹逼推理；这些步骤由正文利用正弦函数的有界性和 x^2 的非负性说明。",
+      "本次补充的 ε-δ 论证涉及任意误差、邻域选择及不等式，现有有界核算协议不能验证这些量词步骤；既有 S02.C02 仅核算 x^2 在 x 趋于 0 时的极限，不覆盖定义论证。S02.U11 中恒等函数与常数函数基本极限的定义依据亦由正文给出，不将符号代入视为对这些依据的验证。",
+      "S02.U09 补充的定义证明涉及任意 ε>0、选择 δ=ε 及去心邻域内的误差不等式，现有核算协议不能验证这些量词与不等式步骤。既有 S02.C01 仅核算约分后 x+1 在 x 趋于 1 时的极限，不覆盖该定义证明或约分的定义域条件。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S02.U01",
+      "S02.U02",
+      "S02.U03",
+      "S02.U04",
+      "S02.U05",
+      "S02.U06",
+      "S02.U07",
+      "S02.U08",
+      "S02.U09",
+      "S02.U10",
+      "S02.U11",
+      "S02.U12",
+      "S02.U13"
+    ],
+    "limitations": [
+      "本次逐项核对了所提供的 S02 全部实际单元，包括定义域、量词、正负号、端点与去心邻域条件、商与复合极限的适用条件、索引与初值问题，以及锁定目标所要求的局部有界性、夹逼、保号、四则运算和复合结论。未发现需要报告的 blocking、review 或 warning。",
+      "结论基于普通模型对实际正文及所提供 S01 先修正文的审阅，不等同于形式化证明；未对所有可能函数、所有量词推演或最终 PDF 排版进行穷尽验证。",
+      "S03、S04、S05 尚未生成且不属于本次 section_local 范围，因此未对其内容或整份课程的最终覆盖作出判断。"
+    ]
+  },
+  "issues": [],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 3,
+    "proposal_calls": 3,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "fbb8e635b02113721440b9f7865771d8327ff972513a7ecc482e45f5c1305bfa",
+      "tool_checks_hash": "5801e339673489da794326b42c7a440eb71c7f48bf08372cdb1fe7ed67411c3c",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "6c2badf10cdb78e3c52c7ffd31292bcce4fc566bbaf1fb8866d0d65f87322b03",
+      "deterministic_checks_hash": "00274d142b3b24a733e95f46873903fb1d909a55f9b99102912b1abf8864d2f4"
+    }
+  }
+}

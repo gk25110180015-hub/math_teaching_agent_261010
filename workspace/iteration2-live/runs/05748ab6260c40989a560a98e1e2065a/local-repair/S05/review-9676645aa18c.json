@@ -1,0 +1,147 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "6f31ff52e79f09979fcea606449134c07e7dec008989920ed7a030ff81867463",
+    "tool_checks_hash": "2d6a6451b2f6ad8eb6d9e33295fe1c1caf963890f6495b08b8102de4498029ed",
+    "reviewer_prompt_hash": "86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc",
+    "plan_context_hash": "f8f4cc7ed6bd860e6ca8d5fafeb488574e9f010f2eda7e7f06b58bbc35129ff5"
+  },
+  "report": {
+    "section_id": "S05",
+    "math": {
+      "schema_version": 1,
+      "status": "NEEDS_REVIEW",
+      "issues": [
+        {
+          "rule_id": "MATH_CHECK_UNKNOWN",
+          "severity": "review",
+          "message": "ValueError: 幂指数超出受限预算。",
+          "location": {
+            "calculation_id": "S05.C01",
+            "unit_id": "S05.U05"
+          },
+          "resolution_status": "open"
+        }
+      ],
+      "evidence": [
+        {
+          "status": "UNKNOWN",
+          "evidence_type": "not_checked",
+          "message": "ValueError: 幂指数超出受限预算。",
+          "calculation_id": "S05.C01",
+          "unit_id": "S05.U05"
+        }
+      ],
+      "coverage": [
+        "S05.U01",
+        "S05.U02",
+        "S05.U03",
+        "S05.U04",
+        "S05.U05",
+        "S05.U06",
+        "S05.U07",
+        "S05.U08",
+        "S05.U09"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "协议的表达式树不能表达分段定义中的奇偶条件，因此未对 S05.U06--S05.U07 的夹逼论证提交形式化核算；该结论依赖正文中的全称不等式证明。",
+        "协议不能直接核验方法选择定理中关于量词、适用条件和证明策略的完整逻辑结构；相关内容由正文中的定理陈述与证明支持。"
+      ]
+    },
+    "llm_review": {
+      "issues": [
+        {
+          "unit_id": "S05.U03",
+          "severity": "blocking",
+          "message": "把单调有界法的一种证明流程说成所有递推数列取极限前的必要条件，表述错误。递推数列必须先证明收敛，并验证递推式中所用极限运算合法，但不必先证明单调性。应将该句限定为“若选择单调有界原理证明收敛，须先验证单调性及相应方向的界”。",
+          "evidence": "正文写道：“若数列由递推式给出，必须先完成单调性和有界性的证明”。反例：a_1=1，a_{n+1}=-a_n/2，则 a_n=(-1/2)^{n-1} 不单调，但收敛于0。例如由归纳法得 2^{n-1}≥n，从而 |a_n|≤1/n→0。证明收敛后可以合法地在该递推式中取极限，无需且无法证明原数列单调。"
+        },
+        {
+          "unit_id": "S05.U02",
+          "severity": "warning",
+          "message": "方法表中定义法的条件过度简写，单独阅读不足以推出所列结论。建议补全误差条件，并明确“统一”指对所有充分大的下标有效，而非对所有误差使用同一个阈值。后续证明已正确补足，因此这是非阻塞的表述限制。",
+          "evidence": "表格仅列“对任意 ε>0 构造统一的正整数 N”，就给出 a_n→L；没有在该行写出“对所有 n≥N，|a_n-L|<ε”，也没有说明 N 可依赖 ε。S05.U03 第一段正确写出了这些误差量词的实质条件，故结合证明阅读不会产生同样的逻辑缺口。"
+        }
+      ],
+      "checked_unit_ids": [
+        "S05.U01",
+        "S05.U02",
+        "S05.U03",
+        "S05.U04",
+        "S05.U05",
+        "S05.U06",
+        "S05.U07",
+        "S05.U08",
+        "S05.U09"
+      ],
+      "limitations": [
+        "本次按 section_local 范围逐项核对 S05 的九个实际单元；此前章节仅作为依赖背景，不构成对其正文或整份讲义的重新审阅结论。",
+        "已核对本节具体计算、正整数定义域、分母非零条件、误差估计的量词、奇偶分段的统一界，以及练习中由最终正下界推出无界和不收敛的推理。本节未涉及级数或单侧函数极限，相应条件不适用。",
+        "工具对 S05.U05 的计算返回 UNKNOWN，原因为受限幂指数预算；这不是计算错误的证据。独立检查正文可得误差为 5/(n+3)，所取 N>5/ε 有效，但该人工式模型复核不代表工具核算已成功。",
+        "依据 rendering_contract，S05.U09 是关联 S05.U08 的独立答案单元，将被移至讲义末尾，不能由 JSON 顺序推断答案位置违规。未检查实际渲染结果或最终 PDF。",
+        "本结果是普通模型对正文及锁定条件的审阅，不是形式化证明，也不保证发现所有数学或表述问题。"
+      ]
+    },
+    "issues": [
+      {
+        "rule_id": "LECTURE_FRAGMENT_AMBIGUOUS",
+        "severity": "blocking",
+        "unit_id": "S05.U02",
+        "message": "Mixed math delimiters require review",
+        "raw_hash": "7bc603dfef8dbcdbb0e15d16fe1af8aebc71bf278fc1bd9201885ea3e1b21516"
+      },
+      {
+        "rule_id": "MATH_CHECK_UNKNOWN",
+        "severity": "review",
+        "message": "ValueError: 幂指数超出受限预算。",
+        "location": {
+          "calculation_id": "S05.C01",
+          "unit_id": "S05.U05"
+        },
+        "resolution_status": "open"
+      },
+      {
+        "unit_id": "S05.U03",
+        "severity": "blocking",
+        "message": "把单调有界法的一种证明流程说成所有递推数列取极限前的必要条件，表述错误。递推数列必须先证明收敛，并验证递推式中所用极限运算合法，但不必先证明单调性。应将该句限定为“若选择单调有界原理证明收敛，须先验证单调性及相应方向的界”。",
+        "evidence": "正文写道：“若数列由递推式给出，必须先完成单调性和有界性的证明”。反例：a_1=1，a_{n+1}=-a_n/2，则 a_n=(-1/2)^{n-1} 不单调，但收敛于0。例如由归纳法得 2^{n-1}≥n，从而 |a_n|≤1/n→0。证明收敛后可以合法地在该递推式中取极限，无需且无法证明原数列单调。"
+      },
+      {
+        "unit_id": "S05.U02",
+        "severity": "warning",
+        "message": "方法表中定义法的条件过度简写，单独阅读不足以推出所列结论。建议补全误差条件，并明确“统一”指对所有充分大的下标有效，而非对所有误差使用同一个阈值。后续证明已正确补足，因此这是非阻塞的表述限制。",
+        "evidence": "表格仅列“对任意 ε>0 构造统一的正整数 N”，就给出 a_n→L；没有在该行写出“对所有 n≥N，|a_n-L|<ε”，也没有说明 N 可依赖 ε。S05.U03 第一段正确写出了这些误差量词的实质条件，故结合证明阅读不会产生同样的逻辑缺口。"
+      }
+    ],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": [
+    {
+      "rule_id": "LECTURE_FRAGMENT_AMBIGUOUS",
+      "severity": "blocking",
+      "unit_id": "S05.U02",
+      "message": "Mixed math delimiters require review",
+      "raw_hash": "7bc603dfef8dbcdbb0e15d16fe1af8aebc71bf278fc1bd9201885ea3e1b21516"
+    },
+    {
+      "rule_id": "MATH_CHECK_UNKNOWN",
+      "severity": "review",
+      "message": "ValueError: 幂指数超出受限预算。",
+      "location": {
+        "calculation_id": "S05.C01",
+        "unit_id": "S05.U05"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S05.U03",
+      "severity": "blocking",
+      "message": "把单调有界法的一种证明流程说成所有递推数列取极限前的必要条件，表述错误。递推数列必须先证明收敛，并验证递推式中所用极限运算合法，但不必先证明单调性。应将该句限定为“若选择单调有界原理证明收敛，须先验证单调性及相应方向的界”。",
+      "evidence": "正文写道：“若数列由递推式给出，必须先完成单调性和有界性的证明”。反例：a_1=1，a_{n+1}=-a_n/2，则 a_n=(-1/2)^{n-1} 不单调，但收敛于0。例如由归纳法得 2^{n-1}≥n，从而 |a_n|≤1/n→0。证明收敛后可以合法地在该递推式中取极限，无需且无法证明原数列单调。"
+    }
+  ]
+}

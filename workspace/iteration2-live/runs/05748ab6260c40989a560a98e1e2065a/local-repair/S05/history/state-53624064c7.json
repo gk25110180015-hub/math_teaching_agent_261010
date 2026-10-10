@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "60e76cc0b1271ac1b32a9f48c9ae760665bb7180cbdd52df6f5f5958f25db4ac",
+    "section_id": "S05",
+    "context_hash": "f8f4cc7ed6bd860e6ca8d5fafeb488574e9f010f2eda7e7f06b58bbc35129ff5",
+    "base_hash": "6f31ff52e79f09979fcea606449134c07e7dec008989920ed7a030ff81867463",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "NEEDS_REPAIR",
+  "applied_rounds": 0,
+  "proposal_calls": 1,
+  "rejected_proposals": 1,
+  "pending_issues": [
+    {
+      "rule_id": "MATH_CHECK_UNKNOWN",
+      "severity": "review",
+      "message": "ValueError: 幂指数超出受限预算。",
+      "location": {
+        "calculation_id": "S05.C01",
+        "unit_id": "S05.U05"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S05.U01",
+      "severity": "blocking",
+      "message": "将“递推数列先证明单调性和有界性”表述成所有递推数列的必要流程，数学上不成立。递推数列可以通过夹逼、显式展开、误差估计等方式证明收敛而不具备单调性；例如 a₁=1、aₙ₊₁=−aₙ/2 给出 aₙ=(−1/2)ⁿ⁻¹，虽不单调但收敛于 0。应限定为“若选择单调有界原理证明收敛，则需证明相应的单调性和界”。",
+      "evidence": "正文原句为：“若数列由递推关系给出，则先证明单调性和有界性，再由单调有界原理判断收敛，最后才将极限代入递推关系。”其中“若数列由递推关系给出”覆盖所有递推数列，而不是仅覆盖采用单调有界法的情形；同一单元还把该流程作为一般方法选择规则。"
+    },
+    {
+      "unit_id": "S05.U02",
+      "severity": "review",
+      "message": "表格中“ε--N 定义”所需条件写成“对任意 ε>0 构造统一的正整数 N”，量词含义不够明确。若“统一”意指同一个 N 对所有 ε 有效，则与 ε--N 定义错误；正确量词应明确为：对每个 ε>0，存在可依赖于 ε 但不依赖于 n 的正整数 N，使所有 n≥N 时误差小于 ε。若“统一”仅指对所有尾项 n≥N 一致成立，应改写以消除歧义。",
+      "evidence": "S05.U02 的表格直接写“对任意 ε>0 构造统一的正整数 N”，未明确 N 是否允许依赖 ε。该单元承担方法定理和核心量词说明，不能仅依靠 S05.U03 中较清楚的展开来消除定义表述本身的歧义。"
+    },
+    {
+      "unit_id": "S05.U02",
+      "severity": "review",
+      "message": "四则运算法则一行把“商的分母极限非零”与和、差、积并列为统一条件，未区分该条件只对商法则必要。作为充分条件整体并不导致计算错误，但会把商法则的专门假设误写成所有四则运算都需要的条件；应分别列出常数倍、和差、积与商的适用条件。",
+      "evidence": "表格在“方法：四则运算法则”下统一写“各相关数列的极限存在，且商的分母极限非零”。S05.U03 随后只在商法则段落中正确使用非零条件，显示表格与解释文字的条件粒度不一致。"
+    },
+    {
+      "unit_id": "S05.U03",
+      "severity": "blocking",
+      "message": "把单调有界法的一种证明流程说成递推数列取极限前的普遍必要条件，结论错误。递推数列必须先证明收敛并确认递推关系中的极限运算合法，但不必先证明单调性和有界性；若采用单调有界原理，才需要证明相应方向的单调性和界。",
+      "evidence": "正文原句为：“若数列由递推式给出，必须先完成单调性和有界性的证明；只有在已经知道 a_n→A 后，才能利用移位数列也趋于 A 以及极限运算法则，将极限代入递推式。”反例 a₁=1、aₙ₊₁=−aₙ/2 的数列不单调但收敛于 0，因此可在证明收敛后取极限，不能把单调性作为普遍必要条件。"
+    },
+    {
+      "unit_id": "S05.U05",
+      "severity": "review",
+      "message": "该单元的具体数学推导看起来正确，但相关自动核算未完成，不能据此宣称形式化核验通过。",
+      "evidence": "工具检查对 S05.C01 返回“ValueError: 幂指数超出受限预算”，状态为 UNKNOWN。正文中的误差恒等式为 |(2n+1)/(n+3)−2|=5/(n+3)，且 5/(n+3)≤5/n；在 n 为正整数时这些步骤成立，但本次计算工具未能完成核算。"
+    }
+  ],
+  "unit_applied_counts": {},
+  "proposal_counts_by_key": {
+    "unit:S05.U02": 1,
+    "unit:S05.U03": 1,
+    "unit:S05.U05": 1
+  },
+  "rejected_counts_by_key": {
+    "unit:S05.U02": 1,
+    "unit:S05.U03": 1,
+    "unit:S05.U05": 1
+  },
+  "evidence_dependencies": [],
+  "last_review_context_hash": "fb1077b1277c4d8c4f00f49fd381df59954871dbcc2428c835299c40ca054ef3",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1; tolerate one rejection per key, stop after another; retain aggregate calls and run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/05748ab6260c40989a560a98e1e2065a/local-repair/S05/candidate-ddf6321d19dc.json",
+  "candidate_hash": "101062162a823cb5bf854f55709d1e83de35338ce195fae35a4aac3028de5c37",
+  "last_review_key": "runs/05748ab6260c40989a560a98e1e2065a/local-repair/S05/review-f7d64959f223.json",
+  "pending_operation": "strict_local_patch",
+  "pending_keys": [
+    "unit:S05.U02",
+    "unit:S05.U03",
+    "unit:S05.U05"
+  ],
+  "request_count_before": 29,
+  "last_rejection": {
+    "code": "REPAIR_SCOPE_VIOLATION",
+    "message": "局部候选结构不明确，未采用；合法原稿和提案保留"
+  }
+}

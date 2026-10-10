@@ -1,0 +1,28 @@
+{
+  "status": "UNCHECKED_REPAIRED",
+  "state_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S03.json",
+  "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S03/candidate-becc07d4d97b.json",
+  "candidate_hash": "7adce019cfd6a50f19ca3d0035642f03b7d314800ae111576cfe946fb9460f59",
+  "applied_rounds": 7,
+  "proposal_calls": 8,
+  "rejected_proposals": 1,
+  "pending_issues": [
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "S03.U04 对指数基本极限的证明明确依赖先修命题：当 $0<t<1$ 时，$1+t\\le e^t\\le1/(1-t)$。当前提供的 S01、S02 正文未核实包含该命题，因此其先修来源仍需课程材料另行确认；若未建立该命题，本单元的指数极限证明不应视为自足。",
+      "location": {},
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S03.U04",
+      "severity": "review",
+      "message": "指数基本极限的证明仍依赖未能由当前提供正文核实的先修不等式。正文明确使用：对任意实数 t，若 0<t<1，则 1+t≤e^t≤1/(1−t)。虽然本单元已说明该命题不是由待证极限推出，因而没有发现循环论证，但 S01、S02 的实际正文没有陈述或证明该不等式；计划先修项“指数函数、对数函数和三角函数的基本性质”也未明确给出这一精确命题及其条件。应在课程先修材料中明确建立该命题，或在本单元补充可接受的证明后，才能完整核实该证明链条。",
+      "evidence": "S03.U04 在证明 lim_{x→0}(e^x−1)/x=1 时两侧均直接调用 1+t≤e^t≤1/(1−t)（0<t<1）；随后用该不等式分别处理 0<x<1 和 x=−t<0。已提供的 prior_sections 仅包含 S01、S02，逐单元正文中没有该不等式、指数函数凸性或可直接推出它的等价基础结论。S03.U04 自身也明确承认：若该先修命题尚未建立，指数基本极限的证明链条不能仅凭本单元其余内容独立完成。"
+    },
+    {
+      "severity": "review",
+      "message": "S03.U04 对指数基本极限的证明明确依赖先修命题：当 $0<t<1$ 时，$1+t\\le e^t\\le1/(1-t)$。当前提供的 S01、S02 正文未核实包含该命题，因此其先修来源仍需课程材料另行确认；若未建立该命题，本单元的指数极限证明不应视为自足。"
+    }
+  ]
+}

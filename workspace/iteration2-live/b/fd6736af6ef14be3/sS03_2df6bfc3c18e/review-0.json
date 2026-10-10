@@ -1,0 +1,162 @@
+{
+  "section_id": "S03",
+  "math": {
+    "schema_version": 1,
+    "status": "FAIL",
+    "issues": [
+      {
+        "rule_id": "SYMBOLIC_COUNTERCHECK_FAILED",
+        "severity": "blocking",
+        "message": "在声明假设下符号结果与预期不一致。",
+        "location": {
+          "calculation_id": "S03.C03",
+          "unit_id": "S03.U14"
+        },
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "kind": "series",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "domain_scope": "supported_tail_guards",
+        "limitations": [
+          "以起点加非负整数代入，检查已保留的受支持运算定义域约束；不是通用定义域证明器。"
+        ],
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": true,
+        "message": "级数收敛性核算与声明一致。",
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U09"
+      },
+      {
+        "kind": "series",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "domain_scope": "supported_tail_guards",
+        "limitations": [
+          "以起点加非负整数代入，检查已保留的受支持运算定义域约束；不是通用定义域证明器。"
+        ],
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": false,
+        "message": "级数收敛性核算与声明一致。",
+        "calculation_id": "S03.C02",
+        "unit_id": "S03.U09"
+      },
+      {
+        "kind": "limit",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "FAIL",
+        "evidence_type": "symbolic_check_failed",
+        "result": "oo",
+        "message": "在声明假设下符号结果与预期不一致。",
+        "calculation_id": "S03.C03",
+        "unit_id": "S03.U14"
+      }
+    ],
+    "coverage": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10",
+      "S03.U11",
+      "S03.U12",
+      "S03.U13",
+      "S03.U14",
+      "S03.U15",
+      "S03.U16"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "协议的 series 核算只能对给定的具体幂指数核对收敛性，不能直接表达定理中对所有实数 $p$ 的量词；比较判别法、极限比较判别法和积分判别法的普遍证明由正文完成。",
+      "S03.U12 使用一般连续正值单调递减函数的积分比较及部分和有界性；现有核算协议不支持一般函数、定积分或不等式证明，不能直接核算本次修复中的两向推理。",
+      "新增的几何级数说明涉及有限求和及公比区间 0<r<1、r>1 的分类。现有 JSON AST 不支持有限求和表达式，布尔假设也不能直接表示这些区间约束；本次未对该一般参数结论新增符号核算，依据在正文中以有限等比求和和数列极限给出。原有两项具体 p-级数核算保持不变。",
+      "新增核算仅覆盖 S03.U14 中第 (1) 项极限比较解法的比值极限。正项性、比较判别法及 $p=2$ 级数收敛性由正文结论承担，现有核算协议不能替代这些一般论证。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10",
+      "S03.U11",
+      "S03.U12",
+      "S03.U13",
+      "S03.U14",
+      "S03.U15",
+      "S03.U16"
+    ],
+    "limitations": [
+      "本次限于 section_local：已逐单元阅读 S03 的全部正文，并使用所提供的 S01、S02 正文核对先修依据；未对其他章节作覆盖结论，也不将尚未生成的 S04、S05 视为本节遗漏。",
+      "已核对本节四项锁定目标，以及定义域、正项性、判别法方向、参数边界和最小合法指标。本节给出一般实参数 p 级数分类，并明确限定几何级数为非负项情形、处理 r=0 和 r=1；比较、极限比较及积分判别法均有相应论证和应用。本次未发现需要报告的具体正文数学错误或核心目标缺口。",
+      "工具报告 S03.C03 的极限结果为正无穷，与 S03.U14 的实际正文不一致。直接核对正文可得 ((3n+1)n^2)/(n^3+2)=(3+1/n)/(1+2/n^3) 趋于 3，正文的极限比较解法成立。当前数据未提供该核算请求的原始表达式，无法确定工具失败的原因；不能据此认定正文错误，也不能宣称该工具失败已解决。",
+      "依 rendering_contract，S03.U16 是关联到练习 S03.U15 的独立答案单元，将被移至末尾；未将其 JSON 位置视为答案位置违规。未检查最终 PDF 的排版、引用编号或实际答案组装结果。",
+      "这是普通模型的数学与教学覆盖审阅，不是形式化证明；所附符号核算仅覆盖少量具体表达式，不能替代一般定理、量词和依赖关系的核查，也不能保证不存在遗漏。"
+    ]
+  },
+  "issues": [
+    {
+      "rule_id": "SYMBOLIC_COUNTERCHECK_FAILED",
+      "severity": "blocking",
+      "message": "在声明假设下符号结果与预期不一致。",
+      "location": {
+        "calculation_id": "S03.C03",
+        "unit_id": "S03.U14"
+      },
+      "resolution_status": "open"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 3,
+    "proposal_calls": 3,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "723a8813d4f8fddcabe0057230950c4d1cb1778c06c7a924c8f06ceb61c41a43",
+      "tool_checks_hash": "04176440518b2df98df84ea5cae943798604b81f63011cff52754080480b7d7a",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "025f95eac8d7c39ad421ba73e5d5cde9ebe99234a78ff75f4b370320b6723cd1",
+      "deterministic_checks_hash": "53f77782d7c4bfd5390fcea0e6a2833267864cbb135d8f469d01cf047ecddf4f"
+    }
+  }
+}

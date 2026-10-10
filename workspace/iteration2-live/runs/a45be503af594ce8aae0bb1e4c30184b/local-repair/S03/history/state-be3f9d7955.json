@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+    "section_id": "S03",
+    "context_hash": "20bc5215697a77a7c252b9a49d0db0eb244de77fab8dea336612d9fbd49ce7fd",
+    "base_hash": "9980f4b7f564d841ca36dfe8da896e5cab257f30d68864e9dc8ad749b5afaa1a",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "NEEDS_REPAIR",
+  "applied_rounds": 8,
+  "proposal_calls": 9,
+  "rejected_proposals": 1,
+  "pending_issues": [
+    {
+      "unit_id": "S03.U04",
+      "severity": "review",
+      "message": "指数基本极限的新证明已补上原来缺失的不等式推导，但引入了尚未交代的数列收敛基础：从单调有界推出数列极限存在。应明确将数列的单调有界原理作为已知实数基础并说明其含义，或提供适合本课程的依据及必要的数列极限说明。这不是要求从算术独立证明实数完备性，也不是认定 Euler 定义或该不等式错误；当前问题是关键证明的基础依赖尚未完整交代。",
+      "evidence": "本单元先写“采用 Euler 定义 e=lim_{n→∞}a_n，a_n=(1+1/n)^n”，随后证明 a_n 单调不减且小于 3，并直接断言“故 (a_n) 单调有界，极限 e 存在”。这一步需要数列的单调有界收敛原理，不能仅由已提供的函数极限四则法则和夹逼定理推出。核对提供的 S01、S02 正文，内容为函数极限定义、性质与运算法则，没有数列极限或单调有界收敛原理；锁定先修项也未明确列出该原理。后文还利用 a_n^t 的极限及子列 a_{qn}^t 的极限建立指数估计。因此，旧记录所称“完全没有建立指数不等式”已不符合现正文，但新证明所用的收敛基础仍需明示。"
+    },
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "S03.U04 对指数基本极限的证明明确依赖先修命题：当 $0<t<1$ 时，$1+t\\le e^t\\le1/(1-t)$。当前提供的 S01、S02 正文未核实包含该命题，因此其先修来源仍需课程材料另行确认；若未建立该命题，本单元的指数极限证明不应视为自足。\n显式裁定：当前正文已实质性修补原缺口：它不再直接把指数不等式作为待确认的先修命题，而是用 Euler 数列、二项式估计先证明有理指数情形，再借实幂保序性推广到所有 0<t<1；随后正、负两侧差商的夹逼及负数除法方向均正确，也未使用待证差商极限、导数或 Taylor 展开。因此不能继续认定正文完全没有推导该不等式。不过，这一推导的起点仍从数列单调有界直接断言极限存在，尚未说明所用收敛原理及数列极限基础；实际提供的 S01、S02 没有补上这一依据。该步骤直接承载 e 的存在及后续 a_n^t 趋于 e^t 的论证，故原疑点所要求的证明自足性尚未充分落实，不能判为已消解。这不是要求证明实数完备性：可在本单元内以简短的实数上确界基础说明和误差论证补齐所需的具体收敛步骤，无需新增单元、系统讲授数列理论或更改章节目标。\n限定修复：仅修订 S03.U04。保留已有二项式估计和有理指数到实指数的非循环推导，补齐 Euler 数列收敛的基础说明：明确数列趋于某数的 ε-N 含义，说明所用实数上确界性质而不展开实数完备性的证明，并针对本数列取 E=sup{a_n}；由任意 ε>0 时存在 a_N>E-ε 及单调性，推出 n≥N 时 0≤E-a_n<ε，从而落实 Euler 定义中的极限存在。接着用同一 ε-N 含义说明 a_{qn} 仍趋于 E，并把有限因式分解给出的正根误差控制写清，使 a_{qn}^{p/q} 趋于 E^{p/q} 有明确依据。几何级数上界可直接改用有限等比求和公式，避免另引级数收敛理论。不得仅写“假设单调有界原理已知”，不得要求补写其他单元或新增课程先修条件。",
+      "location": {
+        "unit_id": "S03.U04"
+      },
+      "uncertainty_id": "D001-5898c5c5e7790a29",
+      "original_sha256": "5898c5c5e7790a29989d52eaf390ad6aa922b40682d69856f2d2bb2b89a76020",
+      "resolution_status": "open",
+      "disposition": "open_actionable",
+      "disposition_evidence": [
+        {
+          "source_key": "current:S03.U04",
+          "source_sha256": "5ae6613c587109c3f76fd1f41a292b0ead81cb0f97adb78b4d36e090a7e886c9",
+          "quote": "再证明第二个基本极限。先建立所需的指数函数估计，而不把待证极限作为先验性质。采用 Euler 定义\n\\[\ne=\\lim_{n\\to\\infty}a_n,\n\\qquad a_n=\\left(1+\\frac1n\\right)^n.\n\\]\n由二项式定理，$a_n$ 的第 $k$ 项为\n\\[\n\\binom nk\\frac1{n^k}=\\frac1{k!}\\prod_{j=0}^{k-1}\\left(1-\\frac{j}{n}\\right).\n\\]\n对每个固定的 $k$，该项随 $n$ 增大而不减；展开式中的新增项非负，所以 $a_n$ 单调不减。又因 $k!\\geq2^{k-1}$（$k\\geq1$），当 $n\\geq2$ 时\n\\[\na_n\\leq1+1+\\sum_{k=2}^n\\frac1{2^{k-1}}<3,\n\\]\n且 $a_1=2$，故 $(a_n)$ 单调有界，极限 $e$ 存在。特别地，$e\\geq2>1$。"
+        },
+        {
+          "source_key": "current:S03.U04",
+          "source_sha256": "5ae6613c587109c3f76fd1f41a292b0ead81cb0f97adb78b4d36e090a7e886c9",
+          "quote": "实数幂先由有理幂的保序延拓定义；固定正整数 $q$ 时，$q$ 次根的极限可由有限因式分解\n\\[\nu^q-v^q=(u-v)(u^{q-1}+u^{q-2}v+\\cdots+v^{q-1})\n\\]\n得到。因此，对有理数 $t=p/q\\in(0,1)$（$p,q$ 为正整数），由有理幂的定义及上述根式极限，$e^t$ 可由 $a_n^t$ 的极限表示。取子列 $n\\mapsto qn$，有\n\\[\na_{qn}^t=\\left(1+\\frac1{qn}\\right)^{pn}.\n\\]\n二项式展开给出下界\n\\[\na_{qn}^t\\geq1+\\frac{pn}{qn}=1+t.\n\\]\n另一方面，对每个 $k$，有\n\\[\n\\frac{\\binom{pn}{k}}{(qn)^k}\n\\leq\\frac{(pn)^k}{k!(qn)^k}\n=\\frac{t^k}{k!}\\leq t^k,\n\\]\n从而\n\\[\na_{qn}^t\\leq\\sum_{k=0}^{pn}t^k\\leq\\sum_{k=0}^{\\infty}t^k=\\frac1{1-t}.\n\\]\n令 $n\\to\\infty$，得到对有理 $t\\in(0,1)$ 有\n\\[\n1+t\\leq e^t\\leq\\frac1{1-t}.\n\\]\n对任意实数 $0<t<1$，取有理数 $0<u<t<v<1$。由实幂的保序性，\n\\[\n1+u\\leq e^u\\leq e^t\\leq e^v\\leq\\frac1{1-v}.\n\\]\n令有理数 $u$ 从下方趋于 $t$、$v$ 从上方趋于 $t$。这里只对线性函数和有理式取极限，得到\n\\[\n1+t\\leq e^t\\leq\\frac1{1-t},\\qquad 0<t<1.\n\\]"
+        }
+      ]
+    }
+  ],
+  "unit_applied_counts": {
+    "S03.U06": 4,
+    "S03.U04": 4,
+    "S03.U03": 1,
+    "S03.U01": 1,
+    "S03.U02": 1
+  },
+  "proposal_counts_by_key": {
+    "unit:S03.U06": 5,
+    "unit:S03.U03": 3,
+    "unit:S03.U04": 4,
+    "unit:S03.U01": 1,
+    "unit:S03.U02": 1
+  },
+  "rejected_counts_by_key": {
+    "unit:S03.U06": 1,
+    "unit:S03.U03": 1
+  },
+  "evidence_dependencies": [
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/candidate.json",
+      "hash": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/candidate-normalization.json",
+      "hash": "7a16722e222b0f53d7139bbf141bf65d8fa4d5031ca800197ad8e03124d69907",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/candidate-normalized.json",
+      "hash": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/repair-1-raw.json",
+      "hash": "f83fb0ad488a76716c1035b4227e264228a769263ed65df8cb1c2e64bcf5fc31",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/review-0.json",
+      "hash": "82d99330205c20d3ef65c42bdfcb6ad2e98447a870236770e6030a67e461a9df",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/repair-1.json",
+      "hash": "27ab613ba344ae302646d8292dcdfdc5e5b1c40609653ffee3aba85ea6c6aa9c",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/review-1.json",
+      "hash": "36fcaca67eeb744e502668fb685bd5d874d153e91a31aaefee9a404413167658",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/repair-2-raw.json",
+      "hash": "a6450eb8ea431009ed23e2b766d73056e57cd17608549d4bb9c5c58578df9c23",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/review-1.json",
+      "hash": "36fcaca67eeb744e502668fb685bd5d874d153e91a31aaefee9a404413167658",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_7a1a1a12cc06/repair-3-patch.json",
+      "hash": "1c3f2d131422826b93d445f8da712fec178b8127616c2ebebe006e3f45b2757f",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_7a1a1a12cc06/repair-4-patch.json",
+      "hash": "6f338c0f9193e532f2e58c001218da3ce30b583326489c390eb1e7afa9417749",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_f92a23859f42/repair-5-patch.json",
+      "hash": "afdb96d7dd9ad10067ffd98998840c7245909aece3baf0d3d6e85e1bcb9bdafc",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_1ff435e861a9/repair-6-patch.json",
+      "hash": "fa942e60746d1d16a2d3a08c24462ed73ae2a18bfe72335d882ac2b4781919e0",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_a2bea203727d/repair-7-patch.json",
+      "hash": "d4f1f34f73ba3eb2d836cf010ed902f1423dfbcd118268b144ce8b41d738e7af",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_a2bea203727d/repair-8-patch.json",
+      "hash": "f77333887a120ff9c240c77084efe87d5b8b5a4bfcc2ac8fb43b958b94824fd6",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "runs/a45be503af594ce8aae0bb1e4c30184b/repair-guidance/68b1bfe121b8e665a2217521/proposal.json",
+      "hash": "00c003266f9e2fc86e6180e9dbca9abd1fdd3a7bfee3c67f9a05863bb2a9faa8",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "77291f8d60056d54911251ddd215dfcfe21cf4d71890277776c08de540e10298",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S03/candidate-6565d662be54.json",
+  "candidate_hash": "c901a338dbfe23042afb7a9abb4263a00457066146e2c68af73eb4d47b5ae543",
+  "legacy_import": {
+    "origin_candidate_key": "b/a45be503af594ce8/sS03_4e86629a0d4a/candidate.json",
+    "origin_candidate_hash": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+    "records": [
+      {
+        "number": 1,
+        "raw_key": "b/a45be503af594ce8/sS03_4e86629a0d4a/repair-1-raw.json",
+        "raw_hash": "f83fb0ad488a76716c1035b4227e264228a769263ed65df8cb1c2e64bcf5fc31",
+        "review_key": "b/a45be503af594ce8/sS03_4e86629a0d4a/review-0.json",
+        "review_hash": "82d99330205c20d3ef65c42bdfcb6ad2e98447a870236770e6030a67e461a9df",
+        "status": "VERIFIED_APPLIED",
+        "applied_hash": "27ab613ba344ae302646d8292dcdfdc5e5b1c40609653ffee3aba85ea6c6aa9c"
+      },
+      {
+        "number": 2,
+        "raw_key": "b/a45be503af594ce8/sS03_4e86629a0d4a/repair-2-raw.json",
+        "raw_hash": "a6450eb8ea431009ed23e2b766d73056e57cd17608549d4bb9c5c58578df9c23",
+        "review_key": "b/a45be503af594ce8/sS03_4e86629a0d4a/review-1.json",
+        "review_hash": "36fcaca67eeb744e502668fb685bd5d874d153e91a31aaefee9a404413167658",
+        "status": "REJECTED_NOT_ADOPTED"
+      }
+    ],
+    "total_request_count_at_import": 22,
+    "old_reviewer_prompt_hash": "UNKNOWN_NOT_ARCHIVED",
+    "migration_policy": "Explicit patch-protocol migration: retain applied/rejected/proposal counters and all existing total requests; no budget reset."
+  },
+  "last_review_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S03/review-339b1d31fb06.json",
+  "pending_operation": "guided_local_patch:873af6990ceca1c10c4d98d5",
+  "pending_keys": [
+    "unit:S03.U04"
+  ],
+  "request_count_before": 155,
+  "patch_evidence": {
+    "schema_version": 1,
+    "operation": "strict_local_patch",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "893c09404ad95da192bc6a553dadea48e6b96275c3ce03431a4cfde00b0c644a",
+    "patch_hash": "c0bf6813b64589ae5e002a8172590b9c7f721fcc3ad90fcaf25247c5ad00039d",
+    "result_section_hash": "abc8d017418ea8bbfb1fa47dc7b74263d454ba7d2ba38f25c62226079b5260e2",
+    "allowed_unit_ids": [
+      "S03.U04"
+    ],
+    "changed_unit_ids": [
+      "S03.U04"
+    ],
+    "unit_order_preserved": true,
+    "unit_identity_and_metadata_preserved": true,
+    "non_target_units_preserved": true,
+    "original_calculation_count": 1,
+    "calculation_updates": [],
+    "calculation_additions": [],
+    "non_target_calculations_preserved": true,
+    "old_uncertainties_preserved": true,
+    "old_calculation_limitations_preserved": true,
+    "normalization": "NOT_RUN",
+    "math_check": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "proposal_key": "runs/a45be503af594ce8aae0bb1e4c30184b/repair-guidance/68b1bfe121b8e665a2217521/proposal.json"
+  },
+  "reason": "Explicit global-repair seed; existing local counters retained",
+  "guidance_acceptances": {
+    "authorized-CH03-U04-20260923T090838-b64292": {
+      "action_hash": "873af6990ceca1c10c4d98d5d5070b44116cd27cce63504eb0a75f2773473d23",
+      "after_hash": "abc8d017418ea8bbfb1fa47dc7b74263d454ba7d2ba38f25c62226079b5260e2"
+    }
+  }
+}

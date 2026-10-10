@@ -1,0 +1,118 @@
+{
+  "prior_issues": [
+    {
+      "unit_id": "S04.U07",
+      "severity": "review",
+      "message": "余项估计证明的首个差分公式在所声称的最小指标处引用了未定义的部分和 S_0。请将该公式的适用范围改为 m≥2（已足以证明偶数部分和数列单调不减），或明确补充 S_0=0 的约定。这是证明中的索引定义缺口，不影响余项估计定理本身的正确性。",
+      "evidence": "本单元写道“对任意正整数 m”，随后使用 S_{2m}-S_{2m-2}=b_{2m-1}-b_{2m}≥0；代入 m=1 即需要 S_2-S_0=b_1-b_2。已核对当前节全部正文及提供的先修正文：S01.U02 仅为 n=1,2,3,… 定义 S_n，S04.U03 以相同的有限求和形式定义部分和，未声明 S_0 或空和约定。S04.U03 的配对求和论证及 S04.U13 的夹逼论证可以支持相关数学结论，但并未定义 S04.U07 此处实际使用的 S_0。"
+    }
+  ],
+  "review_identity": {
+    "candidate_hash": "970de279785e5d37c0dbfa42425e9a5a72e27f42ae1b09a0d62e5365089a1e67",
+    "tool_checks_hash": "09b2b814ed9fe8ac778a9113b80cdb5db9e6286a4f75362e753eceace1c025bf",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "91e937ea7cc2667fffd29fd0cf377e2c9969268da5d3eef32ee3fd1c96c3088d",
+    "deterministic_checks_hash": "62a616f548840d8f9f63157fdc022b223ef9f83b78c559f5aa75f46bed081e65"
+  },
+  "report": {
+    "section_id": "S04",
+    "math": {
+      "schema_version": 1,
+      "status": "NEEDS_REVIEW",
+      "issues": [
+        {
+          "rule_id": "NUMERIC_IS_NOT_PROOF",
+          "severity": "warning",
+          "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+          "location": {
+            "calculation_id": "S04.C01",
+            "unit_id": "S04.U05"
+          },
+          "resolution_status": "open"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "numeric_spotcheck",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "numeric_spotcheck_passed",
+          "point_count": 1,
+          "message": "仅在指定点数值一致，不是一般性证明。",
+          "calculation_id": "S04.C01",
+          "unit_id": "S04.U05"
+        }
+      ],
+      "coverage": [
+        "S04.U01",
+        "S04.U02",
+        "S04.U03",
+        "S04.U04",
+        "S04.U05",
+        "S04.U06",
+        "S04.U07",
+        "S04.U08",
+        "S04.U09",
+        "S04.U10",
+        "S04.U11",
+        "S04.U12",
+        "S04.U13"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "协议的数值核算只能抽查交错项在指定整数处的取值，不能表达对所有正整数的单调性、极限或余项不等式；交错级数判别法及余项估计仍由正文证明。",
+        "既有核算 S04.C01 仅比较 n=3 时的通项值与 1/3，覆盖范围限于该单点等式；不提供对所有正整数的结论，也不构成交错调和级数收敛性或截断误差界的证明。这些结论依赖正文中的判别条件核实与定理证明。",
+        "本次仅修复目标正文的 TeX 反斜杠转义层级，不改变数学结论，不新增核算请求。该转义问题及公式环境、引用的实际渲染不属于有界数学核算协议的检查范围，须由后续 TeX 编译与交叉引用检查验证。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S04.U01",
+        "S04.U02",
+        "S04.U03",
+        "S04.U04",
+        "S04.U05",
+        "S04.U06",
+        "S04.U07",
+        "S04.U08",
+        "S04.U09",
+        "S04.U10",
+        "S04.U11",
+        "S04.U12",
+        "S04.U13"
+      ],
+      "limitations": [
+        "本次为 section_local 审阅，逐一读取了所列当前节单元，并依据提供的先修正文核对依赖及本节四项目标；不对其他章节作完整复核，也不将尚未生成的 S05 视为本节遗漏。",
+        "已重新核对保留的索引问题：S04.U07 现明确将差分公式限定为整数 m≥2，最小指标只使用已定义的 S4 与 S2，不再引用 S0；该范围足以证明偶数部分和单调不减。后续奇偶分类对正整数 n 分别使用正整数 m，包含 n=1 的余项估计，未发现原索引缺口仍然存在。",
+        "正文核对涵盖非负项及零项约定、判别法的充分条件、奇偶部分和的单调性与极限、余项的符号与上界、绝对收敛与条件收敛的区分，以及截断位置的整数边界。S04.U12 的 n=999 是满足所选误差上界条件的最小正整数，并非实际误差要求的必要截断位置。",
+        "按 rendering_contract，S04.U11 和 S04.U12 是关联练习的独立解答，将由程序集中至末尾，不能由 JSON 顺序推断答案位置违规。本次未执行最终 TeX 编译、交叉引用解析或 PDF 版面检查。",
+        "这是普通模型对正文的数学与教学覆盖审阅，不是形式化证明。提供的工具结果仅核对了一个通项的单点数值，不证明一般收敛性或余项界；本次未进行额外工具核算，未发现问题也不保证不存在遗漏。"
+      ]
+    },
+    "issues": [
+      {
+        "rule_id": "NUMERIC_IS_NOT_PROOF",
+        "severity": "warning",
+        "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+        "location": {
+          "calculation_id": "S04.C01",
+          "unit_id": "S04.U05"
+        },
+        "resolution_status": "open"
+      }
+    ],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": []
+}

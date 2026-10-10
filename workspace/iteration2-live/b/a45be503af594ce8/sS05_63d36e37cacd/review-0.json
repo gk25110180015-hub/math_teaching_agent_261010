@@ -1,0 +1,107 @@
+{
+  "section_id": "S05",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "equivalence",
+        "assumptions": {
+          "x": {
+            "real": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "x**2 - 4*x + 5",
+        "message": "在声明假设下符号差为零。",
+        "calculation_id": "S05.C01",
+        "unit_id": "S05.U12"
+      }
+    ],
+    "coverage": [
+      "S05.U01",
+      "S05.U02",
+      "S05.U03",
+      "S05.U04",
+      "S05.U05",
+      "S05.U06",
+      "S05.U07",
+      "S05.U08",
+      "S05.U09",
+      "S05.U10",
+      "S05.U11",
+      "S05.U12",
+      "S05.U13",
+      "S05.U14",
+      "S05.U15",
+      "S05.U16",
+      "S05.U17",
+      "S05.U18",
+      "S05.U19",
+      "S05.U20",
+      "S05.U21",
+      "S05.U22"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "代表核算仅覆盖 S05.U12 明示对所有实数成立的配方恒等式，不覆盖区间上的不等式、最值取得及根的个数判断。",
+      "协议没有表示一般连续函数、闭区间套、上确界及存在量词的操作，不能核算本节一般定理的证明；其布尔假设也不能完整表达经济模型中的有限价格区间与一般函数单调性条件。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S05.U01",
+      "S05.U02",
+      "S05.U03",
+      "S05.U04",
+      "S05.U05",
+      "S05.U06",
+      "S05.U07",
+      "S05.U08",
+      "S05.U09",
+      "S05.U10",
+      "S05.U11",
+      "S05.U12",
+      "S05.U13",
+      "S05.U14",
+      "S05.U15",
+      "S05.U16",
+      "S05.U17",
+      "S05.U18",
+      "S05.U19",
+      "S05.U20",
+      "S05.U21",
+      "S05.U22"
+    ],
+    "limitations": [
+      "本次为 section_local 审阅，完整检查了所列 S05 的 22 个实际单元，并使用已提供的先修正文核对当前推理依赖；未对其他章节作独立完整审阅，也不作整份讲义的教学覆盖结论。",
+      "已按本节三个锁定目标核对一般定理、证明及例练：有界性与最值、介值与零点存在性、方程根及经济均衡应用均有实际正文承载。本次未发现需要报告的确定数学错误或重大缺口；这不等于形式化证明或保证不存在遗漏。",
+      "证明核查以 S05.U01 明示的上确界性质和闭区间套性质为已知实数基础。这两条性质的陈述及本节使用条件相符，正文未展开其完备性证明；本次也未独立构造或形式化验证这些基础。",
+      "已检查二分论证的初值和最小指标、端点及单点区间处理、正负号、存在性与唯一性的区别，并复核具体代数计算及经济模型反例。所提供工具结果仅核对 S05.U12 的配方恒等式，不能替代一般定理、量词和教学覆盖的正文审阅。",
+      "答案位置按 rendering_contract 判断：S05.U20、S05.U21、S05.U22 为关联练习的独立答案单元，不因 JSON 中的位置认定违规。未执行实际渲染；S05.U19 的手写答案标题与程序汇总答案区的最终衔接、重复标题及 PDF 引用显示仍需在成品检查中确认。"
+    ]
+  },
+  "issues": [],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 1,
+    "proposal_calls": 1,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "aa5062cf9f770f3f4eb56e3dfe29bbb040011a9e277de69ec00c6853386e13a4",
+      "tool_checks_hash": "16a761fe656ccc5a95f9b1bfa7dbf221feb86587c52cb1cdfd70654f0f0256b3",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "99362913b22e3a11c92fa58d26ce5da360ddd7b282e05f6bfa35c8796f66292a",
+      "deterministic_checks_hash": "cfac747d3e7d4648e63f818c35384c5d794b7f0c97201028d1e86d4b3fc6ed39"
+    }
+  }
+}

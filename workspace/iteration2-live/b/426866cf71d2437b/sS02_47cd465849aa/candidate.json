@@ -1,0 +1,262 @@
+{
+  "section_id": "S02",
+  "units": [
+    {
+      "id": "S02.U01",
+      "kind": "definition",
+      "tex": "设 $\\{a_n\\}$、$\\{b_n\\}$ 为实数数列，$c\\in\\mathbb{R}$。数列的和、差、积及常数倍均按项定义：对每个 $n\\in\\mathbb{N}^+$，相应的第 $n$ 项分别为\n\\[\na_n+b_n,\\qquad a_n-b_n,\\qquad a_nb_n,\\qquad ca_n.\n\\]\n商的第 $n$ 项定义为 $a_n/b_n$，但只在 $b_n\\ne0$ 的指标上有意义。若对所有正整数 $n$ 都有 $b_n\\ne0$，则得到完整的商数列；若只在某个正整数 $N_0$ 之后有 $b_n\\ne0$，则可先讨论 $n>N_0$ 时的商，并给前面有限个指标任意指定实数值以补成数列。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U02",
+      "kind": "explanation",
+      "tex": "根据定义 \\ref{def:sequence-limit}，极限只要求所有充分大的下标满足误差条件，因此改变有限个初始项不影响极限。具体地，若两个实数数列在所有 $n>N_0$ 时相等，且其中一个收敛于 $A$，则对任意 $\\varepsilon>0$，把它的误差阈值 $N_1$ 换为 $\\max\\{N_0,N_1\\}$，就能验证另一个也收敛于 $A$。反方向同理。\n\n因此，对最终才有定义的商，补入的有限个初始值不会影响极限。定理 \\ref{thm:limit-uniqueness} 又保证，只要极限存在，其值就是唯一的。以下运算法则是在已有收敛结论的基础上计算这个唯一的值。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U03",
+      "kind": "theorem",
+      "tex": "常数数列的极限：对任意 $c\\in\\mathbb{R}$，若 $a_n=c$ 对所有 $n\\in\\mathbb{N}^+$ 成立，则\n\\[\n\\lim_{n\\to\\infty}a_n=c.\n\\]",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U04",
+      "kind": "proof",
+      "tex": "任取 $\\varepsilon>0$，取正整数 $N=1$。对每个正整数 $n>N$，都有\n\\[\n|a_n-c|=|c-c|=0<\\varepsilon.\n\\]\n由数列极限的定义，$\\lim_{n\\to\\infty}a_n=c$。",
+      "relates_to": "S02.U03"
+    },
+    {
+      "id": "S02.U05",
+      "kind": "theorem",
+      "tex": "收敛数列的运算法则：设 $\\{a_n\\}$、$\\{b_n\\}$ 为实数数列，且\n\\[\n\\lim_{n\\to\\infty}a_n=A,\\qquad \\lim_{n\\to\\infty}b_n=B,\n\\qquad A,B\\in\\mathbb{R}.\n\\]\n则对任意实常数 $c$，有\n\\[\n\\begin{aligned}\n\\lim_{n\\to\\infty}(a_n+b_n)&=A+B,\\\\\n\\lim_{n\\to\\infty}(a_n-b_n)&=A-B,\\\\\n\\lim_{n\\to\\infty}(ca_n)&=cA,\\\\\n\\lim_{n\\to\\infty}(a_nb_n)&=AB.\n\\end{aligned}\n\\]\n若另有 $B\\ne0$，则存在正整数 $N_0$，使每个正整数 $n>N_0$ 都满足 $b_n\\ne0$，并且\n\\[\n\\lim_{n\\to\\infty}\\frac{a_n}{b_n}=\\frac{A}{B}.\n\\]\n这里的商可只在 $n>N_0$ 时按原式定义，再任意补入有限个初始值。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U06",
+      "kind": "proof",
+      "tex": "完整证明加法法则。任取 $\\varepsilon>0$。由 $a_n\\to A$，存在正整数 $N_A$，使所有 $n>N_A$ 满足 $|a_n-A|<\\varepsilon/2$；由 $b_n\\to B$，存在正整数 $N_B$，使所有 $n>N_B$ 满足 $|b_n-B|<\\varepsilon/2$。\n\n取 $N=\\max\\{N_A,N_B\\}$。对每个正整数 $n>N$，三角不等式给出\n\\[\n\\begin{aligned}\n|(a_n+b_n)-(A+B)|\n&=|(a_n-A)+(b_n-B)|\\\\\n&\\leq |a_n-A|+|b_n-B|\\\\\n&<\\frac{\\varepsilon}{2}+\\frac{\\varepsilon}{2}=\\varepsilon.\n\\end{aligned}\n\\]\n所以 $a_n+b_n\\to A+B$。其余法则的误差估计与附加条件说明如下。",
+      "relates_to": "S02.U05"
+    },
+    {
+      "id": "S02.U07",
+      "kind": "explanation",
+      "tex": "常数倍的误差为 $|ca_n-cA|=|c|\\,|a_n-A|$。当 $c=0$ 时结果是常数数列；当 $c\\ne0$ 时，把原数列的误差控制在 $\\varepsilon/|c|$ 以内即可。减法可写为 $a_n+(-1)b_n$，因而由常数倍与加法法则得到。\n\n乘法不能只把两个误差相乘，因为还含有交叉项。由 $b_n\\to B$，最终有 $|b_n-B|<1$，从而 $|b_n|<|B|+1$。利用\n\\[\n|a_nb_n-AB|\n\\leq |b_n|\\,|a_n-A|+|A|\\,|b_n-B|,\n\\]\n就可以用固定常数控制两个趋于零的误差。这是乘法法则的主要依据。\n\n商法则中 $B\\ne0$ 尤其重要。由收敛定义，最终有\n\\[\n|b_n-B|<\\frac{|B|}{2}.\n\\]\n此时\n\\[\n|b_n|\\geq |B|-|b_n-B|>\\frac{|B|}{2}>0,\n\\]\n既保证分母最终非零，也使分母不会任意接近零。在这些指标上，\n\\[\n\\left|\\frac{a_n}{b_n}-\\frac{A}{B}\\right|\n\\leq \\frac{2}{|B|}|a_n-A|\n+\\frac{2|A|}{|B|^2}|b_n-B|.\n\\]\n右端可通过控制两个原数列的误差而任意小，这说明商法则的依据。若 $B=0$，上述估计不适用，不能直接把极限值代入商法则。\n\n使用运算法则前，必须确认参与运算的数列都已知收敛，并检查商法则的非零条件；不能把这些条件当成计算后的补充。",
+      "relates_to": "S02.U05"
+    },
+    {
+      "id": "S02.U08",
+      "kind": "example",
+      "tex": "设\n\\[\na_n=\\frac{3n+2}{2n+1},\\qquad n\\in\\mathbb{N}^+.\n\\]\n求 $\\lim_{n\\to\\infty}a_n$，并说明所用商法则的条件。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U09",
+      "kind": "solution",
+      "tex": "对每个正整数 $n$，有 $2n+1>0$，所以原数列的每一项都有定义。分子、分母同除以非零的 $n$，得\n\\[\na_n=\\frac{3+2/n}{2+1/n}.\n\\]\n由前节的基本极限 \\eqref{eq:reciprocal-limit}，$1/n\\to0$。结合常数数列的极限、常数倍及加法法则，得到\n\\[\n\\lim_{n\\to\\infty}\\left(3+\\frac{2}{n}\\right)=3+2\\cdot0=3,\n\\qquad\n\\lim_{n\\to\\infty}\\left(2+\\frac{1}{n}\\right)=2+0=2.\n\\]\n分母数列的极限为 $2\\ne0$，满足商法则的附加条件。因此\n\\[\n\\lim_{n\\to\\infty}\\frac{3n+2}{2n+1}=\\frac{3}{2}.\n\\]\n同除以 $n$ 的作用，是把原式改写成常数与已知趋于零的数列的运算，而不是直接对原来的分子、分母套用商法则。",
+      "relates_to": "S02.U08"
+    },
+    {
+      "id": "S02.U10",
+      "kind": "exercise",
+      "tex": "设\n\\[\nb_n=\\frac{2n^2-n+1}{n^2+3},\\qquad n\\in\\mathbb{N}^+.\n\\]\n求 $\\lim_{n\\to\\infty}b_n$。要求先用乘法法则说明 $1/n^2$ 的极限，再逐项求改写后的分子、分母的极限，并检查商法则的条件。参考解答置于讲义末尾。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U11",
+      "kind": "explanation",
+      "tex": "本节小结：计算简单数列极限时，先把通项改写为基本收敛数列的四则运算，再逐步应用法则。有限个初始项不影响极限，但每一步的定义域和商法则的非零极限条件仍须明确。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U12",
+      "kind": "solution",
+      "tex": "\\textbf{讲义末尾练习参考解答（本节）。}\n\n对每个 $n\\in\\mathbb{N}^+$，$n^2+3>0$，原式有定义。由 \\eqref{eq:reciprocal-limit} 和乘法法则，\n\\[\n\\lim_{n\\to\\infty}\\frac{1}{n^2}\n=\\lim_{n\\to\\infty}\\left(\\frac{1}{n}\\cdot\\frac{1}{n}\\right)\n=0\\cdot0=0.\n\\]\n分子、分母同除以 $n^2>0$，得到\n\\[\nb_n=\\frac{2-1/n+1/n^2}{1+3/n^2}.\n\\]\n由常数数列极限、常数倍及加减法法则，\n\\[\n\\begin{aligned}\n\\lim_{n\\to\\infty}\\left(2-\\frac{1}{n}+\\frac{1}{n^2}\\right)&=2-0+0=2,\\\\\n\\lim_{n\\to\\infty}\\left(1+\\frac{3}{n^2}\\right)&=1+3\\cdot0=1.\n\\end{aligned}\n\\]\n改写后的分母极限为 $1\\ne0$，所以可使用商法则，得到\n\\[\n\\lim_{n\\to\\infty}\\frac{2n^2-n+1}{n^2+3}=\\frac{2}{1}=2.\n\\]",
+      "relates_to": "S02.U10"
+    }
+  ],
+  "calculations": [
+    {
+      "id": "S02.C01",
+      "unit_id": "S02.U09",
+      "kind": "limit",
+      "assumptions": {
+        "n": {
+          "integer": true,
+          "positive": true
+        }
+      },
+      "expression": {
+        "op": "Mul",
+        "args": [
+          {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 3
+                  },
+                  {
+                    "op": "Symbol",
+                    "name": "n"
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": 2
+                      },
+                      {
+                        "op": "Symbol",
+                        "name": "n"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": -1
+              }
+            ]
+          }
+        ]
+      },
+      "variable": "n",
+      "point": {
+        "op": "Infinity"
+      },
+      "direction": "-",
+      "expected": {
+        "op": "Rational",
+        "p": 3,
+        "q": 2
+      }
+    },
+    {
+      "id": "S02.C02",
+      "unit_id": "S02.U12",
+      "kind": "limit",
+      "assumptions": {
+        "n": {
+          "integer": true,
+          "positive": true
+        }
+      },
+      "expression": {
+        "op": "Mul",
+        "args": [
+          {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  },
+                  {
+                    "op": "Pow",
+                    "args": [
+                      {
+                        "op": "Symbol",
+                        "name": "n"
+                      },
+                      {
+                        "op": "Integer",
+                        "value": 2
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": -1
+                  },
+                  {
+                    "op": "Symbol",
+                    "name": "n"
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Pow",
+                    "args": [
+                      {
+                        "op": "Symbol",
+                        "name": "n"
+                      },
+                      {
+                        "op": "Integer",
+                        "value": 2
+                      }
+                    ]
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 3
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": -1
+              }
+            ]
+          }
+        ]
+      },
+      "variable": "n",
+      "point": {
+        "op": "Infinity"
+      },
+      "direction": "-",
+      "expected": {
+        "op": "Integer",
+        "value": 2
+      }
+    }
+  ],
+  "calculation_limitations": [
+    "所提交核算仅覆盖例题与练习的具体极限；协议不能表达任意数列的量词条件及其误差估计，因此不覆盖常数数列与四则运算法则的一般证明，也不覆盖有限个初始项不影响极限的论证。"
+  ],
+  "uncertainties": []
+}

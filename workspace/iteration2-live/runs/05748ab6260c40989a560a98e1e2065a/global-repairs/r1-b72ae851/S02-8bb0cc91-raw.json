@@ -1,0 +1,71 @@
+{
+  "section_id": "S02",
+  "replacements": [
+    {
+      "unit_id": "S02.U12",
+      "tex": "计算下列数列的极限，并说明所使用的运算法则，其中各小问均取 $n\\in\\mathbb{N}^{+}$：\n\\[\n(1)\\quad a_n=3(1/n)+2;\\qquad\n(2)\\quad b_n=\\frac{2n+1}{n+3};\\qquad\n(3)\\quad c_n=\\left|\\frac3n-2\\right|.\n\\]"
+    },
+    {
+      "unit_id": "S02.U13",
+      "tex": "(1) 由前一节的基本极限 $1/n\\to0$，利用常数倍法则与和法则，\n\\[\n\\lim_{n\\to\\infty}a_n=3\\cdot0+2=2.\n\\]\n\n(2) 对于 $b_n$，由于 $n\\in\\mathbb{N}^{+}$，可将分子、分母同除以 $n$，得到\n\\[\nb_n=\\frac{2+1/n}{1+3/n}.\n\\]\n由 $1/n\\to0$，有 $2+1/n\\to2$，且 $1+3/n\\to1\\neq0$。另外，$1+3/n>0$，所以商式有定义。由商法则，\n\\[\n\\lim_{n\\to\\infty}b_n=\\frac21=2.\n\\]\n使用商法则前必须确认分母极限非零。\n\n(3) 所用的绝对值极限法则是：若实数数列 $x_n\\to L$，其中 $L\\in\\mathbb{R}$，则 $|x_n|\\to|L|$。其依据是反三角不等式\n\\[\n\\bigl||x_n|-|L|\\bigr|\\leq|x_n-L|.\n\\]\n事实上，任给 $\\varepsilon>0$，由 $x_n\\to L$，存在正整数 $N$，使得当 $n\\geq N$ 时 $|x_n-L|<\\varepsilon$，于是 $\\bigl||x_n|-|L|\\bigr|<\\varepsilon$，由极限定义即得上述法则。\n\n应用时，先由 $1/n\\to0$ 及常数倍、差法则得到 $3/n-2\\to-2$，再用绝对值极限法则得到\n\\[\n\\lim_{n\\to\\infty}c_n=\\lim_{n\\to\\infty}|3/n-2|=|-2|=2.\n\\]\n这说明处理含绝对值的数列极限时，可以先求绝对值内部数列的极限，再对所得极限取绝对值。"
+    }
+  ],
+  "calculation_updates": [
+    {
+      "id": "S02.C01",
+      "unit_id": "S02.U13",
+      "kind": "limit",
+      "assumptions": {
+        "n": {
+          "integer": true,
+          "positive": true
+        }
+      },
+      "expression": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Integer",
+            "value": 2
+          },
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Integer",
+                "value": 3
+              },
+              {
+                "op": "Pow",
+                "args": [
+                  {
+                    "op": "Symbol",
+                    "name": "n"
+                  },
+                  {
+                    "op": "Integer",
+                    "value": -1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "variable": "n",
+      "point": {
+        "op": "Infinity"
+      },
+      "direction": "-",
+      "expected": {
+        "op": "Integer",
+        "value": 2
+      }
+    }
+  ],
+  "calculation_additions": [],
+  "uncertainties_append": [],
+  "calculation_limitations_append": [
+    "既有 S02.C02 保留原绑定 S02.U12，不作改绑；修订后该单元仅列出含绝对值的小问，其极限结论与证明归入 S02.U13。因此该请求只能核对题面所列具体表达式的预期极限，不能作为 S02.U12 含有证明或结论的证据，也不能核验题面与关联解答的组织对应关系。"
+  ]
+}

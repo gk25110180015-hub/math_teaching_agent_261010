@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+    "section_id": "S04",
+    "context_hash": "a66090b604f0b2c570d27bbcc3db5b89f8c0d10539634222f06e7ad1a3c4d59e",
+    "base_hash": "f432f77a40c64e15c5ac4d756b1d0dabb42e5f2c5b531078e881a2b22d881d80",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "UNCHECKED_REPAIRED",
+  "applied_rounds": 3,
+  "proposal_calls": 3,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "unit_id": "S04.U05",
+      "severity": "blocking",
+      "message": "S04.U05 的最后一段没有证明 S04.U04 中的复合函数连续性结论。S04.U04 断言：若 g 在 x0 连续、f 在 g(x0) 连续且 f∘g 在 x0 某邻域有定义，则 f∘g 在 x0 连续。但 U05 的复合部分额外假设 g(x)≠b，并只推出极限 lim_{x→x0} f(g(x))=L，而不是证明 f∘g 在 x0 连续。该额外条件不在 U04 的假设中，且结论类型也不是连续性。虽然后续 S04.U06/U07 另行给出并证明了复合连续性定理，但 S04.U05 作为 U04 的证明单元仍存在确定的证明与目标不匹配问题。",
+      "evidence": "S04.U04：『若函数 g 在 x0 处连续，函数 f 在 g(x0) 处连续，并且复合函数 f∘g 在 x0 的某个邻域内有定义，则 f∘g 在 x0 处连续。』S04.U05：『最后证明复合极限结论。按该结论的假设，取 r>0，使得当 0<|x-x0|<r 时，g(x)≠b 且 f(g(x)) 有定义……由极限定义即得 lim_{x→x0} f(g(x))=L。』该段使用了 g(x)≠b 与 lim_{t→b} f(t)=L，并只证明极限值，不匹配 U04 的复合连续性结论。"
+    }
+  ],
+  "unit_applied_counts": {
+    "S04.U05": 2,
+    "S04.U07": 1,
+    "S04.U03": 2
+  },
+  "proposal_counts_by_key": {
+    "unit:S04.U03": 2,
+    "unit:S04.U05": 2,
+    "unit:S04.U07": 1
+  },
+  "rejected_counts_by_key": {},
+  "evidence_dependencies": [
+    {
+      "key": "b/a45be503af594ce8/sS04_1131f5fcd8cf/repair-1-patch.json",
+      "hash": "49d7ef3a21a86bde9c5e2cbdac037f2949efaec309ce8027a34af843d2b19f61",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS04_d8112be51cdd/repair-2-patch.json",
+      "hash": "1bfacae647f631c9b1f2539f3778fbb370fcee9189594f342cff20f91be5173f",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS04_00aecb9ed051/repair-3-patch.json",
+      "hash": "1adead109381274e98ac04118fc5a2913c4f6b18ca4a9cf41134bc40d989f1f9",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "07f57917a27c23f8ef7a8f36097aded8397f788c08ee4de0b31f7b0e33608ad3",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S04/candidate-fbb72a4f5877.json",
+  "candidate_hash": "e8e3fe92d3349963566219909dd1eecbef947a1e99019f5e8efc4cc1d505e594",
+  "last_review_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S04/review-02befd511e33.json",
+  "pending_operation": "strict_local_patch",
+  "pending_keys": [
+    "unit:S04.U05"
+  ],
+  "request_count_before": 93,
+  "patch_evidence": {
+    "schema_version": 1,
+    "operation": "strict_local_patch",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "f432f77a40c64e15c5ac4d756b1d0dabb42e5f2c5b531078e881a2b22d881d80",
+    "patch_hash": "282d35e5cce3dc372f6ef4eee194b969ee031b8f35f2d3c3e5384cdfdda3da56",
+    "result_section_hash": "e6a05a6de4d57a0ee3a5ab75a60554852a573430a1f9f45116090dbbbbcd6990",
+    "allowed_unit_ids": [
+      "S04.U05"
+    ],
+    "changed_unit_ids": [
+      "S04.U05"
+    ],
+    "unit_order_preserved": true,
+    "unit_identity_and_metadata_preserved": true,
+    "non_target_units_preserved": true,
+    "original_calculation_count": 0,
+    "calculation_updates": [],
+    "calculation_additions": [],
+    "non_target_calculations_preserved": true,
+    "old_uncertainties_preserved": true,
+    "old_calculation_limitations_preserved": true,
+    "normalization": "NOT_RUN",
+    "math_check": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "proposal_key": "b/a45be503af594ce8/sS04_00aecb9ed051/repair-3-patch.json"
+  },
+  "reason": "Explicit global-repair seed; existing local counters retained"
+}

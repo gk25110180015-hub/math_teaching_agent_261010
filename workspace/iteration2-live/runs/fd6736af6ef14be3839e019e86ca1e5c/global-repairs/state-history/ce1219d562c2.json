@@ -1,0 +1,51 @@
+{
+  "schema_version": 2,
+  "identity": {
+    "plan_hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227",
+    "model": "gpt-6-astra",
+    "provider": "live",
+    "repair_contract_version": 2,
+    "repair_prompt_hash": "362fb34b2529572af9620c5433dbb223290c519889e89192c1d52c5d65e60943",
+    "written_schema_hash": "4e9b07e27f359212c0460381e3cbd6e548d18a48490e553e60b0c56d30d9ada7",
+    "patch_schema_hash": "0d86c8d71317f64b5b07f16f49a50ad4dd13c072cbf83dcaa1babdd53d1510dd",
+    "patch_validator_hash": "78427756213a06179f7d1f6c496f22871cc3abd333330c09635fc0cf0b6d55e3",
+    "calculation_protocol_hash": "d0e00874991f1762e72dcf4845ff8417ca54d1a399d3ec3f2f8ea0153b99d1aa",
+    "normalizer_hash": "25d2fff448b21fcad71b5e7aae512cf6ab27f66bdeefd9e459ca57652a1fd74c",
+    "migration_contract_hash": "8c1167ba608adbc1b74d9fe4d5852152eba74069606c466a4c2db606c8df2186"
+  },
+  "rounds_used": 3,
+  "phase": "checking",
+  "sections": {
+    "S02": {
+      "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/global-repairs/r3-a84bbd84/S02-locally-checked-1a489c68.json",
+      "candidate_hash": "cccbb60f826a2fd82f0dd2a22f0926a77f9ac4b630d5062562c581ed94c7aad3"
+    },
+    "S03": {
+      "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/global-repairs/r3-a84bbd84/S03-locally-checked-d09ebb04.json",
+      "candidate_hash": "53d90cd93d59b5ab4d9dea22e2a3cd1fcc158f33d041e6d4051bf4a1e5d0f3d3"
+    },
+    "S04": {
+      "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/global-repairs/r3-a84bbd84/S04-locally-checked-a3dfa963.json",
+      "candidate_hash": "02d65dfd2d6b949d8f5f101807d995f2da6068fb2df2c52224838bce9fa11f39"
+    },
+    "S05": {
+      "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/global-repairs/r3-a84bbd84/S05-locally-checked-d3e5c14a.json",
+      "candidate_hash": "8fb78f817e93c2b6ca85d97b94a7281e0e7ea7a12d24e29c2fb586f4988aba03"
+    }
+  },
+  "pending": [],
+  "teacher_visual_review": "NOT_RUN",
+  "round_directory": "runs/fd6736af6ef14be3839e019e86ca1e5c/global-repairs/r3-a84bbd84",
+  "issues": [
+    {
+      "unit_id": "S02.U14",
+      "severity": "blocking",
+      "message": "有限项改变定理的证明在端点指标处写错：由定理假设仅能推出对 n>N 有 a_n=b_n，因此对 n≥N+1 才有 B_n-A_n=∑_{k=1}^{N}(b_k-a_k)。正文写成“对所有整数 n≥N”，在 n=N 时未必成立，导致证明中的恒等式不被现有假设推出。应将该处改为 n≥N+1，或相应调整假设与求和上限。",
+      "evidence": "S02.U13 的假设是“对所有整数 n>N 都有 a_n=b_n”；S02.U14 却断言“对所有整数 n≥N，B_n-A_n=∑_{k=1}^{N}(b_k-a_k)”。例如 N=1、a_1=0、b_1=1 且 n>1 时 a_n=b_n=0，满足全部定理假设，但在 n=N=1 时 B_1-A_1=1，而右端 b_1-a_1=1（若按证明中的差分与后续固定尾部解释则应从 N+1 起论证）；当前证明的 n≥N 边界没有由假设支持，需修正指标后才能完成证明。"
+    }
+  ],
+  "contract_migration": {
+    "id": "d302f4e8de7d3788295466263c573b9bb7773222e58c6eb4c422ed5cd2a127aa",
+    "evidence_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/global-repairs/contract-migrations/d302f4e8de7d378829546626/evidence.json"
+  }
+}

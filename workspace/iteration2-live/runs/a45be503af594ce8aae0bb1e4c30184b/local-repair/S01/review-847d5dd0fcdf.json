@@ -1,0 +1,97 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "b081d105ff0f3374d07d92928f3bb3272b50f179f1a6d4be6f33285c145ec8a6",
+    "tool_checks_hash": "ba510ed75c6a20ffa1421fd5a9677e243874742e3056d2ac51d9a2bbe2c2704b",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "56f24d2c7112a8da58a5685ae7e7a9c4753b0c959d70d98cd2d681cd2a3856a0",
+    "deterministic_checks_hash": "81dbfb347e323196063104d49fa2d84e66c04c4385c0c20e6298ce80fa08c5af"
+  },
+  "report": {
+    "section_id": "S01",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "limit",
+          "assumptions": {
+            "x": {
+              "real": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "5",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S01.C01",
+          "unit_id": "S01.U09"
+        }
+      ],
+      "coverage": [
+        "S01.U01",
+        "S01.U02",
+        "S01.U03",
+        "S01.U04",
+        "S01.U05",
+        "S01.U06",
+        "S01.U07",
+        "S01.U08",
+        "S01.U09",
+        "S01.U10",
+        "S01.U11",
+        "S01.U12",
+        "S01.U13"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+      ]
+    },
+    "llm_review": {
+      "issues": [
+        {
+          "unit_id": "S01.U03",
+          "severity": "warning",
+          "message": "无穷远极限的定义本身在当前单元中已给出，量词和正负无穷方向基本一致；但后续没有用例题或练习实际运用该定义，学生对无穷远极限的判定步骤缺少直接示范。建议补充一个有限极限的无穷远例子，或明确本节仅要求掌握定义表达。",
+          "evidence": "S01.U03同时给出 x→+∞ 与 x→−∞ 的定义；S01.U08–S01.U13仅处理有限点 x→2、x→0、x→1，没有检验无穷远极限。该缺口属于教学覆盖建议，不构成当前数学结论错误。"
+        }
+      ],
+      "checked_unit_ids": [
+        "S01.U01",
+        "S01.U02",
+        "S01.U03",
+        "S01.U04",
+        "S01.U05",
+        "S01.U06",
+        "S01.U07",
+        "S01.U08",
+        "S01.U09",
+        "S01.U10",
+        "S01.U11",
+        "S01.U12",
+        "S01.U13"
+      ],
+      "limitations": [
+        "本次仅核对当前 section_local 范围内的 S01.U01–S01.U13，并使用了提供的先修上下文；S02–S05尚未生成，不构成本节遗漏。",
+        "工具检查只复算了 S01.U09 的一个显式极限，不能替代对全部定义、证明和量词的形式化验证。",
+        "本审阅是普通模型的数学与教学一致性检查，不是形式化证明，也未执行最终 PDF 排版检查。"
+      ]
+    },
+    "issues": [
+      {
+        "unit_id": "S01.U03",
+        "severity": "warning",
+        "message": "无穷远极限的定义本身在当前单元中已给出，量词和正负无穷方向基本一致；但后续没有用例题或练习实际运用该定义，学生对无穷远极限的判定步骤缺少直接示范。建议补充一个有限极限的无穷远例子，或明确本节仅要求掌握定义表达。",
+        "evidence": "S01.U03同时给出 x→+∞ 与 x→−∞ 的定义；S01.U08–S01.U13仅处理有限点 x→2、x→0、x→1，没有检验无穷远极限。该缺口属于教学覆盖建议，不构成当前数学结论错误。"
+      }
+    ],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": []
+}

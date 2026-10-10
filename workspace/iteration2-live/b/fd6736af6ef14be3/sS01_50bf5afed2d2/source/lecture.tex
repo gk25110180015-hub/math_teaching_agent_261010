@@ -1,0 +1,115 @@
+\documentclass[UTF8,fontset=fandol,11pt]{ctexart}
+\usepackage[a4paper,margin=24mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,graphicx,tabularx,booktabs,hyperref}
+\newtheorem{definition}{定义}[section]
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{example}[definition]{例题}
+\newtheorem{exercise}[definition]{练习}
+\hypersetup{unicode=true,colorlinks=true,linkcolor=blue}
+\title{无穷级数：收敛性与基本判别法}
+\date{}
+\begin{document}
+\maketitle
+\section{级数与部分和的基本概念}\label{sec:S01}
+% UNIT S01.U01
+\begin{definition}
+给定一个数列 $\{a_n\}_{n=1}^{\infty}$，形式表达式
+\[
+\sum_{n=1}^{\infty}a_n=a_1+a_2+a_3+\cdots
+\]
+称为无穷级数，简称级数；其中 $a_n$ 称为该级数的通项。记号 $\sum_{n=1}^{\infty}a_n$ 表示按照下标 $n=1,2,3,\ldots$ 依次相加的过程，而不是有限项的和。\label{def:series}
+\end{definition}
+% UNIT S01.U02
+\begin{definition}
+对于级数 $\sum_{n=1}^{\infty}a_n$，定义其第 $n$ 个部分和为
+\[
+S_n=\sum_{k=1}^{n}a_k=a_1+a_2+\cdots+a_n,\qquad n=1,2,3,\ldots.
+\]
+由此得到数列 $\{S_n\}_{n=1}^{\infty}$，称为该级数的部分和数列。\label{def:partial-sum}
+\end{definition}
+% UNIT S01.U03
+\begin{definition}
+若部分和数列 $\{S_n\}_{n=1}^{\infty}$ 收敛，即存在有限实数 $S$ 使得
+\[
+\lim_{n\to\infty}S_n=S,
+\]
+则称级数 $\sum_{n=1}^{\infty}a_n$ 收敛，并称 $S$ 为该级数的和，记作
+\[
+\sum_{n=1}^{\infty}a_n=S.
+\]
+若部分和数列不收敛，则称级数 $\sum_{n=1}^{\infty}a_n$ 发散。\label{def:convergence}
+\end{definition}
+% UNIT S01.U04
+\begin{theorem}
+级数 $\sum_{n=1}^{\infty}a_n$ 收敛，当且仅当其部分和数列 $\{S_n\}_{n=1}^{\infty}$ 收敛。若
+\[
+\lim_{n\to\infty}S_n=S,
+\]
+则
+\[
+\sum_{n=1}^{\infty}a_n=S.
+\]
+\label{thm:series-limit}
+\end{theorem}
+% UNIT S01.U05
+\begin{proof}
+由定义，级数 $\sum_{n=1}^{\infty}a_n$ 的第 $n$ 个部分和就是 $S_n=\sum_{k=1}^{n}a_k$。因此，级数收敛的定义正是部分和数列 $\{S_n\}$ 收敛，即存在有限实数 $S$ 满足
+\[
+\lim_{n\to\infty}S_n=S.
+\]
+所以，级数收敛当且仅当其部分和数列收敛；在这种情况下，级数的和按定义就是部分和数列的极限 $S$。证毕。
+\end{proof}
+% UNIT S01.U06
+\begin{example}
+考虑级数
+\[
+\sum_{n=1}^{\infty}\frac{1}{2^n}.
+\]
+求其前 $3$ 项部分和，并说明如何根据部分和数列判断该级数是否收敛。
+\end{example}
+% UNIT S01.U07
+\par\noindent\textbf{解：}该级数的前 $3$ 项部分和为
+\[
+S_3=\frac12+\frac14+\frac18=\frac78.
+\]
+一般地，对任意正整数 $n$，其部分和为
+\[
+S_n=\sum_{k=1}^{n}\frac{1}{2^k}.
+\]
+若能够证明 $\{S_n\}$ 有有限极限 $S$，则由定理 \ref{thm:series-limit} 可知原级数收敛且其和为 $S$。本例的部分和可写为
+\[
+S_n=1-\frac{1}{2^n},
+\]
+因此
+\[
+\lim_{n\to\infty}S_n=1,
+\]
+从而
+\[
+\sum_{n=1}^{\infty}\frac{1}{2^n}=1.
+\]\par
+% UNIT S01.U08
+\begin{exercise}
+\label{mathagent:exercise:88f1e3edc535eea58e2b1acdc6aefe1b2b782af1c244960542c7c18b26231ebf}
+设级数
+\[
+\sum_{n=1}^{\infty}a_n,
+\qquad a_n=\frac{1}{n(n+1)}.
+\]
+写出其第 $3$ 个部分和 $S_3$，并根据级数收敛的定义说明判断该级数收敛性时需要考察哪个数列的极限。
+\end{exercise}
+\section*{练习答案}
+% UNIT S01.U09
+\par\noindent\textbf{\hyperref[mathagent:exercise:88f1e3edc535eea58e2b1acdc6aefe1b2b782af1c244960542c7c18b26231ebf]{练习 \ref*{mathagent:exercise:88f1e3edc535eea58e2b1acdc6aefe1b2b782af1c244960542c7c18b26231ebf} 的解答：}}由部分和的定义，
+\[
+S_3=a_1+a_2+a_3
+=\frac{1}{1\cdot2}+\frac{1}{2\cdot3}+\frac{1}{3\cdot4}
+=\frac12+\frac16+\frac1{12}
+=\frac34.
+\]
+判断该级数是否收敛时，需要考察部分和数列
+\[
+S_n=\sum_{k=1}^{n}\frac{1}{k(k+1)}
+\]
+是否存在有限极限。若 $\lim_{n\to\infty}S_n$ 存在，则级数收敛；否则级数发散。\par
+\end{document}

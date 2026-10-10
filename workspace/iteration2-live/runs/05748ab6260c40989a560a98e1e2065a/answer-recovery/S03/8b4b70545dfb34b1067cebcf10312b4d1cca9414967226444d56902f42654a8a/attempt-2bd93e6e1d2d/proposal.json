@@ -1,0 +1,85 @@
+{
+  "section_id": "S03",
+  "answers": [
+    {
+      "target_id": "S03.U16",
+      "tex": "对所有正整数 $n$，由 $|\\sin n|\\leq1$ 及 $n+1>0$，有\n\\[\n|b_n|=\\frac{|\\sin n|}{n+1}\\leq\\frac1{n+1}\\leq\\frac1n.\n\\]\n由于 $1/n\\to0$，故\n\\[\n-\\frac1n\\leq b_n\\leq\\frac1n\n\\]\n两侧均趋于零。由夹逼定理，$\\displaystyle\\lim_{n\\to\\infty}b_n=0$；同时上述估计也说明上界 $1/(n+1)$ 趋于零。\n\n虽然 $b_n=(\\sin n)\\cdot1/(n+1)$，但乘积极限法则要求两个因子数列均收敛，不能仅凭 $|\\sin n|\\leq1$ 就认定 $\\{\\sin n\\}$ 收敛，因而不能未经证明就把两个因子的极限相乘。本题只需利用正弦因子的有界性，无需确定其收敛性；也可用有界数列与无穷小数列的乘积趋于零来说明。"
+    },
+    {
+      "target_id": "S03.U17",
+      "tex": "(1) 对所有正整数 $n$，根号内为正，且共轭式 $\\sqrt{n^2+n}+n>0$，所以\n\\[\n\\sqrt{n^2+n}-n\n=\\frac{n}{\\sqrt{n^2+n}+n}\n=\\frac1{\\sqrt{1+1/n}+1}.\n\\]\n这里利用了 $n>0$，从而 $\\sqrt{n^2+n}=n\\sqrt{1+1/n}$。再作共轭变形并估计：\n\\[\n0\\leq\\sqrt{1+1/n}-1\n=\\frac{1/n}{\\sqrt{1+1/n}+1}\n\\leq\\frac1{2n}.\n\\]\n由 $1/(2n)\\to0$ 和夹逼定理，$\\sqrt{1+1/n}-1\\to0$，故 $\\sqrt{1+1/n}\\to1$。变形后分母处处为正，且趋于 $2\\neq0$，由商法则得\n\\[\n\\lim_{n\\to\\infty}\\bigl(\\sqrt{n^2+n}-n\\bigr)=\\frac12.\n\\]\n关键是先用共轭变形及夹逼证明根式数列的极限，再检查商法则的分母条件，并未援引函数连续性。\n\n(2) 由于 $n^2+1>0$，将原式与 $2$ 作差得\n\\[\n\\frac{2n^2+(-1)^n}{n^2+1}-2\n=\\frac{(-1)^n-2}{n^2+1}.\n\\]\n符号变化项满足 $|(-1)^n|=1$，因此对所有正整数 $n$，\n\\[\n\\left|\\frac{2n^2+(-1)^n}{n^2+1}-2\\right|\n\\leq\\frac{|(-1)^n|+2}{n^2+1}\n=\\frac3{n^2+1}\\leq\\frac3{n^2}\\to0.\n\\]\n由误差估计形式的夹逼定理，\n\\[\n\\lim_{n\\to\\infty}\\frac{2n^2+(-1)^n}{n^2+1}=2.\n\\]\n关键是分母为正，且符号变化项造成的误差具有趋于零的绝对值上界；无需对 $(-1)^n$ 本身取极限。"
+    }
+  ],
+  "calculations": [
+    {
+      "id": "S03.C03",
+      "unit_id": "S03.U17.answer",
+      "kind": "limit",
+      "assumptions": {
+        "n": {
+          "integer": true,
+          "positive": true
+        }
+      },
+      "expression": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "sqrt",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Pow",
+                    "args": [
+                      {
+                        "op": "Symbol",
+                        "name": "n"
+                      },
+                      {
+                        "op": "Integer",
+                        "value": 2
+                      }
+                    ]
+                  },
+                  {
+                    "op": "Symbol",
+                    "name": "n"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Integer",
+                "value": -1
+              },
+              {
+                "op": "Symbol",
+                "name": "n"
+              }
+            ]
+          }
+        ]
+      },
+      "variable": "n",
+      "point": {
+        "op": "Infinity"
+      },
+      "direction": "-",
+      "expected": {
+        "op": "Rational",
+        "p": 1,
+        "q": 2
+      }
+    }
+  ],
+  "calculation_limitations": [
+    "新增核算仅请求核对 S03.U17 第 (1) 题的具体极限；它不核验两个答案中对所有正整数成立的不等式链，也不替代夹逼证明及乘积、商法则适用条件的论证。协议没有用于直接核验此类全称不等式证明的请求类型。"
+  ],
+  "uncertainties": []
+}

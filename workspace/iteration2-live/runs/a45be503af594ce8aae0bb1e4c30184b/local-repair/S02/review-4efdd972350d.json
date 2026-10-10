@@ -1,0 +1,122 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "fbb8e635b02113721440b9f7865771d8327ff972513a7ecc482e45f5c1305bfa",
+    "tool_checks_hash": "5801e339673489da794326b42c7a440eb71c7f48bf08372cdb1fe7ed67411c3c",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "6c2badf10cdb78e3c52c7ffd31292bcce4fc566bbaf1fb8866d0d65f87322b03",
+    "deterministic_checks_hash": "00274d142b3b24a733e95f46873903fb1d909a55f9b99102912b1abf8864d2f4"
+  },
+  "report": {
+    "section_id": "S02",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "limit",
+          "assumptions": {
+            "x": {
+              "real": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "2",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S02.C01",
+          "unit_id": "S02.U09"
+        },
+        {
+          "kind": "limit",
+          "assumptions": {
+            "x": {
+              "real": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "0",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S02.C02",
+          "unit_id": "S02.U04"
+        }
+      ],
+      "coverage": [
+        "S02.U01",
+        "S02.U02",
+        "S02.U03",
+        "S02.U04",
+        "S02.U05",
+        "S02.U06",
+        "S02.U07",
+        "S02.U08",
+        "S02.U09",
+        "S02.U10",
+        "S02.U11",
+        "S02.U12",
+        "S02.U13"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "协议支持的极限核算不能表达约分所需的条件 $x\\neq1$；核算仅针对约分后在相应去心邻域内等价的表达式 $x+1$。",
+        "该核算请求不覆盖一般函数的局部有界性、四则运算法则与复合极限定理的量词条件及证明；这些内容由正文的极限定义与估计说明。此处只提交核算请求，不报告执行结果。",
+        "新增核算仅覆盖夹逼应用中上界 x^2 在 x 趋于 0 时的极限。协议没有一般不等式验证请求，不能核验去心邻域 0<|x|<1 上的上下界构造及夹逼推理；这些步骤由正文利用正弦函数的有界性和 x^2 的非负性说明。",
+        "本次补充的 ε-δ 论证涉及任意误差、邻域选择及不等式，现有有界核算协议不能验证这些量词步骤；既有 S02.C02 仅核算 x^2 在 x 趋于 0 时的极限，不覆盖定义论证。S02.U11 中恒等函数与常数函数基本极限的定义依据亦由正文给出，不将符号代入视为对这些依据的验证。",
+        "S02.U09 补充的定义证明涉及任意 ε>0、选择 δ=ε 及去心邻域内的误差不等式，现有核算协议不能验证这些量词与不等式步骤。既有 S02.C01 仅核算约分后 x+1 在 x 趋于 1 时的极限，不覆盖该定义证明或约分的定义域条件。"
+      ]
+    },
+    "llm_review": {
+      "issues": [
+        {
+          "unit_id": "S02.U01",
+          "severity": "warning",
+          "message": "S02.U01 的 kind 为 definition，标签为 def:squeeze-principle，但正文实际陈述的是夹逼定理：在去心邻域内 h(x)≤f(x)≤g(x)，且 h、g 同极限 L，则 f 的极限也为 L。这是定理而非定义；数学陈述本身正确。若渲染层按 kind 显示“定义”，会把定理误呈为定义。建议改为 theorem 或命题呈现，并注意与 S02.U04 中同一命题的 thm:squeeze-theorem 重复。",
+          "evidence": "S02.U01 正文：“设函数 f,g,h 在点 x0 的某个去心邻域内有定义……则 lim_{x→x0}f(x)=L。这称为夹逼原理。”同题在 S02.U04 又以 theorem 出现，并标为 thm:squeeze-theorem。"
+        }
+      ],
+      "checked_unit_ids": [
+        "S02.U01",
+        "S02.U02",
+        "S02.U03",
+        "S02.U04",
+        "S02.U05",
+        "S02.U06",
+        "S02.U07",
+        "S02.U08",
+        "S02.U09",
+        "S02.U10",
+        "S02.U11",
+        "S02.U12",
+        "S02.U13"
+      ],
+      "limitations": [
+        "本次为 section_local，只核对当前 S02 的实际正文；S03、S04、S05 尚未生成，不属于本次审阅范围。",
+        "已读 S02.U01 至 S02.U13；先修 S01 仅作为已提供上下文用于核对极限定义、唯一性等依赖，未在本轮重新出具 S01 结论。",
+        "普通模型审阅不等于形式化证明；epsilon-delta 量词、邻域选择与不等式证明未被工具形式化验证。",
+        "tool_checks 仅覆盖 S02.C01、S02.C02 等指定符号计算，不能覆盖极限四则运算法则、复合极限定理和夹逼定理的一般量词证明。",
+        "未检查最终 PDF 渲染与答案位置；rendering_contract 说明 S02.U13 会被收集到讲义末尾答案区，因此不能仅凭 JSON 顺序推断答案位置违规。",
+        "S02 的数学正文未发现 blocking 或 review 级错误；S02.U01 的 warning 属于 kind 或 label 呈现问题，不否定其数学命题。",
+        "课程范围依据锁定排除项核对，S02 未涉及导数、多元极限、拓扑或完备性证明、渐近展开、测度论等排除内容。"
+      ]
+    },
+    "issues": [
+      {
+        "unit_id": "S02.U01",
+        "severity": "warning",
+        "message": "S02.U01 的 kind 为 definition，标签为 def:squeeze-principle，但正文实际陈述的是夹逼定理：在去心邻域内 h(x)≤f(x)≤g(x)，且 h、g 同极限 L，则 f 的极限也为 L。这是定理而非定义；数学陈述本身正确。若渲染层按 kind 显示“定义”，会把定理误呈为定义。建议改为 theorem 或命题呈现，并注意与 S02.U04 中同一命题的 thm:squeeze-theorem 重复。",
+        "evidence": "S02.U01 正文：“设函数 f,g,h 在点 x0 的某个去心邻域内有定义……则 lim_{x→x0}f(x)=L。这称为夹逼原理。”同题在 S02.U04 又以 theorem 出现，并标为 thm:squeeze-theorem。"
+      }
+    ],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": []
+}

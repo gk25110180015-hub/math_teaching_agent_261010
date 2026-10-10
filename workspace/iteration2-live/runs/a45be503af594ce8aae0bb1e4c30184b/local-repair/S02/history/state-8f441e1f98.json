@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+    "section_id": "S02",
+    "context_hash": "6c2badf10cdb78e3c52c7ffd31292bcce4fc566bbaf1fb8866d0d65f87322b03",
+    "base_hash": "88cc2e168d096f46aa6d33a79c1a49f95796442587c810dd8aa2a48bbfe3395b",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "PROPOSAL_PENDING",
+  "applied_rounds": 2,
+  "proposal_calls": 3,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "unit_id": "S02.U09",
+      "severity": "review",
+      "message": "该解答将“\\lim_{x\\to1}(x+1)=1+1=2”作为直接代入使用，但当前已提供正文只在 S02.U11 中用定义证明了特定点处的恒等函数极限 \\lim_{x\\to2}x=2 以及常数函数极限；S01.U09 也只证明了特定线性函数在 x\\to2 时的极限。尚未明确建立一般结论 \\lim_{x\\to a}x=a（或在 x\\to1 处的独立证明），因此该计算的关键基本极限依据未完全落实。应补充一般基本极限定理，或在本单元直接给出 x\\to1 时的定义证明。",
+      "evidence": "S02.U09 写为“\\lim_{x\\to1}(x+1)=1+1=2”。可核对的先修正文 S01.U09 仅证明 \\lim_{x\\to2}(3x-1)=5；S02.U11 仅证明 \\lim_{x\\to2}x=2 和常数函数极限，不能直接覆盖 x\\to1 时的恒等函数极限。"
+    }
+  ],
+  "unit_applied_counts": {
+    "S02.U04": 2,
+    "S02.U11": 1
+  },
+  "proposal_counts_by_key": {
+    "unit:S02.U04": 2,
+    "unit:S02.U11": 1,
+    "unit:S02.U09": 1
+  },
+  "rejected_counts_by_key": {},
+  "evidence_dependencies": [
+    {
+      "key": "b/a45be503af594ce8/sS02_6ee1a7801716/repair-1-patch.json",
+      "hash": "c44669e99c523c69efbd905fd4e3e5ca53bfd76872e123dd2b3608657a13f5b8",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS02_8ccb3e0975d1/repair-2-patch.json",
+      "hash": "22e9baeb2c25fb7afd30681df11ff0b9a10bbbf07249cc4f91dad5a5483d4e63",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "a6dbcbb5d34c267f861a0a3976a849ae3ca58179a82864d43094aed1fb7a9092",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S02/candidate-9a4100a0fdaa.json",
+  "candidate_hash": "44a6117383e5d68b5132d19cdad7f9874f6bddaf728021a7eeaacf3de3e7f3b8",
+  "last_review_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S02/review-15bb4ffa1587.json",
+  "pending_operation": "strict_local_patch",
+  "pending_keys": [
+    "unit:S02.U09"
+  ],
+  "request_count_before": 126,
+  "patch_evidence": {
+    "schema_version": 1,
+    "operation": "strict_local_patch",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "88cc2e168d096f46aa6d33a79c1a49f95796442587c810dd8aa2a48bbfe3395b",
+    "patch_hash": "87d07a8dd2b629402c735ea38aac8b56b7c6bcf3b6388eeea46089f145e0d119",
+    "result_section_hash": "74d492bbb290594ca3246f6f925e882aa9d36b8f7d175c06a15d7ccc6546c995",
+    "allowed_unit_ids": [
+      "S02.U04",
+      "S02.U11"
+    ],
+    "changed_unit_ids": [
+      "S02.U04",
+      "S02.U11"
+    ],
+    "unit_order_preserved": true,
+    "unit_identity_and_metadata_preserved": true,
+    "non_target_units_preserved": true,
+    "original_calculation_count": 2,
+    "calculation_updates": [],
+    "calculation_additions": [],
+    "non_target_calculations_preserved": true,
+    "old_uncertainties_preserved": true,
+    "old_calculation_limitations_preserved": true,
+    "normalization": "NOT_RUN",
+    "math_check": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "proposal_key": "b/a45be503af594ce8/sS02_8ccb3e0975d1/repair-2-patch.json"
+  },
+  "reason": "Explicit global-repair seed; existing local counters retained"
+}

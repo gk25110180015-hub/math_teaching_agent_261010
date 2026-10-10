@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227",
+    "section_id": "S04",
+    "context_hash": "178dc2dd11e3a60d6a05ef56ad909f7b4939f52f8206733cb03da40ad6ca9a93",
+    "base_hash": "970de279785e5d37c0dbfa42425e9a5a72e27f42ae1b09a0d62e5365089a1e67",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "PROPOSAL_PENDING",
+  "applied_rounds": 5,
+  "proposal_calls": 6,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "unit_id": "S04.U03",
+      "severity": "review",
+      "message": "偶数部分和上界证明的展开式缺少首个指标的处理。该段讨论每个正整数 m，但所写末尾括号在 m=1 时涉及未定义的 b_0；不能默认为正文已经声明省略号下的空项约定。建议单独写明 S_2=b_1-b_2≤b_1，再对 m≥2 使用该展开式；也可改写为有限求和并明确空和约定。交错级数判别法的结论本身正确，此处问题是证明在所声明指标范围内的表达不完整。",
+      "evidence": "正文先写“对每个正整数 m”，随后用于推出上界的等式为 S_{2m}=b_1-(b_2-b_3)-⋯-(b_{2m-2}-b_{2m-1})-b_{2m}≤b_1。代入最小合法指标 m=1，显式末尾括号成为 b_0-b_1。S04.U01、S04.U02 中 b_n 仅对正整数下标定义；已核对当前节及所提供先修正文，未见 b_0 的定义或适用于此展开式的空项约定。直接计算 S_2=b_1-b_2 可以解决该边界，不需要新增数学假设。"
+    }
+  ],
+  "unit_applied_counts": {
+    "S04.U01": 1,
+    "S04.U05": 1,
+    "S04.U06": 1,
+    "S04.U02": 1,
+    "S04.U04": 1,
+    "S04.U03": 1,
+    "S04.U07": 2,
+    "S04.U11": 1,
+    "S04.U13": 1,
+    "S04.U09": 1,
+    "S04.U10": 1,
+    "S04.U08": 1,
+    "S04.U12": 1
+  },
+  "proposal_counts_by_key": {
+    "unit:S04.U01": 1,
+    "unit:S04.U05": 3,
+    "unit:S04.U02": 1,
+    "unit:S04.U06": 1,
+    "unit:S04.U03": 2,
+    "unit:S04.U04": 1,
+    "unit:S04.U07": 2,
+    "unit:S04.U08": 1,
+    "unit:S04.U09": 1,
+    "unit:S04.U10": 1,
+    "unit:S04.U11": 1,
+    "unit:S04.U12": 1,
+    "unit:S04.U13": 1
+  },
+  "rejected_counts_by_key": {},
+  "evidence_dependencies": [
+    {
+      "key": "b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-1-patch.json",
+      "hash": "fc4b1fe4fdb05f9c0d41cabde751d13c07047849b6c61ae6fc3bdc4805fe052c",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-2-patch.json",
+      "hash": "9c0eaad9696aecfba9429f6141c5623db0eca1b617d2a1491b65d32906615a0a",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-3-patch.json",
+      "hash": "98d54dbc8b547e7d2de8f640d3802cf8b136b0fa2befe52c44ef41870690d538",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS04_3ffbed0d2d1e/repair-4-patch.json",
+      "hash": "c518c029a10061c5b3870ced32cd85b37a73eb38e7d1f9165c11fcb74b27e624",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS04_60f55db3d67d/repair-5-patch.json",
+      "hash": "8cf189408d5397a89f5b25093670855945832faee35c5da643f89733208643d6",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "8b56b58c9361b3b24e385396159729724522310c2920f2e4a68124cad1348258",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S04/candidate-a3f72373382c.json",
+  "candidate_hash": "356d0c0c63af310c03b85308ea1a6660582a94007bcf9ca1685784de639bee83",
+  "last_review_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S04/review-6ca900893b0a.json",
+  "pending_operation": "strict_local_patch",
+  "pending_keys": [
+    "unit:S04.U03"
+  ],
+  "request_count_before": 67,
+  "patch_evidence": {
+    "schema_version": 1,
+    "operation": "strict_local_patch",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "9d1c3094018cbfc1ff07a7df0890af533679776168f87876400a87dadc5081db",
+    "patch_hash": "825c74017d5572407f8ff0c323c777f5cce8c9741911a3bc8f3fccd91a9621ba",
+    "result_section_hash": "970de279785e5d37c0dbfa42425e9a5a72e27f42ae1b09a0d62e5365089a1e67",
+    "allowed_unit_ids": [
+      "S04.U07"
+    ],
+    "changed_unit_ids": [
+      "S04.U07"
+    ],
+    "unit_order_preserved": true,
+    "unit_identity_and_metadata_preserved": true,
+    "non_target_units_preserved": true,
+    "original_calculation_count": 1,
+    "calculation_updates": [],
+    "calculation_additions": [],
+    "non_target_calculations_preserved": true,
+    "old_uncertainties_preserved": true,
+    "old_calculation_limitations_preserved": true,
+    "normalization": "NOT_RUN",
+    "math_check": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "proposal_key": "b/fd6736af6ef14be3/sS04_60f55db3d67d/repair-5-patch.json"
+  },
+  "reason": "Explicit global-repair seed; existing local counters retained"
+}

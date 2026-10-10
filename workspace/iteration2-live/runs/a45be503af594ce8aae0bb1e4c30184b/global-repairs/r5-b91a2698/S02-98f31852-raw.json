@@ -1,0 +1,63 @@
+{
+  "section_id": "S02",
+  "replacements": [
+    {
+      "unit_id": "S02.U12",
+      "tex": "设函数 $f$ 与 $g$ 在点 $x_0$ 的某个去心邻域内有定义，且\n\\[\n\\lim_{x\\to x_0}f(x)=2,\n\\qquad\n\\lim_{x\\to x_0}g(x)=-1.\n\\]\n求\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)+g(x)}{f(x)-g(x)}.\n\\]\n并说明使用商的极限法则时需要检查的条件。\n\n附加小问：用夹逼定理计算\n\\[\n\\lim_{x\\to0}\\frac{x^2}{2+\\cos(1/x)}.\n\\]\n请自行构造上下界，确认原式与上下界在同一去心邻域内有定义，说明所考察的同一趋近过程，计算两端的共同极限，再给出结论。"
+    },
+    {
+      "unit_id": "S02.U13",
+      "tex": "由极限的和与差法则，\n\\[\n\\lim_{x\\to x_0}(f(x)+g(x))=2+(-1)=1,\n\\]\n\\[\n\\lim_{x\\to x_0}(f(x)-g(x))=2-(-1)=3.\n\\]\n分母的极限为 $3\\neq0$，所以分母在 $x_0$ 的某个去心邻域内不为零，可以使用商的极限法则。因此\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)+g(x)}{f(x)-g(x)}=\\frac{1}{3}.\n\\]\n\n附加小问解答：在去心邻域 $0<|x|<1$ 内，$1/x$ 有定义。由余弦函数的有界性，\n\\[\n-1\\leq\\cos(1/x)\\leq1,\n\\qquad\n1\\leq2+\\cos(1/x)\\leq3.\n\\]\n因此分母始终为正，原式在该去心邻域内有定义。对上述正数取倒数，再乘以非负数 $x^2$，得到\n\\[\n\\frac{x^2}{3}\\leq\\frac{x^2}{2+\\cos(1/x)}\\leq x^2.\n\\]\n上下界也在同一去心邻域内有定义，三者均考察双侧趋近过程 $x\\to0$。由 $\\lim_{x\\to0}x=0$ 及极限的积与常数倍法则，\n\\[\n\\lim_{x\\to0}\\frac{x^2}{3}=0,\n\\qquad\n\\lim_{x\\to0}x^2=0.\n\\]\n两端趋于同一有限数，故由夹逼定理，\n\\[\n\\lim_{x\\to0}\\frac{x^2}{2+\\cos(1/x)}=0.\n\\]\n这里仅使用余弦函数的有界性与代数极限，不需要求 $\\cos(1/x)$ 的极限，也不需要在 $x=0$ 处定义原式。"
+    }
+  ],
+  "calculation_updates": [],
+  "calculation_additions": [
+    {
+      "id": "S02.C03",
+      "unit_id": "S02.U13",
+      "kind": "limit",
+      "assumptions": {
+        "x": {
+          "real": true
+        }
+      },
+      "expression": {
+        "op": "Mul",
+        "args": [
+          {
+            "op": "Rational",
+            "p": 1,
+            "q": 3
+          },
+          {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Symbol",
+                "name": "x"
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      },
+      "variable": "x",
+      "point": {
+        "op": "Integer",
+        "value": 0
+      },
+      "direction": "+-",
+      "expected": {
+        "op": "Integer",
+        "value": 0
+      }
+    }
+  ],
+  "uncertainties_append": [],
+  "calculation_limitations_append": [
+    "新增请求 S02.C03 仅覆盖附加小问下界 x^2/3 在 x 趋于 0 时的极限。协议没有一般不等式验证请求，不能核验余弦有界性、分母正性、同一去心邻域内的上下界构造及完整夹逼推理；这些条件与步骤由 S02.U13 正文说明。"
+  ]
+}

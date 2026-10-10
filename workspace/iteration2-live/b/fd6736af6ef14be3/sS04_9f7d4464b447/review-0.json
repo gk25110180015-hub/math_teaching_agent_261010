@@ -1,0 +1,125 @@
+{
+  "section_id": "S04",
+  "math": {
+    "schema_version": 1,
+    "status": "NEEDS_REVIEW",
+    "issues": [
+      {
+        "rule_id": "NUMERIC_IS_NOT_PROOF",
+        "severity": "warning",
+        "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+        "location": {
+          "calculation_id": "S04.C01",
+          "unit_id": "S04.U05"
+        },
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "kind": "numeric_spotcheck",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "numeric_spotcheck_passed",
+        "point_count": 1,
+        "message": "仅在指定点数值一致，不是一般性证明。",
+        "calculation_id": "S04.C01",
+        "unit_id": "S04.U05"
+      }
+    ],
+    "coverage": [
+      "S04.U01",
+      "S04.U02",
+      "S04.U03",
+      "S04.U04",
+      "S04.U05",
+      "S04.U06",
+      "S04.U07",
+      "S04.U08",
+      "S04.U09",
+      "S04.U10",
+      "S04.U11",
+      "S04.U12",
+      "S04.U13"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "协议的数值核算只能抽查交错项在指定整数处的取值，不能表达对所有正整数的单调性、极限或余项不等式；交错级数判别法及余项估计仍由正文证明。",
+      "既有核算 S04.C01 仅比较 n=3 时的通项值与 1/3，覆盖范围限于该单点等式；不提供对所有正整数的结论，也不构成交错调和级数收敛性或截断误差界的证明。这些结论依赖正文中的判别条件核实与定理证明。",
+      "本次仅修复目标正文的 TeX 反斜杠转义层级，不改变数学结论，不新增核算请求。该转义问题及公式环境、引用的实际渲染不属于有界数学核算协议的检查范围，须由后续 TeX 编译与交叉引用检查验证。"
+    ]
+  },
+  "llm_review": {
+    "issues": [
+      {
+        "unit_id": "S04.U05",
+        "severity": "warning",
+        "message": "该例题插入了一个 n=3 的单点数值核对，并说明它不能证明收敛性或余项估计。该段对例题的数学证明目标没有贡献，属于非必要的元说明，建议删除或改为纯粹的项值计算，以免与例题的证明主线混淆。",
+        "evidence": "S04.U05 原文有：作为通项取值的单点核对，n=3 时有 ... 这一数值核对只验证第三项的取值，不能证明级数收敛，也不能证明一般的余项估计。收敛性与误差界须由交错级数判别法及其余项估计在核实条件后得到，具体论证见本例解答。"
+      }
+    ],
+    "checked_unit_ids": [
+      "S04.U01",
+      "S04.U02",
+      "S04.U03",
+      "S04.U04",
+      "S04.U05",
+      "S04.U06",
+      "S04.U07",
+      "S04.U08",
+      "S04.U09",
+      "S04.U10",
+      "S04.U11",
+      "S04.U12",
+      "S04.U13"
+    ],
+    "limitations": [
+      "本次仅审阅当前节 S04 的实际单元；待生成的 S05 不属于本节审阅范围。",
+      "普通模型审阅不等于形式化证明；未发现 blocking/review 级别问题不构成对全部数学内容的完整形式验证。",
+      "S04.C01 仅为 n=3 的单点数值抽查，不能替代交错级数收敛性、单调性或余项估计的一般证明；相关结论依赖 S04.U03、S04.U07、S04.U13 的正文证明。",
+      "本次未依据 rendering_contract 对最终 PDF 的答案位置作数学正确性判断；S04.U11、S04.U12 为独立解答单元，其 JSON 位置本身不构成答案内嵌问题。"
+    ]
+  },
+  "issues": [
+    {
+      "rule_id": "NUMERIC_IS_NOT_PROOF",
+      "severity": "warning",
+      "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+      "location": {
+        "calculation_id": "S04.C01",
+        "unit_id": "S04.U05"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S04.U05",
+      "severity": "warning",
+      "message": "该例题插入了一个 n=3 的单点数值核对，并说明它不能证明收敛性或余项估计。该段对例题的数学证明目标没有贡献，属于非必要的元说明，建议删除或改为纯粹的项值计算，以免与例题的证明主线混淆。",
+      "evidence": "S04.U05 原文有：作为通项取值的单点核对，n=3 时有 ... 这一数值核对只验证第三项的取值，不能证明级数收敛，也不能证明一般的余项估计。收敛性与误差界须由交错级数判别法及其余项估计在核实条件后得到，具体论证见本例解答。"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 6,
+    "proposal_calls": 6,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "b747c59be5e08a36af4c8a69c78f1001d7d7a36170e95aa7cc1acebf79442a85",
+      "tool_checks_hash": "09b2b814ed9fe8ac778a9113b80cdb5db9e6286a4f75362e753eceace1c025bf",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "617e850d751e6662d5b480c54e1404613ba8fc68c591497c93d4d0e1b1c9ec8d",
+      "deterministic_checks_hash": "62a616f548840d8f9f63157fdc022b223ef9f83b78c559f5aa75f46bed081e65"
+    }
+  }
+}

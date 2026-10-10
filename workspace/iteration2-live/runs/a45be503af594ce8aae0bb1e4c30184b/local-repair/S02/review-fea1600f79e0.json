@@ -1,0 +1,123 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "70603191dbfdc6d939b7c5c3146b846d39756b6cad1ffe00c63a4e41fe181685",
+    "tool_checks_hash": "d4768ade64fcef4614db05cfe786dd1c74e06cc3e2239734ea48c80b78252c8b",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "6c2badf10cdb78e3c52c7ffd31292bcce4fc566bbaf1fb8866d0d65f87322b03",
+    "deterministic_checks_hash": "00274d142b3b24a733e95f46873903fb1d909a55f9b99102912b1abf8864d2f4"
+  },
+  "report": {
+    "section_id": "S02",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "limit",
+          "assumptions": {
+            "x": {
+              "real": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "2",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S02.C01",
+          "unit_id": "S02.U09"
+        },
+        {
+          "kind": "limit",
+          "assumptions": {
+            "x": {
+              "real": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "0",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S02.C02",
+          "unit_id": "S02.U04"
+        },
+        {
+          "kind": "limit",
+          "assumptions": {
+            "x": {
+              "real": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "0",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S02.C03",
+          "unit_id": "S02.U13"
+        }
+      ],
+      "coverage": [
+        "S02.U01",
+        "S02.U02",
+        "S02.U03",
+        "S02.U04",
+        "S02.U05",
+        "S02.U06",
+        "S02.U07",
+        "S02.U08",
+        "S02.U09",
+        "S02.U10",
+        "S02.U11",
+        "S02.U12",
+        "S02.U13"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "协议支持的极限核算不能表达约分所需的条件 $x\\neq1$；核算仅针对约分后在相应去心邻域内等价的表达式 $x+1$。",
+        "该核算请求不覆盖一般函数的局部有界性、四则运算法则与复合极限定理的量词条件及证明；这些内容由正文的极限定义与估计说明。此处只提交核算请求，不报告执行结果。",
+        "新增核算仅覆盖夹逼应用中上界 x^2 在 x 趋于 0 时的极限。协议没有一般不等式验证请求，不能核验去心邻域 0<|x|<1 上的上下界构造及夹逼推理；这些步骤由正文利用正弦函数的有界性和 x^2 的非负性说明。",
+        "本次补充的 ε-δ 论证涉及任意误差、邻域选择及不等式，现有有界核算协议不能验证这些量词步骤；既有 S02.C02 仅核算 x^2 在 x 趋于 0 时的极限，不覆盖定义论证。S02.U11 中恒等函数与常数函数基本极限的定义依据亦由正文给出，不将符号代入视为对这些依据的验证。",
+        "S02.U09 补充的定义证明涉及任意 ε>0、选择 δ=ε 及去心邻域内的误差不等式，现有核算协议不能验证这些量词与不等式步骤。既有 S02.C01 仅核算约分后 x+1 在 x 趋于 1 时的极限，不覆盖该定义证明或约分的定义域条件。",
+        "新增请求 S02.C03 仅覆盖附加小问下界 x^2/3 在 x 趋于 0 时的极限。协议没有一般不等式验证请求，不能核验余弦有界性、分母正性、同一去心邻域内的上下界构造及完整夹逼推理；这些条件与步骤由 S02.U13 正文说明。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S02.U01",
+        "S02.U02",
+        "S02.U03",
+        "S02.U04",
+        "S02.U05",
+        "S02.U06",
+        "S02.U07",
+        "S02.U08",
+        "S02.U09",
+        "S02.U10",
+        "S02.U11",
+        "S02.U12",
+        "S02.U13"
+      ],
+      "limitations": [
+        "本次仅审阅 S02 的全部十三个实际单元，并使用已提供的 S01 正文核对先修依据；不对尚未生成的 S03—S05 作覆盖判断。",
+        "已逐项核对本节锁定目标：唯一性已有 S01 的定理与证明支撑；局部有界性、保号性、四则运算、带有内函数最终避开目标点条件的复合极限，以及代数变形和夹逼应用均有实际正文依据。未发现需要报告的确定数学错误、重大不确定或核心目标缺口。",
+        "已检查所提供公式与解释文字、去心邻域定义域、量词、符号及分母非零条件。本节没有级数、递推或移位下标论证，因而不涉及相应的收敛判别和初值检查。",
+        "按 rendering_contract，S02.U13 是独立且正确关联到练习的答案单元，应由程序移至讲义末尾；本次未把其 JSON 位置视为答案位置问题，也未执行最终 PDF 的排版与引用显示检查。",
+        "本结论来自普通模型对正文的数学与教学覆盖审阅，不等于形式化证明。所提供符号核算仅涉及个别表达式，不能替代对一般定理、量词和证明依赖的验证。"
+      ]
+    },
+    "issues": [],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": []
+}

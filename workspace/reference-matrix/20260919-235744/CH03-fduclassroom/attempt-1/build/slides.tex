@@ -1,0 +1,3001 @@
+\documentclass[aspectratio=169,10pt,fontset=fandol]{ctexbeamer}
+\usepackage{amsmath,amssymb,mathtools,bm,mathrsfs}
+\usepackage{graphicx,booktabs,array,tabularx,multirow}
+\usepackage{tikz,pgfplots,xparse,xstring,mdframed}
+\usetikzlibrary{arrows.meta,calc,angles,positioning,shapes.geometric,graphs}
+\pgfplotsset{compat=1.18}
+\usetheme{fduclassroom}
+\input{workflow_style.tex}
+\input{workflow_fonts.tex}
+\mdfdefinestyle{extrastyle}{%
+    linecolor=gray,
+    linewidth=0.8pt,
+    frametitlerule=true,
+    frametitlebackgroundcolor=gray!10,
+    backgroundcolor=gray!5,
+    skipabove=10pt,
+    skipbelow=10pt,
+    innertopmargin=6pt,
+    innerbottommargin=6pt
+}
+\newenvironment{extra}{\begin{mdframed}[style=extrastyle, frametitle={* 选读内容（不要求掌握）}]}{\end{mdframed}}
+\newenvironment{custom}[1]{\par\noindent\textbf{#1}\quad}{\par\vspace{0.8em}}
+\newenvironment{idea}{\par\noindent\textbf{思路}\quad}{\par\vspace{0.4em}}
+\newenvironment{warning}{\par\noindent\textbf{注：}\quad}{\par\vspace{0.8em}}
+\newenvironment{intuition}{\par\noindent\textbf{直观理解}\quad}{\par\vspace{0.8em}}
+\NewDocumentEnvironment{application}{O{}}
+{\par\noindent\textbf{应用拓展\IfStrEq{#1}{}{}{——#1}}\quad}
+{\par\vspace{0.8em}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\upcite}[1]{\textsuperscript{\textsuperscript{\cite{#1}}}}
+\DeclareMathOperator*{\argmax}{\mathrm{arg\,max}}
+\DeclareMathOperator*{\argmin}{\mathrm{arg\,min}}
+\title{第三章}
+\begin{document}
+\section{数学内容}
+% FRAME-ID F001
+\begin{frame}[t,fragile]{目录（1/2）}
+\normalsize
+{\color{blue}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 2. 一元函数极限\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 3. 函数极限的基本性质\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 4. Landau 符号与渐近阶\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 5. 两个重要极限\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 6. 等价无穷小\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 7. 极限计算与易错分析\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 8. 一元函数的连续性\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 9. 闭区间连续函数的两个基本定理\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 10. 二元函数的极限与连续\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F002
+\begin{frame}[t,fragile]{目录（2/2）}
+\normalsize
+{\color{gray!40}\normalsize 11. 第4章课后习题\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 12. 第4章参考答案与提示\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F003
+\begin{frame}[t,fragile]{数学内容}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0001 0 33
+
+\maketitle
+\vspace{-1em}
+
+
+
+% SOURCE-END U0001
+}
+\end{frame}
+\section{一元函数极限}
+% FRAME-ID F004
+\begin{frame}[t,fragile]{目录（1/2）}
+\normalsize
+{\color{black}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{blue}\normalsize 2. 一元函数极限\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 3. 函数极限的基本性质\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 4. Landau 符号与渐近阶\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 5. 两个重要极限\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 6. 等价无穷小\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 7. 极限计算与易错分析\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 8. 一元函数的连续性\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 9. 闭区间连续函数的两个基本定理\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 10. 二元函数的极限与连续\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F005
+\begin{frame}[t,fragile]{目录（2/2）}
+\normalsize
+{\color{gray!40}\normalsize 11. 第4章课后习题\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 12. 第4章参考答案与提示\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F006
+\begin{frame}[t,fragile]{一元函数极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0002 0 170
+
+
+数列极限研究的是离散点列 \(a_1,a_2,\ldots\) 的变化趋势；函数极限研究的则是自变量在某个点附近连续变化时，函数值的变化趋势。讨论 \(x\to x_0\) 时，只关心 \(x\) 充分接近 \(x_0\) 且 \(x\neq x_0\) 的情形，这一区域称为 \(x_0\) 的\textbf{去心邻域}。
+
+
+% SOURCE-END U0002
+}
+\end{frame}
+% FRAME-ID F007
+\begin{frame}[t,fragile]{一元函数极限}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0003 0 228
+
+设函数 \(f\) 在点 \(x_0\) 的某个去心邻域内有定义。若存在常数 \(A\)，使得对任意 \(\varepsilon>0\)，总存在 \(\delta>0\)，当
+\[
+0<|x-x_0|<\delta
+\]
+时都有
+\[
+|f(x)-A|<\varepsilon,
+\]
+则称当 \(x\to x_0\) 时 \(f(x)\) 的极限为 \(A\)，记作
+\[
+\lim_{x\to x_0}f(x)=A.
+\]
+
+% SOURCE-END U0003
+}
+\end{block}
+\end{frame}
+% FRAME-ID F008
+\begin{frame}[t,fragile]{一元函数极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0004 0 116
+
+
+定义中的逻辑次序是“先给误差要求 \(\varepsilon\)，再寻找自变量范围 \(\delta\)”。\(\delta\) 可以依赖于 \(\varepsilon\)，但不能依赖于邻域中临时选取的 \(x\)。
+
+
+% SOURCE-END U0004
+}
+\end{frame}
+% FRAME-ID F009
+\begin{frame}[t,fragile]{一元函数极限}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0005 0 37
+
+证明
+\[
+\lim_{x\to2}(3x-1)=5.
+\]
+
+% SOURCE-END U0005
+}
+\end{block}
+\end{frame}
+% FRAME-ID F010
+\begin{frame}[t,fragile]{一元函数极限}
+\normalsize
+{\normalsize
+\textbf{证明：}
+% SOURCE-BEGIN U0006 0 178
+任取 \(\varepsilon>0\)。注意到
+\[
+|(3x-1)-5|=3|x-2|.
+\]
+取 \(\delta=\varepsilon/3\)，则当 \(0<|x-2|<\delta\) 时，
+\[
+|(3x-1)-5|<3\delta=\varepsilon.
+\]
+因此 \(\lim_{x\to2}(3x-1)=5\)。
+
+% SOURCE-END U0006
+}
+\end{frame}
+% FRAME-ID F011
+\begin{frame}[t,fragile]{一元函数极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0007 0 242
+\begin{custom}{极限与函数在该点的取值无关}
+函数极限只考察去心邻域，所以 \(f(x_0)\) 可以等于极限、不同于极限，甚至没有定义。例如
+\[
+f(x)=
+\begin{cases}
+\dfrac{x^2-1}{x-1},&x\neq1,\\
+100,&x=1
+\end{cases}
+\]
+满足 \(\lim_{x\to1}f(x)=2\)，尽管 \(f(1)=100\)。改变单独一个点的函数值不会改变该点的极限。
+\end{custom}
+% SOURCE-END U0007
+}
+\end{frame}
+% FRAME-ID F012
+\begin{frame}[t,fragile]{一元函数极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0008 0 34
+
+
+\subsubsection*{单侧极限与双侧极限}
+
+
+% SOURCE-END U0008
+}
+\end{frame}
+% FRAME-ID F013
+\begin{frame}[t,fragile]{一元函数极限}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0009 0 263
+
+若对任意 \(\varepsilon>0\)，存在 \(\delta>0\)，使得当 \(x_0-\delta<x<x_0\) 时，
+\[
+|f(x)-A|<\varepsilon,
+\]
+则称 \(A\) 为 \(f(x)\) 在 \(x_0\) 处的左极限，记作
+\[
+\lim_{x\to x_0^-}f(x)=A.
+\]
+类似地，当 \(x_0<x<x_0+\delta\) 时满足上述不等式，则称 \(A\) 为右极限，记作
+\[
+\lim_{x\to x_0^+}f(x)=A.
+\]
+
+% SOURCE-END U0009
+}
+\end{block}
+\end{frame}
+% FRAME-ID F014
+\begin{frame}[t,fragile]{一元函数极限}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0010 0 95
+
+\[
+\lim_{x\to x_0}f(x)=A
+\]
+当且仅当
+\[
+\lim_{x\to x_0^-}f(x)=\lim_{x\to x_0^+}f(x)=A.
+\]
+
+% SOURCE-END U0010
+}
+\end{block}
+\end{frame}
+% FRAME-ID F015
+\begin{frame}[t,fragile]{一元函数极限}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0011 0 174
+
+设
+\[
+f(x)=
+\begin{cases}
+-1,&x<0,\\
+1,&x\geq0.
+\end{cases}
+\]
+则
+\[
+\lim_{x\to0^-}f(x)=-1,\qquad
+\lim_{x\to0^+}f(x)=1.
+\]
+左右极限不相等，所以 \(\lim_{x\to0}f(x)\) 不存在。
+
+% SOURCE-END U0011
+}
+\end{block}
+\end{frame}
+% FRAME-ID F016
+\begin{frame}[t,fragile]{一元函数极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0012 0 37
+
+
+\subsubsection*{自变量趋于无穷与无穷极限}
+
+
+% SOURCE-END U0012
+}
+\end{frame}
+% FRAME-ID F017
+\begin{frame}[t,fragile]{一元函数极限}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0013 0 170
+
+若对任意 \(\varepsilon>0\)，存在 \(X>0\)，使得当 \(x>X\) 时都有
+\[
+|f(x)-A|<\varepsilon,
+\]
+则称 \(\lim_{x\to+\infty}f(x)=A\)。将条件改为 \(x<-X\)，便得到 \(\lim_{x\to-\infty}f(x)=A\) 的定义。
+
+% SOURCE-END U0013
+}
+\end{block}
+\end{frame}
+% FRAME-ID F018
+\begin{frame}[t,fragile]{一元函数极限}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0014 0 196
+\[
+\lim_{x\to+\infty}\frac{2x+1}{x+3}=2.
+\]
+事实上，
+\[
+\left|\frac{2x+1}{x+3}-2\right|=\frac5{x+3}.
+\]
+给定 \(\varepsilon>0\)，取 \(X>\max\{0,5/\varepsilon-3\}\)，当 \(x>X\) 时上式小于 \(\varepsilon\)。
+
+% SOURCE-END U0014
+}
+\end{block}
+\end{frame}
+% FRAME-ID F019
+\begin{frame}[t,fragile]{一元函数极限}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0015 0 324
+
+若对任意 \(M>0\)，存在 \(\delta>0\)，使得当 \(0<|x-x_0|<\delta\) 时都有
+\[
+f(x)>M,
+\]
+则称 \(\lim_{x\to x_0}f(x)=+\infty\)。将 \(f(x)>M\) 改为 \(f(x)<-M\)，便得到极限为 \(-\infty\) 的定义。
+
+将 \(0<|x-x_0|<\delta\) 分别改为 \(x_0-\delta<x<x_0\) 或 \(x_0<x<x_0+\delta\)，就得到相应的单侧无穷极限；将它改为 \(x>X\) 或 \(x<-X\)，就得到 \(x\to+\infty\) 或 \(x\to-\infty\) 时的无穷极限。
+
+% SOURCE-END U0015
+}
+\end{block}
+\end{frame}
+% FRAME-ID F020
+\begin{frame}[t,fragile]{一元函数极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0016 0 156
+\begin{warning}
+“在 \(x_0\) 附近无界”不等于“极限为无穷”。例如 \(f(x)=\frac{\sin(1/x)}{x}\) 在 \(x=0\) 的任意去心邻域内都无界，但函数值正负振荡，既不趋于 \(+\infty\)，也不趋于 \(-\infty\)。
+\end{warning}
+% SOURCE-END U0016
+}
+\end{frame}
+\section{函数极限的基本性质}
+% FRAME-ID F021
+\begin{frame}[t,fragile]{目录（1/2）}
+\normalsize
+{\color{black}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{black}\normalsize 2. 一元函数极限\par}\vspace{0.3em}
+{\color{blue}\normalsize 3. 函数极限的基本性质\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 4. Landau 符号与渐近阶\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 5. 两个重要极限\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 6. 等价无穷小\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 7. 极限计算与易错分析\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 8. 一元函数的连续性\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 9. 闭区间连续函数的两个基本定理\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 10. 二元函数的极限与连续\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F022
+\begin{frame}[t,fragile]{目录（2/2）}
+\normalsize
+{\color{gray!40}\normalsize 11. 第4章课后习题\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 12. 第4章参考答案与提示\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F023
+\begin{frame}[t,fragile]{函数极限的基本性质}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0017 0 41
+
+若 \(\lim_{x\to x_0}f(x)\) 存在，则其极限值唯一。
+
+% SOURCE-END U0017
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{证明：}
+% SOURCE-BEGIN U0018 0 281
+假设 \(f(x)\) 同时以 \(A\) 和 \(B\) 为极限，且 \(A\neq B\)。取
+\[
+\varepsilon=\frac{|A-B|}{3}.
+\]
+当 \(x\) 充分接近 \(x_0\) 且 \(x\neq x_0\) 时，同时有
+\[
+|f(x)-A|<\varepsilon,\qquad |f(x)-B|<\varepsilon.
+\]
+由三角不等式，
+\[
+|A-B|\leq |A-f(x)|+|f(x)-B|<2\varepsilon=\frac23|A-B|,
+\]
+矛盾。因此 \(A=B\)。
+
+% SOURCE-END U0018
+}
+\end{frame}
+% FRAME-ID F024
+\begin{frame}[t,fragile]{函数极限的基本性质}
+\normalsize
+\begin{block}{命题}
+{\normalsize
+% SOURCE-BEGIN U0019 0 123
+
+若 \(\lim_{x\to x_0}f(x)=A\)，则 \(f\) 在 \(x_0\) 的某个去心邻域内有界。若 \(A>0\)，则在某个去心邻域内 \(f(x)>0\)；若 \(A<0\)，则在某个去心邻域内 \(f(x)<0\)。
+
+% SOURCE-END U0019
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{证明：}
+% SOURCE-BEGIN U0020 0 192
+在极限定义中取 \(\varepsilon=1\)，当 \(x\) 充分接近 \(x_0\) 时有
+\[
+|f(x)|\leq |f(x)-A|+|A|<1+|A|,
+\]
+故 \(f\) 局部有界。若 \(A>0\)，取 \(\varepsilon=A/2\)，则
+\[
+f(x)>A-\frac A2=\frac A2>0.
+\]
+\(A<0\) 的情形同理。
+
+% SOURCE-END U0020
+}
+\end{frame}
+% FRAME-ID F025
+\begin{frame}[t,fragile]{函数极限的基本性质}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0021 0 209
+
+若 \(\lim_{x\to x_0}f(x)=A\)，\(\lim_{x\to x_0}g(x)=B\)，则
+\[
+\lim_{x\to x_0}[f(x)\pm g(x)]=A\pm B,\qquad
+\lim_{x\to x_0}f(x)g(x)=AB.
+\]
+若 \(B\neq0\)，则
+\[
+\lim_{x\to x_0}\frac{f(x)}{g(x)}=\frac AB.
+\]
+
+% SOURCE-END U0021
+}
+\end{block}
+\end{frame}
+% FRAME-ID F026
+\begin{frame}[t,fragile]{函数极限的基本性质}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0022 0 141
+
+若在 \(x_0\) 的某个去心邻域内
+\[
+g(x)\leq f(x)\leq h(x),
+\]
+且
+\[
+\lim_{x\to x_0}g(x)=\lim_{x\to x_0}h(x)=A,
+\]
+则 \(\lim_{x\to x_0}f(x)=A\)。
+
+% SOURCE-END U0022
+}
+\end{block}
+\end{frame}
+% FRAME-ID F027
+\begin{frame}[t,fragile]{函数极限的基本性质}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0023 0 756
+\begin{extra}
+
+\textbf{用数列刻画函数极限}
+
+\begin{theorem}[Heine定理]
+设 \(x_0\) 是函数 \(f\) 定义域的聚点。则
+\[
+\lim_{x\to x_0}f(x)=A
+\]
+当且仅当：对定义域内任意满足
+\[
+x_n\neq x_0,\qquad x_n\to x_0
+\]
+的数列 \(\{x_n\}\)，都有 \(f(x_n)\to A\)。
+\end{theorem}
+\begin{proofdetail}
+若函数极限为 \(A\)，则给定 \(\varepsilon>0\)，当 \(x\) 充分接近 \(x_0\) 时有 \(|f(x)-A|<\varepsilon\)。又因 \(x_n\to x_0\)，充分大的 \(n\) 都满足这一邻域条件，故 \(f(x_n)\to A\)。
+
+反之，若函数极限不为 \(A\)，则存在 \(\varepsilon_0>0\)，使得对每个正整数 \(n\)，都能在
+\[
+0<|x-x_0|<\frac1n
+\]
+中选到一个定义域内的点 \(x_n\)，满足 \(|f(x_n)-A|\geq\varepsilon_0\)。这样 \(x_n\to x_0\)，但 \(f(x_n)\) 不趋于 \(A\)，与条件矛盾。
+\end{proofdetail}
+
+\begin{custom}{Heine定理的用途}
+这个定理把“从所有方式趋近”转化为“考察任意趋近数列”。要证明极限不存在，只需找到两列趋向同一点的自变量，使对应函数值趋向不同结果；要证明极限存在，则不能只检查有限几条路径。
+\end{custom}
+
+\end{extra}
+% SOURCE-END U0023
+}
+\end{frame}
+% FRAME-ID F028
+\begin{frame}[t,fragile]{函数极限的基本性质}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0024 0 16
+
+
+
+\iffalse
+
+% SOURCE-END U0024
+}
+\end{frame}
+\section{Landau 符号与渐近阶}
+% FRAME-ID F029
+\begin{frame}[t,fragile]{目录（1/2）}
+\normalsize
+{\color{black}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{black}\normalsize 2. 一元函数极限\par}\vspace{0.3em}
+{\color{black}\normalsize 3. 函数极限的基本性质\par}\vspace{0.3em}
+{\color{blue}\normalsize 4. Landau 符号与渐近阶\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 5. 两个重要极限\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 6. 等价无穷小\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 7. 极限计算与易错分析\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 8. 一元函数的连续性\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 9. 闭区间连续函数的两个基本定理\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 10. 二元函数的极限与连续\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F030
+\begin{frame}[t,fragile]{目录（2/2）}
+\normalsize
+{\color{gray!40}\normalsize 11. 第4章课后习题\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 12. 第4章参考答案与提示\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F031
+\begin{frame}[t,fragile]{Landau 符号与渐近阶}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0025 0 74
+
+
+函数极限理论建立以后，可以把数列中的渐近记号推广到连续变量情形。以下均设 \(g(x)\neq0\) 在目标点的某个去心邻域内成立。
+
+
+% SOURCE-END U0025
+}
+\end{frame}
+% FRAME-ID F032
+\begin{frame}[t,fragile]{Landau 符号与渐近阶}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0026 0 171
+
+若
+\[
+\lim_{x\to x_0}\frac{f(x)}{g(x)}=0,
+\]
+则写作
+\[
+f(x)=o\bigl(g(x)\bigr)\qquad(x\to x_0).
+\]
+它表示 \(f\) 相对于 \(g\) 可以忽略；当二者都趋于 \(0\) 时，也称 \(f\) 是比 \(g\) 高阶的无穷小。
+
+% SOURCE-END U0026
+}
+\end{block}
+\end{frame}
+% FRAME-ID F033
+\begin{frame}[t,fragile]{Landau 符号与渐近阶}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0027 0 194
+
+若存在常数 \(C>0\) 和 \(\delta>0\)，使得当
+\[
+0<|x-x_0|<\delta
+\]
+时总有
+\[
+|f(x)|\le C|g(x)|,
+\]
+则写作
+\[
+f(x)=O\bigl(g(x)\bigr)\qquad(x\to x_0).
+\]
+大 \(O\) 只给出量级上界，并不要求 \(f(x)/g(x)\) 趋于某个特定值。
+
+% SOURCE-END U0027
+}
+\end{block}
+\end{frame}
+% FRAME-ID F034
+\begin{frame}[t,fragile]{Landau 符号与渐近阶}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0028 0 86
+\(o(g)\) 与 \(O(g)\) 表示满足相应条件的一类函数，不是某个固定函数。同一公式中两次出现的 \(o(g)\) 或 \(O(g)\) 未必代表相同的余项。
+
+% SOURCE-END U0028
+}
+\end{frame}
+% FRAME-ID F035
+\begin{frame}[t,fragile]{Landau 符号与渐近阶}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0029 0 47
+
+
+在极限计算和渐近分析中，小 \(o\) 和大 \(O\) 具有简洁的运算规则。
+
+
+% SOURCE-END U0029
+}
+\end{frame}
+% FRAME-ID F036
+\begin{frame}[t,fragile]{Landau 符号与渐近阶}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0030 0 1074
+
+设 \(f(x),g(x),h(x)\) 定义在 \(x_0\) 的某个去心邻域内，且讨论 \(x\to x_0\)。则以下运算规则成立：
+
+\begin{enumerate}
+\item \textbf{常数倍：}
+   \[
+   c \cdot o(g) = o(g),\quad c \cdot O(g) = O(g) \quad (c \text{ 为非零常数})
+   \]
+
+\item \textbf{加减法：}
+   \[
+   o(g) + o(g) = o(g),\quad O(g) + O(g) = O(g)
+   \]
+   \[
+   o(g) - o(g) = o(g),\quad O(g) - O(g) = O(g)
+   \]
+   \[
+   o(g) + O(g) = O(g) \quad (\text{但通常不能写成 } o(g))
+   \]
+
+\item \textbf{乘法：}
+   \[
+   o(g) \cdot o(h) = o(gh),\quad O(g) \cdot O(h) = O(gh)
+   \]
+   \[
+   o(g) \cdot O(h) = o(gh),\quad O(g) \cdot o(h) = o(gh)
+   \]
+
+\item \textbf{传递性：}
+   \begin{itemize}
+   \item 若 \(f = o(g)\) 且 \(g = o(h)\)，则 \(f = o(h)\)
+   \item 若 \(f = O(g)\) 且 \(g = O(h)\)，则 \(f = O(h)\)
+   \item 若 \(f = o(g)\) 且 \(g = O(h)\)，则 \(f = o(h)\)
+   \end{itemize}
+
+\item \textbf{与极限的关系：}
+   \begin{itemize}
+   \item \(f(x) \to 0\) 当且仅当 \(f(x) = o(1)\)
+   \item \(f(x)\) 有界当且仅当 \(f(x) = O(1)\)
+   \end{itemize}
+
+\item \textbf{主要项法则：} 若 \(f=o(g)\)，则 \(f+g\sim g\)；若 \(f,g\to0\)，这也表示 \(f+g\) 与 \(g\) 是等价无穷小。
+\end{enumerate}
+
+% SOURCE-END U0030
+}
+\end{block}
+\end{frame}
+% FRAME-ID F037
+\begin{frame}[t,fragile]{Landau 符号与渐近阶}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0031 0 447
+\begin{custom}{规则背后的直观理解}
+
+这些规则其实很符合直觉：
+
+\begin{itemize}
+\item \textbf{加法规则：} 两个“小东西”加起来还是“小东西”；两个“有界的东西”加起来还是有界的。
+\item \textbf{乘法规则：} “小东西”乘以“小东西”更小（高阶乘高阶得更高阶）；“小东西”乘以“有界的东西”还是小东西。
+\item \textbf{传递性：} 如果 \(f\) 比 \(g\) 小得多，\(g\) 比 \(h\) 小得多，那么 \(f\) 比 \(h\) 小得多。
+\end{itemize}
+
+\textbf{一个容易混淆的点：} \(o(g) + O(g) = O(g)\)，但不能写成 \(o(g)\)。因为 \(O(g)\) 可能包含一个与 \(g\) 同阶的项（比如 \(g\) 本身），而 \(o(g)\) 要求比值趋于 0，所以 \(g\) 本身不是 \(o(g)\)。
+\end{custom}
+% SOURCE-END U0031
+}
+\end{frame}
+% FRAME-ID F038
+\begin{frame}[t,fragile]{Landau 符号与渐近阶}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0032 0 318
+
+比较下列数列的增长速度：
+\[
+a_n = n^2 + n \ln n,\quad b_n = n^2.
+\]
+
+\begin{solution}
+\[
+a_n = n^2 + n \ln n = n^2 \left(1 + \dfrac{\ln n}{n}\right).
+\]
+由于 \(\dfrac{\ln n}{n} = o(1)\)，所以
+\[
+a_n = n^2 (1 + o(1)) = n^2 + o(n^2).
+\]
+因此 \(a_n \sim n^2\)，即 \(a_n\) 与 \(b_n\) 是等价无穷大（当 \(n \to \infty\)）。
+\end{solution}
+
+% SOURCE-END U0032
+}
+\end{block}
+\end{frame}
+% FRAME-ID F039
+\begin{frame}[t,fragile]{Landau 符号与渐近阶}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0033 0 697
+\begin{custom}{常见错误警示}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+\hline
+\textbf{错误写法} & \textbf{问题} & \textbf{正确理解} \\
+\hline
+\(o(g) - o(g) = 0\) & 两个不同的 \(o(g)\) 相减不一定为 0 & \(o(g) - o(g) = o(g)\) \\
+\hline
+\(\dfrac{o(g)}{g} = 0\) & 写法不规范 & 应写为 \(\dfrac{o(g)}{g} \to 0\) \\
+\hline
+\(o(1) \cdot \infty = ?\) & 未定义 & \(o(1)\) 乘以无穷大可能为任何情况 \\
+\hline
+\(x^3=O(x^3)\) 与 \(x^3=o(x^2)\) 混淆 & 两种写法给出的量级精度不同 & 前者给出三阶上界，后者只说明高于二阶 \\
+\hline
+\end{tabularx}
+\end{center}
+
+\textbf{核心原则：} 小 \(o\) 描述的是“比……高阶”，大 \(O\) 描述的是“不超过……的常数倍”。在相加时，主要项会吸收相对它而言的高阶小量；大 \(O\) 只给出量级上界。
+\end{custom}
+% SOURCE-END U0033
+}
+\end{frame}
+% FRAME-ID F040
+\begin{frame}[t,fragile]{Landau 符号与渐近阶}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0034 0 13
+
+
+\fi
+
+
+
+% SOURCE-END U0034
+}
+\end{frame}
+\section{两个重要极限}
+% FRAME-ID F041
+\begin{frame}[t,fragile]{目录（1/2）}
+\normalsize
+{\color{black}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{black}\normalsize 2. 一元函数极限\par}\vspace{0.3em}
+{\color{black}\normalsize 3. 函数极限的基本性质\par}\vspace{0.3em}
+{\color{black}\normalsize 4. Landau 符号与渐近阶\par}\vspace{0.3em}
+{\color{blue}\normalsize 5. 两个重要极限\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 6. 等价无穷小\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 7. 极限计算与易错分析\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 8. 一元函数的连续性\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 9. 闭区间连续函数的两个基本定理\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 10. 二元函数的极限与连续\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F042
+\begin{frame}[t,fragile]{目录（2/2）}
+\normalsize
+{\color{gray!40}\normalsize 11. 第4章课后习题\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 12. 第4章参考答案与提示\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F043
+\begin{frame}[t,fragile]{两个重要极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0035 0 153
+
+
+
+
+\subsubsection*{第一个重要极限}
+
+\[
+\lim_{x \to 0} \frac{\sin x}{x} = 1.
+\]
+
+这个极限是微积分中最重要的极限之一。它告诉我们：当 \(x\) 非常接近 0 时，\(\sin x\) 和 \(x\) 几乎相等。
+
+
+% SOURCE-END U0035
+}
+\end{frame}
+% FRAME-ID F044
+\begin{frame}[t,fragile]{两个重要极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0036 0 1242
+\begin{custom}{几何直观：从单位圆看起}
+
+画一个半径为 1 的圆（单位圆）。在圆中取一个很小的角 \(x\)，如图：
+
+\begin{center}
+\begin{tikzpicture}[scale=3]
+\coordinate (O) at (0,0);
+\coordinate (A) at (1,0);
+\coordinate (B) at ({cos(30)},{sin(30)});
+\coordinate (C) at ({cos(30)},0);
+\coordinate (D) at (1,{tan(30)});
+\draw[->] (-0.2,0) -- (1.25,0) node[right] {$x$};
+\draw[->] (0,-0.2) -- (0,1.2) node[above] {$y$};
+\draw (O) circle (1);
+\draw (O)--(A) (O)--(D) (B)--(C) (A)--(D);
+\fill (O) circle (0.5pt) node[below left] {$O$};
+\fill (A) circle (0.5pt) node[below right] {$A$};
+\fill (B) circle (0.5pt) node[above left] {$B$};
+\fill (C) circle (0.5pt) node[below] {$C$};
+\fill (D) circle (0.5pt) node[right] {$D$};
+\draw (0.25,0) arc (0:30:0.25);
+\node at (0.18,0.06) {$x$};
+\node[right] at (1,0.28) {$\tan x$};
+\node[left] at ({cos(30)},0.25) {$\sin x$};
+\node[below] at ({cos(30)/2},0) {$\cos x$};
+\end{tikzpicture}
+\end{center}
+
+图中：
+\begin{itemize}
+\item 角 \(x\) 对应的圆弧长 = \(x\)（因为半径=1，弧长=半径×角度）
+\item 垂线 \(BC\) 的长度 = \(\sin x\)
+\item 水平线 \(OC\) 的长度 = \(\cos x\)
+\item 切线 \(AD\) 的长度 = \(\tan x\)
+\end{itemize}
+
+从图中可以看出，三个面积之间有如下关系：
+
+\[
+\triangle OAB \text{ 的面积 } < \text{ 扇形 } OAB \text{ 的面积 } < \triangle OAD \text{ 的面积}.
+\]
+
+\end{custom}
+% SOURCE-END U0036
+}
+\end{frame}
+% FRAME-ID F045
+\begin{frame}[t,fragile]{两个重要极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0037 0 491
+\begin{custom}{面积比较}
+
+\begin{itemize}
+\item \(\triangle OAB\) 的面积 = \(\dfrac{1}{2} \times 1 \times \sin x = \dfrac{1}{2} \sin x\)
+\item 扇形 \(OAB\) 的面积 = \(\dfrac{1}{2} \times 1^2 \times x = \dfrac{x}{2}\)
+\item \(\triangle OAD\) 的面积 = \(\dfrac{1}{2} \times 1 \times \tan x = \dfrac{1}{2} \tan x\)
+\end{itemize}
+
+因此：
+
+\[
+\dfrac{1}{2} \sin x  <  \dfrac{x}{2} < \dfrac{1}{2} \tan x \qquad (0 < x < \dfrac{\pi}{2}).
+\]
+
+两边同时乘以 2，得到：
+
+\[
+\sin x  < x < \tan x.
+\]
+
+\end{custom}
+% SOURCE-END U0037
+}
+\end{frame}
+% FRAME-ID F046
+\begin{frame}[t,fragile]{两个重要极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0038 0 394
+\begin{custom}{推导 \(\dfrac{\sin x}{x}\) 的夹逼不等式}
+
+由 \(x < \tan x = \dfrac{\sin x}{\cos x}\)，两边同时除以 \(\sin x > 0\)，得：
+
+\[
+\dfrac{x}{\sin x} < \dfrac{1}{\cos x} \quad \Longrightarrow \quad \cos x < \dfrac{\sin x}{x}.
+\]
+
+又由 \(\sin x < x\)，两边除以 \(x > 0\)，得：
+
+\[
+\dfrac{\sin x}{x} < 1.
+\]
+
+合起来：
+
+\[
+\cos x < \dfrac{\sin x}{x} < 1 \qquad (0 < x < \dfrac{\pi}{2}).
+\]
+
+\end{custom}
+% SOURCE-END U0038
+}
+\end{frame}
+% FRAME-ID F047
+\begin{frame}[t,fragile]{两个重要极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0039 0 425
+\begin{custom}{用夹逼准则取极限}
+
+由 \(|\sin u|\leq|u|\)，有
+\[
+0\leq1-\cos x=2\sin^2\frac x2\leq\frac{x^2}{2},
+\]
+所以由夹逼定理可先得到 \(\lim_{x\to0}\cos x=1\)。因此，当 \(x \to 0^+\) 时：
+
+\[
+\cos x \;\longrightarrow\; 1,\quad \dfrac{\sin x}{x} \;\longrightarrow\; 1.
+\]
+
+当 \(x\) 为负时（即 \(x \to 0^-\)），由于 \(\dfrac{\sin x}{x}\) 是偶函数（\(\sin(-x)/(-x) = \sin x / x\)），左右极限相等。因此：
+
+\[
+\lim_{x \to 0} \dfrac{\sin x}{x} = 1.
+\]
+
+\end{custom}
+% SOURCE-END U0039
+}
+\end{frame}
+% FRAME-ID F048
+\begin{frame}[t,fragile]{两个重要极限}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0040 0 42
+求 \(\lim_{x \to 0} \dfrac{\sin 2x}{x}\)。
+
+% SOURCE-END U0040
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0041 0 79
+\[
+	\dfrac{\sin 2x}{x} = 2 \cdot \dfrac{\sin 2x}{2x} \to 2 \cdot 1 = 2.
+	\]
+
+% SOURCE-END U0041
+}
+\end{frame}
+% FRAME-ID F049
+\begin{frame}[t,fragile]{两个重要极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0042 0 427
+\begin{application}[物理：小角度近似]
+
+这个极限告诉我们：当角度 \(x\) 非常小时，\(\sin x\) 和 \(x\) 几乎相等。这里的角度必须使用\textbf{弧度}。例如：
+
+\[
+x = 0.1 \text{ 弧度} \approx 5.73^\circ,\quad \sin(0.1) \approx 0.099833,\quad \dfrac{\sin 0.1}{0.1} \approx 0.99833.
+\]
+
+\[
+x = 0.01 \text{ 弧度},\quad \dfrac{\sin 0.01}{0.01} \approx 0.999983.
+\]
+
+误差非常小，且随 \(x\) 越小，比值越接近 $1$。这一近似常见于小振幅单摆、光学近轴近似和小角度机械运动。本章只由极限说明近似成立，不提前使用泰勒公式；第6章将进一步估计误差。
+
+\end{application}
+% SOURCE-END U0042
+}
+\end{frame}
+% FRAME-ID F050
+\begin{frame}[t,fragile]{两个重要极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0043 0 416
+\begin{application}[生物医学：饱和响应的低浓度近似]
+设教学模型
+\[
+v(C)=\frac{V_{\max}C}{K+C},\qquad V_{\max}>0,\quad K>0,
+\]
+其中 $C$ 表示浓度，$v(C)$ 表示响应速率。假设在所研究范围内参数保持不变，则
+\[
+\frac{v(C)}{C}=\frac{V_{\max}}{K+C}
+\longrightarrow\frac{V_{\max}}K
+\qquad(C\to0^+).
+\]
+因此在低浓度范围内，
+\[
+v(C)\approx\frac{V_{\max}}K\,C.
+\]
+这说明非线性响应在局部可以近似为线性。本例只用于展示局部近似结构，不应把该公式直接解释为临床剂量关系；具体生物系统还可能存在多种反应途径和参数变化。\upcite{NCBIEnzyme}
+\end{application}
+% SOURCE-END U0043
+}
+\end{frame}
+% FRAME-ID F051
+\begin{frame}[t,fragile]{两个重要极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0044 0 34
+
+
+\subsubsection*{第二个重要极限}
+
+
+
+% SOURCE-END U0044
+}
+\end{frame}
+% FRAME-ID F052
+\begin{frame}[t,fragile]{两个重要极限}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0045 0 71
+
+	\[
+	\lim_{n\to\infty} \left(1 + \dfrac{1}{n}\right)^n = \ee.
+	\]
+
+% SOURCE-END U0045
+}
+\end{block}
+\end{frame}
+% FRAME-ID F053
+\begin{frame}[t,fragile]{两个重要极限}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0046 0 1818
+\begin{custom}{具体证明}
+	证明分为两步：先证 \(\{a_n\}\) 单调递增，再证它有上界。
+	
+	\noindent\textbf{第一步：证明单调递增}
+	
+	由二项式定理展开：
+	\[
+	a_n = \left(1+\dfrac{1}{n}\right)^n = \sum\limits_{k=0}^{n} C_n^k \dfrac{1}{n^k} = \sum_{k=0}^{n} \dfrac{1}{k!} \cdot \dfrac{n(n-1)\cdots(n-k+1)}{n^k}.
+	\]
+	其中 \(\dfrac{n(n-1)\cdots(n-k+1)}{n^k} = 1 \cdot \left(1-\dfrac{1}{n}\right) \cdots \left(1-\dfrac{k-1}{n}\right)\)。于是
+	\[
+	a_n = \sum_{k=0}^{n} \dfrac{1}{k!} \left(1-\dfrac{1}{n}\right)\left(1-\dfrac{2}{n}\right)\cdots\left(1-\dfrac{k-1}{n}\right).
+	\]
+	
+	同理，
+	\[
+	a_{n+1} = \sum_{k=0}^{n+1} \dfrac{1}{k!} \left(1-\dfrac{1}{n+1}\right)\left(1-\dfrac{2}{n+1}\right)\cdots\left(1-\dfrac{k-1}{n+1}\right).
+	\]
+	
+	比较 \(a_n\) 与 \(a_{n+1}\) 中 \(k\) 相同的项（\(1 \leq k \leq n\)）：
+	\[
+	\left(1-\dfrac{1}{n}\right)\left(1-\dfrac{2}{n}\right)\cdots\left(1-\dfrac{k-1}{n}\right) < \left(1-\dfrac{1}{n+1}\right)\left(1-\dfrac{2}{n+1}\right)\cdots\left(1-\dfrac{k-1}{n+1}\right),
+	\]
+	因为每个因子 \(1-\dfrac{j}{n}<1-\dfrac{j}{n+1}\)（\(j=1,2,\dots,k-1\)），并且 \(a_{n+1}\) 还多出一个正项。因此
+	\[
+	a_n < a_{n+1},
+	\]
+	故数列严格递增。
+	
+	\noindent\textbf{第二步：证明有上界}
+	
+	由展开式，
+	\[
+	a_n = \sum_{k=0}^{n} \dfrac{1}{k!} \left(1-\dfrac{1}{n}\right)\cdots\left(1-\dfrac{k-1}{n}\right) \leq \sum_{k=0}^{n} \dfrac{1}{k!}.
+	\]
+	
+	当 \(k \geq 1\) 时，\(k! = 1 \cdot 2 \cdot 3 \cdots k \geq 1 \cdot 2 \cdot 2 \cdots 2 = 2^{k-1}\)，因此
+	\[
+	\dfrac{1}{k!} \leq \dfrac{1}{2^{k-1}} \quad (k \geq 1).
+	\]
+	
+	于是
+	\[
+	a_n < 1 + 1 + \dfrac{1}{2} + \dfrac{1}{2^2} + \cdots + \dfrac{1}{2^{n-1}} = 1 + \dfrac{1 - (1/2)^n}{1 - 1/2} = 1 + 2\left(1 - \dfrac{1}{2^n}\right) < 3.
+	\]
+	
+	所以 \(a_n < 3\) 对所有 \(n\) 成立，数列有上界。
+	
+	\noindent\textbf{结论：} 数列 \(\{a_n\}\) 单调递增且有上界，由单调有界准则，极限存在。记这个极限为 \(\ee\)，即
+	\[
+	\ee = \lim_{n\to\infty} \left(1+\dfrac{1}{n}\right)^n.
+	\]
+\end{custom}
+% SOURCE-END U0046
+}
+\end{frame}
+% FRAME-ID F054
+\begin{frame}[t,fragile]{两个重要极限}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0047 0 40
+
+\[
+\lim_{x\to0}(1+x)^{1/x}=\ee.
+\]
+
+% SOURCE-END U0047
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{证明：}
+% SOURCE-BEGIN U0048 0 763
+先考虑 \(x\to0^+\)。令
+\[
+n=\left\lfloor\frac1x\right\rfloor,
+\]
+则当 \(x\to0^+\) 时 \(n\to\infty\)，并且
+\[
+\frac1{n+1}<x\leq\frac1n,\qquad n\leq\frac1x<n+1.
+\]
+由于此时各底数都大于 \(1\)，有
+\[
+\left(1+\frac1{n+1}\right)^n
+\leq(1+x)^{1/x}
+\leq\left(1+\frac1n\right)^{n+1}.
+\]
+记 \(a_n=(1+\frac1n)^n\)。前面已经证明 \(a_n\to\ee\)，而
+\[
+\left(1+\frac1{n+1}\right)^n
+=\frac{a_{n+1}}{1+\frac1{n+1}}\to\ee,
+\]
+\[
+\left(1+\frac1n\right)^{n+1}
+=a_n\left(1+\frac1n\right)\to\ee.
+\]
+由夹逼定理，
+\[
+\lim_{x\to0^+}(1+x)^{1/x}=\ee.
+\]
+
+再考虑 \(x\to0^-\)。当 \(x\) 充分接近 \(0\) 时 \(x>-1\)。令
+\[
+y=-\frac{x}{1+x},
+\]
+则 \(y\to0^+\)，且 \(1+x=(1+y)^{-1}\)、\(1/x=-(1+y)/y\)。因此
+\[
+(1+x)^{1/x}
+=(1+y)^{(1+y)/y}
+=(1+y)^{1/y}(1+y)\to\ee.
+\]
+左右极限相等，所以
+\[
+\lim_{x\to0}(1+x)^{1/x}=\ee.
+\]
+
+% SOURCE-END U0048
+}
+\end{frame}
+% FRAME-ID F055
+\begin{frame}[t,fragile]{两个重要极限}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0049 0 75
+
+对任意实数 \(a\)，
+\[
+\lim_{n\to\infty}\left(1+\frac an\right)^n=\ee^a.
+\]
+
+% SOURCE-END U0049
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{证明：}
+% SOURCE-BEGIN U0050 0 171
+当 \(a=0\) 时结论显然成立。当 \(a\neq0\) 时，令 \(x=a/n\)，则 \(x\to0\)，且对充分大的 \(n\)，\(1+a/n>0\)。于是
+\[
+\left(1+\frac an\right)^n
+=\left[(1+x)^{1/x}\right]^a\longrightarrow\ee^a.
+\]
+
+% SOURCE-END U0050
+}
+\end{frame}
+% FRAME-ID F056
+\begin{frame}[t,fragile]{两个重要极限}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0051 0 65
+求 \(\lim\limits_{n\to\infty} \left(1 + \dfrac{2}{n}\right)^n\)。
+
+% SOURCE-END U0051
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0052 0 109
+\[
+	\left(1 + \dfrac{2}{n}\right)^n = \left[\left(1 + \dfrac{1}{n/2}\right)^{n/2}\right]^2 \to \ee^2.
+	\]
+
+% SOURCE-END U0052
+}
+\end{frame}
+\section{等价无穷小}
+% FRAME-ID F057
+\begin{frame}[t,fragile]{目录（1/2）}
+\normalsize
+{\color{black}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{black}\normalsize 2. 一元函数极限\par}\vspace{0.3em}
+{\color{black}\normalsize 3. 函数极限的基本性质\par}\vspace{0.3em}
+{\color{black}\normalsize 4. Landau 符号与渐近阶\par}\vspace{0.3em}
+{\color{black}\normalsize 5. 两个重要极限\par}\vspace{0.3em}
+{\color{blue}\normalsize 6. 等价无穷小\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 7. 极限计算与易错分析\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 8. 一元函数的连续性\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 9. 闭区间连续函数的两个基本定理\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 10. 二元函数的极限与连续\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F058
+\begin{frame}[t,fragile]{目录（2/2）}
+\normalsize
+{\color{gray!40}\normalsize 11. 第4章课后习题\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 12. 第4章参考答案与提示\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F059
+\begin{frame}[t,fragile]{等价无穷小}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0053 0 79
+
+
+在计算极限时，我们经常遇到两个无穷小量相乘或相除的情况。如果能用一个简单的无穷小量代替复杂的无穷小量，计算会大大简化。这就是等价无穷小的思想。
+
+
+% SOURCE-END U0053
+}
+\end{frame}
+% FRAME-ID F060
+\begin{frame}[t,fragile]{等价无穷小}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0054 0 443
+
+	如果 $\lim _{x \rightarrow a} f(x)=0$ ，那么 $f(x)$ 称为是 $x \rightarrow a$ 时的无穷小量．如果 $f(x)$ 与 $g(x)$都是 $x \rightarrow a$ 时的无穷小量，那么
+	\begin{itemize}
+		\item[1．] 当 $\lim _{x \rightarrow a} \frac{g(x)}{f(x)}=0$ 时，说 $g(x)$ 是 $f(x)$ 的高阶无穷小，记为 $g(x)=o(f(x))$ ；
+		\item[2．] 当 $\lim _{x \rightarrow a} \frac{g(x)}{f(x)}=L>0$ 时，说 $g(x)$ 是 $f(x)$ 的同阶无穷小，特别地，当 $L=1$ 时，称为等价无穷小，记为 $\mathrm{f}(\mathrm{x}) \sim \mathrm{g}(\mathrm{x})$ ；
+	\end{itemize}
+
+
+% SOURCE-END U0054
+}
+\end{block}
+\end{frame}
+% FRAME-ID F061
+\begin{frame}[t,fragile]{等价无穷小}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0055 0 132
+
+
+
+
+
+
+
+
+\subsubsection{\texorpdfstring{常用等价无穷小（\(x \to 0\) 时）}{常用等价无穷小（x 趋于 0 时）}}
+
+以下等价关系是微积分中最常用的，务必熟记：
+
+\[
+\boxed{
+
+% SOURCE-END U0055
+}
+\end{frame}
+% FRAME-ID F062
+\begin{frame}[t,fragile]{等价无穷小}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0056 0 222
+\begin{aligned}
+\sin x &\sim x & \tan x &\sim x \\
+\arcsin x &\sim x & \arctan x &\sim x \\
+\ee^x - 1 &\sim x & \ln(1+x) &\sim x \\
+1 - \cos x &\sim \dfrac{x^2}{2} & (1+x)^a - 1 &\sim ax \quad (a \neq 0)
+\end{aligned}
+% SOURCE-END U0056
+}
+\end{frame}
+% FRAME-ID F063
+\begin{frame}[t,fragile]{等价无穷小}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0057 0 11
+
+}
+\]
+
+
+% SOURCE-END U0057
+}
+\end{frame}
+% FRAME-ID F064
+\begin{frame}[t,fragile]{等价无穷小}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0058 0 100
+本章在处理指数、对数和三角函数时，使用高中阶段已经熟悉的初等函数基本连续性，例如 $\ln x$ 在 $x>0$ 上连续。本章后半部分将用极限语言正式定义函数连续性，并系统讨论一般连续函数的性质。
+
+% SOURCE-END U0058
+}
+\end{frame}
+% FRAME-ID F065
+\begin{frame}[t,fragile]{等价无穷小}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0059 0 1142
+\begin{custom}{几个等价关系的推导}
+
+\begin{itemize}
+\item \textbf{\(\sin x \sim x\)：} 这就是我们之前证明的 \(\lim_{x \to 0} \dfrac{\sin x}{x} = 1\)。
+
+\item \textbf{\(\tan x \sim x\)：} 
+\[
+\lim_{x \to 0} \dfrac{\tan x}{x} = \lim_{x \to 0} \dfrac{\sin x}{x} \cdot \dfrac{1}{\cos x} = 1 \cdot 1 = 1.
+\]
+
+\item \textbf{\(\ln(1+x)\sim x\)：} 由第二个重要极限及对数函数的连续性，
+\[
+\lim_{x\to0}\frac{\ln(1+x)}{x}
+=\lim_{x\to0}\ln\!\left[(1+x)^{1/x}\right]
+=\ln\ee=1.
+\]
+
+\item \textbf{\(\ee^x-1\sim x\)：} 令 \(t=\ee^x-1\)，则 \(x=\ln(1+t)\)。当 \(x\to0\) 时 \(t\to0\)，利用刚证明的 \(\ln(1+t)\sim t\)，
+\[
+\lim_{x\to0}\frac{\ee^x-1}{x}
+=\lim_{t\to0}\frac{t}{\ln(1+t)}=1.
+\]
+
+\item \textbf{\(1 - \cos x \sim \dfrac{x^2}{2}\)：} 
+\[
+\lim_{x \to 0} \dfrac{1 - \cos x}{x^2/2} = \lim_{x \to 0} \dfrac{2 \sin^2(x/2)}{x^2/2} = \lim_{x \to 0} \dfrac{4 \sin^2(x/2)}{x^2} = \lim_{x \to 0} \left(\dfrac{\sin(x/2)}{x/2}\right)^2 = 1.
+\]
+
+\item \textbf{\((1+x)^a - 1 \sim ax\)：} 
+\[
+\lim_{x \to 0} \dfrac{(1+x)^a - 1}{ax} = \dfrac{1}{a} \cdot \lim_{x \to 0} \dfrac{\ee^{a\ln(1+x)} - 1}{x} = \dfrac{1}{a} \cdot \lim_{x \to 0} \dfrac{a\ln(1+x)}{x} = 1.
+\]
+\end{itemize}
+\end{custom}
+% SOURCE-END U0059
+}
+\end{frame}
+% FRAME-ID F066
+\begin{frame}[t,fragile]{等价无穷小}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0060 0 39
+
+
+\subsubsection{等价无穷小的应用：简化极限计算}
+
+
+% SOURCE-END U0060
+}
+\end{frame}
+% FRAME-ID F067
+\begin{frame}[t,fragile]{等价无穷小}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0061 0 238
+\begin{custom}{核心原则}
+在乘除结构中，可以用等价无穷小替换来简化计算：
+\[
+\lim \dfrac{f(x)}{g(x)} = \lim \dfrac{\tilde{f}(x)}{\tilde{g}(x)},
+\]
+其中 \(\tilde{f} \sim f\)，\(\tilde{g} \sim g\)。
+
+\textbf{但注意：} 在加减结构中，不能随意替换！因为主要项可能相互抵消，替换后可能丢失关键信息。
+\end{custom}
+% SOURCE-END U0061
+}
+\end{frame}
+% FRAME-ID F068
+\begin{frame}[t,fragile]{等价无穷小}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0062 0 69
+
+求 \(\lim\limits_{x \to 0} \dfrac{\sin 2x \cdot \ln(1+3x)}{x^2}\)。
+
+% SOURCE-END U0062
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0063 0 351
+当 \(x \to 0\) 时，\(\sin 2x \sim 2x\)，\(\ln(1+3x) \sim 3x\)，所以
+\[
+\dfrac{\sin 2x \cdot \ln(1+3x)}{x^2} \sim \dfrac{(2x) \cdot (3x)}{x^2} = 6 \quad \Rightarrow \quad \text{极限为 } 6.
+\]
+更严谨地：
+\[
+\lim_{x \to 0} \dfrac{\sin 2x \cdot \ln(1+3x)}{x^2} = \lim_{x \to 0} \dfrac{\sin 2x}{2x} \cdot \dfrac{\ln(1+3x)}{3x} \cdot 6 = 1 \cdot 1 \cdot 6 = 6.
+\]
+
+% SOURCE-END U0063
+}
+\end{frame}
+% FRAME-ID F069
+\begin{frame}[t,fragile]{等价无穷小}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0064 0 64
+
+求 \(\lim\limits_{x \to 0} \dfrac{\ee^{x^2} - \cos x}{x^2}\)。
+
+% SOURCE-END U0064
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0065 0 372
+这里分子是两项相减，不能把 \(\ee^{x^2}\) 与 \(\cos x\) 都直接替换为 \(1\)。将分子按已知等价无穷小拆分：
+\[
+\frac{\ee^{x^2}-\cos x}{x^2}
+=\frac{\ee^{x^2}-1}{x^2}+\frac{1-\cos x}{x^2}.
+\]
+由于 \(\ee^u-1\sim u\)（取 \(u=x^2\)）且 \(1-\cos x\sim x^2/2\)，所以
+\[
+\lim_{x\to0}\frac{\ee^{x^2}-\cos x}{x^2}
+=1+\frac12=\frac32.
+\]
+
+\textbf{注意：} 这里不能直接用 \(\ee^{x^2}\sim1\) 和 \(\cos x\sim1\)，因为 \(1-1=0\) 会丢失主要信息。
+
+% SOURCE-END U0065
+}
+\end{frame}
+% FRAME-ID F070
+\begin{frame}[t,fragile]{等价无穷小}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0066 0 649
+
+求 \(\lim\limits_{x \to 0} \dfrac{\tan x - \sin x}{x^3}\)。
+
+
+
+
+\begin{solution}
+	先用恒等变形把相减结构改写为乘除结构：
+	\[
+	\frac{\tan x-\sin x}{x^3}
+	=\frac{\sin x(1-\cos x)}{x^3\cos x}.
+	\]
+	利用 \(\sin x\sim x\)、\(1-\cos x\sim x^2/2\) 以及 \(\cos x\to1\)，得到
+	\[
+	\lim_{x\to0}\frac{\tan x-\sin x}{x^3}
+	=\frac12.
+	\]
+	
+\end{solution}
+
+\textbf{注意：} 这里不能直接使用 \(\tan x \sim x\)，\(\sin x \sim x\)，否则 \(\tan x - \sin x \sim x - x = 0\)，极限为 0。
+
+
+\iffalse
+
+\begin{custom}{后续方法预告}
+学习泰勒公式后，也可以写成
+\[
+\tan x=x+\frac{x^3}{3}+o(x^3),\qquad
+\sin x=x-\frac{x^3}{6}+o(x^3),
+\]
+从而立即看出三次项的系数之差为 \(1/2\)。这里仅作方法预告，不把尚未建立的泰勒公式作为当前证明的依据。
+\end{custom}
+
+\fi
+
+% SOURCE-END U0066
+}
+\end{block}
+\end{frame}
+% FRAME-ID F071
+\begin{frame}[t,fragile]{等价无穷小}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0067 0 608
+\begin{custom}{等价无穷小替换的口诀}
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{
+\textbf{乘除可换因子，加减先防抵消。}\\
+\textbf{当前先作恒等变形，学完泰勒公式后再看高阶项。}}
+}
+\end{center}
+
+\textbf{具体规则：}
+\begin{itemize}
+\item 在乘除结构中：可以用等价无穷小替换因子。
+\item 在加减结构中，不能仅由 $\alpha\sim\widetilde\alpha$、$\beta\sim\widetilde\beta$ 就把各项分别替换后再相加或相减，因为主项可能发生抵消。
+\item 若已经证明 $\alpha=o(\beta)$，则
+\[
+\alpha+\beta
+=\beta\left(1+\frac{\alpha}{\beta}\right)
+=\beta[1+o(1)]
+\sim\beta.
+\]
+此时可以说高阶项 $\alpha$ 相对于主项 $\beta$ 可以忽略。
+\item 若两个无穷小同阶，尤其需要警惕主项抵消；若发生抵消，应使用恒等变形、已知极限或后续的泰勒展开继续分析。“不是同阶”本身也不保证存在明确的高阶关系，例如两个无穷小的比值可能振荡。
+\end{itemize}
+\end{custom}
+% SOURCE-END U0067
+}
+\end{frame}
+% FRAME-ID F072
+\begin{frame}[t,fragile]{等价无穷小}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0068 0 75
+
+
+\subsubsection{等价无穷小与无穷小量阶的比较}
+
+为了更精确地描述无穷小量趋近于 0 的“速度”，我们引入阶的概念。
+
+
+% SOURCE-END U0068
+}
+\end{frame}
+% FRAME-ID F073
+\begin{frame}[t,fragile]{等价无穷小}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0069 0 367
+
+设 \(\alpha(x) \to 0\)，\(\beta(x) \to 0\)，且 \(\beta(x) \neq 0\)。
+\begin{itemize}
+\item 若 \(\lim \dfrac{\alpha}{\beta} = 0\)，称 \(\alpha\) 是比 \(\beta\) 高阶的无穷小，记作 \(\alpha = o(\beta)\)。
+\item 若 \(\lim \dfrac{\alpha}{\beta} = C \neq 0\)，称 \(\alpha\) 与 \(\beta\) 是同阶无穷小。
+\item 特别地，若 \(C = 1\)，称 \(\alpha\) 与 \(\beta\) 是等价无穷小，记作 \(\alpha \sim \beta\)。
+\end{itemize}
+
+% SOURCE-END U0069
+}
+\end{block}
+\end{frame}
+% FRAME-ID F074
+\begin{frame}[t,fragile]{等价无穷小}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0070 0 488
+\begin{custom}{阶的比较：举例}
+当 \(x \to 0\) 时：
+\begin{itemize}
+\item \(x^2\) 是比 \(x\) 高阶的无穷小：\(\dfrac{x^2}{x} = x \to 0\)，记作 \(x^2 = o(x)\)。
+\item \(x^2\) 与 \(2x^2\) 是同阶无穷小：\(\dfrac{x^2}{2x^2} = \dfrac{1}{2}\)。
+\item \(x\) 与 \(\sin x\) 是等价无穷小：\(\dfrac{x}{\sin x} \to 1\)。
+\end{itemize}
+
+\textbf{阶的比较示意图：}
+\[
+\underbrace{x^3}_{o(x^2)} \quad \ll \quad \underbrace{x^2}_{o(x)} \quad \ll \quad \underbrace{x}_{\text{一阶}} \quad \ll \quad \underbrace{\sqrt{x}}_{\text{低阶}}
+\]
+\end{custom}
+% SOURCE-END U0070
+}
+\end{frame}
+% FRAME-ID F075
+\begin{frame}[t,fragile]{等价无穷小}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0071 0 33
+
+
+\Needspace{0.62\textheight}
+
+% SOURCE-END U0071
+}
+\end{frame}
+% FRAME-ID F076
+\begin{frame}[t,fragile]{等价无穷小}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0072 0 749
+\begin{extra}
+\subsection*{等价无穷小的推广（选读）}
+
+
+\begin{custom}{推广一：复合函数的等价替换}
+若当 \(u \to 0\) 时 \(f(u) \sim g(u)\)，且 \(u(x) \to 0\)，则当 \(x \to x_0\) 时 \(f(u(x)) \sim g(u(x))\)。
+
+例如：\(\sin(x^2) \sim x^2\)（因为 \(x^2 \to 0\)），\(\ln(1+\sin x) \sim \sin x \sim x\)。
+
+\begin{example}
+求 \(\lim\limits_{x \to 0} \dfrac{\ln(1 + \sin x)}{x}\)。
+\end{example}
+\begin{solution}
+当 \(x \to 0\) 时，\(\sin x \to 0\)，所以 \(\ln(1+\sin x) \sim \sin x \sim x\)，因此
+\[
+\lim_{x \to 0} \dfrac{\ln(1+\sin x)}{x} = 1.
+\]
+\end{solution}
+\end{custom}
+
+\begin{custom}{推广二：多个等价无穷小的链式替换}
+若 \(\alpha \sim \beta\)，\(\beta \sim \gamma\)，则 \(\alpha \sim \gamma\)。等价关系具有传递性。
+
+例如：\(\ee^x - 1 \sim x \sim \ln(1+x)\)，所以 \(\ee^x - 1 \sim \ln(1+x)\)。
+\end{custom}
+\end{extra}
+% SOURCE-END U0072
+}
+\end{frame}
+% FRAME-ID F077
+\begin{frame}[t,fragile]{等价无穷小}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0073 0 18
+
+
+
+\iffalse
+
+
+% SOURCE-END U0073
+}
+\end{frame}
+\section{极限计算与易错分析}
+% FRAME-ID F078
+\begin{frame}[t,fragile]{目录（1/2）}
+\normalsize
+{\color{black}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{black}\normalsize 2. 一元函数极限\par}\vspace{0.3em}
+{\color{black}\normalsize 3. 函数极限的基本性质\par}\vspace{0.3em}
+{\color{black}\normalsize 4. Landau 符号与渐近阶\par}\vspace{0.3em}
+{\color{black}\normalsize 5. 两个重要极限\par}\vspace{0.3em}
+{\color{black}\normalsize 6. 等价无穷小\par}\vspace{0.3em}
+{\color{blue}\normalsize 7. 极限计算与易错分析\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 8. 一元函数的连续性\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 9. 闭区间连续函数的两个基本定理\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 10. 二元函数的极限与连续\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F079
+\begin{frame}[t,fragile]{目录（2/2）}
+\normalsize
+{\color{gray!40}\normalsize 11. 第4章课后习题\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 12. 第4章参考答案与提示\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F080
+\begin{frame}[t,fragile]{极限计算与易错分析}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0074 0 42
+求 \(\lim_{x \to 0} \dfrac{\sin 2x}{x}\)。
+
+% SOURCE-END U0074
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0075 0 77
+\[
+\dfrac{\sin 2x}{x} = 2 \cdot \dfrac{\sin 2x}{2x} \to 2 \cdot 1 = 2.
+\]
+
+% SOURCE-END U0075
+}
+\end{frame}
+% FRAME-ID F081
+\begin{frame}[t,fragile]{极限计算与易错分析}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0076 0 47
+求 \(\lim_{x \to 0} \dfrac{1 - \cos x}{x^2}\)。
+
+% SOURCE-END U0076
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0077 0 219
+利用 \(1 - \cos x = 2 \sin^2 \dfrac{x}{2}\)：
+\[
+\dfrac{1 - \cos x}{x^2} = \dfrac{2 \sin^2 \dfrac{x}{2}}{x^2} = \dfrac{1}{2} \cdot \left( \dfrac{\sin (x/2)}{x/2} \right)^2 \to \dfrac{1}{2} \cdot 1^2 = \dfrac{1}{2}.
+\]
+
+% SOURCE-END U0077
+}
+\end{frame}
+% FRAME-ID F082
+\begin{frame}[t,fragile]{极限计算与易错分析}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0078 0 65
+求 \(\lim\limits_{n\to\infty} \left(1 + \dfrac{2}{n}\right)^n\)。
+
+% SOURCE-END U0078
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0079 0 107
+\[
+\left(1 + \dfrac{2}{n}\right)^n = \left[\left(1 + \dfrac{1}{n/2}\right)^{n/2}\right]^2 \to \ee^2.
+\]
+
+% SOURCE-END U0079
+}
+\end{frame}
+% FRAME-ID F083
+\begin{frame}[t,fragile]{极限计算与易错分析}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0080 0 63
+求 \(\lim\limits_{n\to\infty} \left(\dfrac{n}{n+1}\right)^n\)。
+
+% SOURCE-END U0080
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0081 0 104
+\[
+\left(\dfrac{n}{n+1}\right)^n = \dfrac{1}{\left(1 + \dfrac{1}{n}\right)^n} \to \dfrac{1}{\ee}.
+\]
+
+% SOURCE-END U0081
+}
+\end{frame}
+% FRAME-ID F084
+\begin{frame}[t,fragile]{极限计算与易错分析}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0082 0 326
+\begin{custom}{方法总结：用差分求幂和的大O形式}
+
+上述方法的核心思路：
+\[
+k^m = \dfrac{1}{m+1} \left[(k+1)^{m+1} - k^{m+1}\right] + O(k^{m-1}).
+\]
+
+对其求和得到：
+\[
+\sum_{k=1}^n k^m
+=\frac{n^{m+1}}{m+1}+O(n^m)
+\qquad(m\ge1).
+\]
+
+这种方法的优点：
+\begin{itemize}
+\item 不需要记住 \(\sum  k^m\) 的精确公式。
+\item 直接得到主要项和误差阶，足以计算极限。
+\end{itemize}
+\end{custom}
+% SOURCE-END U0082
+}
+\end{frame}
+% FRAME-ID F085
+\begin{frame}[t,fragile]{极限计算与易错分析}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0083 0 118
+
+
+\subsubsection{易错警示：常见极限错误分析}
+
+在学习极限时，初学者常犯的错误是滥用极限的四则运算法则，特别是将“和的极限”与“极限的和”随意混用，或者错误地拆分乘积。下面通过几个典型例子说明这些错误。
+
+
+% SOURCE-END U0083
+}
+\end{frame}
+% FRAME-ID F086
+\begin{frame}[t,fragile]{极限计算与易错分析}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0084 0 844
+
+求 \(\lim\limits_{n\to\infty} \dfrac{1 + 2 + \cdots + n}{n^2}\)。
+
+\textbf{错误解法（常见错误）：}
+\[
+\lim_{n\to\infty} \dfrac{1 + 2 + \cdots + n}{n^2} = \lim_{n\to\infty} \dfrac{1}{n^2} + \lim_{n\to\infty} \dfrac{2}{n^2} + \cdots + \lim_{n\to\infty} \dfrac{n}{n^2} = 0 + 0 + \cdots + 0 = 0.
+\]
+
+\textbf{为什么错误？}
+
+极限的四则运算法则只适用于\textbf{有限项}的加减乘除。而这里，分子是 \(n\) 个项的和，当 \(n \to \infty\) 时，项数也在趋于无穷。我们不能将“有限项和”的极限法则直接推广到“无限项和”！
+
+换句话说，\(\lim_{n\to\infty} \sum_{k=1}^{n} a_k(n)\) 不能简单地等于 \(\sum_{k=1}^{\infty} \lim_{n\to\infty} a_k(n)\)，除非有额外的条件（如一致收敛）。
+
+\textbf{正确解法：}
+先求和，再求极限：
+\[
+1 + 2 + \cdots + n = \dfrac{n(n+1)}{2},
+\]
+所以
+\[
+\lim_{n\to\infty} \dfrac{1 + 2 + \cdots + n}{n^2} = \lim_{n\to\infty} \dfrac{n(n+1)}{2n^2} = \lim_{n\to\infty} \dfrac{1 + 1/n}{2} = \dfrac{1}{2}.
+\]
+
+\textbf{结论：} 当分子或分母本身是随 \(n\) 变化的求和（或求积）时，必须先化简，不能逐项取极限。
+
+% SOURCE-END U0084
+}
+\end{block}
+\end{frame}
+% FRAME-ID F087
+\begin{frame}[t,fragile]{极限计算与易错分析}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0085 0 495
+
+求 \(\lim\limits_{n\to\infty} \left(1 + \dfrac{1}{n}\right)^n\)。
+
+\textbf{错误解法（常见错误）：}
+\[
+\lim_{n\to\infty} \left(1 + \dfrac{1}{n}\right)^n = \left(\lim_{n\to\infty} \left(1 + \dfrac{1}{n}\right)\right)^n = 1^\infty = 1 \quad \text{（错误!）}
+\]
+
+\textbf{为什么错误？}
+
+这里的问题在于：指数 \(n\) 本身也在趋于无穷。我们不能先对内层取极限（得到 1），再用这个极限去做无穷次方。\(1^\infty\) 是\textbf{不定式}，不同表达式可能得到不同的有限极限、无穷大或不存在极限，需要具体分析。
+
+正确解法见前文（第一个重要极限）。
+
+\textbf{结论：} 遇到 \(1^\infty\) 型极限，不能直接认为等于 1，要转化为 \((1 + \dfrac{1}{n})^n\) 的形式处理。
+
+% SOURCE-END U0085
+}
+\end{block}
+\end{frame}
+% FRAME-ID F088
+\begin{frame}[t,fragile]{极限计算与易错分析}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0086 0 11
+
+
+\fi
+
+
+% SOURCE-END U0086
+}
+\end{frame}
+% FRAME-ID F089
+\begin{frame}[t,fragile]{极限计算与易错分析}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0087 0 464
+\begin{extra}
+\subsection*{Stolz定理（选读）}
+
+Stolz定理可以看作处理某些 \(\dfrac{\infty}{\infty}\) 型数列极限的离散版洛必达法则：
+设 \(\{a_n\}, \{b_n\}\) 满足 \(b_n \to +\infty\) 且单调递增，若 \(\lim \dfrac{a_{n+1}-a_n}{b_{n+1}-b_n} = L\)，则 \(\lim \dfrac{a_n}{b_n} = L\)。
+
+例如，用Stolz定理可证 \(\lim_{n\to\infty} \dfrac{\ln n}{n} = 0\)：
+\[
+\lim_{n\to\infty} \dfrac{\ln n}{n} = \lim_{n\to\infty} \dfrac{\ln(n+1) - \ln n}{(n+1)-n} = \lim_{n\to\infty} \ln\left(1+\dfrac{1}{n}\right) = 0.
+\]
+\end{extra}
+% SOURCE-END U0087
+}
+\end{frame}
+\section{一元函数的连续性}
+% FRAME-ID F090
+\begin{frame}[t,fragile]{目录（1/2）}
+\normalsize
+{\color{black}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{black}\normalsize 2. 一元函数极限\par}\vspace{0.3em}
+{\color{black}\normalsize 3. 函数极限的基本性质\par}\vspace{0.3em}
+{\color{black}\normalsize 4. Landau 符号与渐近阶\par}\vspace{0.3em}
+{\color{black}\normalsize 5. 两个重要极限\par}\vspace{0.3em}
+{\color{black}\normalsize 6. 等价无穷小\par}\vspace{0.3em}
+{\color{black}\normalsize 7. 极限计算与易错分析\par}\vspace{0.3em}
+{\color{blue}\normalsize 8. 一元函数的连续性\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 9. 闭区间连续函数的两个基本定理\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 10. 二元函数的极限与连续\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F091
+\begin{frame}[t,fragile]{目录（2/2）}
+\normalsize
+{\color{gray!40}\normalsize 11. 第4章课后习题\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 12. 第4章参考答案与提示\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F092
+\begin{frame}[t,fragile]{一元函数的连续性}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0088 0 219
+
+设函数 $f$ 在点 $x_0$ 的某邻域内有定义，且 $f(x_0)$ 有定义。 若
+\[
+\lim_{x\to x_0}f(x)=f(x_0),
+\]
+则称 $f$ 在点 $x_0$ 处连续。 等价地，对任意 $\varepsilon>0$，存在 $\delta>0$，使得当 $|x-x_0|<\delta$ 且 $x$ 属于函数定义域时，都有
+\[
+|f(x)-f(x_0)|<\varepsilon.
+\]
+
+% SOURCE-END U0088
+}
+\end{block}
+\end{frame}
+% FRAME-ID F093
+\begin{frame}[t,fragile]{一元函数的连续性}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0089 0 161
+
+若
+\[
+\lim_{x\to x_0-}f(x)=f(x_0),
+\]
+则称 $f$ 在 $x_0$ 处左连续；若
+\[
+\lim_{x\to x_0+}f(x)=f(x_0),
+\]
+则称 $f$ 在 $x_0$ 处右连续。 函数在 $x_0$ 连续，当且仅当它在 $x_0$ 左连续且右连续。
+
+% SOURCE-END U0089
+}
+\end{block}
+\end{frame}
+% FRAME-ID F094
+\begin{frame}[t,fragile]{一元函数的连续性}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0090 0 164
+
+若 $f$ 在开区间 $(a,b)$ 内每一点连续，则称 $f$ 在 $(a,b)$ 上连续。 若 $f$ 在 $(a,b)$ 内连续，且
+\[
+\lim_{x\to a+}f(x)=f(a),\qquad \lim_{x\to b-}f(x)=f(b),
+\]
+则称 $f$ 在闭区间 $[a,b]$ 上连续。
+
+% SOURCE-END U0090
+}
+\end{block}
+\end{frame}
+% FRAME-ID F095
+\begin{frame}[t,fragile]{一元函数的连续性}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0091 0 813
+\begin{center}
+\begin{tikzpicture}[scale=0.9,>=Stealth]
+  \draw[->] (-0.3,0)--(5.8,0) node[right] {$x$};
+  \draw[->] (0,-0.3)--(0,3.2) node[above] {$y$};
+  \draw[domain=0.3:5.2,smooth,variable=\x,thick] plot ({\x},{1.4+0.35*sin(80*\x)});
+  \node at (2.9,-0.55) {连续图像：局部变化不会出现跳跃};
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[scale=0.9,>=Stealth]
+  \draw[->] (-0.3,0)--(5.8,0) node[right] {$x$};
+  \draw[->] (0,-0.3)--(0,3.2) node[above] {$y$};
+  \draw[domain=0.3:2.65,smooth,variable=\x,thick] plot ({\x},{0.7+0.25*\x});
+  \draw[domain=2.75:5.2,smooth,variable=\x,thick] plot ({\x},{1.8+0.12*(\x-3)^2});
+  \filldraw[white] (2.7,1.375) circle (2.2pt);
+  \draw (2.7,1.375) circle (2.2pt);
+  \fill (2.7,1.81) circle (2.2pt);
+  \node at (2.9,-0.55) {不连续图像：极限值与函数值不一致};
+\end{tikzpicture}
+\end{center}
+% SOURCE-END U0091
+}
+\end{frame}
+% FRAME-ID F096
+\begin{frame}[t,fragile]{一元函数的连续性}
+\normalsize
+\begin{block}{命题}
+{\normalsize
+% SOURCE-BEGIN U0092 0 100
+
+若 $f,g$ 在 $x_0$ 处连续，则 $f+g,\,f-g,\,fg$ 在 $x_0$ 处连续。 若 $g(x_0)\neq0$，则 $\frac{f}{g}$ 在 $x_0$ 处连续。
+
+% SOURCE-END U0092
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{证明：}
+% SOURCE-BEGIN U0093 0 334
+以乘积为例。 由连续性得
+\[
+\lim_{x\to x_0}f(x)=f(x_0),\qquad \lim_{x\to x_0}g(x)=g(x_0).
+\]
+由极限乘法法则，
+\[
+\lim_{x\to x_0}f(x)g(x)=f(x_0)g(x_0),
+\]
+故 $fg$ 在 $x_0$ 连续。 加、减同理。 对商函数，由 $g(x_0)\neq0$ 且 $g$ 连续，存在 $x_0$ 的某邻域使 $g(x)\neq0$，于是商函数在该邻域有定义，并由极限商法则得
+\[
+\lim_{x\to x_0}\frac{f(x)}{g(x)}=\frac{f(x_0)}{g(x_0)}.
+\]
+故 $\frac{f}{g}$ 连续。
+
+% SOURCE-END U0093
+}
+\end{frame}
+% FRAME-ID F097
+\begin{frame}[t,fragile]{一元函数的连续性}
+\normalsize
+\begin{block}{命题}
+{\normalsize
+% SOURCE-BEGIN U0094 0 70
+
+若 $g$ 在 $x_0$ 处连续，$f$ 在 $g(x_0)$ 处连续，则复合函数 $f\circ g$ 在 $x_0$ 处连续。
+
+% SOURCE-END U0094
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{证明：}
+% SOURCE-BEGIN U0095 0 309
+记 $y_0=g(x_0)$。 给定任意 $\varepsilon>0$。 因 $f$ 在 $y_0$ 处连续，存在 $\eta>0$，使得当 $|y-y_0|<\eta$ 时，
+\[
+|f(y)-f(y_0)|<\varepsilon.
+\]
+因 $g$ 在 $x_0$ 处连续，存在 $\delta>0$，使得当 $|x-x_0|<\delta$ 时，
+\[
+|g(x)-g(x_0)|<\eta.
+\]
+于是当 $|x-x_0|<\delta$ 时，
+\[
+|f(g(x))-f(g(x_0))|<\varepsilon.
+\]
+这正是 $f\circ g$ 在 $x_0$ 处连续。
+
+% SOURCE-END U0095
+}
+\end{frame}
+% FRAME-ID F098
+\begin{frame}[t,fragile]{一元函数的连续性}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0096 0 292
+
+若 $f$ 在 $x_0$ 不连续，则称 $x_0$ 为 $f$ 的间断点。 常见情形包括：
+\begin{enumerate}[label=(\arabic*),leftmargin=2em]
+\item 可去间断：$\lim_{x\to x_0}f(x)$ 存在，但不等于 $f(x_0)$，或 $f(x_0)$ 未定义；
+\item 跳跃间断：左右极限都存在但不相等；
+\item 无穷间断：至少有一个单侧极限为 \(+\infty\) 或 \(-\infty\)；
+\item 振荡间断：函数在该点附近无限振荡，极限不存在。
+\end{enumerate}
+
+% SOURCE-END U0096
+}
+\end{block}
+\end{frame}
+% FRAME-ID F099
+\begin{frame}[t,fragile]{一元函数的连续性}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0097 0 103
+讨论函数
+\[
+f(x)=
+\begin{cases}
+\dfrac{\sin x}{x},&x\neq0,\\
+a,&x=0
+\end{cases}
+\]
+在 $x=0$ 处的连续性。
+
+% SOURCE-END U0097
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0098 0 109
+因为
+\[
+\lim_{x\to0}\frac{\sin x}{x}=1,
+\]
+所以 $f$ 在 $0$ 处连续当且仅当 $a=1$。 若 $a\neq1$，极限存在但不等于函数值，$0$ 是可去间断点。
+
+% SOURCE-END U0098
+}
+\end{frame}
+% FRAME-ID F100
+\begin{frame}[t,fragile]{一元函数的连续性}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0099 0 78
+\begin{warning}
+分段函数在分段点处必须检查左极限、右极限和函数值三者。 只检查表达式能否代入，不能保证连续。
+\end{warning}
+% SOURCE-END U0099
+}
+\end{frame}
+% FRAME-ID F101
+\begin{frame}[t,fragile]{一元函数的连续性}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0100 0 14
+
+
+\iffalse
+
+% SOURCE-END U0100
+}
+\end{frame}
+% FRAME-ID F102
+\begin{frame}[t,fragile]{一元函数的连续性}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0101 0 125
+设
+\[
+f(x)=
+\begin{cases}
+x^2+1,&x<1,\\
+ax+b,&x\ge1.
+\end{cases}
+\]
+求 $a,b$ 的条件，使 $f$ 在 $x=1$ 连续；若还要求左右导数相等，求 $a,b$。
+
+% SOURCE-END U0101
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0102 0 161
+连续要求
+\[
+\lim_{x\to1-}f(x)=f(1).
+\]
+左极限为 $2$，右侧函数值 $f(1)=a+b$，故连续条件为
+\[
+a+b=2.
+\]
+若还要求左右导数相等，左侧导数为 $(x^2+1)'|_{x=1}=2$，右侧导数为 $a$，故 $a=2$。 代入连续条件得 $b=0$。
+
+% SOURCE-END U0102
+}
+\end{frame}
+% FRAME-ID F103
+\begin{frame}[t,fragile]{一元函数的连续性}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0103 0 13
+
+\fi
+
+
+
+
+% SOURCE-END U0103
+}
+\end{frame}
+\section{闭区间连续函数的两个基本定理}
+% FRAME-ID F104
+\begin{frame}[t,fragile]{目录（1/2）}
+\normalsize
+{\color{black}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{black}\normalsize 2. 一元函数极限\par}\vspace{0.3em}
+{\color{black}\normalsize 3. 函数极限的基本性质\par}\vspace{0.3em}
+{\color{black}\normalsize 4. Landau 符号与渐近阶\par}\vspace{0.3em}
+{\color{black}\normalsize 5. 两个重要极限\par}\vspace{0.3em}
+{\color{black}\normalsize 6. 等价无穷小\par}\vspace{0.3em}
+{\color{black}\normalsize 7. 极限计算与易错分析\par}\vspace{0.3em}
+{\color{black}\normalsize 8. 一元函数的连续性\par}\vspace{0.3em}
+{\color{blue}\normalsize 9. 闭区间连续函数的两个基本定理\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 10. 二元函数的极限与连续\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F105
+\begin{frame}[t,fragile]{目录（2/2）}
+\normalsize
+{\color{gray!40}\normalsize 11. 第4章课后习题\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 12. 第4章参考答案与提示\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F106
+\begin{frame}[t,fragile]{闭区间连续函数的两个基本定理}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0104 0 125
+
+若 $f$ 在闭区间 $[a,b]$ 上连续，则 $f$ 在 $[a,b]$ 上有界，并且存在 $x_m,x_M\in[a,b]$，使得
+\[
+f(x_m)\le f(x)\le f(x_M)\qquad (x\in[a,b]).
+\]
+
+% SOURCE-END U0104
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{证明：}
+% SOURCE-BEGIN U0105 0 448
+先证有界性。 若 $f$ 无界，则对每个正整数 $n$，可取 $x_n\in[a,b]$ 使 $|f(x_n)|>n$。 数列 $\{x_n\}$ 有界，故存在收敛子列 $x_{n_k}\to x_0\in[a,b]$。 由于 $f$ 在 $x_0$ 连续，有 $f(x_{n_k})\to f(x_0)$，于是 $\{f(x_{n_k})\}$ 有界。 但 $|f(x_{n_k})|>n_k\to\infty$，矛盾。 故 $f$ 有界。
+
+设
+\[
+M=\sup\{f(x):x\in[a,b]\}.
+\]
+由上确界定义，对每个 $n$ 存在 $x_n\in[a,b]$，使
+\[
+M-\frac1n<f(x_n)\le M.
+\]
+取收敛子列 $x_{n_k}\to x_M\in[a,b]$。 连续性给出
+\[
+f(x_M)=\lim_{k\to\infty}f(x_{n_k})=M.
+\]
+故最大值取到。 对 $-f$ 应用同样结论，可得最小值取到。
+
+% SOURCE-END U0105
+}
+\end{frame}
+% FRAME-ID F107
+\begin{frame}[t,fragile]{闭区间连续函数的两个基本定理}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0106 0 91
+
+若 $f$ 在 $[a,b]$ 上连续，且 $N$ 介于 $f(a)$ 与 $f(b)$ 之间，则存在 $\xi\in[a,b]$，使得
+\[
+f(\xi)=N.
+\]
+
+% SOURCE-END U0106
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{证明：}
+% SOURCE-BEGIN U0107 0 266
+不妨设 $f(a)<N<f(b)$。 令
+\[
+S=\{x\in[a,b]:f(x)<N\}.
+\]
+则 $S$ 非空且有上界。 设 $\xi=\sup S$。 若 $f(\xi)>N$，由连续性可得 $\xi$ 左侧足够近的点也满足 $f(x)>N$，这与 $\xi$ 是 $S$ 的上确界矛盾。 若 $f(\xi)<N$，由连续性可得 $\xi$ 右侧足够近的点仍满足 $f(x)<N$，这与 $\xi$ 是 $S$ 的上界矛盾；若 $\xi=b$，则与 $f(b)>N$ 矛盾。 因此只能有 $f(\xi)=N$。
+
+% SOURCE-END U0107
+}
+\end{frame}
+% FRAME-ID F108
+\begin{frame}[t,fragile]{闭区间连续函数的两个基本定理}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0108 0 38
+证明方程 $x^3+x-1=0$ 在 $(0,1)$ 内至少有一个实根。
+
+% SOURCE-END U0108
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0109 0 164
+令 $f(x)=x^3+x-1$。 多项式函数在 $[0,1]$ 上连续。 有
+\[
+f(0)=-1,\qquad f(1)=1.
+\]
+由于 $0$ 介于 $f(0)$ 与 $f(1)$ 之间，由介值定理，存在 $\xi\in(0,1)$，使 $f(\xi)=0$。 因而方程在 $(0,1)$ 内至少有一个实根。
+
+% SOURCE-END U0109
+}
+\end{frame}
+% FRAME-ID F109
+\begin{frame}[t,fragile]{闭区间连续函数的两个基本定理}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0110 0 108
+某商品价格为 $p$ 时的需求量模型为 $Q(p)=120-5p$，其中 $p$ 的单位为元，$Q$ 的单位为件。 若价格从 $12$ 元连续调整到 $20$ 元，问是否存在某个价格使需求量恰好为 $40$ 件？
+
+% SOURCE-END U0110
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0111 0 223
+这里的“需求函数” $Q(p)$ 表示价格 $p$ 与消费者愿意购买数量之间的函数关系。 模型 $Q(p)=120-5p$ 为一次函数，因此在 $[12,20]$ 上连续。 有
+\[
+Q(12)=60,\qquad Q(20)=20.
+\]
+由于 $40$ 介于 $20$ 与 $60$ 之间，介值定理保证存在 $\xi\in[12,20]$，使 $Q(\xi)=40$。 直接求解 $120-5\xi=40$，得 $\xi=16$。
+
+% SOURCE-END U0111
+}
+\end{frame}
+% FRAME-ID F110
+\begin{frame}[t,fragile]{闭区间连续函数的两个基本定理}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0112 0 409
+\begin{application}[工程：传感器标定与介值定理]
+设压力传感器的输出电压为 $V(P)$，其中压力 $P$ 的单位为 $\mathrm{kPa}$，电压 $V$ 的单位为 $\mathrm V$。假设在量程 $100\leq P\leq200$ 内，传感器响应连续，并已测得
+\[
+V(100)=2.1\ \mathrm V,\qquad V(200)=3.7\ \mathrm V.
+\]
+目标电压 $3.0\ \mathrm V$ 介于两个端点输出之间。因此由介值定理，至少存在一个
+\[
+P_*\in(100,200)
+\]
+使 $V(P_*)=3.0\ \mathrm V$。介值定理只保证目标状态存在；若要确定 $P_*$ 的数值，还需要更具体的标定函数或数值测量。实际传感器还可能有噪声、滞后和量化误差，本例只讨论理想的连续响应。
+\end{application}
+% SOURCE-END U0112
+}
+\end{frame}
+% FRAME-ID F111
+\begin{frame}[t,fragile]{闭区间连续函数的两个基本定理}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0113 0 319
+\begin{application}[农业：田间含水率阈值]
+沿一条长 $100\ \mathrm m$ 的田间测线，以 $x$ 表示距起点的位置，以 $M(x)$ 表示体积含水率。假设忽略局部土质突变，并用连续函数近似空间变化。若
+\[
+M(0)=12\%,\qquad M(100)=28\%,
+\]
+而灌溉管理阈值为 $20\%$，则存在 $x_*\in(0,100)$ 使 $M(x_*)=20\%$。这说明测线上必有位置达到阈值，但不说明该位置唯一。真实田间数据来自离散采样，并受土壤结构、地形和天气影响；连续性是用于说明介值定理的教学假设。\upcite{BradyWeil}
+\end{application}
+% SOURCE-END U0113
+}
+\end{frame}
+\section{二元函数的极限与连续}
+% FRAME-ID F112
+\begin{frame}[t,fragile]{目录（1/2）}
+\normalsize
+{\color{black}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{black}\normalsize 2. 一元函数极限\par}\vspace{0.3em}
+{\color{black}\normalsize 3. 函数极限的基本性质\par}\vspace{0.3em}
+{\color{black}\normalsize 4. Landau 符号与渐近阶\par}\vspace{0.3em}
+{\color{black}\normalsize 5. 两个重要极限\par}\vspace{0.3em}
+{\color{black}\normalsize 6. 等价无穷小\par}\vspace{0.3em}
+{\color{black}\normalsize 7. 极限计算与易错分析\par}\vspace{0.3em}
+{\color{black}\normalsize 8. 一元函数的连续性\par}\vspace{0.3em}
+{\color{black}\normalsize 9. 闭区间连续函数的两个基本定理\par}\vspace{0.3em}
+{\color{blue}\normalsize 10. 二元函数的极限与连续\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F113
+\begin{frame}[t,fragile]{目录（2/2）}
+\normalsize
+{\color{gray!40}\normalsize 11. 第4章课后习题\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 12. 第4章参考答案与提示\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F114
+\begin{frame}[t,fragile]{二元函数的极限与连续}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0114 0 117
+
+
+一元函数中，\(x\to x_0\) 只有从左、从右两种基本方向；在平面上，点 \((x,y)\) 可以沿直线、曲线或其他任意路径趋近 \((x_0,y_0)\)。因此，二元函数的极限必须对所有趋近方式给出同一个结果。
+
+
+% SOURCE-END U0114
+}
+\end{frame}
+% FRAME-ID F115
+\begin{frame}[t,fragile]{二元函数的极限与连续}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0115 0 325
+
+	设函数 \(f(x,y)\) 在点 \(P_0=(x_0,y_0)\) 的某个去心邻域内有定义。记
+	\[
+	\rho=\sqrt{(x-x_0)^2+(y-y_0)^2}.
+	\]
+	若存在常数 \(A\)，使得对任意 \(\varepsilon>0\)，总存在 \(\delta>0\)，当
+	\[
+	0<\rho<\delta
+	\]
+	时都有
+	\[
+	|f(x,y)-A|<\varepsilon,
+	\]
+	则称当 \((x,y)\to(x_0,y_0)\) 时 \(f(x,y)\) 的极限为 \(A\)，记作
+	\[
+	\lim_{(x,y)\to(x_0,y_0)}f(x,y)=A.
+	\]
+
+% SOURCE-END U0115
+}
+\end{block}
+\end{frame}
+% FRAME-ID F116
+\begin{frame}[t,fragile]{二元函数的极限与连续}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0116 0 52
+
+	证明
+	\[
+	\lim_{(x,y)\to(0,0)}(x^2+y^2)=0.
+	\]
+
+% SOURCE-END U0116
+}
+\end{block}
+\end{frame}
+% FRAME-ID F117
+\begin{frame}[t,fragile]{二元函数的极限与连续}
+\normalsize
+{\normalsize
+\textbf{证明：}
+% SOURCE-BEGIN U0117 0 169
+任取 \(\varepsilon>0\)，取 \(\delta=\sqrt{\varepsilon}\)。当
+	\[
+	0<\sqrt{x^2+y^2}<\delta
+	\]
+	时，
+	\[
+	|(x^2+y^2)-0|=x^2+y^2<\delta^2=\varepsilon.
+	\]
+	因此该极限为 \(0\)。
+
+% SOURCE-END U0117
+}
+\end{frame}
+% FRAME-ID F118
+\begin{frame}[t,fragile]{二元函数的极限与连续}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0118 0 112
+\begin{custom}{用不同路径判定极限不存在}
+	若二元极限存在，则沿任意一条趋近目标点的路径，函数值都必须趋于同一结果。因此，只要找到两条路径得到不同的极限，就能断定二元极限不存在。
+\end{custom}
+% SOURCE-END U0118
+}
+\end{frame}
+% FRAME-ID F119
+\begin{frame}[t,fragile]{二元函数的极限与连续}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0119 0 211
+
+	考察
+	\[
+	\lim_{(x,y)\to(0,0)}\frac{xy}{x^2+y^2}.
+	\]
+	沿 \(y=0\) 趋近时，
+	\[
+	\frac{x\cdot0}{x^2+0}=0;
+	\]
+	沿 \(y=x\) 趋近时，
+	\[
+	\frac{x^2}{x^2+x^2}=\frac12\qquad(x\neq0).
+	\]
+	两条路径得到的结果不同，所以该二元极限不存在。
+
+% SOURCE-END U0119
+}
+\end{block}
+\end{frame}
+% FRAME-ID F120
+\begin{frame}[t,fragile]{二元函数的极限与连续}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0120 0 276
+\begin{warning}
+	检查若干条直线路径只能用来发现极限不存在，不能据此证明极限存在。例如
+	\[
+	f(x,y)=\frac{x^2y}{x^4+y^2}.
+	\]
+	沿每条直线 \(y=mx\) 都有
+	\[
+	f(x,mx)=\frac{mx}{x^2+m^2}\to0
+	\]
+	（\(m=0\) 时也成立），但沿抛物线 \(y=x^2\) 有
+	\[
+	f(x,x^2)=\frac12.
+	\]
+	因此，即使所有直线路径给出相同结果，也仍可能存在其他曲线路径给出不同结果。
+\end{warning}
+% SOURCE-END U0120
+}
+\end{frame}
+% FRAME-ID F121
+\begin{frame}[t,fragile]{二元函数的极限与连续}
+\normalsize
+\begin{block}{定理}
+{\normalsize
+% SOURCE-BEGIN U0121 0 191
+
+	若
+	\[
+	\lim_{(x,y)\to(x_0,y_0)}f(x,y)=A,\qquad
+	\lim_{(x,y)\to(x_0,y_0)}g(x,y)=B,
+	\]
+	则和、差、积的极限分别为 \(A+B\)、\(A-B\)、\(AB\)；当 \(B\neq0\) 时，商的极限为 \(A/B\)。二元函数的极限也具有唯一性、局部有界性、保号性和夹逼性质。
+
+% SOURCE-END U0121
+}
+\end{block}
+\end{frame}
+% FRAME-ID F122
+\begin{frame}[t,fragile]{二元函数的极限与连续}
+\normalsize
+\begin{block}{定义}
+{\normalsize
+% SOURCE-BEGIN U0122 0 174
+
+	若 \(f(x,y)\) 在点 \((x_0,y_0)\) 有定义，并且
+	\[
+	\lim_{(x,y)\to(x_0,y_0)}f(x,y)=f(x_0,y_0),
+	\]
+	则称 \(f\) 在 \((x_0,y_0)\) 连续。若 \(f\) 在区域 \(D\) 内每一点都连续，则称 \(f\) 在 \(D\) 上连续。
+
+% SOURCE-END U0122
+}
+\end{block}
+\end{frame}
+% FRAME-ID F123
+\begin{frame}[t,fragile]{二元函数的极限与连续}
+\normalsize
+\begin{block}{命题}
+{\normalsize
+% SOURCE-BEGIN U0123 0 98
+
+	二元连续函数的和、差、积仍连续；分母不为零时，商也连续。多项式函数在整个平面上连续，有理函数在分母不为零的点连续；由连续初等函数经过有限次四则运算与复合所得的二元函数，在其定义域内连续。
+
+% SOURCE-END U0123
+}
+\end{block}
+\end{frame}
+% FRAME-ID F124
+\begin{frame}[t,fragile]{二元函数的极限与连续}
+\normalsize
+\begin{block}{例题}
+{\normalsize
+% SOURCE-BEGIN U0124 0 67
+
+	求
+	\[
+	\lim_{(x,y)\to(1,2)}
+	\frac{x^2+\sin(xy)}{x+y}.
+	\]
+
+% SOURCE-END U0124
+}
+\end{block}
+\pause
+{\normalsize
+\textbf{解：}
+% SOURCE-BEGIN U0125 0 127
+分子、分母均为连续函数，且目标点处分母 \(1+2=3\neq0\)，所以可直接代入：
+	\[
+	\lim_{(x,y)\to(1,2)}
+	\frac{x^2+\sin(xy)}{x+y}
+	=\frac{1+\sin2}{3}.
+	\]
+
+% SOURCE-END U0125
+}
+\end{frame}
+% FRAME-ID F125
+\begin{frame}[t,fragile]{二元函数的极限与连续}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0126 0 22
+
+
+
+
+
+\iffalse
+
+
+% SOURCE-END U0126
+}
+\end{frame}
+\section{第4章课后习题}
+% FRAME-ID F126
+\begin{frame}[t,fragile]{目录（1/2）}
+\normalsize
+{\color{black}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{black}\normalsize 2. 一元函数极限\par}\vspace{0.3em}
+{\color{black}\normalsize 3. 函数极限的基本性质\par}\vspace{0.3em}
+{\color{black}\normalsize 4. Landau 符号与渐近阶\par}\vspace{0.3em}
+{\color{black}\normalsize 5. 两个重要极限\par}\vspace{0.3em}
+{\color{black}\normalsize 6. 等价无穷小\par}\vspace{0.3em}
+{\color{black}\normalsize 7. 极限计算与易错分析\par}\vspace{0.3em}
+{\color{black}\normalsize 8. 一元函数的连续性\par}\vspace{0.3em}
+{\color{black}\normalsize 9. 闭区间连续函数的两个基本定理\par}\vspace{0.3em}
+{\color{black}\normalsize 10. 二元函数的极限与连续\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F127
+\begin{frame}[t,fragile]{目录（2/2）}
+\normalsize
+{\color{blue}\normalsize 11. 第4章课后习题\par}\vspace{0.3em}
+{\color{gray!40}\normalsize 12. 第4章参考答案与提示\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F128
+\begin{frame}[t,fragile]{第4章课后习题}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0127 0 89
+
+\addcontentsline{toc}{subsection}{第4章课后习题}
+
+\subsubsection*{第4.1--4.6节\quad 函数极限}
+
+
+% SOURCE-END U0127
+}
+\end{frame}
+% FRAME-ID F129
+\begin{frame}[t,fragile]{第4章课后习题}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0128 0 266
+求下列极限：
+\begin{enumerate}
+\item \(\lim\limits_{n\to\infty} \dfrac{3n^2 - 2n + 1}{n^2 + 5}\)
+\item \(\lim\limits_{n\to\infty} \left(\dfrac{2n-1}{3n+2} + \dfrac{n+1}{4n-3}\right)\)
+\item \(\lim\limits_{n\to\infty} \dfrac{\sqrt{n^2 + 3n} - n}{2}\)
+\end{enumerate}
+
+% SOURCE-END U0128
+}
+\end{frame}
+% FRAME-ID F130
+\begin{frame}[t,fragile]{第4章课后习题}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0129 0 216
+用夹逼准则求下列极限：
+\begin{enumerate}
+\item \(\lim\limits_{n\to\infty} \dfrac{\sin n}{n}\)
+\item \(\lim\limits_{n\to\infty} \left(\dfrac{1}{n^2+1} + \dfrac{1}{n^2+2} + \cdots + \dfrac{1}{n^2+n}\right)\)
+\end{enumerate}
+
+% SOURCE-END U0129
+}
+\end{frame}
+% FRAME-ID F131
+\begin{frame}[t,fragile]{第4章课后习题}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0130 0 287
+求下列极限：
+\begin{enumerate}
+\item \(\lim\limits_{n\to\infty} \left(1 + \dfrac{3}{n}\right)^n\)
+\item \(\lim\limits_{n\to\infty} \left(1 - \dfrac{1}{n}\right)^n\)
+\item \(\lim\limits_{x\to 0} \dfrac{\sin 3x}{x}\)
+\item \(\lim\limits_{x\to 0} \dfrac{1 - \cos x}{x^2}\)
+\end{enumerate}
+
+% SOURCE-END U0130
+}
+\end{frame}
+% FRAME-ID F132
+\begin{frame}[t,fragile]{第4章课后习题}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0131 0 228
+求下列极限：
+\begin{enumerate}
+\item \(\lim\limits_{x\to 0} \dfrac{\tan 2x}{\sin 5x}\)
+\item \(\lim\limits_{x\to 0} \dfrac{\ee^{2x} - 1}{\ln(1+3x)}\)
+\item \(\lim\limits_{x\to 0} \dfrac{\ln(1 + x^2)}{x \sin x}\)
+\end{enumerate}
+
+% SOURCE-END U0131
+}
+\end{frame}
+% FRAME-ID F133
+\begin{frame}[t,fragile]{第4章课后习题}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0132 0 318
+
+求 \(\lim\limits_{n\to\infty} \dfrac{1 + 2 + \cdots + n}{n^2 + 1}\)。
+
+\textbf{错误解法：}
+\[
+\lim_{n\to\infty} \dfrac{1 + 2 + \cdots + n}{n^2 + 1} = \lim_{n\to\infty} \dfrac{1}{n^2+1} + \lim_{n\to\infty} \dfrac{2}{n^2+1} + \cdots + \lim_{n\to\infty} \dfrac{n}{n^2+1} = 0 + 0 + \cdots + 0 = 0.
+\]
+
+请指出错误原因，并写出正确解法。
+
+% SOURCE-END U0132
+}
+\end{frame}
+% FRAME-ID F134
+\begin{frame}[t,fragile]{第4章课后习题}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0133 0 426
+
+求 \(\lim\limits_{n\to\infty} \left(1 + \dfrac{1}{n}\right)^{2n}\)。
+
+\textbf{错误解法：}
+\[
+\lim_{n\to\infty} \left(1 + \dfrac{1}{n}\right)^{2n} = \left(\lim_{n\to\infty} \left(1 + \dfrac{1}{n}\right)\right)^{2n} = 1 ^{2n}=1.
+\]
+
+\textbf{另一位同学的解法：}
+\[
+\lim_{n\to\infty} \left(1 + \dfrac{1}{n}\right)^{2n} = \lim_{n\to\infty} \left(\left(1 + \dfrac{1}{n}\right)^n\right)^2 = \ee^2.
+\]
+
+请问第一位同学的解法错在哪里？第二位同学的解法正确吗？为什么？
+
+% SOURCE-END U0133
+}
+\end{frame}
+% FRAME-ID F135
+\begin{frame}[t,fragile]{第4章课后习题}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0134 0 197
+
+求 \(\lim\limits_{x\to 0} \dfrac{\tan x - \sin x}{x^3}\)。
+
+\textbf{错误解法：}
+由于 \(\tan x \sim x\)、\(\sin x\sim x\)（当 \(x \to 0\)），所以 \(\tan x-\sin x\sim x-x=0\)，因此原极限 \(=0\)。
+
+请指出错误原因，并给出正确解法。
+
+% SOURCE-END U0134
+}
+\end{frame}
+% FRAME-ID F136
+\begin{frame}[t,fragile]{第4章课后习题}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0135 0 292
+已知 \(\lim\limits_{n\to\infty} a_n = 2\)，\(\lim\limits_{n\to\infty} b_n = -1\)，求下列极限：
+\begin{enumerate}
+\item \(\lim\limits_{n\to\infty} (3a_n - 2b_n)\)
+\item \(\lim\limits_{n\to\infty} (a_n b_n + 2a_n)\)
+\item \(\lim\limits_{n\to\infty} \dfrac{a_n^2 - b_n}{a_n + b_n}\)
+\end{enumerate}
+
+% SOURCE-END U0135
+}
+\end{frame}
+% FRAME-ID F137
+\begin{frame}[t,fragile]{第4章课后习题}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0136 0 239
+判断下列说法是否正确，正确的请简要说明理由，错误的请举反例：
+\begin{enumerate}
+\item 有界数列一定收敛。
+\item 收敛数列一定有界。
+\item 若 \(\lim a_n = 0\)，则 \(\{a_n\}\) 是无穷小量。
+\item 若 \(\{a_n\}\) 是无穷大量，则 \(\{a_n\}\) 无界。
+\item 若 \(\{a_n\}\) 无界，则 \(\{a_n\}\) 是无穷大量。
+\end{enumerate}
+
+% SOURCE-END U0136
+}
+\end{frame}
+% FRAME-ID F138
+\begin{frame}[t,fragile]{第4章课后习题}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0137 0 237
+求下列极限：
+\begin{enumerate}
+\item \(\lim\limits_{n\to\infty} \left(1 + \dfrac{1}{2n}\right)^n\)
+\item \(\lim\limits_{n\to\infty} \left(\dfrac{n+1}{n-1}\right)^n\)
+\item \(\lim\limits_{x\to 0} (1 + 2x)^{\dfrac{1}{x}}\)
+\end{enumerate}
+
+% SOURCE-END U0137
+}
+\end{frame}
+% FRAME-ID F139
+\begin{frame}[t,fragile]{第4章课后习题}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0138 0 48
+
+
+\subsubsection*{第4.7--4.10节\quad 函数的连续性}
+
+
+% SOURCE-END U0138
+}
+\end{frame}
+% FRAME-ID F140
+\begin{frame}[t,fragile]{第4章课后习题}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0139 0 429
+\begin{enumerate}[label=\textbf{练习\arabic*.},leftmargin=2.2em]
+\item 求常数 $a$，使
+\[
+f(x)=
+\begin{cases}
+\dfrac{1-\cos x}{x^2},&x\neq0,\\
+a,&x=0
+\end{cases}
+\]
+在 $x=0$ 连续。
+\item 讨论函数 $f(x)=\frac{x^2-1}{x-1}$ 在 $x=1$ 处的间断类型，并说明如何补充定义使其连续。
+\item 证明方程 $\cos x=x$ 在 $(0,1)$ 内至少有一个实根。
+\item 设成本函数 $C(x)=100+20x+0.5x^2$，价格函数 $p(x)=80-0.2x$。 若收益 $R(x)=xp(x)$，利润 $P(x)=R(x)-C(x)$，说明 $P$ 在 $[0,100]$ 上是否一定能取到最大值。
+\end{enumerate}
+% SOURCE-END U0139
+}
+\end{frame}
+\section{第4章参考答案与提示}
+% FRAME-ID F141
+\begin{frame}[t,fragile]{目录（1/2）}
+\normalsize
+{\color{black}\normalsize 1. 数学内容\par}\vspace{0.3em}
+{\color{black}\normalsize 2. 一元函数极限\par}\vspace{0.3em}
+{\color{black}\normalsize 3. 函数极限的基本性质\par}\vspace{0.3em}
+{\color{black}\normalsize 4. Landau 符号与渐近阶\par}\vspace{0.3em}
+{\color{black}\normalsize 5. 两个重要极限\par}\vspace{0.3em}
+{\color{black}\normalsize 6. 等价无穷小\par}\vspace{0.3em}
+{\color{black}\normalsize 7. 极限计算与易错分析\par}\vspace{0.3em}
+{\color{black}\normalsize 8. 一元函数的连续性\par}\vspace{0.3em}
+{\color{black}\normalsize 9. 闭区间连续函数的两个基本定理\par}\vspace{0.3em}
+{\color{black}\normalsize 10. 二元函数的极限与连续\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F142
+\begin{frame}[t,fragile]{目录（2/2）}
+\normalsize
+{\color{black}\normalsize 11. 第4章课后习题\par}\vspace{0.3em}
+{\color{blue}\normalsize 12. 第4章参考答案与提示\par}\vspace{0.3em}
+\end{frame}
+% FRAME-ID F143
+\begin{frame}[t,fragile]{第4章参考答案与提示}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0140 0 92
+
+\addcontentsline{toc}{subsection}{第4章参考答案与提示}
+
+\subsubsection*{第4.1--4.6节\quad 函数极限}
+
+
+% SOURCE-END U0140
+}
+\end{frame}
+% FRAME-ID F144
+\begin{frame}[t,fragile]{第4章参考答案与提示}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0141 0 2237
+\begin{enumerate}
+\item[1.] 
+   (a) \(3\) \quad (b) \(\dfrac{2}{3} + \dfrac{1}{4} = \dfrac{11}{12}\) \quad (c) \(\dfrac{3}{4}\)（先分子有理化：\(\sqrt{n^2+3n} - n = \dfrac{3n}{\sqrt{n^2+3n}+n} \to \dfrac{3}{2}\)，再除以2得 \(\dfrac{3}{4}\)）
+
+\item[2.] 
+   (a) \(0\)（\(-\dfrac{1}{n} \leq \dfrac{\sin n}{n} \leq \dfrac{1}{n}\)）\quad 
+   (b) \(0\)（\(\dfrac{n}{n^2+n} \leq \text{原式} \leq \dfrac{n}{n^2+1}\)）
+
+\item[3.] 
+(a) \(\ee^3\) \quad (b) \(\dfrac{1}{\ee}\) \quad (c) \(3\) \quad (d) \(\dfrac{1}{2}\)
+
+\item[4.] 
+   (a) \(\dfrac{2}{5}\) \quad (b) \(\dfrac{2}{3}\) \quad (c) \(1\)
+
+\item[5.] 
+   \textbf{错误原因：} 极限的四则运算法则只适用于有限项，这里分子有 \(n\) 项，项数随 \(n\) 变化，不能逐项取极限。
+   
+   \textbf{正确解法：} \(1+2+\cdots+n = \dfrac{n(n+1)}{2}\)，所以原式 \(= \lim\limits_{n\to\infty} \dfrac{n(n+1)}{2(n^2+1)} = \lim\limits_{n\to\infty} \dfrac{1+1/n}{2(1+1/n^2)} = \dfrac{1}{2}\)。
+
+\item[6.] 
+   第一位同学的解法错误：他先对括号内取极限得1，然后做 \(1^{2n}\) 次方得1，这是错误的，因为 \(1^\infty\) 是不定式，不能先算括号内再算指数。
+   
+第二位同学的解法正确：因为 \(\left(1+\dfrac{1}{n}\right)^{2n} = \left[\left(1+\dfrac{1}{n}\right)^n\right]^2\)，而括号内极限为 \(\ee\)，平方后得 \(\ee^2\)。注意这里的指数 \(2n\) 是整体指数，不能拆成先极限再指数。
+
+\item[7.] 
+   \textbf{错误原因：} 等价无穷小替换在加减法中不能直接使用。\(\tan x\) 和 \(\sin x\) 的主要项相同，相减后主要项发生抵消。
+   
+   \textbf{正确解法：}
+   \[
+   \frac{\tan x-\sin x}{x^3}
+   =\frac{\sin x}{x}\cdot\frac{1-\cos x}{x^2}\cdot\frac1{\cos x}
+   \longrightarrow 1\cdot\frac12\cdot1=\frac12.
+   \]
+
+\item[8.] 
+   (a) \(3 \times 2 - 2 \times (-1) = 6 + 2 = 8\) \quad
+   (b) \(2 \times (-1) + 2 \times 2 = -2 + 4 = 2\) \quad
+   (c) \(\dfrac{4 - (-1)}{2 + (-1)} = \dfrac{5}{1} = 5\)
+
+\item[9.] 
+   (a) 错误，反例：\(a_n = (-1)^n\) 有界但不收敛。\quad
+   (b) 正确，收敛数列必有界。\quad
+   (c) 正确，无穷小量的定义就是极限为 0。\quad
+   (d) 正确，无穷大量一定无界。\quad
+   (e) 错误，反例：\(a_n = n(1+(-1)^n)\) 无界但不是无穷大量（奇数项为 0，偶数项为 \(2n\)）。
+
+\item[10.] 
+(a) \(\lim\left(1+\dfrac{1}{2n}\right)^n = \lim\left[\left(1+\dfrac{1}{2n}\right)^{2n}\right]^{1/2} = \ee^{1/2} = \sqrt{\ee}\) \quad
+   (b) \(\left(\dfrac{n+1}{n-1}\right)^n = \left(1 + \dfrac{2}{n-1}\right)^n = \left(1 + \dfrac{2}{n-1}\right)^{n-1} \cdot \left(1 + \dfrac{2}{n-1}\right) \to \ee^2 \cdot 1 = \ee^2\) \quad
+   (c) \(\lim (1+2x)^{1/x} = \lim \left[(1+2x)^{\dfrac{1}{2x}}\right]^2 = \ee^2\)
+\end{enumerate}
+% SOURCE-END U0141
+}
+\end{frame}
+% FRAME-ID F145
+\begin{frame}[t,fragile]{第4章参考答案与提示}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0142 0 162
+
+
+连续性连接了极限与导数。 直观地说，函数在一点连续表示当自变量发生足够小的变化时，函数值也只发生足够小的变化；几何上表现为图像在该点没有跳跃、空洞或爆裂。 但在大学数学中，仅靠图像直观是不够的，连续性必须由极限严格定义。
+
+\subsubsection*{第4.7--4.10节\quad 函数的连续性}
+
+
+% SOURCE-END U0142
+}
+\end{frame}
+% FRAME-ID F146
+\begin{frame}[t,fragile]{第4章参考答案与提示}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0143 0 476
+\begin{enumerate}[label=\textbf{练习\arabic*.},leftmargin=2.2em]
+\item 因 $\lim_{x\to0}\frac{1-\cos x}{x^2}=\frac12$，故 $a=\frac12$。
+\item 当 $x\neq1$ 时 $f(x)=x+1$，故 $\lim_{x\to1}f(x)=2$，但原函数在 $x=1$ 未定义。 这是可去间断点。 定义 $f(1)=2$ 后函数在 $x=1$ 连续。
+\item 令 $F(x)=\cos x-x$。 $F$ 在 $[0,1]$ 上连续，且 $F(0)=1>0$，$F(1)=\cos1-1<0$。 由介值定理，存在 $\xi\in(0,1)$ 使 $F(\xi)=0$。
+\item $P(x)=x(80-0.2x)-(100+20x+0.5x^2)$ 是多项式函数，故在 $[0,100]$ 上连续。 由闭区间连续函数最值定理，$P$ 在 $[0,100]$ 上一定能取到最大值和最小值。
+\end{enumerate}
+% SOURCE-END U0143
+}
+\end{frame}
+% FRAME-ID F147
+\begin{frame}[t,fragile]{第4章参考答案与提示}
+\normalsize
+{\normalsize
+% SOURCE-BEGIN U0144 0 11
+
+
+\fi
+
+
+% SOURCE-END U0144
+}
+\end{frame}
+\end{document}

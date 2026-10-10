@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+    "model": "gpt-6-astra",
+    "provider": "live",
+    "repair_prompt_hash": "46c1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9",
+    "written_schema_hash": "4e9b07e27f359212c0460381e3cbd6e548d18a48490e553e60b0c56d30d9ada7",
+    "normalizer_hash": "25d2fff448b21fcad71b5e7aae512cf6ab27f66bdeefd9e459ca57652a1fd74c"
+  },
+  "rounds_used": 2,
+  "phase": "checking",
+  "sections": {
+    "S03": {
+      "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r2-e4e359cf/S03-locally-checked-431ecfc4.json",
+      "candidate_hash": "3a4d914fd5a2aa07b3e5cf563f44de3b467db404e06b873ba140cb9b022c779a"
+    },
+    "S04": {
+      "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r2-e4e359cf/S04-locally-checked-cc72d851.json",
+      "candidate_hash": "f34ca906975479e054f012ccae72f56d7c90f113911784fac98cb12cd5f8c0aa"
+    },
+    "S05": {
+      "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r2-e4e359cf/S05-before.json",
+      "candidate_hash": "966e8bf52a7460b18680d6427b5a685a653ec269f32221b1645c9139a6a272dc"
+    }
+  },
+  "pending": [],
+  "teacher_visual_review": "NOT_RUN",
+  "round_directory": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r2-e4e359cf",
+  "issues": [
+    {
+      "unit_id": "S03.U04",
+      "severity": "review",
+      "message": "该单元在证明两个基本极限时，对 x→0^+ 和 t→0^+ 直接使用夹逼定理，但 S02 只提供了双侧 x→x0 的夹逼原理/定理（S02.U01、S02.U04），未提供单侧版本，也未说明如何把双侧论证限制到单侧。单侧夹逼虽可由相同 δ 论证立即改写得到，但当前依赖链没有给出该结论，影响 S03.U04 对关键基本极限证明的完整性。",
+      "evidence": "S03.U04 中写道“当 $x\\to0^+$ 时，$\\cos x\\to1$，由夹逼定理可知……”以及“令 $t\\to0^+$，再次由夹逼定理得到……”；而 S02.U04 的定理陈述为“设函数 $f,g,h$ 在点 $x_0$ 的某个去心邻域内有定义……若 $\\lim_{x\\to x_0}h(x)=L,\\lim_{x\\to x_0}g(x)=L$，则 $\\lim_{x\\to x_0}f(x)=L$”，没有 $x\\to x_0^+$ 或 $x\\to x_0^-$ 的单侧形式。"
+    }
+  ]
+}

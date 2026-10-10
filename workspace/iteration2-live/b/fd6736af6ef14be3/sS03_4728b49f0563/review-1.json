@@ -1,0 +1,119 @@
+{
+  "section_id": "S03",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "series",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": true,
+        "message": "级数收敛性核算与声明一致。",
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U09"
+      },
+      {
+        "kind": "series",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": false,
+        "message": "级数收敛性核算与声明一致。",
+        "calculation_id": "S03.C02",
+        "unit_id": "S03.U09"
+      }
+    ],
+    "coverage": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10",
+      "S03.U11",
+      "S03.U12",
+      "S03.U13",
+      "S03.U14",
+      "S03.U15",
+      "S03.U16"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "协议的 series 核算只能对给定的具体幂指数核对收敛性，不能直接表达定理中对所有实数 $p$ 的量词；比较判别法、极限比较判别法和积分判别法的普遍证明由正文完成。",
+      "S03.U12 使用一般连续正值单调递减函数的积分比较及部分和有界性；现有核算协议不支持一般函数、定积分或不等式证明，不能直接核算本次修复中的两向推理。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10",
+      "S03.U11",
+      "S03.U12",
+      "S03.U13",
+      "S03.U14",
+      "S03.U15",
+      "S03.U16"
+    ],
+    "limitations": [
+      "已逐单元核对所提供的S03正文，包括定义域、量词、正负号、端点、级数判别条件、定理假设、证明方向及例题解答；未审查尚未生成的S04和S05。",
+      "此前关于S03.U12积分判别法不等式方向的阻塞问题，在当前实际正文中已修正：积分收敛推出级数收敛使用左侧不等式，级数收敛推出积分收敛使用右侧不等式。",
+      "S03.U04和S03.U10引用单调有界数列收敛定理，本文将其作为已知数列极限性质使用；本次审阅未将其展开为形式化实数完备性证明。",
+      "普通模型审阅和给定计算核查不能替代形式化证明，也不能保证排版、最终PDF呈现或未提供单元中的数学正确性。"
+    ]
+  },
+  "issues": [],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 1,
+    "proposal_calls": 1,
+    "rejected_proposals": 0,
+    "preserved_issues": [
+      {
+        "unit_id": "S03.U12",
+        "severity": "blocking",
+        "message": "积分判别法证明中对不等式方向的文字指称写反，导致正文所述推理与公式不一致。应在“积分收敛推出级数收敛”处使用左侧不等式，在“级数收敛推出积分收敛”处使用右侧不等式。",
+        "evidence": "正文给出 \\(\\sum_{n=2}^{m+1}f(n)\\leq\\int_1^{m+1}f(x)\\,dx\\leq\\sum_{n=1}^{m}f(n)\\)。但随后写“若积分收敛，则右侧不等式说明正项级数的部分和有上界”，实际推出级数部分和有上界的是左侧不等式；又写“若级数收敛，则左侧不等式说明积分的截断值有上界”，实际应由右侧不等式推出。定理结论本身正确，但当前证明文字的核心方向与公式不一致。"
+      }
+    ],
+    "review_identity": {
+      "candidate_hash": "0c7512748b63c42f3963cbaf8be05b4931b8483b563f537680da163318fba1ac",
+      "tool_checks_hash": "436cb6831b30b057b607484e20ffadad7482c7374193ac7236fe8afcae425661",
+      "reviewer_prompt_hash": "86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc",
+      "plan_context_hash": "1f32866035f7eb263bff9c7dbf77bb5b544301cd5c93cc6e0eaf2ad117b42d10",
+      "deterministic_checks_hash": "9a2a8a625e6ac42c47bbb9e07c1794b98b61906c6c1814bc4eecd387e4f3cdfd"
+    }
+  }
+}

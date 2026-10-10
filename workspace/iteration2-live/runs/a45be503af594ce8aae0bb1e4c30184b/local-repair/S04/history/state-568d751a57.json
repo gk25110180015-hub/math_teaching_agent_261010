@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+    "section_id": "S04",
+    "context_hash": "d1cb1178501852ac220ef61e3efc53d670f11fb004fdb98e2e05199f7f6d606c",
+    "base_hash": "b114f0ce464f6975e07e268f262ae4bfb94a115e3e4503709796536a416501a7",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "UNCHECKED_REPAIRED",
+  "applied_rounds": 2,
+  "proposal_calls": 2,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "unit_id": "S04.U03",
+      "severity": "review",
+      "message": "“能够判断可去间断点、跳跃间断点和无穷间断点”的锁定目标在正文中给出了三类判据，但实际例题只覆盖可去间断点和跳跃间断点，没有展示一个满足正文全部定义条件的无穷间断点判断。因而学生是否能据此掌握第三类的实际判别步骤尚未充分落实。建议补充一个单侧或双侧趋于无穷的例题，并明确函数定义域、考察侧及相应量词。",
+      "evidence": "S04.U03完整定义了可去、跳跃和无穷间断点；S04.U08–S04.U13的实际例题与答案仅处理 x=1 的可去间断点、x=0 的跳跃间断点以及参数 a 导致的可去间断点，没有无穷间断点的应用示例。"
+    }
+  ],
+  "unit_applied_counts": {
+    "S04.U05": 1,
+    "S04.U07": 1,
+    "S04.U03": 2
+  },
+  "proposal_counts_by_key": {
+    "unit:S04.U03": 2,
+    "unit:S04.U05": 1,
+    "unit:S04.U07": 1
+  },
+  "rejected_counts_by_key": {},
+  "evidence_dependencies": [
+    {
+      "key": "b/a45be503af594ce8/sS04_1131f5fcd8cf/repair-1-patch.json",
+      "hash": "49d7ef3a21a86bde9c5e2cbdac037f2949efaec309ce8027a34af843d2b19f61",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS04_d8112be51cdd/repair-2-patch.json",
+      "hash": "1bfacae647f631c9b1f2539f3778fbb370fcee9189594f342cff20f91be5173f",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "6fa566f66798a94869a1852eac8759b1857609bc54d95adea16e288339c3f482",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S04/candidate-2be45e9a41e5.json",
+  "candidate_hash": "f34ca906975479e054f012ccae72f56d7c90f113911784fac98cb12cd5f8c0aa",
+  "last_review_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S04/review-655cd4be10fd.json",
+  "pending_operation": "strict_local_patch",
+  "pending_keys": [
+    "unit:S04.U03"
+  ],
+  "request_count_before": 74,
+  "patch_evidence": {
+    "schema_version": 1,
+    "operation": "strict_local_patch",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "b114f0ce464f6975e07e268f262ae4bfb94a115e3e4503709796536a416501a7",
+    "patch_hash": "fd10ab0eace6672a680b3c41581f56b8ba1a6e1ad8ff8435adcf3aba305b7a30",
+    "result_section_hash": "90d3520c3da32613351ba0a05d216927129ed7d35af9713c8a035b5f195251c5",
+    "allowed_unit_ids": [
+      "S04.U03"
+    ],
+    "changed_unit_ids": [
+      "S04.U03"
+    ],
+    "unit_order_preserved": true,
+    "unit_identity_and_metadata_preserved": true,
+    "non_target_units_preserved": true,
+    "original_calculation_count": 0,
+    "calculation_updates": [],
+    "calculation_additions": [],
+    "non_target_calculations_preserved": true,
+    "old_uncertainties_preserved": true,
+    "old_calculation_limitations_preserved": true,
+    "normalization": "NOT_RUN",
+    "math_check": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "proposal_key": "b/a45be503af594ce8/sS04_d8112be51cdd/repair-2-patch.json"
+  },
+  "reason": "Explicit global-repair seed; existing local counters retained"
+}

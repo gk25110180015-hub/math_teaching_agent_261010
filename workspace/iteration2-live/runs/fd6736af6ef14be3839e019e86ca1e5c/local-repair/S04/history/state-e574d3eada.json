@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227",
+    "section_id": "S04",
+    "context_hash": "d594d5962e767f3be7499bfbe76faf41c48d7586841588100516b510408d6af5",
+    "base_hash": "40643e3b5cfda7956700cc7f43db493f40b0f2f4f91b4400f53468d389ef80b7",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "UNCHECKED_REPAIRED",
+  "applied_rounds": 1,
+  "proposal_calls": 1,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "rule_id": "NUMERIC_IS_NOT_PROOF",
+      "severity": "review",
+      "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+      "location": {
+        "calculation_id": "S04.C01",
+        "unit_id": "S04.U05"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S04.U01",
+      "severity": "review",
+      "message": "交错级数的核心定义存在表述范围不一致：公式只要求 b_n\\geq0，允许某些 b_n=0；但随后称“各项的符号正负交替”，这通常暗示非零项严格交替，且将 b_n 称为“正项序列”也容易被理解为 b_n>0。应明确采用“具有交错符号形式”还是要求 b_n>0；若允许零项，应说明零项不破坏后续判别法，并避免把该条件表述为严格正负交替。",
+      "evidence": "S04.U01 同时写出“b_n\\geq0”与“其中各项的符号正负交替”，两者对零项的允许范围不同。后续 S04.U02 的条件也沿用 b_n\\geq0，因此这是核心定义与实际假设范围的歧义，而非仅文字风格问题。"
+    }
+  ],
+  "unit_applied_counts": {
+    "S04.U01": 1,
+    "S04.U05": 1
+  },
+  "proposal_counts_by_key": {
+    "unit:S04.U01": 1,
+    "unit:S04.U05": 1
+  },
+  "rejected_counts_by_key": {},
+  "evidence_dependencies": [
+    {
+      "key": "b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-1-patch.json",
+      "hash": "fc4b1fe4fdb05f9c0d41cabde751d13c07047849b6c61ae6fc3bdc4805fe052c",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "80538fe54eb9376ae0b4c8f7583e71a8aa184e21b81728cf9e3ced4534985a01",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1; tolerate one rejection per key, stop after another; retain aggregate calls and run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S04/candidate-f6741c9915e3.json",
+  "candidate_hash": "26a2b8ccc2ec0678c7a21be547093b69715bc58db9674a05962298c81454510d",
+  "last_review_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S04/review-d6ee900f2de4.json",
+  "pending_operation": "strict_local_patch",
+  "pending_keys": [
+    "unit:S04.U01",
+    "unit:S04.U05"
+  ],
+  "request_count_before": 27,
+  "patch_evidence": {
+    "schema_version": 1,
+    "operation": "strict_local_patch",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "40643e3b5cfda7956700cc7f43db493f40b0f2f4f91b4400f53468d389ef80b7",
+    "patch_hash": "234a39b2e77c2b767af093a0ccc694da54e935baa5dab899e0e6d3f9882dad15",
+    "result_section_hash": "17b379a1c5cd1c71d800dc42ae71fb1df2ab3431ae9f75827dce95381f8a4702",
+    "allowed_unit_ids": [
+      "S04.U01",
+      "S04.U05"
+    ],
+    "changed_unit_ids": [
+      "S04.U01",
+      "S04.U05"
+    ],
+    "unit_order_preserved": true,
+    "unit_identity_and_metadata_preserved": true,
+    "non_target_units_preserved": true,
+    "original_calculation_count": 1,
+    "calculation_updates": [],
+    "calculation_additions": [],
+    "non_target_calculations_preserved": true,
+    "old_uncertainties_preserved": true,
+    "old_calculation_limitations_preserved": true,
+    "normalization": "NOT_RUN",
+    "math_check": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "proposal_key": "b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-1-patch.json"
+  }
+}

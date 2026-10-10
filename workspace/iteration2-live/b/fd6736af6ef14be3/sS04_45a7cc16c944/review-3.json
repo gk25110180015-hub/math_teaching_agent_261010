@@ -1,0 +1,166 @@
+{
+  "section_id": "S04",
+  "math": {
+    "schema_version": 1,
+    "status": "NEEDS_REVIEW",
+    "issues": [
+      {
+        "rule_id": "NUMERIC_IS_NOT_PROOF",
+        "severity": "review",
+        "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+        "location": {
+          "calculation_id": "S04.C01",
+          "unit_id": "S04.U05"
+        },
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "kind": "numeric_spotcheck",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "numeric_spotcheck_passed",
+        "point_count": 1,
+        "message": "仅在指定点数值一致，不是一般性证明。",
+        "calculation_id": "S04.C01",
+        "unit_id": "S04.U05"
+      }
+    ],
+    "coverage": [
+      "S04.U01",
+      "S04.U02",
+      "S04.U03",
+      "S04.U04",
+      "S04.U05",
+      "S04.U06",
+      "S04.U07",
+      "S04.U08",
+      "S04.U09",
+      "S04.U10",
+      "S04.U11",
+      "S04.U12",
+      "S04.U13"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "协议的数值核算只能抽查交错项在指定整数处的取值，不能表达对所有正整数的单调性、极限或余项不等式；交错级数判别法及余项估计仍由正文证明。",
+      "既有核算 S04.C01 仅比较 n=3 时的通项值与 1/3，覆盖范围限于该单点等式；不提供对所有正整数的结论，也不构成交错调和级数收敛性或截断误差界的证明。这些结论依赖正文中的判别条件核实与定理证明。"
+    ]
+  },
+  "llm_review": {
+    "issues": [
+      {
+        "unit_id": "S04.U07",
+        "severity": "blocking",
+        "message": "余项估计证明及多个后续单元仍存在确定的 TeX 转义层级错误：JSON 解码后，公式命令前保留两个反斜杠，而不是一个。这会破坏数学环境、运算符或交叉引用，必须修复实际正文，不能仅按猜测出的公式阅读。",
+        "evidence": "S04.U07 的 tex 在 JSON 解码后含有两个反斜杠后接 [、geq、ref、leq 等形式。相同问题仍出现在 S04.U08、S04.U09、S04.U10、S04.U11、S04.U12、S04.U13；例如 S04.U11 的平方根命令、S04.U12 的余项不等式及定理引用均受影响。rendering_contract 仅规定独立解答的组装与搬移，没有规定再次解码或修复 TeX。与保留问题中的旧证据不同，当前 S04.U03、S04.U04 已使用正常的单反斜杠命令，不再属于该错误。"
+      },
+      {
+        "unit_id": "S04.U07",
+        "severity": "warning",
+        "message": "证明在下标端点使用了未定义的 S_0。补充约定 S_0=0，或将相邻偶数部分和的差式限定为 m≥2，即可消除这一局部记号缺口；不影响余项估计的实质推理。",
+        "evidence": "正文写“对任意正整数 m”有 S_{2m}-S_{2m-2}=b_{2m-1}-b_{2m}≥0。取 m=1 时出现 S_0，而当前部分和定义及所引用的基础定义均从正整数下标开始。证明偶数部分和序列单调不减只需 m≥2 时的差式。"
+      }
+    ],
+    "checked_unit_ids": [
+      "S04.U01",
+      "S04.U02",
+      "S04.U03",
+      "S04.U04",
+      "S04.U05",
+      "S04.U06",
+      "S04.U07",
+      "S04.U08",
+      "S04.U09",
+      "S04.U10",
+      "S04.U11",
+      "S04.U12",
+      "S04.U13"
+    ],
+    "limitations": [
+      "本次为 section_local 审阅，已逐一阅读列出的十三个当前单元，并检查其数学陈述、证明、题解对应关系及所用先修依据；未对其他章节作完整复审，也未将尚未生成的 S05 视为本节遗漏。",
+      "在辨认出预期公式的前提下，交错级数判别法的充分条件、奇偶部分和证明、允许零项时的余项符号与上界、条件收敛分类均未发现其他实质数学错误。S04.U10—S04.U12 求的是满足所给充分条件的最小 n=999，而非实际误差达标的最小截断位置。",
+      "已重新核对保留的单点抽查问题：S04.U05 明确说明 n=3 的数值核对不能证明收敛性或一般余项估计；S04.U06 则对所有正整数核实正性、单调性与趋零条件，并引用相应定理。因此不再将单点抽查本身列为未解决的正文问题，但它仍不提供一般性证明或形式化验证。",
+      "S04.U11、S04.U12 是分别关联实际练习 S04.U09、S04.U10 的独立 solution 单元。按 rendering_contract，它们会被搬移到讲义末尾，不能根据 JSON 排列位置认定答案位置违规。",
+      "本次未运行 TeX 编译或检查最终 PDF；转义错误依据实际源文本识别，修复后的显示效果、交叉引用和最终答案组装仍需另行检查。普通模型逐单元审阅不等于形式化证明，也不能保证发现所有错误。"
+    ]
+  },
+  "issues": [
+    {
+      "rule_id": "NUMERIC_IS_NOT_PROOF",
+      "severity": "review",
+      "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+      "location": {
+        "calculation_id": "S04.C01",
+        "unit_id": "S04.U05"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S04.U07",
+      "severity": "blocking",
+      "message": "余项估计证明及多个后续单元仍存在确定的 TeX 转义层级错误：JSON 解码后，公式命令前保留两个反斜杠，而不是一个。这会破坏数学环境、运算符或交叉引用，必须修复实际正文，不能仅按猜测出的公式阅读。",
+      "evidence": "S04.U07 的 tex 在 JSON 解码后含有两个反斜杠后接 [、geq、ref、leq 等形式。相同问题仍出现在 S04.U08、S04.U09、S04.U10、S04.U11、S04.U12、S04.U13；例如 S04.U11 的平方根命令、S04.U12 的余项不等式及定理引用均受影响。rendering_contract 仅规定独立解答的组装与搬移，没有规定再次解码或修复 TeX。与保留问题中的旧证据不同，当前 S04.U03、S04.U04 已使用正常的单反斜杠命令，不再属于该错误。"
+    },
+    {
+      "unit_id": "S04.U07",
+      "severity": "warning",
+      "message": "证明在下标端点使用了未定义的 S_0。补充约定 S_0=0，或将相邻偶数部分和的差式限定为 m≥2，即可消除这一局部记号缺口；不影响余项估计的实质推理。",
+      "evidence": "正文写“对任意正整数 m”有 S_{2m}-S_{2m-2}=b_{2m-1}-b_{2m}≥0。取 m=1 时出现 S_0，而当前部分和定义及所引用的基础定义均从正整数下标开始。证明偶数部分和序列单调不减只需 m≥2 时的差式。"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 3,
+    "proposal_calls": 3,
+    "rejected_proposals": 0,
+    "preserved_issues": [
+      {
+        "rule_id": "NUMERIC_IS_NOT_PROOF",
+        "severity": "review",
+        "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+        "location": {
+          "calculation_id": "S04.C01",
+          "unit_id": "S04.U05"
+        },
+        "resolution_status": "open"
+      },
+      {
+        "unit_id": "S04.U03",
+        "severity": "blocking",
+        "message": "实际正文中出现成批的双反斜杠 TeX 命令，解析 JSON 后仍为两个反斜杠，不能按正常 LaTeX 命令可靠解释。应修复转义层级。",
+        "evidence": "S04.U03 的正文使用 `\\\\[`、`\\\\]`、`\\\\sum` 等形式；同类问题还出现在 S04.U07、S04.U08、S04.U09、S04.U11、S04.U12、S04.U13。对照 S04.U01、S04.U02 和 S04.U05，正常 JSON 转义后的正文命令只保留一层反斜杠。rendering_contract 只说明单元组装和答案搬移，没有声明会再次解码或归一化 TeX 命令，因此这些证明、练习和解答可能无法正常排版。"
+      },
+      {
+        "unit_id": "S04.U04",
+        "severity": "blocking",
+        "message": "余项估计定理本身的实际 TeX 命令也存在双反斜杠转义问题，导致本节核心定理及其引用不能可靠呈现。",
+        "evidence": "S04.U04 中 `\\\\ref`、`\\\\[`、`\\\\]` 和 `\\\\label` 在解析 JSON 后仍是双反斜杠；该单元是 S04.U07、S04.U13 所依赖的核心定理。即使数学陈述本身看起来成立，实际正文的公式和交叉引用仍可能被渲染为错误文本。"
+      },
+      {
+        "unit_id": "S04.U05",
+        "severity": "review",
+        "message": "单点数值抽查不能替代对交错级数判别条件和余项估计的普遍证明；本例是否成立必须依赖 S04.U06 及相关定理的正文核对。",
+        "evidence": "S04.C01 只核对了 n=3 时 `(-1)^{n-1}/n=1/3`。工具证据明确说明该抽查不覆盖对所有正整数的单调性、极限、收敛性或余项不等式；因此不能据此宣称本例的一般性结论已经形式化验证。"
+      }
+    ],
+    "review_identity": {
+      "candidate_hash": "5a8184a19f6e133970fe8ec4700d2e7c1fd67eb1dc31d4f0e7dbb1e8f09ad356",
+      "tool_checks_hash": "b5a296565d92fd9e223d680cef45aff6499d364d669430bc344c8acca6337060",
+      "reviewer_prompt_hash": "86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc",
+      "plan_context_hash": "d594d5962e767f3be7499bfbe76faf41c48d7586841588100516b510408d6af5",
+      "deterministic_checks_hash": "9d57beebee55828fd1211d726f03c6409fab55901b82735524888c0782b9812e"
+    }
+  }
+}

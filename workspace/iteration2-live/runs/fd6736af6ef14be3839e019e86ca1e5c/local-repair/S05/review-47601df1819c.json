@@ -1,0 +1,153 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "0a323170280b0bbdce2b6e6f2fb2f7e33d205c1a59dac87894259b3f540da18b",
+    "tool_checks_hash": "b4370d47f0908781002a77b0c2f8f279b8b9a35751845167231c2553d5714b87",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "a89ed3e5c27a790bef3107de36bd708133f75c314e2e91ff2a74c6c3dda9a886",
+    "deterministic_checks_hash": "ce7f449416a47260036030fdbadd5c393356a0c07a3bbc372daeca97091623bd"
+  },
+  "report": {
+    "section_id": "S05",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "1/2",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S05.C01",
+          "unit_id": "S05.U11"
+        },
+        {
+          "kind": "series",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "domain_scope": "supported_tail_guards",
+          "limitations": [
+            "以起点加非负整数代入，检查已保留的受支持运算定义域约束；不是通用定义域证明器。"
+          ],
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": false,
+          "message": "级数收敛性核算与声明一致。",
+          "calculation_id": "S05.C02",
+          "unit_id": "S05.U11"
+        },
+        {
+          "kind": "limit",
+          "assumptions": {
+            "m": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "1/2",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S05.C03",
+          "unit_id": "S05.U20"
+        }
+      ],
+      "coverage": [
+        "S05.U01",
+        "S05.U02",
+        "S05.U03",
+        "S05.U04",
+        "S05.U05",
+        "S05.U06",
+        "S05.U07",
+        "S05.U08",
+        "S05.U09",
+        "S05.U10",
+        "S05.U11",
+        "S05.U12",
+        "S05.U13",
+        "S05.U14",
+        "S05.U15",
+        "S05.U16",
+        "S05.U17",
+        "S05.U18",
+        "S05.U19",
+        "S05.U20",
+        "S05.U21"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "核算请求覆盖具体通项极限、具体绝对值级数的发散性与几何部分和的极限；协议不支持任意实数列的量化关系及一般不等式证明，因此绝对收敛蕴含收敛、三类划分和一般余项界由正文论证，不由这些核算替代。"
+      ]
+    },
+    "llm_review": {
+      "issues": [
+        {
+          "unit_id": "S05.U18",
+          "severity": "warning",
+          "message": "该单元是学生可见的“参考答案（讲义末尾）”说明，但其本身不是被 rendering_contract 标记为 relocated 的 solution 单元。若按实际渲染规则保留在正文流中，答案标题可能出现在练习正文之后、最终答案区之前；应确认该说明是否也应由渲染器移至最终答案位置，或改成不造成位置歧义的正文说明。此问题不影响数学结论。",
+          "evidence": "S05.U18 的正文直接写有“本节练习参考答案（讲义末尾）”和“以下答案与本节三道练习依次对应”；rendering_contract 仅列出 S05.U19、S05.U20、S05.U21 为 relocated_solution_ids，且规定 solution 单元才由渲染器收集到最终答案区。"
+        }
+      ],
+      "checked_unit_ids": [
+        "S05.U01",
+        "S05.U02",
+        "S05.U03",
+        "S05.U04",
+        "S05.U05",
+        "S05.U06",
+        "S05.U07",
+        "S05.U08",
+        "S05.U09",
+        "S05.U10",
+        "S05.U11",
+        "S05.U12",
+        "S05.U13",
+        "S05.U14",
+        "S05.U15",
+        "S05.U16",
+        "S05.U17",
+        "S05.U18",
+        "S05.U19",
+        "S05.U20",
+        "S05.U21"
+      ],
+      "limitations": [
+        "已逐单元核对 S05.U01–S05.U21 的实际数学正文、同单元后续限定、索引与初值、量词、正负号、端点和判别法条件，并结合所提供的 S03、S04 先修正文检查依赖。",
+        "未发现需要 blocking 或 review 的数学错误；现有正文中绝对收敛的定义、绝对收敛蕴含收敛的证明、三类分类、比较与极限比较条件、交错级数应用及综合练习答案均与其假设一致。",
+        "本次普通模型审阅不是形式化证明；工具抽查也不能替代对任意数列、级数和不等式的形式化验证。未执行最终 TeX 编译、交叉引用检查或 PDF 版面检查。"
+      ]
+    },
+    "issues": [
+      {
+        "unit_id": "S05.U18",
+        "severity": "warning",
+        "message": "该单元是学生可见的“参考答案（讲义末尾）”说明，但其本身不是被 rendering_contract 标记为 relocated 的 solution 单元。若按实际渲染规则保留在正文流中，答案标题可能出现在练习正文之后、最终答案区之前；应确认该说明是否也应由渲染器移至最终答案位置，或改成不造成位置歧义的正文说明。此问题不影响数学结论。",
+        "evidence": "S05.U18 的正文直接写有“本节练习参考答案（讲义末尾）”和“以下答案与本节三道练习依次对应”；rendering_contract 仅列出 S05.U19、S05.U20、S05.U21 为 relocated_solution_ids，且规定 solution 单元才由渲染器收集到最终答案区。"
+      }
+    ],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": []
+}

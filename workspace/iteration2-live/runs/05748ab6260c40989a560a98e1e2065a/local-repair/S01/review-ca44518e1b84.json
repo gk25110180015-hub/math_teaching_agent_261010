@@ -1,0 +1,79 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "0e39140ca2d98f3ffc3545a52761538bf1180b834f74e6c5d0c2c37b19581215",
+    "tool_checks_hash": "fe13021c7c269182ea5232efdc40b7371148e9717304e611b8bbdb11dfcf0a42",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "7b798636de9f484194f5035071eb9b89a50bdd94545f31926a9b0581f43bee87",
+    "deterministic_checks_hash": "5d820d647e5bd6131d1f3bdecef83604b47318c06603c54595a238d082d5e4a8"
+  },
+  "report": {
+    "section_id": "S01",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "0",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S01.C01",
+          "unit_id": "S01.U07"
+        }
+      ],
+      "coverage": [
+        "S01.U01",
+        "S01.U02",
+        "S01.U03",
+        "S01.U04",
+        "S01.U05",
+        "S01.U06",
+        "S01.U07",
+        "S01.U08",
+        "S01.U09",
+        "S01.U10"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S01.U01",
+        "S01.U02",
+        "S01.U03",
+        "S01.U04",
+        "S01.U05",
+        "S01.U06",
+        "S01.U07",
+        "S01.U08",
+        "S01.U09",
+        "S01.U10"
+      ],
+      "limitations": [
+        "本次仅审阅 S01 所提供的十个实际单元，并逐项对照本节四项锁定目标；未审阅尚未生成的 S02—S05，不对整份讲义的教学覆盖作结论。",
+        "已核对正整数下标、分母非零、严格误差不等式、阈值处 n=N 的成立性、极限唯一性证明及定义法例练。S01.U03 正确否定的是“收敛于给定的 L”，没有将其直接称为数列发散。本节目标在当前正文中未发现明确缺口。",
+        "按所提供的组装规则，S01.U10 是关联到 S01.U09 的独立练习答案，将被移至讲义末尾；题干中给出待证结论不属于内嵌解答。这里只核对了正文及关联关系，未检查最终 PDF 的答案位置、排版或引用呈现。",
+        "这是普通模型对正文的数学与教学一致性审阅，不是形式化证明，也不保证不存在遗漏；未将作者自评或符号工具的 PASS 当作全文正确性的依据。"
+      ]
+    },
+    "issues": [],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": []
+}

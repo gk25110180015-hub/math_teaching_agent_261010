@@ -1,0 +1,73 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "6d8c928e2a71a1c49f079d2959df67c0288caa1e47bec7775b70ba816fdb963d",
+    "tool_checks_hash": "0ad9158bf9fb06cc215b2f3494108602fb8039a74641edf698937ed3b86c8461",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "bf94e3252564494fa95f7fd39aa573ed572572050bbaa93d8f20d300133e6b51",
+    "deterministic_checks_hash": "f16908ed6837b2656f809f1c662970a095819a8fc3e6faf1843d5c886de2e2f4"
+  },
+  "report": {
+    "section_id": "S01",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "equivalence",
+          "assumptions": {},
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "7/8",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S01.C01",
+          "unit_id": "S01.U07"
+        }
+      ],
+      "coverage": [
+        "S01.U01",
+        "S01.U02",
+        "S01.U03",
+        "S01.U04",
+        "S01.U05",
+        "S01.U06",
+        "S01.U07",
+        "S01.U08",
+        "S01.U09"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S01.U01",
+        "S01.U02",
+        "S01.U03",
+        "S01.U04",
+        "S01.U05",
+        "S01.U06",
+        "S01.U07",
+        "S01.U08",
+        "S01.U09"
+      ],
+      "limitations": [
+        "本次仅审阅 S01 所提供的九个实际单元，逐项核对了本节锁定目标；未审阅尚未生成的 S02—S05，也未将后续章节内容视为本节遗漏。",
+        "已核对收敛与发散定义的完整上下文、部分和起点、等比部分和公式及练习计算。S01.U09 的“极限存在”承接前句“存在有限极限”，未将无穷极限视为收敛。本次未发现确定数学错误、重大语义缺口或本节核心目标缺失。",
+        "先修依据限于计划声明的数列极限基本性质与有限等比数列求和等知识，未独立审查这些先修知识的教学正文。S01.U04—S01.U05 是对收敛定义的直接重述与解释，不构成独立的新判别法。",
+        "依据 rendering_contract，S01.U09 是关联到练习 S01.U08 的独立答案单元，将移至讲义末尾；没有仅凭 JSON 顺序判定答案位置违规。未检查最终 PDF 的排版、引用编号及实际答案位置。",
+        "这是普通模型对正文的数学与教学覆盖审阅，不是形式化证明；工具提供的单项符号复算也不能证明全部正文正确。未发现问题不代表排除所有潜在错误。"
+      ]
+    },
+    "issues": [],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": []
+}

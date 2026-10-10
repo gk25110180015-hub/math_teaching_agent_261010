@@ -1,0 +1,65 @@
+{
+  "issues": [
+    {
+      "unit_id": "S02.U18",
+      "severity": "blocking",
+      "message": "练习题正文直接包含“答案”及完整解答，违反锁定的 lecture.answers_location=\"end\"。虽然存在单独的 S02.U18.answer 单元且渲染契约会将该独立答案单元移至末尾，但题干内嵌的答案不会被自动移除或迁移，因此仍构成答案位置违规。应从练习题正文删除内嵌答案，仅保留独立答案单元。",
+      "evidence": "S02.U18 的 tex 在三小题题干后直接出现“答案：”并给出全部解答；rendering_contract 明确规定 embedded in exercise.tex 的答案不会被 relocated，而 lecture.answers_location 明确锁定为 end。"
+    },
+    {
+      "unit_id": "S02.U19",
+      "severity": "blocking",
+      "message": "练习题正文直接包含“答案”及完整解答，违反锁定的 lecture.answers_location=\"end\"。独立的 S02.U19.answer 单元不能使 exercise.tex 内嵌的答案自动迁移或免责。应从练习题正文删除内嵌答案，仅保留独立答案单元。",
+      "evidence": "S02.U19 的 tex 在题目后直接出现“答案：”并包含线性运算、有限项改变和反例的完整解答；rendering_contract 明确说明嵌入 exercise.tex 的答案不会被自动移至讲义末尾。"
+    },
+    {
+      "unit_id": "S02.U20",
+      "severity": "blocking",
+      "message": "练习题正文直接包含“答案”及完整解答，违反锁定的 lecture.answers_location=\"end\"。独立的 S02.U20.answer 单元不能迁移或覆盖 exercise.tex 中已经写入的答案。应从练习题正文删除内嵌答案，仅保留独立答案单元。",
+      "evidence": "S02.U20 的 tex 在题干后直接出现“答案：”并给出余项、误差阈值、有限项改变后的和及余项比较；rendering_contract 明确规定题干内嵌答案不会被自动 relocated。"
+    },
+    {
+      "unit_id": "S02.U14",
+      "severity": "warning",
+      "message": "有限项改变定理的证明中下标范围写错了一位：由定理假设只能对 n>N 保证 a_n=b_n，因此当 n>N 时才有 B_n-A_n=\\sum_{k=1}^{N}(b_k-a_k)。正文写成“对所有整数 n\\geq N”，在 n=N 且第 N 项发生改变时该等式不成立。该错误不影响最终同敛散结论，但应将证明中的 n\\geq N 改为 n>N（或 n\\geq N+1）。",
+      "evidence": "S02.U13 的假设是“对所有整数 n>N 都有 a_n=b_n”；S02.U14 随后却写“对所有整数 n\\geq N，B_n-A_n=...”。例如仅令 a_N\\ne b_N、其余项相同，则 n=N 时差值还包含第 N 项差异。"
+    },
+    {
+      "unit_id": "S02.U14",
+      "severity": "warning",
+      "message": "证明后半段关于“添加或删去有限项”的说明是概略性的，未明确给出一般插入或删除后的重编号与尾部部分和关系。当前已给出的有限项修改定理足以支持主要结论，但若将“添加或删去有限项”作为一般性质，建议明确限定保持顺序和重编号规则，避免与无限重排混淆。",
+      "evidence": "S02.U13 将有限项修改与“添加或删去有限项，并保持其余项的相对次序”并列陈述；S02.U14 仅具体证明删去前 N 项及最后一句概括一般情形，未逐一说明一般删除位置后的部分和表达式。"
+    }
+  ],
+  "checked_unit_ids": [
+    "S02.U01",
+    "S02.U02",
+    "S02.U03",
+    "S02.U04",
+    "S02.U05",
+    "S02.U06",
+    "S02.U07",
+    "S02.U08",
+    "S02.U09",
+    "S02.U10",
+    "S02.U11",
+    "S02.U12",
+    "S02.U13",
+    "S02.U14",
+    "S02.U15",
+    "S02.U16",
+    "S02.U17",
+    "S02.U18",
+    "S02.U19",
+    "S02.U20",
+    "S02.U18.answer",
+    "S02.U19.answer",
+    "S02.U20.answer"
+  ],
+  "limitations": [
+    "本次审阅严格限于 scope.kind=\"section_local\" 的 S02 实际单元；S03、S04、S05 尚未生成，不将其未出现内容视为本节遗漏。",
+    "已逐单元检查列出的 23 个实际单元，包括独立 solution 单元；普通模型审阅不是形式化证明，不能替代对全部量词、极限定义和推理的机械验证。",
+    "工具核算只覆盖少量显式表达式，不能证明任意实数列上的一般定理；本报告仍依据实际数学正文检查定义、假设、量词、端点和证明步骤。",
+    "本次结果不包含最终 PDF 的排版或渲染验收；答案位置判断依据提供的 rendering_contract，并区分了独立答案单元与练习题正文中的内嵌答案。"
+  ]
+}

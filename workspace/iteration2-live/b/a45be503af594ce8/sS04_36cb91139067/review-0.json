@@ -1,0 +1,79 @@
+{
+  "section_id": "S04",
+  "math": {
+    "schema_version": 1,
+    "status": "NEEDS_REVIEW",
+    "issues": [],
+    "evidence": [
+      {
+        "evidence_type": "not_checked",
+        "status": "NOT_RUN",
+        "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+      }
+    ],
+    "coverage": [
+      "S04.U01",
+      "S04.U02",
+      "S04.U03",
+      "S04.U04",
+      "S04.U05",
+      "S04.U06",
+      "S04.U07",
+      "S04.U08",
+      "S04.U09",
+      "S04.U10",
+      "S04.U11",
+      "S04.U12",
+      "S04.U13"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "协议支持的表达式树不能表达函数定义、邻域量词、分段函数及连续性的定义条件，因此无法对本节关于点连续、区间连续和间断点分类的结论提交适用的符号核算。",
+      "本节定理涉及一般函数的定义域、极限存在性以及复合函数的定义域条件，现有核算协议不能完整表示这些复合约束；相关结论由正文中的条件和证明给出。",
+      "本次修复涉及间断点分类的双侧定义域前提与单侧无穷极限定义之间的适用范围区别；协议不能表达一般函数定义域、邻域包含关系及量词条件，故未为这一范围修复新增符号核算。",
+      "本次修复明确第一类与第二类间断点的分类约定，并区分局部无界与单侧无穷极限；现有核算协议不能表示一般函数的单侧极限存在性、邻域量词及分类条件，因此未对此分类修复新增符号核算。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S04.U01",
+      "S04.U02",
+      "S04.U03",
+      "S04.U04",
+      "S04.U05",
+      "S04.U06",
+      "S04.U07",
+      "S04.U08",
+      "S04.U09",
+      "S04.U10",
+      "S04.U11",
+      "S04.U12",
+      "S04.U13"
+    ],
+    "limitations": [
+      "本次仅按 section_local 范围审查 S04 的 13 个单元；S01–S03 仅作为已提供的先修依赖使用，未审查尚未生成的 S05。",
+      "未执行符号计算或形式化证明核算；tool_checks 状态为 NOT_RUN，结论来自对正文、定义、量词和证明的人工审阅。",
+      "已核对 rendering_contract：S04.U13 为独立练习解答单元并由渲染器移至末尾，U12 题干未内嵌答案；该核对不构成最终 PDF 验收。",
+      "普通模型审阅不等于形式化证明，也不输出授权或审批。"
+    ]
+  },
+  "issues": [],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 5,
+    "proposal_calls": 5,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "3a16db0496a09c6841bfa2f80b7d70f6a838a974090fc38adb061d13185331c6",
+      "tool_checks_hash": "7359611e10ff6cf57233779f8a4c5bd3a765594d0cdf66af290c1220eccc9ee6",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "8fd5498219532366425d268093036a80e977c8b6e96de3e42359dfff970e03d1",
+      "deterministic_checks_hash": "b7a97f6e7012eaa6e2cc40a081302120e0c99649cd3e096e141c946a1c53ee9f"
+    }
+  }
+}

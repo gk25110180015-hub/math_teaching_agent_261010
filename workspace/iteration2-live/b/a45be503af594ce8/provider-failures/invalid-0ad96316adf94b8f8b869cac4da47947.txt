@@ -1,0 +1,101 @@
+{
+  "$defs": {
+    "MathIssue": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "title": "Evidence",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "blocking",
+            "review",
+            "warning"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "unit_id": {
+          "title": "Unit Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "unit_id",
+        "severity",
+        "message",
+        "evidence"
+      ],
+      "title": "MathIssue",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "checked_unit_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Checked Unit Ids",
+      "type": "array"
+    },
+    "issues": {
+      "items": {
+        "$ref": "#/$defs/MathIssue"
+      },
+      "title": "Issues",
+      "type": "array"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    }
+  },
+  "required": [
+    "issues",
+    "checked_unit_ids",
+    "limitations"
+  ],
+  "title": "MathReview",
+  "type": "object",
+  "issues": [
+    {
+      "unit_id": "S02.U01",
+      "severity": "warning",
+      "message": "S02.U01 的 kind 为 definition，标签为 def:squeeze-principle，但正文实际陈述的是夹逼定理：在去心邻域内 h(x)≤f(x)≤g(x)，且 h、g 同极限 L，则 f 的极限也为 L。这是定理而非定义；数学陈述本身正确。若渲染层按 kind 显示“定义”，会把定理误呈为定义。建议改为 theorem/命题呈现，并注意与 S02.U04 中同一命题的 thm:squeeze-theorem 重复。",
+      "evidence": "S02.U01 正文：“设函数 f,g,h 在点 x0 的某个去心邻域内有定义……则 lim_{x→x0}f(x)=L。这称为夹逼原理。”同题在 S02.U04 又以 theorem 出现，并标为 thm:squeeze-theorem。"
+    }
+  ],
+  "checked_unit_ids": [
+    "S02.U01",
+    "S02.U02",
+    "S02.U03",
+    "S02.U04",
+    "S02.U05",
+    "S02.U06",
+    "S02.U07",
+    "S02.U08",
+    "S02.U09",
+    "S02.U10",
+    "S02.U11",
+    "S02.U12",
+    "S02.U13"
+  ],
+  "limitations": [
+    "本次为 section_local，只核对当前 S02 的实际正文；S03、S04、S05 尚未生成，不属于本次审阅范围。",
+    "已读 S02.U01 至 S02.U13；先修 S01 仅作为已提供上下文用于核对极限定义、唯一性等依赖，未在本轮重新出具 S01 结论。",
+    "普通模型审阅不等于形式化证明；ε-δ 量词、邻域选择与不等式证明未被工具形式化验证。",
+    "tool_checks 仅覆盖 S02.C01、S02.C02 等指定符号计算，不能覆盖极限四则运算法则、复合极限定理和夹逼定理的一般量词证明。",
+    "未检查最终 PDF 渲染与答案位置；rendering_contract 说明 S02.U13 会被收集到讲义末尾答案区，因此不能仅凭 JSON 顺序推断答案位置违规。",
+    "S02 的数学正文未发现 blocking 或 review 级错误；S02.U01 的 warning 属于 kind/label 呈现问题，不否定其数学命题。",
+    "课程范围依据锁定排除项核对，S02 未涉及导数、多元极限、拓扑/完备性证明、渐近展开、测度论等排除内容。"
+  ]
+}

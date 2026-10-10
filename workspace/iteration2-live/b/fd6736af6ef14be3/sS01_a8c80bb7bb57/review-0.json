@@ -1,0 +1,75 @@
+{
+  "section_id": "S01",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "equivalence",
+        "assumptions": {},
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "7/8",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S01.C01",
+        "unit_id": "S01.U07"
+      }
+    ],
+    "coverage": [
+      "S01.U01",
+      "S01.U02",
+      "S01.U03",
+      "S01.U04",
+      "S01.U05",
+      "S01.U06",
+      "S01.U07",
+      "S01.U08",
+      "S01.U09"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S01.U01",
+      "S01.U02",
+      "S01.U03",
+      "S01.U04",
+      "S01.U05",
+      "S01.U06",
+      "S01.U07",
+      "S01.U08",
+      "S01.U09"
+    ],
+    "limitations": [
+      "本次仅审阅 S01 的全部九个实际单元，并逐项核对本节锁定目标；未审阅尚未生成的 S02—S05，不对其教学覆盖或数学正确性作判断。",
+      "本节收敛定义要求存在有限实数极限，发散指部分和数列不收敛；定理及证明与该定义一致。已核对几何级数部分和公式在 n=1 及一般正整数 n 时成立、其极限为 1，以及练习中 S_3=3/4。练习答案末句的“极限存在”按紧邻前句的“存在有限极限”理解，不包含无穷极限。",
+      "所用有限等比求和及数列极限性质属于锁定先修范围。本节目标不要求在该特例之外给出一般几何级数判别，也不要求完成练习中未提出的求和任务。",
+      "已核对 solution 的关联目标，并依据 rendering_contract 区分行内例题解答与末尾练习答案；没有依据 JSON 顺序推断答案位置违规。未检查实际渲染后的 PDF、引用显示及分页。",
+      "这是普通模型对所提供正文的数学与教学覆盖审阅，不是形式化证明；未发现具体问题不代表排除了所有潜在错误。"
+    ]
+  },
+  "issues": [],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 0,
+    "proposal_calls": 0,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "6d8c928e2a71a1c49f079d2959df67c0288caa1e47bec7775b70ba816fdb963d",
+      "tool_checks_hash": "0ad9158bf9fb06cc215b2f3494108602fb8039a74641edf698937ed3b86c8461",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "bf94e3252564494fa95f7fd39aa573ed572572050bbaa93d8f20d300133e6b51",
+      "deterministic_checks_hash": "f16908ed6837b2656f809f1c662970a095819a8fc3e6faf1843d5c886de2e2f4"
+    }
+  }
+}

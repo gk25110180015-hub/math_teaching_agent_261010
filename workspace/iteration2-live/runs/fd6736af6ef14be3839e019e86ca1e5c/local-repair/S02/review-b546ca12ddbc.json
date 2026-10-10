@@ -1,0 +1,257 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "27d40bcc702047b2c6a5c17b20f82990cbfa2648d6f732e1cdf614373f07d693",
+    "tool_checks_hash": "ca7af5a5e82b72c3d93418ade9cb03d92da59f8683e7e83f6c94a16f88f99a60",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "0827c9bc231d0ae64b5ca96dbc16b1569e35e94ba56f382a61b6bc4a736aacc1",
+    "deterministic_checks_hash": "c30c7d86e01df4ffbdb2f54b6fb1da2064d432c6c7a68edcdee0383714cc83f1",
+    "uncertainty_identity": "68732aa43118b16ab677b3798458c70f3e2cc3c661ca731052073f8ca726d17b",
+    "uncertainty_assessment_hash": "2da8ac739c225185f95beb7808f24c54fb2c131eabbbbf3900a1085aefa6c9a5"
+  },
+  "report": {
+    "section_id": "S02",
+    "math": {
+      "schema_version": 1,
+      "status": "NEEDS_REVIEW",
+      "issues": [
+        {
+          "rule_id": "DECLARED_MATH_UNCERTAINTY",
+          "severity": "review",
+          "message": "问题记录对原端点的判断有误：在 n=N 时，B_N-A_N=∑_{k=1}^{N}(b_k-a_k) 直接由有限和定义成立，无须使用 n>N 时的尾项相等条件；记录所给例子两端也均为 1，并非反例。本候选依照所建议的较窄范围改为 n≥N+1 并展开尾和，仍足以证明原定理，不表示原来的 n=N 恒等式错误。",
+          "location": {},
+          "resolution_status": "open"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "1",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S02.C01",
+          "unit_id": "S02.U05"
+        },
+        {
+          "kind": "series",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "domain_scope": "supported_tail_guards",
+          "limitations": [
+            "以起点加非负整数代入，检查已保留的受支持运算定义域约束；不是通用定义域证明器。"
+          ],
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": false,
+          "message": "级数收敛性核算与声明一致。",
+          "calculation_id": "S02.C02",
+          "unit_id": "S02.U07"
+        },
+        {
+          "kind": "equivalence",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "4 - 2/2**n",
+          "message": "在声明假设下符号差为零。",
+          "calculation_id": "S02.C03",
+          "unit_id": "S02.U16"
+        },
+        {
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "2/3",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S02.AC01",
+          "unit_id": "S02.U18.answer"
+        }
+      ],
+      "coverage": [
+        "S02.U01",
+        "S02.U02",
+        "S02.U03",
+        "S02.U04",
+        "S02.U05",
+        "S02.U06",
+        "S02.U07",
+        "S02.U08",
+        "S02.U09",
+        "S02.U10",
+        "S02.U11",
+        "S02.U12",
+        "S02.U13",
+        "S02.U14",
+        "S02.U15",
+        "S02.U16",
+        "S02.U17",
+        "S02.U18",
+        "S02.U19",
+        "S02.U20",
+        "S02.U18.answer",
+        "S02.U19.answer",
+        "S02.U20.answer"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "核算请求覆盖一个通项极限、调和级数的敛散性及一个部分和公式的代数变形；协议不能直接表达任意实数列及其部分和之间的量化关系，因此一般必要条件、线性运算和有限项改变性质由正文证明，不由这些核算替代。",
+        "新增核算仅覆盖 S02.U18.answer 中第 (1) 项的通项极限。任意实数列的线性运算、有限项改变与余项相等的量化论证不由此核算覆盖；截断位置的最小性由答案中的整数比较和单调性说明。",
+        "S02.U10 的修复使用任意实数列的有限部分和恒等式与数列极限减法法则；现有核算协议不能表达这些部分和的量化关系及反证推理，因此不新增核算请求，该一般结论由正文论证。",
+        "S02.U14 本次采用 n≥N+1 并显式拆分有限和；协议不支持任意数列的有限求和、尾项相等的量化条件及固定下标平移的极限论证，故不新增核算请求。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S02.U01",
+        "S02.U02",
+        "S02.U03",
+        "S02.U04",
+        "S02.U05",
+        "S02.U06",
+        "S02.U07",
+        "S02.U08",
+        "S02.U09",
+        "S02.U10",
+        "S02.U11",
+        "S02.U12",
+        "S02.U13",
+        "S02.U14",
+        "S02.U15",
+        "S02.U16",
+        "S02.U17",
+        "S02.U18",
+        "S02.U18.answer",
+        "S02.U19",
+        "S02.U19.answer",
+        "S02.U20",
+        "S02.U20.answer"
+      ],
+      "limitations": [
+        "本次为 section_local 审阅，已逐一阅读列出的全部实际单元，并依据提供的 S01 正文核对先修引用；未审阅尚未生成的 S03—S05，也不对整份讲义的教学覆盖作结论。本节四项锁定目标均有对应的实际论述、证明或例练支持。",
+        "已核对必要条件与充分条件的区别、实数参数和符号、有限改变及线性运算的假设、余项的两种极限、求和起点与奇偶子列的最小指标、截断误差的严格不等号。未发现需要报告的具体数学错误或重大缺口。",
+        "重新核对了工具记录涉及的 S02.U14 端点疑问：当前证明限定 n≥N+1，最小指标下尾和有定义且为零，足以证明结论；即使取 n=N，原有限和恒等式也成立。因此该历史疑问不构成当前正文的问题。S02.U03 则明确限定 n≥2，不引用未定义的 S_0。",
+        "答案位置按 rendering_contract 判断：三份练习答案均为独立且正确关联的 solution 单元，由程序移至讲义末尾；未将其 JSON 顺序视为位置违规。未检查最终 PDF 的实际组装、编号及排版。",
+        "这是普通模型对已提供正文的数学与教学审阅，不是形式化证明，也不以作者自评或符号核算通过替代一般性论证；未发现问题不保证不存在遗漏。"
+      ]
+    },
+    "issues": [],
+    "reference_recovery": null,
+    "answer_recovery": {
+      "schema_version": 1,
+      "operation": "append_missing_answers",
+      "status": "APPLIED_UNCHECKED",
+      "source_section_hash": "db46e9427174364b657889cb04f2ccd9748fdd0c72e357472020c259892ebaa4",
+      "patch_hash": "a93941cf61163d4dafb9dfcd8b38a7c8cfa7506d00f419e46c41b6d4c37a1429",
+      "result_section_hash": "ae68f99d5dcbf8c2cebefe48f8a735d8b7b484fbec86698dfd149f57677e000c",
+      "target_ids": [
+        "S02.U18",
+        "S02.U19",
+        "S02.U20"
+      ],
+      "new_unit_ids": [
+        "S02.U18.answer",
+        "S02.U19.answer",
+        "S02.U20.answer"
+      ],
+      "new_unit_hashes": {
+        "S02.U18.answer": "97bf450d131d9e67ec7a9db038d1878e4148e408482bb882134c5c46501c9390",
+        "S02.U19.answer": "6ca12cbf30641e4e2f0641131f367205d474d8ece28321d43cb56eef9abec988",
+        "S02.U20.answer": "dc1919a67a7b7c0101c45ddcfc63c318f2d5d61e8567e47f0dcef96a10e391a2"
+      },
+      "original_unit_count": 20,
+      "added_unit_count": 3,
+      "original_units_preserved": true,
+      "original_calculations_preserved": true,
+      "new_calculation_count": 1,
+      "math_check": "NOT_RUN",
+      "normalization": "NOT_RUN",
+      "teacher_review": "NOT_RUN",
+      "identity": {
+        "context_hash": "3f9f680007b1540ced449739aa1e373347577afdd839b58f67be47ebf740ca74",
+        "model": "gpt-6-astra",
+        "provider": "live",
+        "prompt_hash": "3f4beaf0cea232c9067c05d0326b08ebba71227e57fd50b283fb3401d8340da3",
+        "schema_hash": "33f1dd4a1048269d000f52f3663cc9fdac32afe07edfda814a6c018869562c33",
+        "implementation_hash": "3ec9e3ba686daea8447efbe4832827ef86797ed21965a6184dd29540d321baf8"
+      },
+      "proposal_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/answer-recovery/S02/ee59068e61ea64cad830cbdbab69eecdcb2f9e79d8963e3ba0bec13e4ca7c53c/attempt-640d65eb3f89/proposal.json",
+      "reused_proposal": false
+    },
+    "mock": false,
+    "uncertainty_review": {
+      "identity_hash": "68732aa43118b16ab677b3798458c70f3e2cc3c661ca731052073f8ca726d17b",
+      "assessment": {
+        "items": [
+          {
+            "uncertainty_id": "D001-2f5bd01600c2fb92",
+            "unit_id": null,
+            "disposition": "resolved_by_current_body",
+            "reason": "该声明涉及有限项改变证明的端点，并指出原端点批评不成立。当前正文已明确写出部分和定义：在 n=N 时，两个有限和相减就等于前 N 项差之和，无须调用尾项相等条件。因此，将范围缩为 n≥N+1 并不是纠正一个错误的 n=N 恒等式。当前证明在 n≥N+1 时显式拆出尾和，其中每项均因 k>N 而为零；最小指标 n=N+1 时也成立。于是最终恒有 B_n=A_n+C，由批准先修中的数列极限基本性质可双向推出部分和同敛散，收敛时极限相差 C，再由已提供的级数收敛定义得到所述结论。这足以消解端点是否妨碍当前证明的具体疑点，不依赖历史例子的数值核查或普通审阅的空 issues。原记录的 unit_id 保持 null，不将证据单元编号重新绑定为其归属。",
+            "evidence": [
+              {
+                "source_key": "current:S02.U14",
+                "source_sha256": "9923f082f36483abae7086179471416c7bc954559f6a3007d31598c8435520f4",
+                "quote": "令 $A_n=\\sum_{k=1}^{n}a_k$、$B_n=\\sum_{k=1}^{n}b_k$。对所有整数 $n\\geq N+1$，由 $k>N$ 时 $a_k=b_k$，有\n\\[\nB_n-A_n=\\sum_{k=1}^{N}(b_k-a_k)+\\sum_{k=N+1}^{n}(b_k-a_k)\n=\\sum_{k=1}^{N}(b_k-a_k)=C,\n\\]\n其中 $C$ 是与 $n$ 无关的有限实数。因此从下标 $N+1$ 起有 $B_n=A_n+C$。数列是否收敛及其极限不受有限个初始项影响，所以两部分和数列同时收敛或同时发散；收敛时极限相差 $C$，即 $B=A+C$。"
+              },
+              {
+                "source_key": "current:S02.U13",
+                "source_sha256": "500830a9b4e65b0eb59366377a1d9efb86fa953ebe83da38371479327968d0f6",
+                "quote": "\\label{thm:finite-change}设 $\\{a_n\\}$、$\\{b_n\\}$ 为两个实数列，存在正整数 $N$，使得对所有整数 $n>N$ 都有 $a_n=b_n$。则 $\\sum_{n=1}^{\\infty}a_n$ 与 $\\sum_{n=1}^{\\infty}b_n$ 同敛散。若前者收敛于 $A$，则后者的和为\n\\[\nB=A+\\sum_{k=1}^{N}(b_k-a_k).\n\\]"
+              },
+              {
+                "source_key": "prior:S01.U03",
+                "source_sha256": "c453e11f29b6fa552d662b4cea8f462e7d7c2dc38ba992261830169b3041af52",
+                "quote": "若部分和数列 $\\{S_n\\}_{n=1}^{\\infty}$ 收敛，即存在有限实数 $S$ 使得\n\\[\n\\lim_{n\\to\\infty}S_n=S,\n\\]\n则称级数 $\\sum_{n=1}^{\\infty}a_n$ 收敛，并称 $S$ 为该级数的和，记作\n\\[\n\\sum_{n=1}^{\\infty}a_n=S.\n\\]\n若部分和数列不收敛，则称级数 $\\sum_{n=1}^{\\infty}a_n$ 发散。\\label{def:convergence}"
+              }
+            ],
+            "remaining_dependency": false,
+            "repair_instruction": null
+          }
+        ],
+        "limitations": [
+          "本次仅裁定所保留的一条声明，属于模型数学审阅，不是形式化证明或教师验收，也不删除原声明、历史证据或独立工具记录。",
+          "判断使用实际正文、所提供的 S01 收敛定义以及批准的实数运算和数列极限基本性质；不需要新增或尚待核实的外部数学前提。",
+          "原声明所说的历史反例未提供完整数据，故未独立确认其两端数值均为 1；端点恒等式及当前证明的有效性由一般有限和推理判断，不依赖该数值说法。",
+          "符号工具未覆盖任意数列有限和及尾项相等的量化论证；已报告的符号核算通过不作为本条消解的证明。"
+        ]
+      },
+      "evidence_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/uncertainty-reviews/68732aa43118b16ab677b379/state.json",
+      "evidence_sha256": "9b7e6f57a8ca356eb52e426079ecde98a59c9fafabc00e9ff6b790fa2514ed0c",
+      "teacher_review": "NOT_RUN"
+    },
+    "uncertainty_legacy_mapping": []
+  },
+  "retained_issues": []
+}

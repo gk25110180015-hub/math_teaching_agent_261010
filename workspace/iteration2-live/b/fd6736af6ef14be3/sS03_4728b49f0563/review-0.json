@@ -1,0 +1,137 @@
+{
+  "section_id": "S03",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "series",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": true,
+        "message": "级数收敛性核算与声明一致。",
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U09"
+      },
+      {
+        "kind": "series",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": false,
+        "message": "级数收敛性核算与声明一致。",
+        "calculation_id": "S03.C02",
+        "unit_id": "S03.U09"
+      }
+    ],
+    "coverage": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10",
+      "S03.U11",
+      "S03.U12",
+      "S03.U13",
+      "S03.U14",
+      "S03.U15",
+      "S03.U16"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "协议的 series 核算只能对给定的具体幂指数核对收敛性，不能直接表达定理中对所有实数 $p$ 的量词；比较判别法、极限比较判别法和积分判别法的普遍证明由正文完成。"
+    ]
+  },
+  "llm_review": {
+    "issues": [
+      {
+        "unit_id": "S03.U12",
+        "severity": "blocking",
+        "message": "积分判别法证明中对不等式方向的文字指称写反，导致正文所述推理与公式不一致。应在“积分收敛推出级数收敛”处使用左侧不等式，在“级数收敛推出积分收敛”处使用右侧不等式。",
+        "evidence": "正文给出 \\(\\sum_{n=2}^{m+1}f(n)\\leq\\int_1^{m+1}f(x)\\,dx\\leq\\sum_{n=1}^{m}f(n)\\)。但随后写“若积分收敛，则右侧不等式说明正项级数的部分和有上界”，实际推出级数部分和有上界的是左侧不等式；又写“若级数收敛，则左侧不等式说明积分的截断值有上界”，实际应由右侧不等式推出。定理结论本身正确，但当前证明文字的核心方向与公式不一致。"
+      },
+      {
+        "unit_id": "S03.U10",
+        "severity": "warning",
+        "message": "当 \\(0<p<1\\) 时，证明从每个分组的下界直接跳到部分和无界，缺少把各组下界累加的明确量词或不等式。建议明确写出前 \\(m\\) 组之和至少为 \\(\\frac12\\sum_{j=1}^{m}2^{j(1-p)}\\)，从而趋于无穷。",
+        "evidence": "正文仅写“当 \\(0<p<1\\) 时，每组和随 \\(j\\) 增大而不减且不趋于零。于是部分和数列无界”。对非负分组而言该结论可以补足成立，但“每组不趋于零”本身需要通过分组下界的累加来推出部分和无界，当前证据未明确给出该累加关系。"
+      }
+    ],
+    "checked_unit_ids": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10",
+      "S03.U11",
+      "S03.U12",
+      "S03.U13",
+      "S03.U14",
+      "S03.U15",
+      "S03.U16"
+    ],
+    "limitations": [
+      "已逐单元核对当前提供的 S03.U01–S03.U16；S04、S05 尚未生成，不属于本节范围，未对其作遗漏判断。",
+      "检查覆盖定义域、量词、正负号、端点、判别法条件、证明方向、例题计算及公式与解释文字的一致性；未将工具抽查结果当作一般性证明。",
+      "本次为普通模型数学审阅，不是形式化证明；即使修正所列问题，也不能据此保证整份课程或最终 PDF 无其他错误。",
+      "根据渲染契约，S03.U16 作为练习答案单元由渲染器移至末尾；本次未将其 JSON 顺序误判为答案位置错误。"
+    ]
+  },
+  "issues": [
+    {
+      "unit_id": "S03.U12",
+      "severity": "blocking",
+      "message": "积分判别法证明中对不等式方向的文字指称写反，导致正文所述推理与公式不一致。应在“积分收敛推出级数收敛”处使用左侧不等式，在“级数收敛推出积分收敛”处使用右侧不等式。",
+      "evidence": "正文给出 \\(\\sum_{n=2}^{m+1}f(n)\\leq\\int_1^{m+1}f(x)\\,dx\\leq\\sum_{n=1}^{m}f(n)\\)。但随后写“若积分收敛，则右侧不等式说明正项级数的部分和有上界”，实际推出级数部分和有上界的是左侧不等式；又写“若级数收敛，则左侧不等式说明积分的截断值有上界”，实际应由右侧不等式推出。定理结论本身正确，但当前证明文字的核心方向与公式不一致。"
+    },
+    {
+      "unit_id": "S03.U10",
+      "severity": "warning",
+      "message": "当 \\(0<p<1\\) 时，证明从每个分组的下界直接跳到部分和无界，缺少把各组下界累加的明确量词或不等式。建议明确写出前 \\(m\\) 组之和至少为 \\(\\frac12\\sum_{j=1}^{m}2^{j(1-p)}\\)，从而趋于无穷。",
+      "evidence": "正文仅写“当 \\(0<p<1\\) 时，每组和随 \\(j\\) 增大而不减且不趋于零。于是部分和数列无界”。对非负分组而言该结论可以补足成立，但“每组不趋于零”本身需要通过分组下界的累加来推出部分和无界，当前证据未明确给出该累加关系。"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 0,
+    "proposal_calls": 0,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "ebdfc86d801277480a98634c72a99248da531e95830f1575ee30f4df4b050427",
+      "tool_checks_hash": "aeca106243af0c565604190da94c0fd6c449dc40b4db57a049a08344c7d10d29",
+      "reviewer_prompt_hash": "86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc",
+      "plan_context_hash": "1f32866035f7eb263bff9c7dbf77bb5b544301cd5c93cc6e0eaf2ad117b42d10",
+      "deterministic_checks_hash": "9a2a8a625e6ac42c47bbb9e07c1794b98b61906c6c1814bc4eecd387e4f3cdfd"
+    }
+  }
+}

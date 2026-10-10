@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227",
+    "section_id": "S04",
+    "context_hash": "d594d5962e767f3be7499bfbe76faf41c48d7586841588100516b510408d6af5",
+    "base_hash": "40643e3b5cfda7956700cc7f43db493f40b0f2f4f91b4400f53468d389ef80b7",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "PROPOSAL_PENDING",
+  "applied_rounds": 0,
+  "proposal_calls": 1,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "rule_id": "NUMERIC_IS_NOT_PROOF",
+      "severity": "review",
+      "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+      "location": {
+        "calculation_id": "S04.C01",
+        "unit_id": "S04.U05"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S04.U01",
+      "severity": "review",
+      "message": "交错级数的核心定义存在表述范围不一致：公式只要求 b_n\\geq0，允许某些 b_n=0；但随后称“各项的符号正负交替”，这通常暗示非零项严格交替，且将 b_n 称为“正项序列”也容易被理解为 b_n>0。应明确采用“具有交错符号形式”还是要求 b_n>0；若允许零项，应说明零项不破坏后续判别法，并避免把该条件表述为严格正负交替。",
+      "evidence": "S04.U01 同时写出“b_n\\geq0”与“其中各项的符号正负交替”，两者对零项的允许范围不同。后续 S04.U02 的条件也沿用 b_n\\geq0，因此这是核心定义与实际假设范围的歧义，而非仅文字风格问题。"
+    }
+  ],
+  "unit_applied_counts": {},
+  "proposal_counts_by_key": {
+    "unit:S04.U01": 1,
+    "unit:S04.U05": 1
+  },
+  "rejected_counts_by_key": {},
+  "evidence_dependencies": [],
+  "last_review_context_hash": "80538fe54eb9376ae0b4c8f7583e71a8aa184e21b81728cf9e3ced4534985a01",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1; tolerate one rejection per key, stop after another; retain aggregate calls and run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S04/candidate-b97496710a15.json",
+  "candidate_hash": "4a252659799ae4fc0103b08beccdb9ab74bbb4fac1605aaed19240f0b05bc840",
+  "last_review_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S04/review-d6ee900f2de4.json",
+  "pending_operation": "strict_local_patch",
+  "pending_keys": [
+    "unit:S04.U01",
+    "unit:S04.U05"
+  ],
+  "request_count_before": 27
+}

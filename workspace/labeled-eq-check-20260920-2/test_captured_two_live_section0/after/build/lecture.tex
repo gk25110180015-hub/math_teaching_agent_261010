@@ -1,0 +1,253 @@
+\documentclass[UTF8,fontset=fandol,11pt]{ctexart}
+\usepackage[a4paper,margin=24mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,graphicx,tabularx,booktabs,hyperref}
+\newtheorem{definition}{定义}[section]
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{example}[definition]{例题}
+\newtheorem{exercise}[definition]{练习}
+\hypersetup{unicode=true,colorlinks=true,linkcolor=blue}
+\title{数列极限入门：定义、唯一性与简单运算}
+\date{}
+\begin{document}
+\maketitle
+\section{数列极限的定义与唯一性}\label{sec:S01}
+% UNIT S01.U01
+\begin{definition}
+直观地说，若数列的项随着下标 $n$ 增大而越来越接近某个实数 $A$，就称数列趋近于 $A$。这里的“越来越接近”不是要求从某一项开始单调接近，而是要求误差可以小于任意预先给定的正数。\label{def:sequence-limit}
+
+设 $\{a_n\}$ 是实数数列，$A$ 是实数。如果
+\[
+\forall\,\varepsilon>0,\quad \exists\,N\in\mathbb{N}^+,\quad \forall\,n\in\mathbb{N}^+,\quad n>N\Longrightarrow |a_n-A|<\varepsilon,
+\]
+则称数列 $\{a_n\}$ 收敛于 $A$，称 $A$ 为该数列的极限，记作
+\[
+\lim_{n\to\infty}a_n=A.
+\]
+其中，$\varepsilon$ 是任意给定的正误差容限，$N$ 可以依赖于 $\varepsilon$，但选定后必须对所有满足 $n>N$ 的正整数 $n$ 同时成立。
+\end{definition}
+% UNIT S01.U02
+\begin{theorem}
+数列极限具有唯一性：如果实数数列 $\{a_n\}$ 满足
+\[
+\lim_{n\to\infty}a_n=A\qquad\text{且}\qquad \lim_{n\to\infty}a_n=B,
+\]
+其中 $A,B\in\mathbb{R}$，那么
+\[
+A=B.
+\]
+\label{thm:limit-uniqueness}
+\end{theorem}
+% UNIT S01.U03
+\begin{proof}
+反设 $A\ne B$。取
+\[
+\varepsilon=\frac{|A-B|}{3}>0.
+\]
+由 $\lim_{n\to\infty}a_n=A$ 的定义，存在正整数 $N_A$，使得当 $n>N_A$ 时，$|a_n-A|<\varepsilon$。同理，存在正整数 $N_B$，使得当 $n>N_B$ 时，$|a_n-B|<\varepsilon$。
+
+取正整数 $N=\max\{N_A,N_B\}$。当 $n>N$ 时，由三角不等式可得
+\[
+|A-B|=|(A-a_n)+(a_n-B)|
+\leq |A-a_n|+|a_n-B|
+<2\varepsilon=\frac{2|A-B|}{3}.
+\]
+这与 $|A-B|>0$ 矛盾。因此不能有 $A\ne B$，所以 $A=B$。
+\end{proof}
+% UNIT S01.U04
+\begin{example}
+用数列极限的定义证明：当 $a_n=\dfrac{1}{n}$，$n\in\mathbb{N}^+$ 时，数列 $\{a_n\}$ 的极限为 $0$。
+\end{example}
+% UNIT S01.U05
+\par\noindent\textbf{解：}任取 $\varepsilon>0$。为了使
+\[
+\left|a_n-0\right|=\frac{1}{n}<\varepsilon,
+\]
+只需令 $n>1/\varepsilon$。取正整数 $N$ 满足
+\[
+N>\frac{1}{\varepsilon}.
+\]
+这样的 $N$ 对每个给定的 $\varepsilon>0$ 都存在。
+
+当 $n>N$ 时，由 $N>1/\varepsilon$ 可知 $n>1/\varepsilon$，于是
+\[
+\left|a_n-0\right|=\left|\frac{1}{n}\right|=\frac{1}{n}<\varepsilon.
+\]
+因此，按照定义，数列 $\{1/n\}$ 收敛于 $0$，即
+\begin{equation}
+\lim_{n\to\infty}\frac{1}{n}=0.
+\label{eq:reciprocal-limit}
+\end{equation}
+这里 $N$ 可以随着 $\varepsilon$ 的变化而重新选择，但在选定某个 $\varepsilon$ 后，$N$ 不能随着待验证的 $n$ 改变。\par
+% UNIT S01.U06
+\begin{exercise}
+用数列极限的定义证明：当 $a_n=2+\dfrac{3}{n}$，$n\in\mathbb{N}^+$ 时，数列 $\{a_n\}$ 的极限为 $2$。
+\end{exercise}
+\section{简单数列极限及运算}\label{sec:S02}
+% UNIT S02.U01
+\begin{definition}
+设 $\{a_n\}$、$\{b_n\}$ 为实数数列，$c\in\mathbb{R}$。数列的和、差、积及常数倍均按项定义：对每个 $n\in\mathbb{N}^+$，相应的第 $n$ 项分别为
+\[
+a_n+b_n,\qquad a_n-b_n,\qquad a_nb_n,\qquad ca_n.
+\]
+商的第 $n$ 项定义为 $a_n/b_n$，但只在 $b_n\ne0$ 的指标上有意义。若对所有正整数 $n$ 都有 $b_n\ne0$，则得到完整的商数列；若只在某个正整数 $N_0$ 之后有 $b_n\ne0$，则可先讨论 $n>N_0$ 时的商，并给前面有限个指标任意指定实数值以补成数列。
+\end{definition}
+% UNIT S02.U02
+根据定义 \ref{def:sequence-limit}，极限只要求所有充分大的下标满足误差条件，因此改变有限个初始项不影响极限。具体地，若两个实数数列在所有 $n>N_0$ 时相等，且其中一个收敛于 $A$，则对任意 $\varepsilon>0$，把它的误差阈值 $N_1$ 换为 $\max\{N_0,N_1\}$，就能验证另一个也收敛于 $A$。反方向同理。
+
+因此，对最终才有定义的商，补入的有限个初始值不会影响极限。定理 \ref{thm:limit-uniqueness} 又保证，只要极限存在，其值就是唯一的。以下运算法则是在已有收敛结论的基础上计算这个唯一的值。\par
+% UNIT S02.U03
+\begin{theorem}
+常数数列的极限：对任意 $c\in\mathbb{R}$，若 $a_n=c$ 对所有 $n\in\mathbb{N}^+$ 成立，则
+\[
+\lim_{n\to\infty}a_n=c.
+\]
+\end{theorem}
+% UNIT S02.U04
+\begin{proof}
+任取 $\varepsilon>0$，取正整数 $N=1$。对每个正整数 $n>N$，都有
+\[
+|a_n-c|=|c-c|=0<\varepsilon.
+\]
+由数列极限的定义，$\lim_{n\to\infty}a_n=c$。
+\end{proof}
+% UNIT S02.U05
+\begin{theorem}
+收敛数列的运算法则：设 $\{a_n\}$、$\{b_n\}$ 为实数数列，且
+\[
+\lim_{n\to\infty}a_n=A,\qquad \lim_{n\to\infty}b_n=B,
+\qquad A,B\in\mathbb{R}.
+\]
+则对任意实常数 $c$，有
+\[
+\begin{aligned}
+\lim_{n\to\infty}(a_n+b_n)&=A+B,\\
+\lim_{n\to\infty}(a_n-b_n)&=A-B,\\
+\lim_{n\to\infty}(ca_n)&=cA,\\
+\lim_{n\to\infty}(a_nb_n)&=AB.
+\end{aligned}
+\]
+若另有 $B\ne0$，则存在正整数 $N_0$，使每个正整数 $n>N_0$ 都满足 $b_n\ne0$，并且
+\[
+\lim_{n\to\infty}\frac{a_n}{b_n}=\frac{A}{B}.
+\]
+这里的商可只在 $n>N_0$ 时按原式定义，再任意补入有限个初始值。
+\end{theorem}
+% UNIT S02.U06
+\begin{proof}
+完整证明加法法则。任取 $\varepsilon>0$。由 $a_n\to A$，存在正整数 $N_A$，使所有 $n>N_A$ 满足 $|a_n-A|<\varepsilon/2$；由 $b_n\to B$，存在正整数 $N_B$，使所有 $n>N_B$ 满足 $|b_n-B|<\varepsilon/2$。
+
+取 $N=\max\{N_A,N_B\}$。对每个正整数 $n>N$，三角不等式给出
+\[
+\begin{aligned}
+|(a_n+b_n)-(A+B)|
+&=|(a_n-A)+(b_n-B)|\\
+&\leq |a_n-A|+|b_n-B|\\
+&<\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon.
+\end{aligned}
+\]
+所以 $a_n+b_n\to A+B$。其余法则的误差估计与附加条件说明如下。
+\end{proof}
+% UNIT S02.U07
+常数倍的误差为 $|ca_n-cA|=|c|\,|a_n-A|$。当 $c=0$ 时结果是常数数列；当 $c\ne0$ 时，把原数列的误差控制在 $\varepsilon/|c|$ 以内即可。减法可写为 $a_n+(-1)b_n$，因而由常数倍与加法法则得到。
+
+乘法不能只把两个误差相乘，因为还含有交叉项。由 $b_n\to B$，最终有 $|b_n-B|<1$，从而 $|b_n|<|B|+1$。利用
+\[
+|a_nb_n-AB|
+\leq |b_n|\,|a_n-A|+|A|\,|b_n-B|,
+\]
+就可以用固定常数控制两个趋于零的误差。这是乘法法则的主要依据。
+
+商法则中 $B\ne0$ 尤其重要。由收敛定义，最终有
+\[
+|b_n-B|<\frac{|B|}{2}.
+\]
+此时
+\[
+|b_n|\geq |B|-|b_n-B|>\frac{|B|}{2}>0,
+\]
+既保证分母最终非零，也使分母不会任意接近零。在这些指标上，
+\[
+\left|\frac{a_n}{b_n}-\frac{A}{B}\right|
+\leq \frac{2}{|B|}|a_n-A|
++\frac{2|A|}{|B|^2}|b_n-B|.
+\]
+右端可通过控制两个原数列的误差而任意小，这说明商法则的依据。若 $B=0$，上述估计不适用，不能直接把极限值代入商法则。
+
+使用运算法则前，必须确认参与运算的数列都已知收敛，并检查商法则的非零条件；不能把这些条件当成计算后的补充。\par
+% UNIT S02.U08
+\begin{example}
+设
+\[
+a_n=\frac{3n+2}{2n+1},\qquad n\in\mathbb{N}^+.
+\]
+求 $\lim_{n\to\infty}a_n$，并说明所用商法则的条件。
+\end{example}
+% UNIT S02.U09
+\par\noindent\textbf{解：}对每个正整数 $n$，有 $2n+1>0$，所以原数列的每一项都有定义。分子、分母同除以非零的 $n$，得
+\[
+a_n=\frac{3+2/n}{2+1/n}.
+\]
+由前节的基本极限 \eqref{eq:reciprocal-limit}，$1/n\to0$。结合常数数列的极限、常数倍及加法法则，得到
+\[
+\lim_{n\to\infty}\left(3+\frac{2}{n}\right)=3+2\cdot0=3,
+\qquad
+\lim_{n\to\infty}\left(2+\frac{1}{n}\right)=2+0=2.
+\]
+分母数列的极限为 $2\ne0$，满足商法则的附加条件。因此
+\[
+\lim_{n\to\infty}\frac{3n+2}{2n+1}=\frac{3}{2}.
+\]
+同除以 $n$ 的作用，是把原式改写成常数与已知趋于零的数列的运算，而不是直接对原来的分子、分母套用商法则。\par
+% UNIT S02.U10
+\begin{exercise}
+设
+\[
+b_n=\frac{2n^2-n+1}{n^2+3},\qquad n\in\mathbb{N}^+.
+\]
+求 $\lim_{n\to\infty}b_n$。要求先用乘法法则说明 $1/n^2$ 的极限，再逐项求改写后的分子、分母的极限，并检查商法则的条件。参考解答置于讲义末尾。
+\end{exercise}
+% UNIT S02.U11
+本节小结：计算简单数列极限时，先把通项改写为基本收敛数列的四则运算，再逐步应用法则。有限个初始项不影响极限，但每一步的定义域和商法则的非零极限条件仍须明确。\par
+\section*{练习答案}
+% UNIT S01.U07
+\par\noindent\textbf{解：}任取 $\varepsilon>0$。有
+\[
+\left|a_n-2\right|=\left|2+\frac{3}{n}-2\right|=\frac{3}{n}.
+\]
+为了使 $\frac{3}{n}<\varepsilon$，只需令 $n>3/\varepsilon$。取正整数 $N$ 满足
+\[
+N>\frac{3}{\varepsilon}.
+\]
+当 $n>N$ 时，有 $n>3/\varepsilon$，从而
+\[
+\left|a_n-2\right|=\frac{3}{n}<\varepsilon.
+\]
+因此，根据数列极限的定义，
+\[
+\lim_{n\to\infty}\left(2+\frac{3}{n}\right)=2.
+\]\par
+% UNIT S02.U12
+\par\noindent\textbf{解：}\textbf{讲义末尾练习参考解答（本节）。}
+
+对每个 $n\in\mathbb{N}^+$，$n^2+3>0$，原式有定义。由 \eqref{eq:reciprocal-limit} 和乘法法则，
+\[
+\lim_{n\to\infty}\frac{1}{n^2}
+=\lim_{n\to\infty}\left(\frac{1}{n}\cdot\frac{1}{n}\right)
+=0\cdot0=0.
+\]
+分子、分母同除以 $n^2>0$，得到
+\[
+b_n=\frac{2-1/n+1/n^2}{1+3/n^2}.
+\]
+由常数数列极限、常数倍及加减法法则，
+\[
+\begin{aligned}
+\lim_{n\to\infty}\left(2-\frac{1}{n}+\frac{1}{n^2}\right)&=2-0+0=2,\\
+\lim_{n\to\infty}\left(1+\frac{3}{n^2}\right)&=1+3\cdot0=1.
+\end{aligned}
+\]
+改写后的分母极限为 $1\ne0$，所以可使用商法则，得到
+\[
+\lim_{n\to\infty}\frac{2n^2-n+1}{n^2+3}=\frac{2}{1}=2.
+\]\par
+\end{document}

@@ -1,0 +1,121 @@
+{
+  "section_id": "S03",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "series",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "domain_scope": "supported_tail_guards",
+        "limitations": [
+          "以起点加非负整数代入，检查已保留的受支持运算定义域约束；不是通用定义域证明器。"
+        ],
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": true,
+        "message": "级数收敛性核算与声明一致。",
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U09"
+      },
+      {
+        "kind": "series",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "domain_scope": "supported_tail_guards",
+        "limitations": [
+          "以起点加非负整数代入，检查已保留的受支持运算定义域约束；不是通用定义域证明器。"
+        ],
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": false,
+        "message": "级数收敛性核算与声明一致。",
+        "calculation_id": "S03.C02",
+        "unit_id": "S03.U09"
+      }
+    ],
+    "coverage": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10",
+      "S03.U11",
+      "S03.U12",
+      "S03.U13",
+      "S03.U14",
+      "S03.U15",
+      "S03.U16"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "协议的 series 核算只能对给定的具体幂指数核对收敛性，不能直接表达定理中对所有实数 $p$ 的量词；比较判别法、极限比较判别法和积分判别法的普遍证明由正文完成。",
+      "S03.U12 使用一般连续正值单调递减函数的积分比较及部分和有界性；现有核算协议不支持一般函数、定积分或不等式证明，不能直接核算本次修复中的两向推理。",
+      "新增的几何级数说明涉及有限求和及公比区间 0<r<1、r>1 的分类。现有 JSON AST 不支持有限求和表达式，布尔假设也不能直接表示这些区间约束；本次未对该一般参数结论新增符号核算，依据在正文中以有限等比求和和数列极限给出。原有两项具体 p-级数核算保持不变。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10",
+      "S03.U11",
+      "S03.U12",
+      "S03.U13",
+      "S03.U14",
+      "S03.U15",
+      "S03.U16"
+    ],
+    "limitations": [
+      "已逐单元核对本节16个实际单元，覆盖定义、定理、证明、例题、解答和练习；未将待生成的S04、S05视为本节遗漏。",
+      "普通模型审阅不是形式化证明。已结合提供的先修正文核对符号、定义、量词、指标起点、正负号、端点和判别法条件，但不能替代对全部实数分析基础及每一步不等式的机械验证。",
+      "工具核算仅覆盖S03.U09中若干具体级数情形，不能形式化证明关于所有实数参数p、几何级数公比范围或一般函数的积分判别法；这些一般结论的依据主要来自S03.U10和S03.U12中的正文论证。",
+      "本次核对未执行最终排版或PDF检查；答案单元S03.U16的最终位置依照提供的rendering_contract处理，位置规则不构成数学正确性的证明。"
+    ]
+  },
+  "issues": [],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 3,
+    "proposal_calls": 3,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "0cd42cafc96e9c4394c7091d4edde95be8f0e3b3cab5dc515a7494b629e625ec",
+      "tool_checks_hash": "b85ed54688bc31696ce3a3b7c46a4dd14cd1376860988d3b5f0f8a5554877e1a",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "025f95eac8d7c39ad421ba73e5d5cde9ebe99234a78ff75f4b370320b6723cd1",
+      "deterministic_checks_hash": "9a2a8a625e6ac42c47bbb9e07c1794b98b61906c6c1814bc4eecd387e4f3cdfd"
+    }
+  }
+}

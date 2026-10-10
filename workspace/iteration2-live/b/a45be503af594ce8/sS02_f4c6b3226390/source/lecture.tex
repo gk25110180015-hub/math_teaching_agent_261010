@@ -1,0 +1,321 @@
+\documentclass[UTF8,fontset=fandol,11pt]{ctexart}
+\usepackage[a4paper,margin=24mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,graphicx,tabularx,booktabs,hyperref}
+\newtheorem{definition}{定义}[section]
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{example}[definition]{例题}
+\newtheorem{exercise}[definition]{练习}
+\hypersetup{unicode=true,colorlinks=true,linkcolor=blue}
+\title{函数极限与连续：本科一年级微积分讲义计划}
+\date{}
+\begin{document}
+\maketitle
+\section{一元函数极限：定义、左右极限与无穷远极限}\label{sec:S01}
+% UNIT S01.U01
+\begin{definition}
+设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义。若存在常数 $A$，使得对任意 $\varepsilon>0$，都存在 $\delta>0$，满足当 $0<|x-x_0|<\delta$ 时有 $|f(x)-A|<\varepsilon$，则称 $A$ 为 $f(x)$ 当 $x\to x_0$ 时的极限，记为
+\[
+\lim_{x\to x_0}f(x)=A.
+\]
+其中，$x_0$ 不要求属于函数的定义域。\label{def:point-limit}
+\end{definition}
+% UNIT S01.U02
+\begin{definition}
+设函数 $f$ 在 $x_0$ 的某个左侧去心邻域内有定义。若存在常数 $A_-$，使得对任意 $\varepsilon>0$，都存在 $\delta>0$，当 $x_0-\delta<x<x_0$ 时有 $|f(x)-A_-|<\varepsilon$，则称 $A_-$ 为 $f(x)$ 当 $x\to x_0^-$ 时的左极限，记为
+\[
+\lim_{x\to x_0^-}f(x)=A_-.
+\]
+设函数 $f$ 在 $x_0$ 的某个右侧去心邻域内有定义。若存在常数 $A_+$，使得对任意 $\varepsilon>0$，都存在 $\delta>0$，当 $x_0<x<x_0+\delta$ 时有 $|f(x)-A_+|<\varepsilon$，则称 $A_+$ 为 $f(x)$ 当 $x\to x_0^+$ 时的右极限，记为
+\[
+\lim_{x\to x_0^+}f(x)=A_+.
+\]
+\label{def:one-sided-limit}
+\end{definition}
+% UNIT S01.U03
+\begin{definition}
+设函数 $f$ 在某个右半无限区间 $(M,+\infty)$ 上有定义。若存在常数 $A$，使得对任意 $\varepsilon>0$，都存在 $R>M$，当 $x>R$ 时有 $|f(x)-A|<\varepsilon$，则称 $A$ 为 $f(x)$ 当 $x\to+\infty$ 时的极限，记为
+\[
+\lim_{x\to+\infty}f(x)=A.
+\]
+类似地，若函数在某个左半无限区间 $(-\infty,M)$ 上有定义，且对任意 $\varepsilon>0$ 都存在 $R<M$，使得当 $x<R$ 时有 $|f(x)-A|<\varepsilon$，则记为
+\[
+\lim_{x\to-\infty}f(x)=A.
+\]
+\label{def:infinite-limit}
+\end{definition}
+% UNIT S01.U04
+\begin{theorem}
+设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义，则
+\[
+\lim_{x\to x_0}f(x)=A
+\]
+当且仅当
+\[
+\lim_{x\to x_0^-}f(x)=A
+\quad\text{且}\quad
+\lim_{x\to x_0^+}f(x)=A.
+\]
+也就是说，函数在一点的双侧极限存在，当且仅当该点的左极限和右极限都存在且相等。\label{thm:two-sided-limit-criterion}
+\end{theorem}
+% UNIT S01.U05
+\begin{proof}
+先设 $\lim_{x\to x_0}f(x)=A$。给定任意 $\varepsilon>0$，由双侧极限的定义，存在 $\delta>0$，使得当 $0<|x-x_0|<\delta$ 时有 $|f(x)-A|<\varepsilon$。特别地，当 $x_0-\delta<x<x_0$ 或 $x_0<x<x_0+\delta$ 时，上述不等式分别成立，因此左极限和右极限都等于 $A$。
+
+反过来，设左极限和右极限都等于 $A$。给定任意 $\varepsilon>0$，存在 $\delta_1>0$，使得当 $x_0-\delta_1<x<x_0$ 时有 $|f(x)-A|<\varepsilon$；存在 $\delta_2>0$，使得当 $x_0<x<x_0+\delta_2$ 时有 $|f(x)-A|<\varepsilon$。取 $\delta=\min\{\delta_1,\delta_2\}$，则当 $0<|x-x_0|<\delta$ 时，$x$ 必在 $x_0$ 的左侧或右侧，从而都有 $|f(x)-A|<\varepsilon$。因此 $\lim_{x\to x_0}f(x)=A$。
+\end{proof}
+% UNIT S01.U06
+\begin{theorem}
+设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义。若
+\[
+\lim_{x\to x_0}f(x)=A
+\quad\text{且}\quad
+\lim_{x\to x_0}f(x)=B,
+\]
+则 $A=B$。因此，函数在同一点处的有限极限至多有一个。\label{thm:limit-uniqueness}
+\end{theorem}
+% UNIT S01.U07
+\begin{proof}
+假设 $A\ne B$。取 $\varepsilon=|A-B|/3>0$。由 $\lim_{x\to x_0}f(x)=A$，存在 $\delta_1>0$，使得当 $0<|x-x_0|<\delta_1$ 时有 $|f(x)-A|<\varepsilon$；由 $\lim_{x\to x_0}f(x)=B$，存在 $\delta_2>0$，使得当 $0<|x-x_0|<\delta_2$ 时有 $|f(x)-B|<\varepsilon$。
+
+取 $\delta=\min\{\delta_1,\delta_2\}$，并取一个满足 $0<|x-x_0|<\delta$ 的 $x$。由三角不等式，
+\[
+|A-B|\leq |A-f(x)|+|f(x)-B|<2\varepsilon=\frac{2}{3}|A-B|,
+\]
+这与 $|A-B|>0$ 矛盾。因此 $A=B$。
+\end{proof}
+% UNIT S01.U08
+\begin{example}
+计算
+\[
+\lim_{x\to2}(3x-1)\text{。}
+\]
+为说明双侧极限的处理方法，分别考察 $x\to2^-$ 和 $x\to2^+$ 两种情形。
+\end{example}
+% UNIT S01.U09
+\par\noindent\textbf{解：}当 $x\to2^-$ 或 $x\to2^+$ 时，都有 $3x-1\to3\cdot2-1=5$。更直接地，对任意 $\varepsilon>0$，取 $\delta=\varepsilon/3$。当 $0<|x-2|<\delta$ 时，
+\[
+|(3x-1)-5|=|3x-6|=3|x-2|<3\delta=\varepsilon\text{。}
+\]
+因此由极限定义，
+\[
+\lim_{x\to2}(3x-1)=5\text{。}
+\]\par
+% UNIT S01.U10
+\begin{example}
+设
+\[
+f(x)=
+\begin{cases}
+1,&x<0,\\
+2,&x>0.
+\end{cases}
+\]
+判断 $\lim_{x\to0}f(x)$ 是否存在。
+\end{example}
+% UNIT S01.U11
+\par\noindent\textbf{解：}当 $x\to0^-$ 时，始终有 $f(x)=1$，所以
+\[
+\lim_{x\to0^-}f(x)=1\text{。}
+\]
+当 $x\to0^+$ 时，始终有 $f(x)=2$，所以
+\[
+\lim_{x\to0^+}f(x)=2\text{。}
+\]
+由于左右极限不相等，根据定理 \ref{thm:two-sided-limit-criterion}，$\lim_{x\to0}f(x)$ 不存在。\par
+% UNIT S01.U12
+\begin{exercise}
+\label{mathagent:exercise:bf60311c135cf0c14f3cb42069a931ed175758be7d89dff861bed83a8d332803}
+设
+\[
+f(x)=
+\begin{cases}
+2x+1,&x<1,\\
+5,&x>1.
+\end{cases}
+\]
+判断 $\lim_{x\to1}f(x)$ 是否存在；若存在，求出该极限。
+\end{exercise}
+\section{极限的基本性质与运算}\label{sec:S02}
+% UNIT S02.U01
+\begin{definition}
+设函数 $f,g,h$ 在点 $x_0$ 的某个去心邻域内有定义。若在该邻域内有 $h(x)\leq f(x)\leq g(x)$，且存在有限数 $L$，使得
+\[
+\lim_{x\to x_0}h(x)=L,\qquad \lim_{x\to x_0}g(x)=L,
+\]
+则
+\[
+\lim_{x\to x_0}f(x)=L\text{。}
+\]
+这称为夹逼原理。\label{def:squeeze-principle}
+\end{definition}
+% UNIT S02.U02
+\begin{theorem}
+设函数 $f$ 与 $g$ 在点 $x_0$ 的某个去心邻域内有定义，且 $\lim_{x\to x_0}f(x)=A$，$\lim_{x\to x_0}g(x)=B$。则
+\[
+\lim_{x\to x_0}(f(x)+g(x))=A+B,
+\qquad
+\lim_{x\to x_0}(f(x)-g(x))=A-B,
+\]
+\[
+\lim_{x\to x_0}f(x)g(x)=AB.
+\]
+若 $B\neq0$，并且在某个去心邻域内 $g(x)\neq0$，则
+\[
+\lim_{x\to x_0}\frac{f(x)}{g(x)}=\frac{A}{B}.
+\]
+\label{thm:limit-algebra}
+
+复合极限的基础结论：设 $g$ 在 $x_0$ 的某个去心邻域内有定义，$\lim_{x\to x_0}g(x)=b$；外函数 $f$ 在 $b$ 的某个去心邻域内有定义，且 $\lim_{t\to b}f(t)=L$。若在 $x_0$ 的某个去心邻域内，$g(x)\neq b$ 且 $g(x)$ 属于 $f$ 的定义域（因而复合函数有定义），则
+\[
+\lim_{x\to x_0}f(g(x))=L.
+\]
+这里要求内函数最终不取到 $b$，不能仅凭上述两个极限就无条件推出复合极限。
+\end{theorem}
+% UNIT S02.U03
+\begin{proof}
+先证明和的法则。给定 $\varepsilon>0$，由 $f(x)\to A$ 与 $g(x)\to B$，分别存在 $\delta_1>0$ 与 $\delta_2>0$，使得当 $0<|x-x_0|<\delta_1$ 时 $|f(x)-A|<\varepsilon/2$，当 $0<|x-x_0|<\delta_2$ 时 $|g(x)-B|<\varepsilon/2$。取 $\delta=\min\{\delta_1,\delta_2\}$，则
+\[
+\left|(f(x)+g(x))-(A+B)\right|\leq |f(x)-A|+|g(x)-B|<\varepsilon.
+\]
+故 $f(x)+g(x)\to A+B$。由于 $|(-g(x))-(-B)|=|g(x)-B|$，由定义有 $-g(x)\to-B$；差的法则由 $f(x)-g(x)=f(x)+(-g(x))$ 及和的法则得到。
+
+先说明局部有界性：若 $f$ 在 $x_0$ 的某个去心邻域内有定义，且有有限极限 $A$，则 $f$ 在某个去心邻域内有界。事实上，在极限定义中取误差为 $1$，可得 $\delta_0>0$，使得当 $0<|x-x_0|<\delta_0$ 时，
+\[
+|f(x)-A|<1,\qquad |f(x)|\leq |A|+|f(x)-A|<|A|+1.
+\]
+这只涉及去心邻域，不要求 $f(x_0)$ 有定义。
+
+对于积，令 $M=|A|+1>0$。给定 $\varepsilon>0$，由两个极限的定义可分别取 $\delta_1,\delta_2>0$，使得当 $0<|x-x_0|<\delta_1$ 时 $|g(x)-B|<\varepsilon/(2M)$，当 $0<|x-x_0|<\delta_2$ 时 $|f(x)-A|<\varepsilon/(2(|B|+1))$。取 $\delta=\min\{\delta_0,\delta_1,\delta_2\}$，则当 $0<|x-x_0|<\delta$ 时，
+\[
+|f(x)g(x)-AB|\leq |f(x)|\,|g(x)-B|+|B|\,|f(x)-A|
+<\frac{\varepsilon}{2}+\frac{|B|\varepsilon}{2(|B|+1)}<\varepsilon.
+\]
+故由极限定义，$f(x)g(x)\to AB$。
+
+若 $B\neq0$，由 $g(x)\to B$，可取 $\delta_3>0$，使得当 $0<|x-x_0|<\delta_3$ 时 $|g(x)-B|<|B|/2$。于是
+\[
+|g(x)|\geq |B|-|g(x)-B|>\frac{|B|}{2}>0,
+\]
+故分母不仅非零，而且远离零，并有
+\[
+\left|\frac{1}{g(x)}-\frac{1}{B}\right|=\frac{|g(x)-B|}{|g(x)||B|}\leq\frac{2|g(x)-B|}{|B|^2}.
+\]
+给定 $\varepsilon>0$，再由极限定义取 $\delta_4>0$，使得当 $0<|x-x_0|<\delta_4$ 时 $|g(x)-B|<\varepsilon|B|^2/2$。当 $0<|x-x_0|<\min\{\delta_3,\delta_4\}$ 时，上述倒数误差小于 $\varepsilon$。所以 $1/g(x)\to1/B$。再由已证明的积的法则，得到
+\[
+\frac{f(x)}{g(x)}=f(x)\frac{1}{g(x)}\to\frac{A}{B}.
+\]
+
+最后证明复合极限结论。按该结论的假设，取 $r>0$，使得当 $0<|x-x_0|<r$ 时，$g(x)\neq b$ 且 $f(g(x))$ 有定义。给定 $\varepsilon>0$，由 $\lim_{t\to b}f(t)=L$，存在 $\eta>0$，使得当 $0<|t-b|<\eta$ 时 $|f(t)-L|<\varepsilon$。由 $g(x)\to b$，存在 $\delta_5>0$，使得当 $0<|x-x_0|<\delta_5$ 时 $|g(x)-b|<\eta$。因此，当 $0<|x-x_0|<\min\{r,\delta_5\}$ 时，
+\[
+0<|g(x)-b|<\eta,\qquad |f(g(x))-L|<\varepsilon.
+\]
+由极限定义即得 $\lim_{x\to x_0}f(g(x))=L$。
+\end{proof}
+% UNIT S02.U04
+\begin{theorem}
+设函数 $f,g,h$ 在点 $x_0$ 的某个去心邻域内有定义，并且在该邻域内满足
+\[
+h(x)\leq f(x)\leq g(x).
+\]
+若
+\[
+\lim_{x\to x_0}h(x)=L,
+\qquad
+\lim_{x\to x_0}g(x)=L,
+\]
+则
+\[
+\lim_{x\to x_0}f(x)=L.
+\]
+\label{thm:squeeze-theorem}
+\end{theorem}
+% UNIT S02.U05
+\begin{proof}
+给定 $\varepsilon>0$。由 $h(x)\to L$，存在 $\delta_1>0$，使得当 $0<|x-x_0|<\delta_1$ 时 $h(x)>L-\varepsilon$；由 $g(x)\to L$，存在 $\delta_2>0$，使得当 $0<|x-x_0|<\delta_2$ 时 $g(x)<L+\varepsilon$。取 $\delta=\min\{\delta_1,\delta_2\}$，则当 $0<|x-x_0|<\delta$ 时，
+\[
+L-\varepsilon<h(x)\leq f(x)\leq g(x)<L+\varepsilon.
+\]
+因此 $|f(x)-L|<\varepsilon$，从而 $\lim_{x\to x_0}f(x)=L$。
+\end{proof}
+% UNIT S02.U06
+\begin{theorem}
+设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义，且 $\lim_{x\to x_0}f(x)=A$。若 $A>0$，则存在 $\delta>0$，使得当 $0<|x-x_0|<\delta$ 时 $f(x)>0$；若 $A<0$，则存在 $\delta>0$，使得当 $0<|x-x_0|<\delta$ 时 $f(x)<0$。\label{thm:limit-sign-preservation}
+\end{theorem}
+% UNIT S02.U07
+\begin{proof}
+设 $A>0$。取 $\varepsilon=A/2$。由极限定义，存在 $\delta>0$，使得当 $0<|x-x_0|<\delta$ 时 $|f(x)-A|<A/2$，于是
+\[
+f(x)>A-\frac{A}{2}=\frac{A}{2}>0.
+\]
+当 $A<0$ 时，取 $\varepsilon=|A|/2$，则
+\[
+f(x)<A+\frac{|A|}{2}=\frac{A}{2}<0.
+\]
+
+\end{proof}
+% UNIT S02.U08
+\begin{example}
+计算
+\[
+\lim_{x\to1}\frac{x^2-1}{x-1}.
+\]
+要求在保持定义域条件 $x\neq1$ 的前提下进行代数变形。
+\end{example}
+% UNIT S02.U09
+\par\noindent\textbf{解：}当 $x\neq1$ 时，$x^2-1=(x-1)(x+1)$，所以
+\[
+\frac{x^2-1}{x-1}=x+1.
+\]
+原函数虽然在 $x=1$ 处没有定义，但极限只考察 $x\neq1$ 且 $x\to1$ 时的函数值。因此
+\[
+\lim_{x\to1}\frac{x^2-1}{x-1}=\lim_{x\to1}(x+1)=1+1=2.
+\]\par
+% UNIT S02.U10
+\begin{example}
+设 $f(x)=x^2-3x+2$。求 $\lim_{x\to2}f(x)$，并说明所得极限的符号。
+\end{example}
+% UNIT S02.U11
+\par\noindent\textbf{解：}由极限的和、差与积法则，
+\[
+\lim_{x\to2}(x^2-3x+2)=2^2-3\cdot2+2=0.
+\]
+因此该极限等于 $0$。由于极限值为零，保号定理不能据此断言 $f(x)$ 在 $2$ 的去心邻域内恒正或恒负。\par
+% UNIT S02.U12
+\begin{exercise}
+\label{mathagent:exercise:b4c9c9a1fb82bcef052fdbf6e1539831ed88cee016dbcbf83a50e5e8d2311be0}
+设函数 $f$ 与 $g$ 在点 $x_0$ 的某个去心邻域内有定义，且
+\[
+\lim_{x\to x_0}f(x)=2,
+\qquad
+\lim_{x\to x_0}g(x)=-1.
+\]
+求
+\[
+\lim_{x\to x_0}\frac{f(x)+g(x)}{f(x)-g(x)}.
+\]
+并说明使用商的极限法则时需要检查的条件。
+\end{exercise}
+\section*{练习答案}
+% UNIT S01.U13
+\par\noindent\textbf{\hyperref[mathagent:exercise:bf60311c135cf0c14f3cb42069a931ed175758be7d89dff861bed83a8d332803]{练习 \ref*{mathagent:exercise:bf60311c135cf0c14f3cb42069a931ed175758be7d89dff861bed83a8d332803} 的解答：}}当 $x\to1^-$ 时，$f(x)=2x+1$，因此
+\[
+\lim_{x\to1^-}f(x)=2\cdot1+1=3\text{。}
+\]
+当 $x\to1^+$ 时，$f(x)=5$，因此
+\[
+\lim_{x\to1^+}f(x)=5\text{。}
+\]
+由于左极限 $3$ 与右极限 $5$ 不相等，根据定理 \ref{thm:two-sided-limit-criterion}，双侧极限 $\lim_{x\to1}f(x)$ 不存在。\par
+% UNIT S02.U13
+\par\noindent\textbf{\hyperref[mathagent:exercise:b4c9c9a1fb82bcef052fdbf6e1539831ed88cee016dbcbf83a50e5e8d2311be0]{练习 \ref*{mathagent:exercise:b4c9c9a1fb82bcef052fdbf6e1539831ed88cee016dbcbf83a50e5e8d2311be0} 的解答：}}由极限的和与差法则，
+\[
+\lim_{x\to x_0}(f(x)+g(x))=2+(-1)=1,
+\]
+\[
+\lim_{x\to x_0}(f(x)-g(x))=2-(-1)=3.
+\]
+分母的极限为 $3\neq0$，所以分母在 $x_0$ 的某个去心邻域内不为零，可以使用商的极限法则。因此
+\[
+\lim_{x\to x_0}\frac{f(x)+g(x)}{f(x)-g(x)}=\frac{1}{3}.
+\]\par
+\end{document}

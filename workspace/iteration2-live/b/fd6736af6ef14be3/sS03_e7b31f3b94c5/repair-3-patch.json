@@ -1,0 +1,13 @@
+{
+  "section_id": "S03",
+  "replacements": [
+    {
+      "unit_id": "S03.U10",
+      "tex": "当 $p\\leq0$ 时，通项 $1/n^p=n^{-p}$ 不趋于零，所以级数发散。\n\n设 $0<p\\leq1$。此时通项确实趋于零，但这只是级数收敛的必要条件，不能据此推出级数收敛。对每个正整数 $j$，考虑区间 $2^{j-1}<n\\leq2^j$。其中共有 $2^{j-1}$ 个整数，并且 $n\\leq2^j$，所以\n\\[\n\\frac{1}{n^p}\\geq\\frac{1}{(2^j)^p}=2^{-jp}.\n\\]\n因此\n\\[\n\\sum_{n=2^{j-1}+1}^{2^j}\\frac{1}{n^p}\n\\geq 2^{j-1}2^{-jp}=\\frac12\\,2^{j(1-p)}.\n\\]\n当 $p=1$ 时，每组和至少为 $1/2$；当 $0<p<1$ 时，每组和随 $j$ 增大而不减且不趋于零。于是部分和数列无界，级数发散。\n\n最后设 $p>1$。取 $q=p-1>0$。对每个正整数 $n\\geq2$，函数 $x^{-p}$ 在区间 $[n-1,n]$ 上递减，所以\n\\[\n\\frac{1}{n^p}\\leq\\int_{n-1}^{n}x^{-p}\\,dx.\n\\]\n于是对任意整数 $m\\geq2$，\n\\[\n\\sum_{n=2}^{m}\\frac{1}{n^p}\n\\leq\\int_{1}^{m}x^{-p}\\,dx\n=\\frac{1-m^{1-p}}{p-1}\n\\leq\\frac{1}{p-1}.\n\\]\n首个部分和为 $S_1=1$；对 $m\\geq2$，上述估计给出 $S_m\\leq1+1/(p-1)$。因此全部部分和有共同上界，故由定理 \\ref{thm:monotone-partial-sums}，级数收敛。\n\n几何级数的结论直接来自有限等比求和。对 $a>0$、$r>0$ 且 $r\\ne1$，第 $m$ 个部分和为\n\\[\n\\sum_{n=1}^{m}ar^{n-1}=\\frac{a(1-r^m)}{1-r}.\n\\]\n当 $0<r<1$ 时，$r^m\\to0$，故部分和趋于 $a/(1-r)$。当 $r>1$ 时，$r^m\\to+\\infty$，部分和 $a(r^m-1)/(r-1)$ 趋于 $+\\infty$，所以级数发散。当 $r=1$ 时，部分和为 $ma$，也趋于 $+\\infty$。当 $r=0$ 时，按上述明确给出的各项，所有部分和都等于 $a$，故级数收敛且和为 $a$。"
+    }
+  ],
+  "calculation_updates": [],
+  "calculation_additions": [],
+  "uncertainties_append": [],
+  "calculation_limitations_append": []
+}

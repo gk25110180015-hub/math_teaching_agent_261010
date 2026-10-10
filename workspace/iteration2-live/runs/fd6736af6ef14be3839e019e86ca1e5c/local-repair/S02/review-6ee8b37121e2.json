@@ -1,0 +1,315 @@
+{
+  "prior_issues": [
+    {
+      "rule_id": "MISSING_ASSOCIATED_ANSWER",
+      "severity": "blocking",
+      "unit_id": "S02.U18",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "rule_id": "MISSING_ASSOCIATED_ANSWER",
+      "severity": "blocking",
+      "unit_id": "S02.U19",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "rule_id": "MISSING_ASSOCIATED_ANSWER",
+      "severity": "blocking",
+      "unit_id": "S02.U20",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "unit_id": "S02.U18",
+      "severity": "blocking",
+      "message": "练习答案直接嵌入题目正文，违反锁定的练习答案位置条件。应保留题目作为本节练习，并将“答案：”及其解答移至讲义末尾；这不是由 JSON 单元顺序造成的误判，因为答案实际写在 exercise.tex 正文中。",
+      "evidence": "锁定计划 lecture.answers_location=\"end\"，且 S02.U17 明确写道“以下为本节练习，答案统一安排在讲义末尾”。但 S02.U18 的 tex 在题目后直接包含“答案：”及三小题的完整解答；rendering_contract 明确规定嵌入 exercise.tex 的答案不会被自动移至末尾。"
+    },
+    {
+      "unit_id": "S02.U19",
+      "severity": "blocking",
+      "message": "练习答案直接嵌入题目正文，违反锁定的练习答案位置条件。应将题目与答案分离，并把答案移至讲义末尾；答案中的数学计算本身未发现错误。",
+      "evidence": "锁定计划 lecture.answers_location=\"end\"。S02.U19 的 tex 在练习题后直接包含“答案：”和完整线性运算、有限项改变及反例解答；rendering_contract 明确说明嵌入 exercise.tex 的答案不会被自动 relocated。"
+    },
+    {
+      "unit_id": "S02.U20",
+      "severity": "blocking",
+      "message": "练习答案直接嵌入题目正文，违反锁定的练习答案位置条件。应将题目与答案分离，并把答案移至讲义末尾；答案中的余项、误差阈值和新级数求和计算本身未发现错误。",
+      "evidence": "锁定计划 lecture.answers_location=\"end\"。S02.U20 的 tex 在题目后直接包含“答案：”及完整解答；rendering_contract 明确规定题干内嵌答案不会被自动移至讲义末尾。"
+    }
+  ],
+  "review_identity": {
+    "candidate_hash": "ae68f99d5dcbf8c2cebefe48f8a735d8b7b484fbec86698dfd149f57677e000c",
+    "tool_checks_hash": "10536bc3867f36511fdd5325d7a26f0d1143bb5e87614d07ea8859e348922d1f",
+    "reviewer_prompt_hash": "86d925c63b8b56ab0432f1395c119f009a7f33d6aff38f36eb37f0d6d3f488cc",
+    "plan_context_hash": "0827c9bc231d0ae64b5ca96dbc16b1569e35e94ba56f382a61b6bc4a736aacc1"
+  },
+  "report": {
+    "section_id": "S02",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "1",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S02.C01",
+          "unit_id": "S02.U05"
+        },
+        {
+          "kind": "series",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": false,
+          "message": "级数收敛性核算与声明一致。",
+          "calculation_id": "S02.C02",
+          "unit_id": "S02.U07"
+        },
+        {
+          "kind": "equivalence",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "4 - 2/2**n",
+          "message": "在声明假设下符号差为零。",
+          "calculation_id": "S02.C03",
+          "unit_id": "S02.U16"
+        },
+        {
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "2/3",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S02.AC01",
+          "unit_id": "S02.U18.answer"
+        }
+      ],
+      "coverage": [
+        "S02.U01",
+        "S02.U02",
+        "S02.U03",
+        "S02.U04",
+        "S02.U05",
+        "S02.U06",
+        "S02.U07",
+        "S02.U08",
+        "S02.U09",
+        "S02.U10",
+        "S02.U11",
+        "S02.U12",
+        "S02.U13",
+        "S02.U14",
+        "S02.U15",
+        "S02.U16",
+        "S02.U17",
+        "S02.U18",
+        "S02.U19",
+        "S02.U20",
+        "S02.U18.answer",
+        "S02.U19.answer",
+        "S02.U20.answer"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "核算请求覆盖一个通项极限、调和级数的敛散性及一个部分和公式的代数变形；协议不能直接表达任意实数列及其部分和之间的量化关系，因此一般必要条件、线性运算和有限项改变性质由正文证明，不由这些核算替代。",
+        "新增核算仅覆盖 S02.U18.answer 中第 (1) 项的通项极限。任意实数列的线性运算、有限项改变与余项相等的量化论证不由此核算覆盖；截断位置的最小性由答案中的整数比较和单调性说明。"
+      ]
+    },
+    "llm_review": {
+      "issues": [
+        {
+          "unit_id": "S02.U18",
+          "severity": "blocking",
+          "message": "练习题正文直接包含“答案”及完整解答，违反锁定的 lecture.answers_location=\"end\"。虽然存在单独的 S02.U18.answer 单元且渲染契约会将该独立答案单元移至末尾，但题干内嵌的答案不会被自动移除或迁移，因此仍构成答案位置违规。应从练习题正文删除内嵌答案，仅保留独立答案单元。",
+          "evidence": "S02.U18 的 tex 在三小题题干后直接出现“答案：”并给出全部解答；rendering_contract 明确规定 embedded in exercise.tex 的答案不会被 relocated，而 lecture.answers_location 明确锁定为 end。"
+        },
+        {
+          "unit_id": "S02.U19",
+          "severity": "blocking",
+          "message": "练习题正文直接包含“答案”及完整解答，违反锁定的 lecture.answers_location=\"end\"。独立的 S02.U19.answer 单元不能使 exercise.tex 内嵌的答案自动迁移或免责。应从练习题正文删除内嵌答案，仅保留独立答案单元。",
+          "evidence": "S02.U19 的 tex 在题目后直接出现“答案：”并包含线性运算、有限项改变和反例的完整解答；rendering_contract 明确说明嵌入 exercise.tex 的答案不会被自动移至讲义末尾。"
+        },
+        {
+          "unit_id": "S02.U20",
+          "severity": "blocking",
+          "message": "练习题正文直接包含“答案”及完整解答，违反锁定的 lecture.answers_location=\"end\"。独立的 S02.U20.answer 单元不能迁移或覆盖 exercise.tex 中已经写入的答案。应从练习题正文删除内嵌答案，仅保留独立答案单元。",
+          "evidence": "S02.U20 的 tex 在题干后直接出现“答案：”并给出余项、误差阈值、有限项改变后的和及余项比较；rendering_contract 明确规定题干内嵌答案不会被自动 relocated。"
+        },
+        {
+          "unit_id": "S02.U14",
+          "severity": "warning",
+          "message": "有限项改变定理的证明中下标范围写错了一位：由定理假设只能对 n>N 保证 a_n=b_n，因此当 n>N 时才有 B_n-A_n=\\sum_{k=1}^{N}(b_k-a_k)。正文写成“对所有整数 n\\geq N”，在 n=N 且第 N 项发生改变时该等式不成立。该错误不影响最终同敛散结论，但应将证明中的 n\\geq N 改为 n>N（或 n\\geq N+1）。",
+          "evidence": "S02.U13 的假设是“对所有整数 n>N 都有 a_n=b_n”；S02.U14 随后却写“对所有整数 n\\geq N，B_n-A_n=...”。例如仅令 a_N\\ne b_N、其余项相同，则 n=N 时差值还包含第 N 项差异。"
+        },
+        {
+          "unit_id": "S02.U14",
+          "severity": "warning",
+          "message": "证明后半段关于“添加或删去有限项”的说明是概略性的，未明确给出一般插入或删除后的重编号与尾部部分和关系。当前已给出的有限项修改定理足以支持主要结论，但若将“添加或删去有限项”作为一般性质，建议明确限定保持顺序和重编号规则，避免与无限重排混淆。",
+          "evidence": "S02.U13 将有限项修改与“添加或删去有限项，并保持其余项的相对次序”并列陈述；S02.U14 仅具体证明删去前 N 项及最后一句概括一般情形，未逐一说明一般删除位置后的部分和表达式。"
+        }
+      ],
+      "checked_unit_ids": [
+        "S02.U01",
+        "S02.U02",
+        "S02.U03",
+        "S02.U04",
+        "S02.U05",
+        "S02.U06",
+        "S02.U07",
+        "S02.U08",
+        "S02.U09",
+        "S02.U10",
+        "S02.U11",
+        "S02.U12",
+        "S02.U13",
+        "S02.U14",
+        "S02.U15",
+        "S02.U16",
+        "S02.U17",
+        "S02.U18",
+        "S02.U19",
+        "S02.U20",
+        "S02.U18.answer",
+        "S02.U19.answer",
+        "S02.U20.answer"
+      ],
+      "limitations": [
+        "本次审阅严格限于 scope.kind=\"section_local\" 的 S02 实际单元；S03、S04、S05 尚未生成，不将其未出现内容视为本节遗漏。",
+        "已逐单元检查列出的 23 个实际单元，包括独立 solution 单元；普通模型审阅不是形式化证明，不能替代对全部量词、极限定义和推理的机械验证。",
+        "工具核算只覆盖少量显式表达式，不能证明任意实数列上的一般定理；本报告仍依据实际数学正文检查定义、假设、量词、端点和证明步骤。",
+        "本次结果不包含最终 PDF 的排版或渲染验收；答案位置判断依据提供的 rendering_contract，并区分了独立答案单元与练习题正文中的内嵌答案。"
+      ]
+    },
+    "issues": [
+      {
+        "unit_id": "S02.U18",
+        "severity": "blocking",
+        "message": "练习题正文直接包含“答案”及完整解答，违反锁定的 lecture.answers_location=\"end\"。虽然存在单独的 S02.U18.answer 单元且渲染契约会将该独立答案单元移至末尾，但题干内嵌的答案不会被自动移除或迁移，因此仍构成答案位置违规。应从练习题正文删除内嵌答案，仅保留独立答案单元。",
+        "evidence": "S02.U18 的 tex 在三小题题干后直接出现“答案：”并给出全部解答；rendering_contract 明确规定 embedded in exercise.tex 的答案不会被 relocated，而 lecture.answers_location 明确锁定为 end。"
+      },
+      {
+        "unit_id": "S02.U19",
+        "severity": "blocking",
+        "message": "练习题正文直接包含“答案”及完整解答，违反锁定的 lecture.answers_location=\"end\"。独立的 S02.U19.answer 单元不能使 exercise.tex 内嵌的答案自动迁移或免责。应从练习题正文删除内嵌答案，仅保留独立答案单元。",
+        "evidence": "S02.U19 的 tex 在题目后直接出现“答案：”并包含线性运算、有限项改变和反例的完整解答；rendering_contract 明确说明嵌入 exercise.tex 的答案不会被自动移至讲义末尾。"
+      },
+      {
+        "unit_id": "S02.U20",
+        "severity": "blocking",
+        "message": "练习题正文直接包含“答案”及完整解答，违反锁定的 lecture.answers_location=\"end\"。独立的 S02.U20.answer 单元不能迁移或覆盖 exercise.tex 中已经写入的答案。应从练习题正文删除内嵌答案，仅保留独立答案单元。",
+        "evidence": "S02.U20 的 tex 在题干后直接出现“答案：”并给出余项、误差阈值、有限项改变后的和及余项比较；rendering_contract 明确规定题干内嵌答案不会被自动 relocated。"
+      },
+      {
+        "unit_id": "S02.U14",
+        "severity": "warning",
+        "message": "有限项改变定理的证明中下标范围写错了一位：由定理假设只能对 n>N 保证 a_n=b_n，因此当 n>N 时才有 B_n-A_n=\\sum_{k=1}^{N}(b_k-a_k)。正文写成“对所有整数 n\\geq N”，在 n=N 且第 N 项发生改变时该等式不成立。该错误不影响最终同敛散结论，但应将证明中的 n\\geq N 改为 n>N（或 n\\geq N+1）。",
+        "evidence": "S02.U13 的假设是“对所有整数 n>N 都有 a_n=b_n”；S02.U14 随后却写“对所有整数 n\\geq N，B_n-A_n=...”。例如仅令 a_N\\ne b_N、其余项相同，则 n=N 时差值还包含第 N 项差异。"
+      },
+      {
+        "unit_id": "S02.U14",
+        "severity": "warning",
+        "message": "证明后半段关于“添加或删去有限项”的说明是概略性的，未明确给出一般插入或删除后的重编号与尾部部分和关系。当前已给出的有限项修改定理足以支持主要结论，但若将“添加或删去有限项”作为一般性质，建议明确限定保持顺序和重编号规则，避免与无限重排混淆。",
+        "evidence": "S02.U13 将有限项修改与“添加或删去有限项，并保持其余项的相对次序”并列陈述；S02.U14 仅具体证明删去前 N 项及最后一句概括一般情形，未逐一说明一般删除位置后的部分和表达式。"
+      }
+    ],
+    "reference_recovery": null,
+    "answer_recovery": {
+      "schema_version": 1,
+      "operation": "append_missing_answers",
+      "status": "APPLIED_UNCHECKED",
+      "source_section_hash": "db46e9427174364b657889cb04f2ccd9748fdd0c72e357472020c259892ebaa4",
+      "patch_hash": "a93941cf61163d4dafb9dfcd8b38a7c8cfa7506d00f419e46c41b6d4c37a1429",
+      "result_section_hash": "ae68f99d5dcbf8c2cebefe48f8a735d8b7b484fbec86698dfd149f57677e000c",
+      "target_ids": [
+        "S02.U18",
+        "S02.U19",
+        "S02.U20"
+      ],
+      "new_unit_ids": [
+        "S02.U18.answer",
+        "S02.U19.answer",
+        "S02.U20.answer"
+      ],
+      "new_unit_hashes": {
+        "S02.U18.answer": "97bf450d131d9e67ec7a9db038d1878e4148e408482bb882134c5c46501c9390",
+        "S02.U19.answer": "6ca12cbf30641e4e2f0641131f367205d474d8ece28321d43cb56eef9abec988",
+        "S02.U20.answer": "dc1919a67a7b7c0101c45ddcfc63c318f2d5d61e8567e47f0dcef96a10e391a2"
+      },
+      "original_unit_count": 20,
+      "added_unit_count": 3,
+      "original_units_preserved": true,
+      "original_calculations_preserved": true,
+      "new_calculation_count": 1,
+      "math_check": "NOT_RUN",
+      "normalization": "NOT_RUN",
+      "teacher_review": "NOT_RUN",
+      "identity": {
+        "context_hash": "3f9f680007b1540ced449739aa1e373347577afdd839b58f67be47ebf740ca74",
+        "model": "gpt-6-astra",
+        "provider": "live",
+        "prompt_hash": "3f4beaf0cea232c9067c05d0326b08ebba71227e57fd50b283fb3401d8340da3",
+        "schema_hash": "33f1dd4a1048269d000f52f3663cc9fdac32afe07edfda814a6c018869562c33",
+        "implementation_hash": "3ec9e3ba686daea8447efbe4832827ef86797ed21965a6184dd29540d321baf8"
+      },
+      "proposal_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/answer-recovery/S02/ee59068e61ea64cad830cbdbab69eecdcb2f9e79d8963e3ba0bec13e4ca7c53c/attempt-640d65eb3f89/proposal.json",
+      "reused_proposal": false
+    },
+    "mock": false
+  },
+  "retained_issues": [
+    {
+      "unit_id": "S02.U18",
+      "severity": "blocking",
+      "message": "练习题正文直接包含“答案”及完整解答，违反锁定的 lecture.answers_location=\"end\"。虽然存在单独的 S02.U18.answer 单元且渲染契约会将该独立答案单元移至末尾，但题干内嵌的答案不会被自动移除或迁移，因此仍构成答案位置违规。应从练习题正文删除内嵌答案，仅保留独立答案单元。",
+      "evidence": "S02.U18 的 tex 在三小题题干后直接出现“答案：”并给出全部解答；rendering_contract 明确规定 embedded in exercise.tex 的答案不会被 relocated，而 lecture.answers_location 明确锁定为 end。"
+    },
+    {
+      "unit_id": "S02.U19",
+      "severity": "blocking",
+      "message": "练习题正文直接包含“答案”及完整解答，违反锁定的 lecture.answers_location=\"end\"。独立的 S02.U19.answer 单元不能使 exercise.tex 内嵌的答案自动迁移或免责。应从练习题正文删除内嵌答案，仅保留独立答案单元。",
+      "evidence": "S02.U19 的 tex 在题目后直接出现“答案：”并包含线性运算、有限项改变和反例的完整解答；rendering_contract 明确说明嵌入 exercise.tex 的答案不会被自动移至讲义末尾。"
+    },
+    {
+      "unit_id": "S02.U20",
+      "severity": "blocking",
+      "message": "练习题正文直接包含“答案”及完整解答，违反锁定的 lecture.answers_location=\"end\"。独立的 S02.U20.answer 单元不能迁移或覆盖 exercise.tex 中已经写入的答案。应从练习题正文删除内嵌答案，仅保留独立答案单元。",
+      "evidence": "S02.U20 的 tex 在题干后直接出现“答案：”并给出余项、误差阈值、有限项改变后的和及余项比较；rendering_contract 明确规定题干内嵌答案不会被自动 relocated。"
+    }
+  ]
+}

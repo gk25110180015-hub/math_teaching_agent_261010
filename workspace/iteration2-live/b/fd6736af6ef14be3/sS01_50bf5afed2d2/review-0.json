@@ -1,0 +1,59 @@
+{
+  "section_id": "S01",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "equivalence",
+        "assumptions": {},
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "7/8",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S01.C01",
+        "unit_id": "S01.U07"
+      }
+    ],
+    "coverage": [
+      "S01.U01",
+      "S01.U02",
+      "S01.U03",
+      "S01.U04",
+      "S01.U05",
+      "S01.U06",
+      "S01.U07",
+      "S01.U08",
+      "S01.U09"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S01.U01",
+      "S01.U02",
+      "S01.U03",
+      "S01.U04",
+      "S01.U05",
+      "S01.U06",
+      "S01.U07",
+      "S01.U08",
+      "S01.U09"
+    ],
+    "limitations": [
+      "本次仅审查section_local范围内的S01实际单元；S02至S05尚未生成，未纳入本节遗漏判断。",
+      "已逐项检查所提供正文中的定义域表述、量词、极限关系、端点与算术计算；未进行形式化证明或穷尽所有可能解释的机器验证。",
+      "工具检查仅覆盖S01.U07中显式请求的部分和计算（结果为7/8），不能替代对整节数学正确性的形式化证明。",
+      "普通模型审阅不等同于形式化证明；本次结论仅表示在给定文本和范围内未发现明确数学错误。"
+    ]
+  },
+  "issues": [],
+  "mock": false
+}

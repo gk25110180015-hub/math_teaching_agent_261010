@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227",
+    "section_id": "S04",
+    "context_hash": "d594d5962e767f3be7499bfbe76faf41c48d7586841588100516b510408d6af5",
+    "base_hash": "40643e3b5cfda7956700cc7f43db493f40b0f2f4f91b4400f53468d389ef80b7",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "BUDGET_EXHAUSTED",
+  "applied_rounds": 3,
+  "proposal_calls": 3,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "rule_id": "NUMERIC_IS_NOT_PROOF",
+      "severity": "review",
+      "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+      "location": {
+        "calculation_id": "S04.C01",
+        "unit_id": "S04.U05"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S04.U07",
+      "severity": "blocking",
+      "message": "余项估计证明及多个后续单元仍存在确定的 TeX 转义层级错误：JSON 解码后，公式命令前保留两个反斜杠，而不是一个。这会破坏数学环境、运算符或交叉引用，必须修复实际正文，不能仅按猜测出的公式阅读。",
+      "evidence": "S04.U07 的 tex 在 JSON 解码后含有两个反斜杠后接 [、geq、ref、leq 等形式。相同问题仍出现在 S04.U08、S04.U09、S04.U10、S04.U11、S04.U12、S04.U13；例如 S04.U11 的平方根命令、S04.U12 的余项不等式及定理引用均受影响。rendering_contract 仅规定独立解答的组装与搬移，没有规定再次解码或修复 TeX。与保留问题中的旧证据不同，当前 S04.U03、S04.U04 已使用正常的单反斜杠命令，不再属于该错误。"
+    }
+  ],
+  "unit_applied_counts": {
+    "S04.U01": 1,
+    "S04.U05": 1,
+    "S04.U06": 1,
+    "S04.U02": 1,
+    "S04.U04": 1,
+    "S04.U03": 1
+  },
+  "proposal_counts_by_key": {
+    "unit:S04.U01": 1,
+    "unit:S04.U05": 3,
+    "unit:S04.U02": 1,
+    "unit:S04.U06": 1,
+    "unit:S04.U03": 1,
+    "unit:S04.U04": 1
+  },
+  "rejected_counts_by_key": {},
+  "evidence_dependencies": [
+    {
+      "key": "b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-1-patch.json",
+      "hash": "fc4b1fe4fdb05f9c0d41cabde751d13c07047849b6c61ae6fc3bdc4805fe052c",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-2-patch.json",
+      "hash": "9c0eaad9696aecfba9429f6141c5623db0eca1b617d2a1491b65d32906615a0a",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-3-patch.json",
+      "hash": "98d54dbc8b547e7d2de8f640d3802cf8b136b0fa2befe52c44ef41870690d538",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "4f1d8aeaa391fa72d2cd426bd7dafabb9d1f63bff23db7add6216cbb70d31e60",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1; tolerate one rejection per key, stop after another; retain aggregate calls and run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S04/candidate-1f19b7a36820.json",
+  "candidate_hash": "450cfef26fc136001da77831e8b0d7eb77a7ae3b1e510ddc42c8dad27b7cbc46",
+  "last_review_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/local-repair/S04/review-9dd785a14435.json",
+  "pending_operation": "strict_local_patch",
+  "pending_keys": [
+    "unit:S04.U03",
+    "unit:S04.U04",
+    "unit:S04.U05"
+  ],
+  "request_count_before": 31,
+  "patch_evidence": {
+    "schema_version": 1,
+    "operation": "strict_local_patch",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "0310a2e4ce6eda2c875ff290b03964029e469bcd38a802cd43e1e4616df40ac4",
+    "patch_hash": "211d63a42096ef109768337d929c06799ae0dd5ee6701f9731424d27831079ec",
+    "result_section_hash": "5a8184a19f6e133970fe8ec4700d2e7c1fd67eb1dc31d4f0e7dbb1e8f09ad356",
+    "allowed_unit_ids": [
+      "S04.U03",
+      "S04.U04",
+      "S04.U05"
+    ],
+    "changed_unit_ids": [
+      "S04.U03",
+      "S04.U04"
+    ],
+    "unit_order_preserved": true,
+    "unit_identity_and_metadata_preserved": true,
+    "non_target_units_preserved": true,
+    "original_calculation_count": 1,
+    "calculation_updates": [],
+    "calculation_additions": [],
+    "non_target_calculations_preserved": true,
+    "old_uncertainties_preserved": true,
+    "old_calculation_limitations_preserved": true,
+    "normalization": "NOT_RUN",
+    "math_check": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "proposal_key": "b/fd6736af6ef14be3/sS04_45a7cc16c944/repair-3-patch.json"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "6d8c928e2a71a1c49f079d2959df67c0288caa1e47bec7775b70ba816fdb963d",
+    "tool_checks_hash": "0ad9158bf9fb06cc215b2f3494108602fb8039a74641edf698937ed3b86c8461",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "bf94e3252564494fa95f7fd39aa573ed572572050bbaa93d8f20d300133e6b51",
+    "deterministic_checks_hash": "f16908ed6837b2656f809f1c662970a095819a8fc3e6faf1843d5c886de2e2f4"
+  },
+  "report": {
+    "section_id": "S01",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "equivalence",
+          "assumptions": {},
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "7/8",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S01.C01",
+          "unit_id": "S01.U07"
+        }
+      ],
+      "coverage": [
+        "S01.U01",
+        "S01.U02",
+        "S01.U03",
+        "S01.U04",
+        "S01.U05",
+        "S01.U06",
+        "S01.U07",
+        "S01.U08",
+        "S01.U09"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S01.U01",
+        "S01.U02",
+        "S01.U03",
+        "S01.U04",
+        "S01.U05",
+        "S01.U06",
+        "S01.U07",
+        "S01.U08",
+        "S01.U09"
+      ],
+      "limitations": [
+        "本次仅审阅 S01 所提供的九个单元，逐项核对本节锁定目标及实际正文；不对尚未生成的 S02—S05 作覆盖判断。",
+        "本节收敛与发散定义以部分和数列是否具有有限实数极限为依据，未发现量词或必要、充分条件混淆。已核对例练计算、求和起点及 n=1 边界；几何部分和公式使用锁定先修中的有限等比数列求和及数列极限性质。本节四项目标均有实际正文支持，此结论不代表整份课程覆盖完成。",
+        "已按 rendering_contract 核对独立解答及其关联：S01.U07 为例题行内解答，S01.U09 为移至讲义末尾的练习答案；题干未内嵌答案，未发现悬空关联。未检查实际生成的 PDF、编号显示与最终排版。",
+        "这是普通模型对所提供正文的数学与教学覆盖审阅，不是形式化证明；未以作者自评或工具的局部符号检查结果代替逐单元审阅，无问题报告也不保证不存在遗漏。"
+      ]
+    },
+    "issues": [],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": []
+}

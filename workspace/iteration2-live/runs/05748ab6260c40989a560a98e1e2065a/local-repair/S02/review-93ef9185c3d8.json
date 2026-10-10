@@ -1,0 +1,108 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "638fb87bdb31831f34423deb5c626a4dc5e16a58077dd9c5d891bfa91b3dcc1e",
+    "tool_checks_hash": "ba58d8fbeb07a1b1a32c2966391fd995e15301c5054092cd6ef236c6cffb0b2d",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "3fefac5439694cac1d0db4a1e66857a9544d41cebe9c5c7e4f5ba3dd13e688aa",
+    "deterministic_checks_hash": "3eb2e5d4a3a3f8641cf94fda148979f818a244e6f6d19d1573ee87c1d1c7e5a0"
+  },
+  "report": {
+    "section_id": "S02",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "2",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S02.C01",
+          "unit_id": "S02.U13"
+        },
+        {
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "2",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S02.C02",
+          "unit_id": "S02.U12"
+        }
+      ],
+      "coverage": [
+        "S02.U01",
+        "S02.U02",
+        "S02.U03",
+        "S02.U04",
+        "S02.U05",
+        "S02.U06",
+        "S02.U07",
+        "S02.U08",
+        "S02.U09",
+        "S02.U10",
+        "S02.U11",
+        "S02.U12",
+        "S02.U13",
+        "S02.U14",
+        "S02.U15"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "新增核算仅覆盖具体数列 |3/n-2| 的极限；协议不能表达一般数列的收敛量词及反三角不等式证明，绝对值极限法则仍须依据正文中的 ε-N 论证复核。",
+        "既有 S02.C02 保留原绑定 S02.U12，不作改绑；修订后该单元仅列出含绝对值的小问，其极限结论与证明归入 S02.U13。因此该请求只能核对题面所列具体表达式的预期极限，不能作为 S02.U12 含有证明或结论的证据，也不能核验题面与关联解答的组织对应关系。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S02.U01",
+        "S02.U02",
+        "S02.U03",
+        "S02.U04",
+        "S02.U05",
+        "S02.U06",
+        "S02.U07",
+        "S02.U08",
+        "S02.U09",
+        "S02.U10",
+        "S02.U11",
+        "S02.U12",
+        "S02.U13",
+        "S02.U14",
+        "S02.U15"
+      ],
+      "limitations": [
+        "本次为 section_local 审阅，逐单元核对了 S02 的全部所提供正文及其五项锁定目标；提供的 S01 正文仅作为先修依据使用。未对尚未生成的 S03、S04、S05 作覆盖判断，也未进行整份讲义的教学覆盖复核。",
+        "本次未发现需要报告的确定数学错误、重大不确定或非阻塞限制。核对包括有界性证明的 N=1 分支、保号与保序的条件及不等号、常数倍法则的 c=0 分支、乘积估计的正分母、商法则的逐项定义及非零极限条件，以及绝对值法则的一般陈述与定义证明。S02.U11 的倒数误差估计可直接按极限定义成立，不依赖尚未提供的夹逼定理。",
+        "例题与练习的题解关联已按正文检查；依据 rendering_contract，S02.U15 将被移至末尾答案区，其 JSON 中的位置不构成答案位置问题。未检查最终 PDF 的排版、引用编号及实际答案位置。",
+        "这是普通模型对数学正文与课程条件的审阅，不是形式化证明。所提供的符号计算结果仅能辅助核对具体表达式，不能替代一般定理、量词和证明依赖的人工式推理检查。"
+      ]
+    },
+    "issues": [],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": []
+}

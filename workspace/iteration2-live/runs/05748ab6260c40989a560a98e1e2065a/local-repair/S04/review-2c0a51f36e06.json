@@ -1,0 +1,69 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "05addf71a729dcf2b9d31a2886a40157eec8bdb20a81bf57177e1331728feb7e",
+    "tool_checks_hash": "841021a60aba5c7a32cbbb956e14ae2da583917ae0129e6d34122eb07f8e477e",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "b940f85a91abc8be98f831169d1eccc0d7f456b3d917b6d009cbc1a066b77e1b",
+    "deterministic_checks_hash": "b9f00b28b293e7e739128adfcf39602d34d5828e9196a835baa88cfb7f017d1c"
+  },
+  "report": {
+    "section_id": "S04",
+    "math": {
+      "schema_version": 1,
+      "status": "NEEDS_REVIEW",
+      "issues": [],
+      "evidence": [
+        {
+          "evidence_type": "not_checked",
+          "status": "NOT_RUN",
+          "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+        }
+      ],
+      "coverage": [
+        "S04.U01",
+        "S04.U02",
+        "S04.U03",
+        "S04.U04",
+        "S04.U05",
+        "S04.U06",
+        "S04.U07",
+        "S04.U08",
+        "S04.U09",
+        "S04.U10"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "本节结论主要涉及递推数列的归纳、有界性与单调性证明，以及由单调有界原理推出收敛。协议支持的表达式树和核算类型不能表达这些全称量词、递推关系与不等式链，因此未提交符号核算。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S04.U01",
+        "S04.U02",
+        "S04.U03",
+        "S04.U04",
+        "S04.U05",
+        "S04.U06",
+        "S04.U07",
+        "S04.U08",
+        "S04.U09",
+        "S04.U10"
+      ],
+      "limitations": [
+        "本次为 section_local 审阅，已阅读并核对 S04 全部十个实际单元及本节六项锁定目标；提供的先修正文仅作为当前推理的依据使用。不对其他章节作完整检查结论，也不将尚未生成的 S05 视为本节遗漏。",
+        "S04.U04 明确引用非空有上界实数集合的上确界性质及对应的下确界性质，并解释其含义；其使用条件和后续 ε-N 推理成立。这里是在已声明的实数基础上证明单调有界原理，并未从算术或归纳法推导完备性，也未展开被排除的严格公理体系。",
+        "已核对递推参数 0<q<1、初值等于 L 的边界情形、从 n=1 开始的归纳与差分、移位极限及极限方程。S04.U10 的下界可由已证单调递增和初值直接得到 a_n≥10；不因未重复写出这一直接推论而认定有界性证明缺失。",
+        "依据 rendering_contract，S04.U10 是关联至练习 S04.U09 的独立答案单元，将被移至讲义末尾；其 JSON 顺序不构成答案位置问题。本次未检查最终 PDF 的排版、引用显示或实际组装结果。",
+        "本次为普通模型正文审阅，不等于形式化证明。未执行外部符号计算或数值工具；未发现问题不表示已由自动证明系统验证全部数学结论。"
+      ]
+    },
+    "issues": [],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": []
+}

@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "uncertainty_id": "D001-5898c5c5e7790a29",
+      "unit_id": "S03.U04",
+      "disposition": "resolved_by_current_body",
+      "reason": "该疑点原本指出 S03.U04 把 $0<t<1$ 时的指数不等式 $1+t\\le e^t\\le1/(1-t)$ 当作未加核实的先修命题。当前 S03.U04 已在同一证明单元中先建立该估计：从 $(1+1/n)^n$ 的单调有界性、上确界、$\\varepsilon$-$N$ 数列极限、正数有理幂的根式极限与二项式/有限等比求和，得到有理 $t$ 上的不等式，再通过实幂保序延拓得到任意 $0<t<1$ 的不等式，并立即用它夹逼得到 $e^x-1$ 差商的左右极限。因此原缺口不再依赖 S01、S02 已包含该命题或外部材料另行确认，当前正文已补足。",
+      "evidence": [
+        {
+          "source_key": "current:S03.U04",
+          "source_sha256": "8ee2f871aa93521ba606b5242d8d33b65ef994fc734d0bad54cf5cf13dbed3a5",
+          "quote": "再证明第二个基本极限。先建立所需的指数函数估计，而不把待证极限作为先验性质。对正整数 $n$，设\n\\[\na_n=\\left(1+\\frac1n\\right)^n.\n\\]\n由二项式定理，$a_n$ 的第 $k$ 项为\n\\[\n\\binom nk\\frac1{n^k}=\\frac1{k!}\\prod_{j=0}^{k-1}\\left(1-\\frac{j}{n}\\right).\n\\]\n对每个固定的 $k$，该项随 $n$ 增大而不减；展开式中的新增项非负，所以 $a_n$ 单调不减。又因 $k!\\geq2^{k-1}$（$k\\geq1$），当 $n\\geq2$ 时\n\\[\na_n\\leq1+1+\\sum_{k=2}^n\\frac1{2^{k-1}}<3,\n\\]\n且 $a_1=2$。令\n\\[\nE=\\sup\\{a_n:n\\in\\mathbb N,\\ n\\geq1\\}.\n\\]\n这里使用实数的上确界性质：每个非空且有上界的实数集合都有最小上界。由上面的估计，集合 $\\{a_n:n\\geq1\\}$ 非空且有上界 $3$，故 $E$ 存在，并且 $2\\leq E\\leq3$。"
+        },
+        {
+          "source_key": "current:S03.U04",
+          "source_sha256": "8ee2f871aa93521ba606b5242d8d33b65ef994fc734d0bad54cf5cf13dbed3a5",
+          "quote": "对有理数 $t=p/q\\in(0,1)$（$p,q$ 为正整数），取子列 $n\\mapsto qn$，有\n\\[\na_{qn}^t=\\left(1+\\frac1{qn}\\right)^{pn}.\n\\]\n由上面已经证明的子列极限和根式误差控制，$a_{qn}^t\\to e^t$。二项式展开给出下界\n\\[\na_{qn}^t\\geq1+\\frac{pn}{qn}=1+t.\n\\]\n另一方面，对每个 $k$，有\n\\[\n\\frac{\\binom{pn}{k}}{(qn)^k}\n\\leq\\frac{(pn)^k}{k!(qn)^k}\n=\\frac{t^k}{k!}\\leq t^k,\n\\]\n从而\n\\[\na_{qn}^t\\leq\\sum_{k=0}^{pn}t^k\n=\\frac{1-t^{pn+1}}{1-t}\n<\\frac1{1-t}.\n\\]\n令 $n\\to\\infty$，得到对有理 $t\\in(0,1)$ 有\n\\[\n1+t\\leq e^t\\leq\\frac1{1-t}.\n\\]\n这里使用的是有限等比求和公式，没有另行使用无穷级数收敛理论。"
+        },
+        {
+          "source_key": "current:S03.U04",
+          "source_sha256": "8ee2f871aa93521ba606b5242d8d33b65ef994fc734d0bad54cf5cf13dbed3a5",
+          "quote": "对任意实数 $0<t<1$，取有理数 $0<u<t<v<1$。由实幂的保序性，\n\\[\n1+u\\leq e^u\\leq e^t\\leq e^v\\leq\\frac1{1-v}.\n\\]\n令有理数 $u$ 从下方趋于 $t$、$v$ 从上方趋于 $t$。这里只对线性函数和有理式取极限，得到\n\\[\n1+t\\leq e^t\\leq\\frac1{1-t},\\qquad 0<t<1.\n\\]\n这就建立了后续证明所需的指数函数估计，未使用待证的差商极限、指数函数在零点的导数或 Taylor 展开。"
+        }
+      ],
+      "remaining_dependency": false,
+      "repair_instruction": null
+    }
+  ],
+  "limitations": [
+    "本次审阅是模型对给定 LaTeX 正文的数学文本核查，不构成形式化证明或教师验收；工具未覆盖该指数不等式或完整 $\\varepsilon$-$N$/夹逼链条，不代表证明有误。",
+    "当前 S03.U04 证明仍以实数上确界性质、实数幂与实幂保序延拓、单位圆几何不等式等为明确基础；这些属于批准计划中的实数与初等函数先修范围，本判定未将其视为讲义内从公理开始重新构造。",
+    "协议极限核算仅对 $\\sin x/x$ 的显式表达式给出 PASS，未能核算本单元指数基本极限；本裁决依据正文推导，而非符号数值抽查。"
+  ]
+}

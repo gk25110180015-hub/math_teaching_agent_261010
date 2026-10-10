@@ -1,0 +1,86 @@
+{
+  "section_id": "S01",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "limit",
+        "assumptions": {
+          "x": {
+            "real": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "5",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S01.C01",
+        "unit_id": "S01.U09"
+      }
+    ],
+    "coverage": [
+      "S01.U01",
+      "S01.U02",
+      "S01.U03",
+      "S01.U04",
+      "S01.U05",
+      "S01.U06",
+      "S01.U07",
+      "S01.U08",
+      "S01.U09",
+      "S01.U10",
+      "S01.U11",
+      "S01.U12",
+      "S01.U13"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S01.U01",
+      "S01.U02",
+      "S01.U03",
+      "S01.U04",
+      "S01.U05",
+      "S01.U06",
+      "S01.U07",
+      "S01.U08",
+      "S01.U09",
+      "S01.U10",
+      "S01.U11",
+      "S01.U12",
+      "S01.U13"
+    ],
+    "limitations": [
+      "本次仅核对当前提供的 S01 实际单元；S02–S05 尚未生成，不构成本节遗漏，也未在本次审阅中核对。",
+      "审阅覆盖了正文中的定义、量词、定义域、端点、左右极限条件、证明中的指标与初值适用性，以及例题和练习答案；未将普通模型审阅视为形式化证明。",
+      "工具检查仅复算了 S01.U09 的一个显式极限并进行有限模式检查，不能替代对整节数学内容的独立形式化验证。",
+      "未进行最终 PDF 排版、交叉引用渲染或答案收集后的成品检查；本次仅依据所提供的实际单元正文和 rendering_contract 判断。"
+    ]
+  },
+  "issues": [],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 0,
+    "proposal_calls": 0,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "b081d105ff0f3374d07d92928f3bb3272b50f179f1a6d4be6f33285c145ec8a6",
+      "tool_checks_hash": "ba510ed75c6a20ffa1421fd5a9677e243874742e3056d2ac51d9a2bbe2c2704b",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "56f24d2c7112a8da58a5685ae7e7a9c4753b0c959d70d98cd2d681cd2a3856a0",
+      "deterministic_checks_hash": "81dbfb347e323196063104d49fa2d84e66c04c4385c0c20e6298ce80fa08c5af"
+    }
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "section_id": "S05",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "limit",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "1/2",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S05.C01",
+        "unit_id": "S05.U11"
+      },
+      {
+        "kind": "series",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "domain_scope": "supported_tail_guards",
+        "limitations": [
+          "以起点加非负整数代入，检查已保留的受支持运算定义域约束；不是通用定义域证明器。"
+        ],
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": false,
+        "message": "级数收敛性核算与声明一致。",
+        "calculation_id": "S05.C02",
+        "unit_id": "S05.U11"
+      },
+      {
+        "kind": "limit",
+        "assumptions": {
+          "m": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "1/2",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S05.C03",
+        "unit_id": "S05.U20"
+      }
+    ],
+    "coverage": [
+      "S05.U01",
+      "S05.U02",
+      "S05.U03",
+      "S05.U04",
+      "S05.U05",
+      "S05.U06",
+      "S05.U07",
+      "S05.U08",
+      "S05.U09",
+      "S05.U10",
+      "S05.U11",
+      "S05.U12",
+      "S05.U13",
+      "S05.U14",
+      "S05.U15",
+      "S05.U16",
+      "S05.U17",
+      "S05.U18",
+      "S05.U19",
+      "S05.U20",
+      "S05.U21"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "核算请求覆盖具体通项极限、具体绝对值级数的发散性与几何部分和的极限；协议不支持任意实数列的量化关系及一般不等式证明，因此绝对收敛蕴含收敛、三类划分和一般余项界由正文论证，不由这些核算替代。",
+      "本次仅修改答案区导航，不涉及受有界数学核算协议支持的数学结论，故不新增核算。现有归属关系明确为 S05.U15 对应 S05.U19、S05.U16 对应 S05.U20、S05.U17 对应 S05.U21；但所提供数据没有实际渲染题号、题目与答案的可引用标签或回链生成规则，无法据此安全写入具体题号或构造可点击链接。候选正文以题目内容辅助识别并说明按实际题号及回链查阅，不代表已经落实或核验具体链接。反馈所要求的实际生成题号与回链核对仍须依据生成器的标签映射及渲染产物完成；本次未视觉核验最终答案排序。"
+    ]
+  },
+  "llm_review": {
+    "issues": [
+      {
+        "unit_id": "S05.U18",
+        "severity": "warning",
+        "message": "答案导航宣称存在对应题号及题目回链，但所提供的组装规则只保证练习解答移至末尾，未保证生成这些导航设施。这不影响数学结论或已明确的答案归属；建议核实渲染器确实生成对应题号与回链，或将导航改为不依赖未确认功能的内容识别说明。",
+        "evidence": "正文要求“以原题实际显示的题号定位答案区中对应题号的解答，并通过答案处的题目回链返回原题”。rendering_contract 明确保证 S05.U19、S05.U20、S05.U21 作为关联练习的独立解答移至末尾，但未提供题号映射或回链生成规则；当前正文也没有用于该导航的显式引用。"
+      }
+    ],
+    "checked_unit_ids": [
+      "S05.U01",
+      "S05.U02",
+      "S05.U03",
+      "S05.U04",
+      "S05.U05",
+      "S05.U06",
+      "S05.U07",
+      "S05.U08",
+      "S05.U09",
+      "S05.U10",
+      "S05.U11",
+      "S05.U12",
+      "S05.U13",
+      "S05.U14",
+      "S05.U15",
+      "S05.U16",
+      "S05.U17",
+      "S05.U18",
+      "S05.U19",
+      "S05.U20",
+      "S05.U21"
+    ],
+    "limitations": [
+      "本次为 section_local 审阅，完整阅读并核对了所列21个当前单元，使用已提供的先修正文核查相关定义、比较判别法、线性运算、有限项改变性质及交错级数判别法；不构成其他章节的重新审阅或整份讲义的教学覆盖复核。",
+      "逐项核对当前节四项目标后，正文已提供绝对收敛与条件收敛的一般定义、绝对收敛蕴含收敛的证明、判别法选择流程及相应综合例练。本次未发现确定数学错误或需要 review 的重大数学缺口；这一判断不依赖作者自评或工具的 PASS 标记。",
+      "已核查当前例练的定义域、比较方向、必要与充分条件，以及有限和、尾和的最小合法指标。S05.U20 的尾和限定 m>n，未引用未定义的初值；其 n=4 结论明确针对给定误差上界，而非任意具体数列的实际最小截断位置。",
+      "按 rendering_contract，独立练习解答的 JSON 顺序不代表最终答案位置；所列练习解答均有实际存在的关联题目。未检查最终 PDF、交叉引用显示、实际题号或链接可用性。",
+      "这是普通模型对所提供正文的数学审阅，不是形式化证明；有限的符号核算也不能替代一般量化命题与完整推理的验证。"
+    ]
+  },
+  "issues": [
+    {
+      "unit_id": "S05.U18",
+      "severity": "warning",
+      "message": "答案导航宣称存在对应题号及题目回链，但所提供的组装规则只保证练习解答移至末尾，未保证生成这些导航设施。这不影响数学结论或已明确的答案归属；建议核实渲染器确实生成对应题号与回链，或将导航改为不依赖未确认功能的内容识别说明。",
+      "evidence": "正文要求“以原题实际显示的题号定位答案区中对应题号的解答，并通过答案处的题目回链返回原题”。rendering_contract 明确保证 S05.U19、S05.U20、S05.U21 作为关联练习的独立解答移至末尾，但未提供题号映射或回链生成规则；当前正文也没有用于该导航的显式引用。"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 1,
+    "proposal_calls": 1,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "c5425c4d065d6da52f76e0288b26c250073cbf1c77ae017369e37bcb5f9fd28e",
+      "tool_checks_hash": "404f218d6532b8e58f693943d0479b342d1979646e59be7f04a513015a236269",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "900b10d5b34abe8b81241d72b6eaeb8458cda8a77249425dbf0b6d22e0d6b175",
+      "deterministic_checks_hash": "ce7f449416a47260036030fdbadd5c393356a0c07a3bbc372daeca97091623bd"
+    }
+  }
+}

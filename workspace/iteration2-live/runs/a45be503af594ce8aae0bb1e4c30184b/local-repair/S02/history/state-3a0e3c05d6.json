@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+    "section_id": "S02",
+    "context_hash": "6c2badf10cdb78e3c52c7ffd31292bcce4fc566bbaf1fb8866d0d65f87322b03",
+    "base_hash": "88cc2e168d096f46aa6d33a79c1a49f95796442587c810dd8aa2a48bbfe3395b",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "PROPOSAL_PENDING",
+  "applied_rounds": 1,
+  "proposal_calls": 2,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "unit_id": "S02.U04",
+      "severity": "review",
+      "message": "夹逼应用使用了“\\lim_{x\\to0}x=0”这一基本极限，但在当前 S02 正文及所提供的先修 S01 正文中没有看到该一般结论的陈述或证明。S01.U09 只证明了特定函数 3x-1 在 x\\to2 时的极限，不能直接替代恒等函数的极限结论。因而该应用的两端极限及随后 x^2 的极限缺少可核对的先修依据；需明确声明采用的基础极限，或在已覆盖范围内补足其依据。",
+      "evidence": "S02.U04 写明“由基本极限 \\lim_{x\\to0}x=0 及积的极限法则，两端满足 \\lim_{x\\to0}(-x^2)=0，\\lim_{x\\to0}x^2=0”。已提供的 prior_sections 仅含 S01.U09 对 \\lim_{x\\to2}(3x-1)=5 的 ε-δ 证明，没有恒等函数、常数函数或一般多项式基本极限的明确结论。"
+    },
+    {
+      "unit_id": "S02.U11",
+      "severity": "review",
+      "message": "该解答把多项式在 x\\to2 时的直接代入作为“极限的和、差与积法则”的应用，但正文没有明确给出 \\lim_{x\\to2}x=2 及常数函数极限作为可用前提；所提供的 S01 也未建立这些一般基本极限。因此计算结果正确，但从当前已提供的定义、定理和先修正文看，关键输入条件未落实。",
+      "evidence": "S02.U11 直接写“由极限的和、差与积法则，\\lim_{x\\to2}(x^2-3x+2)=2^2-3\\cdot2+2=0”。S02.U02 的运算法则要求各组成函数的极限已知，而 prior_sections 中没有明确的 \\lim_{x\\to x_0}x=x_0 或常数函数极限定理；S01.U09 只覆盖特定线性函数在特定点的例题。"
+    }
+  ],
+  "unit_applied_counts": {
+    "S02.U04": 1
+  },
+  "proposal_counts_by_key": {
+    "unit:S02.U04": 2,
+    "unit:S02.U11": 1
+  },
+  "rejected_counts_by_key": {},
+  "evidence_dependencies": [
+    {
+      "key": "b/a45be503af594ce8/sS02_6ee1a7801716/repair-1-patch.json",
+      "hash": "c44669e99c523c69efbd905fd4e3e5ca53bfd76872e123dd2b3608657a13f5b8",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "d97e451eba226bd794c055a25bf0cfed98de5cda84920f84dd0a5e7a3fb3130d",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S02/candidate-d3da0a124db3.json",
+  "candidate_hash": "8a0d00ac7be0a773d1d8a10126fe4dad4e3e3d1fbb3a4b3afdf00b42c2afda09",
+  "last_review_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S02/review-f94eaebf03d8.json",
+  "pending_operation": "strict_local_patch",
+  "pending_keys": [
+    "unit:S02.U04",
+    "unit:S02.U11"
+  ],
+  "request_count_before": 124,
+  "patch_evidence": {
+    "schema_version": 1,
+    "operation": "strict_local_patch",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "f99d591de59dbcd1cc5e0d711d7e8c4c6593b0709290786fe3f04dc035809561",
+    "patch_hash": "6df779adbf94e43cc673dbc7d7e8e4b6b7f4fdf1e4bca3b573ab1e25267777c1",
+    "result_section_hash": "88cc2e168d096f46aa6d33a79c1a49f95796442587c810dd8aa2a48bbfe3395b",
+    "allowed_unit_ids": [
+      "S02.U04"
+    ],
+    "changed_unit_ids": [
+      "S02.U04"
+    ],
+    "unit_order_preserved": true,
+    "unit_identity_and_metadata_preserved": true,
+    "non_target_units_preserved": true,
+    "original_calculation_count": 1,
+    "calculation_updates": [],
+    "calculation_additions": [
+      "S02.C02"
+    ],
+    "non_target_calculations_preserved": true,
+    "old_uncertainties_preserved": true,
+    "old_calculation_limitations_preserved": true,
+    "normalization": "NOT_RUN",
+    "math_check": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "proposal_key": "b/a45be503af594ce8/sS02_6ee1a7801716/repair-1-patch.json"
+  },
+  "reason": "Explicit global-repair seed; existing local counters retained"
+}

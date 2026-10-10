@@ -1,0 +1,1367 @@
+{
+  "operation": "append_missing_answers",
+  "section_id": "S02",
+  "source_section_hash": "db46e9427174364b657889cb04f2ccd9748fdd0c72e357472020c259892ebaa4",
+  "existing_section": {
+    "section_id": "S02",
+    "units": [
+      {
+        "id": "S02.U01",
+        "kind": "explanation",
+        "tex": "本节中的级数均为实数项级数，下标从 $1$ 开始。根据定义 \\ref{def:convergence}，判断级数收敛必须考察部分和，而不能只考察通项。以下先从部分和的极限推出通项必须满足的条件，再讨论已经收敛的级数可以进行哪些运算。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U02",
+        "kind": "theorem",
+        "tex": "\\label{thm:term-test}若实数项级数 $\\sum_{n=1}^{\\infty}a_n$ 收敛，则 $\\lim_{n\\to\\infty}a_n=0$。因此，若通项的极限不存在或不等于零，则该级数发散。通项趋于零只是级数收敛的必要条件，不是充分条件。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U03",
+        "kind": "proof",
+        "tex": "设 $S_n=\\sum_{k=1}^{n}a_k$，且级数收敛于 $S\\in\\mathbb{R}$。对每个整数 $n\\geq2$，有\n\\[\na_n=S_n-S_{n-1}.\n\\]\n由 $S_n\\to S$ 可知 $S_{n-1}\\to S$，故由数列极限的运算法则，\n\\[\n\\lim_{n\\to\\infty}a_n=S-S=0.\n\\]\n其逆否命题给出上述发散判断。下面的调和级数例题将证明，通项趋于零不足以保证级数收敛。",
+        "relates_to": "S02.U02"
+      },
+      {
+        "id": "S02.U04",
+        "kind": "example",
+        "tex": "判断下列级数的敛散性，并说明必要条件在判断中起什么作用：\n\\[\n\\text{(1)}\\quad\\sum_{n=1}^{\\infty}c\\quad(c\\in\\mathbb{R});\\qquad\n\\text{(2)}\\quad\\sum_{n=1}^{\\infty}\\frac{n}{n+1};\\qquad\n\\text{(3)}\\quad\\sum_{n=1}^{\\infty}(-1)^{n-1}.\n\\]",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U05",
+        "kind": "solution",
+        "tex": "(1) 部分和为 $S_n=nc$。当 $c=0$ 时，所有部分和都为零，级数收敛且和为零；当 $c\\neq0$ 时，通项极限为 $c\\neq0$，由定理 \\ref{thm:term-test}，级数发散。此时部分和在 $c>0$ 时趋于 $+\\infty$，在 $c<0$ 时趋于 $-\\infty$。\n\n(2) 对正整数 $n$，有\n\\[\n\\frac{n}{n+1}=1-\\frac{1}{n+1}\\longrightarrow1.\n\\]\n通项不趋于零，所以级数发散。\n\n(3) 通项在 $1$ 与 $-1$ 之间交替，极限不存在，所以级数发散。也可直接观察：$S_{2m}=0$，$S_{2m-1}=1$，其中 $m$ 为任意正整数，故部分和没有极限。可见，级数发散并不一定表现为部分和趋于无穷。",
+        "relates_to": "S02.U04"
+      },
+      {
+        "id": "S02.U06",
+        "kind": "example",
+        "tex": "调和级数 $\\sum_{n=1}^{\\infty}1/n$ 的通项趋于零。仅利用部分和和有限项不等式，证明它仍然发散。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U07",
+        "kind": "solution",
+        "tex": "记 $H_n=\\sum_{k=1}^{n}1/k$。对任意正整数 $j$，从 $k=2^{j-1}+1$ 到 $k=2^j$ 共含 $2^{j-1}$ 项，每项至少为 $1/2^j$，所以\n\\[\n\\sum_{k=2^{j-1}+1}^{2^j}\\frac1k\\geq\\frac{2^{j-1}}{2^j}=\\frac12.\n\\]\n因此，对每个正整数 $m$，\n\\[\nH_{2^m}=1+\\sum_{j=1}^{m}\\sum_{k=2^{j-1}+1}^{2^j}\\frac1k\n\\geq1+\\frac m2.\n\\]\n右端随 $m$ 增大而无界，故部分和数列无界，不可能收敛于有限实数。调和级数发散。这里分组的对象始终是有限部分和，并未对尚未确定收敛的无穷和进行运算。\n\n另一方面，$\\lim_{n\\to\\infty}1/n=0$。这就给出了“通项趋于零但级数发散”的反例。实际解题时，通项趋于零意味着必要条件未能排除收敛，而不是已经证明收敛。",
+        "relates_to": "S02.U06"
+      },
+      {
+        "id": "S02.U08",
+        "kind": "theorem",
+        "tex": "\\label{thm:linearity}设实数项级数 $\\sum_{n=1}^{\\infty}a_n=A$ 和 $\\sum_{n=1}^{\\infty}b_n=B$ 均收敛。对任意实常数 $\\alpha,\\beta$，级数 $\\sum_{n=1}^{\\infty}(\\alpha a_n+\\beta b_n)$ 收敛，且\n\\[\n\\sum_{n=1}^{\\infty}(\\alpha a_n+\\beta b_n)=\\alpha A+\\beta B.\n\\]",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U09",
+        "kind": "proof",
+        "tex": "令 $A_n=\\sum_{k=1}^{n}a_k$，$B_n=\\sum_{k=1}^{n}b_k$。由有限和的运算法则，组合级数的第 $n$ 个部分和为\n\\[\nC_n=\\sum_{k=1}^{n}(\\alpha a_k+\\beta b_k)=\\alpha A_n+\\beta B_n.\n\\]\n已知 $A_n\\to A$、$B_n\\to B$，所以 $C_n\\to\\alpha A+\\beta B$。由定理 \\ref{thm:series-limit} 得到结论。",
+        "relates_to": "S02.U08"
+      },
+      {
+        "id": "S02.U10",
+        "kind": "explanation",
+        "tex": "线性运算定理的前提是两个级数都收敛。不能把发散级数当作实数相减。例如，$\\sum_{n=1}^{\\infty}1$ 与 $\\sum_{n=1}^{\\infty}(-1)$ 都发散，但逐项相加后得到的零级数收敛；这并不是两个级数的和相加，因为原来两个级数都没有有限的和。\n\n若一个级数收敛、另一个发散，则它们逐项相加的级数必发散。否则，假设相加后收敛，再减去原来收敛的级数，由定理 \\ref{thm:linearity} 将推出另一个级数也收敛，产生矛盾。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U11",
+        "kind": "definition",
+        "tex": "\\label{def:remainder}设 $\\sum_{k=1}^{\\infty}a_k$ 收敛且和为 $S$，部分和为 $S_n$。对每个正整数 $n$，定义第 $n$ 个余项为\n\\[\nR_n=S-S_n=\\sum_{k=n+1}^{\\infty}a_k.\n\\]\n这里尾级数的含义是 $\\lim_{m\\to\\infty}\\sum_{k=n+1}^{m}a_k$，其中 $n$ 固定。用 $S_n$ 近似 $S$ 时，带符号的误差为 $R_n$，绝对误差为 $|R_n|$。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U12",
+        "kind": "explanation",
+        "tex": "余项定义中的尾级数确实收敛：固定正整数 $n$，对整数 $m>n$ 有\n\\[\n\\sum_{k=n+1}^{m}a_k=S_m-S_n\\longrightarrow S-S_n.\n\\]\n又因为 $S_n\\to S$，所以 $R_n\\to0$。前一个极限固定 $n$ 而令 $m$ 增大，后一个极限才是令截断位置 $n$ 增大。若原级数发散，则不能把 $S-S_n$ 当作余项，因为此时不存在有限的级数和 $S$。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U13",
+        "kind": "theorem",
+        "tex": "\\label{thm:finite-change}设 $\\{a_n\\}$、$\\{b_n\\}$ 为两个实数列，存在正整数 $N$，使得对所有整数 $n>N$ 都有 $a_n=b_n$。则 $\\sum_{n=1}^{\\infty}a_n$ 与 $\\sum_{n=1}^{\\infty}b_n$ 同敛散。若前者收敛于 $A$，则后者的和为\n\\[\nB=A+\\sum_{k=1}^{N}(b_k-a_k).\n\\]\n因此，改变有限项不改变级数的敛散性，但可能改变级数的和。添加或删去有限项，并保持其余项的相对次序，也不改变敛散性。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U14",
+        "kind": "proof",
+        "tex": "令 $A_n=\\sum_{k=1}^{n}a_k$、$B_n=\\sum_{k=1}^{n}b_k$。对所有整数 $n\\geq N$，\n\\[\nB_n-A_n=\\sum_{k=1}^{N}(b_k-a_k)=C,\n\\]\n其中 $C$ 是与 $n$ 无关的有限实数。因此 $B_n=A_n+C$，两部分和数列同时收敛或同时发散；收敛时极限相差 $C$。\n\n对于删去前 $N$ 项所得的尾级数，其第 $m$ 个部分和为 $A_{N+m}-A_N$，其中 $m$ 为正整数，故它与原级数同敛散。一般地，添加或删去有限项后，在经过最后一个改动位置时，新旧部分和之间只相差一个固定常数和一个固定的下标平移，仍由数列极限性质得到同样结论。这里不涉及无限多项的重新排列。",
+        "relates_to": "S02.U13"
+      },
+      {
+        "id": "S02.U15",
+        "kind": "example",
+        "tex": "设实数列 $\\{b_n\\}$ 满足\n\\[\nb_1=3,\\qquad b_n=\\frac{2}{2^n}\\quad(n\\geq2).\n\\]\n求级数 $\\sum_{n=1}^{\\infty}b_n$ 的和及第 $n$ 个余项，并确定使绝对误差小于 $1/100$ 的最小正整数截断位置 $n$。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U16",
+        "kind": "solution",
+        "tex": "前节已由部分和求得 $\\sum_{k=1}^{\\infty}2^{-k}=1$，且对每个正整数 $n$，有 $\\sum_{k=1}^{n}2^{-k}=1-2^{-n}$。由定理 \\ref{thm:linearity}，$\\sum_{k=1}^{\\infty}2\\cdot2^{-k}=2$。本题将其第一项从 $1$ 改成 $3$，增加了 $2$，故由定理 \\ref{thm:finite-change}，所求级数的和为 $4$。\n\n对每个正整数 $n$，其部分和及余项分别为\n\\[\nS_n=2(1-2^{-n})+2=4-2^{1-n},\\qquad\nR_n=4-S_n=2^{1-n}.\n\\]\n所以 $|R_n|=2^{1-n}$。当 $n=7$ 时，误差为 $1/64>1/100$；当 $n=8$ 时，误差为 $1/128<1/100$。误差随正整数 $n$ 增大严格减小，故满足要求的最小截断位置是 $n=8$。",
+        "relates_to": "S02.U15"
+      },
+      {
+        "id": "S02.U17",
+        "kind": "explanation",
+        "tex": "本节的判断顺序是：先检查通项是否趋于零；若不趋于零，立即判为发散；若趋于零，还需研究部分和或使用其他适用的判别法。线性运算要求有关级数已经收敛；余项用于描述收敛级数的截断误差；有限项改变只保持敛散性，不保证和保持不变。\n\n以下为本节练习，答案统一安排在讲义末尾。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U18",
+        "kind": "exercise",
+        "tex": "分别判断下列级数能否仅用收敛的必要条件判为发散，并对不能据此判定的情形说明原因：\n\\[\n\\text{(1)}\\quad\\sum_{n=1}^{\\infty}\\frac{2n+1}{3n+2};\\qquad\n\\text{(2)}\\quad\\sum_{n=1}^{\\infty}\\frac1{n+2};\\qquad\n\\text{(3)}\\quad\\sum_{n=1}^{\\infty}\\frac{(-1)^n n}{n+1}.\n\\]\n再利用本节已知结论确定第 (2) 个级数的敛散性。\n\n答案： (1) 通项极限为 $2/3\\neq0$，因此仅用收敛的必要条件即可判定级数发散。(2) 通项极限为 $0$，必要条件不能判定其收敛性；但它是调和级数去掉前两项后的尾级数，所以由有限项改变性质可知其发散。(3) 通项 $(-1)^n n/(n+1)$ 没有极限，因而不趋于零，仅用必要条件即可判定级数发散。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U19",
+        "kind": "exercise",
+        "tex": "设实数项级数 $\\sum_{n=1}^{\\infty}a_n=2$、$\\sum_{n=1}^{\\infty}b_n=-1$ 均收敛。求 $\\sum_{n=1}^{\\infty}(3a_n-2b_n)$ 的和。若将组合级数的第一项增加 $5$，其敛散性与和各有何变化？另说明：仅知道 $\\sum_{n=1}^{\\infty}(a_n+b_n)$ 收敛，能否推出两个原级数都收敛？请给出理由或反例。\n\n答案：由线性运算定理，\n\\[\n\\sum_{n=1}^{\\infty}(3a_n-2b_n)=3\\cdot2-2\\cdot(-1)=8.\n\\]\n将第一项增加 $5$ 属于有限项改变，所以级数仍然收敛，而其和增加 $5$，变为 $13$。仅知道 $\\sum_{n=1}^{\\infty}(a_n+b_n)$ 收敛，不能推出两个原级数都收敛。例如取 $a_n=1$、$b_n=-1$，则 $\\sum(a_n+b_n)=\\sum0$ 收敛，但 $\\sum a_n$ 与 $\\sum b_n$ 均发散。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U20",
+        "kind": "exercise",
+        "tex": "对于级数 $\\sum_{n=1}^{\\infty}2^{-n}$，写出第 $n$ 个余项，求使绝对误差小于 $1/1000$ 的最小正整数 $n$。若只将该级数第一项改成 $10$，求新级数的和，并说明对每个正整数 $n$，新旧级数的第 $n$ 个余项是否相同。\n\n答案：几何级数的和为 $1$，第 $n$ 个余项为\n\\[\nR_n=\\sum_{k=n+1}^{\\infty}2^{-k}=2^{-n}.\n\\]\n要求 $2^{-n}<1/1000$。由于 $2^9=512<1000<1024=2^{10}$，最小正整数为 $n=10$。原级数第一项为 $1/2$，改为 $10$ 后增加了 $19/2$，故新级数的和为 $1+19/2=21/2$。对每个正整数 $n$，新旧级数的第 $n$ 个余项相同，均为 $2^{-n}$，因为第一项的改变同时使总和与第 $n$ 个部分和都增加相同的数。",
+        "relates_to": null
+      }
+    ],
+    "calculations": [
+      {
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "direction": "-",
+        "expected": {
+          "op": "Integer",
+          "value": 1
+        },
+        "expression": {
+          "args": [
+            {
+              "name": "n",
+              "op": "Symbol"
+            },
+            {
+              "args": [
+                {
+                  "args": [
+                    {
+                      "name": "n",
+                      "op": "Symbol"
+                    },
+                    {
+                      "op": "Integer",
+                      "value": 1
+                    }
+                  ],
+                  "op": "Add"
+                },
+                {
+                  "op": "Integer",
+                  "value": -1
+                }
+              ],
+              "op": "Pow"
+            }
+          ],
+          "op": "Mul"
+        },
+        "id": "S02.C01",
+        "kind": "limit",
+        "point": {
+          "op": "Infinity"
+        },
+        "unit_id": "S02.U05",
+        "variable": "n"
+      },
+      {
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "end": {
+          "op": "Infinity"
+        },
+        "expected_convergent": false,
+        "id": "S02.C02",
+        "kind": "series",
+        "start": {
+          "op": "Integer",
+          "value": 1
+        },
+        "term": {
+          "args": [
+            {
+              "name": "n",
+              "op": "Symbol"
+            },
+            {
+              "op": "Integer",
+              "value": -1
+            }
+          ],
+          "op": "Pow"
+        },
+        "unit_id": "S02.U07",
+        "variable": "n"
+      },
+      {
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "id": "S02.C03",
+        "kind": "equivalence",
+        "lhs": {
+          "args": [
+            {
+              "args": [
+                {
+                  "op": "Integer",
+                  "value": 2
+                },
+                {
+                  "args": [
+                    {
+                      "op": "Integer",
+                      "value": 1
+                    },
+                    {
+                      "args": [
+                        {
+                          "op": "Integer",
+                          "value": -1
+                        },
+                        {
+                          "args": [
+                            {
+                              "op": "Integer",
+                              "value": 2
+                            },
+                            {
+                              "args": [
+                                {
+                                  "op": "Integer",
+                                  "value": -1
+                                },
+                                {
+                                  "name": "n",
+                                  "op": "Symbol"
+                                }
+                              ],
+                              "op": "Mul"
+                            }
+                          ],
+                          "op": "Pow"
+                        }
+                      ],
+                      "op": "Mul"
+                    }
+                  ],
+                  "op": "Add"
+                }
+              ],
+              "op": "Mul"
+            },
+            {
+              "op": "Integer",
+              "value": 2
+            }
+          ],
+          "op": "Add"
+        },
+        "rhs": {
+          "args": [
+            {
+              "op": "Integer",
+              "value": 4
+            },
+            {
+              "args": [
+                {
+                  "op": "Integer",
+                  "value": -1
+                },
+                {
+                  "args": [
+                    {
+                      "op": "Integer",
+                      "value": 2
+                    },
+                    {
+                      "args": [
+                        {
+                          "op": "Integer",
+                          "value": 1
+                        },
+                        {
+                          "args": [
+                            {
+                              "op": "Integer",
+                              "value": -1
+                            },
+                            {
+                              "name": "n",
+                              "op": "Symbol"
+                            }
+                          ],
+                          "op": "Mul"
+                        }
+                      ],
+                      "op": "Add"
+                    }
+                  ],
+                  "op": "Pow"
+                }
+              ],
+              "op": "Mul"
+            }
+          ],
+          "op": "Add"
+        },
+        "unit_id": "S02.U16"
+      }
+    ],
+    "calculation_limitations": [
+      "核算请求覆盖一个通项极限、调和级数的敛散性及一个部分和公式的代数变形；协议不能直接表达任意实数列及其部分和之间的量化关系，因此一般必要条件、线性运算和有限项改变性质由正文证明，不由这些核算替代。"
+    ],
+    "uncertainties": []
+  },
+  "targets": [
+    {
+      "target_id": "S02.U18",
+      "answer_unit_id": "S02.U18.answer",
+      "problem": {
+        "id": "S02.U18",
+        "kind": "exercise",
+        "tex": "分别判断下列级数能否仅用收敛的必要条件判为发散，并对不能据此判定的情形说明原因：\n\\[\n\\text{(1)}\\quad\\sum_{n=1}^{\\infty}\\frac{2n+1}{3n+2};\\qquad\n\\text{(2)}\\quad\\sum_{n=1}^{\\infty}\\frac1{n+2};\\qquad\n\\text{(3)}\\quad\\sum_{n=1}^{\\infty}\\frac{(-1)^n n}{n+1}.\n\\]\n再利用本节已知结论确定第 (2) 个级数的敛散性。\n\n答案： (1) 通项极限为 $2/3\\neq0$，因此仅用收敛的必要条件即可判定级数发散。(2) 通项极限为 $0$，必要条件不能判定其收敛性；但它是调和级数去掉前两项后的尾级数，所以由有限项改变性质可知其发散。(3) 通项 $(-1)^n n/(n+1)$ 没有极限，因而不趋于零，仅用必要条件即可判定级数发散。",
+        "relates_to": null
+      }
+    },
+    {
+      "target_id": "S02.U19",
+      "answer_unit_id": "S02.U19.answer",
+      "problem": {
+        "id": "S02.U19",
+        "kind": "exercise",
+        "tex": "设实数项级数 $\\sum_{n=1}^{\\infty}a_n=2$、$\\sum_{n=1}^{\\infty}b_n=-1$ 均收敛。求 $\\sum_{n=1}^{\\infty}(3a_n-2b_n)$ 的和。若将组合级数的第一项增加 $5$，其敛散性与和各有何变化？另说明：仅知道 $\\sum_{n=1}^{\\infty}(a_n+b_n)$ 收敛，能否推出两个原级数都收敛？请给出理由或反例。\n\n答案：由线性运算定理，\n\\[\n\\sum_{n=1}^{\\infty}(3a_n-2b_n)=3\\cdot2-2\\cdot(-1)=8.\n\\]\n将第一项增加 $5$ 属于有限项改变，所以级数仍然收敛，而其和增加 $5$，变为 $13$。仅知道 $\\sum_{n=1}^{\\infty}(a_n+b_n)$ 收敛，不能推出两个原级数都收敛。例如取 $a_n=1$、$b_n=-1$，则 $\\sum(a_n+b_n)=\\sum0$ 收敛，但 $\\sum a_n$ 与 $\\sum b_n$ 均发散。",
+        "relates_to": null
+      }
+    },
+    {
+      "target_id": "S02.U20",
+      "answer_unit_id": "S02.U20.answer",
+      "problem": {
+        "id": "S02.U20",
+        "kind": "exercise",
+        "tex": "对于级数 $\\sum_{n=1}^{\\infty}2^{-n}$，写出第 $n$ 个余项，求使绝对误差小于 $1/1000$ 的最小正整数 $n$。若只将该级数第一项改成 $10$，求新级数的和，并说明对每个正整数 $n$，新旧级数的第 $n$ 个余项是否相同。\n\n答案：几何级数的和为 $1$，第 $n$ 个余项为\n\\[\nR_n=\\sum_{k=n+1}^{\\infty}2^{-k}=2^{-n}.\n\\]\n要求 $2^{-n}<1/1000$。由于 $2^9=512<1000<1024=2^{10}$，最小正整数为 $n=10$。原级数第一项为 $1/2$，改为 $10$ 后增加了 $19/2$，故新级数的和为 $1+19/2=21/2$。对每个正整数 $n$，新旧级数的第 $n$ 个余项相同，均为 $2^{-n}$，因为第一项的改变同时使总和与第 $n$ 个部分和都增加相同的数。",
+        "relates_to": null
+      }
+    }
+  ],
+  "remaining_unit_slots": 80,
+  "remaining_calculation_slots": 97,
+  "calculation_protocol": {
+    "schema_version": 1,
+    "purpose": "为本节已实际写出的数学结论提交1至3个受支持的代表性核算；核算不是对整节内容的证明。",
+    "output_field": "calculations",
+    "limitations_output_field": "calculation_limitations",
+    "uncertainties_output_field": "uncertainties",
+    "selection_rules": [
+      "unit_id必须精确等于当前返回units中真实存在且包含该结论的id；id是本节唯一的核算ID。示例ID仅用于演示，不能直接借用。",
+      "只复算本节实际出现且符合课程范围的式子，不为凑1至3项新增例题、升级难度或虚构结论。",
+      "确无适用核算时返回calculations=[]，并在calculation_limitations说明具体覆盖限制；真正数学疑点另外保留在uncertainties。",
+      "只填写请求，不能在请求中增加status、evidence或通过结论；程序运行后才产生证据。"
+    ],
+    "request_common_fields": {
+      "required": [
+        "id",
+        "unit_id",
+        "kind",
+        "assumptions"
+      ],
+      "id": "本节唯一字符串，例如S01.C01",
+      "unit_id": "当前units中的实际ID，例如S01.U04；结论、变量、预期结果须与该单元一致",
+      "assumptions": "符号名到白名单布尔假设的对象；所有Symbol和variable都必须声明。常量式可用{}。",
+      "extra_fields_allowed": false
+    },
+    "request_kinds": {
+      "equivalence": {
+        "required": [
+          "lhs",
+          "rhs"
+        ],
+        "ast_fields": [
+          "lhs",
+          "rhs"
+        ]
+      },
+      "derivative": {
+        "required": [
+          "expression",
+          "variable",
+          "expected"
+        ],
+        "ast_fields": [
+          "expression",
+          "expected"
+        ],
+        "variable": "已在assumptions声明的符号名字符串"
+      },
+      "limit": {
+        "required": [
+          "expression",
+          "variable",
+          "point",
+          "direction",
+          "expected"
+        ],
+        "ast_fields": [
+          "expression",
+          "point",
+          "expected"
+        ],
+        "variable": "已声明的符号名字符串",
+        "direction_values": [
+          "+",
+          "-",
+          "+-"
+        ],
+        "direction_note": "有限点+为右极限、-为左极限、+-为双侧；示例的正无穷极限使用-。"
+      },
+      "series": {
+        "required": [
+          "term",
+          "variable",
+          "start",
+          "end",
+          "expected_convergent"
+        ],
+        "ast_fields": [
+          "term",
+          "start",
+          "end"
+        ],
+        "variable": "已声明的求和符号名字符串",
+        "expected_convergent": "JSON布尔值，只核对收敛性；此kind不核对级数和"
+      },
+      "numeric_spotcheck": {
+        "required": [
+          "lhs",
+          "rhs",
+          "points"
+        ],
+        "ast_fields": [
+          "lhs",
+          "rhs"
+        ],
+        "points": "1至20个对象，每个对象覆盖所有声明变量；值为有限JSON数，绝对值不超过10^9，且满足声明假设",
+        "warning": "仅有限指定点数值一致，不能证明一般结论；返回numeric_spotcheck_passed仍需复核。"
+      }
+    },
+    "assumptions": {
+      "symbol_name_pattern": "[A-Za-z][A-Za-z0-9_]{0,30}",
+      "allowed_boolean_flags": [
+        "real",
+        "positive",
+        "negative",
+        "nonnegative",
+        "nonpositive",
+        "integer",
+        "nonzero",
+        "finite",
+        "rational"
+      ],
+      "rules": [
+        "布尔值必须是真正的JSON true/false，不能写字符串、集合、区间或Python表达式。未明确的属性不要写false，保留未声明。",
+        "假设来自单元明示条件，不得为了得到PASS而擅自加强条件。实对数参数为正；含倒数的恒等变形需保留非零条件；根号求导需检查正值区间与边界。",
+        "白名单不能表达的一般区间/复合约束必须说明限制，不能用更弱或更强的单一布尔属性冒充。系统的域检查不完整，仍须核对原结论条件。"
+      ]
+    },
+    "expression_ast": {
+      "encoding": "表达式只能是以下JSON对象树，不接受TeX、数学字符串或Python代码；所有节点不允许额外字段。",
+      "nodes": {
+        "Integer": {
+          "keys": [
+            "op",
+            "value"
+          ],
+          "value": "JSON整数，绝对值<=10^9；不能用布尔值或小数"
+        },
+        "Rational": {
+          "keys": [
+            "op",
+            "p",
+            "q"
+          ],
+          "p_q": "有界JSON整数，q不为0；小数尽量写精确有理数"
+        },
+        "Symbol": {
+          "keys": [
+            "op",
+            "name"
+          ],
+          "name": "assumptions已声明的符号名"
+        },
+        "Infinity": {
+          "keys": [
+            "op"
+          ],
+          "meaning": "正无穷；负无穷可用Mul(Integer(-1),Infinity)的JSON树"
+        },
+        "Add": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": "1..16"
+        },
+        "Mul": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": "1..16"
+        },
+        "Pow": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 2,
+          "note": "第二项为指数AST；数值指数绝对值<=100"
+        },
+        "sin": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1
+        },
+        "cos": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1
+        },
+        "tan": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1
+        },
+        "exp": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1
+        },
+        "log": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1,
+          "note": "自然对数，检查正实定义域"
+        },
+        "sqrt": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1
+        },
+        "Abs": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1
+        }
+      },
+      "syntax_notes": [
+        "乘方用Pow；除以x用Mul(分子,Pow(x,Integer(-1)))；减法用Add(左式,Mul(Integer(-1),右式))，均展开成JSON对象树。",
+        "不要发明Div、Subtract、Float、Limit、Sum、pi或Python等op/kind。初等常数e可写exp(Integer(1))；不支持的表达式留为覆盖限制。"
+      ]
+    },
+    "budgets": {
+      "per_calculation_timeout_seconds": 8,
+      "per_section_timeout_seconds": 60,
+      "max_request_utf8_bytes": 65536,
+      "max_ast_nodes": 256,
+      "max_ast_depth": 20,
+      "max_function_arguments": 16,
+      "max_declared_symbols": 20,
+      "recommended_requests_per_section": [
+        1,
+        3
+      ]
+    },
+    "evidence_interpretation": {
+      "symbolic_check_passed": "只有所请求表达式在所声明假设下符号核对一致；不是一般定理的形式化证明，也不是整节审核通过。",
+      "numeric_spotcheck_passed": "只通过所列点数值抽查，仍NEEDS_REVIEW，不是一般证明。",
+      "symbolic_check_failed": "请求与核算结果冲突，属于须定位到原单元的数学问题。",
+      "not_checked": "未执行、超时、域条件不完整或无法决定；不得视为PASS。"
+    },
+    "examples": [
+      {
+        "description": "数列1/n的正无穷极限；请求绑定实际含该结论的单元。",
+        "unit": {
+          "id": "EX_LIMIT.U1",
+          "kind": "explanation",
+          "tex": "对正整数 $n$，数列 $a_n=1/n$ 满足 $\\lim_{n\\to\\infty}a_n=0$。",
+          "relates_to": null
+        },
+        "calculation": {
+          "id": "EX_LIMIT.C1",
+          "unit_id": "EX_LIMIT.U1",
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "expression": {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Symbol",
+                "name": "n"
+              },
+              {
+                "op": "Integer",
+                "value": -1
+              }
+            ]
+          },
+          "variable": "n",
+          "point": {
+            "op": "Infinity"
+          },
+          "direction": "-",
+          "expected": {
+            "op": "Integer",
+            "value": 0
+          }
+        },
+        "expected_result": "0"
+      },
+      {
+        "description": "正项p级数p=2的收敛性；此请求不声称计算其和。",
+        "unit": {
+          "id": "EX_SERIES.U1",
+          "kind": "explanation",
+          "tex": "正项级数 $\\sum_{n=1}^{\\infty}1/n^2$ 收敛。",
+          "relates_to": null
+        },
+        "calculation": {
+          "id": "EX_SERIES.C1",
+          "unit_id": "EX_SERIES.U1",
+          "kind": "series",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "term": {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Symbol",
+                "name": "n"
+              },
+              {
+                "op": "Integer",
+                "value": -2
+              }
+            ]
+          },
+          "variable": "n",
+          "start": {
+            "op": "Integer",
+            "value": 1
+          },
+          "end": {
+            "op": "Infinity"
+          },
+          "expected_convergent": true
+        },
+        "expected_result": true
+      },
+      {
+        "description": "在正实定义域内核对log(x)导数，不把公式外推到x<=0。",
+        "unit": {
+          "id": "EX_DERIVATIVE.U1",
+          "kind": "explanation",
+          "tex": "在 $x>0$ 上，$f(x)=\\ln x$ 的导数为 $f'(x)=1/x$。",
+          "relates_to": null
+        },
+        "calculation": {
+          "id": "EX_DERIVATIVE.C1",
+          "unit_id": "EX_DERIVATIVE.U1",
+          "kind": "derivative",
+          "assumptions": {
+            "x": {
+              "real": true,
+              "positive": true
+            }
+          },
+          "expression": {
+            "op": "log",
+            "args": [
+              {
+                "op": "Symbol",
+                "name": "x"
+              }
+            ]
+          },
+          "variable": "x",
+          "expected": {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Symbol",
+                "name": "x"
+              },
+              {
+                "op": "Integer",
+                "value": -1
+              }
+            ]
+          }
+        },
+        "expected_result": "1/x"
+      }
+    ]
+  },
+  "requirements": [
+    "Only return solutions for exactly the listed targets; no existing unit may be replaced, removed, or reordered.",
+    "Each new calculation.unit_id must equal one listed answer_unit_id; calculation IDs must not collide with existing IDs.",
+    "Existing uncertainty/limitation notes remain; new doubts may only be appended. This response is unchecked."
+  ],
+  "approved_plan": {
+    "additions": [],
+    "decision_ids": [
+      "dbde55a67c6144ce89263342b374f0ec",
+      "b2dfa936727f45eaa04d3693772c83d4",
+      "53b60707cba94067953a43625e4ee791",
+      "3a0b619387ce425ab35e31d9aa0faaf1"
+    ],
+    "decisions": [
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "custom_input": "",
+        "id": "dbde55a67c6144ce89263342b374f0ec",
+        "question_id": "Q-PROOF",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "key"
+        },
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "timestamp": "2026-09-19T18:34:31.207163+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "custom_input": "",
+        "id": "b2dfa936727f45eaa04d3693772c83d4",
+        "question_id": "Q-EXAMPLE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "balanced"
+        },
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "timestamp": "2026-09-19T18:34:31.207163+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "custom_input": "",
+        "id": "53b60707cba94067953a43625e4ee791",
+        "question_id": "Q-EXERCISE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "with_answers"
+        },
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "timestamp": "2026-09-19T18:34:31.207163+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "custom_input": "",
+        "id": "3a0b619387ce425ab35e31d9aa0faaf1",
+        "question_id": "Q-ANSWERS",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "end"
+        },
+        "selected_option_ids": [
+          "END"
+        ],
+        "timestamp": "2026-09-19T18:34:31.207163+00:00"
+      }
+    ],
+    "diff": [
+      {
+        "after": {
+          "answers_location": "end",
+          "example_focus": "balanced",
+          "exercises": "with_answers",
+          "proof_policy": "key"
+        },
+        "before": {
+          "answers_location": null,
+          "example_focus": null,
+          "exercises": null,
+          "proof_policy": null
+        },
+        "field": "lecture"
+      }
+    ],
+    "difficulty": "经济学本科一年级微积分",
+    "exclusions": [
+      "不讨论幂级数、函数项级数和傅里叶级数",
+      "不讨论一致收敛、逐项积分与逐项求导",
+      "不系统展开高等数学中的积分判别法证明细节",
+      "不涉及复数项级数"
+    ],
+    "input_snapshot_hash": "a166b0d13bb18f8d1a66fdc2b8d90338d52d4f70e752ae1ba56eb1895cd8f1f0",
+    "lecture": {
+      "answers_location": "end",
+      "example_focus": "balanced",
+      "exercises": "with_answers",
+      "proof_policy": "key"
+    },
+    "objectives": [
+      "建立无穷级数、部分和与收敛的基本概念",
+      "掌握级数收敛的必要条件及基本运算性质",
+      "能够使用正项级数、交错级数和绝对收敛判别法分析级数",
+      "区分绝对收敛、条件收敛与发散，并完成基础证明与计算题"
+    ],
+    "omissions": [],
+    "prerequisites": [
+      "实数运算与不等式",
+      "数列极限的定义与基本性质",
+      "函数极限和连续性的初步知识",
+      "有限等比数列求和与基本积分估计"
+    ],
+    "provider": "live",
+    "questions": [
+      {
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-PROOF",
+        "options": [
+          {
+            "effects": {
+              "value": "key"
+            },
+            "id": "KEY",
+            "label": "关键定理完整证明，其余说明",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "all"
+            },
+            "id": "ALL",
+            "label": "所有定理完整证明",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "定理证明采用哪种深度？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXAMPLE",
+        "options": [
+          {
+            "effects": {
+              "value": "balanced"
+            },
+            "id": "BALANCED",
+            "label": "概念与计算均衡",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "economics"
+            },
+            "id": "ECONOMICS",
+            "label": "更多经济应用",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "例题侧重什么？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXERCISE",
+        "options": [
+          {
+            "effects": {
+              "value": "with_answers"
+            },
+            "id": "WITH",
+            "label": "安排练习并附答案",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "none"
+            },
+            "id": "NONE",
+            "label": "不安排额外练习",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "是否安排练习与答案？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-ANSWERS",
+        "options": [
+          {
+            "effects": {
+              "value": "section"
+            },
+            "id": "SECTION",
+            "label": "各节之后",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "end"
+            },
+            "id": "END",
+            "label": "讲义末尾",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "练习答案放在哪里？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "END"
+        ],
+        "selection_mode": "single"
+      }
+    ],
+    "reference_context": {
+      "dataset": "第二章",
+      "instruction": "Only observe structure, proof depth and notation. Do not copy these examples into a different topic.",
+      "label": "UNTRUSTED_STYLE_REFERENCE_ONLY",
+      "section_titles": [
+        "级数概念的引入",
+        "级数的基本概念",
+        "几何级数",
+        "级数的基本性质",
+        "正项级数及其判别法",
+        "任意项级数的敛散性及其判别法",
+        "判别法小结"
+      ],
+      "source_hash": "5b4e70a9538eae85392ea4d0773ff9d07595ff0d40c6518641396ae938502b0b",
+      "status": "RETRIEVED",
+      "weight_training": false
+    },
+    "reference_registry": {
+      "def:absolute-convergence": "S05",
+      "def:alternating-series": "S04",
+      "def:conditional-convergence": "S05",
+      "def:convergence": "S01",
+      "def:p-series": "S03",
+      "def:partial-sum": "S01",
+      "def:positive-series": "S03",
+      "def:remainder": "S02",
+      "def:series": "S01",
+      "sec:S01": "S01",
+      "sec:S02": "S02",
+      "sec:S03": "S03",
+      "sec:S04": "S04",
+      "sec:S05": "S05",
+      "thm:absolute-implies-convergence": "S05",
+      "thm:alternating-remainder": "S04",
+      "thm:alternating-test": "S04",
+      "thm:comparison": "S03",
+      "thm:comparison-summary": "S05",
+      "thm:convergence-classification": "S05",
+      "thm:finite-change": "S02",
+      "thm:integral-test": "S03",
+      "thm:limit-comparison": "S03",
+      "thm:linearity": "S02",
+      "thm:monotone-partial-sums": "S03",
+      "thm:series-limit": "S01",
+      "thm:term-test": "S02"
+    },
+    "revision": 2,
+    "rules": {
+      "allowed_text_sizes": [
+        "footnotesize",
+        "small",
+        "normalsize",
+        "large"
+      ],
+      "rule_version": 1,
+      "summary_frames": false
+    },
+    "schema_version": 1,
+    "sections": [
+      {
+        "id": "S01",
+        "objectives": [
+          "定义无穷级数及其部分和数列",
+          "说明级数收敛与部分和数列极限之间的关系",
+          "掌握级数收敛、发散和级数和的基本表述",
+          "通过基础例题计算部分和或判断简单级数的收敛性"
+        ],
+        "prerequisites": [],
+        "reference_labels": [
+          "def:series",
+          "def:partial-sum",
+          "def:convergence",
+          "thm:series-limit"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "级数与部分和的基本概念"
+      },
+      {
+        "id": "S02",
+        "objectives": [
+          "证明级数收敛时通项必须趋于零",
+          "掌握级数的线性运算、余项和有限项改变性质",
+          "利用必要条件快速判断典型发散级数",
+          "通过例题分析调和型和常数项级数的基本行为"
+        ],
+        "prerequisites": [
+          "S01"
+        ],
+        "reference_labels": [
+          "def:remainder",
+          "thm:term-test",
+          "thm:linearity",
+          "thm:finite-change"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "收敛的必要条件与级数的基本性质"
+      },
+      {
+        "id": "S03",
+        "objectives": [
+          "理解正项级数部分和单调性的作用",
+          "掌握比较判别法、极限比较判别法和积分判别法的使用条件",
+          "掌握几何级数和p级数等基本参照级数",
+          "能够选择合适判别法判断正项级数的收敛性"
+        ],
+        "prerequisites": [
+          "S01",
+          "S02"
+        ],
+        "reference_labels": [
+          "def:positive-series",
+          "def:p-series",
+          "thm:monotone-partial-sums",
+          "thm:comparison",
+          "thm:limit-comparison",
+          "thm:integral-test"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "正项级数及其判别法"
+      },
+      {
+        "id": "S04",
+        "objectives": [
+          "定义交错级数并识别其符号交替结构",
+          "掌握交错级数判别法及其余项估计",
+          "区分交错级数的收敛性与绝对收敛性",
+          "通过例题估计截断误差并判断条件收敛"
+        ],
+        "prerequisites": [
+          "S02",
+          "S03"
+        ],
+        "reference_labels": [
+          "def:alternating-series",
+          "thm:alternating-test",
+          "thm:alternating-remainder"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "交错级数与条件收敛"
+      },
+      {
+        "id": "S05",
+        "objectives": [
+          "定义绝对收敛和条件收敛",
+          "证明绝对收敛蕴含收敛",
+          "综合使用必要条件、比较判别法、交错级数判别法和绝对收敛判别法",
+          "建立面向本科入门题目的判别法选择流程并完成综合练习"
+        ],
+        "prerequisites": [
+          "S03",
+          "S04"
+        ],
+        "reference_labels": [
+          "def:absolute-convergence",
+          "def:conditional-convergence",
+          "thm:absolute-implies-convergence",
+          "thm:comparison-summary",
+          "thm:convergence-classification"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "绝对收敛、条件收敛与判别法综合"
+      }
+    ],
+    "symbols": {
+      "N": "正整数集合",
+      "S_n": "级数的第n个部分和",
+      "a_n": "级数的第n项或通项",
+      "epsilon": "任意给定的正数",
+      "r": "几何级数的公比",
+      "sum_a_n": "级数Σ_{n=1}^∞ a_n"
+    },
+    "theme": "default",
+    "title": "无穷级数：收敛性与基本判别法",
+    "unresolved_blocking_questions": [],
+    "workflow_id": "lecture.generate",
+    "hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227"
+  },
+  "section_spec": {
+    "id": "S02",
+    "objectives": [
+      "证明级数收敛时通项必须趋于零",
+      "掌握级数的线性运算、余项和有限项改变性质",
+      "利用必要条件快速判断典型发散级数",
+      "通过例题分析调和型和常数项级数的基本行为"
+    ],
+    "prerequisites": [
+      "S01"
+    ],
+    "reference_labels": [
+      "def:remainder",
+      "thm:term-test",
+      "thm:linearity",
+      "thm:finite-change"
+    ],
+    "required_kinds": [
+      "definition",
+      "theorem",
+      "example",
+      "solution",
+      "proof",
+      "exercise"
+    ],
+    "title": "收敛的必要条件与级数的基本性质"
+  },
+  "prior_sections": [
+    {
+      "calculation_limitations": [],
+      "calculations": [
+        {
+          "assumptions": {},
+          "id": "S01.C01",
+          "kind": "equivalence",
+          "lhs": {
+            "args": [
+              {
+                "op": "Rational",
+                "p": 1,
+                "q": 2
+              },
+              {
+                "op": "Rational",
+                "p": 1,
+                "q": 4
+              },
+              {
+                "op": "Rational",
+                "p": 1,
+                "q": 8
+              }
+            ],
+            "op": "Add"
+          },
+          "rhs": {
+            "op": "Rational",
+            "p": 7,
+            "q": 8
+          },
+          "unit_id": "S01.U07"
+        }
+      ],
+      "section_id": "S01",
+      "uncertainties": [],
+      "units": [
+        {
+          "id": "S01.U01",
+          "kind": "definition",
+          "relates_to": null,
+          "tex": "给定一个数列 $\\{a_n\\}_{n=1}^{\\infty}$，形式表达式\n\\[\n\\sum_{n=1}^{\\infty}a_n=a_1+a_2+a_3+\\cdots\n\\]\n称为无穷级数，简称级数；其中 $a_n$ 称为该级数的通项。记号 $\\sum_{n=1}^{\\infty}a_n$ 表示按照下标 $n=1,2,3,\\ldots$ 依次相加的过程，而不是有限项的和。\\label{def:series}"
+        },
+        {
+          "id": "S01.U02",
+          "kind": "definition",
+          "relates_to": null,
+          "tex": "对于级数 $\\sum_{n=1}^{\\infty}a_n$，定义其第 $n$ 个部分和为\n\\[\nS_n=\\sum_{k=1}^{n}a_k=a_1+a_2+\\cdots+a_n,\\qquad n=1,2,3,\\ldots.\n\\]\n由此得到数列 $\\{S_n\\}_{n=1}^{\\infty}$，称为该级数的部分和数列。\\label{def:partial-sum}"
+        },
+        {
+          "id": "S01.U03",
+          "kind": "definition",
+          "relates_to": null,
+          "tex": "若部分和数列 $\\{S_n\\}_{n=1}^{\\infty}$ 收敛，即存在有限实数 $S$ 使得\n\\[\n\\lim_{n\\to\\infty}S_n=S,\n\\]\n则称级数 $\\sum_{n=1}^{\\infty}a_n$ 收敛，并称 $S$ 为该级数的和，记作\n\\[\n\\sum_{n=1}^{\\infty}a_n=S.\n\\]\n若部分和数列不收敛，则称级数 $\\sum_{n=1}^{\\infty}a_n$ 发散。\\label{def:convergence}"
+        },
+        {
+          "id": "S01.U04",
+          "kind": "theorem",
+          "relates_to": null,
+          "tex": "级数 $\\sum_{n=1}^{\\infty}a_n$ 收敛，当且仅当其部分和数列 $\\{S_n\\}_{n=1}^{\\infty}$ 收敛。若\n\\[\n\\lim_{n\\to\\infty}S_n=S,\n\\]\n则\n\\[\n\\sum_{n=1}^{\\infty}a_n=S.\n\\]\n\\label{thm:series-limit}"
+        },
+        {
+          "id": "S01.U05",
+          "kind": "proof",
+          "relates_to": "S01.U04",
+          "tex": "由定义，级数 $\\sum_{n=1}^{\\infty}a_n$ 的第 $n$ 个部分和就是 $S_n=\\sum_{k=1}^{n}a_k$。因此，级数收敛的定义正是部分和数列 $\\{S_n\\}$ 收敛，即存在有限实数 $S$ 满足\n\\[\n\\lim_{n\\to\\infty}S_n=S.\n\\]\n所以，级数收敛当且仅当其部分和数列收敛；在这种情况下，级数的和按定义就是部分和数列的极限 $S$。证毕。"
+        },
+        {
+          "id": "S01.U06",
+          "kind": "example",
+          "relates_to": null,
+          "tex": "考虑级数\n\\[\n\\sum_{n=1}^{\\infty}\\frac{1}{2^n}.\n\\]\n求其前 $3$ 项部分和，并说明如何根据部分和数列判断该级数是否收敛。"
+        },
+        {
+          "id": "S01.U07",
+          "kind": "solution",
+          "relates_to": "S01.U06",
+          "tex": "该级数的前 $3$ 项部分和为\n\\[\nS_3=\\frac12+\\frac14+\\frac18=\\frac78.\n\\]\n一般地，对任意正整数 $n$，其部分和为\n\\[\nS_n=\\sum_{k=1}^{n}\\frac{1}{2^k}.\n\\]\n若能够证明 $\\{S_n\\}$ 有有限极限 $S$，则由定理 \\ref{thm:series-limit} 可知原级数收敛且其和为 $S$。本例的部分和可写为\n\\[\nS_n=1-\\frac{1}{2^n},\n\\]\n因此\n\\[\n\\lim_{n\\to\\infty}S_n=1,\n\\]\n从而\n\\[\n\\sum_{n=1}^{\\infty}\\frac{1}{2^n}=1.\n\\]"
+        },
+        {
+          "id": "S01.U08",
+          "kind": "exercise",
+          "relates_to": null,
+          "tex": "设级数\n\\[\n\\sum_{n=1}^{\\infty}a_n,\n\\qquad a_n=\\frac{1}{n(n+1)}.\n\\]\n写出其第 $3$ 个部分和 $S_3$，并根据级数收敛的定义说明判断该级数收敛性时需要考察哪个数列的极限。"
+        },
+        {
+          "id": "S01.U09",
+          "kind": "solution",
+          "relates_to": "S01.U08",
+          "tex": "由部分和的定义，\n\\[\nS_3=a_1+a_2+a_3\n=\\frac{1}{1\\cdot2}+\\frac{1}{2\\cdot3}+\\frac{1}{3\\cdot4}\n=\\frac12+\\frac16+\\frac1{12}\n=\\frac34.\n\\]\n判断该级数是否收敛时，需要考察部分和数列\n\\[\nS_n=\\sum_{k=1}^{n}\\frac{1}{k(k+1)}\n\\]\n是否存在有限极限。若 $\\lim_{n\\to\\infty}S_n$ 存在，则级数收敛；否则级数发散。"
+        }
+      ]
+    }
+  ]
+}

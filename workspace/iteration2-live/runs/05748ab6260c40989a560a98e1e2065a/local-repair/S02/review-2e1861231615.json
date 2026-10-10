@@ -1,0 +1,115 @@
+{
+  "prior_issues": [
+    {
+      "unit_id": "S02.U12",
+      "severity": "review",
+      "message": "本节尚未落实锁定目标中“处理含有绝对值的基本数列极限”的教学内容。建议在此例题及其解答中补充含绝对值的极限应用，并用反三角不等式说明所依据的绝对值极限法则；这不是要求扩展到函数连续性理论。",
+      "evidence": "S02 的锁定目标明确要求“能够处理含有有理式、绝对值和常数倍的基本数列极限”。S02.U12—U13 仅处理 3/n+2 与 (2n+1)/(n+3)，S02.U14—U15 仅处理线性组合、乘积和商。S02.U08—U11 也未陈述或推导 a_n→L 时 |a_n|→|L|。本节证明中使用绝对值作误差估计，不等于教授含绝对值数列的极限处理方法；提供的 S01 正文亦未补足这一内容。可用 ||a_n|-|L||≤|a_n-L| 配合极限定义给出依据，再安排直接应用。"
+    }
+  ],
+  "review_identity": {
+    "candidate_hash": "3361c1a84ec584b8e306b092d07d5ce9f3fae5004c41d186d72c7ddb9f2f2e7a",
+    "tool_checks_hash": "3ad573efcd1a29d36f04301a6ccf2484c33cfac632ff927e10f27a5cd636ed7c",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "3fefac5439694cac1d0db4a1e66857a9544d41cebe9c5c7e4f5ba3dd13e688aa",
+    "deterministic_checks_hash": "3eb2e5d4a3a3f8641cf94fda148979f818a244e6f6d19d1573ee87c1d1c7e5a0"
+  },
+  "report": {
+    "section_id": "S02",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "2",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S02.C01",
+          "unit_id": "S02.U13"
+        },
+        {
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "2",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S02.C02",
+          "unit_id": "S02.U12"
+        }
+      ],
+      "coverage": [
+        "S02.U01",
+        "S02.U02",
+        "S02.U03",
+        "S02.U04",
+        "S02.U05",
+        "S02.U06",
+        "S02.U07",
+        "S02.U08",
+        "S02.U09",
+        "S02.U10",
+        "S02.U11",
+        "S02.U12",
+        "S02.U13",
+        "S02.U14",
+        "S02.U15"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "新增核算仅覆盖具体数列 |3/n-2| 的极限；协议不能表达一般数列的收敛量词及反三角不等式证明，绝对值极限法则仍须依据正文中的 ε-N 论证复核。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S02.U01",
+        "S02.U02",
+        "S02.U03",
+        "S02.U04",
+        "S02.U05",
+        "S02.U06",
+        "S02.U07",
+        "S02.U08",
+        "S02.U09",
+        "S02.U10",
+        "S02.U11",
+        "S02.U12",
+        "S02.U13",
+        "S02.U14",
+        "S02.U15"
+      ],
+      "limitations": [
+        "本次按 section_local 仅核对 S02 的 15 个实际单元，并使用所提供的 S01 先修正文；S03—S05 尚未生成，不属于本次遗漏判断范围。",
+        "已复核绝对值极限目标：S02.U12 给出一般表述 \\(x_n\\to L\\Rightarrow |x_n|\\to|L|\\)，并以反三角不等式和 \\(\\varepsilon\\)-\\(N\\) 论证支持，再由 S02.U13 应用于具体数列，因此此前关于该目标未落实的疑虑已由实际正文解决。",
+        "商法则在 S02.U10 中采用“所有项分母非零”的充分条件，S02.U11 也正确使用 \\(M\\neq0\\) 推出尾项分母远离零；未将其误判为必须给出最弱的“最终非零”条件。",
+        "普通模型审阅核对了定义、量词、符号、边界指标、定理条件、证明衔接及教学目标，但不等同于形式化证明；工具抽查也不能证明整份讲义在所有语义层面均无误。",
+        "未检查最终 PDF 的排版、渲染效果或跨后续章节的完整课程覆盖。"
+      ]
+    },
+    "issues": [],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": []
+}

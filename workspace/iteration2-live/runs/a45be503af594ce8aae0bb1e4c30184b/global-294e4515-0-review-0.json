@@ -1,0 +1,49 @@
+{
+  "issues": [
+    {
+      "unit_id": "S02.U01",
+      "severity": "warning",
+      "message": "S02.U01 的 kind 为 definition，但正文表达的是条件命题：“若 h≤f≤g 且两端极限同为 L，则 f 的极限为 L”，这是夹逼原理/定理而非定义；同一命题又在 S02.U04 以 thm:squeeze-theorem 重复陈述。数学内容本身正确，但定义/定理标签与重复会影响学生理解，并可能妨碍真正定义类目标的识别。建议保留数学内容，将 S02.U01 改为 theorem/remark，或与 S02.U04 合并。",
+      "evidence": "S02.U01 kind=\"definition\"，正文在“若在该邻域内有 h(x)≤f(x)≤g(x)，且存在有限数 L，使得两端极限均为 L”后给出“则 f 的极限为 L”，并称“这称为夹逼原理”。S02.U04 kind=\"theorem\"，又陈述同一夹逼结论并标注为 thm:squeeze-theorem。"
+    },
+    {
+      "unit_id": "S02.U04",
+      "severity": "warning",
+      "message": "S02.U04 的 kind 为 theorem，但正文在定理陈述后直接包含“夹逼计算的应用”及完整计算，属于 example/solution 内容。数学结论和计算正确，但单元类型混合会影响 required_kinds 的教学覆盖和学生学习路径。建议把应用例题拆到例、解单元中。",
+      "evidence": "S02.U04 kind=\"theorem\"，正文先陈述夹逼定理并标注为 thm:squeeze-theorem，随后写“夹逼计算的应用：求 lim_{x→0} x^2 sin(1/x)”并给出上下界与极限计算。"
+    }
+  ],
+  "checked_unit_ids": [
+    "S01.U01",
+    "S01.U02",
+    "S01.U03",
+    "S01.U04",
+    "S01.U05",
+    "S01.U06",
+    "S01.U07",
+    "S01.U08",
+    "S01.U09",
+    "S01.U10",
+    "S01.U11",
+    "S01.U12",
+    "S01.U13",
+    "S02.U01",
+    "S02.U02",
+    "S02.U03",
+    "S02.U04",
+    "S02.U05",
+    "S02.U06",
+    "S02.U07",
+    "S02.U08",
+    "S02.U09",
+    "S02.U10",
+    "S02.U11",
+    "S02.U12",
+    "S02.U13"
+  ],
+  "limitations": [
+    "本审阅只覆盖 context.scope=adjacent_interface 中实际提供的 S01 与 S02 单元及其相邻依赖接口；S03-S05 和最终 PDF 渲染另由其他检查处理。",
+    "本审阅是普通模型对正文的数学与教学一致性检查，不是形式化证明；未使用证明助手，也未逐步重证所有可由定义直接验证的常规事实。",
+    "在已提供的 S01/S02 正文范围内，未发现需要 blocking 或 review 的数学错误；上面两条为结构、标签层面的非阻塞 warning。"
+  ]
+}

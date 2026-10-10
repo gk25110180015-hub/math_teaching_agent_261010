@@ -1,0 +1,166 @@
+{
+  "prior_issues": [
+    {
+      "unit_id": "S03.U12",
+      "severity": "review",
+      "message": "S03.U12 完整证明了积分判别法的两个方向：由积分夹逼推出部分和有界，以及由级数收敛推出截断积分有界。锁定计划的排除项明确写有“不系统展开高等数学中的积分判别法证明细节”，而 S03 目标只要求“掌握积分判别法的使用条件”。若按该排除项，应只保留定理条件与应用说明，或大幅压缩证明；但 proof_policy=key 又可能被解读为关键定理完整证明，二者存在范围冲突，需按锁定条件处理。",
+      "evidence": "plan.exclusions 包含“不系统展开高等数学中的积分判别法证明细节”；S03 objectives 包含“掌握比较判别法、极限比较判别法和积分判别法的使用条件”；S03.U12 正文给出从 f(n+1)≤∫_n^{n+1}f≤f(n) 到两方向收敛等价的完整证明。"
+    }
+  ],
+  "review_identity": {
+    "candidate_hash": "d60b00c32f1c3e985ec02cf7a800a06fc1ed8dc47f2df5bb800cd8e1b7312695",
+    "tool_checks_hash": "9f5640ca4b6a12e202da8b475550e155493c7af967ef04d6fc4505adf880dd4c",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "025f95eac8d7c39ad421ba73e5d5cde9ebe99234a78ff75f4b370320b6723cd1",
+    "deterministic_checks_hash": "9a2a8a625e6ac42c47bbb9e07c1794b98b61906c6c1814bc4eecd387e4f3cdfd"
+  },
+  "report": {
+    "section_id": "S03",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "series",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "domain_scope": "supported_tail_guards",
+          "limitations": [
+            "以起点加非负整数代入，检查已保留的受支持运算定义域约束；不是通用定义域证明器。"
+          ],
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": true,
+          "message": "级数收敛性核算与声明一致。",
+          "calculation_id": "S03.C01",
+          "unit_id": "S03.U09"
+        },
+        {
+          "kind": "series",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "domain_scope": "supported_tail_guards",
+          "limitations": [
+            "以起点加非负整数代入，检查已保留的受支持运算定义域约束；不是通用定义域证明器。"
+          ],
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": false,
+          "message": "级数收敛性核算与声明一致。",
+          "calculation_id": "S03.C02",
+          "unit_id": "S03.U09"
+        },
+        {
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "3",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S03.C03",
+          "unit_id": "S03.U14"
+        }
+      ],
+      "coverage": [
+        "S03.U01",
+        "S03.U02",
+        "S03.U03",
+        "S03.U04",
+        "S03.U05",
+        "S03.U06",
+        "S03.U07",
+        "S03.U08",
+        "S03.U09",
+        "S03.U10",
+        "S03.U11",
+        "S03.U12",
+        "S03.U13",
+        "S03.U14",
+        "S03.U15",
+        "S03.U16"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "协议的 series 核算只能对给定的具体幂指数核对收敛性，不能直接表达定理中对所有实数 $p$ 的量词；比较判别法、极限比较判别法和积分判别法的普遍证明由正文完成。",
+        "S03.U12 使用一般连续正值单调递减函数的积分比较及部分和有界性；现有核算协议不支持一般函数、定积分或不等式证明，不能直接核算本次修复中的两向推理。",
+        "新增的几何级数说明涉及有限求和及公比区间 0<r<1、r>1 的分类。现有 JSON AST 不支持有限求和表达式，布尔假设也不能直接表示这些区间约束；本次未对该一般参数结论新增符号核算，依据在正文中以有限等比求和和数列极限给出。原有两项具体 p-级数核算保持不变。",
+        "新增核算仅覆盖 S03.U14 中第 (1) 项极限比较解法的比值极限。正项性、比较判别法及 $p=2$ 级数收敛性由正文结论承担，现有核算协议不能替代这些一般论证。",
+        "本次 S03.U12 仅保留积分比较的基本估计与使用条件说明，不再展开积分判别法两方向的完整证明。保留的估计涉及一般函数、定积分及不等式，现有核算协议不能表达，故本次不新增核算请求；既有核算不变。"
+      ]
+    },
+    "llm_review": {
+      "issues": [
+        {
+          "unit_id": "S03.U12",
+          "severity": "review",
+          "message": "积分判别法的正文目前只给出相邻矩形面积的不等式和使用条件，没有证明由该估计推出级数与反常积分双向同敛散。锁定计划一方面将“掌握积分判别法的使用条件”列为目标，并明确排除“不系统展开高等数学中的积分判别法证明细节”；另一方面 proof_policy=key 要求关键定理完整证明。由于积分判别法同时出现在本节 reference_labels 的关键定理列表中，当前正文是否已满足“关键定理完整证明”存在范围不确定，需按锁定条件明确取舍；不能仅以工具检查通过视为已完成证明。",
+          "evidence": "S03.U11 陈述了连续、正值、单调递减且满足 f(n)=a_n 时的积分判别法双向等价。S03.U12 明确写道“这里只说明积分判别法的比较思路，不展开两方向的完整证明”，随后只证明/陈述 f(n+1)≤∫_n^{n+1}f(x)dx≤f(n) 这一局部估计及应用核对条件。plan.exclusions 明确排除系统展开该证明细节，而 lecture.proof_policy=key 又要求关键定理完整证明；现有正文未解决这两项锁定条件的适用边界。"
+        }
+      ],
+      "checked_unit_ids": [
+        "S03.U01",
+        "S03.U02",
+        "S03.U03",
+        "S03.U04",
+        "S03.U05",
+        "S03.U06",
+        "S03.U07",
+        "S03.U08",
+        "S03.U09",
+        "S03.U10",
+        "S03.U11",
+        "S03.U12",
+        "S03.U13",
+        "S03.U14",
+        "S03.U15",
+        "S03.U16"
+      ],
+      "limitations": [
+        "本次仅审查 section_local 范围内的 S03.U01–S03.U16，并使用所提供的 S01、S02 先修正文；S04、S05 尚未生成，不构成本节遗漏。",
+        "普通模型逐单元审阅不等于形式化证明；工具核算只覆盖少量具体表达式，不能替代对一般参数、函数、不等式和量词的完整形式化验证。",
+        "已检查定义域、量词、正负号、端点、级数起点与主要判别法条件；未将一次直接代入或常规极限推论仅因未逐步展开而判为数学错误。",
+        "未进行最终 PDF 排版检查；rendering_contract 仅用于区分独立 solution 单元与最终答案位置，不能证明数学内容正确。"
+      ]
+    },
+    "issues": [
+      {
+        "unit_id": "S03.U12",
+        "severity": "review",
+        "message": "积分判别法的正文目前只给出相邻矩形面积的不等式和使用条件，没有证明由该估计推出级数与反常积分双向同敛散。锁定计划一方面将“掌握积分判别法的使用条件”列为目标，并明确排除“不系统展开高等数学中的积分判别法证明细节”；另一方面 proof_policy=key 要求关键定理完整证明。由于积分判别法同时出现在本节 reference_labels 的关键定理列表中，当前正文是否已满足“关键定理完整证明”存在范围不确定，需按锁定条件明确取舍；不能仅以工具检查通过视为已完成证明。",
+        "evidence": "S03.U11 陈述了连续、正值、单调递减且满足 f(n)=a_n 时的积分判别法双向等价。S03.U12 明确写道“这里只说明积分判别法的比较思路，不展开两方向的完整证明”，随后只证明/陈述 f(n+1)≤∫_n^{n+1}f(x)dx≤f(n) 这一局部估计及应用核对条件。plan.exclusions 明确排除系统展开该证明细节，而 lecture.proof_policy=key 又要求关键定理完整证明；现有正文未解决这两项锁定条件的适用边界。"
+      }
+    ],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": [
+    {
+      "unit_id": "S03.U12",
+      "severity": "review",
+      "message": "积分判别法的正文目前只给出相邻矩形面积的不等式和使用条件，没有证明由该估计推出级数与反常积分双向同敛散。锁定计划一方面将“掌握积分判别法的使用条件”列为目标，并明确排除“不系统展开高等数学中的积分判别法证明细节”；另一方面 proof_policy=key 要求关键定理完整证明。由于积分判别法同时出现在本节 reference_labels 的关键定理列表中，当前正文是否已满足“关键定理完整证明”存在范围不确定，需按锁定条件明确取舍；不能仅以工具检查通过视为已完成证明。",
+      "evidence": "S03.U11 陈述了连续、正值、单调递减且满足 f(n)=a_n 时的积分判别法双向等价。S03.U12 明确写道“这里只说明积分判别法的比较思路，不展开两方向的完整证明”，随后只证明/陈述 f(n+1)≤∫_n^{n+1}f(x)dx≤f(n) 这一局部估计及应用核对条件。plan.exclusions 明确排除系统展开该证明细节，而 lecture.proof_policy=key 又要求关键定理完整证明；现有正文未解决这两项锁定条件的适用边界。"
+    }
+  ]
+}

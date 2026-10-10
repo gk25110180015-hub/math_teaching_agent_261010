@@ -1,0 +1,111 @@
+{
+  "section_id": "S03",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "limit",
+        "assumptions": {
+          "x": {
+            "real": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "1",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U03"
+      }
+    ],
+    "coverage": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "协议支持的极限核算可以核对 $\\sin x/x$ 在 $x\\to0$ 时的代表性结论，但不能表达弧度制、三角函数的几何不等式或完整的夹逼证明。",
+      "协议中的布尔假设不能完整表达去心邻域和函数定义域条件；正文仍保留了 $x\\neq0$ 及相应表达式有定义的条件。",
+      "本次修正 S03.C01 的表达式树格式并重新提交请求，不将此前 UNKNOWN 记录视为核验通过。该请求仅覆盖 S03.U03 中的正弦基本极限，不覆盖指数基本极限及 S03.U06 中一般函数的等价替换证明。",
+      "S03.U01 的修订涉及一般函数的量词定义，以及绝对值趋于无穷与正、负无穷极限的区别；现有有界核算协议不能表达一般函数及其去心邻域量词条件，故不为该定义新增符号核算请求。",
+      "本次仅将证明中的内部单元标识改为定理的自然名称，不改变数学结论；一般函数的等价关系、去心邻域条件及极限乘法推理不能由现有 JSON AST 完整表达，本次不新增核算请求。"
+    ]
+  },
+  "llm_review": {
+    "issues": [
+      {
+        "unit_id": "S03.U04",
+        "severity": "warning",
+        "message": "第一个基本极限的证明在右侧夹逼中使用了当 x→0^+ 时 cos x→1，但没有给出证明或明确引用可用的三角基本性质。该步骤是证明链的一部分；若课程要求从极限定义建立基本极限，应补充例如 0≤1-cos x≤x^2/2 的简短论证，或明确将其列为允许的已知三角性质。",
+        "evidence": "U04 原文：‘当 x→0^+ 时，cos x→1。这里所用的是夹逼原理在右侧邻域上的同样结论……’ 随后用 cos x< sin x/x <1 推出该侧极限。S02 的 prior_sections 未给出 cos x→1；计划先修仅列‘三角函数的基本性质’。"
+      },
+      {
+        "unit_id": "S03.U08",
+        "severity": "warning",
+        "message": "U07 要求说明等价无穷小替换的依据及适用条件，但 U08 仅提到 sin x∼x，随后用基本极限 lim sin x/x=1 计算，没有实际调用等价无穷小替换定理或核对定理条件（例如取 F(x)=(1+x)/x，并检查 F(x)α(x) 的有限极限存在）。因此该例题没有真正演示目标中的‘在乘积/商中进行规范替换’，建议补一个实际替换步骤或改述‘替换’措辞。",
+        "evidence": "U07：‘要求说明等价无穷小替换的依据及适用条件。’ U08：‘当 x→0 时，sin x∼x……由基本极限 lim sin x/x=1……可得……这里的替换只在……进行。’ 显示的计算并未展示用 x 替换 sin x 的乘积替换，也未引用 thm:equivalent-substitution。"
+      }
+    ],
+    "checked_unit_ids": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10"
+    ],
+    "limitations": [
+      "本次为 section_local，仅审阅 S03 实际正文；未生成的 S04、S05 不属于本次范围。",
+      "未进行形式化证明。工具检查仅覆盖显式提交的符号核算，不验证一般量词、三角几何不等式、指数不等式或等价替换定理的全部推理。",
+      "U05/U06 依赖 S02 的极限乘法与倒数极限法则；已核对 prior_sections 中有相应结论，本次未重复展开其证明。",
+      "rendering_contract 已用于判断 S03.U10 为独立解答单元并移至末尾；未检查最终 PDF 的实际渲染与答案版式。"
+    ]
+  },
+  "issues": [
+    {
+      "unit_id": "S03.U04",
+      "severity": "warning",
+      "message": "第一个基本极限的证明在右侧夹逼中使用了当 x→0^+ 时 cos x→1，但没有给出证明或明确引用可用的三角基本性质。该步骤是证明链的一部分；若课程要求从极限定义建立基本极限，应补充例如 0≤1-cos x≤x^2/2 的简短论证，或明确将其列为允许的已知三角性质。",
+      "evidence": "U04 原文：‘当 x→0^+ 时，cos x→1。这里所用的是夹逼原理在右侧邻域上的同样结论……’ 随后用 cos x< sin x/x <1 推出该侧极限。S02 的 prior_sections 未给出 cos x→1；计划先修仅列‘三角函数的基本性质’。"
+    },
+    {
+      "unit_id": "S03.U08",
+      "severity": "warning",
+      "message": "U07 要求说明等价无穷小替换的依据及适用条件，但 U08 仅提到 sin x∼x，随后用基本极限 lim sin x/x=1 计算，没有实际调用等价无穷小替换定理或核对定理条件（例如取 F(x)=(1+x)/x，并检查 F(x)α(x) 的有限极限存在）。因此该例题没有真正演示目标中的‘在乘积/商中进行规范替换’，建议补一个实际替换步骤或改述‘替换’措辞。",
+      "evidence": "U07：‘要求说明等价无穷小替换的依据及适用条件。’ U08：‘当 x→0 时，sin x∼x……由基本极限 lim sin x/x=1……可得……这里的替换只在……进行。’ 显示的计算并未展示用 x 替换 sin x 的乘积替换，也未引用 thm:equivalent-substitution。"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 5,
+    "proposal_calls": 6,
+    "rejected_proposals": 1,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "8457aa8ad8e976d3025b5a3f423066c853f2248e143cdb534a6a5b9b4d48aa6b",
+      "tool_checks_hash": "423fadec3ef019103c617c85b96da8b3a170628a80cc13931879bf355c5ebf6e",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "4a8d8fc48ad7c063d2d0df37834764296a396c654057b6fe7fd4bccdbb9d0a76",
+      "deterministic_checks_hash": "c6cbd5914b55563703a846e10e524d28bb71fd480fe949073253faa77e962639"
+    }
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "section_id": "S02",
+  "units": [
+    {
+      "id": "S02.U01",
+      "kind": "definition",
+      "tex": "设函数 $f,g,h$ 在点 $x_0$ 的某个去心邻域内有定义。若在该邻域内有 $h(x)\\leq f(x)\\leq g(x)$，且存在有限数 $L$，使得\n\\[\n\\lim_{x\\to x_0}h(x)=L,\\qquad \\lim_{x\\to x_0}g(x)=L,\n\\]\n则\n\\[\n\\lim_{x\\to x_0}f(x)=L。\n\\]\n这称为夹逼原理。\\label{def:squeeze-principle}",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U02",
+      "kind": "theorem",
+      "tex": "设函数 $f$ 与 $g$ 在点 $x_0$ 的某个去心邻域内有定义，且 $\\lim_{x\\to x_0}f(x)=A$，$\\lim_{x\\to x_0}g(x)=B$。则\n\\[\n\\lim_{x\\to x_0}(f(x)+g(x))=A+B,\n\\qquad\n\\lim_{x\\to x_0}(f(x)-g(x))=A-B,\n\\]\n\\[\n\\lim_{x\\to x_0}f(x)g(x)=AB.\n\\]\n若 $B\\neq0$，并且在某个去心邻域内 $g(x)\\neq0$，则\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)}{g(x)}=\\frac{A}{B}.\n\\]\n\\label{thm:limit-algebra}",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U03",
+      "kind": "proof",
+      "tex": "先证明和的法则。给定 $\\varepsilon>0$，由 $f(x)\\to A$ 与 $g(x)\\to B$，分别存在 $\\delta_1>0$ 与 $\\delta_2>0$，使得当 $0<|x-x_0|<\\delta_1$ 时 $|f(x)-A|<\\varepsilon/2$，当 $0<|x-x_0|<\\delta_2$ 时 $|g(x)-B|<\\varepsilon/2$。取 $\\delta=\\min\\{\\delta_1,\\delta_2\\}$，则\n\\[\n\\left|(f(x)+g(x))-(A+B)\\right|\\leq |f(x)-A|+|g(x)-B|<\\varepsilon.\n\\]\n故 $f(x)+g(x)\\to A+B$。差的法则由 $f(x)-g(x)=f(x)+(-g(x))$ 得到。\n\n对于积，先由 $f(x)\\to A$ 知道 $f$ 在 $x_0$ 的某个去心邻域内有界。于是\n\\[\n|f(x)g(x)-AB|\\leq |f(x)|\\,|g(x)-B|+|B|\\,|f(x)-A|,\n\\]\n右端趋于零，故 $f(x)g(x)\\to AB$。\n\n若 $B\\neq0$，由 $g(x)\\to B$ 可知在充分小的去心邻域内 $g(x)\\neq0$，并且\n\\[\n\\left|\\frac{1}{g(x)}-\\frac{1}{B}\\right|=\\frac{|g(x)-B|}{|g(x)||B|}\\to0.\n\\]\n所以 $1/g(x)\\to1/B$。再由积的法则，得到\n\\[\n\\frac{f(x)}{g(x)}=f(x)\\frac{1}{g(x)}\\to\\frac{A}{B}.\n\\]",
+      "relates_to": "S02.U02"
+    },
+    {
+      "id": "S02.U04",
+      "kind": "theorem",
+      "tex": "设函数 $f,g,h$ 在点 $x_0$ 的某个去心邻域内有定义，并且在该邻域内满足\n\\[\nh(x)\\leq f(x)\\leq g(x).\n\\]\n若\n\\[\n\\lim_{x\\to x_0}h(x)=L,\n\\qquad\n\\lim_{x\\to x_0}g(x)=L,\n\\]\n则\n\\[\n\\lim_{x\\to x_0}f(x)=L.\n\\]\n\\label{thm:squeeze-theorem}",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U05",
+      "kind": "proof",
+      "tex": "给定 $\\varepsilon>0$。由 $h(x)\\to L$，存在 $\\delta_1>0$，使得当 $0<|x-x_0|<\\delta_1$ 时 $h(x)>L-\\varepsilon$；由 $g(x)\\to L$，存在 $\\delta_2>0$，使得当 $0<|x-x_0|<\\delta_2$ 时 $g(x)<L+\\varepsilon$。取 $\\delta=\\min\\{\\delta_1,\\delta_2\\}$，则当 $0<|x-x_0|<\\delta$ 时，\n\\[\nL-\\varepsilon<h(x)\\leq f(x)\\leq g(x)<L+\\varepsilon.\n\\]\n因此 $|f(x)-L|<\\varepsilon$，从而 $\\lim_{x\\to x_0}f(x)=L$。",
+      "relates_to": "S02.U04"
+    },
+    {
+      "id": "S02.U06",
+      "kind": "theorem",
+      "tex": "设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义，且 $\\lim_{x\\to x_0}f(x)=A$。若 $A>0$，则存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时 $f(x)>0$；若 $A<0$，则存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时 $f(x)<0$。\\label{thm:limit-sign-preservation}",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U07",
+      "kind": "proof",
+      "tex": "设 $A>0$。取 $\\varepsilon=A/2$。由极限定义，存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时 $|f(x)-A|<A/2$，于是\n\\[\nf(x)>A-\\frac{A}{2}=\\frac{A}{2}>0.\n\\]\n当 $A<0$ 时，取 $\\varepsilon=|A|/2$，则\n\\[\nf(x)<A+\\frac{|A|}{2}=\\frac{A}{2}<0.\n\\]\n",
+      "relates_to": "S02.U06"
+    },
+    {
+      "id": "S02.U08",
+      "kind": "example",
+      "tex": "计算\n\\[\n\\lim_{x\\to1}\\frac{x^2-1}{x-1}.\n\\]\n要求在保持定义域条件 $x\\neq1$ 的前提下进行代数变形。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U09",
+      "kind": "solution",
+      "tex": "当 $x\\neq1$ 时，$x^2-1=(x-1)(x+1)$，所以\n\\[\n\\frac{x^2-1}{x-1}=x+1.\n\\]\n原函数虽然在 $x=1$ 处没有定义，但极限只考察 $x\\neq1$ 且 $x\\to1$ 时的函数值。因此\n\\[\n\\lim_{x\\to1}\\frac{x^2-1}{x-1}=\\lim_{x\\to1}(x+1)=1+1=2.\n\\]",
+      "relates_to": "S02.U08"
+    },
+    {
+      "id": "S02.U10",
+      "kind": "example",
+      "tex": "设 $f(x)=x^2-3x+2$。求 $\\lim_{x\\to2}f(x)$，并说明所得极限的符号。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U11",
+      "kind": "solution",
+      "tex": "由极限的和、差与积法则，\n\\[\n\\lim_{x\\to2}(x^2-3x+2)=2^2-3\\cdot2+2=0.\n\\]\n因此该极限等于 $0$。由于极限值为零，保号定理不能据此断言 $f(x)$ 在 $2$ 的去心邻域内恒正或恒负。",
+      "relates_to": "S02.U10"
+    },
+    {
+      "id": "S02.U12",
+      "kind": "exercise",
+      "tex": "设函数 $f$ 与 $g$ 在点 $x_0$ 的某个去心邻域内有定义，且\n\\[\n\\lim_{x\\to x_0}f(x)=2,\n\\qquad\n\\lim_{x\\to x_0}g(x)=-1.\n\\]\n求\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)+g(x)}{f(x)-g(x)}.\n\\]\n并说明使用商的极限法则时需要检查的条件。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U13",
+      "kind": "solution",
+      "tex": "由极限的和与差法则，\n\\[\n\\lim_{x\\to x_0}(f(x)+g(x))=2+(-1)=1,\n\\]\n\\[\n\\lim_{x\\to x_0}(f(x)-g(x))=2-(-1)=3.\n\\]\n分母的极限为 $3\\neq0$，所以分母在 $x_0$ 的某个去心邻域内不为零，可以使用商的极限法则。因此\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)+g(x)}{f(x)-g(x)}=\\frac{1}{3}.\n\\]",
+      "relates_to": "S02.U12"
+    }
+  ],
+  "calculations": [],
+  "calculation_limitations": [
+    "协议支持的极限核算不能表达约分所需的条件 $x\\neq1$；核算仅针对约分后在相应去心邻域内等价的表达式 $x+1$。"
+  ],
+  "uncertainties": []
+}

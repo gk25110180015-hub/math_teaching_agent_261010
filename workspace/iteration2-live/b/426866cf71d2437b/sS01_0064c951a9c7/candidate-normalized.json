@@ -1,0 +1,84 @@
+{
+  "section_id": "S01",
+  "units": [
+    {
+      "id": "S01.U01",
+      "kind": "definition",
+      "tex": "直观地说，若数列的项随着下标 $n$ 增大而越来越接近某个实数 $A$，就称数列趋近于 $A$。这里的“越来越接近”不是要求从某一项开始单调接近，而是要求误差可以小于任意预先给定的正数。\\label{def:sequence-limit}\n\n设 $\\{a_n\\}$ 是实数数列，$A$ 是实数。如果\n\\[\n\\forall\\,\\varepsilon>0,\\quad \\exists\\,N\\in\\mathbb{N}^+,\\quad \\forall\\,n\\in\\mathbb{N}^+,\\quad n>N\\Longrightarrow |a_n-A|<\\varepsilon,\n\\]\n则称数列 $\\{a_n\\}$ 收敛于 $A$，称 $A$ 为该数列的极限，记作\n\\[\n\\lim_{n\\to\\infty}a_n=A.\n\\]\n其中，$\\varepsilon$ 是任意给定的正误差容限，$N$ 可以依赖于 $\\varepsilon$，但选定后必须对所有满足 $n>N$ 的正整数 $n$ 同时成立。",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U02",
+      "kind": "theorem",
+      "tex": "数列极限具有唯一性：如果实数数列 $\\{a_n\\}$ 满足\n\\[\n\\lim_{n\\to\\infty}a_n=A\\qquad\\text{且}\\qquad \\lim_{n\\to\\infty}a_n=B,\n\\]\n其中 $A,B\\in\\mathbb{R}$，那么\n\\[\nA=B.\n\\]\n\\label{thm:limit-uniqueness}",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U03",
+      "kind": "proof",
+      "tex": "反设 $A\\ne B$。取\n\\[\n\\varepsilon=\\frac{|A-B|}{3}>0.\n\\]\n由 $\\lim_{n\\to\\infty}a_n=A$ 的定义，存在正整数 $N_A$，使得当 $n>N_A$ 时，$|a_n-A|<\\varepsilon$。同理，存在正整数 $N_B$，使得当 $n>N_B$ 时，$|a_n-B|<\\varepsilon$。\n\n取正整数 $N=\\max\\{N_A,N_B\\}$。当 $n>N$ 时，由三角不等式可得\n\\[\n|A-B|=|(A-a_n)+(a_n-B)|\n\\leq |A-a_n|+|a_n-B|\n<2\\varepsilon=\\frac{2|A-B|}{3}.\n\\]\n这与 $|A-B|>0$ 矛盾。因此不能有 $A\\ne B$，所以 $A=B$。",
+      "relates_to": "S01.U02"
+    },
+    {
+      "id": "S01.U04",
+      "kind": "example",
+      "tex": "用数列极限的定义证明：当 $a_n=\\dfrac{1}{n}$，$n\\in\\mathbb{N}^+$ 时，数列 $\\{a_n\\}$ 的极限为 $0$。",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U05",
+      "kind": "solution",
+      "tex": "任取 $\\varepsilon>0$。为了使\n\\[\n\\left|a_n-0\\right|=\\frac{1}{n}<\\varepsilon,\n\\]\n只需令 $n>1/\\varepsilon$。取正整数 $N$ 满足\n\\[\nN>\\frac{1}{\\varepsilon}.\n\\]\n这样的 $N$ 对每个给定的 $\\varepsilon>0$ 都存在。\n\n当 $n>N$ 时，由 $N>1/\\varepsilon$ 可知 $n>1/\\varepsilon$，于是\n\\[\n\\left|a_n-0\\right|=\\left|\\frac{1}{n}\\right|=\\frac{1}{n}<\\varepsilon.\n\\]\n因此，按照定义，数列 $\\{1/n\\}$ 收敛于 $0$，即\n\\[\n\\lim_{n\\to\\infty}\\frac{1}{n}=0.\n\\label{eq:reciprocal-limit}\n\\]\n这里 $N$ 可以随着 $\\varepsilon$ 的变化而重新选择，但在选定某个 $\\varepsilon$ 后，$N$ 不能随着待验证的 $n$ 改变。",
+      "relates_to": "S01.U04"
+    },
+    {
+      "id": "S01.U06",
+      "kind": "exercise",
+      "tex": "用数列极限的定义证明：当 $a_n=2+\\dfrac{3}{n}$，$n\\in\\mathbb{N}^+$ 时，数列 $\\{a_n\\}$ 的极限为 $2$。",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U07",
+      "kind": "solution",
+      "tex": "任取 $\\varepsilon>0$。有\n\\[\n\\left|a_n-2\\right|=\\left|2+\\frac{3}{n}-2\\right|=\\frac{3}{n}.\n\\]\n为了使 $\\frac{3}{n}<\\varepsilon$，只需令 $n>3/\\varepsilon$。取正整数 $N$ 满足\n\\[\nN>\\frac{3}{\\varepsilon}.\n\\]\n当 $n>N$ 时，有 $n>3/\\varepsilon$，从而\n\\[\n\\left|a_n-2\\right|=\\frac{3}{n}<\\varepsilon.\n\\]\n因此，根据数列极限的定义，\n\\[\n\\lim_{n\\to\\infty}\\left(2+\\frac{3}{n}\\right)=2.\n\\]",
+      "relates_to": "S01.U06"
+    }
+  ],
+  "calculations": [
+    {
+      "id": "S01.C01",
+      "unit_id": "S01.U05",
+      "kind": "limit",
+      "assumptions": {
+        "n": {
+          "integer": true,
+          "positive": true
+        }
+      },
+      "expression": {
+        "args": [
+          {
+            "name": "n",
+            "op": "Symbol"
+          },
+          {
+            "op": "Integer",
+            "value": -1
+          }
+        ],
+        "op": "Pow"
+      },
+      "variable": "n",
+      "point": {
+        "op": "Infinity"
+      },
+      "direction": "-",
+      "expected": {
+        "op": "Integer",
+        "value": 0
+      }
+    }
+  ],
+  "calculation_limitations": [],
+  "uncertainties": []
+}

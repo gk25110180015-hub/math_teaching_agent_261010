@@ -1,0 +1,602 @@
+{
+  "schema_version": 2,
+  "identity": {
+    "plan_hash": "60e76cc0b1271ac1b32a9f48c9ae760665bb7180cbdd52df6f5f5958f25db4ac",
+    "model": "gpt-6-astra",
+    "provider": "live",
+    "repair_contract_version": 2,
+    "repair_prompt_hash": "362fb34b2529572af9620c5433dbb223290c519889e89192c1d52c5d65e60943",
+    "written_schema_hash": "4e9b07e27f359212c0460381e3cbd6e548d18a48490e553e60b0c56d30d9ada7",
+    "patch_schema_hash": "0d86c8d71317f64b5b07f16f49a50ad4dd13c072cbf83dcaa1babdd53d1510dd",
+    "patch_validator_hash": "78427756213a06179f7d1f6c496f22871cc3abd333330c09635fc0cf0b6d55e3",
+    "calculation_protocol_hash": "d0e00874991f1762e72dcf4845ff8417ca54d1a399d3ec3f2f8ea0153b99d1aa",
+    "normalizer_hash": "25d2fff448b21fcad71b5e7aae512cf6ab27f66bdeefd9e459ca57652a1fd74c",
+    "migration_contract_hash": "8c1167ba608adbc1b74d9fe4d5852152eba74069606c466a4c2db606c8df2186"
+  },
+  "rounds_used": 1,
+  "phase": "repair_pending",
+  "sections": {
+    "S02": {
+      "candidate_key": "runs/05748ab6260c40989a560a98e1e2065a/global-repairs/r1-b72ae851/S02-before.json",
+      "candidate_hash": "71fe14a727983ae099dbf5e501a48a38d03b352ce9914e0125becd3edaedfac4"
+    },
+    "S03": {
+      "candidate_key": "runs/05748ab6260c40989a560a98e1e2065a/global-repairs/r1-b72ae851/S03-before.json",
+      "candidate_hash": "c044d5a1902d79b8428a48069baf4017a7b5716e6f75f3d1f8985a762b917475"
+    },
+    "S04": {
+      "candidate_key": "runs/05748ab6260c40989a560a98e1e2065a/global-repairs/r1-b72ae851/S04-before.json",
+      "candidate_hash": "1ac834859076ae81d39060fae9dd0ddd0f9a470a58abd13f961ccc75a8b086c0"
+    },
+    "S05": {
+      "candidate_key": "runs/05748ab6260c40989a560a98e1e2065a/global-repairs/r1-b72ae851/S05-before.json",
+      "candidate_hash": "d82234db23eb6f966054a7851d33df5025ed0b982a9753746a49eea5767e1bef"
+    }
+  },
+  "pending": [
+    {
+      "section_id": "S02",
+      "issues": [
+        {
+          "unit_id": "S02.U12",
+          "severity": "review",
+          "message": "反馈教学改进（不等于数学错误）[F1]：现稿已部分落实反馈：S02.U12 不再只有常数倍和有理式，已加入 c_n=|3/n-2| 的实际求极限示范，并以反三角不等式和极限定义证明所用法则，计算结果为 2。因此不能沿用原反馈中“没有绝对值训练”的全部观察，也不应重复增加同类题目。但反馈明确要求在题目唯一关联的解答中给出计算、条件和依据；目前这些内容全部写在例题单元 S02.U12 内，关联解答 S02.U13（relates_to 为 S02.U12）仍仅解答 a_n、b_n，没有承接 c_n。剩余缺口是题面与关联解答的组织和覆盖，而非数学错误或绝对值法则证明缺失。应保留已经完成的正确示范，仅在这两个现有单元内作小范围归位，不能判为整项已满足。\n限定修订：仅调整 S02.U12 与 S02.U13：在 S02.U12 保留原有 a_n、b_n 题面，将已经存在的 c_n 作为同一例题的明确小问，继承正整数下标条件；把现有绝对值法则的条件、反三角不等式及定义证明、c_n 的计算与解释完整归入唯一关联解答 S02.U13，并相应整理衔接语。保留 S02.U13 原有两问的计算和商法则条件检查。此为现有正确内容的归位，不删除正确证明，不另加绝对值题目、不新增单元、不修改其他正文，不援引函数连续性。修后核对三个小问与该唯一解答逐一对应。",
+          "evidence": "S02.U12:「计算下列数列的极限，并说明所使用的运算法则：$a_n=3(1/n)+2$，$b_n=(2n+1)/(n+3)$，其中 $n\\in\\mathbb{N}^{+}$。\n\n先补充一个含绝对值的示范：求 $c_n=|3/n-2|$ 的极限。所用的绝对值极限法则是：若 $x_n\\to L$，则 $|x_n|\\to|L|$。其依据是反三角不等式\n\\[\n\\bigl||x_n|-|L|\\bigr|\\leq|x_n-L|.\n\\]\n事实上，任给 $\\varepsilon>0$，由 $x_n\\to L$，存在正整数 $N$，使得当 $n\\geq N$ 时 $|x_n-L|<\\varepsilon$，于是 $\\bigl||x_n|-|L|\\bigr|<\\varepsilon$，由极限定义即得上述法则。应用时，先由 $1/n\\to0$ 及常数倍、差法则得到 $3/n-2\\to-2$，再用绝对值极限法则得到\n\\[\n\\lim_{n\\to\\infty}|3/n-2|=|-2|=2.\n\\]\n这说明处理含绝对值的数列极限时，可以先求绝对值内部数列的极限，再对所得极限取绝对值。原题中 $a_n,b_n$ 的计算如下。」\nS02.U13:「由前一节的基本极限 $1/n\\to0$，利用常数倍法则与和法则，$\\lim_{n\\to\\infty}a_n=3\\cdot0+2=2$。对于 $b_n$，由于 $n\\in\\mathbb{N}^{+}$，可将分子、分母同除以 $n$，得到 $b_n=(2+1/n)/(1+3/n)$。由 $1/n\\to0$，有 $2+1/n\\to2$，且 $1+3/n\\to1\\neq0$。另外，$1+3/n>0$，所以商式有定义。由商法则，$\\lim_{n\\to\\infty}b_n=2/1=2$。使用商法则前必须确认分母极限非零。」\n批准目标依据：[{\"section_id\": \"S02\", \"field\": \"objectives\", \"quote\": \"能够处理含有有理式、绝对值和常数倍的基本数列极限\"}, {\"section_id\": \"S02\", \"field\": \"objectives\", \"quote\": \"例题应包含运算法则的直接应用与一个需要先验证分母极限非零的情形\"}]"
+        },
+        {
+          "unit_id": "S02.U13",
+          "severity": "review",
+          "message": "反馈教学改进（不等于数学错误）[F1]：现稿已部分落实反馈：S02.U12 不再只有常数倍和有理式，已加入 c_n=|3/n-2| 的实际求极限示范，并以反三角不等式和极限定义证明所用法则，计算结果为 2。因此不能沿用原反馈中“没有绝对值训练”的全部观察，也不应重复增加同类题目。但反馈明确要求在题目唯一关联的解答中给出计算、条件和依据；目前这些内容全部写在例题单元 S02.U12 内，关联解答 S02.U13（relates_to 为 S02.U12）仍仅解答 a_n、b_n，没有承接 c_n。剩余缺口是题面与关联解答的组织和覆盖，而非数学错误或绝对值法则证明缺失。应保留已经完成的正确示范，仅在这两个现有单元内作小范围归位，不能判为整项已满足。\n限定修订：仅调整 S02.U12 与 S02.U13：在 S02.U12 保留原有 a_n、b_n 题面，将已经存在的 c_n 作为同一例题的明确小问，继承正整数下标条件；把现有绝对值法则的条件、反三角不等式及定义证明、c_n 的计算与解释完整归入唯一关联解答 S02.U13，并相应整理衔接语。保留 S02.U13 原有两问的计算和商法则条件检查。此为现有正确内容的归位，不删除正确证明，不另加绝对值题目、不新增单元、不修改其他正文，不援引函数连续性。修后核对三个小问与该唯一解答逐一对应。",
+          "evidence": "S02.U12:「计算下列数列的极限，并说明所使用的运算法则：$a_n=3(1/n)+2$，$b_n=(2n+1)/(n+3)$，其中 $n\\in\\mathbb{N}^{+}$。\n\n先补充一个含绝对值的示范：求 $c_n=|3/n-2|$ 的极限。所用的绝对值极限法则是：若 $x_n\\to L$，则 $|x_n|\\to|L|$。其依据是反三角不等式\n\\[\n\\bigl||x_n|-|L|\\bigr|\\leq|x_n-L|.\n\\]\n事实上，任给 $\\varepsilon>0$，由 $x_n\\to L$，存在正整数 $N$，使得当 $n\\geq N$ 时 $|x_n-L|<\\varepsilon$，于是 $\\bigl||x_n|-|L|\\bigr|<\\varepsilon$，由极限定义即得上述法则。应用时，先由 $1/n\\to0$ 及常数倍、差法则得到 $3/n-2\\to-2$，再用绝对值极限法则得到\n\\[\n\\lim_{n\\to\\infty}|3/n-2|=|-2|=2.\n\\]\n这说明处理含绝对值的数列极限时，可以先求绝对值内部数列的极限，再对所得极限取绝对值。原题中 $a_n,b_n$ 的计算如下。」\nS02.U13:「由前一节的基本极限 $1/n\\to0$，利用常数倍法则与和法则，$\\lim_{n\\to\\infty}a_n=3\\cdot0+2=2$。对于 $b_n$，由于 $n\\in\\mathbb{N}^{+}$，可将分子、分母同除以 $n$，得到 $b_n=(2+1/n)/(1+3/n)$。由 $1/n\\to0$，有 $2+1/n\\to2$，且 $1+3/n\\to1\\neq0$。另外，$1+3/n>0$，所以商式有定义。由商法则，$\\lim_{n\\to\\infty}b_n=2/1=2$。使用商法则前必须确认分母极限非零。」\n批准目标依据：[{\"section_id\": \"S02\", \"field\": \"objectives\", \"quote\": \"能够处理含有有理式、绝对值和常数倍的基本数列极限\"}, {\"section_id\": \"S02\", \"field\": \"objectives\", \"quote\": \"例题应包含运算法则的直接应用与一个需要先验证分母极限非零的情形\"}]"
+        }
+      ],
+      "allowed_unit_ids": [
+        "S02.U12",
+        "S02.U13"
+      ],
+      "neighbors": [
+        {
+          "section": {
+            "id": "S01",
+            "objectives": [
+              "理解数列作为定义在正整数集上的函数的含义",
+              "掌握数列收敛到实数的\\(\\varepsilon\\)-\\(N\\)定义及其否定形式",
+              "能够用定义验证简单数列的极限，并区分趋近过程与有限项取值",
+              "通过例题说明极限定义中\\(\\varepsilon\\)与\\(N\\)的量化关系"
+            ],
+            "prerequisites": [],
+            "reference_labels": [
+              "def:sequence",
+              "def:sequence-limit",
+              "def:epsilon-N",
+              "thm:limit-unique"
+            ],
+            "required_kinds": [
+              "definition",
+              "theorem",
+              "example",
+              "solution",
+              "proof",
+              "exercise"
+            ],
+            "title": "数列与数列极限的定义"
+          },
+          "generated": {
+            "calculation_limitations": [],
+            "calculations": [
+              {
+                "assumptions": {
+                  "n": {
+                    "integer": true,
+                    "positive": true
+                  }
+                },
+                "direction": "-",
+                "expected": {
+                  "op": "Integer",
+                  "value": 0
+                },
+                "expression": {
+                  "args": [
+                    {
+                      "name": "n",
+                      "op": "Symbol"
+                    },
+                    {
+                      "op": "Integer",
+                      "value": -1
+                    }
+                  ],
+                  "op": "Pow"
+                },
+                "id": "S01.C01",
+                "kind": "limit",
+                "point": {
+                  "op": "Infinity"
+                },
+                "unit_id": "S01.U07",
+                "variable": "n"
+              }
+            ],
+            "section_id": "S01",
+            "uncertainties": [],
+            "units": [
+              {
+                "id": "S01.U01",
+                "kind": "definition",
+                "relates_to": null,
+                "tex": "\\label{def:sequence}数列是定义在正整数集 $\\mathbb{N}^{+}=\\{1,2,3,\\ldots\\}$ 上、取实数值的函数。若该函数在 $n\\in\\mathbb{N}^{+}$ 处的值为 $a_n$，则称 $a_n$ 为数列 $\\{a_n\\}$ 的第 $n$ 项，通常写作\n\\[\na_1,a_2,\\ldots,a_n,\\ldots,\n\\qquad a_n=f(n),\\quad n\\in\\mathbb{N}^{+}.\n\\]\n数列的下标只能取正整数，且项的排列顺序是数列定义的一部分。"
+              },
+              {
+                "id": "S01.U02",
+                "kind": "definition",
+                "relates_to": null,
+                "tex": "\\label{def:sequence-limit}\\label{def:epsilon-N}设 $\\{a_n\\}$ 是实数数列，$L\\in\\mathbb{R}$。若对于任意 $\\varepsilon>0$，都存在正整数 $N$，使得当 $n\\geq N$ 时有\n\\[\n|a_n-L|<\\varepsilon,\n\\]\n则称数列 $\\{a_n\\}$ 收敛于 $L$，记为\n\\[\n\\lim_{n\\to\\infty}a_n=L.\n\\]\n其中，$\\varepsilon$ 先任意给定，而 $N$ 可以依赖于 $\\varepsilon$，但不能依赖于 $n$。"
+              },
+              {
+                "id": "S01.U03",
+                "kind": "definition",
+                "relates_to": null,
+                "tex": "“收敛于给定的 $L$”的否定形式，即“不收敛于给定的 $L$”，是：存在某个 $\\varepsilon_0>0$，使得对每一个正整数 $N$，都存在 $n\\geq N$，满足\n\\[\n|a_n-L|\\geq\\varepsilon_0.\n\\]\n因此，收敛于这个给定的 $L$ 要求从某个下标开始的所有项都落在区间 $(L-\\varepsilon,L+\\varepsilon)$ 内；不收敛于这个给定的 $L$ 则表示无论下标取得多大，总能找到一项落在某个固定误差范围之外。"
+              },
+              {
+                "id": "S01.U04",
+                "kind": "theorem",
+                "relates_to": null,
+                "tex": "\\label{thm:limit-unique}若数列 $\\{a_n\\}$ 收敛于 $L$，又收敛于 $M$，其中 $L,M\\in\\mathbb{R}$，则\n\\[\nL=M.\n\\]"
+              },
+              {
+                "id": "S01.U05",
+                "kind": "proof",
+                "relates_to": "S01.U04",
+                "tex": "设 $L\\ne M$，取\n\\[\n\\varepsilon=\\frac{|L-M|}{3}>0.\n\\]\n由 $a_n\\to L$，存在正整数 $N_1$，使得当 $n\\geq N_1$ 时，$|a_n-L|<\\varepsilon$。同理由 $a_n\\to M$，存在正整数 $N_2$，使得当 $n\\geq N_2$ 时，$|a_n-M|<\\varepsilon$。令 $N=\\max\\{N_1,N_2\\}$，则对任意 $n\\geq N$，三角不等式给出\n\\[\n|L-M|\\leq |L-a_n|+|a_n-M|<2\\varepsilon=\\frac{2}{3}|L-M|.\n\\]\n这与 $|L-M|>0$ 矛盾。因此 $L=M$。"
+              },
+              {
+                "id": "S01.U06",
+                "kind": "example",
+                "relates_to": null,
+                "tex": "验证数列\n\\[\na_n=\\frac{1}{n},\\qquad n\\in\\mathbb{N}^{+},\n\\]\n是否收敛，并判断其极限。"
+              },
+              {
+                "id": "S01.U07",
+                "kind": "solution",
+                "relates_to": "S01.U06",
+                "tex": "要证明 $a_n\\to0$，需验证对任意 $\\varepsilon>0$，存在正整数 $N$，使得 $n\\geq N$ 时\n\\[\n\\left|\\frac{1}{n}-0\\right|<\\varepsilon.\n\\]\n给定 $\\varepsilon>0$，取正整数 $N>\\frac{1}{\\varepsilon}$。当 $n\\geq N$ 时，由 $n>0$ 得\n\\[\n\\left|\\frac{1}{n}-0\\right|=\\frac{1}{n}\\leq\\frac{1}{N}<\\varepsilon.\n\\]\n所以按照 $\\varepsilon$--$N$ 定义，\n\\[\n\\lim_{n\\to\\infty}\\frac{1}{n}=0.\n\\]"
+              },
+              {
+                "id": "S01.U08",
+                "kind": "explanation",
+                "relates_to": null,
+                "tex": "极限描述的是下标充分大时数列项的接近趋势，而不是某一项必须等于极限。例如，对 $a_n=1/n$，没有正整数 $n$ 使得 $a_n=0$，但当 $n$ 足够大时，$a_n$ 可以小于任意预先给定的正数 $\\varepsilon$。因此，有限项的取值与数列的极限需要区分。"
+              },
+              {
+                "id": "S01.U09",
+                "kind": "exercise",
+                "relates_to": null,
+                "tex": "用 $\\varepsilon$--$N$ 定义证明\n\\[\n\\lim_{n\\to\\infty}\\frac{2n+1}{n}=2.\n\\]\n要求明确写出给定的 $\\varepsilon$、所取的 $N$，以及当 $n\\geq N$ 时的误差估计。"
+              },
+              {
+                "id": "S01.U10",
+                "kind": "solution",
+                "relates_to": "S01.U09",
+                "tex": "给定任意 $\\varepsilon>0$，注意到\n\\[\n\\left|\\frac{2n+1}{n}-2\\right|=\\left|\\frac{1}{n}\\right|=\\frac{1}{n}.\n\\]\n取正整数 $N>\\frac{1}{\\varepsilon}$。当 $n\\geq N$ 时，$n>0$，从而\n\\[\n\\left|\\frac{2n+1}{n}-2\\right|=\\frac{1}{n}\\leq\\frac{1}{N}<\\varepsilon.\n\\]\n因此根据 $\\varepsilon$--$N$ 定义，\n\\[\n\\lim_{n\\to\\infty}\\frac{2n+1}{n}=2.\n\\]"
+              }
+            ]
+          }
+        },
+        {
+          "section": {
+            "id": "S03",
+            "objectives": [
+              "理解并证明数列夹逼定理的基本思想",
+              "能够利用绝对值估计、上下界和已知极限处理振荡因子",
+              "掌握常见基本极限的推导或使用条件，如\\(1/n\\)趋于零及有理式的无穷远行为",
+              "通过例题分析含有有界因子、符号变化因子或根式变形的数列",
+              "练习应覆盖至少一个不能直接套用四则运算法则而需夹逼的数列"
+            ],
+            "prerequisites": [
+              "S02"
+            ],
+            "reference_labels": [
+              "thm:squeeze-sequence",
+              "thm:basic-reciprocal-limit",
+              "thm:bounded-times-zero"
+            ],
+            "required_kinds": [
+              "definition",
+              "theorem",
+              "example",
+              "solution",
+              "proof",
+              "exercise"
+            ],
+            "title": "夹逼定理与常见极限"
+          },
+          "generated": {
+            "calculation_limitations": [
+              "核算请求仅覆盖根式例题和有理式例题的具体极限；协议的表达式树不能表达夹逼定理及有界数列乘无穷小定理中关于任意数列、最终不等式和任意误差的量词结构，这些一般结论由正文证明支持。",
+              "新增核算仅请求核对 S03.U17 第 (1) 题的具体极限；它不核验两个答案中对所有正整数成立的不等式链，也不替代夹逼证明及乘积、商法则适用条件的论证。协议没有用于直接核验此类全称不等式证明的请求类型。"
+            ],
+            "calculations": [
+              {
+                "assumptions": {
+                  "n": {
+                    "integer": true,
+                    "positive": true
+                  }
+                },
+                "direction": "-",
+                "expected": {
+                  "op": "Integer",
+                  "value": 0
+                },
+                "expression": {
+                  "args": [
+                    {
+                      "args": [
+                        {
+                          "args": [
+                            {
+                              "args": [
+                                {
+                                  "name": "n",
+                                  "op": "Symbol"
+                                },
+                                {
+                                  "op": "Integer",
+                                  "value": 2
+                                }
+                              ],
+                              "op": "Pow"
+                            },
+                            {
+                              "op": "Integer",
+                              "value": 3
+                            }
+                          ],
+                          "op": "Add"
+                        }
+                      ],
+                      "op": "sqrt"
+                    },
+                    {
+                      "args": [
+                        {
+                          "op": "Integer",
+                          "value": -1
+                        },
+                        {
+                          "name": "n",
+                          "op": "Symbol"
+                        }
+                      ],
+                      "op": "Mul"
+                    }
+                  ],
+                  "op": "Add"
+                },
+                "id": "S03.C01",
+                "kind": "limit",
+                "point": {
+                  "op": "Infinity"
+                },
+                "unit_id": "S03.U12",
+                "variable": "n"
+              },
+              {
+                "assumptions": {
+                  "n": {
+                    "integer": true,
+                    "positive": true
+                  }
+                },
+                "direction": "-",
+                "expected": {
+                  "op": "Rational",
+                  "p": 3,
+                  "q": 2
+                },
+                "expression": {
+                  "args": [
+                    {
+                      "args": [
+                        {
+                          "args": [
+                            {
+                              "op": "Integer",
+                              "value": 3
+                            },
+                            {
+                              "args": [
+                                {
+                                  "name": "n",
+                                  "op": "Symbol"
+                                },
+                                {
+                                  "op": "Integer",
+                                  "value": 2
+                                }
+                              ],
+                              "op": "Pow"
+                            }
+                          ],
+                          "op": "Mul"
+                        },
+                        {
+                          "args": [
+                            {
+                              "op": "Integer",
+                              "value": -1
+                            },
+                            {
+                              "name": "n",
+                              "op": "Symbol"
+                            }
+                          ],
+                          "op": "Mul"
+                        },
+                        {
+                          "op": "Integer",
+                          "value": 2
+                        }
+                      ],
+                      "op": "Add"
+                    },
+                    {
+                      "args": [
+                        {
+                          "args": [
+                            {
+                              "args": [
+                                {
+                                  "op": "Integer",
+                                  "value": 2
+                                },
+                                {
+                                  "args": [
+                                    {
+                                      "name": "n",
+                                      "op": "Symbol"
+                                    },
+                                    {
+                                      "op": "Integer",
+                                      "value": 2
+                                    }
+                                  ],
+                                  "op": "Pow"
+                                }
+                              ],
+                              "op": "Mul"
+                            },
+                            {
+                              "op": "Integer",
+                              "value": 5
+                            }
+                          ],
+                          "op": "Add"
+                        },
+                        {
+                          "op": "Integer",
+                          "value": -1
+                        }
+                      ],
+                      "op": "Pow"
+                    }
+                  ],
+                  "op": "Mul"
+                },
+                "id": "S03.C02",
+                "kind": "limit",
+                "point": {
+                  "op": "Infinity"
+                },
+                "unit_id": "S03.U14",
+                "variable": "n"
+              },
+              {
+                "assumptions": {
+                  "n": {
+                    "integer": true,
+                    "positive": true
+                  }
+                },
+                "direction": "-",
+                "expected": {
+                  "op": "Rational",
+                  "p": 1,
+                  "q": 2
+                },
+                "expression": {
+                  "args": [
+                    {
+                      "args": [
+                        {
+                          "args": [
+                            {
+                              "args": [
+                                {
+                                  "name": "n",
+                                  "op": "Symbol"
+                                },
+                                {
+                                  "op": "Integer",
+                                  "value": 2
+                                }
+                              ],
+                              "op": "Pow"
+                            },
+                            {
+                              "name": "n",
+                              "op": "Symbol"
+                            }
+                          ],
+                          "op": "Add"
+                        }
+                      ],
+                      "op": "sqrt"
+                    },
+                    {
+                      "args": [
+                        {
+                          "op": "Integer",
+                          "value": -1
+                        },
+                        {
+                          "name": "n",
+                          "op": "Symbol"
+                        }
+                      ],
+                      "op": "Mul"
+                    }
+                  ],
+                  "op": "Add"
+                },
+                "id": "S03.C03",
+                "kind": "limit",
+                "point": {
+                  "op": "Infinity"
+                },
+                "unit_id": "S03.U17.answer",
+                "variable": "n"
+              }
+            ],
+            "section_id": "S03",
+            "uncertainties": [],
+            "units": [
+              {
+                "id": "S03.U01",
+                "kind": "definition",
+                "relates_to": null,
+                "tex": "若实数数列 $\\{a_n\\}$ 满足 $a_n\\to0$，则称它为无穷小数列。“无穷小”描述整个数列的变化趋势，并不是指某个固定的很小的正数。例如 $1/n$ 是无穷小数列，而常数数列 $a_n=10^{-6}$ 不是无穷小数列。本节将用上下界控制误差，从而处理不能直接使用四则运算法则的极限。"
+              },
+              {
+                "id": "S03.U02",
+                "kind": "theorem",
+                "relates_to": null,
+                "tex": "\\label{thm:squeeze-sequence}夹逼定理：设 $\\{a_n\\}$、$\\{b_n\\}$、$\\{c_n\\}$ 为实数数列。若存在正整数 $N_0$，使得对所有 $n\\geq N_0$ 都有\n\\[\na_n\\leq b_n\\leq c_n,\n\\]\n且 $a_n\\to L$、$c_n\\to L$，其中 $L\\in\\mathbb{R}$，则 $b_n\\to L$。"
+              },
+              {
+                "id": "S03.U03",
+                "kind": "proof",
+                "relates_to": "S03.U02",
+                "tex": "任给 $\\varepsilon>0$。由 $a_n\\to L$，存在正整数 $N_1$，使得 $n\\geq N_1$ 时 $|a_n-L|<\\varepsilon$；由 $c_n\\to L$，存在正整数 $N_2$，使得 $n\\geq N_2$ 时 $|c_n-L|<\\varepsilon$。取\n\\[\nN=\\max\\{N_0,N_1,N_2\\}.\n\\]\n对每个 $n\\geq N$，有\n\\[\nL-\\varepsilon<a_n\\leq b_n\\leq c_n<L+\\varepsilon.\n\\]\n所以 $|b_n-L|<\\varepsilon$。由定义 \\ref{def:epsilon-N}，$b_n\\to L$。证明同时说明：夹逼关系只需从某个下标开始成立，有限个初始项不影响结论。"
+              },
+              {
+                "id": "S03.U04",
+                "kind": "explanation",
+                "relates_to": null,
+                "tex": "夹逼定理常写成误差估计的形式：设 $L\\in\\mathbb{R}$，$d_n\\to0$，并且存在正整数 $N_0$，使得对所有 $n\\geq N_0$ 都有\n\\[\n|b_n-L|\\leq d_n.\n\\]\n于是这些下标上必有 $d_n\\geq0$，且\n\\[\nL-d_n\\leq b_n\\leq L+d_n.\n\\]\n由和、差法则及定理 \\ref{thm:squeeze-sequence}，可得 $b_n\\to L$。这不是预先假设 $b_n$ 收敛，而是借助误差上界证明其收敛。若两侧极限不同，则仅凭夹在两者之间不能断言中间数列收敛。"
+              },
+              {
+                "id": "S03.U05",
+                "kind": "theorem",
+                "relates_to": null,
+                "tex": "\\label{thm:basic-reciprocal-limit}对于正整数下标 $n$，有\n\\[\n\\lim_{n\\to\\infty}\\frac1n=0.\n\\]\n更一般地，对每个固定的正整数 $k$，都有\n\\[\n\\lim_{n\\to\\infty}\\frac1{n^k}=0.\n\\]"
+              },
+              {
+                "id": "S03.U06",
+                "kind": "proof",
+                "relates_to": "S03.U05",
+                "tex": "任给 $\\varepsilon>0$，取正整数 $N>1/\\varepsilon$。当 $n\\geq N$ 时，$0<1/n\\leq1/N<\\varepsilon$，故 $1/n\\to0$。对任意固定的正整数 $k$，由于 $n\\geq1$ 时 $n^k\\geq n$，故\n\\[\n0<\\frac1{n^k}\\leq\\frac1n.\n\\]\n由定理 \\ref{thm:squeeze-sequence} 得 $1/n^k\\to0$。这里 $k$ 是固定的，不能把这一表述不加说明地当作关于任意变化指数的结论。"
+              },
+              {
+                "id": "S03.U07",
+                "kind": "theorem",
+                "relates_to": null,
+                "tex": "\\label{thm:bounded-times-zero}有界数列与无穷小数列的乘积是无穷小数列。具体地，设 $\\{u_n\\}$、$\\{v_n\\}$ 为实数数列，存在常数 $M>0$，使得对每个 $n\\in\\mathbb{N}^{+}$ 都有 $|u_n|\\leq M$，且 $v_n\\to0$，则\n\\[\nu_nv_n\\to0.\n\\]\n这里不要求 $\\{u_n\\}$ 本身收敛。"
+              },
+              {
+                "id": "S03.U08",
+                "kind": "proof",
+                "relates_to": "S03.U07",
+                "tex": "由 $v_n\\to0$ 的定义，对任意 $\\varepsilon>0$，存在正整数 $N$，使得 $n\\geq N$ 时 $|v_n|<\\varepsilon/M$。因此对所有 $n\\geq N$，\n\\[\n|u_nv_n|=|u_n|\\,|v_n|\\leq M|v_n|<\\varepsilon,\n\\]\n所以 $u_nv_n\\to0$。从夹逼的角度看，$|v_n|\\to0$ 直接来自极限定义，而\n\\[\n-M|v_n|\\leq u_nv_n\\leq M|v_n|\n\\]\n的两侧都趋于零。"
+              },
+              {
+                "id": "S03.U09",
+                "kind": "example",
+                "relates_to": null,
+                "tex": "设 $n\\in\\mathbb{N}^{+}$。求数列\n\\[\na_n=\\frac{(-1)^n n}{n^2+1}\n\\]\n的极限，并说明为什么不能把 $(-1)^n$ 和 $n/(n^2+1)$ 的极限直接相乘。"
+              },
+              {
+                "id": "S03.U10",
+                "kind": "solution",
+                "relates_to": "S03.U09",
+                "tex": "对每个正整数 $n$，分母 $n^2+1>0$，且\n\\[\n|a_n|=\\frac{n}{n^2+1}\\leq\\frac{n}{n^2}=\\frac1n.\n\\]\n由定理 \\ref{thm:basic-reciprocal-limit} 及误差估计形式的夹逼定理，$a_n\\to0$。\n\n因子 $(-1)^n$ 不收敛。事实上，若它收敛于某个实数 $L$，取 $\\varepsilon=1/2$，则充分大的偶数下标与奇数下标分别给出 $|1-L|<1/2$ 和 $|-1-L|<1/2$，从而\n\\[\n2=|1-(-1)|\\leq|1-L|+|L+1|<1,\n\\]\n矛盾。因此不能使用要求两个因子都收敛的乘积法则。不过 $|(-1)^n|=1$，且 $n/(n^2+1)\\to0$，所以也可用定理 \\ref{thm:bounded-times-zero} 得到答案。"
+              },
+              {
+                "id": "S03.U11",
+                "kind": "example",
+                "relates_to": null,
+                "tex": "对 $n\\in\\mathbb{N}^{+}$，计算\n\\[\n\\sqrt{n^2+3}-n\n\\]\n的极限。要求先作代数变形，再用上下界证明，不使用函数极限或导数。"
+              },
+              {
+                "id": "S03.U12",
+                "kind": "solution",
+                "relates_to": "S03.U11",
+                "tex": "由于 $n\\geq1$，根号内 $n^2+3>0$，且 $\\sqrt{n^2+3}+n>0$。乘以共轭式可得\n\\[\n\\sqrt{n^2+3}-n\n=\\frac{(n^2+3)-n^2}{\\sqrt{n^2+3}+n}\n=\\frac3{\\sqrt{n^2+3}+n}.\n\\]\n又因 $\\sqrt{n^2+3}\\geq n$，所以\n\\[\n0<\\sqrt{n^2+3}-n\\leq\\frac3{2n}.\n\\]\n由 $3/(2n)\\to0$ 和定理 \\ref{thm:squeeze-sequence}，得到\n\\[\n\\lim_{n\\to\\infty}\\bigl(\\sqrt{n^2+3}-n\\bigr)=0.\n\\]\n这里不能把原式中两项分别取实数极限再相减；两项都没有有限实数极限。共轭变形把相减的式子转化成了容易估计的正分式。"
+              },
+              {
+                "id": "S03.U13",
+                "kind": "example",
+                "relates_to": null,
+                "tex": "对 $n\\in\\mathbb{N}^{+}$，求\n\\[\nr_n=\\frac{3n^2-n+2}{2n^2+5}\n\\]\n的极限，并解释分子、分母同除以 $n^2$ 的作用。"
+              },
+              {
+                "id": "S03.U14",
+                "kind": "solution",
+                "relates_to": "S03.U13",
+                "tex": "因为 $n>0$，且 $2n^2+5>0$，所以可写成\n\\[\nr_n=\\frac{3-1/n+2/n^2}{2+5/n^2}.\n\\]\n定理 \\ref{thm:basic-reciprocal-limit} 给出 $1/n\\to0$ 和 $1/n^2\\to0$。由和、常数倍法则，分子趋于 $3$，分母趋于 $2\\neq0$；同时 $2+5/n^2>0$。故由定理 \\ref{thm:limit-quotient}，\n\\[\n\\lim_{n\\to\\infty}r_n=\\frac32.\n\\]\n同除以 $n^2$，使最高次项变成常数，其余项变成常数乘以 $1/n$ 或 $1/n^2$。这解释了本例为何由最高次项的系数决定极限，而不是把“只看最高次项”当作无需验证条件的规则。"
+              },
+              {
+                "id": "S03.U15",
+                "kind": "explanation",
+                "relates_to": null,
+                "tex": "本节的方法选择可以概括为：遇到有界但不收敛的因子，优先估计绝对值；遇到根式相减，先考虑共轭变形；遇到有理式，先用合适的 $n$ 的幂归一化，再检查商法则的分母条件。夹逼时应写清不等式从哪些下标起成立，并说明两侧具有同一个极限。以下练习的答案统一安排在讲义末尾，本节只列题目。"
+              },
+              {
+                "id": "S03.U16",
+                "kind": "exercise",
+                "relates_to": null,
+                "tex": "对 $n\\in\\mathbb{N}^{+}$，用夹逼定理求\n\\[\nb_n=\\frac{\\sin n}{n+1}\n\\]\n的极限，其中 $\\sin n$ 按弧度理解。要求写出对所有正整数 $n$ 成立的绝对值上界，说明上界为何趋于零，并解释为什么不应未经证明就把两个因子的极限相乘。"
+              },
+              {
+                "id": "S03.U17",
+                "kind": "exercise",
+                "relates_to": null,
+                "tex": "对 $n\\in\\mathbb{N}^{+}$，求下列极限，并分别说明所用方法的关键条件：\n\\[\n(1)\\quad \\sqrt{n^2+n}-n;\n\\qquad\n(2)\\quad \\frac{2n^2+(-1)^n}{n^2+1}.\n\\]\n第 (1) 题须先作共轭变形；可通过估计 $\\sqrt{1+1/n}-1$ 证明 $\\sqrt{1+1/n}\\to1$，不要直接援引函数连续性。第 (2) 题须明确控制符号变化项产生的误差。"
+              },
+              {
+                "id": "S03.U16.answer",
+                "kind": "solution",
+                "relates_to": "S03.U16",
+                "tex": "对所有正整数 $n$，由 $|\\sin n|\\leq1$ 及 $n+1>0$，有\n\\[\n|b_n|=\\frac{|\\sin n|}{n+1}\\leq\\frac1{n+1}\\leq\\frac1n.\n\\]\n由于 $1/n\\to0$，故\n\\[\n-\\frac1n\\leq b_n\\leq\\frac1n\n\\]\n两侧均趋于零。由夹逼定理，$\\displaystyle\\lim_{n\\to\\infty}b_n=0$；同时上述估计也说明上界 $1/(n+1)$ 趋于零。\n\n虽然 $b_n=(\\sin n)\\cdot1/(n+1)$，但乘积极限法则要求两个因子数列均收敛，不能仅凭 $|\\sin n|\\leq1$ 就认定 $\\{\\sin n\\}$ 收敛，因而不能未经证明就把两个因子的极限相乘。本题只需利用正弦因子的有界性，无需确定其收敛性；也可用有界数列与无穷小数列的乘积趋于零来说明。"
+              },
+              {
+                "id": "S03.U17.answer",
+                "kind": "solution",
+                "relates_to": "S03.U17",
+                "tex": "(1) 对所有正整数 $n$，根号内为正，且共轭式 $\\sqrt{n^2+n}+n>0$，所以\n\\[\n\\sqrt{n^2+n}-n\n=\\frac{n}{\\sqrt{n^2+n}+n}\n=\\frac1{\\sqrt{1+1/n}+1}.\n\\]\n这里利用了 $n>0$，从而 $\\sqrt{n^2+n}=n\\sqrt{1+1/n}$。再作共轭变形并估计：\n\\[\n0\\leq\\sqrt{1+1/n}-1\n=\\frac{1/n}{\\sqrt{1+1/n}+1}\n\\leq\\frac1{2n}.\n\\]\n由 $1/(2n)\\to0$ 和夹逼定理，$\\sqrt{1+1/n}-1\\to0$，故 $\\sqrt{1+1/n}\\to1$。变形后分母处处为正，且趋于 $2\\neq0$，由商法则得\n\\[\n\\lim_{n\\to\\infty}\\bigl(\\sqrt{n^2+n}-n\\bigr)=\\frac12.\n\\]\n关键是先用共轭变形及夹逼证明根式数列的极限，再检查商法则的分母条件，并未援引函数连续性。\n\n(2) 由于 $n^2+1>0$，将原式与 $2$ 作差得\n\\[\n\\frac{2n^2+(-1)^n}{n^2+1}-2\n=\\frac{(-1)^n-2}{n^2+1}.\n\\]\n符号变化项满足 $|(-1)^n|=1$，因此对所有正整数 $n$，\n\\[\n\\left|\\frac{2n^2+(-1)^n}{n^2+1}-2\\right|\n\\leq\\frac{|(-1)^n|+2}{n^2+1}\n=\\frac3{n^2+1}\\leq\\frac3{n^2}\\to0.\n\\]\n由误差估计形式的夹逼定理，\n\\[\n\\lim_{n\\to\\infty}\\frac{2n^2+(-1)^n}{n^2+1}=2.\n\\]\n关键是分母为正，且符号变化项造成的误差具有趋于零的绝对值上界；无需对 $(-1)^n$ 本身取极限。"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "teacher_visual_review": "NOT_RUN",
+  "round_directory": "runs/05748ab6260c40989a560a98e1e2065a/global-repairs/r1-b72ae851",
+  "issues": [
+    {
+      "unit_id": "S02.U12",
+      "severity": "review",
+      "message": "反馈教学改进（不等于数学错误）[F1]：现稿已部分落实反馈：S02.U12 不再只有常数倍和有理式，已加入 c_n=|3/n-2| 的实际求极限示范，并以反三角不等式和极限定义证明所用法则，计算结果为 2。因此不能沿用原反馈中“没有绝对值训练”的全部观察，也不应重复增加同类题目。但反馈明确要求在题目唯一关联的解答中给出计算、条件和依据；目前这些内容全部写在例题单元 S02.U12 内，关联解答 S02.U13（relates_to 为 S02.U12）仍仅解答 a_n、b_n，没有承接 c_n。剩余缺口是题面与关联解答的组织和覆盖，而非数学错误或绝对值法则证明缺失。应保留已经完成的正确示范，仅在这两个现有单元内作小范围归位，不能判为整项已满足。\n限定修订：仅调整 S02.U12 与 S02.U13：在 S02.U12 保留原有 a_n、b_n 题面，将已经存在的 c_n 作为同一例题的明确小问，继承正整数下标条件；把现有绝对值法则的条件、反三角不等式及定义证明、c_n 的计算与解释完整归入唯一关联解答 S02.U13，并相应整理衔接语。保留 S02.U13 原有两问的计算和商法则条件检查。此为现有正确内容的归位，不删除正确证明，不另加绝对值题目、不新增单元、不修改其他正文，不援引函数连续性。修后核对三个小问与该唯一解答逐一对应。",
+      "evidence": "S02.U12:「计算下列数列的极限，并说明所使用的运算法则：$a_n=3(1/n)+2$，$b_n=(2n+1)/(n+3)$，其中 $n\\in\\mathbb{N}^{+}$。\n\n先补充一个含绝对值的示范：求 $c_n=|3/n-2|$ 的极限。所用的绝对值极限法则是：若 $x_n\\to L$，则 $|x_n|\\to|L|$。其依据是反三角不等式\n\\[\n\\bigl||x_n|-|L|\\bigr|\\leq|x_n-L|.\n\\]\n事实上，任给 $\\varepsilon>0$，由 $x_n\\to L$，存在正整数 $N$，使得当 $n\\geq N$ 时 $|x_n-L|<\\varepsilon$，于是 $\\bigl||x_n|-|L|\\bigr|<\\varepsilon$，由极限定义即得上述法则。应用时，先由 $1/n\\to0$ 及常数倍、差法则得到 $3/n-2\\to-2$，再用绝对值极限法则得到\n\\[\n\\lim_{n\\to\\infty}|3/n-2|=|-2|=2.\n\\]\n这说明处理含绝对值的数列极限时，可以先求绝对值内部数列的极限，再对所得极限取绝对值。原题中 $a_n,b_n$ 的计算如下。」\nS02.U13:「由前一节的基本极限 $1/n\\to0$，利用常数倍法则与和法则，$\\lim_{n\\to\\infty}a_n=3\\cdot0+2=2$。对于 $b_n$，由于 $n\\in\\mathbb{N}^{+}$，可将分子、分母同除以 $n$，得到 $b_n=(2+1/n)/(1+3/n)$。由 $1/n\\to0$，有 $2+1/n\\to2$，且 $1+3/n\\to1\\neq0$。另外，$1+3/n>0$，所以商式有定义。由商法则，$\\lim_{n\\to\\infty}b_n=2/1=2$。使用商法则前必须确认分母极限非零。」\n批准目标依据：[{\"section_id\": \"S02\", \"field\": \"objectives\", \"quote\": \"能够处理含有有理式、绝对值和常数倍的基本数列极限\"}, {\"section_id\": \"S02\", \"field\": \"objectives\", \"quote\": \"例题应包含运算法则的直接应用与一个需要先验证分母极限非零的情形\"}]"
+    },
+    {
+      "unit_id": "S02.U13",
+      "severity": "review",
+      "message": "反馈教学改进（不等于数学错误）[F1]：现稿已部分落实反馈：S02.U12 不再只有常数倍和有理式，已加入 c_n=|3/n-2| 的实际求极限示范，并以反三角不等式和极限定义证明所用法则，计算结果为 2。因此不能沿用原反馈中“没有绝对值训练”的全部观察，也不应重复增加同类题目。但反馈明确要求在题目唯一关联的解答中给出计算、条件和依据；目前这些内容全部写在例题单元 S02.U12 内，关联解答 S02.U13（relates_to 为 S02.U12）仍仅解答 a_n、b_n，没有承接 c_n。剩余缺口是题面与关联解答的组织和覆盖，而非数学错误或绝对值法则证明缺失。应保留已经完成的正确示范，仅在这两个现有单元内作小范围归位，不能判为整项已满足。\n限定修订：仅调整 S02.U12 与 S02.U13：在 S02.U12 保留原有 a_n、b_n 题面，将已经存在的 c_n 作为同一例题的明确小问，继承正整数下标条件；把现有绝对值法则的条件、反三角不等式及定义证明、c_n 的计算与解释完整归入唯一关联解答 S02.U13，并相应整理衔接语。保留 S02.U13 原有两问的计算和商法则条件检查。此为现有正确内容的归位，不删除正确证明，不另加绝对值题目、不新增单元、不修改其他正文，不援引函数连续性。修后核对三个小问与该唯一解答逐一对应。",
+      "evidence": "S02.U12:「计算下列数列的极限，并说明所使用的运算法则：$a_n=3(1/n)+2$，$b_n=(2n+1)/(n+3)$，其中 $n\\in\\mathbb{N}^{+}$。\n\n先补充一个含绝对值的示范：求 $c_n=|3/n-2|$ 的极限。所用的绝对值极限法则是：若 $x_n\\to L$，则 $|x_n|\\to|L|$。其依据是反三角不等式\n\\[\n\\bigl||x_n|-|L|\\bigr|\\leq|x_n-L|.\n\\]\n事实上，任给 $\\varepsilon>0$，由 $x_n\\to L$，存在正整数 $N$，使得当 $n\\geq N$ 时 $|x_n-L|<\\varepsilon$，于是 $\\bigl||x_n|-|L|\\bigr|<\\varepsilon$，由极限定义即得上述法则。应用时，先由 $1/n\\to0$ 及常数倍、差法则得到 $3/n-2\\to-2$，再用绝对值极限法则得到\n\\[\n\\lim_{n\\to\\infty}|3/n-2|=|-2|=2.\n\\]\n这说明处理含绝对值的数列极限时，可以先求绝对值内部数列的极限，再对所得极限取绝对值。原题中 $a_n,b_n$ 的计算如下。」\nS02.U13:「由前一节的基本极限 $1/n\\to0$，利用常数倍法则与和法则，$\\lim_{n\\to\\infty}a_n=3\\cdot0+2=2$。对于 $b_n$，由于 $n\\in\\mathbb{N}^{+}$，可将分子、分母同除以 $n$，得到 $b_n=(2+1/n)/(1+3/n)$。由 $1/n\\to0$，有 $2+1/n\\to2$，且 $1+3/n\\to1\\neq0$。另外，$1+3/n>0$，所以商式有定义。由商法则，$\\lim_{n\\to\\infty}b_n=2/1=2$。使用商法则前必须确认分母极限非零。」\n批准目标依据：[{\"section_id\": \"S02\", \"field\": \"objectives\", \"quote\": \"能够处理含有有理式、绝对值和常数倍的基本数列极限\"}, {\"section_id\": \"S02\", \"field\": \"objectives\", \"quote\": \"例题应包含运算法则的直接应用与一个需要先验证分母极限非零的情形\"}]"
+    }
+  ]
+}

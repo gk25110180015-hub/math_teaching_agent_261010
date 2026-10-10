@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "job_id": "4678ed20f5c44ad89b289ffcee4d8143",
+  "plan_hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227",
+  "plan_revision": 2,
+  "feedback_hash": "5d3a22b9bf42bc748892693d1eeee1cc0ebd25d4f337ff2211598a6c355b2591",
+  "identity_hash": "52f895a6b6e0d89ceb766bdc7b2df8244be28d3a13303c294dfabff953be65c2",
+  "status": "reviewed",
+  "items": [
+    {
+      "id": "F1",
+      "status": "satisfied",
+      "reason": "现稿 S05.U18 已将“本节三题依次对应”的局部导航改为全章末尾答案导航，明确答案区并非仅收录本节三题，要求按实际题号查找并通过题目回链返回，且明确禁止把开头三份答案当作 S05 三题答案。该说明不再依赖答案区首先输出哪一节，因而与批准的末尾集中答案策略相容。输入中的解答归属关系仍通过 relates_to 保持，未见为修正导航而改题或重排的要求；不应重复扩写。此结论针对实际正文导航的修复，不声称已经运行渲染器验证最终 PDF 的排序与链接。",
+      "unit_ids": [
+        "S05.U18"
+      ],
+      "repair_unit_ids": [],
+      "unit_evidence": [
+        {
+          "unit_id": "S05.U18",
+          "quote": "\\textbf{全章练习答案区导航（讲义末尾）}\n\n讲义末尾集中列出全章练习的参考答案，并非仅收录本节三题。查阅时，请以原题实际显示的题号定位答案区中对应题号的解答，并通过答案处的题目回链返回原题；不要把答案区开头的三份解答当作本节三题的答案。",
+          "kind": "reference"
+        },
+        {
+          "unit_id": "S05.U18",
+          "quote": "各题及其解答沿用既定题号、归属关系与答案排序。",
+          "kind": "statement"
+        }
+      ],
+      "objective_evidence": [
+        {
+          "section_id": null,
+          "field": "lecture.answers_location",
+          "quote": "end"
+        }
+      ],
+      "repair_instruction": null
+    },
+    {
+      "id": "F2",
+      "status": "satisfied",
+      "reason": "应用训练缺口已在 S03.U14 第(1)题实际补齐，而非仅提到方法名称：现稿保留正确直接比较解法，另以真实通项 (3n+1)/(n^3+2) 和参照项 1/n² 核实正项性、计算比值极限为有限正数 3，并以收敛的 p=2 级数得出结论。因此无需再修改 S03.U16 或 S05 综合解答，也不能把其中合法的直接比较判成错误。附带核查中，对数级数仍从 2 起步，解答在 [2,∞) 上使用积分估计；交错调和级数第三项及余项的奇偶索引与当前定义一致。所引几何级数陈述明确限定非负公比并单独处理 r=0，本项不据原稿较宽覆盖范围要求扩展。对提供的相关证明作文本数学核查，未发现因本项改进导致的证明或索引破坏；这不替代独立的普通数学审阅。",
+      "unit_ids": [
+        "S03.U14",
+        "S03.U13",
+        "S03.U09",
+        "S04.U05",
+        "S04.U07"
+      ],
+      "repair_unit_ids": [],
+      "unit_evidence": [
+        {
+          "unit_id": "S03.U14",
+          "quote": "(1) 直接比较可得，对正整数 $n$，有\n\\[\n0<\\frac{3n+1}{n^3+2}\\leq\\frac{4n}{n^3}=\\frac{4}{n^2},\n\\]\n因为 $n\\geq1$ 时 $3n+1\\leq4n$ 且 $n^3+2\\geq n^3$。由 $p$-级数 $\\sum 1/n^2$ 收敛以及比较判别法，原级数收敛。\n\n也可以使用极限比较判别法。令\n\\[\na_n=\\frac{3n+1}{n^3+2},\\qquad b_n=\\frac1{n^2}.\n\\]\n对每个正整数 $n$，$a_n>0$ 且 $b_n>0$，并且\n\\[\n\\frac{a_n}{b_n}=\\frac{(3n+1)n^2}{n^3+2}\n=\\frac{3+1/n}{1+2/n^3}\\longrightarrow3.\n\\]\n由于 $3\\in(0,\\infty)$，由极限比较判别法，$\\sum a_n$ 与 $\\sum b_n$ 同敛散。又因为 $\\sum b_n=\\sum 1/n^2$ 收敛，所以原级数收敛。该解法展示了在正项性和比值极限为有限正数的条件下，如何选择极限比较判别法。",
+          "kind": "worked_example"
+        },
+        {
+          "unit_id": "S03.U13",
+          "quote": "其中第 (3) 个级数从 $n=2$ 开始，此时 $\\ln n>0$，分母不为零。",
+          "kind": "statement"
+        },
+        {
+          "unit_id": "S03.U14",
+          "quote": "(3) 令 $f(x)=1/(x\\ln x)$，其中 $x\\geq2$。函数为正且连续，并且在 $[2,\\infty)$ 上单调递减。由换元 $u=\\ln x$，得到\n\\[\n\\int_2^t\\frac{1}{x\\ln x}\\,dx\n=\\int_{\\ln2}^{\\ln t}\\frac{1}{u}\\,du\n=\\ln(\\ln t)-\\ln(\\ln2).\n\\]\n当 $t\\to\\infty$ 时，右端趋于 $+\\infty$，所以积分发散。由积分判别法，级数\n\\[\n\\sum_{n=2}^{\\infty}\\frac{1}{n\\ln n}\n\\]\n发散。",
+          "kind": "worked_example"
+        },
+        {
+          "unit_id": "S03.U09",
+          "quote": "当 $0<r<1$ 时它收敛，和为 $a/(1-r)$；当 $r\\geq1$ 时它发散。边界 $r=0$ 时，将各项明确取为 $a,0,0,\\ldots$，级数收敛且和为 $a$。这里不讨论负公比的符号交替情形。",
+          "kind": "statement"
+        },
+        {
+          "unit_id": "S04.U05",
+          "quote": "作为通项取值的单点核对，$n=3$ 时有\n\\[\n\\frac{(-1)^{3-1}}{3}=\\frac13.\n\\]\n这一数值核对只验证第三项的取值，不能证明级数收敛，也不能证明一般的余项估计。",
+          "kind": "statement"
+        },
+        {
+          "unit_id": "S04.U07",
+          "quote": "对固定的正整数 $n$，若 $n=2m$，则\n\\[\nS_{2m+1}-S_{2m}=b_{2m+1},\n\\]\n且 $S_{2m}\\leq S\\leq S_{2m+1}$，因为偶数项部分和从下方增加而奇数项部分和从上方减少。因此\n\\[\n0\\leq S-S_{2m}\\leq b_{2m+1}.\n\\]\n若 $n=2m-1$，则\n\\[\nS_{2m-1}-S_{2m} = b_{2m},\n\\]\n且 $S_{2m}\\leq S\\leq S_{2m-1}$，从而\n\\[\n0\\leq S_{2m-1}-S\\leq b_{2m}.\n\\]",
+          "kind": "proof"
+        }
+      ],
+      "objective_evidence": [
+        {
+          "section_id": "S03",
+          "field": "objectives",
+          "quote": "掌握比较判别法、极限比较判别法和积分判别法的使用条件"
+        },
+        {
+          "section_id": "S03",
+          "field": "objectives",
+          "quote": "能够选择合适判别法判断正项级数的收敛性"
+        }
+      ],
+      "repair_instruction": null
+    }
+  ],
+  "limitations": [
+    "本评估依据提供的完整单元正文、批准计划 revision 2 及全部原反馈进行，是模型文本评估，不是形式化证明或教师审核、验收签认。",
+    "未执行真实 TeX 编译、最终答案排序运行核验、PDF 全页视觉检查或题目回链点击测试；导航履约结论限于现有正文及提供的归属元数据。",
+    "反馈逐项回执不替代普通数学审阅，也不撤销其他审阅流程中已有的疑点；本次未获得独立的既有数学疑点清单或历史修复计数记录。"
+  ],
+  "teacher_review": "NOT_RUN",
+  "mock": false
+}

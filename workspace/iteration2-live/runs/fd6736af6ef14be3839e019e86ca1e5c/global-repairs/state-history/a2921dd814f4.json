@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227",
+    "model": "gpt-6-astra",
+    "provider": "live",
+    "repair_prompt_hash": "46c1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9",
+    "written_schema_hash": "4e9b07e27f359212c0460381e3cbd6e548d18a48490e553e60b0c56d30d9ada7",
+    "normalizer_hash": "25d2fff448b21fcad71b5e7aae512cf6ab27f66bdeefd9e459ca57652a1fd74c"
+  },
+  "rounds_used": 1,
+  "phase": "checking",
+  "sections": {
+    "S03": {
+      "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/global-repairs/r1-a82d6c66/S03-locally-checked-538e853c.json",
+      "candidate_hash": "4f00ce3607532dceb7cc4b84e6baff4820cab4fa915cb5656cb2944e5f8f897c"
+    },
+    "S04": {
+      "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/global-repairs/r1-a82d6c66/S04-before.json",
+      "candidate_hash": "02d65dfd2d6b949d8f5f101807d995f2da6068fb2df2c52224838bce9fa11f39"
+    },
+    "S05": {
+      "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/global-repairs/r1-a82d6c66/S05-before.json",
+      "candidate_hash": "d1cfb16ab2e435bf0f2a4ee5fde6c5ca590a21c8c27957078215814b10621a3d"
+    }
+  },
+  "pending": [],
+  "teacher_visual_review": "NOT_RUN",
+  "round_directory": "runs/fd6736af6ef14be3839e019e86ca1e5c/global-repairs/r1-a82d6c66",
+  "issues": [
+    {
+      "unit_id": "S03.U14",
+      "severity": "review",
+      "message": "S03 锁定目标要求“掌握比较判别法、极限比较判别法和积分判别法的使用条件”并“能够选择合适判别法判断正项级数的收敛性”。U07/U08 的极限比较判别法定理及证明正确，但 U13/U14、U15/U16 以及 S05 综合解答中涉及比较的题目全部使用直接比较，没有一次完整的极限比较应用（例如计算 a_n/b_n 的有限正极限）。这不是现有直接比较解法错误，但该应用目标尚未落实。建议在现有 S03.U14 的 (1) 保留正确的直接比较解并补充替代解：核实 a_n=(3n+1)/(n^3+2)>0、b_n=1/n²>0、a_n/b_n→3∈(0,∞)，再由 p=2 级数收敛得原级数收敛；若当前题目表达式已变化，须按实际表达式重新计算。",
+      "evidence": "S03.U14 当前 (1) 只写 0<a_n≤4/n² 后使用比较判别法；S03.U15/U16 的解答也只用直接比较或积分判别法；批准目标见 S03 objectives：“掌握比较判别法、极限比较判别法和积分判别法的使用条件”“能够选择合适判别法判断正项级数的收敛性”。"
+    }
+  ]
+}

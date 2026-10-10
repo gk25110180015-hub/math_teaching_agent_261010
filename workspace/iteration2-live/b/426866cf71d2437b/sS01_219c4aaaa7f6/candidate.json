@@ -1,0 +1,49 @@
+{
+  "section_id": "S01",
+  "units": [
+    {
+      "id": "S01-U01",
+      "kind": "definition",
+      "tex": "\\begin{definition}[数列极限]\n设 $\\{a_n\\}$ 是定义在 $\\mathbb{N}^+=\\{1,2,3,\\ldots\\}$ 上的实数数列，$A\\in\\mathbb{R}$。直观地说，当下标 $n$ 足够大时，$a_n$ 可以任意接近 $A$，就称数列 $\\{a_n\\}$ 收敛于 $A$，记作\n\\[\n\\lim_{n\\to\\infty}a_n=A.\n\\]\n严格地说，若对任意 $\\varepsilon>0$，都存在正整数 $N$，使得对所有满足 $n>N$ 的正整数 $n$，均有\n\\[\n|a_n-A|<\\varepsilon,\n\\]\n则称数列 $\\{a_n\\}$ 收敛于 $A$。\n\\label{def:sequence-limit}\n\\end{definition}\n\n这里的量词顺序是：先任意给定 $\\varepsilon>0$，再选择正整数 $N$，最后要求所有 $n>N$ 都满足不等式。所选择的 $N$ 可以依赖于 $\\varepsilon$，但不能在检验不同的 $n$ 时随 $n$ 改变。",
+      "relates_to": null
+    },
+    {
+      "id": "S01-U02",
+      "kind": "theorem",
+      "tex": "\\begin{theorem}[数列极限的唯一性]\n若数列 $\\{a_n\\}$ 收敛于 $A$，且也收敛于 $B$，其中 $A,B\\in\\mathbb{R}$，则\n\\[\nA=B.\n\\]\n\\label{thm:limit-uniqueness}\n\\end{theorem}",
+      "relates_to": null
+    },
+    {
+      "id": "S01-U03",
+      "kind": "proof",
+      "tex": "\\begin{proof}\n反设 $A\\ne B$。取\n\\[\n\\varepsilon=\\frac{|A-B|}{3}>0.\n\\]\n由 $a_n\\to A$，存在正整数 $N_1$，使得当 $n>N_1$ 时，\n\\[\n|a_n-A|<\\varepsilon.\n\\]\n同理由 $a_n\\to B$，存在正整数 $N_2$，使得当 $n>N_2$ 时，\n\\[\n|a_n-B|<\\varepsilon.\n\\]\n取正整数 $n>\\max\\{N_1,N_2\\}$，则由三角不等式，\n\\[\n|A-B|=|(A-a_n)+(a_n-B)|\n\\le |A-a_n|+|a_n-B|\n<2\\varepsilon=\\frac{2|A-B|}{3}.\n\\]\n这意味着 $|A-B|<\\frac{2|A-B|}{3}$，与 $|A-B|>0$ 矛盾。因此 $A=B$。\n\\end{proof}",
+      "relates_to": "S01-U02"
+    },
+    {
+      "id": "S01-U04",
+      "kind": "example",
+      "tex": "\\begin{example}\n用数列极限的定义证明\n\\[\n\\lim_{n\\to\\infty}\\frac{1}{n}=0.\n\\]\n\\end{example}",
+      "relates_to": null
+    },
+    {
+      "id": "S01-U05",
+      "kind": "solution",
+      "tex": "\\begin{solution}\n任意给定 $\\varepsilon>0$。为了使\n\\[\n\\left|\\frac{1}{n}-0\\right|<\\varepsilon,\n\\]\n只需使 $\\frac{1}{n}<\\varepsilon$，即 $n>\\frac{1}{\\varepsilon}$。因此，取正整数 $N$ 满足\n\\[\nN>\\frac{1}{\\varepsilon}.\n\\]\n例如可以取 $N=\\left\\lfloor\\frac{1}{\\varepsilon}\\right\\rfloor+1$。当任意正整数 $n>N$ 时，有\n\\[\n\\left|\\frac{1}{n}-0\\right|=\\frac{1}{n}<\\frac{1}{N}<\\varepsilon.\n\\]\n所以按照数列极限的定义，\n\\[\n\\lim_{n\\to\\infty}\\frac{1}{n}=0.\n\\tag{1}\\label{eq:reciprocal-limit}\n\\]\n这里 $N$ 可以依赖于预先给定的 $\\varepsilon$，但一旦选定，就必须对所有 $n>N$ 同时成立。\n\\end{solution}",
+      "relates_to": "S01-U04"
+    },
+    {
+      "id": "S01-U06",
+      "kind": "exercise",
+      "tex": "\\begin{exercise}\n用数列极限的定义证明\n\\[\n\\lim_{n\\to\\infty}\\left(2+\\frac{3}{n}\\right)=2.\n\\]\n\\end{exercise}",
+      "relates_to": null
+    },
+    {
+      "id": "S01-U07",
+      "kind": "solution",
+      "tex": "\\begin{solution}\n任意给定 $\\varepsilon>0$。有\n\\[\n\\left|\\left(2+\\frac{3}{n}\\right)-2\\right|=\\frac{3}{n}.\n\\]\n为了使上式小于 $\\varepsilon$，只需使\n\\[\n\\frac{3}{n}<\\varepsilon,\n\\qquad\\text{即}\\qquad\nn>\\frac{3}{\\varepsilon}.\n\\]\n取正整数 $N$ 满足\n\\[\nN>\\frac{3}{\\varepsilon}.\n\\]\n当任意正整数 $n>N$ 时，便有\n\\[\n\\left|\\left(2+\\frac{3}{n}\\right)-2\\right|\n=\\frac{3}{n}\n<\\frac{3}{N}\n<\\varepsilon.\n\\]\n因此，根据数列极限的定义，\n\\[\n\\lim_{n\\to\\infty}\\left(2+\\frac{3}{n}\\right)=2.\n\\]\n\\end{solution}",
+      "relates_to": "S01-U06"
+    }
+  ],
+  "calculations": [],
+  "uncertainties": []
+}

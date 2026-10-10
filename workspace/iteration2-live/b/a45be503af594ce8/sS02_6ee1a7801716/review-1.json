@@ -1,0 +1,112 @@
+{
+  "section_id": "S02",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "limit",
+        "assumptions": {
+          "x": {
+            "real": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "2",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S02.C01",
+        "unit_id": "S02.U09"
+      },
+      {
+        "kind": "limit",
+        "assumptions": {
+          "x": {
+            "real": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "0",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S02.C02",
+        "unit_id": "S02.U04"
+      }
+    ],
+    "coverage": [
+      "S02.U01",
+      "S02.U02",
+      "S02.U03",
+      "S02.U04",
+      "S02.U05",
+      "S02.U06",
+      "S02.U07",
+      "S02.U08",
+      "S02.U09",
+      "S02.U10",
+      "S02.U11",
+      "S02.U12",
+      "S02.U13"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "协议支持的极限核算不能表达约分所需的条件 $x\\neq1$；核算仅针对约分后在相应去心邻域内等价的表达式 $x+1$。",
+      "该核算请求不覆盖一般函数的局部有界性、四则运算法则与复合极限定理的量词条件及证明；这些内容由正文的极限定义与估计说明。此处只提交核算请求，不报告执行结果。",
+      "新增核算仅覆盖夹逼应用中上界 x^2 在 x 趋于 0 时的极限。协议没有一般不等式验证请求，不能核验去心邻域 0<|x|<1 上的上下界构造及夹逼推理；这些步骤由正文利用正弦函数的有界性和 x^2 的非负性说明。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S02.U01",
+      "S02.U02",
+      "S02.U03",
+      "S02.U04",
+      "S02.U05",
+      "S02.U06",
+      "S02.U07",
+      "S02.U08",
+      "S02.U09",
+      "S02.U10",
+      "S02.U11",
+      "S02.U12",
+      "S02.U13"
+    ],
+    "limitations": [
+      "已逐单元核对本次提供的 S02 全部实际正文，并结合所提供的 S01 先修正文检查定义域、量词、符号、端点、适用条件、初值与目标落实情况；pending 的 S03–S05 不属于本次 section_local 范围。",
+      "S02.U04 已实际包含利用有界性构造上下界的夹逼计算，先前关于缺少夹逼应用的 review 不再成立。该应用中在 0<|x|<1 内使用 x^2 非负及 -1≤sin(1/x)≤1，条件与结论一致。",
+      "复合极限、商法则、保号性及夹逼定理的正文条件与证明在本次阅读范围内相互一致；S02.U13 的分母非零条件由其极限为 3 直接推出。",
+      "本审阅是普通模型对实际数学正文的逐项检查，不是形式化证明；未证明所有可能的隐含解释、排版生成结果或未提供章节中的内容。"
+    ]
+  },
+  "issues": [],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 1,
+    "proposal_calls": 1,
+    "rejected_proposals": 0,
+    "preserved_issues": [
+      {
+        "unit_id": "S02.U04",
+        "severity": "review",
+        "message": "锁定目标中的“运用夹逼思想……完成初等计算”尚缺实际计算应用的支撑。夹逼定理及证明正确，但本节没有展示如何为待求极限构造上下界，也没有相应练习。建议在该定理的应用部分补充一个使用已知基本极限的夹逼计算，并说明不等式成立的邻域与两端极限；无需提前引入后续章节的重要极限。",
+        "evidence": "S02 的第三项目标为“能够运用代数变形、夹逼思想和基本极限完成初等计算”。S02.U01、S02.U04 仅陈述一般夹逼结论，S02.U05 给出定义式证明。已读全部本节例练：S02.U08–U09 为约分计算，S02.U10–U11 为多项式四则运算及零极限的保号限制，S02.U12–U13 为和、差、商法则应用；均没有夹逼计算或要求学生构造夹逼界的任务。因此一般定理已经落实，但目标所要求的计算方法应用尚未落实。"
+      }
+    ],
+    "review_identity": {
+      "candidate_hash": "88cc2e168d096f46aa6d33a79c1a49f95796442587c810dd8aa2a48bbfe3395b",
+      "tool_checks_hash": "4e609e9e0f88013334c7e7087494fc3c7f895c3ce0cc55ced55853bb19c4a1f3",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "6c2badf10cdb78e3c52c7ffd31292bcce4fc566bbaf1fb8866d0d65f87322b03",
+      "deterministic_checks_hash": "00274d142b3b24a733e95f46873903fb1d909a55f9b99102912b1abf8864d2f4"
+    }
+  }
+}

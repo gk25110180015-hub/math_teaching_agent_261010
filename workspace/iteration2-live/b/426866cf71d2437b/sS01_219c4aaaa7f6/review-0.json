@@ -1,0 +1,61 @@
+{
+  "section_id": "S01",
+  "math": {
+    "schema_version": 1,
+    "status": "NEEDS_REVIEW",
+    "issues": [],
+    "evidence": [
+      {
+        "evidence_type": "not_checked",
+        "status": "NOT_RUN",
+        "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+      }
+    ],
+    "coverage": [
+      "S01-U01",
+      "S01-U02",
+      "S01-U03",
+      "S01-U04",
+      "S01-U05",
+      "S01-U06",
+      "S01-U07"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+    ]
+  },
+  "llm_review": {
+    "issues": [
+      {
+        "unit_id": "S02",
+        "severity": "blocking",
+        "message": "锁定课程条件要求严格规划并覆盖两节，且 S02 必须包含数列的和、差、积、商与常数倍定义、四则运算法则及其假设、例题和练习；实际提供的 units 仅包含 S01-U01 至 S01-U07，没有任何 S02 实际数学正文。因此无法核对第二节的定义域、分母非零条件、商法则的极限非零假设、有限初始项处理及对应例题计算。",
+        "evidence": "plan.sections 明确列出 S02《简单数列极限及运算》，并要求 required_kinds 包含 definition、theorem、proof、example、solution、exercise；输入数据的 units 数组只提供 S01-U01 至 S01-U07，未提供 S02 单元。"
+      }
+    ],
+    "checked_unit_ids": [
+      "S01-U01",
+      "S01-U02",
+      "S01-U03",
+      "S01-U04",
+      "S01-U05",
+      "S01-U06",
+      "S01-U07"
+    ],
+    "limitations": [
+      "已逐项核对的实际数学正文仅覆盖 checked_unit_ids 中的 S01 单元；S02 未提供，不能据此判断第二节数学内容正确或通过。",
+      "对 S01 的量词顺序、端点约定 n>N、三角不等式证明、正负号和 ε–N 选择进行了普通模型审阅；未执行形式化证明、自动定理证明或完整符号核算。",
+      "未将工具检查状态为 NOT_RUN 视为数学正确性证据；即使已核对单元未发现明确错误，仍不能替代形式化验证。"
+    ]
+  },
+  "issues": [
+    {
+      "unit_id": "S02",
+      "severity": "blocking",
+      "message": "锁定课程条件要求严格规划并覆盖两节，且 S02 必须包含数列的和、差、积、商与常数倍定义、四则运算法则及其假设、例题和练习；实际提供的 units 仅包含 S01-U01 至 S01-U07，没有任何 S02 实际数学正文。因此无法核对第二节的定义域、分母非零条件、商法则的极限非零假设、有限初始项处理及对应例题计算。",
+      "evidence": "plan.sections 明确列出 S02《简单数列极限及运算》，并要求 required_kinds 包含 definition、theorem、proof、example、solution、exercise；输入数据的 units 数组只提供 S01-U01 至 S01-U07，未提供 S02 单元。"
+    }
+  ],
+  "mock": false
+}

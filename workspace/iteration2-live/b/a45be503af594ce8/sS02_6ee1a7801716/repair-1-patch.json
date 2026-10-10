@@ -1,0 +1,49 @@
+{
+  "section_id": "S02",
+  "replacements": [
+    {
+      "unit_id": "S02.U04",
+      "tex": "设函数 $f,g,h$ 在点 $x_0$ 的某个去心邻域内有定义，并且在该邻域内满足\n\\[\nh(x)\\leq f(x)\\leq g(x).\n\\]\n若\n\\[\n\\lim_{x\\to x_0}h(x)=L,\n\\qquad\n\\lim_{x\\to x_0}g(x)=L,\n\\]\n则\n\\[\n\\lim_{x\\to x_0}f(x)=L.\n\\]\n\\label{thm:squeeze-theorem}\n\n夹逼计算的应用：求 $\\lim_{x\\to0}x^2\\sin(1/x)$。构造上下界时，先利用三角函数的基本性质 $-1\\leq\\sin t\\leq1$，再乘以非负因子 $x^2$。在去心邻域 $0<|x|<1$ 内，$1/x$ 有定义，且\n\\[\n-x^2\\leq x^2\\sin(1/x)\\leq x^2.\n\\]\n由基本极限 $\\lim_{x\\to0}x=0$ 及积的极限法则，两端满足\n\\[\n\\lim_{x\\to0}(-x^2)=0,\\qquad \\lim_{x\\to0}x^2=0.\n\\]\n因此由夹逼定理，\n\\[\n\\lim_{x\\to0}x^2\\sin(1/x)=0.\n\\]\n这里无需计算 $\\sin(1/x)$ 的极限，也未使用三角函数的重要极限；关键是用它的有界性构造趋于同一数值的上下界。"
+    }
+  ],
+  "calculation_updates": [],
+  "calculation_additions": [
+    {
+      "id": "S02.C02",
+      "unit_id": "S02.U04",
+      "kind": "limit",
+      "assumptions": {
+        "x": {
+          "real": true
+        }
+      },
+      "expression": {
+        "op": "Pow",
+        "args": [
+          {
+            "op": "Symbol",
+            "name": "x"
+          },
+          {
+            "op": "Integer",
+            "value": 2
+          }
+        ]
+      },
+      "variable": "x",
+      "point": {
+        "op": "Integer",
+        "value": 0
+      },
+      "direction": "+-",
+      "expected": {
+        "op": "Integer",
+        "value": 0
+      }
+    }
+  ],
+  "uncertainties_append": [],
+  "calculation_limitations_append": [
+    "新增核算仅覆盖夹逼应用中上界 x^2 在 x 趋于 0 时的极限。协议没有一般不等式验证请求，不能核验去心邻域 0<|x|<1 上的上下界构造及夹逼推理；这些步骤由正文利用正弦函数的有界性和 x^2 的非负性说明。"
+  ]
+}

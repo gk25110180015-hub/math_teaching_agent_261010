@@ -1,0 +1,68 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "05addf71a729dcf2b9d31a2886a40157eec8bdb20a81bf57177e1331728feb7e",
+    "tool_checks_hash": "841021a60aba5c7a32cbbb956e14ae2da583917ae0129e6d34122eb07f8e477e",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "197bed02d3cea89c10bf1d21b0ba4c89f597fb4eff0cef30c2443078cc5672ec",
+    "deterministic_checks_hash": "b9f00b28b293e7e739128adfcf39602d34d5828e9196a835baa88cfb7f017d1c"
+  },
+  "report": {
+    "section_id": "S04",
+    "math": {
+      "schema_version": 1,
+      "status": "NEEDS_REVIEW",
+      "issues": [],
+      "evidence": [
+        {
+          "evidence_type": "not_checked",
+          "status": "NOT_RUN",
+          "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+        }
+      ],
+      "coverage": [
+        "S04.U01",
+        "S04.U02",
+        "S04.U03",
+        "S04.U04",
+        "S04.U05",
+        "S04.U06",
+        "S04.U07",
+        "S04.U08",
+        "S04.U09",
+        "S04.U10"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "本节结论主要涉及递推数列的归纳、有界性与单调性证明，以及由单调有界原理推出收敛。协议支持的表达式树和核算类型不能表达这些全称量词、递推关系与不等式链，因此未提交符号核算。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S04.U01",
+        "S04.U02",
+        "S04.U03",
+        "S04.U04",
+        "S04.U05",
+        "S04.U06",
+        "S04.U07",
+        "S04.U08",
+        "S04.U09",
+        "S04.U10"
+      ],
+      "limitations": [
+        "本次仅对 S04 的十个实际单元进行局部审阅，并使用已提供的先修正文核对依赖；未对其他章节作完整覆盖复核，也未将尚未生成的 S05 视为本节遗漏。",
+        "已核对本节各项锁定目标，以及定义的量词、单调有界原理的假设与证明、递推参数范围、初值和最小下标、归纳与差分符号、先证收敛再列极限方程的顺序。未发现需要报告的具体数学错误或重大缺口。S04.U04 明示采用正确的上确界与下确界性质作为已知实数基础，并未展开被排除的完备性公理体系。",
+        "按提供的 rendering_contract，S04.U10 是关联练习的独立答案单元，将被移至讲义末尾；其 JSON 位置不构成答案位置违规。本次未检查最终 PDF 的排版、引用编号及实际组装效果。",
+        "本次是普通模型对正文的数学审阅，不等于形式化证明；本节未执行 SymPy 核算，结论依据实际正文与所提供先修论证的人工式核对，不构成对所有潜在问题均已排除的保证。"
+      ]
+    },
+    "issues": [],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": []
+}

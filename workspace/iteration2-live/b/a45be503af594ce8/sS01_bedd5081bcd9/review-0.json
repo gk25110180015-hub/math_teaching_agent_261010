@@ -1,0 +1,100 @@
+{
+  "section_id": "S01",
+  "math": {
+    "schema_version": 1,
+    "status": "NEEDS_REVIEW",
+    "issues": [
+      {
+        "rule_id": "MATH_CHECK_UNKNOWN",
+        "severity": "review",
+        "message": "ValueError: limit 必须明确 direction 为 +、- 或 +-。",
+        "location": {
+          "calculation_id": "S01.C01",
+          "unit_id": "S01.U09"
+        },
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "status": "UNKNOWN",
+        "evidence_type": "not_checked",
+        "message": "ValueError: limit 必须明确 direction 为 +、- 或 +-。",
+        "calculation_id": "S01.C01",
+        "unit_id": "S01.U09"
+      }
+    ],
+    "coverage": [
+      "S01.U01",
+      "S01.U02",
+      "S01.U03",
+      "S01.U04",
+      "S01.U05",
+      "S01.U06",
+      "S01.U07",
+      "S01.U08",
+      "S01.U09",
+      "S01.U10",
+      "S01.U11",
+      "S01.U12",
+      "S01.U13"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+    ]
+  },
+  "llm_review": {
+    "issues": [
+      {
+        "unit_id": "S01.U02",
+        "severity": "review",
+        "message": "单侧极限的核心定义不必要地要求函数在左右两侧都有定义，与本节承诺的一般左右极限定义范围不一致，会排除区间端点处的基本单侧极限。应分别设置假设：左极限只要求某个左侧去心邻域内有定义，右极限只要求某个右侧去心邻域内有定义。现有公式在两侧都有定义的限定情形下成立，但不足以作为一般单侧极限定义。",
+        "evidence": "定义以“设函数 f 在 x_0 的某个左邻域和右邻域内有定义”共同限定随后两个定义；实际左极限公式仅使用 x_0-δ<x<x_0，右极限公式仅使用 x_0<x<x_0+δ。例如 f(x)=√x 在 x_0=0 处具有右极限 0，却不满足这里要求的左侧定义域条件。"
+      }
+    ],
+    "checked_unit_ids": [
+      "S01.U01",
+      "S01.U02",
+      "S01.U03",
+      "S01.U04",
+      "S01.U05",
+      "S01.U06",
+      "S01.U07",
+      "S01.U08",
+      "S01.U09",
+      "S01.U10",
+      "S01.U11",
+      "S01.U12",
+      "S01.U13"
+    ],
+    "limitations": [
+      "本次仅审阅 section_local 范围内提供的 S01 全部 13 个单元，并对照相关锁定课程条件；未审阅尚未生成的 S02—S05，也未将这些章节的内容视为本节遗漏。",
+      "已核对当前正文中的定义域、量词、符号、单侧端点条件、定理假设、证明和解答，以及本节内部先修依赖。当前正文不涉及级数判别条件或数列收敛否定，未对这些未出现的内容作结论。",
+      "工具对 S01.U09 的 UNKNOWN 源于调用未明确指定方向，不是数学反例。本次独立核对了其双侧极限的定义证明：δ=ε/3 时误差为 3|x-2|<ε，足以得到极限 5；未声称该工具调用已成功。",
+      "按 rendering_contract，独立练习解答 S01.U13 将移至末尾，不能因 JSON 中的单元位置判定答案位置违规。已核对其关联目标 S01.U12 存在且题干未内嵌答案；未检查最终 PDF 的实际组装与显示。",
+      "这是普通模型的正文数学审阅，不是形式化证明；未列出问题不代表已穷尽所有潜在错误。"
+    ]
+  },
+  "issues": [
+    {
+      "rule_id": "MATH_CHECK_UNKNOWN",
+      "severity": "review",
+      "message": "ValueError: limit 必须明确 direction 为 +、- 或 +-。",
+      "location": {
+        "calculation_id": "S01.C01",
+        "unit_id": "S01.U09"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S01.U02",
+      "severity": "review",
+      "message": "单侧极限的核心定义不必要地要求函数在左右两侧都有定义，与本节承诺的一般左右极限定义范围不一致，会排除区间端点处的基本单侧极限。应分别设置假设：左极限只要求某个左侧去心邻域内有定义，右极限只要求某个右侧去心邻域内有定义。现有公式在两侧都有定义的限定情形下成立，但不足以作为一般单侧极限定义。",
+      "evidence": "定义以“设函数 f 在 x_0 的某个左邻域和右邻域内有定义”共同限定随后两个定义；实际左极限公式仅使用 x_0-δ<x<x_0，右极限公式仅使用 x_0<x<x_0+δ。例如 f(x)=√x 在 x_0=0 处具有右极限 0，却不满足这里要求的左侧定义域条件。"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false
+}

@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+    "section_id": "S04",
+    "context_hash": "a66090b604f0b2c570d27bbcc3db5b89f8c0d10539634222f06e7ad1a3c4d59e",
+    "base_hash": "f432f77a40c64e15c5ac4d756b1d0dabb42e5f2c5b531078e881a2b22d881d80",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "UNCHECKED_REPAIRED",
+  "applied_rounds": 4,
+  "proposal_calls": 4,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "unit_id": "S04.U03",
+      "severity": "review",
+      "message": "无穷间断点的定义域条件前后不一致/未明确：开头把间断点限定为 f 在 x0 的某个双侧去心邻域内有定义；随后定义单侧无穷极限时明确右侧不要求左侧、左侧不要求右侧，紧接着又以“至少有一个单侧极限为 +∞ 或 -∞”称 x0 为无穷间断点，未说明这一分类是否仍要求最初的双侧去心邻域。这样字面上可把仅在单侧有定义的边界点（例如仅定义在 (0,+∞) 上的 f(x)=1/x 在 x0=0）归为无穷间断点，与最初的间断点定义冲突。应明确无穷间断点要求双侧去心邻域还是相应单侧邻域，并统一表述。",
+      "evidence": "S04.U03 开头：“设函数 f 在点 x0 的某个去心邻域内有定义。若 f(x0) 未定义，或 … 则称 x0 为 f 的间断点。”随后：“这些定义不要求上述双侧去心邻域条件……右侧定义不要求左侧有定义，左侧定义不要求右侧有定义。”分类句：“若至少有一个单侧极限为 +∞ 或 -∞……则称 x0 为无穷间断点。”"
+    }
+  ],
+  "unit_applied_counts": {
+    "S04.U05": 2,
+    "S04.U07": 1,
+    "S04.U03": 3
+  },
+  "proposal_counts_by_key": {
+    "unit:S04.U03": 3,
+    "unit:S04.U05": 2,
+    "unit:S04.U07": 1
+  },
+  "rejected_counts_by_key": {},
+  "evidence_dependencies": [
+    {
+      "key": "b/a45be503af594ce8/sS04_1131f5fcd8cf/repair-1-patch.json",
+      "hash": "49d7ef3a21a86bde9c5e2cbdac037f2949efaec309ce8027a34af843d2b19f61",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS04_d8112be51cdd/repair-2-patch.json",
+      "hash": "1bfacae647f631c9b1f2539f3778fbb370fcee9189594f342cff20f91be5173f",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS04_00aecb9ed051/repair-3-patch.json",
+      "hash": "1adead109381274e98ac04118fc5a2913c4f6b18ca4a9cf41134bc40d989f1f9",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS04_00aecb9ed051/repair-4-patch.json",
+      "hash": "699fbd24fe69fa81895846c759f7d33362a9ac6939b483ebb991fd7e1236fb61",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "39fc39b8251f880e4922a695073dcfe1ea160bee10d117cfc922a17e589641e7",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S04/candidate-689115374ca6.json",
+  "candidate_hash": "3d3aede5baa12a9bf4cd7cc36ec8cc102f4e69d11746483eb60d8e0c1a30fbac",
+  "last_review_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S04/review-57cb16469921.json",
+  "pending_operation": "strict_local_patch",
+  "pending_keys": [
+    "unit:S04.U03"
+  ],
+  "request_count_before": 96,
+  "patch_evidence": {
+    "schema_version": 1,
+    "operation": "strict_local_patch",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "e6a05a6de4d57a0ee3a5ab75a60554852a573430a1f9f45116090dbbbbcd6990",
+    "patch_hash": "b6e21f4fec84d167d074a219af7105e26ec78dd300fccec18686f8d2a8da3295",
+    "result_section_hash": "d0b7670d4dbf500e0a5d5db44b926d41ef443fae726af1c7191b4b7534aaf57a",
+    "allowed_unit_ids": [
+      "S04.U03"
+    ],
+    "changed_unit_ids": [
+      "S04.U03"
+    ],
+    "unit_order_preserved": true,
+    "unit_identity_and_metadata_preserved": true,
+    "non_target_units_preserved": true,
+    "original_calculation_count": 0,
+    "calculation_updates": [],
+    "calculation_additions": [],
+    "non_target_calculations_preserved": true,
+    "old_uncertainties_preserved": true,
+    "old_calculation_limitations_preserved": true,
+    "normalization": "NOT_RUN",
+    "math_check": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "proposal_key": "b/a45be503af594ce8/sS04_00aecb9ed051/repair-4-patch.json"
+  },
+  "reason": "Explicit global-repair seed; existing local counters retained"
+}

@@ -1,0 +1,23 @@
+{
+  "status": "UNCHECKED_REPAIRED",
+  "state_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S03.json",
+  "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S03/candidate-8e5a43ddec81.json",
+  "candidate_hash": "6020d175640cba9fa72772276d7161d5e0f885e44ef6abee16c210c3bfae5a21",
+  "applied_rounds": 3,
+  "proposal_calls": 4,
+  "rejected_proposals": 1,
+  "pending_issues": [
+    {
+      "unit_id": "S03.U02",
+      "severity": "review",
+      "message": "“等价无穷小”的形式化定义没有把“α(x) 与 β(x) 都是无穷小”写入若条件。仅有 β(x) 在去心邻域内非零且 α(x)/β(x)→1，并不能推出二者趋于零；例如 α(x)=β(x)=1 时比值仍趋于 1，但二者不是无穷小。后文虽用文字补充“首先要求二者都是同一极限过程下的无穷小”，但该条件未与公式定义明确合并，定义的形式表达与解释文字存在范围不一致。",
+      "evidence": "S03.U02 的正式条件仅写“α、β 在去心邻域内有定义，且 β(x)≠0；lim α(x)/β(x)=1”，随后才说明“等价无穷小首先要求二者都是……无穷小”。应在定义条件中明确 lim α(x)=lim β(x)=0，或将定义名称改为一般的“等价函数”。"
+    },
+    {
+      "unit_id": "S03.U06",
+      "severity": "review",
+      "message": "证明中从 α(x)∼β(x) 直接写出 β(x)/α(x)→1，实质上使用了倒数极限定理。该步需要说明 α(x)/β(x) 在充分小的去心邻域内非零，并引用其极限为 1≠0；这虽可由 S03.U02 的 α、β 非零条件和 S02 的商法则推出，但正文没有交代。由于该结论是等价无穷小替换定理的核心证明步骤，当前证明存在先修定理与非零条件未显式接合的缺口。",
+      "evidence": "S03.U06 仅写“由 α(x)∼β(x)，有 lim β(x)/α(x)=1”，没有展示 β/α=1/(α/β) 及倒数极限所需的最终非零条件。S03.U02 确实给出 α、β 在同一去心邻域内非零，因此结论可修复，但当前证明未明确使用该条件。"
+    }
+  ]
+}

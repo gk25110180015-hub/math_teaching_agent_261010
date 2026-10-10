@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227",
+    "model": "gpt-6-astra",
+    "provider": "live",
+    "repair_prompt_hash": "46c1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9",
+    "written_schema_hash": "4e9b07e27f359212c0460381e3cbd6e548d18a48490e553e60b0c56d30d9ada7",
+    "normalizer_hash": "25d2fff448b21fcad71b5e7aae512cf6ab27f66bdeefd9e459ca57652a1fd74c"
+  },
+  "rounds_used": 2,
+  "phase": "checking",
+  "sections": {
+    "S05": {
+      "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/global-repairs/r2-1a805ccb/S05-locally-checked-aff120db.json",
+      "candidate_hash": "8fb78f817e93c2b6ca85d97b94a7281e0e7ea7a12d24e29c2fb586f4988aba03"
+    }
+  },
+  "pending": [],
+  "teacher_visual_review": "NOT_RUN",
+  "round_directory": "runs/fd6736af6ef14be3839e019e86ca1e5c/global-repairs/r2-1a805ccb",
+  "issues": [
+    {
+      "unit_id": "S05.U18",
+      "severity": "blocking",
+      "message": "答案导航说明与 answers_location=end 的最终排序不一致。该说明称“以下答案与本节三道练习依次对应”，但按 rendering_contract，S05.U19–S05.U21 会被收集到讲义末尾的全章答案区，且该区先输出 S01.U09 等先前各节答案；S05.U18 本身不会随答案重排。因此学生看到的“以下答案”并非紧接着本节三道练习。应改为与全章题号回链一致的导航，例如说明本节练习为 S05.U15–S05.U17、答案见讲义末尾答案区，不改变题目、解答或既定末尾排序。",
+      "evidence": "S05.U18 正文以“本节练习参考答案（讲义末尾）”开头，并称“以下答案与本节三道练习依次对应”。rendering_contract.relocated_solution_ids 顺序为 S01.U09、S02.U18.answer、...、S05.U19、S05.U20、S05.U21；S05.U18 是 explanation，不是被重排的 solution。"
+    }
+  ]
+}

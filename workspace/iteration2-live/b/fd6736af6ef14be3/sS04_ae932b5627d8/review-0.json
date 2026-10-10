@@ -1,0 +1,112 @@
+{
+  "section_id": "S04",
+  "math": {
+    "schema_version": 1,
+    "status": "NEEDS_REVIEW",
+    "issues": [
+      {
+        "rule_id": "NUMERIC_IS_NOT_PROOF",
+        "severity": "warning",
+        "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+        "location": {
+          "calculation_id": "S04.C01",
+          "unit_id": "S04.U05"
+        },
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "kind": "numeric_spotcheck",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "numeric_spotcheck_passed",
+        "point_count": 1,
+        "message": "仅在指定点数值一致，不是一般性证明。",
+        "calculation_id": "S04.C01",
+        "unit_id": "S04.U05"
+      }
+    ],
+    "coverage": [
+      "S04.U01",
+      "S04.U02",
+      "S04.U03",
+      "S04.U04",
+      "S04.U05",
+      "S04.U06",
+      "S04.U07",
+      "S04.U08",
+      "S04.U09",
+      "S04.U10",
+      "S04.U11",
+      "S04.U12",
+      "S04.U13"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "协议的数值核算只能抽查交错项在指定整数处的取值，不能表达对所有正整数的单调性、极限或余项不等式；交错级数判别法及余项估计仍由正文证明。",
+      "既有核算 S04.C01 仅比较 n=3 时的通项值与 1/3，覆盖范围限于该单点等式；不提供对所有正整数的结论，也不构成交错调和级数收敛性或截断误差界的证明。这些结论依赖正文中的判别条件核实与定理证明。",
+      "本次仅修复目标正文的 TeX 反斜杠转义层级，不改变数学结论，不新增核算请求。该转义问题及公式环境、引用的实际渲染不属于有界数学核算协议的检查范围，须由后续 TeX 编译与交叉引用检查验证。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S04.U01",
+      "S04.U02",
+      "S04.U03",
+      "S04.U04",
+      "S04.U05",
+      "S04.U06",
+      "S04.U07",
+      "S04.U08",
+      "S04.U09",
+      "S04.U10",
+      "S04.U11",
+      "S04.U12",
+      "S04.U13"
+    ],
+    "limitations": [
+      "本次为 section_local 审阅，仅对 S04 的上述实际单元作检查；使用已提供的 S01—S03 正文核对先修依据，不将其列为本次完成局部审阅的单元。S05 尚未生成，不属于本次覆盖范围。",
+      "已对照 S04 的四项锁定目标核查定义、判别条件、证明、收敛分类及截断误差例练，未发现确定数学错误或重大覆盖缺口。交错级数定义明确采用允许零项的指定符号形式；余项证明的最小指标未引用未定义的 S_0；n=999 是题目要求的误差上界充分条件的最小取值，而不是实际误差满足要求的最小截断位置。",
+      "依据 rendering_contract，S04.U11、S04.U12 的独立练习解答由程序移至讲义末尾，不能由 JSON 中的位置判断答案放置违规。本次未检查最终 PDF、TeX 编译结果及交叉引用的实际显示。",
+      "工具证据仅核对了 S04.U05 在 n=3 时的通项值，不能证明一般收敛性或余项界。本次结论来自对正文条件与推理的普通模型审阅，不等于形式化证明，也不保证发现所有潜在问题。"
+    ]
+  },
+  "issues": [
+    {
+      "rule_id": "NUMERIC_IS_NOT_PROOF",
+      "severity": "warning",
+      "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+      "location": {
+        "calculation_id": "S04.C01",
+        "unit_id": "S04.U05"
+      },
+      "resolution_status": "open"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 6,
+    "proposal_calls": 6,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "b747c59be5e08a36af4c8a69c78f1001d7d7a36170e95aa7cc1acebf79442a85",
+      "tool_checks_hash": "09b2b814ed9fe8ac778a9113b80cdb5db9e6286a4f75362e753eceace1c025bf",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "f5e895a1bb356e84253be5d607badd423975d62b71eea40243b6193139355170",
+      "deterministic_checks_hash": "62a616f548840d8f9f63157fdc022b223ef9f83b78c559f5aa75f46bed081e65"
+    }
+  }
+}

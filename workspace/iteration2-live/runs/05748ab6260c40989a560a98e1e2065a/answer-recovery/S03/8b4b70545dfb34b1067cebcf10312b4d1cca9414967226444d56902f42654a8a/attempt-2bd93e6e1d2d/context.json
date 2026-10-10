@@ -1,0 +1,1454 @@
+{
+  "operation": "append_missing_answers",
+  "section_id": "S03",
+  "source_section_hash": "7dbd0e0f1f4cf3ac3f713477ed9e9adc9e1c13e2d2fb34202ddd70f04a54e02e",
+  "existing_section": {
+    "section_id": "S03",
+    "units": [
+      {
+        "id": "S03.U01",
+        "kind": "definition",
+        "tex": "若实数数列 $\\{a_n\\}$ 满足 $a_n\\to0$，则称它为无穷小数列。“无穷小”描述整个数列的变化趋势，并不是指某个固定的很小的正数。例如 $1/n$ 是无穷小数列，而常数数列 $a_n=10^{-6}$ 不是无穷小数列。本节将用上下界控制误差，从而处理不能直接使用四则运算法则的极限。",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U02",
+        "kind": "theorem",
+        "tex": "\\label{thm:squeeze-sequence}夹逼定理：设 $\\{a_n\\}$、$\\{b_n\\}$、$\\{c_n\\}$ 为实数数列。若存在正整数 $N_0$，使得对所有 $n\\geq N_0$ 都有\n\\[\na_n\\leq b_n\\leq c_n,\n\\]\n且 $a_n\\to L$、$c_n\\to L$，其中 $L\\in\\mathbb{R}$，则 $b_n\\to L$。",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U03",
+        "kind": "proof",
+        "tex": "任给 $\\varepsilon>0$。由 $a_n\\to L$，存在正整数 $N_1$，使得 $n\\geq N_1$ 时 $|a_n-L|<\\varepsilon$；由 $c_n\\to L$，存在正整数 $N_2$，使得 $n\\geq N_2$ 时 $|c_n-L|<\\varepsilon$。取\n\\[\nN=\\max\\{N_0,N_1,N_2\\}.\n\\]\n对每个 $n\\geq N$，有\n\\[\nL-\\varepsilon<a_n\\leq b_n\\leq c_n<L+\\varepsilon.\n\\]\n所以 $|b_n-L|<\\varepsilon$。由定义 \\ref{def:epsilon-N}，$b_n\\to L$。证明同时说明：夹逼关系只需从某个下标开始成立，有限个初始项不影响结论。",
+        "relates_to": "S03.U02"
+      },
+      {
+        "id": "S03.U04",
+        "kind": "explanation",
+        "tex": "夹逼定理常写成误差估计的形式：设 $L\\in\\mathbb{R}$，$d_n\\to0$，并且存在正整数 $N_0$，使得对所有 $n\\geq N_0$ 都有\n\\[\n|b_n-L|\\leq d_n.\n\\]\n于是这些下标上必有 $d_n\\geq0$，且\n\\[\nL-d_n\\leq b_n\\leq L+d_n.\n\\]\n由和、差法则及定理 \\ref{thm:squeeze-sequence}，可得 $b_n\\to L$。这不是预先假设 $b_n$ 收敛，而是借助误差上界证明其收敛。若两侧极限不同，则仅凭夹在两者之间不能断言中间数列收敛。",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U05",
+        "kind": "theorem",
+        "tex": "\\label{thm:basic-reciprocal-limit}对于正整数下标 $n$，有\n\\[\n\\lim_{n\\to\\infty}\\frac1n=0.\n\\]\n更一般地，对每个固定的正整数 $k$，都有\n\\[\n\\lim_{n\\to\\infty}\\frac1{n^k}=0.\n\\]",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U06",
+        "kind": "proof",
+        "tex": "任给 $\\varepsilon>0$，取正整数 $N>1/\\varepsilon$。当 $n\\geq N$ 时，$0<1/n\\leq1/N<\\varepsilon$，故 $1/n\\to0$。对任意固定的正整数 $k$，由于 $n\\geq1$ 时 $n^k\\geq n$，故\n\\[\n0<\\frac1{n^k}\\leq\\frac1n.\n\\]\n由定理 \\ref{thm:squeeze-sequence} 得 $1/n^k\\to0$。这里 $k$ 是固定的，不能把这一表述不加说明地当作关于任意变化指数的结论。",
+        "relates_to": "S03.U05"
+      },
+      {
+        "id": "S03.U07",
+        "kind": "theorem",
+        "tex": "\\label{thm:bounded-times-zero}有界数列与无穷小数列的乘积是无穷小数列。具体地，设 $\\{u_n\\}$、$\\{v_n\\}$ 为实数数列，存在常数 $M>0$，使得对每个 $n\\in\\mathbb{N}^{+}$ 都有 $|u_n|\\leq M$，且 $v_n\\to0$，则\n\\[\nu_nv_n\\to0.\n\\]\n这里不要求 $\\{u_n\\}$ 本身收敛。",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U08",
+        "kind": "proof",
+        "tex": "由 $v_n\\to0$ 的定义，对任意 $\\varepsilon>0$，存在正整数 $N$，使得 $n\\geq N$ 时 $|v_n|<\\varepsilon/M$。因此对所有 $n\\geq N$，\n\\[\n|u_nv_n|=|u_n|\\,|v_n|\\leq M|v_n|<\\varepsilon,\n\\]\n所以 $u_nv_n\\to0$。从夹逼的角度看，$|v_n|\\to0$ 直接来自极限定义，而\n\\[\n-M|v_n|\\leq u_nv_n\\leq M|v_n|\n\\]\n的两侧都趋于零。",
+        "relates_to": "S03.U07"
+      },
+      {
+        "id": "S03.U09",
+        "kind": "example",
+        "tex": "设 $n\\in\\mathbb{N}^{+}$。求数列\n\\[\na_n=\\frac{(-1)^n n}{n^2+1}\n\\]\n的极限，并说明为什么不能把 $(-1)^n$ 和 $n/(n^2+1)$ 的极限直接相乘。",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U10",
+        "kind": "solution",
+        "tex": "对每个正整数 $n$，分母 $n^2+1>0$，且\n\\[\n|a_n|=\\frac{n}{n^2+1}\\leq\\frac{n}{n^2}=\\frac1n.\n\\]\n由定理 \\ref{thm:basic-reciprocal-limit} 及误差估计形式的夹逼定理，$a_n\\to0$。\n\n因子 $(-1)^n$ 不收敛。事实上，若它收敛于某个实数 $L$，取 $\\varepsilon=1/2$，则充分大的偶数下标与奇数下标分别给出 $|1-L|<1/2$ 和 $|-1-L|<1/2$，从而\n\\[\n2=|1-(-1)|\\leq|1-L|+|L+1|<1,\n\\]\n矛盾。因此不能使用要求两个因子都收敛的乘积法则。不过 $|(-1)^n|=1$，且 $n/(n^2+1)\\to0$，所以也可用定理 \\ref{thm:bounded-times-zero} 得到答案。",
+        "relates_to": "S03.U09"
+      },
+      {
+        "id": "S03.U11",
+        "kind": "example",
+        "tex": "对 $n\\in\\mathbb{N}^{+}$，计算\n\\[\n\\sqrt{n^2+3}-n\n\\]\n的极限。要求先作代数变形，再用上下界证明，不使用函数极限或导数。",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U12",
+        "kind": "solution",
+        "tex": "由于 $n\\geq1$，根号内 $n^2+3>0$，且 $\\sqrt{n^2+3}+n>0$。乘以共轭式可得\n\\[\n\\sqrt{n^2+3}-n\n=\\frac{(n^2+3)-n^2}{\\sqrt{n^2+3}+n}\n=\\frac3{\\sqrt{n^2+3}+n}.\n\\]\n又因 $\\sqrt{n^2+3}\\geq n$，所以\n\\[\n0<\\sqrt{n^2+3}-n\\leq\\frac3{2n}.\n\\]\n由 $3/(2n)\\to0$ 和定理 \\ref{thm:squeeze-sequence}，得到\n\\[\n\\lim_{n\\to\\infty}\\bigl(\\sqrt{n^2+3}-n\\bigr)=0.\n\\]\n这里不能把原式中两项分别取实数极限再相减；两项都没有有限实数极限。共轭变形把相减的式子转化成了容易估计的正分式。",
+        "relates_to": "S03.U11"
+      },
+      {
+        "id": "S03.U13",
+        "kind": "example",
+        "tex": "对 $n\\in\\mathbb{N}^{+}$，求\n\\[\nr_n=\\frac{3n^2-n+2}{2n^2+5}\n\\]\n的极限，并解释分子、分母同除以 $n^2$ 的作用。",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U14",
+        "kind": "solution",
+        "tex": "因为 $n>0$，且 $2n^2+5>0$，所以可写成\n\\[\nr_n=\\frac{3-1/n+2/n^2}{2+5/n^2}.\n\\]\n定理 \\ref{thm:basic-reciprocal-limit} 给出 $1/n\\to0$ 和 $1/n^2\\to0$。由和、常数倍法则，分子趋于 $3$，分母趋于 $2\\neq0$；同时 $2+5/n^2>0$。故由定理 \\ref{thm:limit-quotient}，\n\\[\n\\lim_{n\\to\\infty}r_n=\\frac32.\n\\]\n同除以 $n^2$，使最高次项变成常数，其余项变成常数乘以 $1/n$ 或 $1/n^2$。这解释了本例为何由最高次项的系数决定极限，而不是把“只看最高次项”当作无需验证条件的规则。",
+        "relates_to": "S03.U13"
+      },
+      {
+        "id": "S03.U15",
+        "kind": "explanation",
+        "tex": "本节的方法选择可以概括为：遇到有界但不收敛的因子，优先估计绝对值；遇到根式相减，先考虑共轭变形；遇到有理式，先用合适的 $n$ 的幂归一化，再检查商法则的分母条件。夹逼时应写清不等式从哪些下标起成立，并说明两侧具有同一个极限。以下练习的答案统一安排在讲义末尾，本节只列题目。",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U16",
+        "kind": "exercise",
+        "tex": "对 $n\\in\\mathbb{N}^{+}$，用夹逼定理求\n\\[\nb_n=\\frac{\\sin n}{n+1}\n\\]\n的极限，其中 $\\sin n$ 按弧度理解。要求写出对所有正整数 $n$ 成立的绝对值上界，说明上界为何趋于零，并解释为什么不应未经证明就把两个因子的极限相乘。",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U17",
+        "kind": "exercise",
+        "tex": "对 $n\\in\\mathbb{N}^{+}$，求下列极限，并分别说明所用方法的关键条件：\n\\[\n(1)\\quad \\sqrt{n^2+n}-n;\n\\qquad\n(2)\\quad \\frac{2n^2+(-1)^n}{n^2+1}.\n\\]\n第 (1) 题须先作共轭变形；可通过估计 $\\sqrt{1+1/n}-1$ 证明 $\\sqrt{1+1/n}\\to1$，不要直接援引函数连续性。第 (2) 题须明确控制符号变化项产生的误差。",
+        "relates_to": null
+      }
+    ],
+    "calculations": [
+      {
+        "id": "S03.C01",
+        "unit_id": "S03.U12",
+        "kind": "limit",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "expression": {
+          "op": "Add",
+          "args": [
+            {
+              "op": "sqrt",
+              "args": [
+                {
+                  "op": "Add",
+                  "args": [
+                    {
+                      "op": "Pow",
+                      "args": [
+                        {
+                          "op": "Symbol",
+                          "name": "n"
+                        },
+                        {
+                          "op": "Integer",
+                          "value": 2
+                        }
+                      ]
+                    },
+                    {
+                      "op": "Integer",
+                      "value": 3
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "op": "Mul",
+              "args": [
+                {
+                  "op": "Integer",
+                  "value": -1
+                },
+                {
+                  "op": "Symbol",
+                  "name": "n"
+                }
+              ]
+            }
+          ]
+        },
+        "variable": "n",
+        "point": {
+          "op": "Infinity"
+        },
+        "direction": "-",
+        "expected": {
+          "op": "Integer",
+          "value": 0
+        }
+      },
+      {
+        "id": "S03.C02",
+        "unit_id": "S03.U14",
+        "kind": "limit",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "expression": {
+          "op": "Mul",
+          "args": [
+            {
+              "op": "Add",
+              "args": [
+                {
+                  "op": "Mul",
+                  "args": [
+                    {
+                      "op": "Integer",
+                      "value": 3
+                    },
+                    {
+                      "op": "Pow",
+                      "args": [
+                        {
+                          "op": "Symbol",
+                          "name": "n"
+                        },
+                        {
+                          "op": "Integer",
+                          "value": 2
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "Mul",
+                  "args": [
+                    {
+                      "op": "Integer",
+                      "value": -1
+                    },
+                    {
+                      "op": "Symbol",
+                      "name": "n"
+                    }
+                  ]
+                },
+                {
+                  "op": "Integer",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "op": "Pow",
+              "args": [
+                {
+                  "op": "Add",
+                  "args": [
+                    {
+                      "op": "Mul",
+                      "args": [
+                        {
+                          "op": "Integer",
+                          "value": 2
+                        },
+                        {
+                          "op": "Pow",
+                          "args": [
+                            {
+                              "op": "Symbol",
+                              "name": "n"
+                            },
+                            {
+                              "op": "Integer",
+                              "value": 2
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "Integer",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "op": "Integer",
+                  "value": -1
+                }
+              ]
+            }
+          ]
+        },
+        "variable": "n",
+        "point": {
+          "op": "Infinity"
+        },
+        "direction": "-",
+        "expected": {
+          "op": "Rational",
+          "p": 3,
+          "q": 2
+        }
+      }
+    ],
+    "calculation_limitations": [
+      "核算请求仅覆盖根式例题和有理式例题的具体极限；协议的表达式树不能表达夹逼定理及有界数列乘无穷小定理中关于任意数列、最终不等式和任意误差的量词结构，这些一般结论由正文证明支持。"
+    ],
+    "uncertainties": []
+  },
+  "targets": [
+    {
+      "target_id": "S03.U16",
+      "answer_unit_id": "S03.U16.answer",
+      "problem": {
+        "id": "S03.U16",
+        "kind": "exercise",
+        "tex": "对 $n\\in\\mathbb{N}^{+}$，用夹逼定理求\n\\[\nb_n=\\frac{\\sin n}{n+1}\n\\]\n的极限，其中 $\\sin n$ 按弧度理解。要求写出对所有正整数 $n$ 成立的绝对值上界，说明上界为何趋于零，并解释为什么不应未经证明就把两个因子的极限相乘。",
+        "relates_to": null
+      }
+    },
+    {
+      "target_id": "S03.U17",
+      "answer_unit_id": "S03.U17.answer",
+      "problem": {
+        "id": "S03.U17",
+        "kind": "exercise",
+        "tex": "对 $n\\in\\mathbb{N}^{+}$，求下列极限，并分别说明所用方法的关键条件：\n\\[\n(1)\\quad \\sqrt{n^2+n}-n;\n\\qquad\n(2)\\quad \\frac{2n^2+(-1)^n}{n^2+1}.\n\\]\n第 (1) 题须先作共轭变形；可通过估计 $\\sqrt{1+1/n}-1$ 证明 $\\sqrt{1+1/n}\\to1$，不要直接援引函数连续性。第 (2) 题须明确控制符号变化项产生的误差。",
+        "relates_to": null
+      }
+    }
+  ],
+  "remaining_unit_slots": 83,
+  "remaining_calculation_slots": 98,
+  "calculation_protocol": {
+    "schema_version": 1,
+    "purpose": "为本节已实际写出的数学结论提交1至3个受支持的代表性核算；核算不是对整节内容的证明。",
+    "output_field": "calculations",
+    "limitations_output_field": "calculation_limitations",
+    "uncertainties_output_field": "uncertainties",
+    "selection_rules": [
+      "unit_id必须精确等于当前返回units中真实存在且包含该结论的id；id是本节唯一的核算ID。示例ID仅用于演示，不能直接借用。",
+      "只复算本节实际出现且符合课程范围的式子，不为凑1至3项新增例题、升级难度或虚构结论。",
+      "确无适用核算时返回calculations=[]，并在calculation_limitations说明具体覆盖限制；真正数学疑点另外保留在uncertainties。",
+      "只填写请求，不能在请求中增加status、evidence或通过结论；程序运行后才产生证据。"
+    ],
+    "request_common_fields": {
+      "required": [
+        "id",
+        "unit_id",
+        "kind",
+        "assumptions"
+      ],
+      "id": "本节唯一字符串，例如S01.C01",
+      "unit_id": "当前units中的实际ID，例如S01.U04；结论、变量、预期结果须与该单元一致",
+      "assumptions": "符号名到白名单布尔假设的对象；所有Symbol和variable都必须声明。常量式可用{}。",
+      "extra_fields_allowed": false
+    },
+    "request_kinds": {
+      "equivalence": {
+        "required": [
+          "lhs",
+          "rhs"
+        ],
+        "ast_fields": [
+          "lhs",
+          "rhs"
+        ]
+      },
+      "derivative": {
+        "required": [
+          "expression",
+          "variable",
+          "expected"
+        ],
+        "ast_fields": [
+          "expression",
+          "expected"
+        ],
+        "variable": "已在assumptions声明的符号名字符串"
+      },
+      "limit": {
+        "required": [
+          "expression",
+          "variable",
+          "point",
+          "direction",
+          "expected"
+        ],
+        "ast_fields": [
+          "expression",
+          "point",
+          "expected"
+        ],
+        "variable": "已声明的符号名字符串",
+        "direction_values": [
+          "+",
+          "-",
+          "+-"
+        ],
+        "direction_note": "有限点+为右极限、-为左极限、+-为双侧；示例的正无穷极限使用-。"
+      },
+      "series": {
+        "required": [
+          "term",
+          "variable",
+          "start",
+          "end",
+          "expected_convergent"
+        ],
+        "ast_fields": [
+          "term",
+          "start",
+          "end"
+        ],
+        "variable": "已声明的求和符号名字符串",
+        "expected_convergent": "JSON布尔值，只核对收敛性；此kind不核对级数和"
+      },
+      "numeric_spotcheck": {
+        "required": [
+          "lhs",
+          "rhs",
+          "points"
+        ],
+        "ast_fields": [
+          "lhs",
+          "rhs"
+        ],
+        "points": "1至20个对象，每个对象覆盖所有声明变量；值为有限JSON数，绝对值不超过10^9，且满足声明假设",
+        "warning": "仅有限指定点数值一致，不能证明一般结论；返回numeric_spotcheck_passed仍需复核。"
+      }
+    },
+    "assumptions": {
+      "symbol_name_pattern": "[A-Za-z][A-Za-z0-9_]{0,30}",
+      "allowed_boolean_flags": [
+        "real",
+        "positive",
+        "negative",
+        "nonnegative",
+        "nonpositive",
+        "integer",
+        "nonzero",
+        "finite",
+        "rational"
+      ],
+      "rules": [
+        "布尔值必须是真正的JSON true/false，不能写字符串、集合、区间或Python表达式。未明确的属性不要写false，保留未声明。",
+        "假设来自单元明示条件，不得为了得到PASS而擅自加强条件。实对数参数为正；含倒数的恒等变形需保留非零条件；根号求导需检查正值区间与边界。",
+        "白名单不能表达的一般区间/复合约束必须说明限制，不能用更弱或更强的单一布尔属性冒充。系统的域检查不完整，仍须核对原结论条件。"
+      ]
+    },
+    "expression_ast": {
+      "encoding": "表达式只能是以下JSON对象树，不接受TeX、数学字符串或Python代码；所有节点不允许额外字段。",
+      "nodes": {
+        "Integer": {
+          "keys": [
+            "op",
+            "value"
+          ],
+          "value": "JSON整数，绝对值<=10^9；不能用布尔值或小数"
+        },
+        "Rational": {
+          "keys": [
+            "op",
+            "p",
+            "q"
+          ],
+          "p_q": "有界JSON整数，q不为0；小数尽量写精确有理数"
+        },
+        "Symbol": {
+          "keys": [
+            "op",
+            "name"
+          ],
+          "name": "assumptions已声明的符号名"
+        },
+        "Infinity": {
+          "keys": [
+            "op"
+          ],
+          "meaning": "正无穷；负无穷可用Mul(Integer(-1),Infinity)的JSON树"
+        },
+        "Add": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": "1..16"
+        },
+        "Mul": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": "1..16"
+        },
+        "Pow": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 2,
+          "note": "第二项为指数AST；数值指数绝对值<=100"
+        },
+        "sin": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1
+        },
+        "cos": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1
+        },
+        "tan": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1
+        },
+        "exp": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1
+        },
+        "log": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1,
+          "note": "自然对数，检查正实定义域"
+        },
+        "sqrt": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1
+        },
+        "Abs": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1
+        }
+      },
+      "syntax_notes": [
+        "乘方用Pow；除以x用Mul(分子,Pow(x,Integer(-1)))；减法用Add(左式,Mul(Integer(-1),右式))，均展开成JSON对象树。",
+        "不要发明Div、Subtract、Float、Limit、Sum、pi或Python等op/kind。初等常数e可写exp(Integer(1))；不支持的表达式留为覆盖限制。"
+      ]
+    },
+    "budgets": {
+      "per_calculation_timeout_seconds": 8,
+      "per_section_timeout_seconds": 60,
+      "max_request_utf8_bytes": 65536,
+      "max_ast_nodes": 256,
+      "max_ast_depth": 20,
+      "max_function_arguments": 16,
+      "max_declared_symbols": 20,
+      "recommended_requests_per_section": [
+        1,
+        3
+      ]
+    },
+    "evidence_interpretation": {
+      "symbolic_check_passed": "只有所请求表达式在所声明假设下符号核对一致；不是一般定理的形式化证明，也不是整节审核通过。",
+      "numeric_spotcheck_passed": "只通过所列点数值抽查，仍NEEDS_REVIEW，不是一般证明。",
+      "symbolic_check_failed": "请求与核算结果冲突，属于须定位到原单元的数学问题。",
+      "not_checked": "未执行、超时、域条件不完整或无法决定；不得视为PASS。"
+    },
+    "examples": [
+      {
+        "description": "数列1/n的正无穷极限；请求绑定实际含该结论的单元。",
+        "unit": {
+          "id": "EX_LIMIT.U1",
+          "kind": "explanation",
+          "tex": "对正整数 $n$，数列 $a_n=1/n$ 满足 $\\lim_{n\\to\\infty}a_n=0$。",
+          "relates_to": null
+        },
+        "calculation": {
+          "id": "EX_LIMIT.C1",
+          "unit_id": "EX_LIMIT.U1",
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "expression": {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Symbol",
+                "name": "n"
+              },
+              {
+                "op": "Integer",
+                "value": -1
+              }
+            ]
+          },
+          "variable": "n",
+          "point": {
+            "op": "Infinity"
+          },
+          "direction": "-",
+          "expected": {
+            "op": "Integer",
+            "value": 0
+          }
+        },
+        "expected_result": "0"
+      },
+      {
+        "description": "正项p级数p=2的收敛性；此请求不声称计算其和。",
+        "unit": {
+          "id": "EX_SERIES.U1",
+          "kind": "explanation",
+          "tex": "正项级数 $\\sum_{n=1}^{\\infty}1/n^2$ 收敛。",
+          "relates_to": null
+        },
+        "calculation": {
+          "id": "EX_SERIES.C1",
+          "unit_id": "EX_SERIES.U1",
+          "kind": "series",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "term": {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Symbol",
+                "name": "n"
+              },
+              {
+                "op": "Integer",
+                "value": -2
+              }
+            ]
+          },
+          "variable": "n",
+          "start": {
+            "op": "Integer",
+            "value": 1
+          },
+          "end": {
+            "op": "Infinity"
+          },
+          "expected_convergent": true
+        },
+        "expected_result": true
+      },
+      {
+        "description": "在正实定义域内核对log(x)导数，不把公式外推到x<=0。",
+        "unit": {
+          "id": "EX_DERIVATIVE.U1",
+          "kind": "explanation",
+          "tex": "在 $x>0$ 上，$f(x)=\\ln x$ 的导数为 $f'(x)=1/x$。",
+          "relates_to": null
+        },
+        "calculation": {
+          "id": "EX_DERIVATIVE.C1",
+          "unit_id": "EX_DERIVATIVE.U1",
+          "kind": "derivative",
+          "assumptions": {
+            "x": {
+              "real": true,
+              "positive": true
+            }
+          },
+          "expression": {
+            "op": "log",
+            "args": [
+              {
+                "op": "Symbol",
+                "name": "x"
+              }
+            ]
+          },
+          "variable": "x",
+          "expected": {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Symbol",
+                "name": "x"
+              },
+              {
+                "op": "Integer",
+                "value": -1
+              }
+            ]
+          }
+        },
+        "expected_result": "1/x"
+      }
+    ]
+  },
+  "requirements": [
+    "Only return solutions for exactly the listed targets; no existing unit may be replaced, removed, or reordered.",
+    "Each new calculation.unit_id must equal one listed answer_unit_id; calculation IDs must not collide with existing IDs.",
+    "Existing uncertainty/limitation notes remain; new doubts may only be appended. This response is unchecked."
+  ],
+  "approved_plan": {
+    "additions": [],
+    "decision_ids": [
+      "0d9be895ddb5497799a0d3d74d45e7c7",
+      "d58ade8b491549d3bbc82f9826046722",
+      "bdfb1c0ebdb24bc395a555b5f2c5358a",
+      "1b278740b48247269d568d407072acce"
+    ],
+    "decisions": [
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "custom_input": "",
+        "id": "0d9be895ddb5497799a0d3d74d45e7c7",
+        "question_id": "Q-PROOF",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "key"
+        },
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "timestamp": "2026-09-19T18:33:03.981248+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "custom_input": "",
+        "id": "d58ade8b491549d3bbc82f9826046722",
+        "question_id": "Q-EXAMPLE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "balanced"
+        },
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "timestamp": "2026-09-19T18:33:03.982248+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "custom_input": "",
+        "id": "bdfb1c0ebdb24bc395a555b5f2c5358a",
+        "question_id": "Q-EXERCISE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "with_answers"
+        },
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "timestamp": "2026-09-19T18:33:03.982248+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "custom_input": "",
+        "id": "1b278740b48247269d568d407072acce",
+        "question_id": "Q-ANSWERS",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "end"
+        },
+        "selected_option_ids": [
+          "END"
+        ],
+        "timestamp": "2026-09-19T18:33:03.982248+00:00"
+      }
+    ],
+    "diff": [
+      {
+        "after": {
+          "answers_location": "end",
+          "example_focus": "balanced",
+          "exercises": "with_answers",
+          "proof_policy": "key"
+        },
+        "before": {
+          "answers_location": null,
+          "example_focus": null,
+          "exercises": null,
+          "proof_policy": null
+        },
+        "field": "lecture"
+      }
+    ],
+    "difficulty": "经济学本科一年级微积分",
+    "exclusions": [
+      "不展开函数极限、连续性和导数理论",
+      "不讨论无穷级数、幂级数和函数项级数",
+      "不涉及多元数列、度量空间或拓扑学中的一般收敛",
+      "不要求完整处理复杂递推方程和高阶渐近展开",
+      "不引入超出本科一年级微积分范围的实数完备性公理体系"
+    ],
+    "input_snapshot_hash": "6a800bd5cb1a5351711cfe165c1b643dc94fa3d3e00970fba57b54d550e62eeb",
+    "lecture": {
+      "answers_location": "end",
+      "example_focus": "balanced",
+      "exercises": "with_answers",
+      "proof_policy": "key"
+    },
+    "objectives": [
+      "建立数列及其极限的严格直观与符号体系",
+      "掌握数列极限的定义、唯一性、基本性质与运算法则",
+      "能够运用夹逼定理和单调有界原理判断常见数列的收敛性",
+      "结合经济学本科一年级所需的计算，分析递推数列和简单经济模型中的极限"
+    ],
+    "omissions": [],
+    "prerequisites": [
+      "实数运算与不等式变形",
+      "函数的基本概念与初等函数运算",
+      "绝对值、不等式和自然数归纳法的基础知识"
+    ],
+    "provider": "live",
+    "questions": [
+      {
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-PROOF",
+        "options": [
+          {
+            "effects": {
+              "value": "key"
+            },
+            "id": "KEY",
+            "label": "关键定理完整证明，其余说明",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "all"
+            },
+            "id": "ALL",
+            "label": "所有定理完整证明",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "定理证明采用哪种深度？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXAMPLE",
+        "options": [
+          {
+            "effects": {
+              "value": "balanced"
+            },
+            "id": "BALANCED",
+            "label": "概念与计算均衡",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "economics"
+            },
+            "id": "ECONOMICS",
+            "label": "更多经济应用",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "例题侧重什么？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXERCISE",
+        "options": [
+          {
+            "effects": {
+              "value": "with_answers"
+            },
+            "id": "WITH",
+            "label": "安排练习并附答案",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "none"
+            },
+            "id": "NONE",
+            "label": "不安排额外练习",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "是否安排练习与答案？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-ANSWERS",
+        "options": [
+          {
+            "effects": {
+              "value": "section"
+            },
+            "id": "SECTION",
+            "label": "各节之后",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "end"
+            },
+            "id": "END",
+            "label": "讲义末尾",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "练习答案放在哪里？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "END"
+        ],
+        "selection_mode": "single"
+      }
+    ],
+    "reference_context": {
+      "dataset": "第一章",
+      "instruction": "Only observe structure, proof depth and notation. Do not copy these examples into a different topic.",
+      "label": "UNTRUSTED_STYLE_REFERENCE_ONLY",
+      "section_titles": [
+        "数列的一般定义",
+        "拓展阅读：数列的应用",
+        "差分及其应用",
+        "数列极限",
+        "收敛数列的基本性质",
+        "极限存在性定理"
+      ],
+      "source_hash": "49a18ae541e03d6f60b99782fa5c1413a1f1c9e93a3614f865b4b263acb0045d",
+      "status": "RETRIEVED",
+      "weight_training": false
+    },
+    "reference_registry": {
+      "def:bounded-sequence": "S04",
+      "def:epsilon-N": "S01",
+      "def:limit-proof-strategy": "S05",
+      "def:monotone-sequence": "S04",
+      "def:sequence": "S01",
+      "def:sequence-limit": "S01",
+      "sec:S01": "S01",
+      "sec:S02": "S02",
+      "sec:S03": "S03",
+      "sec:S04": "S04",
+      "sec:S05": "S05",
+      "thm:basic-reciprocal-limit": "S03",
+      "thm:bounded-times-zero": "S03",
+      "thm:convergence-method-selection": "S05",
+      "thm:convergent-bounded": "S02",
+      "thm:limit-order": "S02",
+      "thm:limit-quotient": "S02",
+      "thm:limit-sign": "S02",
+      "thm:limit-sum-product": "S02",
+      "thm:limit-unique": "S01",
+      "thm:monotone-bounded": "S04",
+      "thm:recursive-limit-method": "S04",
+      "thm:squeeze-sequence": "S03"
+    },
+    "revision": 2,
+    "rules": {
+      "allowed_text_sizes": [
+        "footnotesize",
+        "small",
+        "normalsize",
+        "large"
+      ],
+      "rule_version": 1,
+      "summary_frames": false
+    },
+    "schema_version": 1,
+    "sections": [
+      {
+        "id": "S01",
+        "objectives": [
+          "理解数列作为定义在正整数集上的函数的含义",
+          "掌握数列收敛到实数的\\(\\varepsilon\\)-\\(N\\)定义及其否定形式",
+          "能够用定义验证简单数列的极限，并区分趋近过程与有限项取值",
+          "通过例题说明极限定义中\\(\\varepsilon\\)与\\(N\\)的量化关系"
+        ],
+        "prerequisites": [],
+        "reference_labels": [
+          "def:sequence",
+          "def:sequence-limit",
+          "def:epsilon-N",
+          "thm:limit-unique"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "数列与数列极限的定义"
+      },
+      {
+        "id": "S02",
+        "objectives": [
+          "掌握收敛数列的有界性、保号性和保序性等基本性质",
+          "建立极限的和、差、积、商运算法则及其适用条件",
+          "能够处理含有有理式、绝对值和常数倍的基本数列极限",
+          "例题应包含运算法则的直接应用与一个需要先验证分母极限非零的情形",
+          "练习应要求说明所用定理及关键条件，而不仅给出计算结果"
+        ],
+        "prerequisites": [
+          "S01"
+        ],
+        "reference_labels": [
+          "thm:convergent-bounded",
+          "thm:limit-sign",
+          "thm:limit-order",
+          "thm:limit-sum-product",
+          "thm:limit-quotient"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "收敛数列的基本性质与极限运算法则"
+      },
+      {
+        "id": "S03",
+        "objectives": [
+          "理解并证明数列夹逼定理的基本思想",
+          "能够利用绝对值估计、上下界和已知极限处理振荡因子",
+          "掌握常见基本极限的推导或使用条件，如\\(1/n\\)趋于零及有理式的无穷远行为",
+          "通过例题分析含有有界因子、符号变化因子或根式变形的数列",
+          "练习应覆盖至少一个不能直接套用四则运算法则而需夹逼的数列"
+        ],
+        "prerequisites": [
+          "S02"
+        ],
+        "reference_labels": [
+          "thm:squeeze-sequence",
+          "thm:basic-reciprocal-limit",
+          "thm:bounded-times-zero"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "夹逼定理与常见极限"
+      },
+      {
+        "id": "S04",
+        "objectives": [
+          "定义数列的单调性与有界性，并理解二者对收敛性的作用",
+          "掌握单调有界原理及其在递推数列中的标准应用流程",
+          "能够先证明递推数列的有界性和单调性，再求其可能的极限",
+          "说明取极限代入递推关系前必须先证明收敛",
+          "例题应包含一个经济学背景下的逐期调整或迭代模型",
+          "练习应要求完整写出归纳、有界、单调和极限方程等关键步骤"
+        ],
+        "prerequisites": [
+          "S03"
+        ],
+        "reference_labels": [
+          "def:monotone-sequence",
+          "def:bounded-sequence",
+          "thm:monotone-bounded",
+          "thm:recursive-limit-method"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "单调有界原理与递推数列的极限"
+      },
+      {
+        "id": "S05",
+        "objectives": [
+          "综合选择定义法、运算法则、夹逼定理和单调有界原理解决极限问题",
+          "比较不同方法的适用条件、证明成本和计算效率",
+          "处理含参数、分段表达式或简单递推结构的本科入门级综合题",
+          "通过综合例题总结判断数列收敛性的步骤化策略",
+          "练习应至少包含一道要求辨析错误论证的题目，并给出改正方向"
+        ],
+        "prerequisites": [
+          "S04"
+        ],
+        "reference_labels": [
+          "def:limit-proof-strategy",
+          "thm:convergence-method-selection"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "数列极限综合应用与方法比较"
+      }
+    ],
+    "symbols": {
+      "Delta": "差值或误差算子，具体含义由上下文确定",
+      "L": "数列可能趋近的实数",
+      "N": "正整数集，记为\\(\\mathbb N^+\\)或\\(\\mathbb N\\)",
+      "N_epsilon": "依赖于\\(\\varepsilon\\)的正整数阈值，通常记为\\(N\\)",
+      "a_n": "数列\\(\\{a_n\\}\\)的第\\(n\\)项",
+      "epsilon": "任意给定的正数，通常记为\\(\\varepsilon\\)"
+    },
+    "theme": "default",
+    "title": "数列与数列极限：经济学本科一年级微积分讲义计划",
+    "unresolved_blocking_questions": [],
+    "workflow_id": "lecture.generate",
+    "hash": "60e76cc0b1271ac1b32a9f48c9ae760665bb7180cbdd52df6f5f5958f25db4ac"
+  },
+  "section_spec": {
+    "id": "S03",
+    "objectives": [
+      "理解并证明数列夹逼定理的基本思想",
+      "能够利用绝对值估计、上下界和已知极限处理振荡因子",
+      "掌握常见基本极限的推导或使用条件，如\\(1/n\\)趋于零及有理式的无穷远行为",
+      "通过例题分析含有有界因子、符号变化因子或根式变形的数列",
+      "练习应覆盖至少一个不能直接套用四则运算法则而需夹逼的数列"
+    ],
+    "prerequisites": [
+      "S02"
+    ],
+    "reference_labels": [
+      "thm:squeeze-sequence",
+      "thm:basic-reciprocal-limit",
+      "thm:bounded-times-zero"
+    ],
+    "required_kinds": [
+      "definition",
+      "theorem",
+      "example",
+      "solution",
+      "proof",
+      "exercise"
+    ],
+    "title": "夹逼定理与常见极限"
+  },
+  "prior_sections": [
+    {
+      "section_id": "S01",
+      "units": [
+        {
+          "id": "S01.U01",
+          "kind": "definition",
+          "tex": "\\label{def:sequence}数列是定义在正整数集 $\\mathbb{N}^{+}=\\{1,2,3,\\ldots\\}$ 上、取实数值的函数。若该函数在 $n\\in\\mathbb{N}^{+}$ 处的值为 $a_n$，则称 $a_n$ 为数列 $\\{a_n\\}$ 的第 $n$ 项，通常写作\n\\[\na_1,a_2,\\ldots,a_n,\\ldots,\n\\qquad a_n=f(n),\\quad n\\in\\mathbb{N}^{+}.\n\\]\n数列的下标只能取正整数，且项的排列顺序是数列定义的一部分。",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U02",
+          "kind": "definition",
+          "tex": "\\label{def:sequence-limit}\\label{def:epsilon-N}设 $\\{a_n\\}$ 是实数数列，$L\\in\\mathbb{R}$。若对于任意 $\\varepsilon>0$，都存在正整数 $N$，使得当 $n\\geq N$ 时有\n\\[\n|a_n-L|<\\varepsilon,\n\\]\n则称数列 $\\{a_n\\}$ 收敛于 $L$，记为\n\\[\n\\lim_{n\\to\\infty}a_n=L.\n\\]\n其中，$\\varepsilon$ 先任意给定，而 $N$ 可以依赖于 $\\varepsilon$，但不能依赖于 $n$。",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U03",
+          "kind": "definition",
+          "tex": "“收敛于给定的 $L$”的否定形式，即“不收敛于给定的 $L$”，是：存在某个 $\\varepsilon_0>0$，使得对每一个正整数 $N$，都存在 $n\\geq N$，满足\n\\[\n|a_n-L|\\geq\\varepsilon_0.\n\\]\n因此，收敛于这个给定的 $L$ 要求从某个下标开始的所有项都落在区间 $(L-\\varepsilon,L+\\varepsilon)$ 内；不收敛于这个给定的 $L$ 则表示无论下标取得多大，总能找到一项落在某个固定误差范围之外。",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U04",
+          "kind": "theorem",
+          "tex": "\\label{thm:limit-unique}若数列 $\\{a_n\\}$ 收敛于 $L$，又收敛于 $M$，其中 $L,M\\in\\mathbb{R}$，则\n\\[\nL=M.\n\\]",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U05",
+          "kind": "proof",
+          "tex": "设 $L\\ne M$，取\n\\[\n\\varepsilon=\\frac{|L-M|}{3}>0.\n\\]\n由 $a_n\\to L$，存在正整数 $N_1$，使得当 $n\\geq N_1$ 时，$|a_n-L|<\\varepsilon$。同理由 $a_n\\to M$，存在正整数 $N_2$，使得当 $n\\geq N_2$ 时，$|a_n-M|<\\varepsilon$。令 $N=\\max\\{N_1,N_2\\}$，则对任意 $n\\geq N$，三角不等式给出\n\\[\n|L-M|\\leq |L-a_n|+|a_n-M|<2\\varepsilon=\\frac{2}{3}|L-M|.\n\\]\n这与 $|L-M|>0$ 矛盾。因此 $L=M$。",
+          "relates_to": "S01.U04"
+        },
+        {
+          "id": "S01.U06",
+          "kind": "example",
+          "tex": "验证数列\n\\[\na_n=\\frac{1}{n},\\qquad n\\in\\mathbb{N}^{+},\n\\]\n是否收敛，并判断其极限。",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U07",
+          "kind": "solution",
+          "tex": "要证明 $a_n\\to0$，需验证对任意 $\\varepsilon>0$，存在正整数 $N$，使得 $n\\geq N$ 时\n\\[\n\\left|\\frac{1}{n}-0\\right|<\\varepsilon.\n\\]\n给定 $\\varepsilon>0$，取正整数 $N>\\frac{1}{\\varepsilon}$。当 $n\\geq N$ 时，由 $n>0$ 得\n\\[\n\\left|\\frac{1}{n}-0\\right|=\\frac{1}{n}\\leq\\frac{1}{N}<\\varepsilon.\n\\]\n所以按照 $\\varepsilon$--$N$ 定义，\n\\[\n\\lim_{n\\to\\infty}\\frac{1}{n}=0.\n\\]",
+          "relates_to": "S01.U06"
+        },
+        {
+          "id": "S01.U08",
+          "kind": "explanation",
+          "tex": "极限描述的是下标充分大时数列项的接近趋势，而不是某一项必须等于极限。例如，对 $a_n=1/n$，没有正整数 $n$ 使得 $a_n=0$，但当 $n$ 足够大时，$a_n$ 可以小于任意预先给定的正数 $\\varepsilon$。因此，有限项的取值与数列的极限需要区分。",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U09",
+          "kind": "exercise",
+          "tex": "用 $\\varepsilon$--$N$ 定义证明\n\\[\n\\lim_{n\\to\\infty}\\frac{2n+1}{n}=2.\n\\]\n要求明确写出给定的 $\\varepsilon$、所取的 $N$，以及当 $n\\geq N$ 时的误差估计。",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U10",
+          "kind": "solution",
+          "tex": "给定任意 $\\varepsilon>0$，注意到\n\\[\n\\left|\\frac{2n+1}{n}-2\\right|=\\left|\\frac{1}{n}\\right|=\\frac{1}{n}.\n\\]\n取正整数 $N>\\frac{1}{\\varepsilon}$。当 $n\\geq N$ 时，$n>0$，从而\n\\[\n\\left|\\frac{2n+1}{n}-2\\right|=\\frac{1}{n}\\leq\\frac{1}{N}<\\varepsilon.\n\\]\n因此根据 $\\varepsilon$--$N$ 定义，\n\\[\n\\lim_{n\\to\\infty}\\frac{2n+1}{n}=2.\n\\]",
+          "relates_to": "S01.U09"
+        }
+      ],
+      "calculations": [
+        {
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "direction": "-",
+          "expected": {
+            "op": "Integer",
+            "value": 0
+          },
+          "expression": {
+            "args": [
+              {
+                "name": "n",
+                "op": "Symbol"
+              },
+              {
+                "op": "Integer",
+                "value": -1
+              }
+            ],
+            "op": "Pow"
+          },
+          "id": "S01.C01",
+          "kind": "limit",
+          "point": {
+            "op": "Infinity"
+          },
+          "unit_id": "S01.U07",
+          "variable": "n"
+        }
+      ],
+      "calculation_limitations": [],
+      "uncertainties": []
+    },
+    {
+      "section_id": "S02",
+      "units": [
+        {
+          "id": "S02.U01",
+          "kind": "definition",
+          "tex": "设数列 $\\{a_n\\}$。若存在常数 $M>0$，使得对所有 $n\\in\\mathbb{N}^{+}$ 都有 $|a_n|\\leq M$，则称数列 $\\{a_n\\}$ 有界。",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U02",
+          "kind": "theorem",
+          "tex": "\\label{thm:convergent-bounded}若数列 $\\{a_n\\}$ 收敛于实数 $L$，则数列 $\\{a_n\\}$ 有界。",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U03",
+          "kind": "proof",
+          "tex": "由 $a_n\\to L$，取 $\\varepsilon=1$。则存在正整数 $N$，使得当 $n\\geq N$ 时，$|a_n-L|<1$。于是当 $n\\geq N$ 时，$|a_n|\\leq|a_n-L|+|L|<1+|L|$。令 $M$ 为有限数集 $\\{|a_1|,\\ldots,|a_{N-1}|,1+|L|\\}$ 的最大值；若 $N=1$，则取 $M=1+|L|$。于是对所有 $n\\in\\mathbb{N}^{+}$ 都有 $|a_n|\\leq M$，所以数列有界。",
+          "relates_to": "S02.U02"
+        },
+        {
+          "id": "S02.U04",
+          "kind": "theorem",
+          "tex": "\\label{thm:limit-sign}设 $a_n\\to L$。若 $L>0$，则存在正整数 $N$，使得当 $n\\geq N$ 时 $a_n>0$；若 $L<0$，则存在正整数 $N$，使得当 $n\\geq N$ 时 $a_n<0$。特别地，若 $a_n\\geq0$ 对所有 $n$ 成立，则 $L\\geq0$；若 $a_n\\leq0$ 对所有 $n$ 成立，则 $L\\leq0$。",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U05",
+          "kind": "proof",
+          "tex": "当 $L>0$ 时，取 $\\varepsilon=L/2$。由极限定义，存在正整数 $N$，使得 $n\\geq N$ 时 $|a_n-L|<L/2$。因此 $a_n>L/2>0$。当 $L<0$ 时，取 $\\varepsilon=|L|/2$，则当 $n$ 足够大时，$a_n<L+|L|/2=L/2<0$。若 $a_n\\geq0$ 且 $L<0$，则这与充分大的 $n$ 满足 $a_n<0$ 矛盾，所以 $L\\geq0$。另一种情形同理。",
+          "relates_to": "S02.U04"
+        },
+        {
+          "id": "S02.U06",
+          "kind": "theorem",
+          "tex": "\\label{thm:limit-order}设 $a_n\\to L$，$b_n\\to M$，且存在正整数 $N_0$，使得对所有 $n\\geq N_0$ 都有 $a_n\\leq b_n$，则 $L\\leq M$。",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U07",
+          "kind": "proof",
+          "tex": "反设 $L>M$，取 $\\varepsilon=(L-M)/3>0$。由 $a_n\\to L$ 和 $b_n\\to M$，存在正整数 $N_1,N_2$，使得当 $n\\geq N_1$ 时 $|a_n-L|<\\varepsilon$，当 $n\\geq N_2$ 时 $|b_n-M|<\\varepsilon$。当 $n\\geq\\max\\{N_0,N_1,N_2\\}$ 时，$a_n>L-\\varepsilon$ 且 $b_n<M+\\varepsilon$。所以 $a_n-b_n>L-M-2\\varepsilon=(L-M)/3>0$，即 $a_n>b_n$，与题设矛盾。因此 $L\\leq M$。",
+          "relates_to": "S02.U06"
+        },
+        {
+          "id": "S02.U08",
+          "kind": "theorem",
+          "tex": "\\label{thm:limit-sum-product}设 $a_n\\to L$，$b_n\\to M$，且 $c\\in\\mathbb{R}$ 为常数，则 $ca_n\\to cL$，$a_n+b_n\\to L+M$，以及 $a_nb_n\\to LM$。从而 $a_n-b_n\\to L-M$。",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U09",
+          "kind": "proof",
+          "tex": "先证常数倍法则。若 $c=0$，则对任意 $\\varepsilon>0$，取 $N=1$，当 $n\\geq N$ 时有 $|ca_n-cL|=0<\\varepsilon$。若 $c\\neq0$，则对任意 $\\varepsilon>0$，由 $a_n\\to L$ 可取正整数 $N$，使得当 $n\\geq N$ 时 $|a_n-L|<\\varepsilon/|c|$，于是 $|ca_n-cL|=|c|\\,|a_n-L|<\\varepsilon$。所以 $ca_n\\to cL$。\n再证和法则。任给 $\\varepsilon>0$，由两个数列的收敛性，分别取正整数 $N_1,N_2$，使得当 $n\\geq N_1$ 时 $|a_n-L|<\\varepsilon/2$，当 $n\\geq N_2$ 时 $|b_n-M|<\\varepsilon/2$。取 $N=\\max\\{N_1,N_2\\}$，则当 $n\\geq N$ 时，由三角不等式，$|(a_n+b_n)-(L+M)|\\leq|a_n-L|+|b_n-M|<\\varepsilon/2+\\varepsilon/2=\\varepsilon$。故 $a_n+b_n\\to L+M$。由已证的常数倍法则，$-b_n\\to-M$，再用和法则即得 $a_n-b_n\\to L-M$。\n对乘积，先由 \\ref{thm:convergent-bounded} 知道收敛数列有界，取常数 $K>0$，使得对所有 $n$ 都有 $|a_n|\\leq K$。利用恒等式 $a_nb_n-LM=a_n(b_n-M)+M(a_n-L)$，有 $|a_nb_n-LM|\\leq K|b_n-M|+|M|\\,|a_n-L|$。任给 $\\varepsilon>0$，由收敛性可分别取正整数 $N_3,N_4$，使得当 $n\\geq N_3$ 时 $|b_n-M|<\\varepsilon/(2K)$，当 $n\\geq N_4$ 时 $|a_n-L|<\\varepsilon/[2(|M|+1)]$。取 $N=\\max\\{N_3,N_4\\}$，则当 $n\\geq N$ 时，$|a_nb_n-LM|<\\varepsilon/2+|M|\\varepsilon/[2(|M|+1)]<\\varepsilon$。因此由极限定义，$a_nb_n\\to LM$。",
+          "relates_to": "S02.U08"
+        },
+        {
+          "id": "S02.U10",
+          "kind": "theorem",
+          "tex": "\\label{thm:limit-quotient}设 $a_n\\to L$，$b_n\\to M$，且 $M\\neq0$。若对所有 $n\\in\\mathbb{N}^{+}$ 都有 $b_n\\neq0$，则 $a_n/b_n\\to L/M$。",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U11",
+          "kind": "proof",
+          "tex": "由 $b_n\\to M$ 且 $M\\neq0$，取 $\\varepsilon=|M|/2$。根据极限定义，当 $n$ 足够大时，$|b_n-M|<|M|/2$，从而 $|b_n|\\geq|M|-|b_n-M|>|M|/2$。于是 $|1/b_n-1/M|=|b_n-M|/(|M|\\,|b_n|)\\leq2|b_n-M|/|M|^2\\to0$。所以 $1/b_n\\to1/M$。再由乘积法则，$a_n/b_n=a_n(1/b_n)\\to L(1/M)=L/M$。",
+          "relates_to": "S02.U10"
+        },
+        {
+          "id": "S02.U12",
+          "kind": "example",
+          "tex": "计算下列数列的极限，并说明所使用的运算法则：$a_n=3(1/n)+2$，$b_n=(2n+1)/(n+3)$，其中 $n\\in\\mathbb{N}^{+}$。",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U13",
+          "kind": "solution",
+          "tex": "由前一节的基本极限 $1/n\\to0$，利用常数倍法则与和法则，$\\lim_{n\\to\\infty}a_n=3\\cdot0+2=2$。对于 $b_n$，由于 $n\\in\\mathbb{N}^{+}$，可将分子、分母同除以 $n$，得到 $b_n=(2+1/n)/(1+3/n)$。由 $1/n\\to0$，有 $2+1/n\\to2$，且 $1+3/n\\to1\\neq0$。另外，$1+3/n>0$，所以商式有定义。由商法则，$\\lim_{n\\to\\infty}b_n=2/1=2$。使用商法则前必须确认分母极限非零。",
+          "relates_to": "S02.U12"
+        },
+        {
+          "id": "S02.U14",
+          "kind": "exercise",
+          "tex": "设 $a_n\\to2$，$b_n\\to-1$，且对所有 $n\\in\\mathbb{N}^{+}$ 都有 $b_n\\neq0$。求下列极限，并说明所使用的定理及关键条件：$(1)\\ 4a_n-3b_n$；$(2)\\ a_nb_n$；$(3)\\ (a_n+1)/b_n$。",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U15",
+          "kind": "solution",
+          "tex": "由常数倍法则与差法则，$4a_n-3b_n\\to4\\cdot2-3\\cdot(-1)=11$。由乘积法则，$a_nb_n\\to2\\cdot(-1)=-2$。又由和法则，$a_n+1\\to3$。由于 $b_n\\to-1\\neq0$，且题设保证 $b_n\\neq0$，可使用商法则，得到 $(a_n+1)/b_n\\to3/(-1)=-3$。关键条件是分母数列的极限非零，并且商式在所讨论的下标上有定义。",
+          "relates_to": "S02.U14"
+        }
+      ],
+      "calculations": [
+        {
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "direction": "-",
+          "expected": {
+            "op": "Integer",
+            "value": 2
+          },
+          "expression": {
+            "args": [
+              {
+                "op": "Integer",
+                "value": 2
+              },
+              {
+                "args": [
+                  {
+                    "name": "n",
+                    "op": "Symbol"
+                  },
+                  {
+                    "op": "Integer",
+                    "value": -1
+                  }
+                ],
+                "op": "Pow"
+              }
+            ],
+            "op": "Add"
+          },
+          "id": "S02.C01",
+          "kind": "limit",
+          "point": {
+            "op": "Infinity"
+          },
+          "unit_id": "S02.U13",
+          "variable": "n"
+        }
+      ],
+      "calculation_limitations": [],
+      "uncertainties": []
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "section_id": "S03",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "series",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "domain_scope": "supported_tail_guards",
+        "limitations": [
+          "以起点加非负整数代入，检查已保留的受支持运算定义域约束；不是通用定义域证明器。"
+        ],
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": true,
+        "message": "级数收敛性核算与声明一致。",
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U09"
+      },
+      {
+        "kind": "series",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "domain_scope": "supported_tail_guards",
+        "limitations": [
+          "以起点加非负整数代入，检查已保留的受支持运算定义域约束；不是通用定义域证明器。"
+        ],
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": false,
+        "message": "级数收敛性核算与声明一致。",
+        "calculation_id": "S03.C02",
+        "unit_id": "S03.U09"
+      }
+    ],
+    "coverage": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10",
+      "S03.U11",
+      "S03.U12",
+      "S03.U13",
+      "S03.U14",
+      "S03.U15",
+      "S03.U16"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "协议的 series 核算只能对给定的具体幂指数核对收敛性，不能直接表达定理中对所有实数 $p$ 的量词；比较判别法、极限比较判别法和积分判别法的普遍证明由正文完成。",
+      "S03.U12 使用一般连续正值单调递减函数的积分比较及部分和有界性；现有核算协议不支持一般函数、定积分或不等式证明，不能直接核算本次修复中的两向推理。",
+      "新增的几何级数说明涉及有限求和及公比区间 0<r<1、r>1 的分类。现有 JSON AST 不支持有限求和表达式，布尔假设也不能直接表示这些区间约束；本次未对该一般参数结论新增符号核算，依据在正文中以有限等比求和和数列极限给出。原有两项具体 p-级数核算保持不变。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10",
+      "S03.U11",
+      "S03.U12",
+      "S03.U13",
+      "S03.U14",
+      "S03.U15",
+      "S03.U16"
+    ],
+    "limitations": [
+      "本次为 section_local 审阅，已阅读并核对列出的全部当前节单元，并使用已提供的前两节正文核查先修依赖；未对其他章节作覆盖结论，也未将尚未生成的章节视为遗漏。",
+      "已按实际正文重新核查保留的 S03.U10 疑点：该单元明确说明通项趋零不是充分条件，并对 0<p≤1 使用分组下界证明发散、对 p>1 使用积分估计证明部分和有界。因此，原先关于误用必要条件推出收敛的 blocking 判断不适用于当前正文。",
+      "本节四项锁定目标均已结合实际定义、定理、证明和例练核查。几何级数明确限定为本节的非负项情形；积分判别法在例题中从 2 起算，可通过变量平移直接归入已陈述的定理，不构成缺失必要假设。",
+      "根据 rendering_contract，S03.U16 是关联到练习 S03.U15 的独立答案单元，由程序移至讲义末尾；未以 JSON 中的位置判定答案位置违规。未检查最终 PDF 的实际排版、引用解析或答案搬移结果。",
+      "这是普通模型数学审阅，不是形式化证明。工具提供的两个具体 p 级数核算不能证明一般参数结论或一般函数定理；本次对此类内容的判断依据是正文推理，仍存在人工式审阅可能遗漏问题的局限。"
+    ]
+  },
+  "issues": [],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 3,
+    "proposal_calls": 3,
+    "rejected_proposals": 0,
+    "preserved_issues": [
+      {
+        "rule_id": "ZERO_TERM_NOT_SUFFICIENT",
+        "severity": "blocking",
+        "message": "通项趋零只是级数收敛的必要条件，不能据此推出收敛。",
+        "location": {
+          "unit_id": "S03.U10"
+        },
+        "resolution_status": "open"
+      }
+    ],
+    "review_identity": {
+      "candidate_hash": "0cd42cafc96e9c4394c7091d4edde95be8f0e3b3cab5dc515a7494b629e625ec",
+      "tool_checks_hash": "b85ed54688bc31696ce3a3b7c46a4dd14cd1376860988d3b5f0f8a5554877e1a",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "1f32866035f7eb263bff9c7dbf77bb5b544301cd5c93cc6e0eaf2ad117b42d10",
+      "deterministic_checks_hash": "9a2a8a625e6ac42c47bbb9e07c1794b98b61906c6c1814bc4eecd387e4f3cdfd"
+    }
+  }
+}
