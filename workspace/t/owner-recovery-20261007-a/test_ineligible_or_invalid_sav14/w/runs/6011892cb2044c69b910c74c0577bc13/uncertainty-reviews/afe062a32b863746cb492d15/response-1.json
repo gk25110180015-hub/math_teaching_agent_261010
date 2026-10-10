@@ -1,0 +1,23 @@
+{
+  "items": [
+    {
+      "uncertainty_id": "D001-6e31a6936c94d510",
+      "unit_id": "S01.U10",
+      "disposition": "resolved_by_current_body",
+      "reason": "原疑点针对练习答案中的直接代入、有限求和及分数运算是否逐项核验。当前 S01.U10 明确给出了均值、中心化乘积和平方和、斜率、截距、三个拟合值、三个残差、残差和以及插值预测值的完整有理数计算链；所提供的符号核算结果对这些显式运算逐项通过，未留下该具体疑点所指的未核验分数运算。",
+      "evidence": [
+        {
+          "source_key": "current:S01.U04",
+          "source_sha256": "b3fd4d759b40a0502d7b63390fbfef783744167fa89c7dd0daa41afe7e328298",
+          "quote": "将 $S(a,b)$ 展开得\n\\[\nS(a,b)=\\sum_{i=1}^{n}\\bigl[y_i-a-bx_i\\bigr]^2.\n\\]\n对 $a$ 和 $b$ 分别求偏导，得到\n\\[\n\\frac{\\partial S}{\\partial a}=-2\\sum_{i=1}^{n}\\bigl[y_i-a-bx_i\\bigr],\n\\qquad\n\\frac{\\partial S}{\\partial b}=-2\\sum_{i=1}^{n}x_i\\bigl[y_i-a-bx_i\\bigr].\n\\]\n因此，最小点必须满足式 \\eqref{thm:normal-equations}。第一条正规方程给出\n\\[\nn\\hat a+\\hat b\\sum_{i=1}^{n}x_i=\\sum_{i=1}^{n}y_i,\n\\]\n从而\n\\[\n\\hat a=\\bar y-\\hat b\\bar x.\n\\]\n把它代入第二条正规方程，并利用\n\\[\n\\sum_{i=1}^{n}(x_i-\\bar x)=0,\n\\qquad\n\\sum_{i=1}^{n}(y_i-\\bar y)=0,\n\\]\n可得\n\\[\n\\hat b\\sum_{i=1}^{n}(x_i-\\bar x)^2\n=\\sum_{i=1}^{n}(x_i-\\bar x)(y_i-\\bar y).\n\\]\n由于分母严格为正，故 $\\hat b$ 唯一确定，随后 $\\hat a$ 也唯一确定。\n\n下面验证由上述公式给出的 $(\\hat a,\\hat b)$ 确实满足正规方程。对第一条，有\n\\[\n\\sum_{i=1}^{n}\\bigl[y_i-(\\hat a+\\hat b x_i)\\bigr]\n=\\sum_{i=1}^{n}y_i-n\\hat a-\\hat b\\sum_{i=1}^{n}x_i\n=n\\bar y-n(\\bar y-\\hat b\\bar x)-\\hat b n\\bar x=0.\n\\]\n对第二条，利用 $\\sum_{i=1}^{n}(x_i-\\bar x)=0$ 和 $\\sum_{i=1}^{n}(y_i-\\bar y)=0$，有\n\\[\n\\sum_{i=1}^{n}x_i\\bigl[y_i-(\\hat a+\\hat b x_i)\\bigr]\n=\\sum_{i=1}^{n}(x_i-\\bar x)(y_i-\\bar y)\n-\\hat b\\sum_{i=1}^{n}(x_i-\\bar x)^2=0,\n\\]\n最后一步由 $\\hat b$ 的定义得到。因此 $(\\hat a,\\hat b)$ 满足式 \\eqref{thm:normal-equations}。\n\n为说明这是唯一的全局最小点，令 $u=a-\\hat a$，$v=b-\\hat b$。由于 $(\\hat a,\\hat b)$ 满足正规方程，直接展开平方项可得\n\\[\nS(a,b)=S(\\hat a,\\hat b)+\\sum_{i=1}^{n}(u+vx_i)^2.\n\\]\n再将 $x_i=(x_i-\\bar x)+\\bar x$ 代入，并令 $w=u+v\\bar x$，得到\n\\[\n\\sum_{i=1}^{n}(u+vx_i)^2\n=nw^2+v^2\\sum_{i=1}^{n}(x_i-\\bar x)^2\\geq 0.\n\\]\n当且仅当 $w=0$ 且 $v=0$ 时等号成立；由此 $u=0$。所以 $(\\hat a,\\hat b)$ 是唯一最小点。"
+        }
+      ],
+      "remaining_dependency": false,
+      "repair_instruction": null
+    }
+  ],
+  "limitations": [
+    "判断依赖所提供的符号核算记录对 S01.U10 中显式列出的有理数表达式逐项通过；这不等同于对整份讲义进行形式化证明或机器验证。",
+    "未将普通数学审阅、LaTeX 编译结果或最终排版视为额外证明。"
+  ]
+}

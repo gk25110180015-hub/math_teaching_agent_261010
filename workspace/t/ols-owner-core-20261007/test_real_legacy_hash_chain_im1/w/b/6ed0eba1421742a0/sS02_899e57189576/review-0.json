@@ -1,0 +1,137 @@
+{
+  "section_id": "S02",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "limit",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "1",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S02.C01",
+        "unit_id": "S02.U05"
+      },
+      {
+        "kind": "series",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": false,
+        "message": "级数收敛性核算与声明一致。",
+        "calculation_id": "S02.C02",
+        "unit_id": "S02.U07"
+      },
+      {
+        "kind": "equivalence",
+        "assumptions": {
+          "n": {
+            "integer": true,
+            "positive": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "4 - 2/2**n",
+        "message": "在声明假设下符号差为零。",
+        "calculation_id": "S02.C03",
+        "unit_id": "S02.U16"
+      }
+    ],
+    "coverage": [
+      "S02.U01",
+      "S02.U02",
+      "S02.U03",
+      "S02.U04",
+      "S02.U05",
+      "S02.U06",
+      "S02.U07",
+      "S02.U08",
+      "S02.U09",
+      "S02.U10",
+      "S02.U11",
+      "S02.U12",
+      "S02.U13",
+      "S02.U14",
+      "S02.U15",
+      "S02.U16",
+      "S02.U17",
+      "S02.U18",
+      "S02.U19",
+      "S02.U20"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "核算请求覆盖一个通项极限、调和级数的敛散性及一个部分和公式的代数变形；协议不能直接表达任意实数列及其部分和之间的量化关系，因此一般必要条件、线性运算和有限项改变性质由正文证明，不由这些核算替代。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S02.U01",
+      "S02.U02",
+      "S02.U03",
+      "S02.U04",
+      "S02.U05",
+      "S02.U06",
+      "S02.U07",
+      "S02.U08",
+      "S02.U09",
+      "S02.U10",
+      "S02.U11",
+      "S02.U12",
+      "S02.U13",
+      "S02.U14",
+      "S02.U15",
+      "S02.U16",
+      "S02.U17",
+      "S02.U18",
+      "S02.U19",
+      "S02.U20"
+    ],
+    "limitations": [
+      "本次仅审阅当前提供的 S02 实际单元，并依据 S01 已提供正文核对其先修依赖；pending_sections 中的 S03、S04、S05 不属于本节审阅范围。",
+      "未发现当前正文中定义域、量词、正负号、端点、级数必要条件、定理假设或显式计算的数学错误；但普通模型审阅不等于形式化证明。",
+      "工具核算仅覆盖少量指定表达式，不能替代对全部证明、任意实数列及所有量化陈述的形式化验证。",
+      "本审阅未对未提供的后续章节内容或跨后续章节接口作完整性判断。"
+    ]
+  },
+  "issues": [
+    {
+      "severity": "blocking",
+      "unit_id": "S02.U18",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "severity": "blocking",
+      "unit_id": "S02.U19",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "severity": "blocking",
+      "unit_id": "S02.U20",
+      "message": "例题/练习缺少显式关联答案"
+    }
+  ],
+  "mock": false
+}

@@ -1,0 +1,111 @@
+{
+  "section_id": "S01",
+  "math": {
+    "schema_version": 1,
+    "status": "NEEDS_REVIEW",
+    "issues": [
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "练习答案的分数计算仍需核查；请确认所有结果一致。",
+        "location": {},
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_type": "not_checked",
+        "status": "NOT_RUN",
+        "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+      }
+    ],
+    "coverage": [
+      "S01.U01",
+      "S01.U04",
+      "S01.U10"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S01.U01",
+      "S01.U04",
+      "S01.U10"
+    ],
+    "limitations": [
+      "Offline injected review; no teacher acceptance."
+    ]
+  },
+  "issues": [
+    {
+      "rule_id": "INTERNAL_UNIT_ID_VISIBLE",
+      "severity": "blocking",
+      "unit_id": "S01.U10",
+      "message": "学生正文出现内部单元ID S01.U10；保留数学内容，改为自然名称或已存在且语义正确的编号引用，不得编造标签。",
+      "evidence": [
+        "S01.U10"
+      ]
+    },
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "练习答案的分数计算仍需核查；请确认所有结果一致。",
+      "location": {},
+      "uncertainty_id": "D001-45e923c2da7fa2e9",
+      "original_sha256": "45e923c2da7fa2e9a5d2c050e39370e0797be8fc0e4a3f8aac8a2c3c23a8a4ee",
+      "resolution_status": "open"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "uncertainty_review": {
+    "identity_hash": "d930626d6771734d35f9d5169411849f2b01c6aa10b2b4d0d6787a4ae029d7da",
+    "status": "INVALID",
+    "evidence_key": "runs/70e840436b33441abf29ceada303509b/uncertainty-reviews/d930626d6771734d35f9d516/state.json",
+    "evidence_sha256": "9f60770374d2d443532834e859b859d8fe77edf625a207f67156d321571d0386",
+    "failure": {
+      "code": null,
+      "message": "Disposition cannot guess or change the declared owner",
+      "at": "2026-10-07T05:18:46.457849+00:00",
+      "retryable_same_slot": false
+    },
+    "teacher_review": "NOT_RUN"
+  },
+  "uncertainty_legacy_mapping": [],
+  "local_recovery": {
+    "applied_rounds": 0,
+    "proposal_calls": 0,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "af312d9560d4128cb03f2251ea3944cfc4fa35153a26fd879bf84ad249a1952c",
+      "tool_checks_hash": "07176d2238e0bafe6cdd387a875700865a00519fd3abab3a78752fd33a41cf2a",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "21f4e4014c3124f10f141f23477b9f2943dde6a7e8f281581e83e8d86633361a",
+      "deterministic_checks_hash": "b782391011b4396f91044af291ebfe7328254c8dad42a54662619fa7ed1f7056",
+      "uncertainty_identity": "d930626d6771734d35f9d5169411849f2b01c6aa10b2b4d0d6787a4ae029d7da",
+      "uncertainty_failure_hash": "9c2a45f7d5cce2f0b7ab2797b9576434095ac429a5f34a4a30d19cd045a4ad04"
+    }
+  },
+  "independent_repair": {
+    "status": "REQUIRED",
+    "issues": [
+      {
+        "rule_id": "INTERNAL_UNIT_ID_VISIBLE",
+        "severity": "blocking",
+        "unit_id": "S01.U10",
+        "message": "学生正文出现内部单元ID S01.U10；保留数学内容，改为自然名称或已存在且语义正确的编号引用，不得编造标签。",
+        "evidence": [
+          "S01.U10"
+        ]
+      }
+    ],
+    "uncertainty_status": "INVALID",
+    "requires_changed_body_and_full_recheck": true
+  }
+}

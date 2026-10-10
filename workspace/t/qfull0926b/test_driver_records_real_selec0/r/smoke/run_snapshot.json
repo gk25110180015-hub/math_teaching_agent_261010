@@ -1,0 +1,344 @@
+{
+  "id": "871e41eb69de46928ccb50774b797693",
+  "workflow_id": "lecture.generate",
+  "version": 1,
+  "owner_id": "local",
+  "status": "AWAITING_USER_REVIEW",
+  "stage": "review.pages_and_quality",
+  "input_hash": "d70c649c2e6d2547ed361f9aa4c123ec14b6bcbf54fde5db76c59c7c0445fcba",
+  "active_plan_revision": 2,
+  "created_at": "2026-09-26T09:15:47.815044+00:00",
+  "updated_at": "2026-09-26T09:15:47.932831+00:00",
+  "request_count": 0,
+  "schema_version": 1,
+  "input": {
+    "attachments": [],
+    "difficulty": "经济学本科一年级微积分",
+    "model_id": "gpt6",
+    "provider": "live",
+    "schema_version": 1,
+    "theme": "default",
+    "topic": "数列极限入门。此为小型基准测试，严格只规划两节：数列极限的定义与唯一性；简单数列极限及运算。每节安排一个例题及一个练习，避免扩展为整章。",
+    "trusted_input": true,
+    "units": [],
+    "use_reference_bibliography": false,
+    "workflow_id": "lecture.generate"
+  },
+  "error": null,
+  "plan": {
+    "decision_ids": [
+      "553e0c2e6ef7447789ee82dcb1568ed3",
+      "7b6bf54c927442cb9e4da8787c10ee90",
+      "ca6657deec9544a59aea5cc97e649dff",
+      "dd38a78d3c424b6b8a20cabf889a091f"
+    ],
+    "decisions": [
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "custom_input": "",
+        "id": "553e0c2e6ef7447789ee82dcb1568ed3",
+        "question_id": "Q-PROOF",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "key"
+        },
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "timestamp": "2026-09-26T09:15:47.884846+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "custom_input": "",
+        "id": "7b6bf54c927442cb9e4da8787c10ee90",
+        "question_id": "Q-EXAMPLE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "balanced"
+        },
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "timestamp": "2026-09-26T09:15:47.884846+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "custom_input": "",
+        "derived_section_requirements": [
+          {
+            "after": [
+              "exercise",
+              "solution"
+            ],
+            "before": [],
+            "section_id": "S1"
+          },
+          {
+            "after": [
+              "exercise",
+              "solution"
+            ],
+            "before": [],
+            "section_id": "S2"
+          }
+        ],
+        "id": "ca6657deec9544a59aea5cc97e649dff",
+        "question_id": "Q-EXERCISE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "with_answers"
+        },
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "timestamp": "2026-09-26T09:15:47.884846+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "custom_input": "",
+        "id": "dd38a78d3c424b6b8a20cabf889a091f",
+        "question_id": "Q-ANSWERS",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "end"
+        },
+        "selected_option_ids": [
+          "END"
+        ],
+        "timestamp": "2026-09-26T09:15:47.884846+00:00"
+      }
+    ],
+    "diff": [
+      {
+        "after": {
+          "answers_location": "end",
+          "example_focus": "balanced",
+          "exercises": "with_answers",
+          "proof_policy": "key"
+        },
+        "before": {},
+        "field": "lecture"
+      },
+      {
+        "after": [
+          {
+            "id": "S1",
+            "required_kinds": [
+              "exercise",
+              "solution"
+            ],
+            "title": "one"
+          },
+          {
+            "id": "S2",
+            "required_kinds": [
+              "exercise",
+              "solution"
+            ],
+            "title": "two"
+          }
+        ],
+        "before": [
+          {
+            "id": "S1",
+            "title": "one"
+          },
+          {
+            "id": "S2",
+            "title": "two"
+          }
+        ],
+        "field": "sections"
+      }
+    ],
+    "lecture": {
+      "answers_location": "end",
+      "example_focus": "balanced",
+      "exercises": "with_answers",
+      "proof_policy": "key"
+    },
+    "questions": [
+      {
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-PROOF",
+        "options": [
+          {
+            "effects": {
+              "value": "key"
+            },
+            "id": "KEY",
+            "label": "KEY",
+            "recommended": true
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "Q-PROOF",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXAMPLE",
+        "options": [
+          {
+            "effects": {
+              "value": "balanced"
+            },
+            "id": "BALANCED",
+            "label": "BALANCED",
+            "recommended": true
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "Q-EXAMPLE",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXERCISE",
+        "options": [
+          {
+            "effects": {
+              "value": "with_answers"
+            },
+            "id": "WITH",
+            "label": "WITH",
+            "recommended": true
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "Q-EXERCISE",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-ANSWERS",
+        "options": [
+          {
+            "effects": {
+              "value": "end"
+            },
+            "id": "END",
+            "label": "END",
+            "recommended": true
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "Q-ANSWERS",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "END"
+        ],
+        "selection_mode": "single"
+      }
+    ],
+    "revision": 2,
+    "sections": [
+      {
+        "id": "S1",
+        "required_kinds": [
+          "exercise",
+          "solution"
+        ],
+        "title": "one"
+      },
+      {
+        "id": "S2",
+        "required_kinds": [
+          "exercise",
+          "solution"
+        ],
+        "title": "two"
+      }
+    ],
+    "theme": "default",
+    "title": "Offline fixture",
+    "unresolved_blocking_questions": [],
+    "hash": "e8545fa47dd99e79e6fed0bcdba6c137e9698cc361dc6e34f6c815348750d423"
+  },
+  "approval": {
+    "run_id": "871e41eb69de46928ccb50774b797693",
+    "revision": 2,
+    "hash": "e8545fa47dd99e79e6fed0bcdba6c137e9698cc361dc6e34f6c815348750d423",
+    "input_hash": "d70c649c2e6d2547ed361f9aa4c123ec14b6bcbf54fde5db76c59c7c0445fcba",
+    "action_id": "benchmark_driver:smoke:e8545fa47dd99e79",
+    "confirmed_at": "2026-09-26T09:15:47.897193+00:00"
+  },
+  "jobs": [
+    {
+      "id": "dd951aed3af249f7b3bec5e76323015f",
+      "kind": "plan",
+      "status": "done",
+      "attempt": 1,
+      "fencing_token": 1
+    },
+    {
+      "id": "ad27ffa1ae2640dabd2c08a04a7fa004",
+      "kind": "build",
+      "status": "done",
+      "attempt": 1,
+      "fencing_token": 1
+    }
+  ],
+  "artifacts": [],
+  "reviews": []
+}

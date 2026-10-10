@@ -1,0 +1,70 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "23a43569c0ee7b7585f3540ac21ec36cb347ef2f5ee92513c8830e69229768b9",
+    "tool_checks_hash": "2dbb88bc9eac47172772f1f37a17c262551686a8659b6eb7d52e5ad4a27d3737",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "144df4ed0bccc0018b60b914a1d1c4df68bd536bd500932403187cc2d2c8a3e1",
+    "deterministic_checks_hash": "bf3ea53565daf04adeb5f01736a6c169edc918c1bfca6d838a112f201ce3caef"
+  },
+  "report": {
+    "math": {
+      "schema_version": 1,
+      "status": "NEEDS_REVIEW",
+      "issues": [
+        {
+          "rule_id": "DECLARED_MATH_UNCERTAINTY",
+          "severity": "review",
+          "message": "S01.U1 该单元对正整数索引和定义范围的说明仍需核对。",
+          "location": {},
+          "resolution_status": "open"
+        }
+      ],
+      "evidence": [
+        {
+          "evidence_type": "not_checked",
+          "status": "NOT_RUN",
+          "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+        }
+      ],
+      "coverage": [
+        "S01.U1",
+        "S01.U2"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+      ]
+    },
+    "issues": [
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "S01.U1 该单元对正整数索引和定义范围的说明仍需核对。",
+        "unit_id": "S01.U2",
+        "evidence": "不同来源的独立问题。"
+      },
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "未知来源的不同问题。",
+        "uncertainty_id": "D001-96dd97d5295fe300"
+      }
+    ]
+  },
+  "retained_issues": [
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "S01.U1 该单元对正整数索引和定义范围的说明仍需核对。",
+      "unit_id": "S01.U2",
+      "evidence": "不同来源的独立问题。"
+    },
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "未知来源的不同问题。",
+      "uncertainty_id": "D001-96dd97d5295fe300"
+    }
+  ]
+}

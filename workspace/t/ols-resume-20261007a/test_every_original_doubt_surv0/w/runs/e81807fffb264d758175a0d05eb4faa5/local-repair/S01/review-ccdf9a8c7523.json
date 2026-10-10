@@ -1,0 +1,156 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "41aa37a3337e9b9c4999bbcf5f37fd6f96a70d3ccc6e5650b8ce0301b9140270",
+    "tool_checks_hash": "a117eabce83650da2542754088fbcd966fff24cbe3f2a0903bbc9f7c24c27d0b",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "21f4e4014c3124f10f141f23477b9f2943dde6a7e8f281581e83e8d86633361a",
+    "deterministic_checks_hash": "be2c10866c22cc42acb8417ab7a7f23ea05769b884dd06624bf95bd323bf642f",
+    "uncertainty_identity": "4c51db89d3147acdaa9d3d026f13d1bab65be43162e0b91b67773204c0d02d11",
+    "uncertainty_failure_hash": "43099c0fc003bb4891aaead5352020fe0dac1ba57587ef0148eb91564d1eac5c"
+  },
+  "report": {
+    "section_id": "S01",
+    "math": {
+      "schema_version": 1,
+      "status": "NEEDS_REVIEW",
+      "issues": [
+        {
+          "rule_id": "DECLARED_MATH_UNCERTAINTY",
+          "severity": "review",
+          "message": "练习答案的分数计算仍需核查；请确认所有结果一致。",
+          "location": {},
+          "resolution_status": "open"
+        },
+        {
+          "rule_id": "DECLARED_MATH_UNCERTAINTY",
+          "severity": "review",
+          "message": "正规方程候选解满足最优性条件的完整论证仍需核查。",
+          "location": {},
+          "resolution_status": "open"
+        }
+      ],
+      "evidence": [
+        {
+          "evidence_type": "not_checked",
+          "status": "NOT_RUN",
+          "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+        }
+      ],
+      "coverage": [
+        "S01.U01",
+        "S01.U04",
+        "S01.U10"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+      ]
+    },
+    "llm_review": {
+      "issues": [
+        {
+          "unit_id": "S01.U10",
+          "severity": "blocking",
+          "message": "独立普通审阅：练习答案算术错误。",
+          "evidence": "受控离线正文核对。"
+        },
+        {
+          "unit_id": "S01.U04",
+          "severity": "review",
+          "message": "独立普通审阅：正规方程验证缺失。",
+          "evidence": "受控离线证明核对。"
+        }
+      ],
+      "checked_unit_ids": [
+        "S01.U01",
+        "S01.U04",
+        "S01.U10"
+      ],
+      "limitations": [
+        "Offline injected review; no teacher acceptance."
+      ]
+    },
+    "issues": [
+      {
+        "unit_id": "S01.U10",
+        "severity": "blocking",
+        "message": "独立普通审阅：练习答案算术错误。",
+        "evidence": "受控离线正文核对。"
+      },
+      {
+        "unit_id": "S01.U04",
+        "severity": "review",
+        "message": "独立普通审阅：正规方程验证缺失。",
+        "evidence": "受控离线证明核对。"
+      },
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "练习答案的分数计算仍需核查；请确认所有结果一致。",
+        "location": {},
+        "uncertainty_id": "D001-45e923c2da7fa2e9",
+        "original_sha256": "45e923c2da7fa2e9a5d2c050e39370e0797be8fc0e4a3f8aac8a2c3c23a8a4ee",
+        "resolution_status": "open"
+      },
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "正规方程候选解满足最优性条件的完整论证仍需核查。",
+        "location": {},
+        "uncertainty_id": "D002-ea803f129491302b",
+        "original_sha256": "ea803f129491302bc82bca00fdfc288bafe8e9b3944f336902b7045d4ac62635",
+        "resolution_status": "open"
+      }
+    ],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false,
+    "uncertainty_review": {
+      "identity_hash": "4c51db89d3147acdaa9d3d026f13d1bab65be43162e0b91b67773204c0d02d11",
+      "status": "INVALID",
+      "evidence_key": "runs/e81807fffb264d758175a0d05eb4faa5/uncertainty-reviews/4c51db89d3147acdaa9d3d02/state.json",
+      "evidence_sha256": "78995f3eb4cb0003ac78fe02c9c789aa289165d01003e774135eae02fdc3c558",
+      "failure": {
+        "code": null,
+        "message": "Disposition cannot guess or change the declared owner",
+        "at": "2026-10-07T05:34:37.078509+00:00",
+        "retryable_same_slot": false
+      },
+      "teacher_review": "NOT_RUN"
+    },
+    "uncertainty_legacy_mapping": []
+  },
+  "retained_issues": [
+    {
+      "unit_id": "S01.U10",
+      "severity": "blocking",
+      "message": "独立普通审阅：练习答案算术错误。",
+      "evidence": "受控离线正文核对。"
+    },
+    {
+      "unit_id": "S01.U04",
+      "severity": "review",
+      "message": "独立普通审阅：正规方程验证缺失。",
+      "evidence": "受控离线证明核对。"
+    },
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "练习答案的分数计算仍需核查；请确认所有结果一致。",
+      "location": {},
+      "uncertainty_id": "D001-45e923c2da7fa2e9",
+      "original_sha256": "45e923c2da7fa2e9a5d2c050e39370e0797be8fc0e4a3f8aac8a2c3c23a8a4ee",
+      "resolution_status": "open"
+    },
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "正规方程候选解满足最优性条件的完整论证仍需核查。",
+      "location": {},
+      "uncertainty_id": "D002-ea803f129491302b",
+      "original_sha256": "ea803f129491302bc82bca00fdfc288bafe8e9b3944f336902b7045d4ac62635",
+      "resolution_status": "open"
+    }
+  ]
+}

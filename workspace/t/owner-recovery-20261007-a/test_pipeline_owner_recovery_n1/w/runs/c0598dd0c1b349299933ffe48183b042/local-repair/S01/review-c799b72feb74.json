@@ -1,0 +1,112 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "ab49cbc6354e4852bfce6fd8f7c5535e750cf5b734a6746f19acb66d5031bb92",
+    "tool_checks_hash": "07176d2238e0bafe6cdd387a875700865a00519fd3abab3a78752fd33a41cf2a",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "21f4e4014c3124f10f141f23477b9f2943dde6a7e8f281581e83e8d86633361a",
+    "deterministic_checks_hash": "b782391011b4396f91044af291ebfe7328254c8dad42a54662619fa7ed1f7056",
+    "uncertainty_identity": "108a224cb550c89b3714b0e1e214d68f7af416ee5e4b93f8c70c0ae75f7e2f30",
+    "uncertainty_failure_hash": "d4235be62e93566340f3d80b2ecb9897c7716aae45890421b5770d738f5eb608"
+  },
+  "report": {
+    "section_id": "S01",
+    "math": {
+      "schema_version": 1,
+      "status": "NEEDS_REVIEW",
+      "issues": [
+        {
+          "rule_id": "DECLARED_MATH_UNCERTAINTY",
+          "severity": "review",
+          "message": "练习答案的分数计算仍需核查；请确认所有结果一致。",
+          "location": {},
+          "resolution_status": "open"
+        }
+      ],
+      "evidence": [
+        {
+          "evidence_type": "not_checked",
+          "status": "NOT_RUN",
+          "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+        }
+      ],
+      "coverage": [
+        "S01.U01",
+        "S01.U04",
+        "S01.U10"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S01.U01",
+        "S01.U04",
+        "S01.U10"
+      ],
+      "limitations": [
+        "Offline injected review; no teacher acceptance."
+      ]
+    },
+    "issues": [
+      {
+        "rule_id": "INTERNAL_UNIT_ID_VISIBLE",
+        "severity": "blocking",
+        "unit_id": "S01.U10",
+        "message": "学生正文出现内部单元ID S01.U10；保留数学内容，改为自然名称或已存在且语义正确的编号引用，不得编造标签。",
+        "evidence": [
+          "S01.U10"
+        ]
+      },
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "练习答案的分数计算仍需核查；请确认所有结果一致。",
+        "location": {},
+        "uncertainty_id": "D001-45e923c2da7fa2e9",
+        "original_sha256": "45e923c2da7fa2e9a5d2c050e39370e0797be8fc0e4a3f8aac8a2c3c23a8a4ee",
+        "resolution_status": "open"
+      }
+    ],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false,
+    "uncertainty_review": {
+      "identity_hash": "108a224cb550c89b3714b0e1e214d68f7af416ee5e4b93f8c70c0ae75f7e2f30",
+      "status": "INVALID",
+      "evidence_key": "runs/c0598dd0c1b349299933ffe48183b042/uncertainty-reviews/108a224cb550c89b3714b0e1/state.json",
+      "evidence_sha256": "34fa3ec3387aca5b85479b7ecc79bdbb9d7e30bfa069e1394cda8e628516772d",
+      "failure": {
+        "code": null,
+        "message": "Disposition cannot guess or change the declared owner",
+        "at": "2026-10-07T05:49:17.333454+00:00",
+        "retryable_same_slot": false
+      },
+      "teacher_review": "NOT_RUN"
+    },
+    "uncertainty_legacy_mapping": []
+  },
+  "retained_issues": [
+    {
+      "rule_id": "INTERNAL_UNIT_ID_VISIBLE",
+      "severity": "blocking",
+      "unit_id": "S01.U10",
+      "message": "学生正文出现内部单元ID S01.U10；保留数学内容，改为自然名称或已存在且语义正确的编号引用，不得编造标签。",
+      "evidence": [
+        "S01.U10"
+      ]
+    },
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "练习答案的分数计算仍需核查；请确认所有结果一致。",
+      "location": {},
+      "uncertainty_id": "D001-45e923c2da7fa2e9",
+      "original_sha256": "45e923c2da7fa2e9a5d2c050e39370e0797be8fc0e4a3f8aac8a2c3c23a8a4ee",
+      "resolution_status": "open"
+    }
+  ]
+}

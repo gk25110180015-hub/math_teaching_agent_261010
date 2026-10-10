@@ -1,0 +1,132 @@
+{
+  "prior_issues": [
+    {
+      "rule_id": "INTERNAL_UNIT_ID_VISIBLE",
+      "severity": "blocking",
+      "unit_id": "S01.U10",
+      "message": "学生正文出现内部单元ID S01.U10；保留数学内容，改为自然名称或已存在且语义正确的编号引用，不得编造标签。",
+      "evidence": [
+        "S01.U10"
+      ]
+    },
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "练习答案的分数计算仍需核查；请确认所有结果一致。",
+      "location": {},
+      "uncertainty_id": "D001-45e923c2da7fa2e9",
+      "original_sha256": "45e923c2da7fa2e9a5d2c050e39370e0797be8fc0e4a3f8aac8a2c3c23a8a4ee",
+      "resolution_status": "open"
+    }
+  ],
+  "review_identity": {
+    "candidate_hash": "ab49cbc6354e4852bfce6fd8f7c5535e750cf5b734a6746f19acb66d5031bb92",
+    "tool_checks_hash": "07176d2238e0bafe6cdd387a875700865a00519fd3abab3a78752fd33a41cf2a",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "21f4e4014c3124f10f141f23477b9f2943dde6a7e8f281581e83e8d86633361a",
+    "deterministic_checks_hash": "b782391011b4396f91044af291ebfe7328254c8dad42a54662619fa7ed1f7056",
+    "uncertainty_identity": "7197c1f68322fa779c9dd7a22c2075d6fed44275b72a284a69401851da57e951",
+    "uncertainty_assessment_hash": "38ceeea19f9cd4f0eef5f4f1659c8cd663c71dd51a489fb57bf41a87236401d9"
+  },
+  "report": {
+    "section_id": "S01",
+    "math": {
+      "schema_version": 1,
+      "status": "NEEDS_REVIEW",
+      "issues": [
+        {
+          "rule_id": "DECLARED_MATH_UNCERTAINTY",
+          "severity": "review",
+          "message": "练习答案的分数计算仍需核查；请确认所有结果一致。",
+          "location": {},
+          "resolution_status": "open"
+        }
+      ],
+      "evidence": [
+        {
+          "evidence_type": "not_checked",
+          "status": "NOT_RUN",
+          "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+        }
+      ],
+      "coverage": [
+        "S01.U01",
+        "S01.U04",
+        "S01.U10"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S01.U01",
+        "S01.U04",
+        "S01.U10"
+      ],
+      "limitations": [
+        "Offline injected review; no teacher acceptance."
+      ]
+    },
+    "issues": [
+      {
+        "rule_id": "INTERNAL_UNIT_ID_VISIBLE",
+        "severity": "blocking",
+        "unit_id": "S01.U10",
+        "message": "学生正文出现内部单元ID S01.U10；保留数学内容，改为自然名称或已存在且语义正确的编号引用，不得编造标签。",
+        "evidence": [
+          "S01.U10"
+        ]
+      }
+    ],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false,
+    "uncertainty_review": {
+      "identity_hash": "7197c1f68322fa779c9dd7a22c2075d6fed44275b72a284a69401851da57e951",
+      "assessment": {
+        "items": [
+          {
+            "uncertainty_id": "D001-45e923c2da7fa2e9",
+            "unit_id": null,
+            "disposition": "resolved_by_current_body",
+            "reason": "离线受控裁定：保留数学疑点，并依据实际提供正文进行独立核查。",
+            "evidence": [
+              {
+                "source_key": "current:S01.U10",
+                "source_sha256": "d85a6507d3e6dd9053668d88879f9f9ca5a94a85157270519d163fdface01cb5",
+                "quote": "本练习答案的有限求和及相应分数结果需要重新核对。 S01.U10"
+              }
+            ],
+            "remaining_dependency": false,
+            "repair_instruction": null
+          }
+        ],
+        "limitations": [
+          "Offline injected disposition."
+        ]
+      },
+      "status": "REVIEWED_PROTOCOL_RECOVERED",
+      "source_identity_hash": "108a224cb550c89b3714b0e1e214d68f7af416ee5e4b93f8c70c0ae75f7e2f30",
+      "source_state_sha256": "b50c20df6302344c92d80e6900dcd2dae1d691ce97a695c7d2714dccf5d3ff51",
+      "evidence_key": "runs/8555fec0aa9d45b8b541cdad0b83637d/uncertainty-owner-recovery/108a224cb550c89b3714b0e1/recovery.json",
+      "evidence_sha256": "cf73bfbe723b2f2b8b397c87998f8ec2a7ceb8f02810b84dd78fcaa3bdd94b60",
+      "provider_calls_during_replay": 0,
+      "teacher_review": "NOT_RUN"
+    },
+    "uncertainty_legacy_mapping": []
+  },
+  "retained_issues": [
+    {
+      "rule_id": "INTERNAL_UNIT_ID_VISIBLE",
+      "severity": "blocking",
+      "unit_id": "S01.U10",
+      "message": "学生正文出现内部单元ID S01.U10；保留数学内容，改为自然名称或已存在且语义正确的编号引用，不得编造标签。",
+      "evidence": [
+        "S01.U10"
+      ]
+    }
+  ]
+}

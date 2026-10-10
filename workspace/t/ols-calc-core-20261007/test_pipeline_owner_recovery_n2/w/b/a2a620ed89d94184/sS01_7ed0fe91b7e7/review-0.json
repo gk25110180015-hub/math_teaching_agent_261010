@@ -1,0 +1,124 @@
+{
+  "section_id": "S01",
+  "math": {
+    "schema_version": 1,
+    "status": "NEEDS_REVIEW",
+    "issues": [
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "练习答案的分数计算仍需核查；请确认所有结果一致。",
+        "location": {},
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_type": "not_checked",
+        "status": "NOT_RUN",
+        "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+      }
+    ],
+    "coverage": [
+      "S01.U01",
+      "S01.U04",
+      "S01.U10"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S01.U01",
+      "S01.U04",
+      "S01.U10"
+    ],
+    "limitations": [
+      "Offline injected review; no teacher acceptance."
+    ]
+  },
+  "issues": [
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "练习答案的分数计算仍需核查；请确认所有结果一致。 这是不同来源的独立审阅疑点，不能按编号清除。",
+      "location": {},
+      "uncertainty_id": "D001-45e923c2da7fa2e9",
+      "original_sha256": "45e923c2da7fa2e9a5d2c050e39370e0797be8fc0e4a3f8aac8a2c3c23a8a4ee",
+      "resolution_status": "open"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "uncertainty_review": {
+    "identity_hash": "8d32956fc048cedf6f26be94c38c5c8870abc76250e035efd9b111ce3e8e1bc7",
+    "assessment": {
+      "items": [
+        {
+          "uncertainty_id": "D001-45e923c2da7fa2e9",
+          "unit_id": null,
+          "disposition": "resolved_by_current_body",
+          "reason": "离线受控裁定：保留数学疑点，并依据实际提供正文进行独立核查。",
+          "evidence": [
+            {
+              "source_key": "current:S01.U10",
+              "source_sha256": "596f55456a8432abe95a7a518bf207d8990cb4590516fc098c422ad3dcb838b2",
+              "quote": "本练习答案的有限求和及相应分数结果需要重新核对。"
+            }
+          ],
+          "remaining_dependency": false,
+          "repair_instruction": null
+        }
+      ],
+      "limitations": [
+        "Offline injected disposition."
+      ]
+    },
+    "status": "REVIEWED_PROTOCOL_RECOVERED",
+    "source_identity_hash": "41393ccf805cfe9d09e1e1b434276403c41af1ba4d21a731375a0aa7ac406ccf",
+    "source_state_sha256": "6486bfce2aed53d55cb392a50fd3d7a16f2548aa8c322736987c4436604a432f",
+    "evidence_key": "runs/a2a620ed89d9418486ab6af49e63a7f4/uncertainty-owner-recovery/41393ccf805cfe9d09e1e1b4/recovery.json",
+    "evidence_sha256": "2942d47afc73b052f807f4e8886b1a36016ff909ada2799c86d4e9d8950e014f",
+    "provider_calls_during_replay": 0,
+    "teacher_review": "NOT_RUN"
+  },
+  "uncertainty_legacy_mapping": [],
+  "local_recovery": {
+    "applied_rounds": 0,
+    "proposal_calls": 0,
+    "rejected_proposals": 0,
+    "preserved_issues": [
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "练习答案的分数计算仍需核查；请确认所有结果一致。",
+        "location": {},
+        "uncertainty_id": "D001-45e923c2da7fa2e9",
+        "original_sha256": "45e923c2da7fa2e9a5d2c050e39370e0797be8fc0e4a3f8aac8a2c3c23a8a4ee",
+        "resolution_status": "open"
+      },
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "练习答案的分数计算仍需核查；请确认所有结果一致。 这是不同来源的独立审阅疑点，不能按编号清除。",
+        "location": {},
+        "uncertainty_id": "D001-45e923c2da7fa2e9",
+        "original_sha256": "45e923c2da7fa2e9a5d2c050e39370e0797be8fc0e4a3f8aac8a2c3c23a8a4ee",
+        "resolution_status": "open"
+      }
+    ],
+    "review_identity": {
+      "candidate_hash": "ac11a181aed22e746d9ae8ea5cf4b26cc6a92c3dbf8de05f5120d3288fdcfa16",
+      "tool_checks_hash": "07176d2238e0bafe6cdd387a875700865a00519fd3abab3a78752fd33a41cf2a",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "21f4e4014c3124f10f141f23477b9f2943dde6a7e8f281581e83e8d86633361a",
+      "deterministic_checks_hash": "ac13b780807ad9d17d85dc50afc07d1cc37ab0eb5c580ee1df1a3e9a4715327c",
+      "uncertainty_identity": "8d32956fc048cedf6f26be94c38c5c8870abc76250e035efd9b111ce3e8e1bc7",
+      "uncertainty_assessment_hash": "802a840a15972845971261de3154db6eaa8c113dc9dfec60f8a16d7f646f6063"
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "section_id": "S01",
+  "math": {
+    "schema_version": 1,
+    "status": "NEEDS_REVIEW",
+    "issues": [
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "S01.U1 该单元对正整数索引和定义范围的说明仍需核对。",
+        "location": {},
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_type": "not_checked",
+        "status": "NOT_RUN",
+        "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+      }
+    ],
+    "coverage": [
+      "S01.U1",
+      "S01.U2"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S01.U1",
+      "S01.U2"
+    ],
+    "limitations": [
+      "Mock ordinary review."
+    ]
+  },
+  "issues": [
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "S01.U1 该单元对正整数索引和定义范围的说明仍需核对。",
+      "location": {
+        "unit_id": "S01.U1"
+      },
+      "uncertainty_id": "D001-96dd97d5295fe300",
+      "original_sha256": "96dd97d5295fe300175983ddf9b59b0c34b75ee76bcfcddd459d62b52a0e7af7",
+      "resolution_status": "open"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "uncertainty_review": {
+    "identity_hash": "d977d55811826ec0f902ed3e05c149f617d566d6dfa9952a9d299f1c197bfb1b",
+    "status": "INVALID",
+    "evidence_key": "runs/46c5d49a0bad410fba3df1c40f17ba12/uncertainty-reviews/d977d55811826ec0f902ed3e/state.json",
+    "evidence_sha256": "5c0722615e1277b8f3092a985d1f0a7a92ee6cc7184cc2729b4cae1047d29de8",
+    "failure": {
+      "code": null,
+      "message": "1 validation error for UncertaintyAssessment\nitems\n  List should have at least 1 item after validation, not 0 [type=too_short, input_value=[], input_type=list]\n    For further information visit https://errors.pydantic.dev/2.13/v/too_short",
+      "at": "2026-10-07T05:48:07.405007+00:00",
+      "retryable_same_slot": false
+    },
+    "teacher_review": "NOT_RUN"
+  },
+  "uncertainty_legacy_mapping": [],
+  "local_recovery": {
+    "applied_rounds": 0,
+    "proposal_calls": 0,
+    "rejected_proposals": 0,
+    "preserved_issues": [
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "S01.U1 该单元对正整数索引和定义范围的说明仍需核对。",
+        "location": {
+          "unit_id": "S01.U1"
+        },
+        "uncertainty_id": "D001-96dd97d5295fe300",
+        "original_sha256": "96dd97d5295fe300175983ddf9b59b0c34b75ee76bcfcddd459d62b52a0e7af7",
+        "resolution_status": "open"
+      }
+    ],
+    "review_identity": {
+      "candidate_hash": "23a43569c0ee7b7585f3540ac21ec36cb347ef2f5ee92513c8830e69229768b9",
+      "tool_checks_hash": "2dbb88bc9eac47172772f1f37a17c262551686a8659b6eb7d52e5ad4a27d3737",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "21f4e4014c3124f10f141f23477b9f2943dde6a7e8f281581e83e8d86633361a",
+      "deterministic_checks_hash": "ac09337aa0b0b76b1730af4b66596f08e6746a50ab0d42abe51a9fe0bce401d1",
+      "uncertainty_identity": "d977d55811826ec0f902ed3e05c149f617d566d6dfa9952a9d299f1c197bfb1b",
+      "uncertainty_failure_hash": "f1ea820611d5b715a3f2b523d7bc1f82a4abc8a670e8cc6dcafe419a98fbc87b"
+    }
+  }
+}

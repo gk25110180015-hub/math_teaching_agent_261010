@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "source": {
+      "state_key": "runs/e2a91e4e677a4d93828a92a87a05764d/uncertainty-reviews/afe062a32b863746cb492d15/state.json",
+      "state_sha256": "fa1562edaa0a1483c809616e0583e43655bbe2baabe153e8cb6fdd5614c79f56",
+      "identity_hash": "afe062a32b863746cb492d15986143df1e1ea9474a554745db263714e21538c2",
+      "response_file": "response-1.json",
+      "response_sha256": "73ecfde72c38f31a79816ce830d064dc83915c2a5bb0e74c1dce027368f0b525",
+      "failure_file": "failure-1.json",
+      "failure_sha256": "dfebf69d23f6a352913ce1638cf3f8516eedfda3d87227d6321d232ed911bfb1"
+    },
+    "contract": {
+      "version": 1,
+      "helper_sha256": "26e376653fd0e701d735918130d580b6c8d327d8d1829a5fcafd96d3a124b83f",
+      "operation": "restore_null_owner_for_resolved_current_evidence"
+    }
+  },
+  "identity_hash": "5894bad365eabc254dc1a4d8d7f6303b37162f6cdd823c77b2799cc56d5fa3ad",
+  "source": {
+    "state_key": "runs/e2a91e4e677a4d93828a92a87a05764d/uncertainty-reviews/afe062a32b863746cb492d15/state.json",
+    "state_sha256": "fa1562edaa0a1483c809616e0583e43655bbe2baabe153e8cb6fdd5614c79f56",
+    "identity_hash": "afe062a32b863746cb492d15986143df1e1ea9474a554745db263714e21538c2",
+    "response_file": "response-1.json",
+    "response_sha256": "73ecfde72c38f31a79816ce830d064dc83915c2a5bb0e74c1dce027368f0b525",
+    "failure_file": "failure-1.json",
+    "failure_sha256": "dfebf69d23f6a352913ce1638cf3f8516eedfda3d87227d6321d232ed911bfb1"
+  },
+  "source_dependencies": {
+    "input.json": "21f440c7d84dd91e009a518f2ebe0de6d9acc428d0862a3367e334f247de47e9",
+    "ordinary-context.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "ordinary-review.json": "b1f34ff8c66740201789dc6a0286787960433061358b9d95bee7177396a78638",
+    "assessment-input.json": "c3bdef2ee5934b9621fe1e9c223964b92db52cfeea22e4593a31436f65dd7667",
+    "response-1.json": "73ecfde72c38f31a79816ce830d064dc83915c2a5bb0e74c1dce027368f0b525",
+    "failure-1.json": "dfebf69d23f6a352913ce1638cf3f8516eedfda3d87227d6321d232ed911bfb1"
+  },
+  "original_response": {
+    "items": [
+      {
+        "uncertainty_id": "D001-6e31a6936c94d510",
+        "unit_id": "S01.U10",
+        "disposition": "resolved_by_current_body",
+        "reason": "原疑点针对练习答案中的直接代入、有限求和及分数运算是否逐项核验。当前 S01.U10 明确给出了均值、中心化乘积和平方和、斜率、截距、三个拟合值、三个残差、残差和以及插值预测值的完整有理数计算链；所提供的符号核算结果对这些显式运算逐项通过，未留下该具体疑点所指的未核验分数运算。",
+        "evidence": [
+          {
+            "source_key": "current:S01.U10",
+            "source_sha256": "904be7b01d48530958ccea9dcf604685785cbf545dc2d9239ee4cc459f66626f",
+            "quote": "答案如下：\n\\[\n\\bar x=\\frac{1+2+4}{3}=\\frac73,\n\\qquad\n\\bar y=\\frac{4+5+8}{3}=\\frac{17}{3}\\text{。}\n\\]\n进一步有\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)(y_i-\\bar y)=\\frac{19}{3},\n\\qquad\n\\sum_{i=1}^{3}(x_i-\\bar x)^2=\\frac{14}{3}\\text{。}\n\\]\n所以\n\\[\n\\hat b=\\frac{19/3}{14/3}=\\frac{19}{14},\n\\qquad\n\\hat a=\\frac{17}{3}-\\frac{19}{14}\\cdot\\frac73=\\frac52\\text{。}\n\\]"
+          },
+          {
+            "source_key": "current:S01.U10",
+            "source_sha256": "904be7b01d48530958ccea9dcf604685785cbf545dc2d9239ee4cc459f66626f",
+            "quote": "三个拟合值和残差为\n\\[\n\\begin{array}{c|c|c}\n i&\\hat y_i&\\hat e_i=y_i-\\hat y_i\\\\ \\hline\n 1&\\frac{27}{7}&\\frac17\\\\\n 2&\\frac{73}{14}&-\\frac{3}{14}\\\\\n 3&\\frac{111}{14}&\\frac{1}{14}\n\\end{array}\n\\]\n残差之和为\n\\[\n\\frac17-\\frac{3}{14}+\\frac{1}{14}=0\\text{。}\n\\]\n最后，$x=3$ 时的拟合值为\n\\[\n\\hat y(3)=\\frac52+\\frac{19}{14}\\cdot3=\\frac{46}{7}\\text{。}\n\\]"
+          }
+        ],
+        "remaining_dependency": false,
+        "repair_instruction": null
+      }
+    ],
+    "limitations": [
+      "判断依赖所提供的符号核算记录对 S01.U10 中显式列出的有理数表达式逐项通过；这不等同于对整份讲义进行形式化证明或机器验证。",
+      "未将普通数学审阅、LaTeX 编译结果或最终排版视为额外证明。"
+    ]
+  },
+  "field_changes": [
+    {
+      "item_index": 0,
+      "uncertainty_id": "D001-6e31a6936c94d510",
+      "field": "unit_id",
+      "original_value": "S01.U10",
+      "authoritative_value": null
+    }
+  ],
+  "normalized_response": {
+    "items": [
+      {
+        "uncertainty_id": "D001-6e31a6936c94d510",
+        "unit_id": null,
+        "disposition": "resolved_by_current_body",
+        "reason": "原疑点针对练习答案中的直接代入、有限求和及分数运算是否逐项核验。当前 S01.U10 明确给出了均值、中心化乘积和平方和、斜率、截距、三个拟合值、三个残差、残差和以及插值预测值的完整有理数计算链；所提供的符号核算结果对这些显式运算逐项通过，未留下该具体疑点所指的未核验分数运算。",
+        "evidence": [
+          {
+            "source_key": "current:S01.U10",
+            "source_sha256": "904be7b01d48530958ccea9dcf604685785cbf545dc2d9239ee4cc459f66626f",
+            "quote": "答案如下：\n\\[\n\\bar x=\\frac{1+2+4}{3}=\\frac73,\n\\qquad\n\\bar y=\\frac{4+5+8}{3}=\\frac{17}{3}\\text{。}\n\\]\n进一步有\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)(y_i-\\bar y)=\\frac{19}{3},\n\\qquad\n\\sum_{i=1}^{3}(x_i-\\bar x)^2=\\frac{14}{3}\\text{。}\n\\]\n所以\n\\[\n\\hat b=\\frac{19/3}{14/3}=\\frac{19}{14},\n\\qquad\n\\hat a=\\frac{17}{3}-\\frac{19}{14}\\cdot\\frac73=\\frac52\\text{。}\n\\]"
+          },
+          {
+            "source_key": "current:S01.U10",
+            "source_sha256": "904be7b01d48530958ccea9dcf604685785cbf545dc2d9239ee4cc459f66626f",
+            "quote": "三个拟合值和残差为\n\\[\n\\begin{array}{c|c|c}\n i&\\hat y_i&\\hat e_i=y_i-\\hat y_i\\\\ \\hline\n 1&\\frac{27}{7}&\\frac17\\\\\n 2&\\frac{73}{14}&-\\frac{3}{14}\\\\\n 3&\\frac{111}{14}&\\frac{1}{14}\n\\end{array}\n\\]\n残差之和为\n\\[\n\\frac17-\\frac{3}{14}+\\frac{1}{14}=0\\text{。}\n\\]\n最后，$x=3$ 时的拟合值为\n\\[\n\\hat y(3)=\\frac52+\\frac{19}{14}\\cdot3=\\frac{46}{7}\\text{。}\n\\]"
+          }
+        ],
+        "remaining_dependency": false,
+        "repair_instruction": null
+      }
+    ],
+    "limitations": [
+      "判断依赖所提供的符号核算记录对 S01.U10 中显式列出的有理数表达式逐项通过；这不等同于对整份讲义进行形式化证明或机器验证。",
+      "未将普通数学审阅、LaTeX 编译结果或最终排版视为额外证明。"
+    ]
+  },
+  "assessment": {
+    "items": [
+      {
+        "uncertainty_id": "D001-6e31a6936c94d510",
+        "unit_id": null,
+        "disposition": "resolved_by_current_body",
+        "reason": "原疑点针对练习答案中的直接代入、有限求和及分数运算是否逐项核验。当前 S01.U10 明确给出了均值、中心化乘积和平方和、斜率、截距、三个拟合值、三个残差、残差和以及插值预测值的完整有理数计算链；所提供的符号核算结果对这些显式运算逐项通过，未留下该具体疑点所指的未核验分数运算。",
+        "evidence": [
+          {
+            "source_key": "current:S01.U10",
+            "source_sha256": "904be7b01d48530958ccea9dcf604685785cbf545dc2d9239ee4cc459f66626f",
+            "quote": "答案如下：\n\\[\n\\bar x=\\frac{1+2+4}{3}=\\frac73,\n\\qquad\n\\bar y=\\frac{4+5+8}{3}=\\frac{17}{3}\\text{。}\n\\]\n进一步有\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)(y_i-\\bar y)=\\frac{19}{3},\n\\qquad\n\\sum_{i=1}^{3}(x_i-\\bar x)^2=\\frac{14}{3}\\text{。}\n\\]\n所以\n\\[\n\\hat b=\\frac{19/3}{14/3}=\\frac{19}{14},\n\\qquad\n\\hat a=\\frac{17}{3}-\\frac{19}{14}\\cdot\\frac73=\\frac52\\text{。}\n\\]"
+          },
+          {
+            "source_key": "current:S01.U10",
+            "source_sha256": "904be7b01d48530958ccea9dcf604685785cbf545dc2d9239ee4cc459f66626f",
+            "quote": "三个拟合值和残差为\n\\[\n\\begin{array}{c|c|c}\n i&\\hat y_i&\\hat e_i=y_i-\\hat y_i\\\\ \\hline\n 1&\\frac{27}{7}&\\frac17\\\\\n 2&\\frac{73}{14}&-\\frac{3}{14}\\\\\n 3&\\frac{111}{14}&\\frac{1}{14}\n\\end{array}\n\\]\n残差之和为\n\\[\n\\frac17-\\frac{3}{14}+\\frac{1}{14}=0\\text{。}\n\\]\n最后，$x=3$ 时的拟合值为\n\\[\n\\hat y(3)=\\frac52+\\frac{19}{14}\\cdot3=\\frac{46}{7}\\text{。}\n\\]"
+          }
+        ],
+        "remaining_dependency": false,
+        "repair_instruction": null
+      }
+    ],
+    "limitations": [
+      "判断依赖所提供的符号核算记录对 S01.U10 中显式列出的有理数表达式逐项通过；这不等同于对整份讲义进行形式化证明或机器验证。",
+      "未将普通数学审阅、LaTeX 编译结果或最终排版视为额外证明。"
+    ]
+  },
+  "validation": {
+    "status": "PASS",
+    "validator": "validate_uncertainty_assessment",
+    "assessment_hash": "b25f60c3db5947b630588955f98e87cfadee27f122ee1b0b3a4893ac72d07b3b"
+  },
+  "status": "REVIEWED_PROTOCOL_RECOVERED",
+  "provider_calls_during_replay": 0,
+  "teacher_review": "NOT_RUN"
+}

@@ -1,0 +1,116 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "a2d2093347fb844c1b9ff6991a8a7b9ebe7f5299e75037c67270e07ddbe22086",
+    "tool_checks_hash": "59598762495b32310c3b200cf2623107b126207b3951d45d9b433b7f897e0eee",
+    "reviewer_prompt_hash": "5d38a796ccdff81f3bba09d0c48210a836e83b77be5b31c2a814f7437e1ec69a",
+    "plan_context_hash": "21f4e4014c3124f10f141f23477b9f2943dde6a7e8f281581e83e8d86633361a",
+    "deterministic_checks_hash": "57a6a9193b5bce0064acbc3e2e03b195dd7fe94abcd057b81ae87f382f59f4e4"
+  },
+  "report": {
+    "section_id": "S01",
+    "math": {
+      "schema_version": 1,
+      "status": "NEEDS_REVIEW",
+      "issues": [
+        {
+          "rule_id": "NUMERIC_IS_NOT_PROOF",
+          "severity": "review",
+          "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+          "location": {
+            "calculation_id": "S04.C01",
+            "unit_id": "S01.U05"
+          },
+          "resolution_status": "open"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "numeric_spotcheck",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "numeric_spotcheck_passed",
+          "point_count": 1,
+          "message": "仅在指定点数值一致，不是一般性证明。",
+          "calculation_id": "S04.C01",
+          "unit_id": "S01.U05"
+        }
+      ],
+      "coverage": [
+        "S01.U00",
+        "S01.U05",
+        "S01.U06"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "协议的数值核算只能抽查交错项在指定整数处的取值，不能表达对所有正整数的单调性、极限或余项不等式；交错级数判别法及余项估计仍由正文证明。",
+        "既有核算 S04.C01 仅比较 n=3 时的通项值与 1/3，覆盖范围限于该单点等式；不提供对所有正整数的结论，也不构成交错调和级数收敛性或截断误差界的证明。这些结论依赖正文中的判别条件核实与定理证明。"
+      ]
+    },
+    "llm_review": {
+      "issues": [
+        {
+          "unit_id": "S01.U05",
+          "severity": "blocking",
+          "message": "把单点数值抽查当作一般性证明，结论没有得到证明。",
+          "evidence": "MOCK reviewer: actual source claims a finite sample proves the infinite series."
+        }
+      ],
+      "checked_unit_ids": [
+        "S01.U00",
+        "S01.U05",
+        "S01.U06"
+      ],
+      "limitations": [
+        "MOCK reviewer; not teacher acceptance or formal proof."
+      ]
+    },
+    "issues": [
+      {
+        "rule_id": "NUMERIC_IS_NOT_PROOF",
+        "severity": "review",
+        "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+        "location": {
+          "calculation_id": "S04.C01",
+          "unit_id": "S01.U05"
+        },
+        "resolution_status": "open"
+      },
+      {
+        "unit_id": "S01.U05",
+        "severity": "blocking",
+        "message": "把单点数值抽查当作一般性证明，结论没有得到证明。",
+        "evidence": "MOCK reviewer: actual source claims a finite sample proves the infinite series."
+      }
+    ],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": [
+    {
+      "rule_id": "NUMERIC_IS_NOT_PROOF",
+      "severity": "review",
+      "message": "只通过指定点数值抽查，不能据此视为一般性证明。",
+      "location": {
+        "calculation_id": "S04.C01",
+        "unit_id": "S01.U05"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S01.U05",
+      "severity": "blocking",
+      "message": "把单点数值抽查当作一般性证明，结论没有得到证明。",
+      "evidence": "MOCK reviewer: actual source claims a finite sample proves the infinite series."
+    }
+  ]
+}

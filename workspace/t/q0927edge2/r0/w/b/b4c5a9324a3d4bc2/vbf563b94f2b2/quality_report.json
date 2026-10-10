@@ -1,0 +1,222 @@
+{
+  "content": {
+    "status": "PASS",
+    "evidence": [
+      "实际 TeX 与保留源单元对照"
+    ],
+    "limitations": []
+  },
+  "math": {
+    "status": "NEEDS_REVIEW",
+    "evidence": [
+      "原文保真；未自动修正源讲义数学结论"
+    ],
+    "limitations": [
+      "教师须复核原文的具体数学疑点"
+    ]
+  },
+  "fidelity": {
+    "status": "PASS",
+    "issues": [],
+    "evidence": "Independent comparison of actual source payload strings and exact contiguous original intervals; scaffold fingerprint checked when supplied",
+    "checked_units": 3,
+    "limitations": [
+      "Whitespace/comments ignored; no claim of semantic equivalence for rewritten mathematics"
+    ]
+  },
+  "compile": {
+    "status": "PASS",
+    "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\q0927edge2\\r0\\w\\b\\b4c5a9324a3d4bc2\\vbf563b94f2b2\\build-4\\slides.pdf",
+    "issues": [],
+    "log_paths": [
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\q0927edge2\\r0\\w\\b\\b4c5a9324a3d4bc2\\vbf563b94f2b2\\build-4\\pass-1.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\q0927edge2\\r0\\w\\b\\b4c5a9324a3d4bc2\\vbf563b94f2b2\\build-4\\pass-1.tex.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\q0927edge2\\r0\\w\\b\\b4c5a9324a3d4bc2\\vbf563b94f2b2\\build-4\\pass-2.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\t\\q0927edge2\\r0\\w\\b\\b4c5a9324a3d4bc2\\vbf563b94f2b2\\build-4\\pass-2.tex.log"
+    ],
+    "engine": {
+      "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+    },
+    "passes": 2,
+    "compile_mode": "trusted_local",
+    "isolation": "NOT_IMPLEMENTED",
+    "limitations": [
+      "原生可信本机编译不是文件系统或网络隔离沙箱。"
+    ],
+    "command": [
+      "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "-no-shell-escape",
+      "-recorder",
+      "-synctex=1",
+      "-jobname=slides",
+      "-output-directory=.",
+      "slides.tex"
+    ],
+    "elapsed_seconds": 4.406,
+    "page_count": 6,
+    "pdf_sha256": "8ed0f943c265b2f14f709d1b3a69fe38e737f6424194d872c76f4cd090c9c261",
+    "auxiliary_hashes": {
+      ".aux": "2170b605b2d43aa477b58c2a6923b11507523e2978a6084c8ad25de248e96497",
+      ".toc": "2842c931e54f0b1c5811d8daaf94ccab949756f214692f82d24339f70ab5fcf4",
+      ".nav": "891dacdfa7981374ba4432962c93db74c6002bfd87dd78d114150057ca2ccb08",
+      ".snm": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      ".out": "2b311755ac67d59c8a3d2b9b13f0b3c2ee77e91c4099e2a8e3fa5b07aa0a04c8"
+    }
+  },
+  "layout": {
+    "status": "NEEDS_REVIEW",
+    "evidence": {
+      "page_count": 6,
+      "all_rendered": true
+    },
+    "limitations": [
+      "几何检查是启发式，只能定位可测风险，不能证明所有正文均无裁切或遮挡。",
+      "尚未做模型视觉复核或教师人工逐页审核；每页图片及哈希供独立审核。",
+      "数学上下标的自然小字号不判为违规；PDF 文字提取不是数学内容真值。",
+      "正文安全区来自匹配模板的实际 measured_probe；仍是单个探针估计，不是完整版式校准。"
+    ]
+  },
+  "policy": {
+    "status": "PASS",
+    "evidence": {
+      "schema_version": 1,
+      "decisions": [
+        {
+          "decision_id": "9f48a3b07e544785b1b2f5f8860c8f68",
+          "resolved_effects": [],
+          "status": "PASS",
+          "artifact": "slides.tex",
+          "artifact_hash": "bf2e788b9d61b233c13a5f8df6242a686042b1df795a258b75664b4c46bcf9d8",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        },
+        {
+          "decision_id": "94904276566f4245a6b0dd89be559058",
+          "resolved_effects": [],
+          "status": "PASS",
+          "artifact": "slides.tex",
+          "artifact_hash": "bf2e788b9d61b233c13a5f8df6242a686042b1df795a258b75664b4c46bcf9d8",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        }
+      ],
+      "limitations": [
+        "语义自定义不能仅凭模型自评当作落实；发布前须人工审阅质量报告。"
+      ]
+    },
+    "limitations": []
+  },
+  "security": {
+    "status": "PASS",
+    "evidence": [
+      "回环服务、受控源码、编译参数及白名单子进程环境"
+    ],
+    "limitations": [
+      "trusted_local 不是文件系统/网络隔离沙箱"
+    ]
+  },
+  "schema_version": 1,
+  "provider": "mock",
+  "human_visual_review": "NOT_RUN",
+  "model_visual_review": "NOT_RUN",
+  "issues": [
+    {
+      "rule_id": "BODY_REGION_CONTACT",
+      "severity": "review",
+      "message": "正文文字接近或跨过实测探针估计的标题/页脚安全边界，需结合页面复核。",
+      "evidence": [
+        {
+          "text": "选",
+          "bbox": [
+            28.346,
+            27.629,
+            36.316,
+            35.599
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "读",
+          "bbox": [
+            36.316,
+            27.629,
+            44.286,
+            35.599
+          ],
+          "region": "body",
+          "boundary": "header"
+        }
+      ],
+      "location": {
+        "physical_page": 4
+      }
+    },
+    {
+      "rule_id": "BODY_REGION_CONTACT",
+      "severity": "review",
+      "message": "正文文字接近或跨过实测探针估计的标题/页脚安全边界，需结合页面复核。",
+      "evidence": [
+        {
+          "text": "选",
+          "bbox": [
+            28.346,
+            27.629,
+            36.316,
+            35.599
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "读",
+          "bbox": [
+            36.316,
+            27.629,
+            44.286,
+            35.599
+          ],
+          "region": "body",
+          "boundary": "header"
+        }
+      ],
+      "location": {
+        "physical_page": 5
+      }
+    },
+    {
+      "rule_id": "BODY_REGION_CONTACT",
+      "severity": "review",
+      "message": "正文文字接近或跨过实测探针估计的标题/页脚安全边界，需结合页面复核。",
+      "evidence": [
+        {
+          "text": "选",
+          "bbox": [
+            28.346,
+            27.629,
+            36.316,
+            35.599
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "读",
+          "bbox": [
+            36.316,
+            27.629,
+            44.286,
+            35.599
+          ],
+          "region": "body",
+          "boundary": "header"
+        }
+      ],
+      "location": {
+        "physical_page": 6
+      }
+    }
+  ]
+}

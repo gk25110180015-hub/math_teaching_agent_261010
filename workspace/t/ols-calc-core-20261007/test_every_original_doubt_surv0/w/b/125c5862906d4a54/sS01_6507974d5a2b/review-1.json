@@ -1,0 +1,144 @@
+{
+  "section_id": "S01",
+  "math": {
+    "schema_version": 1,
+    "status": "NEEDS_REVIEW",
+    "issues": [
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "练习答案的分数计算仍需核查；请确认所有结果一致。",
+        "location": {},
+        "resolution_status": "open"
+      },
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "正规方程候选解满足最优性条件的完整论证仍需核查。",
+        "location": {},
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_type": "not_checked",
+        "status": "NOT_RUN",
+        "message": "没有结构化复算请求，尚未执行 SymPy 数学核算。"
+      }
+    ],
+    "coverage": [
+      "S01.U01",
+      "S01.U04",
+      "S01.U10"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S01.U01",
+      "S01.U04",
+      "S01.U10"
+    ],
+    "limitations": [
+      "Offline injected review; no teacher acceptance."
+    ]
+  },
+  "issues": [],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "uncertainty_review": {
+    "identity_hash": "86a179048fd5b924a032e2434960f2a9169bc8641fef790d8c71e44b98371aa5",
+    "assessment": {
+      "items": [
+        {
+          "uncertainty_id": "D001-45e923c2da7fa2e9",
+          "unit_id": null,
+          "disposition": "resolved_by_current_body",
+          "reason": "离线受控裁定：保留数学疑点，并依据实际提供正文进行独立核查。",
+          "evidence": [
+            {
+              "source_key": "current:S01.U10",
+              "source_sha256": "ef1b701121f2bf8a200fb845ffa18284fabcea80cd5dbd76ae2b3f5f9fd0f214",
+              "quote": "本练习答案的有限求和及相应分数结果需要重新核对。 已完成独立修复并逐项核验。"
+            }
+          ],
+          "remaining_dependency": false,
+          "repair_instruction": null
+        },
+        {
+          "uncertainty_id": "D002-ea803f129491302b",
+          "unit_id": null,
+          "disposition": "resolved_by_current_body",
+          "reason": "离线受控裁定：保留数学疑点，并依据实际提供正文进行独立核查。",
+          "evidence": [
+            {
+              "source_key": "current:S01.U10",
+              "source_sha256": "ef1b701121f2bf8a200fb845ffa18284fabcea80cd5dbd76ae2b3f5f9fd0f214",
+              "quote": "本练习答案的有限求和及相应分数结果需要重新核对。 已完成独立修复并逐项核验。"
+            }
+          ],
+          "remaining_dependency": false,
+          "repair_instruction": null
+        }
+      ],
+      "limitations": [
+        "Offline injected disposition."
+      ]
+    },
+    "evidence_key": "runs/125c5862906d4a54987682b2911f7abb/uncertainty-reviews/86a179048fd5b924a032e243/state.json",
+    "evidence_sha256": "2eaf54a54ddc5bad74afb0864b0b413bf72e17fe3ef08112c484bd83dd2f8457",
+    "teacher_review": "NOT_RUN"
+  },
+  "uncertainty_legacy_mapping": [],
+  "local_recovery": {
+    "applied_rounds": 1,
+    "proposal_calls": 1,
+    "rejected_proposals": 0,
+    "preserved_issues": [
+      {
+        "unit_id": "S01.U10",
+        "severity": "blocking",
+        "message": "独立普通审阅：练习答案算术错误。",
+        "evidence": "受控离线正文核对。"
+      },
+      {
+        "unit_id": "S01.U04",
+        "severity": "review",
+        "message": "独立普通审阅：正规方程验证缺失。",
+        "evidence": "受控离线证明核对。"
+      },
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "练习答案的分数计算仍需核查；请确认所有结果一致。",
+        "location": {},
+        "uncertainty_id": "D001-45e923c2da7fa2e9",
+        "original_sha256": "45e923c2da7fa2e9a5d2c050e39370e0797be8fc0e4a3f8aac8a2c3c23a8a4ee",
+        "resolution_status": "open"
+      },
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "正规方程候选解满足最优性条件的完整论证仍需核查。",
+        "location": {},
+        "uncertainty_id": "D002-ea803f129491302b",
+        "original_sha256": "ea803f129491302bc82bca00fdfc288bafe8e9b3944f336902b7045d4ac62635",
+        "resolution_status": "open"
+      }
+    ],
+    "review_identity": {
+      "candidate_hash": "85437550fec2ed372086a6fe521027673ffcdd54d448fef1eca1e1dada030ef7",
+      "tool_checks_hash": "a117eabce83650da2542754088fbcd966fff24cbe3f2a0903bbc9f7c24c27d0b",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "21f4e4014c3124f10f141f23477b9f2943dde6a7e8f281581e83e8d86633361a",
+      "deterministic_checks_hash": "be2c10866c22cc42acb8417ab7a7f23ea05769b884dd06624bf95bd323bf642f",
+      "uncertainty_identity": "86a179048fd5b924a032e2434960f2a9169bc8641fef790d8c71e44b98371aa5",
+      "uncertainty_assessment_hash": "01ef31ee5f0937dd52180f83c7f8e1f76c0c92f83f25d9c2b98afb7163fdd15e"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "uncertainty_id": "D001-6e31a6936c94d510",
+      "unit_id": "S01.U10",
+      "disposition": "resolved_by_current_body",
+      "reason": "原疑点针对练习答案中的直接代入、有限求和及分数运算是否逐项核验。当前 S01.U10 明确给出了均值、中心化乘积和平方和、斜率、截距、三个拟合值、三个残差、残差和以及插值预测值的完整有理数计算链；所提供的符号核算结果对这些显式运算逐项通过，未留下该具体疑点所指的未核验分数运算。",
+      "evidence": [
+        {
+          "source_key": "current:S01.U10",
+          "source_sha256": "904be7b01d48530958ccea9dcf604685785cbf545dc2d9239ee4cc459f66626f",
+          "quote": "答案如下：\n\\[\n\\bar x=\\frac{1+2+4}{3}=\\frac73,\n\\qquad\n\\bar y=\\frac{4+5+8}{3}=\\frac{17}{3}\\text{。}\n\\]\n进一步有\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)(y_i-\\bar y)=\\frac{19}{3},\n\\qquad\n\\sum_{i=1}^{3}(x_i-\\bar x)^2=\\frac{14}{3}\\text{。}\n\\]\n所以\n\\[\n\\hat b=\\frac{19/3}{14/3}=\\frac{19}{14},\n\\qquad\n\\hat a=\\frac{17}{3}-\\frac{19}{14}\\cdot\\frac73=\\frac52\\text{。}\n\\]"
+        },
+        {
+          "source_key": "current:S01.U10",
+          "source_sha256": "904be7b01d48530958ccea9dcf604685785cbf545dc2d9239ee4cc459f66626f",
+          "quote": "三个拟合值和残差为\n\\[\n\\begin{array}{c|c|c}\n i&\\hat y_i&\\hat e_i=y_i-\\hat y_i\\\\ \\hline\n 1&\\frac{27}{7}&\\frac17\\\\\n 2&\\frac{73}{14}&-\\frac{3}{14}\\\\\n 3&\\frac{111}{14}&\\frac{1}{14}\n\\end{array}\n\\]\n残差之和为\n\\[\n\\frac17-\\frac{3}{14}+\\frac{1}{14}=0\\text{。}\n\\]\n最后，$x=3$ 时的拟合值为\n\\[\n\\hat y(3)=\\frac52+\\frac{19}{14}\\cdot3=\\frac{46}{7}\\text{。}\n\\]"
+        }
+      ],
+      "remaining_dependency": false,
+      "repair_instruction": "不得将带有修复指令的裁定转换为无条件通过。"
+    }
+  ],
+  "limitations": [
+    "判断依赖所提供的符号核算记录对 S01.U10 中显式列出的有理数表达式逐项通过；这不等同于对整份讲义进行形式化证明或机器验证。",
+    "未将普通数学审阅、LaTeX 编译结果或最终排版视为额外证明。"
+  ]
+}
