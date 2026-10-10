@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+    "section_id": "S03",
+    "context_hash": "20bc5215697a77a7c252b9a49d0db0eb244de77fab8dea336612d9fbd49ce7fd",
+    "base_hash": "9980f4b7f564d841ca36dfe8da896e5cab257f30d68864e9dc8ad749b5afaa1a",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "NEEDS_REPAIR",
+  "applied_rounds": 7,
+  "proposal_calls": 8,
+  "rejected_proposals": 1,
+  "pending_issues": [
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "S03.U04 对指数基本极限的证明明确依赖先修命题：当 $0<t<1$ 时，$1+t\\le e^t\\le1/(1-t)$。当前提供的 S01、S02 正文未核实包含该命题，因此其先修来源仍需课程材料另行确认；若未建立该命题，本单元的指数极限证明不应视为自足。",
+      "location": {},
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S03.U04",
+      "severity": "review",
+      "message": "指数基本极限的证明仍依赖未能由当前提供正文核实的先修不等式。正文明确使用：对任意实数 t，若 0<t<1，则 1+t≤e^t≤1/(1−t)。虽然本单元已说明该命题不是由待证极限推出，因而没有发现循环论证，但 S01、S02 的实际正文没有陈述或证明该不等式；计划先修项“指数函数、对数函数和三角函数的基本性质”也未明确给出这一精确命题及其条件。应在课程先修材料中明确建立该命题，或在本单元补充可接受的证明后，才能完整核实该证明链条。",
+      "evidence": "S03.U04 在证明 lim_{x→0}(e^x−1)/x=1 时两侧均直接调用 1+t≤e^t≤1/(1−t)（0<t<1）；随后用该不等式分别处理 0<x<1 和 x=−t<0。已提供的 prior_sections 仅包含 S01、S02，逐单元正文中没有该不等式、指数函数凸性或可直接推出它的等价基础结论。S03.U04 自身也明确承认：若该先修命题尚未建立，指数基本极限的证明链条不能仅凭本单元其余内容独立完成。"
+    },
+    {
+      "severity": "review",
+      "message": "S03.U04 对指数基本极限的证明明确依赖先修命题：当 $0<t<1$ 时，$1+t\\le e^t\\le1/(1-t)$。当前提供的 S01、S02 正文未核实包含该命题，因此其先修来源仍需课程材料另行确认；若未建立该命题，本单元的指数极限证明不应视为自足。"
+    }
+  ],
+  "unit_applied_counts": {
+    "S03.U06": 4,
+    "S03.U04": 3,
+    "S03.U03": 1,
+    "S03.U01": 1,
+    "S03.U02": 1
+  },
+  "proposal_counts_by_key": {
+    "unit:S03.U06": 5,
+    "unit:S03.U03": 3,
+    "unit:S03.U04": 3,
+    "unit:S03.U01": 1,
+    "unit:S03.U02": 1
+  },
+  "rejected_counts_by_key": {
+    "unit:S03.U06": 1,
+    "unit:S03.U03": 1
+  },
+  "evidence_dependencies": [
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/candidate.json",
+      "hash": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/candidate-normalization.json",
+      "hash": "7a16722e222b0f53d7139bbf141bf65d8fa4d5031ca800197ad8e03124d69907",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/candidate-normalized.json",
+      "hash": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/repair-1-raw.json",
+      "hash": "f83fb0ad488a76716c1035b4227e264228a769263ed65df8cb1c2e64bcf5fc31",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/review-0.json",
+      "hash": "82d99330205c20d3ef65c42bdfcb6ad2e98447a870236770e6030a67e461a9df",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/repair-1.json",
+      "hash": "27ab613ba344ae302646d8292dcdfdc5e5b1c40609653ffee3aba85ea6c6aa9c",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/review-1.json",
+      "hash": "36fcaca67eeb744e502668fb685bd5d874d153e91a31aaefee9a404413167658",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/repair-2-raw.json",
+      "hash": "a6450eb8ea431009ed23e2b766d73056e57cd17608549d4bb9c5c58578df9c23",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_4e86629a0d4a/review-1.json",
+      "hash": "36fcaca67eeb744e502668fb685bd5d874d153e91a31aaefee9a404413167658",
+      "error_code": "LOCAL_REPAIR_LEGACY_UNVERIFIED"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_7a1a1a12cc06/repair-3-patch.json",
+      "hash": "1c3f2d131422826b93d445f8da712fec178b8127616c2ebebe006e3f45b2757f",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_7a1a1a12cc06/repair-4-patch.json",
+      "hash": "6f338c0f9193e532f2e58c001218da3ce30b583326489c390eb1e7afa9417749",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_f92a23859f42/repair-5-patch.json",
+      "hash": "afdb96d7dd9ad10067ffd98998840c7245909aece3baf0d3d6e85e1bcb9bdafc",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_1ff435e861a9/repair-6-patch.json",
+      "hash": "fa942e60746d1d16a2d3a08c24462ed73ae2a18bfe72335d882ac2b4781919e0",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_a2bea203727d/repair-7-patch.json",
+      "hash": "d4f1f34f73ba3eb2d836cf010ed902f1423dfbcd118268b144ce8b41d738e7af",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/a45be503af594ce8/sS03_a2bea203727d/repair-8-patch.json",
+      "hash": "f77333887a120ff9c240c77084efe87d5b8b5a4bfcc2ac8fb43b958b94824fd6",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "2a95669b9ba8fb6d166024756b0d75bd6e816f44a74bcf36d2ba134fbdeabe52",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S03/candidate-becc07d4d97b.json",
+  "candidate_hash": "7adce019cfd6a50f19ca3d0035642f03b7d314800ae111576cfe946fb9460f59",
+  "legacy_import": {
+    "origin_candidate_key": "b/a45be503af594ce8/sS03_4e86629a0d4a/candidate.json",
+    "origin_candidate_hash": "71591e194a990d0a6fb5ce71590d207bc4996facfda3eea749813ae035eacbbd",
+    "records": [
+      {
+        "number": 1,
+        "raw_key": "b/a45be503af594ce8/sS03_4e86629a0d4a/repair-1-raw.json",
+        "raw_hash": "f83fb0ad488a76716c1035b4227e264228a769263ed65df8cb1c2e64bcf5fc31",
+        "review_key": "b/a45be503af594ce8/sS03_4e86629a0d4a/review-0.json",
+        "review_hash": "82d99330205c20d3ef65c42bdfcb6ad2e98447a870236770e6030a67e461a9df",
+        "status": "VERIFIED_APPLIED",
+        "applied_hash": "27ab613ba344ae302646d8292dcdfdc5e5b1c40609653ffee3aba85ea6c6aa9c"
+      },
+      {
+        "number": 2,
+        "raw_key": "b/a45be503af594ce8/sS03_4e86629a0d4a/repair-2-raw.json",
+        "raw_hash": "a6450eb8ea431009ed23e2b766d73056e57cd17608549d4bb9c5c58578df9c23",
+        "review_key": "b/a45be503af594ce8/sS03_4e86629a0d4a/review-1.json",
+        "review_hash": "36fcaca67eeb744e502668fb685bd5d874d153e91a31aaefee9a404413167658",
+        "status": "REJECTED_NOT_ADOPTED"
+      }
+    ],
+    "total_request_count_at_import": 22,
+    "old_reviewer_prompt_hash": "UNKNOWN_NOT_ARCHIVED",
+    "migration_policy": "Explicit patch-protocol migration: retain applied/rejected/proposal counters and all existing total requests; no budget reset."
+  },
+  "last_review_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S03/review-1f3161930303.json",
+  "pending_operation": "strict_local_patch",
+  "pending_keys": [
+    "unit:S03.U04"
+  ],
+  "request_count_before": 144,
+  "patch_evidence": {
+    "schema_version": 1,
+    "operation": "strict_local_patch",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "016fb472486cc654623d0cf01669a1895acfc83085b2a6ce80da9236410f0dca",
+    "patch_hash": "57764ffe97bf73f064ee52f1d258efc26c49c5c4c19bbe8edcfa2cceba6dc752",
+    "result_section_hash": "893c09404ad95da192bc6a553dadea48e6b96275c3ce03431a4cfde00b0c644a",
+    "allowed_unit_ids": [
+      "S03.U04"
+    ],
+    "changed_unit_ids": [
+      "S03.U04"
+    ],
+    "unit_order_preserved": true,
+    "unit_identity_and_metadata_preserved": true,
+    "non_target_units_preserved": true,
+    "original_calculation_count": 1,
+    "calculation_updates": [],
+    "calculation_additions": [],
+    "non_target_calculations_preserved": true,
+    "old_uncertainties_preserved": true,
+    "old_calculation_limitations_preserved": true,
+    "normalization": "NOT_RUN",
+    "math_check": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "proposal_key": "b/a45be503af594ce8/sS03_a2bea203727d/repair-8-patch.json"
+  },
+  "reason": "Explicit global-repair seed; existing local counters retained"
+}

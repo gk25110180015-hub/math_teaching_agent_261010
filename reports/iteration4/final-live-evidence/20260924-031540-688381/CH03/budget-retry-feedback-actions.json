@@ -1,0 +1,706 @@
+[
+  {
+    "sequence": 415,
+    "type": "job.retry",
+    "timestamp": "2026-09-19T19:20:24.727335+00:00",
+    "payload": {
+      "approval_preserved": true,
+      "job_id": "27979f9a88114ed1a41b9d3c3c5facd8",
+      "resume_stage": "compile.section.S01"
+    }
+  },
+  {
+    "sequence": 610,
+    "type": "job.retry",
+    "timestamp": "2026-09-19T20:18:02.403727+00:00",
+    "payload": {
+      "approval_preserved": true,
+      "job_id": "27979f9a88114ed1a41b9d3c3c5facd8",
+      "resume_stage": "repair.section.S03"
+    }
+  },
+  {
+    "sequence": 801,
+    "type": "budget.increased_by_user",
+    "timestamp": "2026-09-20T14:33:57.713309+00:00",
+    "payload": {
+      "action_id": "authorized-iteration4-CH03-20260920T143357-e340db",
+      "actor": "local_user",
+      "after": {
+        "global_repair_rounds": 6,
+        "local_repairs_per_unit": 6,
+        "requests": 240
+      },
+      "approval_preserved": true,
+      "before": {
+        "global_repair_rounds": 2,
+        "local_repairs_per_unit": 2,
+        "requests": 60
+      },
+      "execution": "NOT_STARTED",
+      "note": "用户明确授权提高第二、三章修复及请求上限，以完善工作流和制作质量为优先；由Codex代为执行本次已授权预算动作。",
+      "request_count_preserved": 27,
+      "request_limit_action": "INCREASE_KNOWN_LIMIT",
+      "teacher_review": "NOT_PERFORMED"
+    }
+  },
+  {
+    "sequence": 803,
+    "type": "job.retry",
+    "timestamp": "2026-09-20T14:33:57.881105+00:00",
+    "payload": {
+      "approval_preserved": true,
+      "job_id": "27979f9a88114ed1a41b9d3c3c5facd8",
+      "resume_stage": "review.section.S03"
+    }
+  },
+  {
+    "sequence": 931,
+    "type": "job.retry",
+    "timestamp": "2026-09-20T15:27:29.754881+00:00",
+    "payload": {
+      "approval_preserved": true,
+      "job_id": "27979f9a88114ed1a41b9d3c3c5facd8",
+      "resume_stage": "compile.section.S05"
+    }
+  },
+  {
+    "sequence": 1529,
+    "type": "checks.rerun_requested",
+    "timestamp": "2026-09-20T17:39:13.433744+00:00",
+    "payload": {
+      "actor": "local_user",
+      "approval_preserved": true,
+      "budget_version": 1,
+      "checkpoints_preserved": true,
+      "feedback": "本轮反馈基于 CH03 首次完整交付的只读检查，属于 agent_audit 建议，需由工作流对完整正文独立核实，不是教师审核、数学证明或新增范围批准。基线任务 a45be503af594ce8aae0bb1e4c30184b，AWAITING_USER_REVIEW，累计请求 108；原批准计划 revision=2、hash=fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7。实际 lecture.tex 的 SHA-256 已与当前 artifact b3e88d2d481d4c96b65edee97240db17 核对一致：5eaf8546bc13e35b5ae6310d1e913dcbd8666d214060fe3ad299934e278f437b。以下判断只针对该版本；若恢复后的正文已补齐，应记录已解决而不要重复扩写。\n\n请保持原批准计划、既有单元 ID、正确结论与证明、预算及历史计数，练习答案仍集中在讲义末尾。只在现有单元内做与已批准目标一致的小范围改进。\n\n1. S02：补一项学生实际使用夹逼原理的初等计算训练。\n已批准目标明确要求“能够运用代数变形、夹逼思想和基本极限完成初等计算”。当前 S02.U01/U04 陈述夹逼原理，S02.U05 给出证明；S02.U08/U09 是约分计算，U10/U11 是多项式代入与零极限保号限制，U12/U13 是已知两个极限后的四则运算。这些例题与练习尚未让学生实际选上下界、验证同一趋近过程并算出被夹函数的极限。\n应准确区分：全章并非没有夹逼应用，S03.U04 已在两个基本极限的证明中使用夹逼，须保留；本项是 S02 对学生计算能力的训练不足，不应误报为“夹逼未讲授”。建议在 S02.U08/U09 或 U12/U13 的现有题解配对中补一小问，要求具体构造上下界并检查两界极限相同。可考虑 x→0 时 x²sin(1/x) 一类仅依赖三角函数有界性和代数极限的题目，明确 x≠0、上下界与结论；这是可选教学示例，不要求照抄，也不需要新增小节或依赖尚未讲授的导数。\n\n2. S03：把加减式不可无条件逐项替换的提醒落实为一个抵消反例；不要再补无穷小阶定义。\n已批准目标包括理解等价无穷小及在乘积和商中规范替换。当前 S03.U05/U06 已明确加减式不能无条件逐项替换，U07/U08 是三角基本极限乘积例题，U09/U10 是指数基本极限乘积练习；尚无具体算式展示主项抵消时错误替换与真实结果的差异。建议在既有 U07/U08 或 U09/U10 题解配对中补一个短小、能直接代数核查的对照反例，并保留 U05/U06 的正确条件。\n例如可自行核查 x→0 时 x+x² 与 x 的比值趋于 1，但 [(x+x²)-x]/x² 的实际极限与把括号内第一项直接替换成 x 所得结果不同；应说明为何乘积或商的合法替换结论不能直接用于这个抵消中的加项。该例只需代数恒等式，无须泰勒展开、导数或系统渐近理论。\n当前 S03.U02 已给出高阶、低阶、同阶、等价以及 o(1) 的解释，并明确同一极限过程和去心邻域分母非零等条件。因此先前“补阶定义”的条件性建议已经解决，本轮应撤回，不重复修订该单元。\n\n3. S05：说明已有经济应用题的变量计量约定，并在结果解释中保持一致。\n已批准目标要求将连续性定理用于简单经济学模型的可行性。当前 S05.U13/U14 已有价格范围 [0,8]、供需函数非负性、连续性与端点异号、均衡价格 20/3 和交易量 32/3，以及用严格递减说明唯一性的论证；U18/U22 已有 [1,5]、连续非负供需、存在与唯一条件区分，以及连续但多均衡的反例。这些数学论证应保留，不能误报为缺少经济应用、可行区间或唯一性依据。\n现有 U13 和 U18 尚未说明价格 p 与 D、S 的计量单位或统一时间尺度，U14 的数值结论也没有单位解释。建议仅在这两个题面及必要的对应答案 U14/U22 中注明“以下变量是所选统一单位下的数值”，给出合理的价格单位、数量单位与供需共同的时间尺度，并保持原公式、区间和端点数据不变。明确这是简化教学模型中的假设，不把假设叙述为真实商品市场事实。本项是模型解释清晰度改进，不是现有连续性证明的数学错误。\n\n范围说明：原稿采用的经典第二重要极限 (1+x)^(1/x)→e 及其数列形式，与当前讲义选择的 (e^x−1)/x→1 有形式差异；批准目标写的是“常用基本极限及其适用条件”，没有逐字指定必须复刻原稿的两种经典形式。原稿被标记为 UNTRUSTED_STYLE_REFERENCE_ONLY。当前 S03.U03/U04 已讲 sin(x)/x→1 与 (e^x−1)/x→1，注明弧度制，并以独立指数不等式为后一个证明的前提。不要仅因形式不同强行判为错误、增设经典第二极限或扩展到多元、导数、泰勒等已排除内容。后续仍可独立核查现有结论的条件、前提与非循环性。\n\n验收边界：本次只读核查了以上三项与当前完整 TeX 的关系及产物哈希，没有执行模型 API、重新编译、全页视觉验收或教师审核；也没有直接修改讲义正文或任务状态。请通过正式反馈复检工作流处理这些建议，并保留旧交付历史。",
+      "feedback_source": "agent_audit",
+      "idempotency_key": "iteration4-feedback-CH03-20260920T173913-564609",
+      "job_id": "bebb0a193e2344c6a33cfa1a0e27fce2",
+      "payload_hash": "d39002b6c467eb63afc21a0fd710850cca999e82799bf3cef19aa8ec9824eade",
+      "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+      "plan_revision": 2,
+      "request_count_preserved": 108,
+      "superseded_artifact_ids": [
+        "e17df383464543919cc1e8fa45e0247f",
+        "2f6c305adde549b3885b198b0e3e8089",
+        "1166a71bc0dd4f469b1cac0fae552ce8",
+        "66686352056e4482a3ef82644fc7436b",
+        "23c5a5748f524a5085403ed9be45457c",
+        "4250c54f56e8432cbf850a999f3c8035",
+        "b3b404770618416eaeecb9b80f7d9bc0",
+        "0d4e0eb722bb4ddda0c9ad3a830fc391",
+        "d2cbb1153530437bb363ffb4802eb960",
+        "3f6b022bde864e738e791bd3fce6559a",
+        "eecfec15fa544ea18ce2626d32df8dce",
+        "3ab7f85c136245c387d1c2b7e72c8070",
+        "d1255ced7bed48439ef8903a664a48c4",
+        "b3e88d2d481d4c96b65edee97240db17",
+        "8c278e8c43254c1babdd1e1d5524895c",
+        "d40dfb72392847b2a5aef4378b2864bc",
+        "c1eb1b62da6e4e8e94ba5c7c8948d257",
+        "8dfdb36f0cba44b2a54fa94d190f8983",
+        "366321e4b2214737b3ce412e185cacc9",
+        "ea3277469a7f4511ad6dfc067e55f9b5",
+        "7b79a2834bc54196bb375c0d0a589bfe",
+        "0f0684d11fb147ceacbc1025a07bf799",
+        "20feeb127f73449c8ee6cfeff0370f0f",
+        "97764b1cab0d4afd98e46e4246561cfe",
+        "206f3398dd654b67860492cb4bdaff8a",
+        "477eee6c26a444df9828a79988d8c569",
+        "89506589fb3b41a393babab8d9238e31",
+        "e9ffe40f795841d19433777c51e5cf35",
+        "14a4f7fd86d64a09b0fe639485d12299",
+        "d0e99e48aa274f0a9c97949975d6ce1a",
+        "8f813a26896e448daf1f4a0073b5f75e",
+        "c343d8af1dc54dabb2dcc141f3a7c9d2",
+        "5f00ab87fe96466db5eec1384c173f0e",
+        "db03edf94a834d17a23b56cca9db603b"
+      ],
+      "teacher_review": "NOT_PERFORMED"
+    }
+  },
+  {
+    "sequence": 1898,
+    "type": "checks.rerun_requested",
+    "timestamp": "2026-09-20T18:38:29.153482+00:00",
+    "payload": {
+      "actor": "local_user",
+      "approval_preserved": true,
+      "budget_version": 1,
+      "checkpoints_preserved": true,
+      "feedback": "这是基于当前 CH03 完整稿的 agent_audit 反馈，不是教师签认、数学证明或新增范围批准。任务 a45be503af594ce8aae0bb1e4c30184b，累计请求 122；批准计划 revision=2、hash=fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7。当前 lecture.tex SHA-256=6a4de1463d086884f1cdedd0bb8eb1e2a17ac391659deb02d2319c11134adcc2。请对实际最新正文逐项独立核查；若已完成，记录已满足并引用真实正文，不重复扩写。保持既有单元、批准范围、正确证明、历史计数及讲义末尾答案策略。\n\n1. S02 的夹逼计算教学：当前 U04 已完整示范 x→0 时 x²sin(1/x) 的上下界、共同极限和去心条件，不能再称“没有夹逼应用”，也不要改写这段正确示范。请核查是否还有学生独立使用夹逼的练习及对应答案。批准目标包含运用夹逼完成计算；若仍只有教师示范，可在现有 U12/U13 题解配对中补一个短小且区别于原示范的小问，让学生选择上下界、核实同一趋近过程并得结论。仅需要初等有界性和代数极限，不引入导数、泰勒或新单元。若实际其他练习已满足这一要求，则给出对应证据即可。\n\n2. S03 的等价无穷小替换：请给出一个短小、可直接代数核查的加减抵消反例，补在既有 U07/U08 或 U09/U10 题解配对中，保留原题和正确解答。当前 U05/U06 的乘积、商替换条件与一般加减警告正确，不能把它们改判为错；一般警告本身也不能代表具体反例已完成。例如可核实 x→0 时 x+x² 与 x 等价，而 [(x+x²)-x]/x² 的实际结果与把加项 x+x² 直接换成 x 得到的结果不同，解释原替换定理为何不能用于这一抵消。可选其他同样初等的明确对照，但不依赖尚未批准的工具。U02 的高阶、低阶、同阶、等价及 o(1) 已补齐，不要重复补定义。\n\n3. S05 的经济模型解释：请核查 U13/U18 两道题面及对应答案 U14/U22 是否说明了价格、供需数量的计量单位和共同时间尺度，并在数值结论中一致使用。当前数学计算、可行区间、连续性和端点异号、存在与唯一性的区分均应保留。第一例已有 [0,8]、均衡价格 20/3 和数量 32/3；第二例已有 [1,5]、连续非负供需及多均衡反例。只需明确这是简化教学模型，变量是选定统一单位下的数值，注明合理价格单位、数量单位与同一时间尺度；不要改变公式、区间、端点数据，也不要把教学假设写成真实市场事实。这是解释清晰度改进，不是现有连续性证明错误。\n\n范围说明：基准原稿与当前批准内容的第二重要极限形式不同，不能据此强制扩写经典 (1+x)^(1/x)→e、数列形式、多元、导数或泰勒内容。反馈只能为现有批准目标提供依据，不能改变计划或签署教师数学及视觉验收。请明确区分已满足、范围内仍需改进、有依据拒绝、越界及未决，保留每项实际引文和修复范围。",
+      "feedback_source": "agent_audit",
+      "idempotency_key": "iteration4-feedback-CH03-20260920T183829-0d222d",
+      "job_id": "89467291c05a478b9b525da3ce65b50f",
+      "payload_hash": "a0d775781ba949256b5dfc43bb28c833212620b0db3a42fbbf1d48f49c46b791",
+      "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+      "plan_revision": 2,
+      "request_count_preserved": 122,
+      "superseded_artifact_ids": [
+        "3841d007c92b46e5950e44f3be931bfd",
+        "8f0e6f56664646b18434aef7e41f106e",
+        "f558ae5e02e34636b32124d5ac7fd9b5",
+        "df894eee4b82493ab88bd2a24c48e97a",
+        "685f1e8d48614330976452994848c05e",
+        "fe1fb44f908f45c0aa2573341c98696b",
+        "d87e77ac803044a7a81e469d507ba4e1",
+        "a401b23ead2240ddb889299368823c8c",
+        "982a6d5b6a3941f590d8d2fee6210d4e",
+        "6859a39752654a2ba98964ec35ad752a",
+        "7d773d76a01f472193dcc635909a6dd4",
+        "8225d9fb225248238aba656d5a1b8419",
+        "69ef9505a99c4f37a90dca54395e0570",
+        "9d15349f59454bdf82b88ee98d815b52",
+        "5e6c164db7f341b3a08637b9dcca2771",
+        "63a0d57d27664f909bf7d4d2f56914a0",
+        "85cf0a8f686942d382421a22b697451f",
+        "ea526f6c4b7a482d8b960e1963ed92c6",
+        "abbc0906c0304e889b60dfedd63b7b16",
+        "1dee65fd10584a58a447e79903d33b99",
+        "698bc8ec11da477b8cd59d2da09e0f40",
+        "03c8ff58e3424341abc6be82c502e524",
+        "15b293942e444f5f98f8c5d6414f3652",
+        "8af6ae971e7f4386a5285e13b115b6fc",
+        "55c4a786c0dd4965b7a0cb73461b0e1c",
+        "5f8d7b881f1149a2b0e9756bf42a4c50",
+        "70541e93fb0d43928821bf0a36278208",
+        "1787495b8bf74bdcbb7f870f80d4158d",
+        "2e350c6cd8d94e06bc66be1af6708fca",
+        "d3f9a506992c463480564985610fab11"
+      ],
+      "teacher_review": "NOT_PERFORMED"
+    }
+  },
+  {
+    "sequence": 2186,
+    "type": "budget.increased_by_user",
+    "timestamp": "2026-09-22T04:39:57.754693+00:00",
+    "payload": {
+      "action_id": "authorized-iteration4-CH03-20260922T043957-2745e1",
+      "actor": "local_user",
+      "after": {
+        "global_repair_rounds": 12,
+        "local_repairs_per_unit": 12,
+        "requests": 480
+      },
+      "approval_preserved": true,
+      "before": {
+        "global_repair_rounds": 6,
+        "local_repairs_per_unit": 6,
+        "requests": 240
+      },
+      "execution": "NOT_STARTED",
+      "note": "用户已明确允许继续增加第二三章预算。V4严格全局补丁、已知契约迁移和数学疑点定位/显式裁定已部署，986项完整后台回归通过；保留原审批、原任务和全部累计次数，从修复过的阻断节点继续。",
+      "request_count_preserved": 146,
+      "request_limit_action": "INCREASE_KNOWN_LIMIT",
+      "teacher_review": "NOT_PERFORMED"
+    }
+  },
+  {
+    "sequence": 2188,
+    "type": "job.retry",
+    "timestamp": "2026-09-22T04:39:58.022102+00:00",
+    "payload": {
+      "approval_preserved": true,
+      "job_id": "89467291c05a478b9b525da3ce65b50f",
+      "resume_stage": "review.section.S03"
+    }
+  },
+  {
+    "sequence": 2194,
+    "type": "global.repair_contract_migrated",
+    "timestamp": "2026-09-22T04:39:58.765422+00:00",
+    "payload": {
+      "after_key": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/contract-migrations/aa521f98713131672d7cc58f/after.json",
+      "after_sha256": "d2bbb27802050237365f40286942828ff453edf1d59b77dea52c3b695ff71e80",
+      "approval_hash": "5a0cf5f59d4f4787a195231c290200e3f5f83ce8241e967f8c01e1406aa7284c",
+      "before_key": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/contract-migrations/aa521f98713131672d7cc58f/before.json",
+      "before_sha256": "899ad29055f3d611e4d768bfff653b3ba4ae9603c913a3eb7e143a7aede93dd0",
+      "created_at": "2026-09-22T04:39:58.764422+00:00",
+      "evidence_key": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/contract-migrations/aa521f98713131672d7cc58f/evidence.json",
+      "from_identity": {
+        "model": "gpt-6-astra",
+        "normalizer_hash": "25d2fff448b21fcad71b5e7aae512cf6ab27f66bdeefd9e459ca57652a1fd74c",
+        "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+        "provider": "live",
+        "repair_prompt_hash": "46c1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9",
+        "written_schema_hash": "4e9b07e27f359212c0460381e3cbd6e548d18a48490e553e60b0c56d30d9ada7"
+      },
+      "id": "aa521f98713131672d7cc58fea4039217a2297df86004f60e04d81a7a3779071",
+      "input_hash": "3b4e20cb757d221f1c974ffadb5918b392f9092cd5d1a8d9e5847c07c37930b7",
+      "job_id": "89467291c05a478b9b525da3ce65b50f",
+      "migration": "known_full_section_v1_to_strict_patch_v2",
+      "pending_scope": [],
+      "phase_preserved": "checking",
+      "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+      "plan_revision": 2,
+      "preserved_payload_hash": "a9bca16e427e5f2792aad5558d50b04db73cf36c0cc28164c8fed034f4e2f21f",
+      "request_count_preserved": 146,
+      "rounds_used_preserved": 4,
+      "run_id": "a45be503af594ce8aae0bb1e4c30184b",
+      "schema_version": 1,
+      "teacher_review": "NOT_RUN",
+      "to_identity": {
+        "calculation_protocol_hash": "d0e00874991f1762e72dcf4845ff8417ca54d1a399d3ec3f2f8ea0153b99d1aa",
+        "migration_contract_hash": "8c1167ba608adbc1b74d9fe4d5852152eba74069606c466a4c2db606c8df2186",
+        "model": "gpt-6-astra",
+        "normalizer_hash": "25d2fff448b21fcad71b5e7aae512cf6ab27f66bdeefd9e459ca57652a1fd74c",
+        "patch_schema_hash": "0d86c8d71317f64b5b07f16f49a50ad4dd13c072cbf83dcaa1babdd53d1510dd",
+        "patch_validator_hash": "78427756213a06179f7d1f6c496f22871cc3abd333330c09635fc0cf0b6d55e3",
+        "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+        "provider": "live",
+        "repair_contract_version": 2,
+        "repair_prompt_hash": "362fb34b2529572af9620c5433dbb223290c519889e89192c1d52c5d65e60943",
+        "written_schema_hash": "4e9b07e27f359212c0460381e3cbd6e548d18a48490e553e60b0c56d30d9ada7"
+      }
+    }
+  },
+  {
+    "sequence": 2266,
+    "type": "math.uncertainty_reviewed",
+    "timestamp": "2026-09-22T04:47:56.760964+00:00",
+    "payload": {
+      "evidence_key": "runs/a45be503af594ce8aae0bb1e4c30184b/uncertainty-reviews/f206571db8cd33f474daaa40/state.json",
+      "evidence_sha256": "fb13f4ed2d7ea1ece93f6916a46915ec7c4bda2146a0e06ccb903b45c5fb03eb",
+      "identity_hash": "f206571db8cd33f474daaa40666329d9b4a01fb941bff9789bf2ff9ec0309722",
+      "job_id": "89467291c05a478b9b525da3ce65b50f",
+      "origin_job_id": "89467291c05a478b9b525da3ce65b50f",
+      "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+      "plan_revision": 2,
+      "status": "INVALID",
+      "teacher_review": "NOT_RUN"
+    }
+  },
+  {
+    "sequence": 2270,
+    "type": "repair.guidance_requested",
+    "timestamp": "2026-09-23T09:08:38.698938+00:00",
+    "payload": {
+      "action_id": "authorized-CH03-U04-20260923T090838-b64292",
+      "actor": "local_user",
+      "approval_preserved": true,
+      "budget_version": 2,
+      "candidate_file_hash": "7adce019cfd6a50f19ca3d0035642f03b7d314800ae111576cfe946fb9460f59",
+      "candidate_hash": "893c09404ad95da192bc6a553dadea48e6b96275c3ce03431a4cfde00b0c644a",
+      "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S03/candidate-becc07d4d97b.json",
+      "instructions": "这是一条独立审读后提出的定点修复建议，不是数学裁定、教师签认或新增计划授权。仅允许修改当前 S03.U04；其他单元、已有核算和历史疑点记录保留，全部变化仍须正常数学检查和模型审阅。\n\n现有正文在证明指数基本极限时依赖 0<t<1 下 1+t≤e^t≤1/(1−t)，但已给正文没有建立这一估计。请在 S03.U04 内补一个简短、明确基础的引理，再接回当前双侧极限证明。不得仅把“尚未核实的先修命题”改称“已知”，不得用待证差商极限、导数、凸性或 Taylor 展开来证明它。不要直接采用本建议的结论；逐步核验以下候选路线、定义与当前批准范围是否相容。\n\n可检验路线：明确本节使用 Euler 定义 e=lim a_n，a_n=(1+1/n)^n，以及实数幂由有理幂的保序延拓定义。若未给 Euler 数列存在性，可简要补有限二项式系数论证：a_n 的第 k 项系数为 (1/k!)∏_{j=0}^{k−1}(1−j/n)，对固定 k 随 n 增大；新增项非负，所以 a_n 单调。对 n≥2 用 k!≥2^(k−1) 得 a_n≤2+Σ_{k=2}^n 1/2^(k−1)<3，n=1 时 a_1=2，故单调有界极限存在。这里只用有限和，不引入无穷幂级数。\n\n由 a_1=2 和单调性明确 e≥2，所以底数大于 1；实数幂可明确为有理幂的保序上确界延拓。先取有理 t=p/q∈(0,1)，p、q 为固定正整数。a_(qn)^(p/q)=(1+1/(qn))^(pn)。有限二项式前两项为 1+t，而各 k 项满足 C(pn,k)/(qn)^k≤t^k/k!≤t^k；因此 1+t≤a_(qn)^t≤Σ_{k=0}^{pn}t^k≤1/(1−t)。对 n 取极限，只用固定正有理幂的根式极限，得到有理 t 的估计。根式极限可由 x^q−y^q 的有限因式分解说明，不使用指数函数连续性。\n\n再取实数 0<t<1，选有理 0<u<t<v<1。由实幂保序定义得 1+u≤e^u≤e^t≤e^v≤1/(1−v)。让有理 u 从下方趋于 t、v 从上方趋于 t，仅在线性函数和有理式取极限，即得实数 t 的估计，不使用 e^u→e^t，也不把待证结果换个名称当先修。若采用这些基础会超出本节批准范围，应明确指出具体缺口并保留未决，而非声称本建议已授权扩展课程。\n\n在这条引理正确且范围合适时，接回已有 x>0 和 x<0 两侧证明；保持条件 0<t<1 清晰，负侧不等式除以负数必须正确反向。历史 uncertainties 不删除；在实际新增证明完成后，由正常疑点裁定依据新正文逐条处理，不能用本建议本身作为“已解决”的证据。",
+      "job_id": "89467291c05a478b9b525da3ce65b50f",
+      "meaning": "Scoped repair proposal requested; not a mathematical verdict or new plan authorization",
+      "payload_hash": "6baba311a12b8389db56dca0a1fe9daf7d71a5ad614dc17cde322718061b5d8a",
+      "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+      "plan_revision": 2,
+      "recovery_binding": {
+        "global_state_key": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repair-state.json",
+        "global_state_sha256": "d2bbb27802050237365f40286942828ff453edf1d59b77dea52c3b695ff71e80",
+        "identity": {
+          "base_hash": "9980f4b7f564d841ca36dfe8da896e5cab257f30d68864e9dc8ad749b5afaa1a",
+          "context_hash": "20bc5215697a77a7c252b9a49d0db0eb244de77fab8dea336612d9fbd49ce7fd",
+          "model": "gpt-6-astra",
+          "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+          "provider": "live",
+          "section_id": "S03"
+        },
+        "last_review_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S03/review-1f3161930303.json",
+        "last_review_sha256": "5fe32acefc45f841702736cf94fdedb7fe6e01d565046237aef70c8d00323145",
+        "pending_issues_sha256": "e5ab5000955432e9929ebb5ef09ef21cb10cf43b5fb76747d96fc535d30acc45",
+        "state_key": "runs/a45be503af594ce8aae0bb1e4c30184b/local-repair/S03.json",
+        "state_sha256": "1b6e996a6b6e62379bc072969c3eac0967a973f156291e686f35fa2d298a3c47"
+      },
+      "request_count_preserved": 153,
+      "section_id": "S03",
+      "source": "agent_audit",
+      "teacher_review": "NOT_RUN",
+      "unit_ids": [
+        "S03.U04"
+      ]
+    }
+  },
+  {
+    "sequence": 2271,
+    "type": "job.retry",
+    "timestamp": "2026-09-23T09:08:38.698938+00:00",
+    "payload": {
+      "approval_preserved": true,
+      "job_id": "89467291c05a478b9b525da3ce65b50f",
+      "resume_stage": "review.section.S03"
+    }
+  },
+  {
+    "sequence": 2353,
+    "type": "repair.guidance_applied",
+    "timestamp": "2026-09-23T09:13:35.919904+00:00",
+    "payload": {
+      "action_id": "authorized-CH03-U04-20260923T090838-b64292",
+      "after_hash": "abc8d017418ea8bbfb1fa47dc7b74263d454ba7d2ba38f25c62226079b5260e2",
+      "before_hash": "893c09404ad95da192bc6a553dadea48e6b96275c3ce03431a4cfde00b0c644a",
+      "job_id": "89467291c05a478b9b525da3ce65b50f",
+      "section_id": "S03",
+      "source": "agent_audit",
+      "status": "UNCHECKED_REPAIRED",
+      "teacher_review": "NOT_RUN",
+      "unit_ids": [
+        "S03.U04"
+      ]
+    }
+  },
+  {
+    "sequence": 2375,
+    "type": "math.uncertainty_reviewed",
+    "timestamp": "2026-09-23T09:15:25.048973+00:00",
+    "payload": {
+      "evidence_key": "runs/a45be503af594ce8aae0bb1e4c30184b/uncertainty-reviews/c74b6206fa4db23065075638/state.json",
+      "evidence_sha256": "fbf8209d2ded3f79312f2753e3d405936bbf2bfd1a21dde7946e483c4af9e968",
+      "identity_hash": "c74b6206fa4db230650756381917aef328f011fcffbcf2879704b1e70e0cf1ff",
+      "job_id": "89467291c05a478b9b525da3ce65b50f",
+      "origin_job_id": "89467291c05a478b9b525da3ce65b50f",
+      "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+      "plan_revision": 2,
+      "status": "REVIEWED",
+      "teacher_review": "NOT_RUN"
+    }
+  },
+  {
+    "sequence": 2397,
+    "type": "math.uncertainty_reviewed",
+    "timestamp": "2026-09-23T09:19:35.354983+00:00",
+    "payload": {
+      "evidence_key": "runs/a45be503af594ce8aae0bb1e4c30184b/uncertainty-reviews/34dcd9159892334d8047759a/state.json",
+      "evidence_sha256": "8e618307687f7d857a2ca0a1a450c2fae7daf37f421363e39ce4acf823a12844",
+      "identity_hash": "34dcd9159892334d8047759a63f651653c4e475b2fe6dda6b4a50e0acdb3a4ae",
+      "job_id": "89467291c05a478b9b525da3ce65b50f",
+      "origin_job_id": "89467291c05a478b9b525da3ce65b50f",
+      "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+      "plan_revision": 2,
+      "status": "REVIEWED",
+      "teacher_review": "NOT_RUN"
+    }
+  },
+  {
+    "sequence": 2514,
+    "type": "feedback.reviewed",
+    "timestamp": "2026-09-23T09:31:28.482449+00:00",
+    "payload": {
+      "evidence_key": "runs/a45be503af594ce8aae0bb1e4c30184b/feedback-reviews/79b5a589e0f64a5d838c806a/receipt-1-reviewed.json",
+      "evidence_sha256": "ab7f92d14ecd96255f1f6de65d488807afa2eb7b888043786f6f39365395394b",
+      "feedback_hash": "06234869adb0ea50ef8f5edb9e5da5f7fe690e3e7f6abfd2093d47d8640497dd",
+      "identity_hash": "79b5a589e0f64a5d838c806ac078b8d527cb40f108980893eeb11db6d7598cc7",
+      "items": [
+        {
+          "id": "F1",
+          "objective_evidence": [
+            {
+              "field": "objectives",
+              "quote": "能够运用代数变形、夹逼思想和基本极限完成初等计算。",
+              "section_id": "S02"
+            },
+            {
+              "field": "lecture.exercises",
+              "quote": "with_answers",
+              "section_id": null
+            },
+            {
+              "field": "lecture.answers_location",
+              "quote": "end",
+              "section_id": null
+            }
+          ],
+          "reason": "现稿已有完整的夹逼计算示范，不能称为“没有夹逼应用”，也不应改写该示范。核查全章练习及其答案后，尚未发现要求学生独立选择上下界并完成夹逼计算的题解配对；基本极限证明中的夹逼属于教师证明，不替代独立训练。S02.U12/U13 目前只训练和、差、商法则及分母条件。因此，补一个短小夹逼小问是批准计算目标内的教学改进，不是纠正现有数学错误。",
+          "repair_instruction": "仅修改 S02.U12/U13：保留原商法则题及正确解答，在题面附加一个区别于现有示范的初等夹逼小问，要求学生自行构造上下界、确认定义域及同一趋近过程、计算两端共同极限并给出结论；在对应答案中落实这些步骤。只使用初等有界性和代数极限，不引入导数、泰勒或新单元。保留 S02.U04 原示范与证明，新增答案沿用批准的讲义末尾答案策略。",
+          "repair_unit_ids": [
+            "S02.U12",
+            "S02.U13"
+          ],
+          "status": "supported_improvement",
+          "unit_evidence": [
+            {
+              "kind": "worked_example",
+              "quote": "夹逼计算的应用：求 $\\lim_{x\\to0}x^2\\sin(1/x)$。构造上下界时，先利用三角函数的基本性质 $-1\\leq\\sin t\\leq1$，再乘以非负因子 $x^2$。在去心邻域 $0<|x|<1$ 内，$1/x$ 有定义，且\n\\[\n-x^2\\leq x^2\\sin(1/x)\\leq x^2.\n\\]",
+              "unit_id": "S02.U04"
+            },
+            {
+              "kind": "statement",
+              "quote": "设函数 $f$ 与 $g$ 在点 $x_0$ 的某个去心邻域内有定义，且\n\\[\n\\lim_{x\\to x_0}f(x)=2,\n\\qquad\n\\lim_{x\\to x_0}g(x)=-1.\n\\]\n求\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)+g(x)}{f(x)-g(x)}.\n\\]\n并说明使用商的极限法则时需要检查的条件。",
+              "unit_id": "S02.U12"
+            },
+            {
+              "kind": "worked_example",
+              "quote": "分母的极限为 $3\\neq0$，所以分母在 $x_0$ 的某个去心邻域内不为零，可以使用商的极限法则。因此\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)+g(x)}{f(x)-g(x)}=\\frac{1}{3}.\n\\]",
+              "unit_id": "S02.U13"
+            }
+          ],
+          "unit_ids": [
+            "S02.U04",
+            "S02.U12",
+            "S02.U13"
+          ]
+        },
+        {
+          "id": "F2",
+          "objective_evidence": [
+            {
+              "field": "objectives",
+              "quote": "理解无穷小及其阶的基本思想，掌握等价无穷小在极限计算中的使用条件。",
+              "section_id": null
+            },
+            {
+              "field": "objectives",
+              "quote": "理解等价无穷小的定义，并能在乘积和商的极限中进行规范替换。",
+              "section_id": "S03"
+            }
+          ],
+          "reason": "现稿的等价替换条件及加减警告正确，但全章尚无实际的加减抵消反例。S03.U07/U08 是正常的乘积、商计算，不能当作抵消反例，也不能用一般警告认定本项已完成。可在这对既有单元中增加一个代数可核查的对照，使学生看见等价加项替换前后整体极限不同，从而落实批准目标中的使用条件教学。已有阶比较定义及替换定理、证明无需修改。",
+          "repair_instruction": "仅修改 S03.U07/U08，保留原题及全部正确解答，附加一个简短的加减抵消对照及解释。所选反例须明确趋近过程和非零分母条件，代数核实两无穷小等价，分别算出原式与错误逐项替换后表达式的不同结果，并指出被替换对象是加减项而非定理所许可的整体乘积因子或商结构，不能套用原定理。可采用反馈建议，也可选择同等初等的其他反例；不依赖导数、泰勒，不新增单元，不重复补定义，不修改正确的替换定理和证明。",
+          "repair_unit_ids": [
+            "S03.U07",
+            "S03.U08"
+          ],
+          "status": "supported_improvement",
+          "unit_evidence": [
+            {
+              "kind": "statement",
+              "quote": "因此，在商的极限中，可以将分母中的无穷小 $\\alpha(x)$ 替换为与其等价的无穷小 $\\beta(x)$，但必须同时检查两个商在同一去心邻域内有定义，并且原商的有限极限存在。一般而言，不能在加减式中无条件逐项替换等价无穷小；加减项的替换必须另行检验整体极限，不能仅由等价关系和表达式有定义推出。",
+              "unit_id": "S03.U05"
+            },
+            {
+              "kind": "statement",
+              "quote": "计算\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}.\n\\]\n要求说明等价无穷小替换的依据及适用条件。",
+              "unit_id": "S03.U07"
+            },
+            {
+              "kind": "worked_example",
+              "quote": "当 $x\\to0$ 时，$\\sin x\\sim x$，并且 $1+x\\to1$。在 $x\\neq0$ 的去心邻域内，原式有定义，且\n\\[\n\\frac{(1+x)\\sin x}{x}=(1+x)\\frac{\\sin x}{x}.\n\\]",
+              "unit_id": "S03.U08"
+            }
+          ],
+          "unit_ids": [
+            "S03.U05",
+            "S03.U07",
+            "S03.U08"
+          ]
+        },
+        {
+          "id": "F3",
+          "objective_evidence": [
+            {
+              "field": "objectives",
+              "quote": "理解闭区间上连续函数的有界性、最值性和介值性，并能解决基础经济学模型中的连续性问题。",
+              "section_id": null
+            },
+            {
+              "field": "objectives",
+              "quote": "能够将连续性定理用于判断方程根的存在性及简单经济学模型的可行性。",
+              "section_id": "S05"
+            }
+          ],
+          "reason": "两道经济题及对应答案均未明确价格单位、供需数量单位或共同时间尺度，也未说明公式是统一单位下数值之间的简化教学关系。现有连续性、可行性、端点异号及存在性与唯一性的区分不因这一缺口而错误，但数值结论的经济含义仍不够明确。给四个既有单元补充一致的单位和模型限定，是批准经济应用目标内的解释改进。反馈末尾的范围说明是本项处理边界，不构成扩写第二重要极限、数列、多元、导数或泰勒的授权。",
+          "repair_instruction": "仅修改 S05.U13/U14/U18/U22 的模型解释及单位表述：在两题题面分别明确这是简化教学模型，p、D、S 为选定统一单位下的数值，指定合理价格单位、数量单位与供需共用的固定时间尺度。答案沿用各自题面的约定，为均衡价格、交易量、超额需求及反例表格和价格区间补充必要的单位说明。保留全部公式、区间、端点数据、数值结果、连续非负条件、正确证明和多均衡反例；不得把教学假设表述为真实市场事实，不增添模型推断或扩写其他数学主题。",
+          "repair_unit_ids": [
+            "S05.U13",
+            "S05.U14",
+            "S05.U18",
+            "S05.U22"
+          ],
+          "status": "supported_improvement",
+          "unit_evidence": [
+            {
+              "kind": "model_assumption",
+              "quote": "在价格范围 $p\\in[0,8]$ 内，某商品的需求量与供给量分别为\n\\[\nD(p)=24-2p,\\qquad S(p)=4+p.\n\\]\n先用连续性说明该价格范围内存在供需相等的均衡价格，再求出均衡价格与交易量，并说明唯一性的依据。",
+              "unit_id": "S05.U13"
+            },
+            {
+              "kind": "worked_example",
+              "quote": "解线性方程 $20-3p_*=0$，得\n\\[\np_*=\\frac{20}{3},\\qquad D(p_*)=S(p_*)=\\frac{32}{3}.\n\\]",
+              "unit_id": "S05.U14"
+            },
+            {
+              "kind": "model_assumption",
+              "quote": "某商品在 $p\\in[1,5]$ 上的需求函数 $D$ 和供给函数 $S$ 均连续且非负，满足\n\\[\nD(1)=12,\\quad S(1)=3,\\qquad D(5)=4,\\quad S(5)=8.\n\\]\n证明存在区间内部的均衡价格。若进一步知道 $D$ 严格递减、$S$ 严格递增，证明均衡价格唯一。仅凭最初给出的条件能否断言唯一？",
+              "unit_id": "S05.U18"
+            },
+            {
+              "kind": "worked_example",
+              "quote": "令 $E(p)=D(p)-S(p)$，$p\\in[1,5]$。由连续函数的差仍连续，$E$ 在 $[1,5]$ 上连续，且\n\\[\nE(1)=9>0,\\qquad E(5)=-4<0.\n\\]\n所以存在 $p_*\\in(1,5)$ 使 $E(p_*)=0$，即 $D(p_*)=S(p_*)$。",
+              "unit_id": "S05.U22"
+            },
+            {
+              "kind": "counterexample",
+              "quote": "仅凭最初的连续性和端点数据不能断言唯一。例如，令 $D,S$ 分别在相邻整数价格之间作直线连接，其在 $p=1,2,3,4,5$ 处的值依次为\n\\[\n\\begin{array}{c|ccccc}\np&1&2&3&4&5\\\\\nD(p)&12&4&8&4&4\\\\\nS(p)&3&5&5&5&8\n\\end{array}\n\\]\n所得函数连续且非负，并满足给定端点条件。",
+              "unit_id": "S05.U22"
+            }
+          ],
+          "unit_ids": [
+            "S05.U13",
+            "S05.U14",
+            "S05.U18",
+            "S05.U22"
+          ]
+        }
+      ],
+      "job_id": "89467291c05a478b9b525da3ce65b50f",
+      "limitations": [
+        "本评估依据所提供的完整单元正文和批准计划进行模型层面的逐项核对，未独立读取外部文件或核验所述文件哈希。",
+        "这不是形式化证明或完整普通数学审阅，不替代也不撤销其他审阅中已有的疑点。",
+        "未进行真实 TeX 编译、PDF 全页视觉检查或教师审核；本回执不签署数学及视觉验收，也不改变批准范围。",
+        "supported_improvement 表示现稿仍需在指定既有单元内落实改进，不表示修订已经完成。"
+      ],
+      "mock": false,
+      "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+      "plan_revision": 2,
+      "schema_version": 1,
+      "status": "reviewed",
+      "teacher_review": "NOT_RUN"
+    }
+  },
+  {
+    "sequence": 2566,
+    "type": "math.uncertainty_reviewed",
+    "timestamp": "2026-09-23T09:39:11.539575+00:00",
+    "payload": {
+      "evidence_key": "runs/a45be503af594ce8aae0bb1e4c30184b/uncertainty-reviews/4cf4d8a6262268c154ef7961/state.json",
+      "evidence_sha256": "082e1baa2b663b530cf959f59c3dca8800310036ff60a90b05e93c0c058dd317",
+      "identity_hash": "4cf4d8a6262268c154ef7961fea9b70947287ee508e56234096caccc01302e32",
+      "job_id": "89467291c05a478b9b525da3ce65b50f",
+      "origin_job_id": "89467291c05a478b9b525da3ce65b50f",
+      "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+      "plan_revision": 2,
+      "status": "REVIEWED",
+      "teacher_review": "NOT_RUN"
+    }
+  },
+  {
+    "sequence": 2635,
+    "type": "feedback.reviewed",
+    "timestamp": "2026-09-23T09:55:00.286744+00:00",
+    "payload": {
+      "evidence_key": "runs/a45be503af594ce8aae0bb1e4c30184b/feedback-reviews/b4f65b4a7e5e106d37462281/receipt-1-reviewed.json",
+      "evidence_sha256": "885de593854f3f02296bf6c065ae9ca61b59b697eb4bf2636bec00bfbf4d0135",
+      "feedback_hash": "06234869adb0ea50ef8f5edb9e5da5f7fe690e3e7f6abfd2093d47d8640497dd",
+      "identity_hash": "b4f65b4a7e5e106d374622814929485399e8bad784705910ead83f6648386b36",
+      "items": [
+        {
+          "id": "F1",
+          "objective_evidence": [
+            {
+              "field": "objectives",
+              "quote": "能够运用代数变形、夹逼思想和基本极限完成初等计算。",
+              "section_id": "S02"
+            },
+            {
+              "field": "lecture.exercises",
+              "quote": "with_answers",
+              "section_id": null
+            }
+          ],
+          "reason": "现稿已在批准的 S02 目标内提供学生独立使用夹逼定理的练习及对应答案，并未改写 U04 的原有示范。U12 的附加小问要求学生自行构造上下界、确认同一去心趋近过程并求共同极限；U13 随后给出完整核查、夹逼结论及不需要计算振荡函数极限的说明。因此该反馈所要求的练习—答案配对已经实际完成。",
+          "repair_instruction": null,
+          "repair_unit_ids": [],
+          "status": "satisfied",
+          "unit_evidence": [
+            {
+              "kind": "worked_example",
+              "quote": "附加小问：用夹逼定理计算\n\\[\n\\lim_{x\\to0}\\frac{x^2}{2+\\cos(1/x)}.\n\\]\n请自行构造上下界，确认原式与上下界在同一去心邻域内有定义，说明所考察的同一趋近过程，计算两端的共同极限，再给出结论。",
+              "unit_id": "S02.U12"
+            },
+            {
+              "kind": "worked_example",
+              "quote": "附加小问解答：在去心邻域 $0<|x|<1$ 内，$1/x$ 有定义。由余弦函数的有界性，\n\\[\n-1\\leq\\cos(1/x)\\leq1,\n\\qquad\n1\\leq2+\\cos(1/x)\\leq3.\n\\]\n因此分母始终为正，原式在该去心邻域内有定义。对上述正数取倒数，再乘以非负数 $x^2$，得到\n\\[\n\\frac{x^2}{3}\\leq\\frac{x^2}{2+\\cos(1/x)}\\leq x^2.\n\\]\n上下界也在同一去心邻域内有定义，三者均考察双侧趋近过程 $x\\to0$。由 $\\lim_{x\\to0}x=0$ 及极限的积与常数倍法则，\n\\[\n\\lim_{x\\to0}\\frac{x^2}{3}=0,\n\\qquad\n\\lim_{x\\to0}x^2=0.\n\\]\n两端趋于同一有限数，故由夹逼定理，\n\\[\n\\lim_{x\\to0}\\frac{x^2}{2+\\cos(1/x)}=0.\n\\]\n这里仅使用余弦函数的有界性与代数极限，不需要求 $\\cos(1/x)$ 的极限，也不需要在 $x=0$ 处定义原式。",
+              "unit_id": "S02.U13"
+            }
+          ],
+          "unit_ids": [
+            "S02.U12",
+            "S02.U13"
+          ]
+        },
+        {
+          "id": "F2",
+          "objective_evidence": [
+            {
+              "field": "objectives",
+              "quote": "理解等价无穷小的定义，并能在乘积和商的极限中进行规范替换。",
+              "section_id": "S03"
+            },
+            {
+              "field": "lecture.exercises",
+              "quote": "with_answers",
+              "section_id": null
+            }
+          ],
+          "reason": "现稿已在既有 U07/U08 题解配对中给出具体的加减抵消反例，而不是只重复一般警告。文本明确验证 $x+x^2\\sim x$，原式的实际结果为 $1$，直接替换后所得结果为 $0$，并解释这是加减式中的项替换而非定理允许的整体乘积因子或商结构。该反例满足初等代数核查要求，且保留了原题和正确解答。",
+          "repair_instruction": null,
+          "repair_unit_ids": [],
+          "status": "satisfied",
+          "unit_evidence": [
+            {
+              "kind": "counterexample",
+              "quote": "再说明加减式中不能无条件逐项替换等价无穷小。对 $x\\to0$ 且 $x\\neq0$，有\n\\[\n\\frac{x+x^2}{x}=1+x\\longrightarrow1,\n\\]\n所以 $x+x^2\\sim x$；同时分母 $x^2\\neq0$。但是\n\\[\n\\frac{(x+x^2)-x}{x^2}=\\frac{x^2}{x^2}=1,\n\\]\n故原式的极限为 $1$。若把加减项 $x+x^2$ 逐项替换为等价无穷小 $x$，则得到\n\\[\n\\frac{x-x}{x^2}=0,\n\\]\n其极限为 $0$，与原式不同。这里被替换的是加减式中的一个加项，而不是等价无穷小替换定理所许可的整体乘积因子或商结构；因此不能仅由等价关系和表达式有定义就进行这种替换，必须另行检验替换后的整体极限。",
+              "unit_id": "S03.U08"
+            }
+          ],
+          "unit_ids": [
+            "S03.U08"
+          ]
+        },
+        {
+          "id": "F3",
+          "objective_evidence": [
+            {
+              "field": "objectives",
+              "quote": "能够将连续性定理用于判断方程根的存在性及简单经济学模型的可行性。",
+              "section_id": "S05"
+            },
+            {
+              "field": "lecture.example_focus",
+              "quote": "balanced",
+              "section_id": null
+            }
+          ],
+          "reason": "现稿已在两道经济模型题面及其答案中明确给出价格、数量的计量单位和共同时间尺度，并在数值结论中保持一致。U13/U14 使用元/千克、同一固定一周和千克；U18/U22 同样使用元/千克、同一固定一周和千克，并明确这些是简化教学模型中的统一单位数值而非真实市场事实。原有区间、端点数据、连续性论证、存在性与唯一性区分均被保留，因此无需修复。",
+          "repair_instruction": null,
+          "repair_unit_ids": [],
+          "status": "satisfied",
+          "unit_evidence": [
+            {
+              "kind": "worked_example",
+              "quote": "考虑某商品的简化教学模型：$p$ 为以元/千克计的价格数值，$D(p)$ 与 $S(p)$ 分别为同一个固定的一周内、以千克计的需求量和供给量数值。下列公式是这些统一单位下数值之间的假设关系，并非对真实市场的事实描述。在价格范围 $p\\in[0,8]$（即每千克 $0$ 至 $8$ 元）内，某商品的需求量与供给量分别为\n\\[\nD(p)=24-2p,\\qquad S(p)=4+p.\n\\]\n先用连续性说明该价格范围内存在供需相等的均衡价格，再求出均衡价格与交易量，并说明唯一性的依据。",
+              "unit_id": "S05.U13"
+            },
+            {
+              "kind": "worked_example",
+              "quote": "沿用题面的简化教学模型及单位：价格以元/千克计，供需数量均为同一个固定的一周内以千克计的数值。在 $[0,8]$ 上，两种数量均非负，且 $D,S$ 均为连续函数。定义超额需求\n\\[\nE(p)=D(p)-S(p)=20-3p\\qquad(p\\in[0,8]).\n\\]\n这里 $E(p)$ 也是该周内以千克计的数量差数值，价格区间 $[0,8]$ 对应每千克 $0$ 至 $8$ 元。它在闭区间上连续，且 $E(0)=20>0$，$E(8)=-4<0$，分别表示该周的需求量比供给量多 $20$ 千克和少 $4$ 千克。由零点存在性定理，存在 $p_*\\in(0,8)$ 使 $E(p_*)=0$，即供需相等。",
+              "unit_id": "S05.U14"
+            },
+            {
+              "kind": "worked_example",
+              "quote": "考虑某商品的简化教学模型：$p$ 为以元/千克计的价格数值，需求函数 $D$ 和供给函数 $S$ 的值分别为同一个固定的一周内、以千克计的需求量和供给量数值。以下条件是统一单位下数值之间的教学假设，并非对真实市场的事实描述。某商品在 $p\\in[1,5]$（即每千克 $1$ 至 $5$ 元）上的需求函数 $D$ 和供给函数 $S$ 均连续且非负，满足\n\\[\nD(1)=12,\\quad S(1)=3,\\qquad D(5)=4,\\quad S(5)=8.\n\\]\n证明存在区间内部的均衡价格。若进一步知道 $D$ 严格递减、$S$ 严格递增，证明均衡价格唯一。仅凭最初给出的条件能否断言唯一？",
+              "unit_id": "S05.U18"
+            },
+            {
+              "kind": "worked_example",
+              "quote": "沿用题面的简化教学模型，价格以元/千克计，需求量与供给量均指同一个固定的一周内以千克计的数量。令 $E(p)=D(p)-S(p)$，$p\\in[1,5]$，其中 $E(p)$ 为该周超额需求的千克数，价格区间对应每千克 $1$ 至 $5$ 元。由连续函数的差仍连续，$E$ 在 $[1,5]$ 上连续，且\n\\[\nE(1)=9>0,\\qquad E(5)=-4<0.\n\\]\n这分别表示该周的需求量比供给量多 $9$ 千克和少 $4$ 千克。所以存在 $p_*\\in(1,5)$ 使 $E(p_*)=0$，即 $D(p_*)=S(p_*)$。均衡价格为 $p_*$ 元/千克，位于每千克 $1$ 元与 $5$ 元之间；相等的供需数量是该周以千克计的均衡交易量。",
+              "unit_id": "S05.U22"
+            }
+          ],
+          "unit_ids": [
+            "S05.U13",
+            "S05.U14",
+            "S05.U18",
+            "S05.U22"
+          ]
+        }
+      ],
+      "job_id": "89467291c05a478b9b525da3ce65b50f",
+      "limitations": [
+        "本评估依据所提供的完整正文、批准计划和反馈数据进行文本核对，不等同于形式化数学证明。",
+        "未执行真实 TeX 编译、PDF 全页视觉检查或教师审核；本结果不构成教师数学或视觉验收。"
+      ],
+      "mock": false,
+      "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+      "plan_revision": 2,
+      "schema_version": 1,
+      "status": "reviewed",
+      "teacher_review": "NOT_RUN"
+    }
+  }
+]

@@ -1,0 +1,54 @@
+{
+  "by_model": {
+    "gpt6": {
+      "attempts": 132,
+      "validated_successes": 101,
+      "recorded_failures": 28,
+      "completion_uncertain": 3,
+      "billing_uncertain": 25,
+      "statuses": {
+        "SCHEMA_VALIDATED": 101,
+        "HTTP_504": 22,
+        "SCHEMA_INVALID": 6,
+        "HTTP_200": 3
+      }
+    },
+    "deepseek-flash": {
+      "attempts": 19,
+      "validated_successes": 18,
+      "recorded_failures": 1,
+      "completion_uncertain": 0,
+      "billing_uncertain": 1,
+      "statuses": {
+        "TIMEOUT": 1,
+        "SCHEMA_VALIDATED": 18
+      }
+    },
+    "deepseek-v4-pro": {
+      "attempts": 1,
+      "validated_successes": 0,
+      "recorded_failures": 1,
+      "completion_uncertain": 0,
+      "billing_uncertain": 1,
+      "statuses": {
+        "TOTAL_TIMEOUT": 1
+      }
+    }
+  },
+  "totals": {
+    "attempts": 152,
+    "validated_successes": 119,
+    "recorded_failures": 30,
+    "completion_uncertain": 3,
+    "billing_uncertain": 27
+  },
+  "success_definition": "SCHEMA_VALIDATED only; not mathematical correctness or teacher acceptance.",
+  "uncertainty_definition": "No definitive success/failure recorded; HTTP 200 headers alone are uncertain. Timeouts are recorded client failures and may still have been handled/billed by the server.",
+  "known_usage_sum": {
+    "prompt_tokens": 2069769,
+    "completion_tokens": 721631,
+    "total_tokens": 2791400
+  },
+  "usage_reporting_complete": false,
+  "price_status": "NOT_PROVIDED"
+}

@@ -1,0 +1,125 @@
+{
+  "section_id": "S03",
+  "units": [
+    {
+      "id": "S03.U01",
+      "kind": "definition",
+      "tex": "设函数 $\\alpha(x)$ 在考察点 $x_0$ 的某个去心邻域内有定义。若\n\\[\n\\lim_{x\\to x_0}\\alpha(x)=0,\n\\]\n则称 $\\alpha(x)$ 是当 $x\\to x_0$ 时的无穷小。这里的“无穷小”表示函数值趋近于零，而不表示函数在某个邻域内恒不为零。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时有\n\\[\n|\\alpha(x)|>M,\n\\]\n则称 $\\alpha(x)$ 是当 $x\\to x_0$ 时绝对值意义下的无穷大，即 $|\\alpha(x)|\\to+\\infty$。本节的“无穷大”采用这一含义，它本身不指定函数值的正负方向。\n\n正无穷极限与负无穷极限须分别定义：若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时有 $\\alpha(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0}\\alpha(x)=+\\infty;\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时有 $\\alpha(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0}\\alpha(x)=-\\infty.\n\\]\n上述两种情形均满足绝对值意义下的无穷大条件，但仅有 $|\\alpha(x)|\\to+\\infty$ 不能推出其中任何一种带符号的极限。无穷小与无穷大都是相对于特定的极限过程而言的。\\label{def:infinitesimal}",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U02",
+      "kind": "definition",
+      "tex": "设函数 $\\alpha(x)$ 与 $\\beta(x)$ 在 $x_0$ 的某个去心邻域内有定义，且在该邻域内 $\\beta(x)\\neq0$。若\n\\[\n\\lim_{x\\to x_0}\\alpha(x)=0,\\qquad\n\\lim_{x\\to x_0}\\beta(x)=0,\n\\qquad\n\\lim_{x\\to x_0}\\frac{\\alpha(x)}{\\beta(x)}=1,\n\\]\n则称 $\\alpha(x)$ 与 $\\beta(x)$ 当 $x\\to x_0$ 时为等价无穷小，记为\n\\[\n\\alpha(x)\\sim\\beta(x)\\qquad(x\\to x_0).\n\\]\n其中，前两个条件说明二者都是同一极限过程下的无穷小，最后一个条件给出它们的等价关系；比值条件只在商有定义的去心邻域内使用。若只满足比值极限为 $1$ 而不要求二者都趋于零，则称为一般的等价函数关系，而不称为等价无穷小。\\label{def:equivalent-infinitesimal}\n\n无穷小的阶比较描述它们在同一极限过程中趋于零的相对快慢。仍设 $\\alpha(x)\\to0$、$\\beta(x)\\to0$，且 $\\beta(x)$ 在某个去心邻域内非零。当 $x\\to x_0$ 时，若\n\\[\n\\frac{\\alpha(x)}{\\beta(x)}\\to0,\n\\]\n则称 $\\alpha$ 是比 $\\beta$ 高阶的无穷小，记为 $\\alpha=o(\\beta)$；若\n\\[\n\\left|\\frac{\\alpha(x)}{\\beta(x)}\\right|\\to+\\infty,\n\\]\n则称 $\\alpha$ 是比 $\\beta$ 低阶的无穷小；若\n\\[\n\\frac{\\alpha(x)}{\\beta(x)}\\to c,\\qquad 0<|c|<\\infty,\n\\]\n则称二者为同阶无穷小。因此，等价无穷小是同阶无穷小中 $c=1$ 的特殊情形，并非所有同阶无穷小都等价。这些比值条件不必对任意一对无穷小成立，不能在比值没有相应极限时强行作上述分类。\n\n记号 $r(x)=o(1)$ 表示在指定的极限过程中 $r(x)\\to0$；这里的 $1$ 是比较用的常数，并不是无穷小。在上述分母非零的条件下，$\\alpha=o(\\beta)$ 等价于 $\\alpha=\\beta r$，其中 $r=o(1)$；$\\alpha\\sim\\beta$ 则等价于 $\\alpha=\\beta(1+r)$，其中 $r=o(1)$。这些记号均须注明或由上下文明确同一个极限过程。",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U03",
+      "kind": "theorem",
+      "tex": "在实数范围内，当 $x\\to0$ 时，有两个基本极限\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1,\n\\qquad\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]\n其中，第一式中的 $x$ 取弧度制。由此可得\n\\[\n\\sin x\\sim x,\n\\qquad\n e^x-1\\sim x\\qquad(x\\to0).\n\\]\n这些结论只适用于所写出的极限过程及其定义域条件，不能不加条件地推广到任意点或任意角度单位。\\label{thm:fundamental-limits}",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U04",
+      "kind": "proof",
+      "tex": "先补充说明三角函数部分所需的基础事实。这里所有角均采用弧度制。由单位圆中的几何不等式，对任意实数 $u$ 都有\n\\[\n|\\sin u|\\leq |u|.\n\\]\n因此取 $u=x/2$，并结合三角恒等式，得到\n\\[\n1-\\cos x=2\\sin^2\\frac{x}{2},\n\\qquad\n0\\leq1-\\cos x=2\\sin^2\\frac{x}{2}\\leq2\\left|\\frac{x}{2}\\right|^2=\\frac{x^2}{2}.\n\\]\n这里的估计在 $x\\to0$ 的某个邻域内当然成立，实际上对所有实数 $x$ 都成立。由于 $x^2/2\\to0$，由夹逼原理得到\n\\[\n\\lim_{x\\to0}\\cos x=1.\n\\]\n因此，下面使用的 $\\cos x\\to1$ 已由上述估计得到，而不是未经说明的前提。\n\n对 $0<x<\\dfrac{\\pi}{2}$，由单位圆中的几何不等式，有\n\\[\n\\sin x<x<\\tan x.\n\\]\n由于 $\\sin x>0$，两边分别除以 $\\sin x$，得到\n\\[\n1<\\frac{x}{\\sin x}<\\frac{1}{\\cos x}.\n\\]\n取倒数可得\n\\[\n\\cos x<\\frac{\\sin x}{x}<1.\n\\]\n当 $x\\to0^+$ 时，$\\cos x\\to1$。这里所用的是夹逼原理在右侧邻域上的同样结论：若在某个右侧去心邻域内有 $h(x)\\leq f(x)\\leq g(x)$，且当 $x\\to x_0^+$ 时 $h(x)$ 与 $g(x)$ 都趋于同一有限数 $L$，则对任意 $\\varepsilon>0$，分别由两个单侧极限取得适用的 $\\delta_1,\\delta_2$，取 $\\delta=\\min\\{\\delta_1,\\delta_2\\}$，即可得到 $|f(x)-L|<\\varepsilon$；因此 $f(x)\\to L$。这只是双侧夹逼证明的同样 $\\delta$ 论证，并将考察范围限制在右侧邻域。由此可知\n\\[\n\\lim_{x\\to0^+}\\frac{\\sin x}{x}=1.\n\\]\n又因为 $\\sin x/x$ 是偶函数，所以左极限也等于 $1$，从而\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1.\n\\]\n\n再证明第二个基本极限。先建立所需的指数函数估计，而不把待证极限作为先验性质。采用 Euler 定义\n\\[\ne=\\lim_{n\\to\\infty}a_n,\n\\qquad a_n=\\left(1+\\frac1n\\right)^n.\n\\]\n由二项式定理，$a_n$ 的第 $k$ 项为\n\\[\n\\binom nk\\frac1{n^k}=\\frac1{k!}\\prod_{j=0}^{k-1}\\left(1-\\frac{j}{n}\\right).\n\\]\n对每个固定的 $k$，该项随 $n$ 增大而不减；展开式中的新增项非负，所以 $a_n$ 单调不减。又因 $k!\\geq2^{k-1}$（$k\\geq1$），当 $n\\geq2$ 时\n\\[\na_n\\leq1+1+\\sum_{k=2}^n\\frac1{2^{k-1}}<3,\n\\]\n且 $a_1=2$，故 $(a_n)$ 单调有界，极限 $e$ 存在。特别地，$e\\geq2>1$。\n\n实数幂先由有理幂的保序延拓定义；固定正整数 $q$ 时，$q$ 次根的极限可由有限因式分解\n\\[\nu^q-v^q=(u-v)(u^{q-1}+u^{q-2}v+\\cdots+v^{q-1})\n\\]\n得到。因此，对有理数 $t=p/q\\in(0,1)$（$p,q$ 为正整数），由有理幂的定义及上述根式极限，$e^t$ 可由 $a_n^t$ 的极限表示。取子列 $n\\mapsto qn$，有\n\\[\na_{qn}^t=\\left(1+\\frac1{qn}\\right)^{pn}.\n\\]\n二项式展开给出下界\n\\[\na_{qn}^t\\geq1+\\frac{pn}{qn}=1+t.\n\\]\n另一方面，对每个 $k$，有\n\\[\n\\frac{\\binom{pn}{k}}{(qn)^k}\n\\leq\\frac{(pn)^k}{k!(qn)^k}\n=\\frac{t^k}{k!}\\leq t^k,\n\\]\n从而\n\\[\na_{qn}^t\\leq\\sum_{k=0}^{pn}t^k\\leq\\sum_{k=0}^{\\infty}t^k=\\frac1{1-t}.\n\\]\n令 $n\\to\\infty$，得到对有理 $t\\in(0,1)$ 有\n\\[\n1+t\\leq e^t\\leq\\frac1{1-t}.\n\\]\n对任意实数 $0<t<1$，取有理数 $0<u<t<v<1$。由实幂的保序性，\n\\[\n1+u\\leq e^u\\leq e^t\\leq e^v\\leq\\frac1{1-v}.\n\\]\n令有理数 $u$ 从下方趋于 $t$、$v$ 从上方趋于 $t$。这里只对线性函数和有理式取极限，得到\n\\[\n1+t\\leq e^t\\leq\\frac1{1-t},\\qquad 0<t<1.\n\\]\n这就建立了后续证明所需的指数函数估计，未使用待证的差商极限、指数函数在零点的导数或 Taylor 展开。\n\n当 $0<x<1$ 时，由上述不等式得到\n\\[\n1\\leq\\frac{e^x-1}{x}\\leq\\frac{1}{1-x}.\n\\]\n令 $x\\to0^+$，并应用上面说明的右侧夹逼结论，得到\n\\[\n\\lim_{x\\to0^+}\\frac{e^x-1}{x}=1.\n\\]\n当 $x=-t<0$ 且 $0<t<1$ 时，对\n\\[\n1+t\\leq e^t\\leq\\frac1{1-t}\n\\]\n取倒数，得到\n\\[\n1-t\\leq e^{-t}\\leq\\frac1{1+t}.\n\\]\n由于 $-t<0$，相减并除以负数 $-t$ 时不等号方向反转，因而\n\\[\n\\frac1{1+t}\\leq\\frac{e^{-t}-1}{-t}\\leq1.\n\\]\n令 $t\\to0^+$，再次应用右侧夹逼结论，得到\n\\[\n\\lim_{x\\to0^-}\\frac{e^x-1}{x}=1.\n\\]\n左右极限相等，所以\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]\n整个论证只使用已说明的三角函数估计、由 Euler 定义和有理幂保序延拓建立的指数函数不等式以及夹逼定理。",
+      "relates_to": "S03.U03"
+    },
+    {
+      "id": "S03.U05",
+      "kind": "theorem",
+      "tex": "设 $\\alpha(x)$ 与 $\\beta(x)$ 在 $x_0$ 的某个去心邻域内有定义，且在该邻域内均不为零。若\n\\[\n\\alpha(x)\\sim\\beta(x)\\qquad(x\\to x_0),\n\\]\n并且函数 $F(x)$ 在相应去心邻域内有定义，满足 $F(x)\\alpha(x)$ 有定义以及\n\\[\n\\lim_{x\\to x_0}F(x)\\alpha(x)=L,\n\\]\n其中 $L$ 为有限数，则\n\\[\n\\lim_{x\\to x_0}F(x)\\beta(x)=L,\n\\]\n只要 $F(x)\\beta(x)$ 在该去心邻域内有定义。特别地，在乘积的极限中，可以用与某个无穷小等价的无穷小替换它，但必须保持相关表达式有定义。\n\n商情形也有明确的替换条件：若 $F(x)/\\alpha(x)$ 在某个去心邻域内有定义，且\n\\[\n\\lim_{x\\to x_0}\\frac{F(x)}{\\alpha(x)}=L,\n\\]\n其中 $L$ 为有限数，并且 $F(x)/\\beta(x)$ 在同一去心邻域内有定义，则\n\\[\n\\lim_{x\\to x_0}\\frac{F(x)}{\\beta(x)}=L.\n\\]\n这里要求 $\\alpha(x)$ 与 $\\beta(x)$ 在该去心邻域内均不为零，从而 $\\alpha(x)/\\beta(x)$ 有定义；证明为\n\\[\n\\frac{F(x)}{\\beta(x)}=\\frac{F(x)}{\\alpha(x)}\\frac{\\alpha(x)}{\\beta(x)}.\n\\]\n由 $\\alpha(x)\\sim\\beta(x)$ 可知\n\\[\n\\lim_{x\\to x_0}\\frac{\\alpha(x)}{\\beta(x)}=1.\n\\]\n再由极限的乘法法则，得到\n\\[\n\\lim_{x\\to x_0}\\frac{F(x)}{\\beta(x)}\n=\\left(\\lim_{x\\to x_0}\\frac{F(x)}{\\alpha(x)}\\right)\n\\left(\\lim_{x\\to x_0}\\frac{\\alpha(x)}{\\beta(x)}\\right)\n=L\\cdot1=L.\n\\]\n因此，在商的极限中，可以将分母中的无穷小 $\\alpha(x)$ 替换为与其等价的无穷小 $\\beta(x)$，但必须同时检查两个商在同一去心邻域内有定义，并且原商的有限极限存在。一般而言，不能在加减式中无条件逐项替换等价无穷小；加减项的替换必须另行检验整体极限，不能仅由等价关系和表达式有定义推出。\\label{thm:equivalent-substitution}",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U06",
+      "kind": "proof",
+      "tex": "由 $\\alpha(x)\\sim\\beta(x)$ 的定义，有\n\\[\n\\lim_{x\\to x_0}\\frac{\\alpha(x)}{\\beta(x)}=1.\n\\]\n又由等价无穷小替换定理的假设，$\\alpha(x)$ 与 $\\beta(x)$ 在同一去心邻域内均不为零，因此商 $\\beta(x)/\\alpha(x)$ 在该邻域内有定义，并且\n\\[\n\\frac{\\beta(x)}{\\alpha(x)}\n=\\left(\\frac{\\alpha(x)}{\\beta(x)}\\right)^{-1}.\n\\]\n由于 $\\lim_{x\\to x_0}\\alpha(x)/\\beta(x)=1\\neq0$，由倒数极限定理可得\n\\[\n\\lim_{x\\to x_0}\\frac{\\beta(x)}{\\alpha(x)}=1.\n\\]\n在所给去心邻域内，利用乘积的代数分解，\n\\[\nF(x)\\beta(x)=F(x)\\alpha(x)\\frac{\\beta(x)}{\\alpha(x)}.\n\\]\n由假设和极限的乘法法则，得到\n\\[\n\\lim_{x\\to x_0}F(x)\\beta(x)\n=\\left(\\lim_{x\\to x_0}F(x)\\alpha(x)\\right)\n\\left(\\lim_{x\\to x_0}\\frac{\\beta(x)}{\\alpha(x)}\\right)\n=L\\cdot1=L.\n\\]\n因此，在上述条件下，若原式写成 $F(x)\\alpha(x)$，可以把其中的因子 $\\alpha(x)$ 替换为 $\\beta(x)$，得到 $F(x)\\beta(x)$。这一操作等价于将原式整体乘以修正比值 $\\beta(x)/\\alpha(x)$，而不是用该比值替换原式中的某个因子。替换时，$\\alpha(x)$ 与 $\\beta(x)$ 在同一去心邻域内均须非零，相关表达式须有定义，并且 $\\lim_{x\\to x_0}F(x)\\alpha(x)$ 必须存在且为有限数。该结论适用于所证明的乘积结构，以及通过倒数改写后满足同样条件的商结构。它不表示可以在加减式中无条件逐项替换等价无穷小；例如加减项的替换必须另行检验整体极限，不能仅由等价关系和表达式有定义推出。",
+      "relates_to": "S03.U05"
+    },
+    {
+      "id": "S03.U07",
+      "kind": "example",
+      "tex": "计算\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}.\n\\]\n要求说明等价无穷小替换的依据及适用条件。",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U08",
+      "kind": "solution",
+      "tex": "当 $x\\to0$ 时，$\\sin x\\sim x$，并且 $1+x\\to1$。在 $x\\neq0$ 的去心邻域内，原式有定义，且\n\\[\n\\frac{(1+x)\\sin x}{x}=(1+x)\\frac{\\sin x}{x}.\n\\]\n由基本极限\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1,\n\\qquad\n\\lim_{x\\to0}(1+x)=1,\n\\]\n可得\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}=1\\cdot1=1.\n\\]\n这里的替换只在 $x\\to0$ 且 $x\\neq0$ 的去心邻域内进行，未将原式在 $x=0$ 处补定义。",
+      "relates_to": "S03.U07"
+    },
+    {
+      "id": "S03.U09",
+      "kind": "exercise",
+      "tex": "计算\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}\\,(1-2x),\n\\]\n并说明所使用的基本极限及乘法法则的条件。",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U10",
+      "kind": "solution",
+      "tex": "当 $x\\to0$ 且 $x\\neq0$ 时，$\\dfrac{e^x-1}{x}$ 有定义。由基本极限\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1,\n\\]\n以及\n\\[\n\\lim_{x\\to0}(1-2x)=1,\n\\]\n再由极限的乘法法则，得到\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}(1-2x)=1\\cdot1=1.\n\\]\n乘法法则要求两个因子在同一去心邻域内有定义，并且各自的有限极限存在；这些条件在本题中均满足。",
+      "relates_to": "S03.U09"
+    }
+  ],
+  "calculations": [
+    {
+      "assumptions": {
+        "x": {
+          "real": true
+        }
+      },
+      "direction": "+-",
+      "expected": {
+        "op": "Integer",
+        "value": 1
+      },
+      "expression": {
+        "args": [
+          {
+            "args": [
+              {
+                "name": "x",
+                "op": "Symbol"
+              }
+            ],
+            "op": "sin"
+          },
+          {
+            "args": [
+              {
+                "name": "x",
+                "op": "Symbol"
+              },
+              {
+                "op": "Integer",
+                "value": -1
+              }
+            ],
+            "op": "Pow"
+          }
+        ],
+        "op": "Mul"
+      },
+      "id": "S03.C01",
+      "kind": "limit",
+      "point": {
+        "op": "Integer",
+        "value": 0
+      },
+      "unit_id": "S03.U03",
+      "variable": "x"
+    }
+  ],
+  "calculation_limitations": [
+    "协议支持的极限核算可以核对 $\\sin x/x$ 在 $x\\to0$ 时的代表性结论，但不能表达弧度制、三角函数的几何不等式或完整的夹逼证明。",
+    "协议中的布尔假设不能完整表达去心邻域和函数定义域条件；正文仍保留了 $x\\neq0$ 及相应表达式有定义的条件。",
+    "本次修正 S03.C01 的表达式树格式并重新提交请求，不将此前 UNKNOWN 记录视为核验通过。该请求仅覆盖 S03.U03 中的正弦基本极限，不覆盖指数基本极限及 S03.U06 中一般函数的等价替换证明。",
+    "S03.U01 的修订涉及一般函数的量词定义，以及绝对值趋于无穷与正、负无穷极限的区别；现有有界核算协议不能表达一般函数及其去心邻域量词条件，故不为该定义新增符号核算请求。",
+    "本次仅将证明中的内部单元标识改为定理的自然名称，不改变数学结论；一般函数的等价关系、去心邻域条件及极限乘法推理不能由现有 JSON AST 完整表达，本次不新增核算请求。",
+    "S03.U04 的指数基本极限及其依赖的不等式不在现有表达式 AST 的可支持核算范围内，故不能用协议核验该先修命题或该证明链条。"
+  ],
+  "uncertainties": [
+    "S03.U04 对指数基本极限的证明明确依赖先修命题：当 $0<t<1$ 时，$1+t\\le e^t\\le1/(1-t)$。当前提供的 S01、S02 正文未核实包含该命题，因此其先修来源仍需课程材料另行确认；若未建立该命题，本单元的指数极限证明不应视为自足。"
+  ]
+}

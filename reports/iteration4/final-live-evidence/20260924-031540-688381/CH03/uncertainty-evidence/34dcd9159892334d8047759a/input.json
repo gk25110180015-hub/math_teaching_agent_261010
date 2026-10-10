@@ -1,0 +1,1200 @@
+{
+  "plan": {
+    "additions": [],
+    "decision_ids": [
+      "f5391dff983a4c9abb85da431cb31909",
+      "7ca7cf70f16741558e7c2f5f52b15a8a",
+      "9e01f2db34b441de925b672b5caa32e7",
+      "9d39de0f38b149659cfdd61fc2be8cf2"
+    ],
+    "decisions": [
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "custom_input": "",
+        "id": "f5391dff983a4c9abb85da431cb31909",
+        "question_id": "Q-PROOF",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "key"
+        },
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "timestamp": "2026-09-19T18:44:39.074420+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "custom_input": "",
+        "id": "7ca7cf70f16741558e7c2f5f52b15a8a",
+        "question_id": "Q-EXAMPLE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "balanced"
+        },
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "timestamp": "2026-09-19T18:44:39.074420+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "custom_input": "",
+        "id": "9e01f2db34b441de925b672b5caa32e7",
+        "question_id": "Q-EXERCISE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "with_answers"
+        },
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "timestamp": "2026-09-19T18:44:39.074420+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "custom_input": "",
+        "id": "9d39de0f38b149659cfdd61fc2be8cf2",
+        "question_id": "Q-ANSWERS",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "end"
+        },
+        "selected_option_ids": [
+          "END"
+        ],
+        "timestamp": "2026-09-19T18:44:39.074420+00:00"
+      }
+    ],
+    "diff": [
+      {
+        "after": {
+          "answers_location": "end",
+          "example_focus": "balanced",
+          "exercises": "with_answers",
+          "proof_policy": "key"
+        },
+        "before": {
+          "answers_location": null,
+          "example_focus": null,
+          "exercises": null,
+          "proof_policy": null
+        },
+        "field": "lecture"
+      }
+    ],
+    "difficulty": "经济学本科一年级微积分",
+    "exclusions": [
+      "不系统讲授导数、微分及其几何应用。",
+      "不展开多元函数极限与连续性。",
+      "不讨论严格的拓扑空间定义、度量空间完备性和序列完备性证明。",
+      "不系统讲授渐近展开、泰勒公式及高阶无穷小理论。",
+      "不涉及测度论、勒贝格积分或高级实分析中的连续性定理证明。"
+    ],
+    "input_snapshot_hash": "3b4e20cb757d221f1c974ffadb5918b392f9092cd5d1a8d9e5847c07c37930b7",
+    "lecture": {
+      "answers_location": "end",
+      "example_focus": "balanced",
+      "exercises": "with_answers",
+      "proof_policy": "key"
+    },
+    "objectives": [
+      "建立一元函数极限的直观与严格认识，掌握点极限、左右极限和无穷远极限的表达方式。",
+      "掌握极限的唯一性、保号性、四则运算等基本性质，并能处理常见极限计算。",
+      "理解无穷小及其阶的基本思想，掌握等价无穷小在极限计算中的使用条件。",
+      "掌握函数连续性的定义、间断点分类及连续函数的基本运算性质。",
+      "理解闭区间上连续函数的有界性、最值性和介值性，并能解决基础经济学模型中的连续性问题。"
+    ],
+    "omissions": [],
+    "prerequisites": [
+      "实数运算与绝对值不等式",
+      "集合、区间与邻域的基本概念",
+      "初等函数及其图像",
+      "代数式变形与因式分解",
+      "指数函数、对数函数和三角函数的基本性质"
+    ],
+    "provider": "live",
+    "questions": [
+      {
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-PROOF",
+        "options": [
+          {
+            "effects": {
+              "value": "key"
+            },
+            "id": "KEY",
+            "label": "关键定理完整证明，其余说明",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "all"
+            },
+            "id": "ALL",
+            "label": "所有定理完整证明",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "定理证明采用哪种深度？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXAMPLE",
+        "options": [
+          {
+            "effects": {
+              "value": "balanced"
+            },
+            "id": "BALANCED",
+            "label": "概念与计算均衡",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "economics"
+            },
+            "id": "ECONOMICS",
+            "label": "更多经济应用",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "例题侧重什么？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXERCISE",
+        "options": [
+          {
+            "effects": {
+              "value": "with_answers"
+            },
+            "id": "WITH",
+            "label": "安排练习并附答案",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "none"
+            },
+            "id": "NONE",
+            "label": "不安排额外练习",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "是否安排练习与答案？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-ANSWERS",
+        "options": [
+          {
+            "effects": {
+              "value": "section"
+            },
+            "id": "SECTION",
+            "label": "各节之后",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "end"
+            },
+            "id": "END",
+            "label": "讲义末尾",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "练习答案放在哪里？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "END"
+        ],
+        "selection_mode": "single"
+      }
+    ],
+    "reference_context": {
+      "dataset": "第三章",
+      "instruction": "Only observe structure, proof depth and notation. Do not copy these examples into a different topic.",
+      "label": "UNTRUSTED_STYLE_REFERENCE_ONLY",
+      "section_titles": [
+        "一元函数极限",
+        "函数极限的基本性质",
+        "两个重要极限",
+        "等价无穷小",
+        "一元函数的连续性",
+        "闭区间连续函数的两个基本定理",
+        "二元函数的极限与连续"
+      ],
+      "source_hash": "73f3c32c19af46bf3c9b3e2881b18327a1aa8970ad2ff8bc2610d979ef655f3f",
+      "status": "RETRIEVED",
+      "weight_training": false
+    },
+    "reference_registry": {
+      "def:bounded-on-closed-interval": "S05",
+      "def:discontinuity-types": "S04",
+      "def:equivalent-infinitesimal": "S03",
+      "def:infinite-limit": "S01",
+      "def:infinitesimal": "S03",
+      "def:interval-continuity": "S04",
+      "def:one-sided-limit": "S01",
+      "def:point-continuity": "S04",
+      "def:point-limit": "S01",
+      "def:squeeze-principle": "S02",
+      "sec:S01": "S01",
+      "sec:S02": "S02",
+      "sec:S03": "S03",
+      "sec:S04": "S04",
+      "sec:S05": "S05",
+      "thm:composition-continuity": "S04",
+      "thm:continuity-algebra": "S04",
+      "thm:equivalent-substitution": "S03",
+      "thm:extreme-value-theorem": "S05",
+      "thm:fundamental-limits": "S03",
+      "thm:intermediate-value-theorem": "S05",
+      "thm:limit-algebra": "S02",
+      "thm:limit-sign-preservation": "S02",
+      "thm:limit-uniqueness": "S01",
+      "thm:squeeze-theorem": "S02",
+      "thm:two-sided-limit-criterion": "S01",
+      "thm:zero-existence-theorem": "S05"
+    },
+    "revision": 2,
+    "rules": {
+      "allowed_text_sizes": [
+        "footnotesize",
+        "small",
+        "normalsize",
+        "large"
+      ],
+      "rule_version": 1,
+      "summary_frames": false
+    },
+    "schema_version": 1,
+    "sections": [
+      {
+        "id": "S01",
+        "objectives": [
+          "理解函数在一点处趋近时的局部行为。",
+          "掌握点极限、左极限、右极限及无穷远极限的定义。",
+          "能够使用极限定义判断简单函数的极限，并用左右极限分析极限存在性。"
+        ],
+        "prerequisites": [],
+        "reference_labels": [
+          "def:point-limit",
+          "def:one-sided-limit",
+          "def:infinite-limit",
+          "thm:two-sided-limit-criterion",
+          "thm:limit-uniqueness"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "一元函数极限：定义、左右极限与无穷远极限"
+      },
+      {
+        "id": "S02",
+        "objectives": [
+          "掌握极限的唯一性、局部有界性和保号性。",
+          "掌握极限的和、差、积、商运算法则及复合函数的基础结论。",
+          "能够运用代数变形、夹逼思想和基本极限完成初等计算。"
+        ],
+        "prerequisites": [
+          "S01"
+        ],
+        "reference_labels": [
+          "def:squeeze-principle",
+          "thm:limit-algebra",
+          "thm:squeeze-theorem",
+          "thm:limit-sign-preservation"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "极限的基本性质与运算"
+      },
+      {
+        "id": "S03",
+        "objectives": [
+          "理解无穷小与无穷大的相对概念。",
+          "掌握常用基本极限及其适用条件。",
+          "理解等价无穷小的定义，并能在乘积和商的极限中进行规范替换。"
+        ],
+        "prerequisites": [
+          "S02"
+        ],
+        "reference_labels": [
+          "def:infinitesimal",
+          "def:equivalent-infinitesimal",
+          "thm:fundamental-limits",
+          "thm:equivalent-substitution"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "无穷小、基本极限与等价无穷小"
+      },
+      {
+        "id": "S04",
+        "objectives": [
+          "掌握函数在一点、区间内连续的定义。",
+          "理解连续性与极限、函数值之间的关系。",
+          "能够判断可去间断点、跳跃间断点和无穷间断点，并掌握连续函数的四则运算与复合性质。"
+        ],
+        "prerequisites": [
+          "S03"
+        ],
+        "reference_labels": [
+          "def:point-continuity",
+          "def:interval-continuity",
+          "def:discontinuity-types",
+          "thm:continuity-algebra",
+          "thm:composition-continuity"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "函数连续性与间断点"
+      },
+      {
+        "id": "S05",
+        "objectives": [
+          "掌握闭区间连续函数有界定理和最值定理。",
+          "理解介值定理与零点存在性定理。",
+          "能够将连续性定理用于判断方程根的存在性及简单经济学模型的可行性。"
+        ],
+        "prerequisites": [
+          "S04"
+        ],
+        "reference_labels": [
+          "def:bounded-on-closed-interval",
+          "thm:extreme-value-theorem",
+          "thm:intermediate-value-theorem",
+          "thm:zero-existence-theorem"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "闭区间连续函数的基本定理及应用"
+      }
+    ],
+    "symbols": {
+      "A": "函数极限值或常数",
+      "[a,b]": "由a与b确定的闭区间，其中a≤b",
+      "\\delta": "依赖于\\varepsilon的正数",
+      "\\lim_{x\\to x_0^+}f(x)": "函数在x从右侧趋近于x_0时的右极限",
+      "\\lim_{x\\to x_0^-}f(x)": "函数在x从左侧趋近于x_0时的左极限",
+      "\\lim_{x\\to x_0}f(x)": "函数在x趋近于x_0时的极限",
+      "\\varepsilon": "任意给定的正数",
+      "f(x)": "定义在相应区间或邻域上的函数",
+      "o(1)": "当自变量趋近相应极限位置时趋于零的量",
+      "x": "自变量",
+      "x_0": "考察的有限点"
+    },
+    "theme": "default",
+    "title": "函数极限与连续：本科一年级微积分讲义计划",
+    "unresolved_blocking_questions": [],
+    "workflow_id": "lecture.generate",
+    "hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7"
+  },
+  "section": {
+    "section_id": "S03",
+    "units": [
+      {
+        "id": "S03.U01",
+        "kind": "definition",
+        "tex": "设函数 $\\alpha(x)$ 在考察点 $x_0$ 的某个去心邻域内有定义。若\n\\[\n\\lim_{x\\to x_0}\\alpha(x)=0,\n\\]\n则称 $\\alpha(x)$ 是当 $x\\to x_0$ 时的无穷小。这里的“无穷小”表示函数值趋近于零，而不表示函数在某个邻域内恒不为零。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时有\n\\[\n|\\alpha(x)|>M,\n\\]\n则称 $\\alpha(x)$ 是当 $x\\to x_0$ 时绝对值意义下的无穷大，即 $|\\alpha(x)|\\to+\\infty$。本节的“无穷大”采用这一含义，它本身不指定函数值的正负方向。\n\n正无穷极限与负无穷极限须分别定义：若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时有 $\\alpha(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0}\\alpha(x)=+\\infty;\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时有 $\\alpha(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0}\\alpha(x)=-\\infty.\n\\]\n上述两种情形均满足绝对值意义下的无穷大条件，但仅有 $|\\alpha(x)|\\to+\\infty$ 不能推出其中任何一种带符号的极限。无穷小与无穷大都是相对于特定的极限过程而言的。\\label{def:infinitesimal}",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U02",
+        "kind": "definition",
+        "tex": "设函数 $\\alpha(x)$ 与 $\\beta(x)$ 在 $x_0$ 的某个去心邻域内有定义，且在该邻域内 $\\beta(x)\\neq0$。若\n\\[\n\\lim_{x\\to x_0}\\alpha(x)=0,\\qquad\n\\lim_{x\\to x_0}\\beta(x)=0,\n\\qquad\n\\lim_{x\\to x_0}\\frac{\\alpha(x)}{\\beta(x)}=1,\n\\]\n则称 $\\alpha(x)$ 与 $\\beta(x)$ 当 $x\\to x_0$ 时为等价无穷小，记为\n\\[\n\\alpha(x)\\sim\\beta(x)\\qquad(x\\to x_0).\n\\]\n其中，前两个条件说明二者都是同一极限过程下的无穷小，最后一个条件给出它们的等价关系；比值条件只在商有定义的去心邻域内使用。若只满足比值极限为 $1$ 而不要求二者都趋于零，则称为一般的等价函数关系，而不称为等价无穷小。\\label{def:equivalent-infinitesimal}\n\n无穷小的阶比较描述它们在同一极限过程中趋于零的相对快慢。仍设 $\\alpha(x)\\to0$、$\\beta(x)\\to0$，且 $\\beta(x)$ 在某个去心邻域内非零。当 $x\\to x_0$ 时，若\n\\[\n\\frac{\\alpha(x)}{\\beta(x)}\\to0,\n\\]\n则称 $\\alpha$ 是比 $\\beta$ 高阶的无穷小，记为 $\\alpha=o(\\beta)$；若\n\\[\n\\left|\\frac{\\alpha(x)}{\\beta(x)}\\right|\\to+\\infty,\n\\]\n则称 $\\alpha$ 是比 $\\beta$ 低阶的无穷小；若\n\\[\n\\frac{\\alpha(x)}{\\beta(x)}\\to c,\\qquad 0<|c|<\\infty,\n\\]\n则称二者为同阶无穷小。因此，等价无穷小是同阶无穷小中 $c=1$ 的特殊情形，并非所有同阶无穷小都等价。这些比值条件不必对任意一对无穷小成立，不能在比值没有相应极限时强行作上述分类。\n\n记号 $r(x)=o(1)$ 表示在指定的极限过程中 $r(x)\\to0$；这里的 $1$ 是比较用的常数，并不是无穷小。在上述分母非零的条件下，$\\alpha=o(\\beta)$ 等价于 $\\alpha=\\beta r$，其中 $r=o(1)$；$\\alpha\\sim\\beta$ 则等价于 $\\alpha=\\beta(1+r)$，其中 $r=o(1)$。这些记号均须注明或由上下文明确同一个极限过程。",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U03",
+        "kind": "theorem",
+        "tex": "在实数范围内，当 $x\\to0$ 时，有两个基本极限\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1,\n\\qquad\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]\n其中，第一式中的 $x$ 取弧度制。由此可得\n\\[\n\\sin x\\sim x,\n\\qquad\n e^x-1\\sim x\\qquad(x\\to0).\n\\]\n这些结论只适用于所写出的极限过程及其定义域条件，不能不加条件地推广到任意点或任意角度单位。\\label{thm:fundamental-limits}",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U04",
+        "kind": "proof",
+        "tex": "先补充说明三角函数部分所需的基础事实。这里所有角均采用弧度制。由单位圆中的几何不等式，对任意实数 $u$ 都有\n\\[\n|\\sin u|\\leq |u|.\n\\]\n因此取 $u=x/2$，并结合三角恒等式，得到\n\\[\n1-\\cos x=2\\sin^2\\frac{x}{2},\n\\qquad\n0\\leq1-\\cos x=2\\sin^2\\frac{x}{2}\\leq2\\left|\\frac{x}{2}\\right|^2=\\frac{x^2}{2}.\n\\]\n这里的估计在 $x\\to0$ 的某个邻域内当然成立，实际上对所有实数 $x$ 都成立。由于 $x^2/2\\to0$，由夹逼原理得到\n\\[\n\\lim_{x\\to0}\\cos x=1.\n\\]\n因此，下面使用的 $\\cos x\\to1$ 已由上述估计得到，而不是未经说明的前提。\n\n对 $0<x<\\dfrac{\\pi}{2}$，由单位圆中的几何不等式，有\n\\[\n\\sin x<x<\\tan x.\n\\]\n由于 $\\sin x>0$，两边分别除以 $\\sin x$，得到\n\\[\n1<\\frac{x}{\\sin x}<\\frac{1}{\\cos x}.\n\\]\n取倒数可得\n\\[\n\\cos x<\\frac{\\sin x}{x}<1.\n\\]\n当 $x\\to0^+$ 时，$\\cos x\\to1$。这里所用的是夹逼原理在右侧邻域上的同样结论：若在某个右侧去心邻域内有 $h(x)\\leq f(x)\\leq g(x)$，且当 $x\\to x_0^+$ 时 $h(x)$ 与 $g(x)$ 都趋于同一有限数 $L$，则对任意 $\\varepsilon>0$，分别由两个单侧极限取得适用的 $\\delta_1,\\delta_2$，取 $\\delta=\\min\\{\\delta_1,\\delta_2\\}$，即可得到 $|f(x)-L|<\\varepsilon$；因此 $f(x)\\to L$。这只是双侧夹逼证明的同样 $\\delta$ 论证，并将考察范围限制在右侧邻域。由此可知\n\\[\n\\lim_{x\\to0^+}\\frac{\\sin x}{x}=1.\n\\]\n又因为 $\\sin x/x$ 是偶函数，所以左极限也等于 $1$，从而\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1.\n\\]\n\n再证明第二个基本极限。先建立所需的指数函数估计，而不把待证极限作为先验性质。对正整数 $n$，设\n\\[\na_n=\\left(1+\\frac1n\\right)^n.\n\\]\n由二项式定理，$a_n$ 的第 $k$ 项为\n\\[\n\\binom nk\\frac1{n^k}=\\frac1{k!}\\prod_{j=0}^{k-1}\\left(1-\\frac{j}{n}\\right).\n\\]\n对每个固定的 $k$，该项随 $n$ 增大而不减；展开式中的新增项非负，所以 $a_n$ 单调不减。又因 $k!\\geq2^{k-1}$（$k\\geq1$），当 $n\\geq2$ 时\n\\[\na_n\\leq1+1+\\sum_{k=2}^n\\frac1{2^{k-1}}<3,\n\\]\n且 $a_1=2$。令\n\\[\nE=\\sup\\{a_n:n\\in\\mathbb N,\\ n\\geq1\\}.\n\\]\n这里使用实数的上确界性质：每个非空且有上界的实数集合都有最小上界。由上面的估计，集合 $\\{a_n:n\\geq1\\}$ 非空且有上界 $3$，故 $E$ 存在，并且 $2\\leq E\\leq3$。\n\n现在用数列极限的 $\\varepsilon$-$N$ 含义说明 $a_n$ 确实趋于 $E$。任给 $\\varepsilon>0$，由 $E$ 是上确界，数 $E-\\varepsilon$ 不可能仍是该集合的上界，因此存在正整数 $N$ 使得\n\\[\na_N>E-\\varepsilon.\n\\]\n由于 $(a_n)$ 单调不减且 $a_n\\leq E$，对一切 $n\\geq N$ 都有\n\\[\n0\\leq E-a_n\\leq E-a_N<\\varepsilon.\n\\]\n这正是 $a_n\\to E$ 的 $\\varepsilon$-$N$ 定义。因此可定义\n\\[\ne:=E=\\lim_{n\\to\\infty}a_n,\n\\qquad e\\geq2>1.\n\\]\n同一 $\\varepsilon$-$N$ 论证还说明任意子列 $a_{qn}$（其中 $q$ 为固定正整数）也趋于 $e$：给定 $\\varepsilon>0$，取上面得到的 $N$，当 $n\\geq N$ 时有 $qn\\geq N$，从而\n\\[\n|a_{qn}-e|<\\varepsilon.\n\\]\n\n实数幂先由有理幂的保序延拓定义。下面说明所需的根式极限，而不把它作为未说明的连续性结论使用。固定正整数 $q$，设 $y_n>0$、$y>0$ 且 $y_n\\to y$。令 $r_n=y_n^{1/q}$、$r=y^{1/q}$，则\n\\[\ny_n-y=(r_n-r)(r_n^{q-1}+r_n^{q-2}r+\\cdots+r^{q-1}).\n\\]\n由于 $y_n\\to y>0$，当 $n$ 足够大时 $y_n>y/2$，故 $r_n\\geq(y/2)^{1/q}$；因而上式中的正因子之和有一个与 $n$ 无关的正下界。这说明\n\\[\n|r_n-r|\\leq C|y_n-y|\\to0\n\\]\n（其中 $C$ 为某个正常数），所以 $y_n^{1/q}\\to y^{1/q}$。再由有限因式分解，对固定正整数 $p$ 有\n\\[\nr_n^p-r^p=(r_n-r)(r_n^{p-1}+r_n^{p-2}r+\\cdots+r^{p-1}),\n\\]\n从而 $y_n^{p/q}=r_n^p\\to r^p=y^{p/q}$。这就明确给出了正数有理幂所需的极限依据。\n\n对有理数 $t=p/q\\in(0,1)$（$p,q$ 为正整数），取子列 $n\\mapsto qn$，有\n\\[\na_{qn}^t=\\left(1+\\frac1{qn}\\right)^{pn}.\n\\]\n由上面已经证明的子列极限和根式误差控制，$a_{qn}^t\\to e^t$。二项式展开给出下界\n\\[\na_{qn}^t\\geq1+\\frac{pn}{qn}=1+t.\n\\]\n另一方面，对每个 $k$，有\n\\[\n\\frac{\\binom{pn}{k}}{(qn)^k}\n\\leq\\frac{(pn)^k}{k!(qn)^k}\n=\\frac{t^k}{k!}\\leq t^k,\n\\]\n从而\n\\[\na_{qn}^t\\leq\\sum_{k=0}^{pn}t^k\n=\\frac{1-t^{pn+1}}{1-t}\n<\\frac1{1-t}.\n\\]\n令 $n\\to\\infty$，得到对有理 $t\\in(0,1)$ 有\n\\[\n1+t\\leq e^t\\leq\\frac1{1-t}.\n\\]\n这里使用的是有限等比求和公式，没有另行使用无穷级数收敛理论。\n\n对任意实数 $0<t<1$，取有理数 $0<u<t<v<1$。由实幂的保序性，\n\\[\n1+u\\leq e^u\\leq e^t\\leq e^v\\leq\\frac1{1-v}.\n\\]\n令有理数 $u$ 从下方趋于 $t$、$v$ 从上方趋于 $t$。这里只对线性函数和有理式取极限，得到\n\\[\n1+t\\leq e^t\\leq\\frac1{1-t},\\qquad 0<t<1.\n\\]\n这就建立了后续证明所需的指数函数估计，未使用待证的差商极限、指数函数在零点的导数或 Taylor 展开。\n\n当 $0<x<1$ 时，由上述不等式得到\n\\[\n1\\leq\\frac{e^x-1}{x}\\leq\\frac{1}{1-x}.\n\\]\n令 $x\\to0^+$，并应用上面说明的右侧夹逼结论，得到\n\\[\n\\lim_{x\\to0^+}\\frac{e^x-1}{x}=1.\n\\]\n当 $x=-t<0$ 且 $0<t<1$ 时，对\n\\[\n1+t\\leq e^t\\leq\\frac1{1-t}\n\\]\n取倒数，得到\n\\[\n1-t\\leq e^{-t}\\leq\\frac1{1+t}.\n\\]\n由于 $-t<0$，相减并除以负数 $-t$ 时不等号方向反转，因而\n\\[\n\\frac1{1+t}\\leq\\frac{e^{-t}-1}{-t}\\leq1.\n\\]\n令 $t\\to0^+$，再次应用右侧夹逼结论，得到\n\\[\n\\lim_{x\\to0^-}\\frac{e^x-1}{x}=1.\n\\]\n左右极限相等，所以\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]\n整个论证只使用已说明的三角函数估计、实数上确界性质、数列极限的 $\\varepsilon$-$N$ 含义、由 Euler 定义和有理幂根式估计建立的指数函数不等式以及夹逼定理。",
+        "relates_to": "S03.U03"
+      },
+      {
+        "id": "S03.U05",
+        "kind": "theorem",
+        "tex": "设 $\\alpha(x)$ 与 $\\beta(x)$ 在 $x_0$ 的某个去心邻域内有定义，且在该邻域内均不为零。若\n\\[\n\\alpha(x)\\sim\\beta(x)\\qquad(x\\to x_0),\n\\]\n并且函数 $F(x)$ 在相应去心邻域内有定义，满足 $F(x)\\alpha(x)$ 有定义以及\n\\[\n\\lim_{x\\to x_0}F(x)\\alpha(x)=L,\n\\]\n其中 $L$ 为有限数，则\n\\[\n\\lim_{x\\to x_0}F(x)\\beta(x)=L,\n\\]\n只要 $F(x)\\beta(x)$ 在该去心邻域内有定义。特别地，在乘积的极限中，可以用与某个无穷小等价的无穷小替换它，但必须保持相关表达式有定义。\n\n商情形也有明确的替换条件：若 $F(x)/\\alpha(x)$ 在某个去心邻域内有定义，且\n\\[\n\\lim_{x\\to x_0}\\frac{F(x)}{\\alpha(x)}=L,\n\\]\n其中 $L$ 为有限数，并且 $F(x)/\\beta(x)$ 在同一去心邻域内有定义，则\n\\[\n\\lim_{x\\to x_0}\\frac{F(x)}{\\beta(x)}=L.\n\\]\n这里要求 $\\alpha(x)$ 与 $\\beta(x)$ 在该去心邻域内均不为零，从而 $\\alpha(x)/\\beta(x)$ 有定义；证明为\n\\[\n\\frac{F(x)}{\\beta(x)}=\\frac{F(x)}{\\alpha(x)}\\frac{\\alpha(x)}{\\beta(x)}.\n\\]\n由 $\\alpha(x)\\sim\\beta(x)$ 可知\n\\[\n\\lim_{x\\to x_0}\\frac{\\alpha(x)}{\\beta(x)}=1.\n\\]\n再由极限的乘法法则，得到\n\\[\n\\lim_{x\\to x_0}\\frac{F(x)}{\\beta(x)}\n=\\left(\\lim_{x\\to x_0}\\frac{F(x)}{\\alpha(x)}\\right)\n\\left(\\lim_{x\\to x_0}\\frac{\\alpha(x)}{\\beta(x)}\\right)\n=L\\cdot1=L.\n\\]\n因此，在商的极限中，可以将分母中的无穷小 $\\alpha(x)$ 替换为与其等价的无穷小 $\\beta(x)$，但必须同时检查两个商在同一去心邻域内有定义，并且原商的有限极限存在。一般而言，不能在加减式中无条件逐项替换等价无穷小；加减项的替换必须另行检验整体极限，不能仅由等价关系和表达式有定义推出。\\label{thm:equivalent-substitution}",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U06",
+        "kind": "proof",
+        "tex": "由 $\\alpha(x)\\sim\\beta(x)$ 的定义，有\n\\[\n\\lim_{x\\to x_0}\\frac{\\alpha(x)}{\\beta(x)}=1.\n\\]\n又由等价无穷小替换定理的假设，$\\alpha(x)$ 与 $\\beta(x)$ 在同一去心邻域内均不为零，因此商 $\\beta(x)/\\alpha(x)$ 在该邻域内有定义，并且\n\\[\n\\frac{\\beta(x)}{\\alpha(x)}\n=\\left(\\frac{\\alpha(x)}{\\beta(x)}\\right)^{-1}.\n\\]\n由于 $\\lim_{x\\to x_0}\\alpha(x)/\\beta(x)=1\\neq0$，由倒数极限定理可得\n\\[\n\\lim_{x\\to x_0}\\frac{\\beta(x)}{\\alpha(x)}=1.\n\\]\n在所给去心邻域内，利用乘积的代数分解，\n\\[\nF(x)\\beta(x)=F(x)\\alpha(x)\\frac{\\beta(x)}{\\alpha(x)}.\n\\]\n由假设和极限的乘法法则，得到\n\\[\n\\lim_{x\\to x_0}F(x)\\beta(x)\n=\\left(\\lim_{x\\to x_0}F(x)\\alpha(x)\\right)\n\\left(\\lim_{x\\to x_0}\\frac{\\beta(x)}{\\alpha(x)}\\right)\n=L\\cdot1=L.\n\\]\n因此，在上述条件下，若原式写成 $F(x)\\alpha(x)$，可以把其中的因子 $\\alpha(x)$ 替换为 $\\beta(x)$，得到 $F(x)\\beta(x)$。这一操作等价于将原式整体乘以修正比值 $\\beta(x)/\\alpha(x)$，而不是用该比值替换原式中的某个因子。替换时，$\\alpha(x)$ 与 $\\beta(x)$ 在同一去心邻域内均须非零，相关表达式须有定义，并且 $\\lim_{x\\to x_0}F(x)\\alpha(x)$ 必须存在且为有限数。该结论适用于所证明的乘积结构，以及通过倒数改写后满足同样条件的商结构。它不表示可以在加减式中无条件逐项替换等价无穷小；例如加减项的替换必须另行检验整体极限，不能仅由等价关系和表达式有定义推出。",
+        "relates_to": "S03.U05"
+      },
+      {
+        "id": "S03.U07",
+        "kind": "example",
+        "tex": "计算\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}.\n\\]\n要求说明等价无穷小替换的依据及适用条件。",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U08",
+        "kind": "solution",
+        "tex": "当 $x\\to0$ 时，$\\sin x\\sim x$，并且 $1+x\\to1$。在 $x\\neq0$ 的去心邻域内，原式有定义，且\n\\[\n\\frac{(1+x)\\sin x}{x}=(1+x)\\frac{\\sin x}{x}.\n\\]\n由基本极限\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1,\n\\qquad\n\\lim_{x\\to0}(1+x)=1,\n\\]\n可得\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}=1\\cdot1=1.\n\\]\n这里的替换只在 $x\\to0$ 且 $x\\neq0$ 的去心邻域内进行，未将原式在 $x=0$ 处补定义。",
+        "relates_to": "S03.U07"
+      },
+      {
+        "id": "S03.U09",
+        "kind": "exercise",
+        "tex": "计算\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}\\,(1-2x),\n\\]\n并说明所使用的基本极限及乘法法则的条件。",
+        "relates_to": null
+      },
+      {
+        "id": "S03.U10",
+        "kind": "solution",
+        "tex": "当 $x\\to0$ 且 $x\\neq0$ 时，$\\dfrac{e^x-1}{x}$ 有定义。由基本极限\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1,\n\\]\n以及\n\\[\n\\lim_{x\\to0}(1-2x)=1,\n\\]\n再由极限的乘法法则，得到\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}(1-2x)=1\\cdot1=1.\n\\]\n乘法法则要求两个因子在同一去心邻域内有定义，并且各自的有限极限存在；这些条件在本题中均满足。",
+        "relates_to": "S03.U09"
+      }
+    ],
+    "calculations": [
+      {
+        "assumptions": {
+          "x": {
+            "real": true
+          }
+        },
+        "direction": "+-",
+        "expected": {
+          "op": "Integer",
+          "value": 1
+        },
+        "expression": {
+          "args": [
+            {
+              "args": [
+                {
+                  "name": "x",
+                  "op": "Symbol"
+                }
+              ],
+              "op": "sin"
+            },
+            {
+              "args": [
+                {
+                  "name": "x",
+                  "op": "Symbol"
+                },
+                {
+                  "op": "Integer",
+                  "value": -1
+                }
+              ],
+              "op": "Pow"
+            }
+          ],
+          "op": "Mul"
+        },
+        "id": "S03.C01",
+        "kind": "limit",
+        "point": {
+          "op": "Integer",
+          "value": 0
+        },
+        "unit_id": "S03.U03",
+        "variable": "x"
+      }
+    ],
+    "calculation_limitations": [
+      "协议支持的极限核算可以核对 $\\sin x/x$ 在 $x\\to0$ 时的代表性结论，但不能表达弧度制、三角函数的几何不等式或完整的夹逼证明。",
+      "协议中的布尔假设不能完整表达去心邻域和函数定义域条件；正文仍保留了 $x\\neq0$ 及相应表达式有定义的条件。",
+      "本次修正 S03.C01 的表达式树格式并重新提交请求，不将此前 UNKNOWN 记录视为核验通过。该请求仅覆盖 S03.U03 中的正弦基本极限，不覆盖指数基本极限及 S03.U06 中一般函数的等价替换证明。",
+      "S03.U01 的修订涉及一般函数的量词定义，以及绝对值趋于无穷与正、负无穷极限的区别；现有有界核算协议不能表达一般函数及其去心邻域量词条件，故不为该定义新增符号核算请求。",
+      "本次仅将证明中的内部单元标识改为定理的自然名称，不改变数学结论；一般函数的等价关系、去心邻域条件及极限乘法推理不能由现有 JSON AST 完整表达，本次不新增核算请求。",
+      "S03.U04 的指数基本极限及其依赖的不等式不在现有表达式 AST 的可支持核算范围内，故不能用协议核验该先修命题或该证明链条。"
+    ],
+    "uncertainties": [
+      "S03.U04 对指数基本极限的证明明确依赖先修命题：当 $0<t<1$ 时，$1+t\\le e^t\\le1/(1-t)$。当前提供的 S01、S02 正文未核实包含该命题，因此其先修来源仍需课程材料另行确认；若未建立该命题，本单元的指数极限证明不应视为自足。"
+    ]
+  },
+  "prior_sections": [
+    {
+      "section_id": "S01",
+      "units": [
+        {
+          "id": "S01.U01",
+          "kind": "definition",
+          "tex": "设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义。若存在常数 $A$，使得对任意 $\\varepsilon>0$，都存在 $\\delta>0$，满足当 $0<|x-x_0|<\\delta$ 时有 $|f(x)-A|<\\varepsilon$，则称 $A$ 为 $f(x)$ 当 $x\\to x_0$ 时的极限，记为\n\\[\n\\lim_{x\\to x_0}f(x)=A.\n\\]\n其中，$x_0$ 不要求属于函数的定义域。\\label{def:point-limit}",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U02",
+          "kind": "definition",
+          "tex": "设函数 $f$ 在 $x_0$ 的某个左侧去心邻域内有定义。若存在常数 $A_-$，使得对任意 $\\varepsilon>0$，都存在 $\\delta>0$，当 $x_0-\\delta<x<x_0$ 时有 $|f(x)-A_-|<\\varepsilon$，则称 $A_-$ 为 $f(x)$ 当 $x\\to x_0^-$ 时的左极限，记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=A_-.\n\\]\n设函数 $f$ 在 $x_0$ 的某个右侧去心邻域内有定义。若存在常数 $A_+$，使得对任意 $\\varepsilon>0$，都存在 $\\delta>0$，当 $x_0<x<x_0+\\delta$ 时有 $|f(x)-A_+|<\\varepsilon$，则称 $A_+$ 为 $f(x)$ 当 $x\\to x_0^+$ 时的右极限，记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=A_+.\n\\]\n\\label{def:one-sided-limit}",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U03",
+          "kind": "definition",
+          "tex": "设函数 $f$ 在某个右半无限区间 $(M,+\\infty)$ 上有定义。若存在常数 $A$，使得对任意 $\\varepsilon>0$，都存在 $R>M$，当 $x>R$ 时有 $|f(x)-A|<\\varepsilon$，则称 $A$ 为 $f(x)$ 当 $x\\to+\\infty$ 时的极限，记为\n\\[\n\\lim_{x\\to+\\infty}f(x)=A.\n\\]\n类似地，若函数在某个左半无限区间 $(-\\infty,M)$ 上有定义，且对任意 $\\varepsilon>0$ 都存在 $R<M$，使得当 $x<R$ 时有 $|f(x)-A|<\\varepsilon$，则记为\n\\[\n\\lim_{x\\to-\\infty}f(x)=A.\n\\]\n\\label{def:infinite-limit}",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U04",
+          "kind": "theorem",
+          "tex": "设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义，则\n\\[\n\\lim_{x\\to x_0}f(x)=A\n\\]\n当且仅当\n\\[\n\\lim_{x\\to x_0^-}f(x)=A\n\\quad\\text{且}\\quad\n\\lim_{x\\to x_0^+}f(x)=A.\n\\]\n也就是说，函数在一点的双侧极限存在，当且仅当该点的左极限和右极限都存在且相等。\\label{thm:two-sided-limit-criterion}",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U05",
+          "kind": "proof",
+          "tex": "先设 $\\lim_{x\\to x_0}f(x)=A$。给定任意 $\\varepsilon>0$，由双侧极限的定义，存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时有 $|f(x)-A|<\\varepsilon$。特别地，当 $x_0-\\delta<x<x_0$ 或 $x_0<x<x_0+\\delta$ 时，上述不等式分别成立，因此左极限和右极限都等于 $A$。\n\n反过来，设左极限和右极限都等于 $A$。给定任意 $\\varepsilon>0$，存在 $\\delta_1>0$，使得当 $x_0-\\delta_1<x<x_0$ 时有 $|f(x)-A|<\\varepsilon$；存在 $\\delta_2>0$，使得当 $x_0<x<x_0+\\delta_2$ 时有 $|f(x)-A|<\\varepsilon$。取 $\\delta=\\min\\{\\delta_1,\\delta_2\\}$，则当 $0<|x-x_0|<\\delta$ 时，$x$ 必在 $x_0$ 的左侧或右侧，从而都有 $|f(x)-A|<\\varepsilon$。因此 $\\lim_{x\\to x_0}f(x)=A$。",
+          "relates_to": "S01.U04"
+        },
+        {
+          "id": "S01.U06",
+          "kind": "theorem",
+          "tex": "设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义。若\n\\[\n\\lim_{x\\to x_0}f(x)=A\n\\quad\\text{且}\\quad\n\\lim_{x\\to x_0}f(x)=B,\n\\]\n则 $A=B$。因此，函数在同一点处的有限极限至多有一个。\\label{thm:limit-uniqueness}",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U07",
+          "kind": "proof",
+          "tex": "假设 $A\\ne B$。取 $\\varepsilon=|A-B|/3>0$。由 $\\lim_{x\\to x_0}f(x)=A$，存在 $\\delta_1>0$，使得当 $0<|x-x_0|<\\delta_1$ 时有 $|f(x)-A|<\\varepsilon$；由 $\\lim_{x\\to x_0}f(x)=B$，存在 $\\delta_2>0$，使得当 $0<|x-x_0|<\\delta_2$ 时有 $|f(x)-B|<\\varepsilon$。\n\n取 $\\delta=\\min\\{\\delta_1,\\delta_2\\}$，并取一个满足 $0<|x-x_0|<\\delta$ 的 $x$。由三角不等式，\n\\[\n|A-B|\\leq |A-f(x)|+|f(x)-B|<2\\varepsilon=\\frac{2}{3}|A-B|,\n\\]\n这与 $|A-B|>0$ 矛盾。因此 $A=B$。",
+          "relates_to": "S01.U06"
+        },
+        {
+          "id": "S01.U08",
+          "kind": "example",
+          "tex": "计算\n\\[\n\\lim_{x\\to2}(3x-1)\\text{。}\n\\]\n为说明双侧极限的处理方法，分别考察 $x\\to2^-$ 和 $x\\to2^+$ 两种情形。",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U09",
+          "kind": "solution",
+          "tex": "当 $x\\to2^-$ 或 $x\\to2^+$ 时，都有 $3x-1\\to3\\cdot2-1=5$。更直接地，对任意 $\\varepsilon>0$，取 $\\delta=\\varepsilon/3$。当 $0<|x-2|<\\delta$ 时，\n\\[\n|(3x-1)-5|=|3x-6|=3|x-2|<3\\delta=\\varepsilon\\text{。}\n\\]\n因此由极限定义，\n\\[\n\\lim_{x\\to2}(3x-1)=5\\text{。}\n\\]",
+          "relates_to": "S01.U08"
+        },
+        {
+          "id": "S01.U10",
+          "kind": "example",
+          "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n1,&x<0,\\\\\n2,&x>0.\n\\end{cases}\n\\]\n判断 $\\lim_{x\\to0}f(x)$ 是否存在。",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U11",
+          "kind": "solution",
+          "tex": "当 $x\\to0^-$ 时，始终有 $f(x)=1$，所以\n\\[\n\\lim_{x\\to0^-}f(x)=1\\text{。}\n\\]\n当 $x\\to0^+$ 时，始终有 $f(x)=2$，所以\n\\[\n\\lim_{x\\to0^+}f(x)=2\\text{。}\n\\]\n由于左右极限不相等，根据定理 \\ref{thm:two-sided-limit-criterion}，$\\lim_{x\\to0}f(x)$ 不存在。",
+          "relates_to": "S01.U10"
+        },
+        {
+          "id": "S01.U12",
+          "kind": "exercise",
+          "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n2x+1,&x<1,\\\\\n5,&x>1.\n\\end{cases}\n\\]\n判断 $\\lim_{x\\to1}f(x)$ 是否存在；若存在，求出该极限。",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U13",
+          "kind": "solution",
+          "tex": "当 $x\\to1^-$ 时，$f(x)=2x+1$，因此\n\\[\n\\lim_{x\\to1^-}f(x)=2\\cdot1+1=3\\text{。}\n\\]\n当 $x\\to1^+$ 时，$f(x)=5$，因此\n\\[\n\\lim_{x\\to1^+}f(x)=5\\text{。}\n\\]\n由于左极限 $3$ 与右极限 $5$ 不相等，根据定理 \\ref{thm:two-sided-limit-criterion}，双侧极限 $\\lim_{x\\to1}f(x)$ 不存在。",
+          "relates_to": "S01.U12"
+        }
+      ],
+      "calculations": [
+        {
+          "assumptions": {
+            "x": {
+              "real": true
+            }
+          },
+          "direction": "+-",
+          "expected": {
+            "op": "Integer",
+            "value": 5
+          },
+          "expression": {
+            "args": [
+              {
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 3
+                  },
+                  {
+                    "name": "x",
+                    "op": "Symbol"
+                  }
+                ],
+                "op": "Mul"
+              },
+              {
+                "op": "Integer",
+                "value": -1
+              }
+            ],
+            "op": "Add"
+          },
+          "id": "S01.C01",
+          "kind": "limit",
+          "point": {
+            "op": "Integer",
+            "value": 2
+          },
+          "unit_id": "S01.U09",
+          "variable": "x"
+        }
+      ],
+      "calculation_limitations": [],
+      "uncertainties": []
+    },
+    {
+      "section_id": "S02",
+      "units": [
+        {
+          "id": "S02.U01",
+          "kind": "definition",
+          "tex": "设函数 $f,g,h$ 在点 $x_0$ 的某个去心邻域内有定义。若在该邻域内有 $h(x)\\leq f(x)\\leq g(x)$，且存在有限数 $L$，使得\n\\[\n\\lim_{x\\to x_0}h(x)=L,\\qquad \\lim_{x\\to x_0}g(x)=L,\n\\]\n则\n\\[\n\\lim_{x\\to x_0}f(x)=L\\text{。}\n\\]\n这称为夹逼原理。\\label{def:squeeze-principle}",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U02",
+          "kind": "theorem",
+          "tex": "设函数 $f$ 与 $g$ 在点 $x_0$ 的某个去心邻域内有定义，且 $\\lim_{x\\to x_0}f(x)=A$，$\\lim_{x\\to x_0}g(x)=B$。则\n\\[\n\\lim_{x\\to x_0}(f(x)+g(x))=A+B,\n\\qquad\n\\lim_{x\\to x_0}(f(x)-g(x))=A-B,\n\\]\n\\[\n\\lim_{x\\to x_0}f(x)g(x)=AB.\n\\]\n若 $B\\neq0$，并且在某个去心邻域内 $g(x)\\neq0$，则\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)}{g(x)}=\\frac{A}{B}.\n\\]\n\\label{thm:limit-algebra}\n\n复合极限的基础结论：设 $g$ 在 $x_0$ 的某个去心邻域内有定义，$\\lim_{x\\to x_0}g(x)=b$；外函数 $f$ 在 $b$ 的某个去心邻域内有定义，且 $\\lim_{t\\to b}f(t)=L$。若在 $x_0$ 的某个去心邻域内，$g(x)\\neq b$ 且 $g(x)$ 属于 $f$ 的定义域（因而复合函数有定义），则\n\\[\n\\lim_{x\\to x_0}f(g(x))=L.\n\\]\n这里要求内函数最终不取到 $b$，不能仅凭上述两个极限就无条件推出复合极限。",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U03",
+          "kind": "proof",
+          "tex": "先证明和的法则。给定 $\\varepsilon>0$，由 $f(x)\\to A$ 与 $g(x)\\to B$，分别存在 $\\delta_1>0$ 与 $\\delta_2>0$，使得当 $0<|x-x_0|<\\delta_1$ 时 $|f(x)-A|<\\varepsilon/2$，当 $0<|x-x_0|<\\delta_2$ 时 $|g(x)-B|<\\varepsilon/2$。取 $\\delta=\\min\\{\\delta_1,\\delta_2\\}$，则\n\\[\n\\left|(f(x)+g(x))-(A+B)\\right|\\leq |f(x)-A|+|g(x)-B|<\\varepsilon.\n\\]\n故 $f(x)+g(x)\\to A+B$。由于 $|(-g(x))-(-B)|=|g(x)-B|$，由定义有 $-g(x)\\to-B$；差的法则由 $f(x)-g(x)=f(x)+(-g(x))$ 及和的法则得到。\n\n先说明局部有界性：若 $f$ 在 $x_0$ 的某个去心邻域内有定义，且有有限极限 $A$，则 $f$ 在某个去心邻域内有界。事实上，在极限定义中取误差为 $1$，可得 $\\delta_0>0$，使得当 $0<|x-x_0|<\\delta_0$ 时，\n\\[\n|f(x)-A|<1,\\qquad |f(x)|\\leq |A|+|f(x)-A|<|A|+1.\n\\]\n这只涉及去心邻域，不要求 $f(x_0)$ 有定义。\n\n对于积，令 $M=|A|+1>0$。给定 $\\varepsilon>0$，由两个极限的定义可分别取 $\\delta_1,\\delta_2>0$，使得当 $0<|x-x_0|<\\delta_1$ 时 $|g(x)-B|<\\varepsilon/(2M)$，当 $0<|x-x_0|<\\delta_2$ 时 $|f(x)-A|<\\varepsilon/(2(|B|+1))$。取 $\\delta=\\min\\{\\delta_0,\\delta_1,\\delta_2\\}$，则当 $0<|x-x_0|<\\delta$ 时，\n\\[\n|f(x)g(x)-AB|\\leq |f(x)|\\,|g(x)-B|+|B|\\,|f(x)-A|\n<\\frac{\\varepsilon}{2}+\\frac{|B|\\varepsilon}{2(|B|+1)}<\\varepsilon.\n\\]\n故由极限定义，$f(x)g(x)\\to AB$。\n\n若 $B\\neq0$，由 $g(x)\\to B$，可取 $\\delta_3>0$，使得当 $0<|x-x_0|<\\delta_3$ 时 $|g(x)-B|<|B|/2$。于是\n\\[\n|g(x)|\\geq |B|-|g(x)-B|>\\frac{|B|}{2}>0,\n\\]\n故分母不仅非零，而且远离零，并有\n\\[\n\\left|\\frac{1}{g(x)}-\\frac{1}{B}\\right|=\\frac{|g(x)-B|}{|g(x)||B|}\\leq\\frac{2|g(x)-B|}{|B|^2}.\n\\]\n给定 $\\varepsilon>0$，再由极限定义取 $\\delta_4>0$，使得当 $0<|x-x_0|<\\delta_4$ 时 $|g(x)-B|<\\varepsilon|B|^2/2$。当 $0<|x-x_0|<\\min\\{\\delta_3,\\delta_4\\}$ 时，上述倒数误差小于 $\\varepsilon$。所以 $1/g(x)\\to1/B$。再由已证明的积的法则，得到\n\\[\n\\frac{f(x)}{g(x)}=f(x)\\frac{1}{g(x)}\\to\\frac{A}{B}.\n\\]\n\n最后证明复合极限结论。按该结论的假设，取 $r>0$，使得当 $0<|x-x_0|<r$ 时，$g(x)\\neq b$ 且 $f(g(x))$ 有定义。给定 $\\varepsilon>0$，由 $\\lim_{t\\to b}f(t)=L$，存在 $\\eta>0$，使得当 $0<|t-b|<\\eta$ 时 $|f(t)-L|<\\varepsilon$。由 $g(x)\\to b$，存在 $\\delta_5>0$，使得当 $0<|x-x_0|<\\delta_5$ 时 $|g(x)-b|<\\eta$。因此，当 $0<|x-x_0|<\\min\\{r,\\delta_5\\}$ 时，\n\\[\n0<|g(x)-b|<\\eta,\\qquad |f(g(x))-L|<\\varepsilon.\n\\]\n由极限定义即得 $\\lim_{x\\to x_0}f(g(x))=L$。",
+          "relates_to": "S02.U02"
+        },
+        {
+          "id": "S02.U04",
+          "kind": "theorem",
+          "tex": "设函数 $f,g,h$ 在点 $x_0$ 的某个去心邻域内有定义，并且在该邻域内满足\n\\[\nh(x)\\leq f(x)\\leq g(x).\n\\]\n若\n\\[\n\\lim_{x\\to x_0}h(x)=L,\n\\qquad\n\\lim_{x\\to x_0}g(x)=L,\n\\]\n则\n\\[\n\\lim_{x\\to x_0}f(x)=L.\n\\]\n\\label{thm:squeeze-theorem}\n\n夹逼计算的应用：求 $\\lim_{x\\to0}x^2\\sin(1/x)$。构造上下界时，先利用三角函数的基本性质 $-1\\leq\\sin t\\leq1$，再乘以非负因子 $x^2$。在去心邻域 $0<|x|<1$ 内，$1/x$ 有定义，且\n\\[\n-x^2\\leq x^2\\sin(1/x)\\leq x^2.\n\\]\n两端的极限可以直接由定义核实：给定 $\\varepsilon>0$，取 $\\delta=\\min\\{1,\\sqrt{\\varepsilon}\\}>0$。当 $0<|x|<\\delta$ 时，\n\\[\n|x^2-0|=x^2<\\varepsilon,\\qquad |(-x^2)-0|=x^2<\\varepsilon.\n\\]\n所以\n\\[\n\\lim_{x\\to0}(-x^2)=0,\\qquad \\lim_{x\\to0}x^2=0.\n\\]\n因此由夹逼定理，\n\\[\n\\lim_{x\\to0}x^2\\sin(1/x)=0.\n\\]\n这里无需计算 $\\sin(1/x)$ 的极限，也未使用三角函数的重要极限；关键是用它的有界性构造趋于同一数值的上下界。",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U05",
+          "kind": "proof",
+          "tex": "给定 $\\varepsilon>0$。由 $h(x)\\to L$，存在 $\\delta_1>0$，使得当 $0<|x-x_0|<\\delta_1$ 时 $h(x)>L-\\varepsilon$；由 $g(x)\\to L$，存在 $\\delta_2>0$，使得当 $0<|x-x_0|<\\delta_2$ 时 $g(x)<L+\\varepsilon$。取 $\\delta=\\min\\{\\delta_1,\\delta_2\\}$，则当 $0<|x-x_0|<\\delta$ 时，\n\\[\nL-\\varepsilon<h(x)\\leq f(x)\\leq g(x)<L+\\varepsilon.\n\\]\n因此 $|f(x)-L|<\\varepsilon$，从而 $\\lim_{x\\to x_0}f(x)=L$。",
+          "relates_to": "S02.U04"
+        },
+        {
+          "id": "S02.U06",
+          "kind": "theorem",
+          "tex": "设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义，且 $\\lim_{x\\to x_0}f(x)=A$。若 $A>0$，则存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时 $f(x)>0$；若 $A<0$，则存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时 $f(x)<0$。\\label{thm:limit-sign-preservation}",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U07",
+          "kind": "proof",
+          "tex": "设 $A>0$。取 $\\varepsilon=A/2$。由极限定义，存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时 $|f(x)-A|<A/2$，于是\n\\[\nf(x)>A-\\frac{A}{2}=\\frac{A}{2}>0.\n\\]\n当 $A<0$ 时，取 $\\varepsilon=|A|/2$，则\n\\[\nf(x)<A+\\frac{|A|}{2}=\\frac{A}{2}<0.\n\\]\n",
+          "relates_to": "S02.U06"
+        },
+        {
+          "id": "S02.U08",
+          "kind": "example",
+          "tex": "计算\n\\[\n\\lim_{x\\to1}\\frac{x^2-1}{x-1}.\n\\]\n要求在保持定义域条件 $x\\neq1$ 的前提下进行代数变形。",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U09",
+          "kind": "solution",
+          "tex": "当 $x\\neq1$ 时，$x^2-1=(x-1)(x+1)$，所以\n\\[\n\\frac{x^2-1}{x-1}=x+1.\n\\]\n原函数虽然在 $x=1$ 处没有定义，但极限只考察 $x\\neq1$ 且 $x\\to1$ 时的函数值。这里直接用定义核实约分后函数的极限：给定任意 $\\varepsilon>0$，取 $\\delta=\\varepsilon>0$。当 $0<|x-1|<\\delta$ 时，\n\\[\n|(x+1)-2|=|x-1|<\\varepsilon.\n\\]\n故 $\\lim_{x\\to1}(x+1)=2$。在同一去心邻域内，原函数与 $x+1$ 相等，其与 $2$ 的误差也小于 $\\varepsilon$，因此\n\\[\n\\lim_{x\\to1}\\frac{x^2-1}{x-1}=\\lim_{x\\to1}(x+1)=2.\n\\]",
+          "relates_to": "S02.U08"
+        },
+        {
+          "id": "S02.U10",
+          "kind": "example",
+          "tex": "设 $f(x)=x^2-3x+2$。求 $\\lim_{x\\to2}f(x)$，并说明所得极限的符号。",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U11",
+          "kind": "solution",
+          "tex": "先由极限定义核实运算法则所需的基本极限。给定 $\\varepsilon>0$，取 $\\delta=\\varepsilon$，则当 $0<|x-2|<\\delta$ 时，恒等函数与目标值 $2$ 的误差为 $|x-2|<\\varepsilon$，故 $\\lim_{x\\to2}x=2$。对常数函数 $c$，取任意 $\\delta>0$ 都有 $|c-c|=0<\\varepsilon$，故 $\\lim_{x\\to2}c=c$；特别地，常数函数 $3$ 和 $2$ 的极限分别为 $3$ 和 $2$。\n\n由上述基本极限及极限的和、差与积法则，\n\\[\n\\lim_{x\\to2}(x^2-3x+2)=2^2-3\\cdot2+2=0.\n\\]\n因此该极限等于 $0$。由于极限值为零，保号定理不能据此断言 $f(x)$ 在 $2$ 的去心邻域内恒正或恒负。",
+          "relates_to": "S02.U10"
+        },
+        {
+          "id": "S02.U12",
+          "kind": "exercise",
+          "tex": "设函数 $f$ 与 $g$ 在点 $x_0$ 的某个去心邻域内有定义，且\n\\[\n\\lim_{x\\to x_0}f(x)=2,\n\\qquad\n\\lim_{x\\to x_0}g(x)=-1.\n\\]\n求\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)+g(x)}{f(x)-g(x)}.\n\\]\n并说明使用商的极限法则时需要检查的条件。",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U13",
+          "kind": "solution",
+          "tex": "由极限的和与差法则，\n\\[\n\\lim_{x\\to x_0}(f(x)+g(x))=2+(-1)=1,\n\\]\n\\[\n\\lim_{x\\to x_0}(f(x)-g(x))=2-(-1)=3.\n\\]\n分母的极限为 $3\\neq0$，所以分母在 $x_0$ 的某个去心邻域内不为零，可以使用商的极限法则。因此\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)+g(x)}{f(x)-g(x)}=\\frac{1}{3}.\n\\]",
+          "relates_to": "S02.U12"
+        }
+      ],
+      "calculations": [
+        {
+          "assumptions": {
+            "x": {
+              "real": true
+            }
+          },
+          "direction": "+-",
+          "expected": {
+            "op": "Integer",
+            "value": 2
+          },
+          "expression": {
+            "args": [
+              {
+                "name": "x",
+                "op": "Symbol"
+              },
+              {
+                "op": "Integer",
+                "value": 1
+              }
+            ],
+            "op": "Add"
+          },
+          "id": "S02.C01",
+          "kind": "limit",
+          "point": {
+            "op": "Integer",
+            "value": 1
+          },
+          "unit_id": "S02.U09",
+          "variable": "x"
+        },
+        {
+          "id": "S02.C02",
+          "unit_id": "S02.U04",
+          "kind": "limit",
+          "assumptions": {
+            "x": {
+              "real": true
+            }
+          },
+          "expression": {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Symbol",
+                "name": "x"
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ]
+          },
+          "variable": "x",
+          "point": {
+            "op": "Integer",
+            "value": 0
+          },
+          "direction": "+-",
+          "expected": {
+            "op": "Integer",
+            "value": 0
+          }
+        }
+      ],
+      "calculation_limitations": [
+        "协议支持的极限核算不能表达约分所需的条件 $x\\neq1$；核算仅针对约分后在相应去心邻域内等价的表达式 $x+1$。",
+        "该核算请求不覆盖一般函数的局部有界性、四则运算法则与复合极限定理的量词条件及证明；这些内容由正文的极限定义与估计说明。此处只提交核算请求，不报告执行结果。",
+        "新增核算仅覆盖夹逼应用中上界 x^2 在 x 趋于 0 时的极限。协议没有一般不等式验证请求，不能核验去心邻域 0<|x|<1 上的上下界构造及夹逼推理；这些步骤由正文利用正弦函数的有界性和 x^2 的非负性说明。",
+        "本次补充的 ε-δ 论证涉及任意误差、邻域选择及不等式，现有有界核算协议不能验证这些量词步骤；既有 S02.C02 仅核算 x^2 在 x 趋于 0 时的极限，不覆盖定义论证。S02.U11 中恒等函数与常数函数基本极限的定义依据亦由正文给出，不将符号代入视为对这些依据的验证。",
+        "S02.U09 补充的定义证明涉及任意 ε>0、选择 δ=ε 及去心邻域内的误差不等式，现有核算协议不能验证这些量词与不等式步骤。既有 S02.C01 仅核算约分后 x+1 在 x 趋于 1 时的极限，不覆盖该定义证明或约分的定义域条件。"
+      ],
+      "uncertainties": []
+    }
+  ],
+  "tool_checks": {
+    "schema_version": 1,
+    "status": "NEEDS_REVIEW",
+    "issues": [
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "S03.U04 对指数基本极限的证明明确依赖先修命题：当 $0<t<1$ 时，$1+t\\le e^t\\le1/(1-t)$。当前提供的 S01、S02 正文未核实包含该命题，因此其先修来源仍需课程材料另行确认；若未建立该命题，本单元的指数极限证明不应视为自足。",
+        "location": {},
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "kind": "limit",
+        "assumptions": {
+          "x": {
+            "real": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "1",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U03"
+      }
+    ],
+    "coverage": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09",
+      "S03.U10"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "协议支持的极限核算可以核对 $\\sin x/x$ 在 $x\\to0$ 时的代表性结论，但不能表达弧度制、三角函数的几何不等式或完整的夹逼证明。",
+      "协议中的布尔假设不能完整表达去心邻域和函数定义域条件；正文仍保留了 $x\\neq0$ 及相应表达式有定义的条件。",
+      "本次修正 S03.C01 的表达式树格式并重新提交请求，不将此前 UNKNOWN 记录视为核验通过。该请求仅覆盖 S03.U03 中的正弦基本极限，不覆盖指数基本极限及 S03.U06 中一般函数的等价替换证明。",
+      "S03.U01 的修订涉及一般函数的量词定义，以及绝对值趋于无穷与正、负无穷极限的区别；现有有界核算协议不能表达一般函数及其去心邻域量词条件，故不为该定义新增符号核算请求。",
+      "本次仅将证明中的内部单元标识改为定理的自然名称，不改变数学结论；一般函数的等价关系、去心邻域条件及极限乘法推理不能由现有 JSON AST 完整表达，本次不新增核算请求。",
+      "S03.U04 的指数基本极限及其依赖的不等式不在现有表达式 AST 的可支持核算范围内，故不能用协议核验该先修命题或该证明链条。"
+    ]
+  },
+  "deterministic_issues": [
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "S03.U04 对指数基本极限的证明明确依赖先修命题：当 $0<t<1$ 时，$1+t\\le e^t\\le1/(1-t)$。当前提供的 S01、S02 正文未核实包含该命题，因此其先修来源仍需课程材料另行确认；若未建立该命题，本单元的指数极限证明不应视为自足。",
+      "location": {
+        "unit_id": "S03.U04"
+      },
+      "uncertainty_id": "D001-5898c5c5e7790a29",
+      "original_sha256": "5898c5c5e7790a29989d52eaf390ad6aa922b40682d69856f2d2bb2b89a76020",
+      "resolution_status": "open"
+    }
+  ],
+  "declared_doubts": [
+    {
+      "uncertainty_id": "D001-5898c5c5e7790a29",
+      "source_index": 0,
+      "original_text": "S03.U04 对指数基本极限的证明明确依赖先修命题：当 $0<t<1$ 时，$1+t\\le e^t\\le1/(1-t)$。当前提供的 S01、S02 正文未核实包含该命题，因此其先修来源仍需课程材料另行确认；若未建立该命题，本单元的指数极限证明不应视为自足。",
+      "original_sha256": "5898c5c5e7790a29989d52eaf390ad6aa922b40682d69856f2d2bb2b89a76020",
+      "unit_id": "S03.U04"
+    }
+  ],
+  "sources": [
+    {
+      "source_key": "current:S03.U01",
+      "unit_id": "S03.U01",
+      "source_sha256": "a7f92bdf9df696bf34fff5dc7eb03ff87025f16f60bd8c8366bbed7e0a3f070d",
+      "tex": "设函数 $\\alpha(x)$ 在考察点 $x_0$ 的某个去心邻域内有定义。若\n\\[\n\\lim_{x\\to x_0}\\alpha(x)=0,\n\\]\n则称 $\\alpha(x)$ 是当 $x\\to x_0$ 时的无穷小。这里的“无穷小”表示函数值趋近于零，而不表示函数在某个邻域内恒不为零。若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时有\n\\[\n|\\alpha(x)|>M,\n\\]\n则称 $\\alpha(x)$ 是当 $x\\to x_0$ 时绝对值意义下的无穷大，即 $|\\alpha(x)|\\to+\\infty$。本节的“无穷大”采用这一含义，它本身不指定函数值的正负方向。\n\n正无穷极限与负无穷极限须分别定义：若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时有 $\\alpha(x)>M$，则记为\n\\[\n\\lim_{x\\to x_0}\\alpha(x)=+\\infty;\n\\]\n若对任意 $M>0$，都存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时有 $\\alpha(x)<-M$，则记为\n\\[\n\\lim_{x\\to x_0}\\alpha(x)=-\\infty.\n\\]\n上述两种情形均满足绝对值意义下的无穷大条件，但仅有 $|\\alpha(x)|\\to+\\infty$ 不能推出其中任何一种带符号的极限。无穷小与无穷大都是相对于特定的极限过程而言的。\\label{def:infinitesimal}"
+    },
+    {
+      "source_key": "current:S03.U02",
+      "unit_id": "S03.U02",
+      "source_sha256": "f3819fb75c6b0b43bfccbf15311a49ba13fe2ef4e65d1d27c9d89701c9f39e94",
+      "tex": "设函数 $\\alpha(x)$ 与 $\\beta(x)$ 在 $x_0$ 的某个去心邻域内有定义，且在该邻域内 $\\beta(x)\\neq0$。若\n\\[\n\\lim_{x\\to x_0}\\alpha(x)=0,\\qquad\n\\lim_{x\\to x_0}\\beta(x)=0,\n\\qquad\n\\lim_{x\\to x_0}\\frac{\\alpha(x)}{\\beta(x)}=1,\n\\]\n则称 $\\alpha(x)$ 与 $\\beta(x)$ 当 $x\\to x_0$ 时为等价无穷小，记为\n\\[\n\\alpha(x)\\sim\\beta(x)\\qquad(x\\to x_0).\n\\]\n其中，前两个条件说明二者都是同一极限过程下的无穷小，最后一个条件给出它们的等价关系；比值条件只在商有定义的去心邻域内使用。若只满足比值极限为 $1$ 而不要求二者都趋于零，则称为一般的等价函数关系，而不称为等价无穷小。\\label{def:equivalent-infinitesimal}\n\n无穷小的阶比较描述它们在同一极限过程中趋于零的相对快慢。仍设 $\\alpha(x)\\to0$、$\\beta(x)\\to0$，且 $\\beta(x)$ 在某个去心邻域内非零。当 $x\\to x_0$ 时，若\n\\[\n\\frac{\\alpha(x)}{\\beta(x)}\\to0,\n\\]\n则称 $\\alpha$ 是比 $\\beta$ 高阶的无穷小，记为 $\\alpha=o(\\beta)$；若\n\\[\n\\left|\\frac{\\alpha(x)}{\\beta(x)}\\right|\\to+\\infty,\n\\]\n则称 $\\alpha$ 是比 $\\beta$ 低阶的无穷小；若\n\\[\n\\frac{\\alpha(x)}{\\beta(x)}\\to c,\\qquad 0<|c|<\\infty,\n\\]\n则称二者为同阶无穷小。因此，等价无穷小是同阶无穷小中 $c=1$ 的特殊情形，并非所有同阶无穷小都等价。这些比值条件不必对任意一对无穷小成立，不能在比值没有相应极限时强行作上述分类。\n\n记号 $r(x)=o(1)$ 表示在指定的极限过程中 $r(x)\\to0$；这里的 $1$ 是比较用的常数，并不是无穷小。在上述分母非零的条件下，$\\alpha=o(\\beta)$ 等价于 $\\alpha=\\beta r$，其中 $r=o(1)$；$\\alpha\\sim\\beta$ 则等价于 $\\alpha=\\beta(1+r)$，其中 $r=o(1)$。这些记号均须注明或由上下文明确同一个极限过程。"
+    },
+    {
+      "source_key": "current:S03.U03",
+      "unit_id": "S03.U03",
+      "source_sha256": "ebe15c387981e76c27fe8bacc1933881aafa0f236aca7926865fe9e8b6e609ab",
+      "tex": "在实数范围内，当 $x\\to0$ 时，有两个基本极限\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1,\n\\qquad\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]\n其中，第一式中的 $x$ 取弧度制。由此可得\n\\[\n\\sin x\\sim x,\n\\qquad\n e^x-1\\sim x\\qquad(x\\to0).\n\\]\n这些结论只适用于所写出的极限过程及其定义域条件，不能不加条件地推广到任意点或任意角度单位。\\label{thm:fundamental-limits}"
+    },
+    {
+      "source_key": "current:S03.U04",
+      "unit_id": "S03.U04",
+      "source_sha256": "8ee2f871aa93521ba606b5242d8d33b65ef994fc734d0bad54cf5cf13dbed3a5",
+      "tex": "先补充说明三角函数部分所需的基础事实。这里所有角均采用弧度制。由单位圆中的几何不等式，对任意实数 $u$ 都有\n\\[\n|\\sin u|\\leq |u|.\n\\]\n因此取 $u=x/2$，并结合三角恒等式，得到\n\\[\n1-\\cos x=2\\sin^2\\frac{x}{2},\n\\qquad\n0\\leq1-\\cos x=2\\sin^2\\frac{x}{2}\\leq2\\left|\\frac{x}{2}\\right|^2=\\frac{x^2}{2}.\n\\]\n这里的估计在 $x\\to0$ 的某个邻域内当然成立，实际上对所有实数 $x$ 都成立。由于 $x^2/2\\to0$，由夹逼原理得到\n\\[\n\\lim_{x\\to0}\\cos x=1.\n\\]\n因此，下面使用的 $\\cos x\\to1$ 已由上述估计得到，而不是未经说明的前提。\n\n对 $0<x<\\dfrac{\\pi}{2}$，由单位圆中的几何不等式，有\n\\[\n\\sin x<x<\\tan x.\n\\]\n由于 $\\sin x>0$，两边分别除以 $\\sin x$，得到\n\\[\n1<\\frac{x}{\\sin x}<\\frac{1}{\\cos x}.\n\\]\n取倒数可得\n\\[\n\\cos x<\\frac{\\sin x}{x}<1.\n\\]\n当 $x\\to0^+$ 时，$\\cos x\\to1$。这里所用的是夹逼原理在右侧邻域上的同样结论：若在某个右侧去心邻域内有 $h(x)\\leq f(x)\\leq g(x)$，且当 $x\\to x_0^+$ 时 $h(x)$ 与 $g(x)$ 都趋于同一有限数 $L$，则对任意 $\\varepsilon>0$，分别由两个单侧极限取得适用的 $\\delta_1,\\delta_2$，取 $\\delta=\\min\\{\\delta_1,\\delta_2\\}$，即可得到 $|f(x)-L|<\\varepsilon$；因此 $f(x)\\to L$。这只是双侧夹逼证明的同样 $\\delta$ 论证，并将考察范围限制在右侧邻域。由此可知\n\\[\n\\lim_{x\\to0^+}\\frac{\\sin x}{x}=1.\n\\]\n又因为 $\\sin x/x$ 是偶函数，所以左极限也等于 $1$，从而\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1.\n\\]\n\n再证明第二个基本极限。先建立所需的指数函数估计，而不把待证极限作为先验性质。对正整数 $n$，设\n\\[\na_n=\\left(1+\\frac1n\\right)^n.\n\\]\n由二项式定理，$a_n$ 的第 $k$ 项为\n\\[\n\\binom nk\\frac1{n^k}=\\frac1{k!}\\prod_{j=0}^{k-1}\\left(1-\\frac{j}{n}\\right).\n\\]\n对每个固定的 $k$，该项随 $n$ 增大而不减；展开式中的新增项非负，所以 $a_n$ 单调不减。又因 $k!\\geq2^{k-1}$（$k\\geq1$），当 $n\\geq2$ 时\n\\[\na_n\\leq1+1+\\sum_{k=2}^n\\frac1{2^{k-1}}<3,\n\\]\n且 $a_1=2$。令\n\\[\nE=\\sup\\{a_n:n\\in\\mathbb N,\\ n\\geq1\\}.\n\\]\n这里使用实数的上确界性质：每个非空且有上界的实数集合都有最小上界。由上面的估计，集合 $\\{a_n:n\\geq1\\}$ 非空且有上界 $3$，故 $E$ 存在，并且 $2\\leq E\\leq3$。\n\n现在用数列极限的 $\\varepsilon$-$N$ 含义说明 $a_n$ 确实趋于 $E$。任给 $\\varepsilon>0$，由 $E$ 是上确界，数 $E-\\varepsilon$ 不可能仍是该集合的上界，因此存在正整数 $N$ 使得\n\\[\na_N>E-\\varepsilon.\n\\]\n由于 $(a_n)$ 单调不减且 $a_n\\leq E$，对一切 $n\\geq N$ 都有\n\\[\n0\\leq E-a_n\\leq E-a_N<\\varepsilon.\n\\]\n这正是 $a_n\\to E$ 的 $\\varepsilon$-$N$ 定义。因此可定义\n\\[\ne:=E=\\lim_{n\\to\\infty}a_n,\n\\qquad e\\geq2>1.\n\\]\n同一 $\\varepsilon$-$N$ 论证还说明任意子列 $a_{qn}$（其中 $q$ 为固定正整数）也趋于 $e$：给定 $\\varepsilon>0$，取上面得到的 $N$，当 $n\\geq N$ 时有 $qn\\geq N$，从而\n\\[\n|a_{qn}-e|<\\varepsilon.\n\\]\n\n实数幂先由有理幂的保序延拓定义。下面说明所需的根式极限，而不把它作为未说明的连续性结论使用。固定正整数 $q$，设 $y_n>0$、$y>0$ 且 $y_n\\to y$。令 $r_n=y_n^{1/q}$、$r=y^{1/q}$，则\n\\[\ny_n-y=(r_n-r)(r_n^{q-1}+r_n^{q-2}r+\\cdots+r^{q-1}).\n\\]\n由于 $y_n\\to y>0$，当 $n$ 足够大时 $y_n>y/2$，故 $r_n\\geq(y/2)^{1/q}$；因而上式中的正因子之和有一个与 $n$ 无关的正下界。这说明\n\\[\n|r_n-r|\\leq C|y_n-y|\\to0\n\\]\n（其中 $C$ 为某个正常数），所以 $y_n^{1/q}\\to y^{1/q}$。再由有限因式分解，对固定正整数 $p$ 有\n\\[\nr_n^p-r^p=(r_n-r)(r_n^{p-1}+r_n^{p-2}r+\\cdots+r^{p-1}),\n\\]\n从而 $y_n^{p/q}=r_n^p\\to r^p=y^{p/q}$。这就明确给出了正数有理幂所需的极限依据。\n\n对有理数 $t=p/q\\in(0,1)$（$p,q$ 为正整数），取子列 $n\\mapsto qn$，有\n\\[\na_{qn}^t=\\left(1+\\frac1{qn}\\right)^{pn}.\n\\]\n由上面已经证明的子列极限和根式误差控制，$a_{qn}^t\\to e^t$。二项式展开给出下界\n\\[\na_{qn}^t\\geq1+\\frac{pn}{qn}=1+t.\n\\]\n另一方面，对每个 $k$，有\n\\[\n\\frac{\\binom{pn}{k}}{(qn)^k}\n\\leq\\frac{(pn)^k}{k!(qn)^k}\n=\\frac{t^k}{k!}\\leq t^k,\n\\]\n从而\n\\[\na_{qn}^t\\leq\\sum_{k=0}^{pn}t^k\n=\\frac{1-t^{pn+1}}{1-t}\n<\\frac1{1-t}.\n\\]\n令 $n\\to\\infty$，得到对有理 $t\\in(0,1)$ 有\n\\[\n1+t\\leq e^t\\leq\\frac1{1-t}.\n\\]\n这里使用的是有限等比求和公式，没有另行使用无穷级数收敛理论。\n\n对任意实数 $0<t<1$，取有理数 $0<u<t<v<1$。由实幂的保序性，\n\\[\n1+u\\leq e^u\\leq e^t\\leq e^v\\leq\\frac1{1-v}.\n\\]\n令有理数 $u$ 从下方趋于 $t$、$v$ 从上方趋于 $t$。这里只对线性函数和有理式取极限，得到\n\\[\n1+t\\leq e^t\\leq\\frac1{1-t},\\qquad 0<t<1.\n\\]\n这就建立了后续证明所需的指数函数估计，未使用待证的差商极限、指数函数在零点的导数或 Taylor 展开。\n\n当 $0<x<1$ 时，由上述不等式得到\n\\[\n1\\leq\\frac{e^x-1}{x}\\leq\\frac{1}{1-x}.\n\\]\n令 $x\\to0^+$，并应用上面说明的右侧夹逼结论，得到\n\\[\n\\lim_{x\\to0^+}\\frac{e^x-1}{x}=1.\n\\]\n当 $x=-t<0$ 且 $0<t<1$ 时，对\n\\[\n1+t\\leq e^t\\leq\\frac1{1-t}\n\\]\n取倒数，得到\n\\[\n1-t\\leq e^{-t}\\leq\\frac1{1+t}.\n\\]\n由于 $-t<0$，相减并除以负数 $-t$ 时不等号方向反转，因而\n\\[\n\\frac1{1+t}\\leq\\frac{e^{-t}-1}{-t}\\leq1.\n\\]\n令 $t\\to0^+$，再次应用右侧夹逼结论，得到\n\\[\n\\lim_{x\\to0^-}\\frac{e^x-1}{x}=1.\n\\]\n左右极限相等，所以\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1.\n\\]\n整个论证只使用已说明的三角函数估计、实数上确界性质、数列极限的 $\\varepsilon$-$N$ 含义、由 Euler 定义和有理幂根式估计建立的指数函数不等式以及夹逼定理。"
+    },
+    {
+      "source_key": "current:S03.U05",
+      "unit_id": "S03.U05",
+      "source_sha256": "e4164750b048ed3f449486862c0fedac34cd8abd5eb1eea32e069e2ba6d7db77",
+      "tex": "设 $\\alpha(x)$ 与 $\\beta(x)$ 在 $x_0$ 的某个去心邻域内有定义，且在该邻域内均不为零。若\n\\[\n\\alpha(x)\\sim\\beta(x)\\qquad(x\\to x_0),\n\\]\n并且函数 $F(x)$ 在相应去心邻域内有定义，满足 $F(x)\\alpha(x)$ 有定义以及\n\\[\n\\lim_{x\\to x_0}F(x)\\alpha(x)=L,\n\\]\n其中 $L$ 为有限数，则\n\\[\n\\lim_{x\\to x_0}F(x)\\beta(x)=L,\n\\]\n只要 $F(x)\\beta(x)$ 在该去心邻域内有定义。特别地，在乘积的极限中，可以用与某个无穷小等价的无穷小替换它，但必须保持相关表达式有定义。\n\n商情形也有明确的替换条件：若 $F(x)/\\alpha(x)$ 在某个去心邻域内有定义，且\n\\[\n\\lim_{x\\to x_0}\\frac{F(x)}{\\alpha(x)}=L,\n\\]\n其中 $L$ 为有限数，并且 $F(x)/\\beta(x)$ 在同一去心邻域内有定义，则\n\\[\n\\lim_{x\\to x_0}\\frac{F(x)}{\\beta(x)}=L.\n\\]\n这里要求 $\\alpha(x)$ 与 $\\beta(x)$ 在该去心邻域内均不为零，从而 $\\alpha(x)/\\beta(x)$ 有定义；证明为\n\\[\n\\frac{F(x)}{\\beta(x)}=\\frac{F(x)}{\\alpha(x)}\\frac{\\alpha(x)}{\\beta(x)}.\n\\]\n由 $\\alpha(x)\\sim\\beta(x)$ 可知\n\\[\n\\lim_{x\\to x_0}\\frac{\\alpha(x)}{\\beta(x)}=1.\n\\]\n再由极限的乘法法则，得到\n\\[\n\\lim_{x\\to x_0}\\frac{F(x)}{\\beta(x)}\n=\\left(\\lim_{x\\to x_0}\\frac{F(x)}{\\alpha(x)}\\right)\n\\left(\\lim_{x\\to x_0}\\frac{\\alpha(x)}{\\beta(x)}\\right)\n=L\\cdot1=L.\n\\]\n因此，在商的极限中，可以将分母中的无穷小 $\\alpha(x)$ 替换为与其等价的无穷小 $\\beta(x)$，但必须同时检查两个商在同一去心邻域内有定义，并且原商的有限极限存在。一般而言，不能在加减式中无条件逐项替换等价无穷小；加减项的替换必须另行检验整体极限，不能仅由等价关系和表达式有定义推出。\\label{thm:equivalent-substitution}"
+    },
+    {
+      "source_key": "current:S03.U06",
+      "unit_id": "S03.U06",
+      "source_sha256": "baeb04a348dee3608165ca1b768bfa7d1b2f86699231992b7001bc0d223b5141",
+      "tex": "由 $\\alpha(x)\\sim\\beta(x)$ 的定义，有\n\\[\n\\lim_{x\\to x_0}\\frac{\\alpha(x)}{\\beta(x)}=1.\n\\]\n又由等价无穷小替换定理的假设，$\\alpha(x)$ 与 $\\beta(x)$ 在同一去心邻域内均不为零，因此商 $\\beta(x)/\\alpha(x)$ 在该邻域内有定义，并且\n\\[\n\\frac{\\beta(x)}{\\alpha(x)}\n=\\left(\\frac{\\alpha(x)}{\\beta(x)}\\right)^{-1}.\n\\]\n由于 $\\lim_{x\\to x_0}\\alpha(x)/\\beta(x)=1\\neq0$，由倒数极限定理可得\n\\[\n\\lim_{x\\to x_0}\\frac{\\beta(x)}{\\alpha(x)}=1.\n\\]\n在所给去心邻域内，利用乘积的代数分解，\n\\[\nF(x)\\beta(x)=F(x)\\alpha(x)\\frac{\\beta(x)}{\\alpha(x)}.\n\\]\n由假设和极限的乘法法则，得到\n\\[\n\\lim_{x\\to x_0}F(x)\\beta(x)\n=\\left(\\lim_{x\\to x_0}F(x)\\alpha(x)\\right)\n\\left(\\lim_{x\\to x_0}\\frac{\\beta(x)}{\\alpha(x)}\\right)\n=L\\cdot1=L.\n\\]\n因此，在上述条件下，若原式写成 $F(x)\\alpha(x)$，可以把其中的因子 $\\alpha(x)$ 替换为 $\\beta(x)$，得到 $F(x)\\beta(x)$。这一操作等价于将原式整体乘以修正比值 $\\beta(x)/\\alpha(x)$，而不是用该比值替换原式中的某个因子。替换时，$\\alpha(x)$ 与 $\\beta(x)$ 在同一去心邻域内均须非零，相关表达式须有定义，并且 $\\lim_{x\\to x_0}F(x)\\alpha(x)$ 必须存在且为有限数。该结论适用于所证明的乘积结构，以及通过倒数改写后满足同样条件的商结构。它不表示可以在加减式中无条件逐项替换等价无穷小；例如加减项的替换必须另行检验整体极限，不能仅由等价关系和表达式有定义推出。"
+    },
+    {
+      "source_key": "current:S03.U07",
+      "unit_id": "S03.U07",
+      "source_sha256": "9b3b420ad62ff6724ad0fee13f43ae5a3dd8cf5fc928b4f64756121baae15c27",
+      "tex": "计算\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}.\n\\]\n要求说明等价无穷小替换的依据及适用条件。"
+    },
+    {
+      "source_key": "current:S03.U08",
+      "unit_id": "S03.U08",
+      "source_sha256": "92003deff4054a564bc2265517f53c8a331944fc9a3a1d801082f9bdef7cf14a",
+      "tex": "当 $x\\to0$ 时，$\\sin x\\sim x$，并且 $1+x\\to1$。在 $x\\neq0$ 的去心邻域内，原式有定义，且\n\\[\n\\frac{(1+x)\\sin x}{x}=(1+x)\\frac{\\sin x}{x}.\n\\]\n由基本极限\n\\[\n\\lim_{x\\to0}\\frac{\\sin x}{x}=1,\n\\qquad\n\\lim_{x\\to0}(1+x)=1,\n\\]\n可得\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}=1\\cdot1=1.\n\\]\n这里的替换只在 $x\\to0$ 且 $x\\neq0$ 的去心邻域内进行，未将原式在 $x=0$ 处补定义。"
+    },
+    {
+      "source_key": "current:S03.U09",
+      "unit_id": "S03.U09",
+      "source_sha256": "f69c13a7101376306eea3f727d3b06d4cd88f79791d15229498056e1509a3297",
+      "tex": "计算\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}\\,(1-2x),\n\\]\n并说明所使用的基本极限及乘法法则的条件。"
+    },
+    {
+      "source_key": "current:S03.U10",
+      "unit_id": "S03.U10",
+      "source_sha256": "4302acedf3d6689519918ec8399678c206fa7b4e58ed45a67d1df0cd0eb341f6",
+      "tex": "当 $x\\to0$ 且 $x\\neq0$ 时，$\\dfrac{e^x-1}{x}$ 有定义。由基本极限\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}=1,\n\\]\n以及\n\\[\n\\lim_{x\\to0}(1-2x)=1,\n\\]\n再由极限的乘法法则，得到\n\\[\n\\lim_{x\\to0}\\frac{e^x-1}{x}(1-2x)=1\\cdot1=1.\n\\]\n乘法法则要求两个因子在同一去心邻域内有定义，并且各自的有限极限存在；这些条件在本题中均满足。"
+    },
+    {
+      "source_key": "prior:S01.U01",
+      "unit_id": "S01.U01",
+      "source_sha256": "641f4974c36d4e76b2043722b2df6c85db9a7afd85958c8082454e89974e2a1a",
+      "tex": "设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义。若存在常数 $A$，使得对任意 $\\varepsilon>0$，都存在 $\\delta>0$，满足当 $0<|x-x_0|<\\delta$ 时有 $|f(x)-A|<\\varepsilon$，则称 $A$ 为 $f(x)$ 当 $x\\to x_0$ 时的极限，记为\n\\[\n\\lim_{x\\to x_0}f(x)=A.\n\\]\n其中，$x_0$ 不要求属于函数的定义域。\\label{def:point-limit}"
+    },
+    {
+      "source_key": "prior:S01.U02",
+      "unit_id": "S01.U02",
+      "source_sha256": "27d28e4b0b930ae71333292ea156a62551e16e126756c3ee7b06da68ea81df95",
+      "tex": "设函数 $f$ 在 $x_0$ 的某个左侧去心邻域内有定义。若存在常数 $A_-$，使得对任意 $\\varepsilon>0$，都存在 $\\delta>0$，当 $x_0-\\delta<x<x_0$ 时有 $|f(x)-A_-|<\\varepsilon$，则称 $A_-$ 为 $f(x)$ 当 $x\\to x_0^-$ 时的左极限，记为\n\\[\n\\lim_{x\\to x_0^-}f(x)=A_-.\n\\]\n设函数 $f$ 在 $x_0$ 的某个右侧去心邻域内有定义。若存在常数 $A_+$，使得对任意 $\\varepsilon>0$，都存在 $\\delta>0$，当 $x_0<x<x_0+\\delta$ 时有 $|f(x)-A_+|<\\varepsilon$，则称 $A_+$ 为 $f(x)$ 当 $x\\to x_0^+$ 时的右极限，记为\n\\[\n\\lim_{x\\to x_0^+}f(x)=A_+.\n\\]\n\\label{def:one-sided-limit}"
+    },
+    {
+      "source_key": "prior:S01.U03",
+      "unit_id": "S01.U03",
+      "source_sha256": "ef33b1f14063926514c207a95a969f40d38c8c6c54eda22f6f6ebcf546a86627",
+      "tex": "设函数 $f$ 在某个右半无限区间 $(M,+\\infty)$ 上有定义。若存在常数 $A$，使得对任意 $\\varepsilon>0$，都存在 $R>M$，当 $x>R$ 时有 $|f(x)-A|<\\varepsilon$，则称 $A$ 为 $f(x)$ 当 $x\\to+\\infty$ 时的极限，记为\n\\[\n\\lim_{x\\to+\\infty}f(x)=A.\n\\]\n类似地，若函数在某个左半无限区间 $(-\\infty,M)$ 上有定义，且对任意 $\\varepsilon>0$ 都存在 $R<M$，使得当 $x<R$ 时有 $|f(x)-A|<\\varepsilon$，则记为\n\\[\n\\lim_{x\\to-\\infty}f(x)=A.\n\\]\n\\label{def:infinite-limit}"
+    },
+    {
+      "source_key": "prior:S01.U04",
+      "unit_id": "S01.U04",
+      "source_sha256": "5230450f55bf08c792608f9ddc8199cf191466d9bea0bd5295cc0b7e36dab18d",
+      "tex": "设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义，则\n\\[\n\\lim_{x\\to x_0}f(x)=A\n\\]\n当且仅当\n\\[\n\\lim_{x\\to x_0^-}f(x)=A\n\\quad\\text{且}\\quad\n\\lim_{x\\to x_0^+}f(x)=A.\n\\]\n也就是说，函数在一点的双侧极限存在，当且仅当该点的左极限和右极限都存在且相等。\\label{thm:two-sided-limit-criterion}"
+    },
+    {
+      "source_key": "prior:S01.U05",
+      "unit_id": "S01.U05",
+      "source_sha256": "03e9760290065cd82f608d55cd78efe93b5224d80b6f99c39aeab2e6eabb3398",
+      "tex": "先设 $\\lim_{x\\to x_0}f(x)=A$。给定任意 $\\varepsilon>0$，由双侧极限的定义，存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时有 $|f(x)-A|<\\varepsilon$。特别地，当 $x_0-\\delta<x<x_0$ 或 $x_0<x<x_0+\\delta$ 时，上述不等式分别成立，因此左极限和右极限都等于 $A$。\n\n反过来，设左极限和右极限都等于 $A$。给定任意 $\\varepsilon>0$，存在 $\\delta_1>0$，使得当 $x_0-\\delta_1<x<x_0$ 时有 $|f(x)-A|<\\varepsilon$；存在 $\\delta_2>0$，使得当 $x_0<x<x_0+\\delta_2$ 时有 $|f(x)-A|<\\varepsilon$。取 $\\delta=\\min\\{\\delta_1,\\delta_2\\}$，则当 $0<|x-x_0|<\\delta$ 时，$x$ 必在 $x_0$ 的左侧或右侧，从而都有 $|f(x)-A|<\\varepsilon$。因此 $\\lim_{x\\to x_0}f(x)=A$。"
+    },
+    {
+      "source_key": "prior:S01.U06",
+      "unit_id": "S01.U06",
+      "source_sha256": "83867326d6fe2aeaf055630ed8e1d3210419670890bffae3a896909d6f32fe77",
+      "tex": "设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义。若\n\\[\n\\lim_{x\\to x_0}f(x)=A\n\\quad\\text{且}\\quad\n\\lim_{x\\to x_0}f(x)=B,\n\\]\n则 $A=B$。因此，函数在同一点处的有限极限至多有一个。\\label{thm:limit-uniqueness}"
+    },
+    {
+      "source_key": "prior:S01.U07",
+      "unit_id": "S01.U07",
+      "source_sha256": "0cc038cb214be3306934e4231dada8fbb06d3bd803977dd4826630d9b11cc598",
+      "tex": "假设 $A\\ne B$。取 $\\varepsilon=|A-B|/3>0$。由 $\\lim_{x\\to x_0}f(x)=A$，存在 $\\delta_1>0$，使得当 $0<|x-x_0|<\\delta_1$ 时有 $|f(x)-A|<\\varepsilon$；由 $\\lim_{x\\to x_0}f(x)=B$，存在 $\\delta_2>0$，使得当 $0<|x-x_0|<\\delta_2$ 时有 $|f(x)-B|<\\varepsilon$。\n\n取 $\\delta=\\min\\{\\delta_1,\\delta_2\\}$，并取一个满足 $0<|x-x_0|<\\delta$ 的 $x$。由三角不等式，\n\\[\n|A-B|\\leq |A-f(x)|+|f(x)-B|<2\\varepsilon=\\frac{2}{3}|A-B|,\n\\]\n这与 $|A-B|>0$ 矛盾。因此 $A=B$。"
+    },
+    {
+      "source_key": "prior:S01.U08",
+      "unit_id": "S01.U08",
+      "source_sha256": "2017ed547fbe2bf05776b6034fb2ac84540b5f53484a6189206a9d7bf24eadbf",
+      "tex": "计算\n\\[\n\\lim_{x\\to2}(3x-1)\\text{。}\n\\]\n为说明双侧极限的处理方法，分别考察 $x\\to2^-$ 和 $x\\to2^+$ 两种情形。"
+    },
+    {
+      "source_key": "prior:S01.U09",
+      "unit_id": "S01.U09",
+      "source_sha256": "5436f5618213822457a7739e31100a2886aea27733cf479cdd298613fb088cf6",
+      "tex": "当 $x\\to2^-$ 或 $x\\to2^+$ 时，都有 $3x-1\\to3\\cdot2-1=5$。更直接地，对任意 $\\varepsilon>0$，取 $\\delta=\\varepsilon/3$。当 $0<|x-2|<\\delta$ 时，\n\\[\n|(3x-1)-5|=|3x-6|=3|x-2|<3\\delta=\\varepsilon\\text{。}\n\\]\n因此由极限定义，\n\\[\n\\lim_{x\\to2}(3x-1)=5\\text{。}\n\\]"
+    },
+    {
+      "source_key": "prior:S01.U10",
+      "unit_id": "S01.U10",
+      "source_sha256": "5425659b0ee426816ab6d5dd204781c83a442bdce48baff9ece5b62b74a92e0b",
+      "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n1,&x<0,\\\\\n2,&x>0.\n\\end{cases}\n\\]\n判断 $\\lim_{x\\to0}f(x)$ 是否存在。"
+    },
+    {
+      "source_key": "prior:S01.U11",
+      "unit_id": "S01.U11",
+      "source_sha256": "4652db9fef67700c588f5f52c0f844c05856fcc66c099cef7a4f920fa623ccd4",
+      "tex": "当 $x\\to0^-$ 时，始终有 $f(x)=1$，所以\n\\[\n\\lim_{x\\to0^-}f(x)=1\\text{。}\n\\]\n当 $x\\to0^+$ 时，始终有 $f(x)=2$，所以\n\\[\n\\lim_{x\\to0^+}f(x)=2\\text{。}\n\\]\n由于左右极限不相等，根据定理 \\ref{thm:two-sided-limit-criterion}，$\\lim_{x\\to0}f(x)$ 不存在。"
+    },
+    {
+      "source_key": "prior:S01.U12",
+      "unit_id": "S01.U12",
+      "source_sha256": "f42109ec39f2e1b81388659e049fe355add94b4eb1aab779b89dcc5e5c659d98",
+      "tex": "设\n\\[\nf(x)=\n\\begin{cases}\n2x+1,&x<1,\\\\\n5,&x>1.\n\\end{cases}\n\\]\n判断 $\\lim_{x\\to1}f(x)$ 是否存在；若存在，求出该极限。"
+    },
+    {
+      "source_key": "prior:S01.U13",
+      "unit_id": "S01.U13",
+      "source_sha256": "6f366cc619b3dcb591609f6acf5412446ce6db2d0516794ce0520f5b1be69007",
+      "tex": "当 $x\\to1^-$ 时，$f(x)=2x+1$，因此\n\\[\n\\lim_{x\\to1^-}f(x)=2\\cdot1+1=3\\text{。}\n\\]\n当 $x\\to1^+$ 时，$f(x)=5$，因此\n\\[\n\\lim_{x\\to1^+}f(x)=5\\text{。}\n\\]\n由于左极限 $3$ 与右极限 $5$ 不相等，根据定理 \\ref{thm:two-sided-limit-criterion}，双侧极限 $\\lim_{x\\to1}f(x)$ 不存在。"
+    },
+    {
+      "source_key": "prior:S02.U01",
+      "unit_id": "S02.U01",
+      "source_sha256": "55d685a68d70d02d8b17b443e02a798e97348dc2985d90ced7dc856cd9996f91",
+      "tex": "设函数 $f,g,h$ 在点 $x_0$ 的某个去心邻域内有定义。若在该邻域内有 $h(x)\\leq f(x)\\leq g(x)$，且存在有限数 $L$，使得\n\\[\n\\lim_{x\\to x_0}h(x)=L,\\qquad \\lim_{x\\to x_0}g(x)=L,\n\\]\n则\n\\[\n\\lim_{x\\to x_0}f(x)=L\\text{。}\n\\]\n这称为夹逼原理。\\label{def:squeeze-principle}"
+    },
+    {
+      "source_key": "prior:S02.U02",
+      "unit_id": "S02.U02",
+      "source_sha256": "9df7dbeb41e2517735ba069bf869476d5fa547efb8c59b832df7690d3c79a818",
+      "tex": "设函数 $f$ 与 $g$ 在点 $x_0$ 的某个去心邻域内有定义，且 $\\lim_{x\\to x_0}f(x)=A$，$\\lim_{x\\to x_0}g(x)=B$。则\n\\[\n\\lim_{x\\to x_0}(f(x)+g(x))=A+B,\n\\qquad\n\\lim_{x\\to x_0}(f(x)-g(x))=A-B,\n\\]\n\\[\n\\lim_{x\\to x_0}f(x)g(x)=AB.\n\\]\n若 $B\\neq0$，并且在某个去心邻域内 $g(x)\\neq0$，则\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)}{g(x)}=\\frac{A}{B}.\n\\]\n\\label{thm:limit-algebra}\n\n复合极限的基础结论：设 $g$ 在 $x_0$ 的某个去心邻域内有定义，$\\lim_{x\\to x_0}g(x)=b$；外函数 $f$ 在 $b$ 的某个去心邻域内有定义，且 $\\lim_{t\\to b}f(t)=L$。若在 $x_0$ 的某个去心邻域内，$g(x)\\neq b$ 且 $g(x)$ 属于 $f$ 的定义域（因而复合函数有定义），则\n\\[\n\\lim_{x\\to x_0}f(g(x))=L.\n\\]\n这里要求内函数最终不取到 $b$，不能仅凭上述两个极限就无条件推出复合极限。"
+    },
+    {
+      "source_key": "prior:S02.U03",
+      "unit_id": "S02.U03",
+      "source_sha256": "49755d5b82226a8d940c581c21d99155a50830ffc7d7c528b028b074dbf3ad94",
+      "tex": "先证明和的法则。给定 $\\varepsilon>0$，由 $f(x)\\to A$ 与 $g(x)\\to B$，分别存在 $\\delta_1>0$ 与 $\\delta_2>0$，使得当 $0<|x-x_0|<\\delta_1$ 时 $|f(x)-A|<\\varepsilon/2$，当 $0<|x-x_0|<\\delta_2$ 时 $|g(x)-B|<\\varepsilon/2$。取 $\\delta=\\min\\{\\delta_1,\\delta_2\\}$，则\n\\[\n\\left|(f(x)+g(x))-(A+B)\\right|\\leq |f(x)-A|+|g(x)-B|<\\varepsilon.\n\\]\n故 $f(x)+g(x)\\to A+B$。由于 $|(-g(x))-(-B)|=|g(x)-B|$，由定义有 $-g(x)\\to-B$；差的法则由 $f(x)-g(x)=f(x)+(-g(x))$ 及和的法则得到。\n\n先说明局部有界性：若 $f$ 在 $x_0$ 的某个去心邻域内有定义，且有有限极限 $A$，则 $f$ 在某个去心邻域内有界。事实上，在极限定义中取误差为 $1$，可得 $\\delta_0>0$，使得当 $0<|x-x_0|<\\delta_0$ 时，\n\\[\n|f(x)-A|<1,\\qquad |f(x)|\\leq |A|+|f(x)-A|<|A|+1.\n\\]\n这只涉及去心邻域，不要求 $f(x_0)$ 有定义。\n\n对于积，令 $M=|A|+1>0$。给定 $\\varepsilon>0$，由两个极限的定义可分别取 $\\delta_1,\\delta_2>0$，使得当 $0<|x-x_0|<\\delta_1$ 时 $|g(x)-B|<\\varepsilon/(2M)$，当 $0<|x-x_0|<\\delta_2$ 时 $|f(x)-A|<\\varepsilon/(2(|B|+1))$。取 $\\delta=\\min\\{\\delta_0,\\delta_1,\\delta_2\\}$，则当 $0<|x-x_0|<\\delta$ 时，\n\\[\n|f(x)g(x)-AB|\\leq |f(x)|\\,|g(x)-B|+|B|\\,|f(x)-A|\n<\\frac{\\varepsilon}{2}+\\frac{|B|\\varepsilon}{2(|B|+1)}<\\varepsilon.\n\\]\n故由极限定义，$f(x)g(x)\\to AB$。\n\n若 $B\\neq0$，由 $g(x)\\to B$，可取 $\\delta_3>0$，使得当 $0<|x-x_0|<\\delta_3$ 时 $|g(x)-B|<|B|/2$。于是\n\\[\n|g(x)|\\geq |B|-|g(x)-B|>\\frac{|B|}{2}>0,\n\\]\n故分母不仅非零，而且远离零，并有\n\\[\n\\left|\\frac{1}{g(x)}-\\frac{1}{B}\\right|=\\frac{|g(x)-B|}{|g(x)||B|}\\leq\\frac{2|g(x)-B|}{|B|^2}.\n\\]\n给定 $\\varepsilon>0$，再由极限定义取 $\\delta_4>0$，使得当 $0<|x-x_0|<\\delta_4$ 时 $|g(x)-B|<\\varepsilon|B|^2/2$。当 $0<|x-x_0|<\\min\\{\\delta_3,\\delta_4\\}$ 时，上述倒数误差小于 $\\varepsilon$。所以 $1/g(x)\\to1/B$。再由已证明的积的法则，得到\n\\[\n\\frac{f(x)}{g(x)}=f(x)\\frac{1}{g(x)}\\to\\frac{A}{B}.\n\\]\n\n最后证明复合极限结论。按该结论的假设，取 $r>0$，使得当 $0<|x-x_0|<r$ 时，$g(x)\\neq b$ 且 $f(g(x))$ 有定义。给定 $\\varepsilon>0$，由 $\\lim_{t\\to b}f(t)=L$，存在 $\\eta>0$，使得当 $0<|t-b|<\\eta$ 时 $|f(t)-L|<\\varepsilon$。由 $g(x)\\to b$，存在 $\\delta_5>0$，使得当 $0<|x-x_0|<\\delta_5$ 时 $|g(x)-b|<\\eta$。因此，当 $0<|x-x_0|<\\min\\{r,\\delta_5\\}$ 时，\n\\[\n0<|g(x)-b|<\\eta,\\qquad |f(g(x))-L|<\\varepsilon.\n\\]\n由极限定义即得 $\\lim_{x\\to x_0}f(g(x))=L$。"
+    },
+    {
+      "source_key": "prior:S02.U04",
+      "unit_id": "S02.U04",
+      "source_sha256": "e1506e69bc13c6a3bcf79363c62fe467c8aba1995d444153949e88bbeab6d5aa",
+      "tex": "设函数 $f,g,h$ 在点 $x_0$ 的某个去心邻域内有定义，并且在该邻域内满足\n\\[\nh(x)\\leq f(x)\\leq g(x).\n\\]\n若\n\\[\n\\lim_{x\\to x_0}h(x)=L,\n\\qquad\n\\lim_{x\\to x_0}g(x)=L,\n\\]\n则\n\\[\n\\lim_{x\\to x_0}f(x)=L.\n\\]\n\\label{thm:squeeze-theorem}\n\n夹逼计算的应用：求 $\\lim_{x\\to0}x^2\\sin(1/x)$。构造上下界时，先利用三角函数的基本性质 $-1\\leq\\sin t\\leq1$，再乘以非负因子 $x^2$。在去心邻域 $0<|x|<1$ 内，$1/x$ 有定义，且\n\\[\n-x^2\\leq x^2\\sin(1/x)\\leq x^2.\n\\]\n两端的极限可以直接由定义核实：给定 $\\varepsilon>0$，取 $\\delta=\\min\\{1,\\sqrt{\\varepsilon}\\}>0$。当 $0<|x|<\\delta$ 时，\n\\[\n|x^2-0|=x^2<\\varepsilon,\\qquad |(-x^2)-0|=x^2<\\varepsilon.\n\\]\n所以\n\\[\n\\lim_{x\\to0}(-x^2)=0,\\qquad \\lim_{x\\to0}x^2=0.\n\\]\n因此由夹逼定理，\n\\[\n\\lim_{x\\to0}x^2\\sin(1/x)=0.\n\\]\n这里无需计算 $\\sin(1/x)$ 的极限，也未使用三角函数的重要极限；关键是用它的有界性构造趋于同一数值的上下界。"
+    },
+    {
+      "source_key": "prior:S02.U05",
+      "unit_id": "S02.U05",
+      "source_sha256": "8b7e1e0a1af1d12a05fc79169e680067eec102b49b8c7c8120c2b0540af3e4a6",
+      "tex": "给定 $\\varepsilon>0$。由 $h(x)\\to L$，存在 $\\delta_1>0$，使得当 $0<|x-x_0|<\\delta_1$ 时 $h(x)>L-\\varepsilon$；由 $g(x)\\to L$，存在 $\\delta_2>0$，使得当 $0<|x-x_0|<\\delta_2$ 时 $g(x)<L+\\varepsilon$。取 $\\delta=\\min\\{\\delta_1,\\delta_2\\}$，则当 $0<|x-x_0|<\\delta$ 时，\n\\[\nL-\\varepsilon<h(x)\\leq f(x)\\leq g(x)<L+\\varepsilon.\n\\]\n因此 $|f(x)-L|<\\varepsilon$，从而 $\\lim_{x\\to x_0}f(x)=L$。"
+    },
+    {
+      "source_key": "prior:S02.U06",
+      "unit_id": "S02.U06",
+      "source_sha256": "983dd2bfecf6a4d8d4ebfbd1d00e5781f9ca2ff9eace1b179b94d27fc78a0d39",
+      "tex": "设函数 $f$ 在点 $x_0$ 的某个去心邻域内有定义，且 $\\lim_{x\\to x_0}f(x)=A$。若 $A>0$，则存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时 $f(x)>0$；若 $A<0$，则存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时 $f(x)<0$。\\label{thm:limit-sign-preservation}"
+    },
+    {
+      "source_key": "prior:S02.U07",
+      "unit_id": "S02.U07",
+      "source_sha256": "34b8e806cfce4b0f8b2e8831e43e17cf10d2ccb8130ffb343da1b6727f669745",
+      "tex": "设 $A>0$。取 $\\varepsilon=A/2$。由极限定义，存在 $\\delta>0$，使得当 $0<|x-x_0|<\\delta$ 时 $|f(x)-A|<A/2$，于是\n\\[\nf(x)>A-\\frac{A}{2}=\\frac{A}{2}>0.\n\\]\n当 $A<0$ 时，取 $\\varepsilon=|A|/2$，则\n\\[\nf(x)<A+\\frac{|A|}{2}=\\frac{A}{2}<0.\n\\]\n"
+    },
+    {
+      "source_key": "prior:S02.U08",
+      "unit_id": "S02.U08",
+      "source_sha256": "cee748292beabfdf960d2e791f5db42f654e7eb8501459ac3718f0d1c4791c30",
+      "tex": "计算\n\\[\n\\lim_{x\\to1}\\frac{x^2-1}{x-1}.\n\\]\n要求在保持定义域条件 $x\\neq1$ 的前提下进行代数变形。"
+    },
+    {
+      "source_key": "prior:S02.U09",
+      "unit_id": "S02.U09",
+      "source_sha256": "95dae3871659f992160cf45f0e6e31f5755a3c8c5bf9ce3102385ef9201e516b",
+      "tex": "当 $x\\neq1$ 时，$x^2-1=(x-1)(x+1)$，所以\n\\[\n\\frac{x^2-1}{x-1}=x+1.\n\\]\n原函数虽然在 $x=1$ 处没有定义，但极限只考察 $x\\neq1$ 且 $x\\to1$ 时的函数值。这里直接用定义核实约分后函数的极限：给定任意 $\\varepsilon>0$，取 $\\delta=\\varepsilon>0$。当 $0<|x-1|<\\delta$ 时，\n\\[\n|(x+1)-2|=|x-1|<\\varepsilon.\n\\]\n故 $\\lim_{x\\to1}(x+1)=2$。在同一去心邻域内，原函数与 $x+1$ 相等，其与 $2$ 的误差也小于 $\\varepsilon$，因此\n\\[\n\\lim_{x\\to1}\\frac{x^2-1}{x-1}=\\lim_{x\\to1}(x+1)=2.\n\\]"
+    },
+    {
+      "source_key": "prior:S02.U10",
+      "unit_id": "S02.U10",
+      "source_sha256": "fe526c6e8f30f444e48ed5573edf93f11a275e0e200a4f59d1f4fa6cb4874985",
+      "tex": "设 $f(x)=x^2-3x+2$。求 $\\lim_{x\\to2}f(x)$，并说明所得极限的符号。"
+    },
+    {
+      "source_key": "prior:S02.U11",
+      "unit_id": "S02.U11",
+      "source_sha256": "e8ae323ae6f901f2ba5dec59f02851dd776f50c62b23cf76da148bab4d26e482",
+      "tex": "先由极限定义核实运算法则所需的基本极限。给定 $\\varepsilon>0$，取 $\\delta=\\varepsilon$，则当 $0<|x-2|<\\delta$ 时，恒等函数与目标值 $2$ 的误差为 $|x-2|<\\varepsilon$，故 $\\lim_{x\\to2}x=2$。对常数函数 $c$，取任意 $\\delta>0$ 都有 $|c-c|=0<\\varepsilon$，故 $\\lim_{x\\to2}c=c$；特别地，常数函数 $3$ 和 $2$ 的极限分别为 $3$ 和 $2$。\n\n由上述基本极限及极限的和、差与积法则，\n\\[\n\\lim_{x\\to2}(x^2-3x+2)=2^2-3\\cdot2+2=0.\n\\]\n因此该极限等于 $0$。由于极限值为零，保号定理不能据此断言 $f(x)$ 在 $2$ 的去心邻域内恒正或恒负。"
+    },
+    {
+      "source_key": "prior:S02.U12",
+      "unit_id": "S02.U12",
+      "source_sha256": "afd20cde1f845e69894660b40c724ae3a7825dfc0fb19fd8492b16e7983aafb8",
+      "tex": "设函数 $f$ 与 $g$ 在点 $x_0$ 的某个去心邻域内有定义，且\n\\[\n\\lim_{x\\to x_0}f(x)=2,\n\\qquad\n\\lim_{x\\to x_0}g(x)=-1.\n\\]\n求\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)+g(x)}{f(x)-g(x)}.\n\\]\n并说明使用商的极限法则时需要检查的条件。"
+    },
+    {
+      "source_key": "prior:S02.U13",
+      "unit_id": "S02.U13",
+      "source_sha256": "6800b8a0d1731d780f068bfb965ebe2c99f250075c338c9c863433585945632a",
+      "tex": "由极限的和与差法则，\n\\[\n\\lim_{x\\to x_0}(f(x)+g(x))=2+(-1)=1,\n\\]\n\\[\n\\lim_{x\\to x_0}(f(x)-g(x))=2-(-1)=3.\n\\]\n分母的极限为 $3\\neq0$，所以分母在 $x_0$ 的某个去心邻域内不为零，可以使用商的极限法则。因此\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)+g(x)}{f(x)-g(x)}=\\frac{1}{3}.\n\\]"
+    }
+  ],
+  "mock": false
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 2,
+  "identity": {
+    "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+    "model": "gpt-6-astra",
+    "provider": "live",
+    "repair_contract_version": 2,
+    "repair_prompt_hash": "362fb34b2529572af9620c5433dbb223290c519889e89192c1d52c5d65e60943",
+    "written_schema_hash": "4e9b07e27f359212c0460381e3cbd6e548d18a48490e553e60b0c56d30d9ada7",
+    "patch_schema_hash": "0d86c8d71317f64b5b07f16f49a50ad4dd13c072cbf83dcaa1babdd53d1510dd",
+    "patch_validator_hash": "78427756213a06179f7d1f6c496f22871cc3abd333330c09635fc0cf0b6d55e3",
+    "calculation_protocol_hash": "d0e00874991f1762e72dcf4845ff8417ca54d1a399d3ec3f2f8ea0153b99d1aa",
+    "normalizer_hash": "25d2fff448b21fcad71b5e7aae512cf6ab27f66bdeefd9e459ca57652a1fd74c",
+    "migration_contract_hash": "8c1167ba608adbc1b74d9fe4d5852152eba74069606c466a4c2db606c8df2186"
+  },
+  "rounds_used": 4,
+  "phase": "checking",
+  "sections": {
+    "S03": {
+      "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r4-24d1db18/S03-5ca5a291-candidate.json",
+      "candidate_hash": "48e052398edd90d595627b555cea3dab3ad5bb800d783385eabc47a139acad86"
+    },
+    "S04": {
+      "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r4-24d1db18/S04-before.json",
+      "candidate_hash": "fef9341d2da1db19b0ffcdea340a159e0350e3185ccf2e97479bea3c07f3e61f"
+    },
+    "S05": {
+      "candidate_key": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r4-24d1db18/S05-before.json",
+      "candidate_hash": "966e8bf52a7460b18680d6427b5a685a653ec269f32221b1645c9139a6a272dc"
+    }
+  },
+  "pending": [],
+  "teacher_visual_review": "NOT_RUN",
+  "round_directory": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/r4-24d1db18",
+  "issues": [
+    {
+      "unit_id": "S03.U04",
+      "severity": "review",
+      "message": "基本极限定理的证明依赖了未在所提供正文中明确建立的关键前提，证明链条因此不完整或至少存在重大不确定性。需要明确说明这些性质是锁定先修中的已知基础性质，或补充其证明/准确引用。",
+      "evidence": "证明正弦基本极限时直接使用“当 x→0^+ 时，cos x→1”，但所提供的 S01、S02 先修正文及当前 S03.U01–S03.U03、S03.U05 之前没有给出 cos x 在 0 处连续或该极限的结论。证明指数基本极限时又直接使用“对 0<t<1，有 1+t≤e^t≤1/(1-t)”并称其为标准推论，却未说明该不等式的已知依据或证明。由于 S03.U03 将这些结果列为关键基本极限，不能仅把缺口视为计算步骤省略。"
+    },
+    {
+      "unit_id": "S03.U04",
+      "severity": "review",
+      "message": "S03.U04 在证明第一个基本极限时，从 cos x < sin x/x < 1 和“当 x→0+ 时，cos x→1”应用夹逼原理推出 sin x/x→1；但 cos x→1 在此处只是直接断言，既未在该单元证明，也未在已提供的先修正文 S01/S02 或 S03 其他单元中作为已声明的基础极限或性质给出。该步骤是夹逼论证的关键前提，缺少必要论证或明确引用。建议补充 cos x→1 的证明，或明确引用已建立的基础极限并说明其适用条件。",
+      "evidence": "S03.U04 原文：“当 x→0+ 时，cos x→1。这里所用的是夹逼原理在右侧邻域上的同样结论……由此可知 lim_{x→0+} sin x/x=1。”此前只给出几何不等式 sin x<x<tan x，并未给出 cos x→1 的依据；已提供的 S01、S02 先修正文及 S03 其他单元也未提供该极限的证明或声明。"
+    }
+  ],
+  "contract_migration": {
+    "id": "aa521f98713131672d7cc58fea4039217a2297df86004f60e04d81a7a3779071",
+    "evidence_key": "runs/a45be503af594ce8aae0bb1e4c30184b/global-repairs/contract-migrations/aa521f98713131672d7cc58f/evidence.json"
+  }
+}

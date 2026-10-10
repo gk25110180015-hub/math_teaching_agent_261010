@@ -1,0 +1,1097 @@
+{
+  "plan": {
+    "additions": [],
+    "decision_ids": [
+      "dbde55a67c6144ce89263342b374f0ec",
+      "b2dfa936727f45eaa04d3693772c83d4",
+      "53b60707cba94067953a43625e4ee791",
+      "3a0b619387ce425ab35e31d9aa0faaf1"
+    ],
+    "decisions": [
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "custom_input": "",
+        "id": "dbde55a67c6144ce89263342b374f0ec",
+        "question_id": "Q-PROOF",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "key"
+        },
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "timestamp": "2026-09-19T18:34:31.207163+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "custom_input": "",
+        "id": "b2dfa936727f45eaa04d3693772c83d4",
+        "question_id": "Q-EXAMPLE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "balanced"
+        },
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "timestamp": "2026-09-19T18:34:31.207163+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "custom_input": "",
+        "id": "53b60707cba94067953a43625e4ee791",
+        "question_id": "Q-EXERCISE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "with_answers"
+        },
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "timestamp": "2026-09-19T18:34:31.207163+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "custom_input": "",
+        "id": "3a0b619387ce425ab35e31d9aa0faaf1",
+        "question_id": "Q-ANSWERS",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "end"
+        },
+        "selected_option_ids": [
+          "END"
+        ],
+        "timestamp": "2026-09-19T18:34:31.207163+00:00"
+      }
+    ],
+    "diff": [
+      {
+        "after": {
+          "answers_location": "end",
+          "example_focus": "balanced",
+          "exercises": "with_answers",
+          "proof_policy": "key"
+        },
+        "before": {
+          "answers_location": null,
+          "example_focus": null,
+          "exercises": null,
+          "proof_policy": null
+        },
+        "field": "lecture"
+      }
+    ],
+    "difficulty": "经济学本科一年级微积分",
+    "exclusions": [
+      "不讨论幂级数、函数项级数和傅里叶级数",
+      "不讨论一致收敛、逐项积分与逐项求导",
+      "不系统展开高等数学中的积分判别法证明细节",
+      "不涉及复数项级数"
+    ],
+    "input_snapshot_hash": "a166b0d13bb18f8d1a66fdc2b8d90338d52d4f70e752ae1ba56eb1895cd8f1f0",
+    "lecture": {
+      "answers_location": "end",
+      "example_focus": "balanced",
+      "exercises": "with_answers",
+      "proof_policy": "key"
+    },
+    "objectives": [
+      "建立无穷级数、部分和与收敛的基本概念",
+      "掌握级数收敛的必要条件及基本运算性质",
+      "能够使用正项级数、交错级数和绝对收敛判别法分析级数",
+      "区分绝对收敛、条件收敛与发散，并完成基础证明与计算题"
+    ],
+    "omissions": [],
+    "prerequisites": [
+      "实数运算与不等式",
+      "数列极限的定义与基本性质",
+      "函数极限和连续性的初步知识",
+      "有限等比数列求和与基本积分估计"
+    ],
+    "provider": "live",
+    "questions": [
+      {
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-PROOF",
+        "options": [
+          {
+            "effects": {
+              "value": "key"
+            },
+            "id": "KEY",
+            "label": "关键定理完整证明，其余说明",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "all"
+            },
+            "id": "ALL",
+            "label": "所有定理完整证明",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "定理证明采用哪种深度？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXAMPLE",
+        "options": [
+          {
+            "effects": {
+              "value": "balanced"
+            },
+            "id": "BALANCED",
+            "label": "概念与计算均衡",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "economics"
+            },
+            "id": "ECONOMICS",
+            "label": "更多经济应用",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "例题侧重什么？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXERCISE",
+        "options": [
+          {
+            "effects": {
+              "value": "with_answers"
+            },
+            "id": "WITH",
+            "label": "安排练习并附答案",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "none"
+            },
+            "id": "NONE",
+            "label": "不安排额外练习",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "是否安排练习与答案？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-ANSWERS",
+        "options": [
+          {
+            "effects": {
+              "value": "section"
+            },
+            "id": "SECTION",
+            "label": "各节之后",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "end"
+            },
+            "id": "END",
+            "label": "讲义末尾",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "练习答案放在哪里？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "END"
+        ],
+        "selection_mode": "single"
+      }
+    ],
+    "reference_context": {
+      "dataset": "第二章",
+      "instruction": "Only observe structure, proof depth and notation. Do not copy these examples into a different topic.",
+      "label": "UNTRUSTED_STYLE_REFERENCE_ONLY",
+      "section_titles": [
+        "级数概念的引入",
+        "级数的基本概念",
+        "几何级数",
+        "级数的基本性质",
+        "正项级数及其判别法",
+        "任意项级数的敛散性及其判别法",
+        "判别法小结"
+      ],
+      "source_hash": "5b4e70a9538eae85392ea4d0773ff9d07595ff0d40c6518641396ae938502b0b",
+      "status": "RETRIEVED",
+      "weight_training": false
+    },
+    "reference_registry": {
+      "def:absolute-convergence": "S05",
+      "def:alternating-series": "S04",
+      "def:conditional-convergence": "S05",
+      "def:convergence": "S01",
+      "def:p-series": "S03",
+      "def:partial-sum": "S01",
+      "def:positive-series": "S03",
+      "def:remainder": "S02",
+      "def:series": "S01",
+      "sec:S01": "S01",
+      "sec:S02": "S02",
+      "sec:S03": "S03",
+      "sec:S04": "S04",
+      "sec:S05": "S05",
+      "thm:absolute-implies-convergence": "S05",
+      "thm:alternating-remainder": "S04",
+      "thm:alternating-test": "S04",
+      "thm:comparison": "S03",
+      "thm:comparison-summary": "S05",
+      "thm:convergence-classification": "S05",
+      "thm:finite-change": "S02",
+      "thm:integral-test": "S03",
+      "thm:limit-comparison": "S03",
+      "thm:linearity": "S02",
+      "thm:monotone-partial-sums": "S03",
+      "thm:series-limit": "S01",
+      "thm:term-test": "S02"
+    },
+    "revision": 2,
+    "rules": {
+      "allowed_text_sizes": [
+        "footnotesize",
+        "small",
+        "normalsize",
+        "large"
+      ],
+      "rule_version": 1,
+      "summary_frames": false
+    },
+    "schema_version": 1,
+    "sections": [
+      {
+        "id": "S01",
+        "objectives": [
+          "定义无穷级数及其部分和数列",
+          "说明级数收敛与部分和数列极限之间的关系",
+          "掌握级数收敛、发散和级数和的基本表述",
+          "通过基础例题计算部分和或判断简单级数的收敛性"
+        ],
+        "prerequisites": [],
+        "reference_labels": [
+          "def:series",
+          "def:partial-sum",
+          "def:convergence",
+          "thm:series-limit"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "级数与部分和的基本概念"
+      },
+      {
+        "id": "S02",
+        "objectives": [
+          "证明级数收敛时通项必须趋于零",
+          "掌握级数的线性运算、余项和有限项改变性质",
+          "利用必要条件快速判断典型发散级数",
+          "通过例题分析调和型和常数项级数的基本行为"
+        ],
+        "prerequisites": [
+          "S01"
+        ],
+        "reference_labels": [
+          "def:remainder",
+          "thm:term-test",
+          "thm:linearity",
+          "thm:finite-change"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "收敛的必要条件与级数的基本性质"
+      },
+      {
+        "id": "S03",
+        "objectives": [
+          "理解正项级数部分和单调性的作用",
+          "掌握比较判别法、极限比较判别法和积分判别法的使用条件",
+          "掌握几何级数和p级数等基本参照级数",
+          "能够选择合适判别法判断正项级数的收敛性"
+        ],
+        "prerequisites": [
+          "S01",
+          "S02"
+        ],
+        "reference_labels": [
+          "def:positive-series",
+          "def:p-series",
+          "thm:monotone-partial-sums",
+          "thm:comparison",
+          "thm:limit-comparison",
+          "thm:integral-test"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "正项级数及其判别法"
+      },
+      {
+        "id": "S04",
+        "objectives": [
+          "定义交错级数并识别其符号交替结构",
+          "掌握交错级数判别法及其余项估计",
+          "区分交错级数的收敛性与绝对收敛性",
+          "通过例题估计截断误差并判断条件收敛"
+        ],
+        "prerequisites": [
+          "S02",
+          "S03"
+        ],
+        "reference_labels": [
+          "def:alternating-series",
+          "thm:alternating-test",
+          "thm:alternating-remainder"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "交错级数与条件收敛"
+      },
+      {
+        "id": "S05",
+        "objectives": [
+          "定义绝对收敛和条件收敛",
+          "证明绝对收敛蕴含收敛",
+          "综合使用必要条件、比较判别法、交错级数判别法和绝对收敛判别法",
+          "建立面向本科入门题目的判别法选择流程并完成综合练习"
+        ],
+        "prerequisites": [
+          "S03",
+          "S04"
+        ],
+        "reference_labels": [
+          "def:absolute-convergence",
+          "def:conditional-convergence",
+          "thm:absolute-implies-convergence",
+          "thm:comparison-summary",
+          "thm:convergence-classification"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "绝对收敛、条件收敛与判别法综合"
+      }
+    ],
+    "symbols": {
+      "N": "正整数集合",
+      "S_n": "级数的第n个部分和",
+      "a_n": "级数的第n项或通项",
+      "epsilon": "任意给定的正数",
+      "r": "几何级数的公比",
+      "sum_a_n": "级数Σ_{n=1}^∞ a_n"
+    },
+    "theme": "default",
+    "title": "无穷级数：收敛性与基本判别法",
+    "unresolved_blocking_questions": [],
+    "workflow_id": "lecture.generate",
+    "hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227"
+  },
+  "units": [
+    {
+      "id": "S01.U01",
+      "kind": "definition",
+      "relates_to": null,
+      "tex": "给定一个数列 $\\{a_n\\}_{n=1}^{\\infty}$，形式表达式\n\\[\n\\sum_{n=1}^{\\infty}a_n=a_1+a_2+a_3+\\cdots\n\\]\n称为无穷级数，简称级数；其中 $a_n$ 称为该级数的通项。记号 $\\sum_{n=1}^{\\infty}a_n$ 表示按照下标 $n=1,2,3,\\ldots$ 依次相加的过程，而不是有限项的和。\\label{def:series}"
+    },
+    {
+      "id": "S01.U02",
+      "kind": "definition",
+      "relates_to": null,
+      "tex": "对于级数 $\\sum_{n=1}^{\\infty}a_n$，定义其第 $n$ 个部分和为\n\\[\nS_n=\\sum_{k=1}^{n}a_k=a_1+a_2+\\cdots+a_n,\\qquad n=1,2,3,\\ldots.\n\\]\n由此得到数列 $\\{S_n\\}_{n=1}^{\\infty}$，称为该级数的部分和数列。\\label{def:partial-sum}"
+    },
+    {
+      "id": "S01.U03",
+      "kind": "definition",
+      "relates_to": null,
+      "tex": "若部分和数列 $\\{S_n\\}_{n=1}^{\\infty}$ 收敛，即存在有限实数 $S$ 使得\n\\[\n\\lim_{n\\to\\infty}S_n=S,\n\\]\n则称级数 $\\sum_{n=1}^{\\infty}a_n$ 收敛，并称 $S$ 为该级数的和，记作\n\\[\n\\sum_{n=1}^{\\infty}a_n=S.\n\\]\n若部分和数列不收敛，则称级数 $\\sum_{n=1}^{\\infty}a_n$ 发散。\\label{def:convergence}"
+    },
+    {
+      "id": "S01.U04",
+      "kind": "theorem",
+      "relates_to": null,
+      "tex": "级数 $\\sum_{n=1}^{\\infty}a_n$ 收敛，当且仅当其部分和数列 $\\{S_n\\}_{n=1}^{\\infty}$ 收敛。若\n\\[\n\\lim_{n\\to\\infty}S_n=S,\n\\]\n则\n\\[\n\\sum_{n=1}^{\\infty}a_n=S.\n\\]\n\\label{thm:series-limit}"
+    },
+    {
+      "id": "S01.U05",
+      "kind": "proof",
+      "relates_to": "S01.U04",
+      "tex": "由定义，级数 $\\sum_{n=1}^{\\infty}a_n$ 的第 $n$ 个部分和就是 $S_n=\\sum_{k=1}^{n}a_k$。因此，级数收敛的定义正是部分和数列 $\\{S_n\\}$ 收敛，即存在有限实数 $S$ 满足\n\\[\n\\lim_{n\\to\\infty}S_n=S.\n\\]\n所以，级数收敛当且仅当其部分和数列收敛；在这种情况下，级数的和按定义就是部分和数列的极限 $S$。证毕。"
+    },
+    {
+      "id": "S01.U06",
+      "kind": "example",
+      "relates_to": null,
+      "tex": "考虑级数\n\\[\n\\sum_{n=1}^{\\infty}\\frac{1}{2^n}.\n\\]\n求其前 $3$ 项部分和，并说明如何根据部分和数列判断该级数是否收敛。"
+    },
+    {
+      "id": "S01.U07",
+      "kind": "solution",
+      "relates_to": "S01.U06",
+      "tex": "该级数的前 $3$ 项部分和为\n\\[\nS_3=\\frac12+\\frac14+\\frac18=\\frac78.\n\\]\n一般地，对任意正整数 $n$，其部分和为\n\\[\nS_n=\\sum_{k=1}^{n}\\frac{1}{2^k}.\n\\]\n若能够证明 $\\{S_n\\}$ 有有限极限 $S$，则由定理 \\ref{thm:series-limit} 可知原级数收敛且其和为 $S$。本例的部分和可写为\n\\[\nS_n=1-\\frac{1}{2^n},\n\\]\n因此\n\\[\n\\lim_{n\\to\\infty}S_n=1,\n\\]\n从而\n\\[\n\\sum_{n=1}^{\\infty}\\frac{1}{2^n}=1.\n\\]"
+    },
+    {
+      "id": "S01.U08",
+      "kind": "exercise",
+      "relates_to": null,
+      "tex": "设级数\n\\[\n\\sum_{n=1}^{\\infty}a_n,\n\\qquad a_n=\\frac{1}{n(n+1)}.\n\\]\n写出其第 $3$ 个部分和 $S_3$，并根据级数收敛的定义说明判断该级数收敛性时需要考察哪个数列的极限。"
+    },
+    {
+      "id": "S01.U09",
+      "kind": "solution",
+      "relates_to": "S01.U08",
+      "tex": "由部分和的定义，\n\\[\nS_3=a_1+a_2+a_3\n=\\frac{1}{1\\cdot2}+\\frac{1}{2\\cdot3}+\\frac{1}{3\\cdot4}\n=\\frac12+\\frac16+\\frac1{12}\n=\\frac34.\n\\]\n判断该级数是否收敛时，需要考察部分和数列\n\\[\nS_n=\\sum_{k=1}^{n}\\frac{1}{k(k+1)}\n\\]\n是否存在有限极限。若 $\\lim_{n\\to\\infty}S_n$ 存在，则级数收敛；否则级数发散。"
+    },
+    {
+      "id": "S02.U01",
+      "kind": "explanation",
+      "relates_to": null,
+      "tex": "本节中的级数均为实数项级数，下标从 $1$ 开始。根据定义 \\ref{def:convergence}，判断级数收敛必须考察部分和，而不能只考察通项。以下先从部分和的极限推出通项必须满足的条件，再讨论已经收敛的级数可以进行哪些运算。"
+    },
+    {
+      "id": "S02.U02",
+      "kind": "theorem",
+      "relates_to": null,
+      "tex": "\\label{thm:term-test}若实数项级数 $\\sum_{n=1}^{\\infty}a_n$ 收敛，则 $\\lim_{n\\to\\infty}a_n=0$。因此，若通项的极限不存在或不等于零，则该级数发散。通项趋于零只是级数收敛的必要条件，不是充分条件。"
+    },
+    {
+      "id": "S02.U03",
+      "kind": "proof",
+      "relates_to": "S02.U02",
+      "tex": "设 $S_n=\\sum_{k=1}^{n}a_k$，且级数收敛于 $S\\in\\mathbb{R}$。对每个整数 $n\\geq2$，有\n\\[\na_n=S_n-S_{n-1}.\n\\]\n由 $S_n\\to S$ 可知 $S_{n-1}\\to S$，故由数列极限的运算法则，\n\\[\n\\lim_{n\\to\\infty}a_n=S-S=0.\n\\]\n其逆否命题给出上述发散判断。下面的调和级数例题将证明，通项趋于零不足以保证级数收敛。"
+    },
+    {
+      "id": "S02.U04",
+      "kind": "example",
+      "relates_to": null,
+      "tex": "判断下列级数的敛散性，并说明必要条件在判断中起什么作用：\n\\[\n\\text{(1)}\\quad\\sum_{n=1}^{\\infty}c\\quad(c\\in\\mathbb{R});\\qquad\n\\text{(2)}\\quad\\sum_{n=1}^{\\infty}\\frac{n}{n+1};\\qquad\n\\text{(3)}\\quad\\sum_{n=1}^{\\infty}(-1)^{n-1}.\n\\]"
+    },
+    {
+      "id": "S02.U05",
+      "kind": "solution",
+      "relates_to": "S02.U04",
+      "tex": "(1) 部分和为 $S_n=nc$。当 $c=0$ 时，所有部分和都为零，级数收敛且和为零；当 $c\\neq0$ 时，通项极限为 $c\\neq0$，由定理 \\ref{thm:term-test}，级数发散。此时部分和在 $c>0$ 时趋于 $+\\infty$，在 $c<0$ 时趋于 $-\\infty$。\n\n(2) 对正整数 $n$，有\n\\[\n\\frac{n}{n+1}=1-\\frac{1}{n+1}\\longrightarrow1.\n\\]\n通项不趋于零，所以级数发散。\n\n(3) 通项在 $1$ 与 $-1$ 之间交替，极限不存在，所以级数发散。也可直接观察：$S_{2m}=0$，$S_{2m-1}=1$，其中 $m$ 为任意正整数，故部分和没有极限。可见，级数发散并不一定表现为部分和趋于无穷。"
+    },
+    {
+      "id": "S02.U06",
+      "kind": "example",
+      "relates_to": null,
+      "tex": "调和级数 $\\sum_{n=1}^{\\infty}1/n$ 的通项趋于零。仅利用部分和和有限项不等式，证明它仍然发散。"
+    },
+    {
+      "id": "S02.U07",
+      "kind": "solution",
+      "relates_to": "S02.U06",
+      "tex": "记 $H_n=\\sum_{k=1}^{n}1/k$。对任意正整数 $j$，从 $k=2^{j-1}+1$ 到 $k=2^j$ 共含 $2^{j-1}$ 项，每项至少为 $1/2^j$，所以\n\\[\n\\sum_{k=2^{j-1}+1}^{2^j}\\frac1k\\geq\\frac{2^{j-1}}{2^j}=\\frac12.\n\\]\n因此，对每个正整数 $m$，\n\\[\nH_{2^m}=1+\\sum_{j=1}^{m}\\sum_{k=2^{j-1}+1}^{2^j}\\frac1k\n\\geq1+\\frac m2.\n\\]\n右端随 $m$ 增大而无界，故部分和数列无界，不可能收敛于有限实数。调和级数发散。这里分组的对象始终是有限部分和，并未对尚未确定收敛的无穷和进行运算。\n\n另一方面，$\\lim_{n\\to\\infty}1/n=0$。这就给出了“通项趋于零但级数发散”的反例。实际解题时，通项趋于零意味着必要条件未能排除收敛，而不是已经证明收敛。"
+    },
+    {
+      "id": "S02.U08",
+      "kind": "theorem",
+      "relates_to": null,
+      "tex": "\\label{thm:linearity}设实数项级数 $\\sum_{n=1}^{\\infty}a_n=A$ 和 $\\sum_{n=1}^{\\infty}b_n=B$ 均收敛。对任意实常数 $\\alpha,\\beta$，级数 $\\sum_{n=1}^{\\infty}(\\alpha a_n+\\beta b_n)$ 收敛，且\n\\[\n\\sum_{n=1}^{\\infty}(\\alpha a_n+\\beta b_n)=\\alpha A+\\beta B.\n\\]"
+    },
+    {
+      "id": "S02.U09",
+      "kind": "proof",
+      "relates_to": "S02.U08",
+      "tex": "令 $A_n=\\sum_{k=1}^{n}a_k$，$B_n=\\sum_{k=1}^{n}b_k$。由有限和的运算法则，组合级数的第 $n$ 个部分和为\n\\[\nC_n=\\sum_{k=1}^{n}(\\alpha a_k+\\beta b_k)=\\alpha A_n+\\beta B_n.\n\\]\n已知 $A_n\\to A$、$B_n\\to B$，所以 $C_n\\to\\alpha A+\\beta B$。由定理 \\ref{thm:series-limit} 得到结论。"
+    },
+    {
+      "id": "S02.U10",
+      "kind": "explanation",
+      "relates_to": null,
+      "tex": "线性运算定理的前提是两个级数都收敛。不能把发散级数当作实数相减。例如，$\\sum_{n=1}^{\\infty}1$ 与 $\\sum_{n=1}^{\\infty}(-1)$ 都发散，但逐项相加后得到的零级数收敛；这并不是两个级数的和相加，因为原来两个级数都没有有限的和。\n\n若一个级数收敛、另一个发散，则它们逐项相加的级数必发散。为证明这一点，设 $\\sum_{n=1}^{\\infty}a_n$ 收敛于 $A$，而 $\\sum_{n=1}^{\\infty}b_n$ 发散。记\n\\[\nA_n=\\sum_{k=1}^{n}a_k,\\qquad B_n=\\sum_{k=1}^{n}b_k,\\qquad C_n=\\sum_{k=1}^{n}(a_k+b_k).\n\\]\n假设逐项相加的级数收敛于有限实数 $C$，则 $C_n\\to C$。由有限和的恒等式 $B_n=C_n-A_n$ 及数列极限的运算法则，得到\n\\[\nB_n\\longrightarrow C-A.\n\\]\n因此 $\\sum_{n=1}^{\\infty}b_n$ 收敛，与假设矛盾。故逐项相加的级数必发散。这里仅对有限部分和作减法，再取极限，并未对发散级数的和作运算。"
+    },
+    {
+      "id": "S02.U11",
+      "kind": "definition",
+      "relates_to": null,
+      "tex": "\\label{def:remainder}设 $\\sum_{k=1}^{\\infty}a_k$ 收敛且和为 $S$，部分和为 $S_n$。对每个正整数 $n$，定义第 $n$ 个余项为\n\\[\nR_n=S-S_n=\\sum_{k=n+1}^{\\infty}a_k.\n\\]\n这里尾级数的含义是 $\\lim_{m\\to\\infty}\\sum_{k=n+1}^{m}a_k$，其中 $n$ 固定。用 $S_n$ 近似 $S$ 时，带符号的误差为 $R_n$，绝对误差为 $|R_n|$。"
+    },
+    {
+      "id": "S02.U12",
+      "kind": "explanation",
+      "relates_to": null,
+      "tex": "余项定义中的尾级数确实收敛：固定正整数 $n$，对整数 $m>n$ 有\n\\[\n\\sum_{k=n+1}^{m}a_k=S_m-S_n\\longrightarrow S-S_n.\n\\]\n又因为 $S_n\\to S$，所以 $R_n\\to0$。前一个极限固定 $n$ 而令 $m$ 增大，后一个极限才是令截断位置 $n$ 增大。若原级数发散，则不能把 $S-S_n$ 当作余项，因为此时不存在有限的级数和 $S$。"
+    },
+    {
+      "id": "S02.U13",
+      "kind": "theorem",
+      "relates_to": null,
+      "tex": "\\label{thm:finite-change}设 $\\{a_n\\}$、$\\{b_n\\}$ 为两个实数列，存在正整数 $N$，使得对所有整数 $n>N$ 都有 $a_n=b_n$。则 $\\sum_{n=1}^{\\infty}a_n$ 与 $\\sum_{n=1}^{\\infty}b_n$ 同敛散。若前者收敛于 $A$，则后者的和为\n\\[\nB=A+\\sum_{k=1}^{N}(b_k-a_k).\n\\]\n因此，改变有限项不改变级数的敛散性，但可能改变级数的和。添加或删去有限项，并保持其余项的相对次序，也不改变敛散性。"
+    },
+    {
+      "id": "S02.U14",
+      "kind": "proof",
+      "relates_to": "S02.U13",
+      "tex": "令 $A_n=\\sum_{k=1}^{n}a_k$、$B_n=\\sum_{k=1}^{n}b_k$。对所有整数 $n\\geq N+1$，由 $k>N$ 时 $a_k=b_k$，有\n\\[\nB_n-A_n=\\sum_{k=1}^{N}(b_k-a_k)+\\sum_{k=N+1}^{n}(b_k-a_k)\n=\\sum_{k=1}^{N}(b_k-a_k)=C,\n\\]\n其中 $C$ 是与 $n$ 无关的有限实数。因此从下标 $N+1$ 起有 $B_n=A_n+C$。数列是否收敛及其极限不受有限个初始项影响，所以两部分和数列同时收敛或同时发散；收敛时极限相差 $C$，即 $B=A+C$。\n\n对于删去前 $N$ 项所得的尾级数，其第 $m$ 个部分和为 $A_{N+m}-A_N$，其中 $m$ 为正整数，故它与原级数同敛散。一般地，添加或删去有限项后，在经过最后一个改动位置时，新旧部分和之间只相差一个固定常数和一个固定的下标平移，仍由数列极限性质得到同样结论。这里不涉及无限多项的重新排列。"
+    },
+    {
+      "id": "S02.U15",
+      "kind": "example",
+      "relates_to": null,
+      "tex": "设实数列 $\\{b_n\\}$ 满足\n\\[\nb_1=3,\\qquad b_n=\\frac{2}{2^n}\\quad(n\\geq2).\n\\]\n求级数 $\\sum_{n=1}^{\\infty}b_n$ 的和及第 $n$ 个余项，并确定使绝对误差小于 $1/100$ 的最小正整数截断位置 $n$。"
+    },
+    {
+      "id": "S02.U16",
+      "kind": "solution",
+      "relates_to": "S02.U15",
+      "tex": "前节已由部分和求得 $\\sum_{k=1}^{\\infty}2^{-k}=1$，且对每个正整数 $n$，有 $\\sum_{k=1}^{n}2^{-k}=1-2^{-n}$。由定理 \\ref{thm:linearity}，$\\sum_{k=1}^{\\infty}2\\cdot2^{-k}=2$。本题将其第一项从 $1$ 改成 $3$，增加了 $2$，故由定理 \\ref{thm:finite-change}，所求级数的和为 $4$。\n\n对每个正整数 $n$，其部分和及余项分别为\n\\[\nS_n=2(1-2^{-n})+2=4-2^{1-n},\\qquad\nR_n=4-S_n=2^{1-n}.\n\\]\n所以 $|R_n|=2^{1-n}$。当 $n=7$ 时，误差为 $1/64>1/100$；当 $n=8$ 时，误差为 $1/128<1/100$。误差随正整数 $n$ 增大严格减小，故满足要求的最小截断位置是 $n=8$。"
+    },
+    {
+      "id": "S02.U17",
+      "kind": "explanation",
+      "relates_to": null,
+      "tex": "本节的判断顺序是：先检查通项是否趋于零；若不趋于零，立即判为发散；若趋于零，还需研究部分和或使用其他适用的判别法。线性运算要求有关级数已经收敛；余项用于描述收敛级数的截断误差；有限项改变只保持敛散性，不保证和保持不变。\n\n以下为本节练习，答案统一安排在讲义末尾。"
+    },
+    {
+      "id": "S02.U18",
+      "kind": "exercise",
+      "relates_to": null,
+      "tex": "分别判断下列级数能否仅用收敛的必要条件判为发散，并对不能据此判定的情形说明原因：\n\\[\n\\text{(1)}\\quad\\sum_{n=1}^{\\infty}\\frac{2n+1}{3n+2};\\qquad\n\\text{(2)}\\quad\\sum_{n=1}^{\\infty}\\frac1{n+2};\\qquad\n\\text{(3)}\\quad\\sum_{n=1}^{\\infty}\\frac{(-1)^n n}{n+1}.\n\\]\n再利用本节已知结论确定第 (2) 个级数的敛散性。"
+    },
+    {
+      "id": "S02.U19",
+      "kind": "exercise",
+      "relates_to": null,
+      "tex": "设实数项级数 $\\sum_{n=1}^{\\infty}a_n=2$、$\\sum_{n=1}^{\\infty}b_n=-1$ 均收敛。求 $\\sum_{n=1}^{\\infty}(3a_n-2b_n)$ 的和。若将组合级数的第一项增加 $5$，其敛散性与和各有何变化？另说明：仅知道 $\\sum_{n=1}^{\\infty}(a_n+b_n)$ 收敛，能否推出两个原级数都收敛？请给出理由或反例。"
+    },
+    {
+      "id": "S02.U20",
+      "kind": "exercise",
+      "relates_to": null,
+      "tex": "对于级数 $\\sum_{n=1}^{\\infty}2^{-n}$，写出第 $n$ 个余项，求使绝对误差小于 $1/1000$ 的最小正整数 $n$。若只将该级数第一项改成 $10$，求新级数的和，并说明对每个正整数 $n$，新旧级数的第 $n$ 个余项是否相同。"
+    },
+    {
+      "id": "S02.U18.answer",
+      "kind": "solution",
+      "relates_to": "S02.U18",
+      "tex": "(1) 通项满足\n\\[\n\\lim_{n\\to\\infty}\\frac{2n+1}{3n+2}\n=\\lim_{n\\to\\infty}\\frac{2+1/n}{3+2/n}=\\frac23\\ne0.\n\\]\n因此仅用收敛的必要条件即可判定该级数发散。\n\n(2) 因为 $1/(n+2)\\to0$，收敛的必要条件得到满足，但这不能保证级数收敛，也不能据此判为发散。进一步，令 $H_m=\\sum_{k=1}^{m}1/k$，则本题的部分和为\n\\[\nS_n=\\sum_{k=1}^{n}\\frac1{k+2}=H_{n+2}-\\frac32.\n\\]\n该级数是调和级数删去前两项所得的尾级数，由调和级数发散及有限项改变性质，知它发散。\n\n(3) 记 $a_n=(-1)^n n/(n+1)$。其偶数项与奇数项分别满足\n\\[\na_{2m}=\\frac{2m}{2m+1}\\longrightarrow1,\\qquad\na_{2m-1}=-\\frac{2m-1}{2m}\\longrightarrow-1.\n\\]\n两个子数列的极限不同，故通项极限不存在，尤其不趋于零。因此仅用收敛的必要条件即可判定该级数发散。"
+    },
+    {
+      "id": "S02.U19.answer",
+      "kind": "solution",
+      "relates_to": "S02.U19",
+      "tex": "由于两个原级数均收敛，由线性运算定理，组合级数收敛且\n\\[\n\\sum_{n=1}^{\\infty}(3a_n-2b_n)=3\\cdot2-2\\cdot(-1)=8.\n\\]\n若将组合级数第一项增加 $5$，则每个正整数下标的部分和均增加 $5$，故新级数仍收敛，其和为 $8+5=13$。\n\n最后一问仅以逐项相加的级数收敛为条件，不再假定两个原级数分别收敛；此时不能推出两个原级数都收敛。反例为 $a_n=1$、$b_n=-1$：逐项相加后各项均为零，所以 $\\sum_{n=1}^{\\infty}(a_n+b_n)$ 收敛于 $0$，而两个原级数的部分和分别为 $n$ 和 $-n$，均无有限极限，因而均发散。"
+    },
+    {
+      "id": "S02.U20.answer",
+      "kind": "solution",
+      "relates_to": "S02.U20",
+      "tex": "由有限等比数列求和公式，对每个正整数 $n$，\n\\[\nS_n=\\sum_{k=1}^{n}2^{-k}=1-2^{-n}.\n\\]\n所以级数的和为 $S=1$，第 $n$ 个余项为\n\\[\nR_n=S-S_n=2^{-n}.\n\\]\n绝对误差小于 $1/1000$ 等价于 $2^n>1000$。因为\n\\[\n2^9=512<1000<1024=2^{10},\n\\]\n且 $2^n$ 随正整数 $n$ 严格递增，满足要求的最小正整数为 $n=10$。\n\n原第一项为 $1/2$，改为 $10$ 后增加了 $10-1/2=19/2$。由有限项改变性质，新级数仍收敛，其和为\n\\[\n\\widetilde S=1+\\frac{19}{2}=\\frac{21}{2}.\n\\]\n对每个正整数 $n$，新部分和为 $\\widetilde S_n=S_n+19/2$，因此\n\\[\n\\widetilde R_n=\\widetilde S-\\widetilde S_n\n=\\left(S+\\frac{19}{2}\\right)-\\left(S_n+\\frac{19}{2}\\right)\n=S-S_n=2^{-n}.\n\\]\n故新旧级数的第 $n$ 个余项相同。"
+    },
+    {
+      "id": "S03.U01",
+      "kind": "definition",
+      "relates_to": null,
+      "tex": "若级数 $\\sum_{n=1}^{\\infty}a_n$ 满足 $a_n\\geq 0$ 对每个正整数 $n$ 都成立，则称其为正项级数。记部分和为\n\\[\nS_n=\\sum_{k=1}^{n}a_k.\n\\]\n由于 $a_{n+1}\\geq0$，有\n\\[\nS_{n+1}=S_n+a_{n+1}\\geq S_n,\n\\]\n所以正项级数的部分和数列是单调不减数列。\\label{def:positive-series}"
+    },
+    {
+      "id": "S03.U02",
+      "kind": "definition",
+      "relates_to": null,
+      "tex": "对实数 $p$，称\n\\[\n\\sum_{n=1}^{\\infty}\\frac{1}{n^p}\n\\]\n为 $p$-级数。其中对正整数 $n$，当 $p\\leq0$ 时，通项 $1/n^p$ 不趋于零；当 $p>0$ 时，通项趋于零，但这还不能单独说明级数收敛。\\label{def:p-series}"
+    },
+    {
+      "id": "S03.U03",
+      "kind": "theorem",
+      "relates_to": null,
+      "tex": "设 $\\sum_{n=1}^{\\infty}a_n$ 为正项级数，部分和为 $S_n$。则该级数收敛，当且仅当数列 $\\{S_n\\}$ 有上界。\\label{thm:monotone-partial-sums}"
+    },
+    {
+      "id": "S03.U04",
+      "kind": "proof",
+      "relates_to": "S03.U03",
+      "tex": "由定义，正项级数的部分和数列满足 $S_{n+1}\\geq S_n$，因此它是单调不减数列。\n\n若级数收敛，则 $S_n$ 收敛于某个有限实数 $S$。收敛数列有界，所以存在常数 $M$，使得 $S_n\\leq M$ 对所有正整数 $n$ 成立。\n\n反过来，若 $\\{S_n\\}$ 有上界，则它是有上界的单调不减数列。由单调有界数列收敛定理，存在有限实数 $S$，使得\n\\[\n\\lim_{n\\to\\infty}S_n=S.\n\\]\n根据级数收敛的定义，$\\sum_{n=1}^{\\infty}a_n$ 收敛。故结论成立。"
+    },
+    {
+      "id": "S03.U05",
+      "kind": "theorem",
+      "relates_to": null,
+      "tex": "设 $\\sum_{n=1}^{\\infty}a_n$ 和 $\\sum_{n=1}^{\\infty}b_n$ 为正项级数，且对某个正整数 $N$ 以及所有整数 $n\\geq N$，有\n\\[\n0\\leq a_n\\leq b_n.\n\\]\n则：\n\\begin{enumerate}\n\\item 若 $\\sum_{n=1}^{\\infty}b_n$ 收敛，则 $\\sum_{n=1}^{\\infty}a_n$ 收敛；\n\\item 若 $\\sum_{n=1}^{\\infty}a_n$ 发散，则 $\\sum_{n=1}^{\\infty}b_n$ 发散。\n\\end{enumerate}\n这称为正项级数的比较判别法。\\label{thm:comparison}"
+    },
+    {
+      "id": "S03.U06",
+      "kind": "proof",
+      "relates_to": "S03.U05",
+      "tex": "设\n\\[\nA_n=\\sum_{k=1}^{n}a_k,\\qquad B_n=\\sum_{k=1}^{n}b_k.\n\\]\n将比较条件中的 $N$ 换成 $\\max\\{N,2\\}$ 不影响条件成立，因此不失一般性取 $N\\geq2$。对 $n\\geq N$，由 $0\\leq a_k\\leq b_k$ 得\n\\[\nA_n=\\sum_{k=1}^{N-1}a_k+\\sum_{k=N}^{n}a_k\n\\leq \\sum_{k=1}^{N-1}a_k+\\sum_{k=N}^{n}b_k.\n\\]\n若 $\\sum b_n$ 收敛，则 $B_n$ 有上界。由于 $b_k\\geq0$，有 $\\sum_{k=N}^{n}b_k\\leq B_n$，因此上式右端有上界，从而 $n\\geq N$ 时的 $A_n$ 有共同上界。再计入有限个初始部分和 $A_1,\\ldots,A_{N-1}$，可知整个部分和数列有上界。由定理 \\ref{thm:monotone-partial-sums}，$\\sum a_n$ 收敛。\n\n第二个结论是第一个结论的逆否命题。若 $\\sum b_n$ 收敛，则由第一部分 $\\sum a_n$ 也收敛；因此若 $\\sum a_n$ 发散，就不可能有 $\\sum b_n$ 收敛，故 $\\sum b_n$ 发散。"
+    },
+    {
+      "id": "S03.U07",
+      "kind": "theorem",
+      "relates_to": null,
+      "tex": "设 $a_n>0$、$b_n>0$ 对所有正整数 $n$ 成立，并且\n\\[\n\\lim_{n\\to\\infty}\\frac{a_n}{b_n}=L,\n\\qquad 0<L<\\infty.\n\\]\n则正项级数 $\\sum_{n=1}^{\\infty}a_n$ 与 $\\sum_{n=1}^{\\infty}b_n$ 同时收敛或同时发散。这称为极限比较判别法。\\label{thm:limit-comparison}"
+    },
+    {
+      "id": "S03.U08",
+      "kind": "proof",
+      "relates_to": "S03.U07",
+      "tex": "由 $a_n/b_n\\to L$ 且 $L>0$，取 $\\varepsilon=L/2$。存在正整数 $N$，使得当 $n\\geq N$ 时，\n\\[\n\\left|\\frac{a_n}{b_n}-L\\right|<\\frac{L}{2}.\n\\]\n因为 $a_n$ 与 $b_n$ 均为正数，所以\n\\[\n\\frac{L}{2}<\\frac{a_n}{b_n}<\\frac{3L}{2},\n\\]\n从而\n\\[\n\\frac{L}{2}b_n<a_n<\\frac{3L}{2}b_n.\n\\]\n若 $\\sum b_n$ 收敛，则比较判别法说明 $\\sum a_n$ 收敛；若 $\\sum b_n$ 发散，则由\n\\[\n\\frac{L}{2}b_n\\leq a_n\n\\]\n以及比较判别法的第二部分，知 $\\sum a_n$ 发散。交换 $a_n$ 与 $b_n$ 的位置可得反向结论，故两级数同敛散。"
+    },
+    {
+      "id": "S03.U09",
+      "kind": "theorem",
+      "relates_to": null,
+      "tex": "对 $p$-级数\n\\[\n\\sum_{n=1}^{\\infty}\\frac{1}{n^p},\n\\]\n有\n\\[\n\\sum_{n=1}^{\\infty}\\frac{1}{n^p}\n\\begin{cases}\n\\text{收敛},&p>1,\\\\\n\\text{发散},&p\\leq1.\n\\end{cases}\n\\]\n\\label{thm:p-series}\n\n另一类基本参照级数是几何级数。本节使用其非负项情形：首项 $a>0$，公比 $r>0$，起点为 $n=1$，即\n\\[\n\\sum_{n=1}^{\\infty}ar^{n-1}=a+ar+ar^2+\\cdots.\n\\]\n当 $0<r<1$ 时它收敛，和为 $a/(1-r)$；当 $r\\geq1$ 时它发散。边界 $r=0$ 时，将各项明确取为 $a,0,0,\\ldots$，级数收敛且和为 $a$。这里不讨论负公比的符号交替情形。"
+    },
+    {
+      "id": "S03.U10",
+      "kind": "proof",
+      "relates_to": "S03.U09",
+      "tex": "当 $p\\leq0$ 时，通项 $1/n^p=n^{-p}$ 不趋于零，所以级数发散。\n\n设 $0<p\\leq1$。此时通项确实趋于零，但这只是级数收敛的必要条件，不能据此推出级数收敛。对每个正整数 $j$，考虑区间 $2^{j-1}<n\\leq2^j$。其中共有 $2^{j-1}$ 个整数，并且 $n\\leq2^j$，所以\n\\[\n\\frac{1}{n^p}\\geq\\frac{1}{(2^j)^p}=2^{-jp}.\n\\]\n因此\n\\[\n\\sum_{n=2^{j-1}+1}^{2^j}\\frac{1}{n^p}\n\\geq 2^{j-1}2^{-jp}=\\frac12\\,2^{j(1-p)}.\n\\]\n当 $p=1$ 时，每组和至少为 $1/2$；当 $0<p<1$ 时，每组和随 $j$ 增大而不减且不趋于零。于是部分和数列无界，级数发散。\n\n最后设 $p>1$。取 $q=p-1>0$。对每个正整数 $n\\geq2$，函数 $x^{-p}$ 在区间 $[n-1,n]$ 上递减，所以\n\\[\n\\frac{1}{n^p}\\leq\\int_{n-1}^{n}x^{-p}\\,dx.\n\\]\n于是对任意整数 $m\\geq2$，\n\\[\n\\sum_{n=2}^{m}\\frac{1}{n^p}\n\\leq\\int_{1}^{m}x^{-p}\\,dx\n=\\frac{1-m^{1-p}}{p-1}\n\\leq\\frac{1}{p-1}.\n\\]\n首个部分和为 $S_1=1$；对 $m\\geq2$，上述估计给出 $S_m\\leq1+1/(p-1)$。因此全部部分和有共同上界，故由定理 \\ref{thm:monotone-partial-sums}，级数收敛。\n\n几何级数的结论直接来自有限等比求和。对 $a>0$、$r>0$ 且 $r\\ne1$，第 $m$ 个部分和为\n\\[\n\\sum_{n=1}^{m}ar^{n-1}=\\frac{a(1-r^m)}{1-r}.\n\\]\n当 $0<r<1$ 时，$r^m\\to0$，故部分和趋于 $a/(1-r)$。当 $r>1$ 时，$r^m\\to+\\infty$，部分和 $a(r^m-1)/(r-1)$ 趋于 $+\\infty$，所以级数发散。当 $r=1$ 时，部分和为 $ma$，也趋于 $+\\infty$。当 $r=0$ 时，按上述明确给出的各项，所有部分和都等于 $a$，故级数收敛且和为 $a$。"
+    },
+    {
+      "id": "S03.U11",
+      "kind": "theorem",
+      "relates_to": null,
+      "tex": "设函数 $f$ 在区间 $[1,\\infty)$ 上连续、正值且单调递减，并满足\n\\[\nf(n)=a_n\\qquad(n=1,2,3,\\ldots).\n\\]\n则正项级数 $\\sum_{n=1}^{\\infty}a_n$ 收敛，当且仅当反常积分\n\\[\n\\int_{1}^{\\infty}f(x)\\,dx\n=\\lim_{t\\to\\infty}\\int_{1}^{t}f(x)\\,dx\n\\]\n收敛。这称为积分判别法。\\label{thm:integral-test}"
+    },
+    {
+      "id": "S03.U12",
+      "kind": "proof",
+      "relates_to": "S03.U11",
+      "tex": "下面仅用基本积分估计和单调有界数列收敛定理，补全积分判别法的双向论证；不系统展开反常积分的一般理论或更高阶证明细节。\n\n在定理的条件下，由 $f$ 单调递减，对 $x\\in[n,n+1]$ 有 $f(n+1)\\leq f(x)\\leq f(n)$，故\n\\[\nf(n+1)\\leq\\int_n^{n+1}f(x)\\,dx\\leq f(n).\n\\]\n这说明曲线下的面积夹在相邻的矩形面积之间。记\n\\[\nS_m=\\sum_{n=1}^{m}a_n,\\qquad I(t)=\\int_1^t f(x)\\,dx\\quad(t\\geq1).\n\\]\n连续性保证每个有限区间上的积分存在，正值性保证 $I(t)$ 单调不减。将上述估计对 $n=1,\\ldots,m$ 求和，得到\n\\[\nS_{m+1}-a_1\\leq I(m+1)\\leq S_m\\qquad(m\\geq1).\n\\]\n\n若反常积分收敛，记其有限极限为 $L$。由 $I(t)$ 单调不减可知 $I(t)\\leq L$，于是\n\\[\nS_{m+1}\\leq a_1+I(m+1)\\leq a_1+L.\n\\]\n再计入 $S_1=a_1$，所有部分和都有共同上界。因此由定理 \\ref{thm:monotone-partial-sums}，级数收敛。\n\n反过来，若级数收敛，则其部分和有上界，设 $S_m\\leq M$。由上面的估计，$I(m+1)\\leq M$；且 $I(1)=0$，故数列 $\\{I(m)\\}$ 单调不减且有上界。由单调有界数列收敛定理，存在有限实数 $L$，使得 $I(m)\\to L$。对任意实数 $t\\geq1$，取整数 $m$ 使 $m\\leq t<m+1$，则\n\\[\nI(m)\\leq I(t)\\leq I(m+1).\n\\]\n当 $t\\to\\infty$ 时，$m\\to\\infty$，两端均趋于 $L$，由夹逼定理得 $I(t)\\to L$。这正是反常积分收敛的定义。两方向均已证明，因此级数与反常积分同敛散。\n\n应用定理 \\ref{thm:integral-test} 时，应先核对 $f(n)=a_n$，以及 $f$ 在所用区间上的连续性、正值性和单调递减性，再判断反常积分是否收敛。该判别法给出的是同敛散关系，并不说明级数的和等于积分值。"
+    },
+    {
+      "id": "S03.U13",
+      "kind": "example",
+      "relates_to": null,
+      "tex": "判断下列正项级数的敛散性，并说明所使用的判别法：\n\\[\n\\text{(1)}\\quad\\sum_{n=1}^{\\infty}\\frac{3n+1}{n^3+2};\n\\qquad\n\\text{(2)}\\quad\\sum_{n=1}^{\\infty}\\frac{1}{n^2+1};\n\\qquad\n\\text{(3)}\\quad\\sum_{n=2}^{\\infty}\\frac{1}{n\\ln n}.\n\\]\n其中第 (3) 个级数从 $n=2$ 开始，此时 $\\ln n>0$，分母不为零。"
+    },
+    {
+      "id": "S03.U14",
+      "kind": "solution",
+      "relates_to": "S03.U13",
+      "tex": "(1) 直接比较可得，对正整数 $n$，有\n\\[\n0<\\frac{3n+1}{n^3+2}\\leq\\frac{4n}{n^3}=\\frac{4}{n^2},\n\\]\n因为 $n\\geq1$ 时 $3n+1\\leq4n$ 且 $n^3+2\\geq n^3$。由 $p$-级数 $\\sum 1/n^2$ 收敛以及比较判别法，原级数收敛。\n\n也可以使用极限比较判别法。令\n\\[\na_n=\\frac{3n+1}{n^3+2},\\qquad b_n=\\frac1{n^2}.\n\\]\n对每个正整数 $n$，$a_n>0$ 且 $b_n>0$，并且\n\\[\n\\frac{a_n}{b_n}=\\frac{(3n+1)n^2}{n^3+2}\n=\\frac{3+1/n}{1+2/n^3}\\longrightarrow3.\n\\]\n由于 $3\\in(0,\\infty)$，由极限比较判别法，$\\sum a_n$ 与 $\\sum b_n$ 同敛散。又因为 $\\sum b_n=\\sum 1/n^2$ 收敛，所以原级数收敛。该解法展示了在正项性和比值极限为有限正数的条件下，如何选择极限比较判别法。\n\n(2) 有\n\\[\n0<\\frac{1}{n^2+1}\\leq\\frac{1}{n^2}.\n\\]\n右侧的 $p$-级数收敛，所以原级数收敛。\n\n(3) 令 $f(x)=1/(x\\ln x)$，其中 $x\\geq2$。函数为正且连续，并且在 $[2,\\infty)$ 上单调递减。由换元 $u=\\ln x$，得到\n\\[\n\\int_2^t\\frac{1}{x\\ln x}\\,dx\n=\\int_{\\ln2}^{\\ln t}\\frac{1}{u}\\,du\n=\\ln(\\ln t)-\\ln(\\ln2).\n\\]\n当 $t\\to\\infty$ 时，右端趋于 $+\\infty$，所以积分发散。由积分判别法，级数\n\\[\n\\sum_{n=2}^{\\infty}\\frac{1}{n\\ln n}\n\\]\n发散。"
+    },
+    {
+      "id": "S03.U15",
+      "kind": "exercise",
+      "relates_to": null,
+      "tex": "判断下列正项级数的敛散性，并写出主要理由：\n\\[\n\\text{(1)}\\quad\\sum_{n=1}^{\\infty}\\frac{1}{n^{3/2}};\n\\qquad\n\\text{(2)}\\quad\\sum_{n=1}^{\\infty}\\frac{n+1}{n^2+3};\n\\qquad\n\\text{(3)}\\quad\\sum_{n=1}^{\\infty}\\frac{1}{\\sqrt{n^2+n}}.\n\\]\n"
+    },
+    {
+      "id": "S03.U16",
+      "kind": "solution",
+      "relates_to": "S03.U15",
+      "tex": "(1) 这是 $p=3/2>1$ 的 $p$-级数，因此收敛。\n\n(2) 对正整数 $n$，有\n\\[\n\\frac{n+1}{n^2+3}\\geq\\frac{n}{n^2+3}\\geq\\frac{n}{4n^2}=\\frac{1}{4n},\n\\]\n其中 $n^2+3\\leq4n^2$。由于调和级数发散，由比较判别法知原级数发散。\n\n(3) 对正整数 $n$，有\n\\[\n\\sqrt{n^2+n}\\leq\\sqrt{2n^2}=\\sqrt{2}\\,n,\n\\]\n所以\n\\[\n\\frac{1}{\\sqrt{n^2+n}}\\geq\\frac{1}{\\sqrt{2}}\\frac{1}{n}.\n\\]\n由调和级数发散及比较判别法，原级数发散。"
+    },
+    {
+      "id": "S04.U01",
+      "kind": "definition",
+      "relates_to": null,
+      "tex": "若级数可以写成\n\\[\n\\sum_{n=1}^{\\infty}(-1)^{n-1}b_n,\n\\qquad b_n\\geq 0\\quad(n=1,2,3,\\ldots),\n\\]\n则称其为交错级数。这里采用“具有交错符号形式”的约定：因子 $(-1)^{n-1}$ 交替取正负号，允许 $b_n=0$，不要求每一项都非零。若所有 $b_n>0$，各项才严格正负交替。称 $\\{b_n\\}$ 为非负项序列；本节后文针对这一形式所说的“正项序列”，也按允许零项的非负意义理解。零项不妨碍后续交错级数判别法及余项估计的应用，但仍须满足单调不增且趋于零的条件。交错符号形式本身并不单独保证级数收敛。\\label{def:alternating-series}"
+    },
+    {
+      "id": "S04.U02",
+      "kind": "theorem",
+      "relates_to": null,
+      "tex": "设 $b_n\\geq0$ 对每个正整数 $n$ 成立。若\n\\[\nb_{n+1}\\leq b_n\\quad(n=1,2,3,\\ldots),\n\\qquad \\lim_{n\\to\\infty}b_n=0,\n\\]\n则交错级数\n\\[\n\\sum_{n=1}^{\\infty}(-1)^{n-1}b_n\n\\]\n收敛。这称为交错级数判别法。\\label{thm:alternating-test}"
+    },
+    {
+      "id": "S04.U03",
+      "kind": "proof",
+      "relates_to": "S04.U02",
+      "tex": "令\n\\[\nS_n=\\sum_{k=1}^{n}(-1)^{k-1}b_k.\n\\]\n考虑偶数项部分和。对每个正整数 $m$，有\n\\[\nS_{2m}=\\sum_{j=1}^{m}(b_{2j-1}-b_{2j}).\n\\]\n由于 $b_{2j-1}\\geq b_{2j}$，数列 $\\{S_{2m}\\}$ 单调不减。另一方面，当 $m=1$ 时，\n\\[\nS_2=b_1-b_2\\leq b_1;\n\\]\n当 $m\\geq2$ 时，\n\\[\nS_{2m}=b_1-(b_2-b_3)-\\cdots-(b_{2m-2}-b_{2m-1})-b_{2m}\\leq b_1.\n\\]\n所以 $\\{S_{2m}\\}$ 有上界，因而存在有限极限，记为 $L$。\n\n又因为\n\\[\nS_{2m+1}=S_{2m}+b_{2m+1},\n\\]\n且 $b_{2m+1}\\to0$，所以 $S_{2m+1}\\to L$。偶数项和奇数项子数列都趋于同一个极限 $L$，故整个部分和数列 $\\{S_n\\}$ 收敛于 $L$。根据级数收敛的定义，交错级数收敛。证毕。"
+    },
+    {
+      "id": "S04.U04",
+      "kind": "theorem",
+      "relates_to": null,
+      "tex": "在定理 \\ref{thm:alternating-test} 的条件下，设交错级数的和为 $S$，第 $n$ 个部分和为 $S_n$，第 $n$ 个余项为 $R_n=S-S_n$。则对每个正整数 $n$，有\n\\[\n|R_n|\\leq b_{n+1}.\n\\]\n更精确地，$R_n$ 的符号与下一项 $(-1)^n b_{n+1}$ 的符号相同，或 $R_n=0$。\\label{thm:alternating-remainder}"
+    },
+    {
+      "id": "S04.U05",
+      "kind": "example",
+      "relates_to": null,
+      "tex": "判断交错调和级数\n\\[\n\\sum_{n=1}^{\\infty}\\frac{(-1)^{n-1}}{n}\n\\]\n的敛散性，并估计其前 $n$ 项部分和的绝对误差。\n\n作为通项取值的单点核对，$n=3$ 时有\n\\[\n\\frac{(-1)^{3-1}}{3}=\\frac13.\n\\]\n这一数值核对只验证第三项的取值，不能证明级数收敛，也不能证明一般的余项估计。收敛性与误差界须由交错级数判别法及其余项估计在核实条件后得到，具体论证见本例解答。"
+    },
+    {
+      "id": "S04.U06",
+      "kind": "solution",
+      "relates_to": "S04.U05",
+      "tex": "令 $b_n=1/n$。对每个正整数 $n$，有 $b_n>0$，且\n\\[\nb_{n+1}=\\frac{1}{n+1}<\\frac1n=b_n,\n\\qquad \\lim_{n\\to\\infty}b_n=0.\n\\]\n因此由交错级数判别法，级数\n\\[\n\\sum_{n=1}^{\\infty}\\frac{(-1)^{n-1}}{n}\n\\]\n收敛。若其和为 $S$，第 $n$ 个部分和为 $S_n$，则由交错余项估计\n\\[\n|S-S_n|\\leq b_{n+1}=\\frac{1}{n+1}.\n\\]\n例如，取 $n=99$ 时，前 $99$ 项部分和与级数和的绝对误差不超过 $1/100$。\n\n还需区分收敛与绝对收敛：若级数各项的绝对值所成级数收敛，则称原级数绝对收敛；若原级数收敛而其绝对值级数发散，则称原级数条件收敛。对于本例，\n\\[\n\\sum_{n=1}^{\\infty}\\left|\\frac{(-1)^{n-1}}{n}\\right|=\\sum_{n=1}^{\\infty}\\frac1n\n\\]\n是发散的调和级数。因此该交错调和级数收敛但不绝对收敛，属于条件收敛。这里判别法说明收敛性，余项估计说明截断误差的大小。"
+    },
+    {
+      "id": "S04.U07",
+      "kind": "proof",
+      "relates_to": "S04.U04",
+      "tex": "设 $S$ 为级数的和。对每个整数 $m\\geq2$，由部分和定义有\n\\[\nS_{2m}-S_{2m-2}=b_{2m-1}-b_{2m}\\geq0,\n\\]\n所以偶数项部分和单调不减；同理，奇数项部分和单调不增。由定理 \\ref{thm:alternating-test}，两者都趋于 $S$。\n\n对固定的正整数 $n$，若 $n=2m$，则\n\\[\nS_{2m+1}-S_{2m}=b_{2m+1},\n\\]\n且 $S_{2m}\\leq S\\leq S_{2m+1}$，因为偶数项部分和从下方增加而奇数项部分和从上方减少。因此\n\\[\n0\\leq S-S_{2m}\\leq b_{2m+1}.\n\\]\n若 $n=2m-1$，则\n\\[\nS_{2m-1}-S_{2m} = b_{2m},\n\\]\n且 $S_{2m}\\leq S\\leq S_{2m-1}$，从而\n\\[\n0\\leq S_{2m-1}-S\\leq b_{2m}.\n\\]\n两种情形合并即得\n\\[\n|S-S_n|\\leq b_{n+1}.\n\\]\n同时，上述夹逼关系表明余项的符号与下一项的符号相同，或余项为零。证毕。"
+    },
+    {
+      "id": "S04.U08",
+      "kind": "explanation",
+      "relates_to": null,
+      "tex": "交错级数判别法的两个条件缺一不可：正项序列必须单调不增，并且必须趋于零。例如，级数\n\\[\n\\sum_{n=1}^{\\infty}(-1)^{n-1}\n\\]\n虽然符号交替，但其正项序列恒为 $1$，不趋于零，因此由收敛的必要条件可知它发散。另一方面，若正项序列趋于零但不具有所需的单调性，则不能直接使用交错级数判别法，必须改用其他判别方法。"
+    },
+    {
+      "id": "S04.U09",
+      "kind": "exercise",
+      "relates_to": null,
+      "tex": "判断下列级数的敛散性，并说明能否使用交错级数判别法：\n\\[\n\\text{(1)}\\quad \\sum_{n=1}^{\\infty}(-1)^{n-1}\\frac{1}{\\sqrt n};\n\\qquad\n\\text{(2)}\\quad \\sum_{n=1}^{\\infty}(-1)^{n-1}\\frac{n}{n+1};\n\\qquad\n\\text{(3)}\\quad \\sum_{n=1}^{\\infty}(-1)^{n-1}\\frac{1}{n^2}.\n\\]"
+    },
+    {
+      "id": "S04.U10",
+      "kind": "exercise",
+      "relates_to": null,
+      "tex": "设\n\\[\nS=\\sum_{n=1}^{\\infty}(-1)^{n-1}\\frac{1}{n}.\n\\]\n若用前 $n$ 项部分和 $S_n$ 近似 $S$，利用交错余项估计确定使绝对误差不超过 $1/1000$ 的一个充分条件，并给出满足该条件的最小正整数 $n$。"
+    },
+    {
+      "id": "S04.U11",
+      "kind": "solution",
+      "relates_to": "S04.U09",
+      "tex": "(1) 令 $b_n=1/\\sqrt n$。它为正项序列，单调递减，并且趋于零。因此可用交错级数判别法，原级数收敛。\n\n(2) 令 $b_n=n/(n+1)$。虽然 $b_n$ 单调递增且趋于 $1$，但不趋于零。因此交错级数的通项不趋于零，原级数发散，不能用交错级数判别法得到收敛结论。\n\n(3) 令 $b_n=1/n^2$。它为正项序列，单调递减且趋于零，因此交错级数判别法说明原级数收敛。事实上，\n\\[\n\\sum_{n=1}^{\\infty}\\left|(-1)^{n-1}\\frac1{n^2}\\right|=\\sum_{n=1}^{\\infty}\\frac1{n^2}\n\\]\n收敛，所以该级数还具有绝对收敛性。"
+    },
+    {
+      "id": "S04.U12",
+      "kind": "solution",
+      "relates_to": "S04.U10",
+      "tex": "由定理 \\ref{thm:alternating-remainder}，有\n\\[\n|S-S_n|\\leq\\frac{1}{n+1}.\n\\]\n要使右端不超过 $1/1000$，只需满足\n\\[\n\\frac{1}{n+1}\\leq\\frac{1}{1000},\n\\qquad n+1\\geq1000.\n\\]\n因此 $n\\geq999$ 是一个充分条件，最小的正整数取为\n\\[\nn=999.\n\\]\n这里的条件保证误差不超过 $1/1000$；实际误差可能比该上界更小。"
+    },
+    {
+      "id": "S04.U13",
+      "kind": "proof",
+      "relates_to": "S04.U04",
+      "tex": "交错余项估计的证明只使用部分和的夹逼关系。偶数项部分和单调不减，奇数项部分和单调不增，并且两者都趋于级数和 $S$。于是对偶数下标 $2m$，有\n\\[\nS_{2m}\\leq S\\leq S_{2m+1},\n\\]\n两端之差为 $b_{2m+1}$；对奇数下标 $2m-1$，有\n\\[\nS_{2m}\\leq S\\leq S_{2m-1},\n\\]\n两端之差为 $b_{2m}$。所以无论 $n$ 为奇数还是偶数，都有\n\\[\n|S-S_n|\\leq b_{n+1}.\n\\]\n这也说明余项位于零与下一项之间，故其符号与下一项一致，或余项为零。"
+    },
+    {
+      "id": "S05.U01",
+      "kind": "explanation",
+      "tex": "本节只讨论实数项级数。对于含正负项的级数，需要分别考察原级数与各项取绝对值后的级数。前者可能因正负抵消而收敛，后者则可使用第 \\ref{sec:S03} 节的正项级数判别法。以下在部分和、比较判别法和交错级数判别法的基础上，建立完整的分类与判断流程。",
+      "relates_to": null
+    },
+    {
+      "id": "S05.U02",
+      "kind": "definition",
+      "tex": "\\label{def:absolute-convergence}设 $a_n\\in\\mathbb{R}$ 对每个正整数 $n$ 成立。若正项级数\n\\[\n\\sum_{n=1}^{\\infty}|a_n|\n\\]\n收敛，则称级数 $\\sum_{n=1}^{\\infty}a_n$ 绝对收敛。这里取绝对值的对象是每一个通项，而不是部分和；一般不能把 $\\sum |a_n|$ 与 $|\\sum a_n|$ 混同。",
+      "relates_to": null
+    },
+    {
+      "id": "S05.U03",
+      "kind": "definition",
+      "tex": "\\label{def:conditional-convergence}设 $a_n\\in\\mathbb{R}$ 对每个正整数 $n$ 成立。若 $\\sum_{n=1}^{\\infty}a_n$ 收敛，而 $\\sum_{n=1}^{\\infty}|a_n|$ 发散，则称原级数条件收敛。因此，判断条件收敛必须同时给出原级数收敛与绝对值级数发散这两方面的理由。",
+      "relates_to": null
+    },
+    {
+      "id": "S05.U04",
+      "kind": "theorem",
+      "tex": "\\label{thm:absolute-implies-convergence}任何绝对收敛的实数项级数都收敛。即若 $\\sum_{n=1}^{\\infty}|a_n|$ 收敛，则 $\\sum_{n=1}^{\\infty}a_n$ 收敛，并且\n\\[\n\\left|\\sum_{n=1}^{\\infty}a_n\\right|\\leq\\sum_{n=1}^{\\infty}|a_n|.\n\\]",
+      "relates_to": null
+    },
+    {
+      "id": "S05.U05",
+      "kind": "proof",
+      "tex": "设 $\\sum_{n=1}^{\\infty}|a_n|=A$，其中 $A$ 为有限非负实数。对每个正整数 $n$，有\n\\[\n0\\leq a_n+|a_n|\\leq2|a_n|.\n\\]\n由于 $\\sum 2|a_n|$ 收敛，由比较判别法，正项级数 $\\sum(a_n+|a_n|)$ 收敛，记其和为 $B$。于是由已收敛级数的线性运算性质，\n\\[\n\\sum_{n=1}^{\\infty}a_n\n=\\sum_{n=1}^{\\infty}\\bigl((a_n+|a_n|)-|a_n|\\bigr)\n=B-A.\n\\]\n这证明了原级数收敛，并未对发散级数作减法。\n\n再令 $S_n=\\sum_{k=1}^{n}a_k$、$A_n=\\sum_{k=1}^{n}|a_k|$。有限和的三角不等式给出 $|S_n|\\leq A_n$。设 $S_n\\to S$，由绝对值函数的连续性及极限的保序性，得到 $|S|\\leq A$，即所需不等式。",
+      "relates_to": "S05.U04"
+    },
+    {
+      "id": "S05.U06",
+      "kind": "theorem",
+      "tex": "\\label{thm:comparison-summary}设 $a_n\\in\\mathbb{R}$、$b_n\\geq0$ 对所有正整数 $n$ 成立。若存在正整数 $N$，使得对所有整数 $n\\geq N$ 都有 $|a_n|\\leq b_n$，且 $\\sum_{n=1}^{\\infty}b_n$ 收敛，则 $\\sum_{n=1}^{\\infty}a_n$ 绝对收敛，因而收敛。\n\n若另有 $b_n>0$ 对所有正整数 $n$ 成立，且\n\\[\n\\lim_{n\\to\\infty}\\frac{|a_n|}{b_n}=L,\\qquad 0<L<\\infty,\n\\]\n则 $\\sum |a_n|$ 与 $\\sum b_n$ 同敛散。特别地，$\\sum b_n$ 收敛时原级数绝对收敛；$\\sum b_n$ 发散时只能断定原级数不绝对收敛，尚不能断定原级数发散。",
+      "relates_to": null
+    },
+    {
+      "id": "S05.U07",
+      "kind": "proof",
+      "tex": "第一部分直接对非负项 $|a_n|$ 使用定理 \\ref{thm:comparison}，再使用定理 \\ref{thm:absolute-implies-convergence}。\n\n对于第二部分，由比值极限及 $L>0$，存在正整数 $N_1$，使得对所有整数 $n\\geq N_1$，\n\\[\n\\frac{L}{2}b_n\\leq |a_n|\\leq\\frac{3L}{2}b_n.\n\\]\n两次使用比较判别法，并结合有限项改变不影响敛散性，即得两个非负项级数同敛散。这里的比较对象是绝对值级数，不是带符号的原级数，因此绝对值级数发散后仍须单独研究原级数。",
+      "relates_to": "S05.U06"
+    },
+    {
+      "id": "S05.U08",
+      "kind": "theorem",
+      "tex": "\\label{thm:convergence-classification}每个实数项级数 $\\sum_{n=1}^{\\infty}a_n$ 恰好属于下列三类之一：绝对收敛、条件收敛、发散。更具体地：\n\\begin{enumerate}\n\\item 若 $\\sum |a_n|$ 收敛，则原级数绝对收敛；\n\\item 若 $\\sum |a_n|$ 发散而 $\\sum a_n$ 收敛，则原级数条件收敛；\n\\item 若 $\\sum a_n$ 发散，则它不属于前两类，并且 $\\sum |a_n|$ 必发散。\n\\end{enumerate}",
+      "relates_to": null
+    },
+    {
+      "id": "S05.U09",
+      "kind": "proof",
+      "tex": "原级数或者收敛，或者发散。若收敛，则按绝对值级数收敛或发散，分别属于绝对收敛或条件收敛，两者互斥。若原级数发散，则绝对值级数不可能收敛，否则由定理 \\ref{thm:absolute-implies-convergence} 将推出原级数收敛，产生矛盾。因此三种情况没有重叠且涵盖全部实数项级数。",
+      "relates_to": "S05.U08"
+    },
+    {
+      "id": "S05.U10",
+      "kind": "example",
+      "tex": "将下列实数项级数分别归类为绝对收敛、条件收敛或发散，并说明选择判别法的理由：\n\\[\n\\text{(1)}\\quad\\sum_{n=1}^{\\infty}\\frac{(-1)^{n-1}}{n^2+1};\\qquad\n\\text{(2)}\\quad\\sum_{n=1}^{\\infty}\\frac{(-1)^{n-1}}{\\sqrt n};\\qquad\n\\text{(3)}\\quad\\sum_{n=1}^{\\infty}(-1)^{n-1}\\frac{n+1}{2n+1}.\n\\]",
+      "relates_to": null
+    },
+    {
+      "id": "S05.U11",
+      "kind": "solution",
+      "tex": "(1) 先考察绝对值。对每个正整数 $n$，\n\\[\n\\left|\\frac{(-1)^{n-1}}{n^2+1}\\right|=\\frac1{n^2+1}\\leq\\frac1{n^2}.\n\\]\n右侧为收敛的 $p$-级数通项，所以原级数绝对收敛，无须再用交错级数判别法证明收敛。\n\n(2) 令 $b_n=1/\\sqrt n$，则 $b_n>0$、$b_{n+1}<b_n$ 且 $b_n\\to0$。由定理 \\ref{thm:alternating-test}，原级数收敛。但其绝对值级数 $\\sum_{n=1}^{\\infty}n^{-1/2}$ 是 $p=1/2$ 的发散 $p$-级数，因此原级数条件收敛。\n\n(3) 对正整数 $n$，\n\\[\n\\lim_{n\\to\\infty}\\frac{n+1}{2n+1}=\\frac12.\n\\]\n原级数通项的绝对值不趋于零，故通项不可能趋于零，由定理 \\ref{thm:term-test}，原级数发散。符号交替本身不能保证收敛。",
+      "relates_to": "S05.U10"
+    },
+    {
+      "id": "S05.U12",
+      "kind": "example",
+      "tex": "判断命题“若 $\\sum_{n=1}^{\\infty}|a_n|$ 发散，则 $\\sum_{n=1}^{\\infty}a_n$ 发散”是否成立。请给出具有相同绝对值通项、但原级数敛散性不同的两个实数项级数。",
+      "relates_to": null
+    },
+    {
+      "id": "S05.U13",
+      "kind": "solution",
+      "tex": "命题不成立。取 $a_n=(-1)^{n-1}/n$ 与 $c_n=1/n$，其中 $n$ 为正整数。它们满足 $|a_n|=|c_n|=1/n$，对应的绝对值级数都是发散的调和级数。但是 $\\sum a_n$ 由交错级数判别法收敛，因而条件收敛；$\\sum c_n$ 则发散。\n\n所以绝对值级数发散只排除绝对收敛，不能区分条件收敛与发散。此外，$a_n\\to0$ 与 $c_n\\to0$ 同时成立，再次说明通项趋于零不是级数收敛的充分条件。",
+      "relates_to": "S05.U12"
+    },
+    {
+      "id": "S05.U14",
+      "kind": "explanation",
+      "tex": "面对入门级敛散性问题，可采用以下流程。\n\\begin{enumerate}\n\\item 先检查通项。若 $a_n$ 不趋于零，则原级数发散；若趋于零，只能继续判断。\n\\item 对非负项级数，优先与已知的几何级数或 $p$-级数比较；比值容易求极限时可用极限比较判别法。使用积分判别法时，须另行核实对应函数连续、正值且单调递减。\n\\item 对含正负项的级数，若绝对值容易估计，先判断 $\\sum |a_n|$。它收敛就得到绝对收敛；它发散则需要回到原级数。\n\\item 若原级数具有交错形式，核实非负幅度单调不增且趋于零，再使用交错级数判别法。只有同时证明绝对值级数发散，才能写出“条件收敛”。\n\\end{enumerate}\n这是选择方法的建议，不是对所有级数都必然有效的算法。某个判别法的条件不满足，通常只说明该方法不能直接使用，并不自动说明级数发散。判断敛散性也不要求求出级数的和。",
+      "relates_to": null
+    },
+    {
+      "id": "S05.U15",
+      "kind": "exercise",
+      "tex": "将下列级数归类为绝对收敛、条件收敛或发散，并写出关键依据：\n\\[\n\\text{(1)}\\quad\\sum_{n=1}^{\\infty}(-1)^{n-1}\\frac{n+1}{n^3+1};\\qquad\n\\text{(2)}\\quad\\sum_{n=1}^{\\infty}\\frac{(-1)^{n-1}}{n+2};\\qquad\n\\text{(3)}\\quad\\sum_{n=1}^{\\infty}\\frac1{\\sqrt{n^2+1}}.\n\\]",
+      "relates_to": null
+    },
+    {
+      "id": "S05.U16",
+      "kind": "exercise",
+      "tex": "设实数列 $\\{a_n\\}$ 满足 $|a_n|\\leq3^{-n}$ 对每个正整数 $n$ 成立。\n\\begin{enumerate}\n\\item 证明 $\\sum_{n=1}^{\\infty}a_n$ 绝对收敛。\n\\item 记其和为 $S$、第 $n$ 个部分和为 $S_n$。证明对每个正整数 $n$，有 $|S-S_n|\\leq1/(2\\cdot3^n)$。\n\\item 求使上述误差上界不超过 $1/100$ 的最小正整数 $n$。\n\\end{enumerate}",
+      "relates_to": null
+    },
+    {
+      "id": "S05.U17",
+      "kind": "exercise",
+      "tex": "判断下列命题的真假，并给出证明或反例。\n\\begin{enumerate}\n\\item 收敛级数与绝对收敛级数逐项相加，所得级数必绝对收敛。\n\\item 条件收敛级数与绝对收敛级数逐项相加，所得级数必条件收敛。\n\\item 两个条件收敛级数逐项相加，所得级数必条件收敛。\n\\end{enumerate}",
+      "relates_to": null
+    },
+    {
+      "id": "S05.U18",
+      "kind": "explanation",
+      "tex": "\\textbf{全章练习答案区导航（讲义末尾）}\n\n讲义末尾集中列出全章练习的参考答案，并非仅收录本节三题。查阅时，请以原题实际显示的题号定位答案区中对应题号的解答，并通过答案处的题目回链返回原题；不要把答案区开头的三份解答当作本节三题的答案。\n\n本节三道练习可按以下题目内容识别，再按各自题号查找：\n\\begin{itemize}\n\\item “将下列级数归类为绝对收敛、条件收敛或发散”：查找该题题号对应的三小问分类解答。\n\\item “设实数列满足 $|a_n|\\leq3^{-n}$”：查找该题题号对应的绝对收敛证明、余项估计及截断项数解答。\n\\item “判断下列命题的真假”：查找该题题号对应的级数逐项相加命题的证明或反例。\n\\end{itemize}\n各题及其解答沿用既定题号、归属关系与答案排序。",
+      "relates_to": null
+    },
+    {
+      "id": "S05.U19",
+      "kind": "solution",
+      "tex": "(1) 对所有正整数 $n$，有\n\\[\n0<\\frac{n+1}{n^3+1}\\leq\\frac{2n}{n^3}=\\frac2{n^2}.\n\\]\n因为 $\\sum 2/n^2$ 收敛，绝对值级数由比较判别法收敛，原级数绝对收敛。\n\n(2) 幅度 $1/(n+2)$ 为正、单调递减且趋于零，故原级数由交错级数判别法收敛。绝对值级数 $\\sum_{n=1}^{\\infty}1/(n+2)$ 是调和级数删去前两项所得的尾级数，发散。因此原级数条件收敛。\n\n(3) 对所有正整数 $n$，$n^2+1\\leq2n^2$，所以\n\\[\n\\frac1{\\sqrt{n^2+1}}\\geq\\frac1{\\sqrt2\\,n}.\n\\]\n由调和级数发散和比较判别法，原级数发散。虽然其通项趋于零，但这并不能保证收敛。",
+      "relates_to": "S05.U15"
+    },
+    {
+      "id": "S05.U20",
+      "kind": "solution",
+      "tex": "(1) 对每个正整数 $m$，由有限等比求和公式，\n\\[\n\\sum_{k=1}^{m}3^{-k}=\\frac12(1-3^{-m})\\longrightarrow\\frac12.\n\\]\n所以 $\\sum 3^{-n}$ 收敛，由 $|a_n|\\leq3^{-n}$ 可知原级数绝对收敛。\n\n(2) 固定正整数 $n$。对任意整数 $m>n$，有限和的三角不等式给出\n\\[\n\\left|\\sum_{k=n+1}^{m}a_k\\right|\n\\leq\\sum_{k=n+1}^{m}3^{-k}\n=\\frac{1}{2\\cdot3^n}\\bigl(1-3^{-(m-n)}\\bigr).\n\\]\n令 $m\\to\\infty$，左侧趋于 $|S-S_n|$，右侧趋于 $1/(2\\cdot3^n)$，故\n\\[\n|S-S_n|\\leq\\frac1{2\\cdot3^n}.\n\\]\n这一估计不要求各项交错。\n\n(3) 上界不超过 $1/100$ 等价于 $3^n\\geq50$。因为 $3^3=27<50<81=3^4$，且 $3^n$ 随正整数 $n$ 严格递增，所以最小的 $n$ 为 $4$。这是使给定上界满足要求的最小截断位置，不表示每个满足题设的数列都必须取到四项。",
+      "relates_to": "S05.U16"
+    },
+    {
+      "id": "S05.U21",
+      "kind": "solution",
+      "tex": "(1) 假。取 $a_n=(-1)^{n-1}/n$、$b_n=0$。前者条件收敛，后者绝对收敛，但逐项相加仍是条件收敛的交错调和级数。\n\n(2) 真。设 $\\sum a_n$ 条件收敛、$\\sum b_n$ 绝对收敛。两者均收敛，由线性运算定理，$\\sum(a_n+b_n)$ 收敛。若它绝对收敛，则由\n\\[\n|a_n|=|(a_n+b_n)-b_n|\\leq|a_n+b_n|+|b_n|\n\\]\n及比较判别法，$\\sum |a_n|$ 也收敛，与条件收敛矛盾。所以相加后的级数收敛但不绝对收敛，即条件收敛。\n\n(3) 假。取 $a_n=(-1)^{n-1}/n$、$b_n=-a_n$。两个级数均条件收敛，而 $a_n+b_n=0$ 对所有正整数 $n$ 成立，所得零级数绝对收敛。",
+      "relates_to": "S05.U17"
+    }
+  ],
+  "actual_unit_ids": [
+    "S01.U01",
+    "S01.U02",
+    "S01.U03",
+    "S01.U04",
+    "S01.U05",
+    "S01.U06",
+    "S01.U07",
+    "S01.U08",
+    "S01.U09",
+    "S02.U01",
+    "S02.U02",
+    "S02.U03",
+    "S02.U04",
+    "S02.U05",
+    "S02.U06",
+    "S02.U07",
+    "S02.U08",
+    "S02.U09",
+    "S02.U10",
+    "S02.U11",
+    "S02.U12",
+    "S02.U13",
+    "S02.U14",
+    "S02.U15",
+    "S02.U16",
+    "S02.U17",
+    "S02.U18",
+    "S02.U19",
+    "S02.U20",
+    "S02.U18.answer",
+    "S02.U19.answer",
+    "S02.U20.answer",
+    "S03.U01",
+    "S03.U02",
+    "S03.U03",
+    "S03.U04",
+    "S03.U05",
+    "S03.U06",
+    "S03.U07",
+    "S03.U08",
+    "S03.U09",
+    "S03.U10",
+    "S03.U11",
+    "S03.U12",
+    "S03.U13",
+    "S03.U14",
+    "S03.U15",
+    "S03.U16",
+    "S04.U01",
+    "S04.U02",
+    "S04.U03",
+    "S04.U04",
+    "S04.U05",
+    "S04.U06",
+    "S04.U07",
+    "S04.U08",
+    "S04.U09",
+    "S04.U10",
+    "S04.U11",
+    "S04.U12",
+    "S04.U13",
+    "S05.U01",
+    "S05.U02",
+    "S05.U03",
+    "S05.U04",
+    "S05.U05",
+    "S05.U06",
+    "S05.U07",
+    "S05.U08",
+    "S05.U09",
+    "S05.U10",
+    "S05.U11",
+    "S05.U12",
+    "S05.U13",
+    "S05.U14",
+    "S05.U15",
+    "S05.U16",
+    "S05.U17",
+    "S05.U18",
+    "S05.U19",
+    "S05.U20",
+    "S05.U21"
+  ],
+  "feedback_text": "请将以下内容作为 agent 的中间稿审读意见，对当前完整实际正文独立核查。这不是教师签认、数学证明或扩大审批范围的授权；已经修复或实际覆盖的项目不要重复改写。保持原批准计划 revision 2、既有节/单元身份、正确证明、累计修复计数及末尾答案策略，只在相关现有单元中修订。\n\n1. 请复检 S05.U18 的答案导航说明。首次完整稿写“以下答案与本节三道练习依次对应”，但按批准 answers_location=end 渲染后，该说明位于全章“练习答案”之前，首先输出的是 S01.U09，并非 S05 三题答案。请核对最终排序，将说明改为与全章题号回链一致的导航，不改变原题、正确解答或既定末尾排序。\n\n2. 请复检 S03.U14/U16 对“掌握极限比较判别法使用条件、能够选择合适判别法”的教学支持。S03.U07–U08 的定理与证明正确，但中间稿 S03 例练解答及 S05 综合解答均使用直接比较，没有一次完整的极限比较应用。这是应用训练缺口，不是现有直接比较解法错误。若全章仍未展示实际应用，可在 S03.U14 第(1)题保留正确的直接比较解法并补充简短替代解：核实实际题目 a_n，明确 a_n>0、b_n=1/n²>0，算出 a_n/b_n→3∈(0,∞)，再据 p=2 级数收敛得结论。若当前题目已变化，请按当前真实表达式计算，不能机械套用该极限值。确保学生可见适用条件，不把合法直接比较改判为错。\n\n范围说明：原稿基准另含负公比的一般几何级数和完整望远镜求和训练；本次批准计划只明确正项参照与基础部分和。当前 a>0、r≥0 的窄范围陈述本身正确，不能仅因与原稿覆盖范围不同就判数学错误，本反馈不要求扩大到未批准的整段内容。继续核查对数级数起点 2、交错级数索引和原有证明是否保持正确。",
+  "feedback_items": [
+    {
+      "id": "F1",
+      "text": "1. 请复检 S05.U18 的答案导航说明。首次完整稿写“以下答案与本节三道练习依次对应”，但按批准 answers_location=end 渲染后，该说明位于全章“练习答案”之前，首先输出的是 S01.U09，并非 S05 三题答案。请核对最终排序，将说明改为与全章题号回链一致的导航，不改变原题、正确解答或既定末尾排序。\n\n",
+      "source_start": 141,
+      "source_end": 307,
+      "requested_counterexample": false
+    },
+    {
+      "id": "F2",
+      "text": "2. 请复检 S03.U14/U16 对“掌握极限比较判别法使用条件、能够选择合适判别法”的教学支持。S03.U07–U08 的定理与证明正确，但中间稿 S03 例练解答及 S05 综合解答均使用直接比较，没有一次完整的极限比较应用。这是应用训练缺口，不是现有直接比较解法错误。若全章仍未展示实际应用，可在 S03.U14 第(1)题保留正确的直接比较解法并补充简短替代解：核实实际题目 a_n，明确 a_n>0、b_n=1/n²>0，算出 a_n/b_n→3∈(0,∞)，再据 p=2 级数收敛得结论。若当前题目已变化，请按当前真实表达式计算，不能机械套用该极限值。确保学生可见适用条件，不把合法直接比较改判为错。\n\n范围说明：原稿基准另含负公比的一般几何级数和完整望远镜求和训练；本次批准计划只明确正项参照与基础部分和。当前 a>0、r≥0 的窄范围陈述本身正确，不能仅因与原稿覆盖范围不同就判数学错误，本反馈不要求扩大到未批准的整段内容。继续核查对数级数起点 2、交错级数索引和原有证明是否保持正确。",
+      "source_start": 307,
+      "source_end": 760,
+      "requested_counterexample": false
+    }
+  ],
+  "feedback_source": "agent_audit",
+  "source_event": {
+    "sequence": 1527,
+    "timestamp": "2026-09-20T17:39:13.152739+00:00",
+    "payload_sha256": "61da8a6be10736f50fc44126511c45c9d013413c5b7b2a36ff4f71a8b399f866",
+    "job_id": "4678ed20f5c44ad89b289ffcee4d8143",
+    "plan_hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227",
+    "plan_revision": 2
+  },
+  "mock": false,
+  "instruction": "Assess every fixed feedback item explicitly against the actual full chapter and approved plan. Feedback is an observation, not proof or scope approval. A valuable supported teaching improvement can require revision even when current mathematics is correct. Do not infer satisfaction from an empty mathematical issue list. Do not alter plan, add units, sign teacher acceptance, or silently ignore an item."
+}

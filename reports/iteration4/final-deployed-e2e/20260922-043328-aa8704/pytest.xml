@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="14" time="180.860" timestamp="2026-09-22T12:33:29.252901+08:00" hostname="Asuna"><testcase classname="tests.e2e.test_automatic_recheck" name="test_recheck_real_click_preserves_downloadable_history_and_current_review_targets" time="27.873" /><testcase classname="tests.e2e.test_browser_workflows" name="test_lecture_real_clicks_restore_confirmation" time="19.026" /><testcase classname="tests.e2e.test_browser_workflows" name="test_beamer_exact_deletion_and_addition" time="10.462" /><testcase classname="tests.e2e.test_browser_workflows" name="test_custom_input_is_saved_as_plan_effect" time="3.260" /><testcase classname="tests.e2e.test_browser_workflows" name="test_compile_failure_retry_does_not_return_to_confirmation" time="8.797" /><testcase classname="tests.e2e.test_browser_workflows" name="test_reference_bibliography_opt_in_preserves_sources" time="11.925" /><testcase classname="tests.e2e.test_budget_recovery" name="test_explicit_budget_increase_preserves_approval_and_partial_drafts" time="25.287" /><testcase classname="tests.e2e.test_feedback_receipts" name="test_current_feedback_receipts_are_visible_and_empty_next_round_retracts_them" time="35.718"><failure message="AssertionError: Locator expected to contain text '新回执到达'&#10;Actual value: F1 · 不适用离线演示不评估自然语言反馈；此固定演示没有判断该建议的教学价值，也未据此修改正文，请用真实模型执行逐项核查。 &#10;Call log:&#10;  - Expect &quot;to_contain_text&quot; locator(&quot;[data-feedback-id=\&quot;F1\&quot;]&quot;) with timeout 10000ms&#10;  - waiting for locator(&quot;[data-feedback-id=\&quot;F1\&quot;]&quot;)&#10;    23 × locator resolved to &lt;li data-feedback-id=&quot;F1&quot; data-feedback-status=&quot;rejected_not_supported&quot;&gt;…&lt;/li&gt;&#10;       - unexpected value &quot;F1 · 不适用离线演示不评估自然语言反馈；此固定演示没有判断该建议的教学价值，也未据此修改正文，请用真实模型执行逐项核查。&quot;&#10;&#10;Aria snapshot:&#10;- listitem:&#10;  - strong: F1 · 不适用&#10;  - paragraph: 离线演示不评估自然语言反馈；此固定演示没有判断该建议的教学价值，也未据此修改正文，请用真实模型执行逐项核查。">browser_page = &lt;Page url='http://127.0.0.1:56938/'&gt;
+local_services = ('http://127.0.0.1:56938', WindowsPath('D:/研究生阶段/数学教学agent/math-teaching-agent/reports/iteration4/final-deployed-e2e/20260922-043328-aa8704/20260922-123516'))
+
+    def test_current_feedback_receipts_are_visible_and_empty_next_round_retracts_them(browser_page, local_services):
+        page, evidence = browser_page, local_services[1]
+        posts = []
+        page.on('request', lambda request: posts.append(request.url) if request.method == 'POST' else None)
+        page.locator('#provider').select_option('mock')
+        page.locator('#topic').fill('数列极限：逐项反馈回执浏览器验收')
+        page.locator('#trusted-input').check()
+        with page.expect_response(lambda response: response.url.endswith('/api/runs') and response.request.method == 'POST') as created:
+            page.locator('#create-run').click()
+        rid = created.value.json()['id']
+        run_url = '/api/runs/' + rid
+        wait_for_plan(page)
+        submit_recommended(page)
+        confirm_execute_refresh(page)
+        accepted_compile_artifacts(page)
+        before = page.request.get(run_url).json()
+        assert before.get('feedback_review') is None
+        feedback = '1. 请补充夹逼计算训练。\n2. 请补充加减抵消的反例。\n3. 请说明经济模型的单位。'
+        page.locator('#recheck-feedback').fill(feedback)
+        with page.expect_response(lambda response: response.url.endswith(run_url+'/recheck') and response.request.method == 'POST') as submitted:
+            page.locator('#recheck-run').click()
+        assert submitted.value.status == 202
+        job = submitted.value.json()
+        page.wait_for_function("id =&gt; state.run?.jobs?.some(job =&gt; job.id === id &amp;&amp; job.status === 'done')", arg=job['id'], timeout=180000)
+        after = page.request.get(run_url).json()
+        save(evidence/'receipt-before.json', before)
+        save(evidence/'receipt-after.json', after)
+        assert after['status'] == 'AWAITING_USER_REVIEW', after.get('error')
+        receipt = after['feedback_review']
+        assert receipt['job_id'] == job['id'] and receipt['status'] == 'reviewed'
+        assert receipt['teacher_review'] == 'NOT_RUN' and receipt['mock'] is True
+        assert [item['id'] for item in receipt['items']] == ['F1','F2','F3']
+        assert all(item['status'] == 'rejected_not_supported' for item in receipt['items'])
+        expect(page.locator('#feedback-review')).to_be_visible()
+        expect(page.locator('#feedback-review')).to_contain_text('MOCK')
+        for item in receipt['items']:
+            row = page.locator('[data-feedback-id="'+item['id']+'"]')
+            expect(row).to_contain_text('不适用')
+            expect(row).to_contain_text(item['reason'])
+        draft = '尚未提交的下一轮反馈草稿'
+        page.locator('#recheck-feedback').fill(draft)
+        page.evaluate('() =&gt; refreshRun(true)')
+        expect(page.locator('#recheck-feedback')).to_have_value(draft)
+        # Change only the receipt in one browser GET response. No server mutation:
+        # timer polling must redraw a new receipt even if stage/jobs are unchanged.
+        updated = json.loads(json.dumps(after))
+        updated['feedback_review']['items'][0]['reason'] = '离线展示测试：新回执到达，任务的阶段和产物没有变化。'
+        page.route('**'+run_url, lambda route: route.fulfill(status=200, content_type='application/json',
+            body=json.dumps(updated, ensure_ascii=False)), times=1)
+&gt;       expect(page.locator('[data-feedback-id="F1"]')).to_contain_text('新回执到达', timeout=10000)
+E       AssertionError: Locator expected to contain text '新回执到达'
+E       Actual value: F1 · 不适用离线演示不评估自然语言反馈；此固定演示没有判断该建议的教学价值，也未据此修改正文，请用真实模型执行逐项核查。 
+E       Call log:
+E         - Expect "to_contain_text" locator("[data-feedback-id=\"F1\"]") with timeout 10000ms
+E         - waiting for locator("[data-feedback-id=\"F1\"]")
+E           23 × locator resolved to &lt;li data-feedback-id="F1" data-feedback-status="rejected_not_supported"&gt;…&lt;/li&gt;
+E              - unexpected value "F1 · 不适用离线演示不评估自然语言反馈；此固定演示没有判断该建议的教学价值，也未据此修改正文，请用真实模型执行逐项核查。"
+E       
+E       Aria snapshot:
+E       - listitem:
+E         - strong: F1 · 不适用
+E         - paragraph: 离线演示不评估自然语言反馈；此固定演示没有判断该建议的教学价值，也未据此修改正文，请用真实模型执行逐项核查。
+
+tests\e2e\test_feedback_receipts.py:65: AssertionError</failure></testcase><testcase classname="tests.e2e.test_model_selection" name="test_three_models_submit_and_restore_actual_selection[gpt6]" time="2.285" /><testcase classname="tests.e2e.test_model_selection" name="test_three_models_submit_and_restore_actual_selection[deepseek-flash]" time="2.039" /><testcase classname="tests.e2e.test_model_selection" name="test_three_models_submit_and_restore_actual_selection[deepseek-v4-pro]" time="2.229" /><testcase classname="tests.e2e.test_model_selection" name="test_http_504_then_503_automatically_reaches_third_model" time="2.253" /><testcase classname="tests.e2e.test_model_selection" name="test_mock_mode_does_not_call_selected_real_model" time="1.783" /><testcase classname="tests.e2e.test_recheck_feedback" name="test_feedback_draft_survives_polling_rerender_and_error_then_submits_once" time="27.320" /></testsuite></testsuites>

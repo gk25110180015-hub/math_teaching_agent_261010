@@ -1,0 +1,545 @@
+[
+  {
+    "sequence": 2514,
+    "timestamp": "2026-09-23T09:31:28.482449+00:00",
+    "integrity": "PASS",
+    "payload": {
+      "evidence_key": "runs/a45be503af594ce8aae0bb1e4c30184b/feedback-reviews/79b5a589e0f64a5d838c806a/receipt-1-reviewed.json",
+      "evidence_sha256": "ab7f92d14ecd96255f1f6de65d488807afa2eb7b888043786f6f39365395394b",
+      "feedback_hash": "06234869adb0ea50ef8f5edb9e5da5f7fe690e3e7f6abfd2093d47d8640497dd",
+      "identity_hash": "79b5a589e0f64a5d838c806ac078b8d527cb40f108980893eeb11db6d7598cc7",
+      "items": [
+        {
+          "id": "F1",
+          "objective_evidence": [
+            {
+              "field": "objectives",
+              "quote": "能够运用代数变形、夹逼思想和基本极限完成初等计算。",
+              "section_id": "S02"
+            },
+            {
+              "field": "lecture.exercises",
+              "quote": "with_answers",
+              "section_id": null
+            },
+            {
+              "field": "lecture.answers_location",
+              "quote": "end",
+              "section_id": null
+            }
+          ],
+          "reason": "现稿已有完整的夹逼计算示范，不能称为“没有夹逼应用”，也不应改写该示范。核查全章练习及其答案后，尚未发现要求学生独立选择上下界并完成夹逼计算的题解配对；基本极限证明中的夹逼属于教师证明，不替代独立训练。S02.U12/U13 目前只训练和、差、商法则及分母条件。因此，补一个短小夹逼小问是批准计算目标内的教学改进，不是纠正现有数学错误。",
+          "repair_instruction": "仅修改 S02.U12/U13：保留原商法则题及正确解答，在题面附加一个区别于现有示范的初等夹逼小问，要求学生自行构造上下界、确认定义域及同一趋近过程、计算两端共同极限并给出结论；在对应答案中落实这些步骤。只使用初等有界性和代数极限，不引入导数、泰勒或新单元。保留 S02.U04 原示范与证明，新增答案沿用批准的讲义末尾答案策略。",
+          "repair_unit_ids": [
+            "S02.U12",
+            "S02.U13"
+          ],
+          "status": "supported_improvement",
+          "unit_evidence": [
+            {
+              "kind": "worked_example",
+              "quote": "夹逼计算的应用：求 $\\lim_{x\\to0}x^2\\sin(1/x)$。构造上下界时，先利用三角函数的基本性质 $-1\\leq\\sin t\\leq1$，再乘以非负因子 $x^2$。在去心邻域 $0<|x|<1$ 内，$1/x$ 有定义，且\n\\[\n-x^2\\leq x^2\\sin(1/x)\\leq x^2.\n\\]",
+              "unit_id": "S02.U04"
+            },
+            {
+              "kind": "statement",
+              "quote": "设函数 $f$ 与 $g$ 在点 $x_0$ 的某个去心邻域内有定义，且\n\\[\n\\lim_{x\\to x_0}f(x)=2,\n\\qquad\n\\lim_{x\\to x_0}g(x)=-1.\n\\]\n求\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)+g(x)}{f(x)-g(x)}.\n\\]\n并说明使用商的极限法则时需要检查的条件。",
+              "unit_id": "S02.U12"
+            },
+            {
+              "kind": "worked_example",
+              "quote": "分母的极限为 $3\\neq0$，所以分母在 $x_0$ 的某个去心邻域内不为零，可以使用商的极限法则。因此\n\\[\n\\lim_{x\\to x_0}\\frac{f(x)+g(x)}{f(x)-g(x)}=\\frac{1}{3}.\n\\]",
+              "unit_id": "S02.U13"
+            }
+          ],
+          "unit_ids": [
+            "S02.U04",
+            "S02.U12",
+            "S02.U13"
+          ]
+        },
+        {
+          "id": "F2",
+          "objective_evidence": [
+            {
+              "field": "objectives",
+              "quote": "理解无穷小及其阶的基本思想，掌握等价无穷小在极限计算中的使用条件。",
+              "section_id": null
+            },
+            {
+              "field": "objectives",
+              "quote": "理解等价无穷小的定义，并能在乘积和商的极限中进行规范替换。",
+              "section_id": "S03"
+            }
+          ],
+          "reason": "现稿的等价替换条件及加减警告正确，但全章尚无实际的加减抵消反例。S03.U07/U08 是正常的乘积、商计算，不能当作抵消反例，也不能用一般警告认定本项已完成。可在这对既有单元中增加一个代数可核查的对照，使学生看见等价加项替换前后整体极限不同，从而落实批准目标中的使用条件教学。已有阶比较定义及替换定理、证明无需修改。",
+          "repair_instruction": "仅修改 S03.U07/U08，保留原题及全部正确解答，附加一个简短的加减抵消对照及解释。所选反例须明确趋近过程和非零分母条件，代数核实两无穷小等价，分别算出原式与错误逐项替换后表达式的不同结果，并指出被替换对象是加减项而非定理所许可的整体乘积因子或商结构，不能套用原定理。可采用反馈建议，也可选择同等初等的其他反例；不依赖导数、泰勒，不新增单元，不重复补定义，不修改正确的替换定理和证明。",
+          "repair_unit_ids": [
+            "S03.U07",
+            "S03.U08"
+          ],
+          "status": "supported_improvement",
+          "unit_evidence": [
+            {
+              "kind": "statement",
+              "quote": "因此，在商的极限中，可以将分母中的无穷小 $\\alpha(x)$ 替换为与其等价的无穷小 $\\beta(x)$，但必须同时检查两个商在同一去心邻域内有定义，并且原商的有限极限存在。一般而言，不能在加减式中无条件逐项替换等价无穷小；加减项的替换必须另行检验整体极限，不能仅由等价关系和表达式有定义推出。",
+              "unit_id": "S03.U05"
+            },
+            {
+              "kind": "statement",
+              "quote": "计算\n\\[\n\\lim_{x\\to0}\\frac{(1+x)\\sin x}{x}.\n\\]\n要求说明等价无穷小替换的依据及适用条件。",
+              "unit_id": "S03.U07"
+            },
+            {
+              "kind": "worked_example",
+              "quote": "当 $x\\to0$ 时，$\\sin x\\sim x$，并且 $1+x\\to1$。在 $x\\neq0$ 的去心邻域内，原式有定义，且\n\\[\n\\frac{(1+x)\\sin x}{x}=(1+x)\\frac{\\sin x}{x}.\n\\]",
+              "unit_id": "S03.U08"
+            }
+          ],
+          "unit_ids": [
+            "S03.U05",
+            "S03.U07",
+            "S03.U08"
+          ]
+        },
+        {
+          "id": "F3",
+          "objective_evidence": [
+            {
+              "field": "objectives",
+              "quote": "理解闭区间上连续函数的有界性、最值性和介值性，并能解决基础经济学模型中的连续性问题。",
+              "section_id": null
+            },
+            {
+              "field": "objectives",
+              "quote": "能够将连续性定理用于判断方程根的存在性及简单经济学模型的可行性。",
+              "section_id": "S05"
+            }
+          ],
+          "reason": "两道经济题及对应答案均未明确价格单位、供需数量单位或共同时间尺度，也未说明公式是统一单位下数值之间的简化教学关系。现有连续性、可行性、端点异号及存在性与唯一性的区分不因这一缺口而错误，但数值结论的经济含义仍不够明确。给四个既有单元补充一致的单位和模型限定，是批准经济应用目标内的解释改进。反馈末尾的范围说明是本项处理边界，不构成扩写第二重要极限、数列、多元、导数或泰勒的授权。",
+          "repair_instruction": "仅修改 S05.U13/U14/U18/U22 的模型解释及单位表述：在两题题面分别明确这是简化教学模型，p、D、S 为选定统一单位下的数值，指定合理价格单位、数量单位与供需共用的固定时间尺度。答案沿用各自题面的约定，为均衡价格、交易量、超额需求及反例表格和价格区间补充必要的单位说明。保留全部公式、区间、端点数据、数值结果、连续非负条件、正确证明和多均衡反例；不得把教学假设表述为真实市场事实，不增添模型推断或扩写其他数学主题。",
+          "repair_unit_ids": [
+            "S05.U13",
+            "S05.U14",
+            "S05.U18",
+            "S05.U22"
+          ],
+          "status": "supported_improvement",
+          "unit_evidence": [
+            {
+              "kind": "model_assumption",
+              "quote": "在价格范围 $p\\in[0,8]$ 内，某商品的需求量与供给量分别为\n\\[\nD(p)=24-2p,\\qquad S(p)=4+p.\n\\]\n先用连续性说明该价格范围内存在供需相等的均衡价格，再求出均衡价格与交易量，并说明唯一性的依据。",
+              "unit_id": "S05.U13"
+            },
+            {
+              "kind": "worked_example",
+              "quote": "解线性方程 $20-3p_*=0$，得\n\\[\np_*=\\frac{20}{3},\\qquad D(p_*)=S(p_*)=\\frac{32}{3}.\n\\]",
+              "unit_id": "S05.U14"
+            },
+            {
+              "kind": "model_assumption",
+              "quote": "某商品在 $p\\in[1,5]$ 上的需求函数 $D$ 和供给函数 $S$ 均连续且非负，满足\n\\[\nD(1)=12,\\quad S(1)=3,\\qquad D(5)=4,\\quad S(5)=8.\n\\]\n证明存在区间内部的均衡价格。若进一步知道 $D$ 严格递减、$S$ 严格递增，证明均衡价格唯一。仅凭最初给出的条件能否断言唯一？",
+              "unit_id": "S05.U18"
+            },
+            {
+              "kind": "worked_example",
+              "quote": "令 $E(p)=D(p)-S(p)$，$p\\in[1,5]$。由连续函数的差仍连续，$E$ 在 $[1,5]$ 上连续，且\n\\[\nE(1)=9>0,\\qquad E(5)=-4<0.\n\\]\n所以存在 $p_*\\in(1,5)$ 使 $E(p_*)=0$，即 $D(p_*)=S(p_*)$。",
+              "unit_id": "S05.U22"
+            },
+            {
+              "kind": "counterexample",
+              "quote": "仅凭最初的连续性和端点数据不能断言唯一。例如，令 $D,S$ 分别在相邻整数价格之间作直线连接，其在 $p=1,2,3,4,5$ 处的值依次为\n\\[\n\\begin{array}{c|ccccc}\np&1&2&3&4&5\\\\\nD(p)&12&4&8&4&4\\\\\nS(p)&3&5&5&5&8\n\\end{array}\n\\]\n所得函数连续且非负，并满足给定端点条件。",
+              "unit_id": "S05.U22"
+            }
+          ],
+          "unit_ids": [
+            "S05.U13",
+            "S05.U14",
+            "S05.U18",
+            "S05.U22"
+          ]
+        }
+      ],
+      "job_id": "89467291c05a478b9b525da3ce65b50f",
+      "limitations": [
+        "本评估依据所提供的完整单元正文和批准计划进行模型层面的逐项核对，未独立读取外部文件或核验所述文件哈希。",
+        "这不是形式化证明或完整普通数学审阅，不替代也不撤销其他审阅中已有的疑点。",
+        "未进行真实 TeX 编译、PDF 全页视觉检查或教师审核；本回执不签署数学及视觉验收，也不改变批准范围。",
+        "supported_improvement 表示现稿仍需在指定既有单元内落实改进，不表示修订已经完成。"
+      ],
+      "mock": false,
+      "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+      "plan_revision": 2,
+      "schema_version": 1,
+      "status": "reviewed",
+      "teacher_review": "NOT_RUN"
+    },
+    "matches_current_job_and_plan": true,
+    "observed_at": "2026-09-24T03:15:41.920229+00:00",
+    "receipt_file_sha256": "ab7f92d14ecd96255f1f6de65d488807afa2eb7b888043786f6f39365395394b",
+    "state_file_sha256": "5f84b75fbfc58b4364845a75928af3fab44fd51f1b2dc7466e91a19b32c9aaf4",
+    "state_status": "REVIEWED",
+    "identity": {
+      "job_id": "89467291c05a478b9b525da3ce65b50f",
+      "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+      "plan_revision": 2,
+      "feedback_hash": "06234869adb0ea50ef8f5edb9e5da5f7fe690e3e7f6abfd2093d47d8640497dd",
+      "context_hash": "2e267ffd5f31791adf6b22bb6a23ca96bd14be32e2cd26baf1a1c8a2dbe6dd7f",
+      "contract": {
+        "version": 1,
+        "helper_sha256": "021ca341a903d516d1c270c38c5806d4386adca89e08528c36353f529d26b965",
+        "provider_sha256": "adaac69a8e12ff4956a8b251170176ab3cae80da787bd7f76bd729f116303685",
+        "prompt_sha256": "7a33796275fd68cf28108cfe896039080cc8b6c69fd4789c6352ef194450d736",
+        "schema_sha256": "c41c7e8f5b4a564445660e9d3ffaae7c48b3a6f5bf82da7d7d46045bbca8e419"
+      },
+      "model_id": "gpt6",
+      "configured_gpt_model": "gpt-6-astra"
+    },
+    "dependencies": [
+      {
+        "name": "input.json",
+        "sha256": "493eaeac0ec5e2371b0f18de61e35ff206a8385ddd3850b49f777a7330da1ae2",
+        "archive": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration4\\final-live-evidence\\20260924-031540-688381\\CH03\\feedback-evidence\\79b5a589e0f64a5d838c806a\\input.json"
+      },
+      {
+        "name": "response-1.json",
+        "sha256": "01c2855fd62185a609e55152fa4d9d497ca883c297527531794bd901676abfeb",
+        "archive": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration4\\final-live-evidence\\20260924-031540-688381\\CH03\\feedback-evidence\\79b5a589e0f64a5d838c806a\\response-1.json"
+      },
+      {
+        "name": "receipt-1-reviewed.json",
+        "sha256": "ab7f92d14ecd96255f1f6de65d488807afa2eb7b888043786f6f39365395394b",
+        "archive": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration4\\final-live-evidence\\20260924-031540-688381\\CH03\\feedback-evidence\\79b5a589e0f64a5d838c806a\\receipt-1-reviewed.json"
+      }
+    ],
+    "saved_response_revalidation": "PASS_PURE_VALIDATION_NO_MODEL_CALL",
+    "body_unit_payload_sha256": "ae2997d78a44c643b52fbe7becb5161cbed4393ae74127c90338a10304fe443a",
+    "body_unit_sha256": {
+      "S01.U01": "68c5fcb187366f90f2688711d942458ea5f356649d886003e0e5a6b1d5351ad8",
+      "S01.U02": "9e90be1466d8c611ebe7205200f32450c0ed123adbeedb5975781c8feee1bab5",
+      "S01.U03": "533f48b852ee5e6891b695131608a1614de54d35cc2d25704f60187fde3206f3",
+      "S01.U04": "4d7179a5af0663ace1ab1163c3ec7072c9fc9e749aea92d74db8f6beef8b3ff5",
+      "S01.U05": "00165e0bd0806337b80dbeb8b2895821bd8d09e256f59e42c4961749cdf56dd3",
+      "S01.U06": "e1448852147a80230379eec5c3c49c9ce2d25aa2ca57b5f0284809cb41aba248",
+      "S01.U07": "354ccd6282f04181f1fff4a6c7a13c87897c3580d95034be3694b2ec5550cdcb",
+      "S01.U08": "29e77fa9dac6b7ef652a2ffb3449f55d1267de253eefebf6d50c92d860c9f582",
+      "S01.U09": "07d1a07180b12368095c93c5c62f738ddab14432e1ace6b91df32224ff9a05bc",
+      "S01.U10": "0329933bea32f6df8d1f643a2d45f1ef362070a1687b44899a77ac70ecb8b418",
+      "S01.U11": "293bb9b1e5bf643485dd93f375a02d5fbd67413788c2a5384cb144b57185a88c",
+      "S01.U12": "0696ed2c268cdccbd8b5ef938427529c79a7bf8cbd461f5f2ec9bd22928f2e3b",
+      "S01.U13": "f4bc496559c02df2ac3f159e3359ba99c9c45f4e52c008f01e6cf722905e9751",
+      "S02.U01": "294dc2bbce8134c422f851cd8b133d66a7b26e177dc628fbe7279815aa1f1128",
+      "S02.U02": "1565af6dd0a4a9b47c65cf0f33cba93ec91bfe3b88eff2a596820b2c9e555686",
+      "S02.U03": "1364b96e89206a0def1a08eab6e3132fccc06355e04dc1da3f32b41aa811ed3e",
+      "S02.U04": "61d14ebdcec0d1515854a0cac3ecea736001ad473ec63f1aeb78a66dbfbdff62",
+      "S02.U05": "756ba4b1bcfb24d27675e9d57c7b23f0466d8c1d1917fab358d5a87bf435cd09",
+      "S02.U06": "5309cb283938ec0c5a083eda5451e660f940e3f27332ab1dbec0df064a4c0d4d",
+      "S02.U07": "ec43b96ef13093e158cd48d90a6ba05e2e79c552df077d8a9f90e587ec5a329f",
+      "S02.U08": "d85dfc180e4b6e38a50834a4dcf968121b8fb0facf8789fd2207a2fa4f1961be",
+      "S02.U09": "302cc8a205870ddae7d090e2d5a926542c5390110943fb2cec63b3492bfb5088",
+      "S02.U10": "696af6dd48c5602e484518365c003561bde5c77ae1c4434983a9f7b3fcb1d49d",
+      "S02.U11": "ecb6fc480aa60aa1e93c054b104255eec6e48a108bbdc2b0b6ffc793eea0a0ec",
+      "S02.U12": "90f97c03ab8b8afced4ada867b59e49dbf95d5c06acbc9a0a5f5cb0cc71c7613",
+      "S02.U13": "81b48003e393c538366c7b76a127690884cf14b12c97f3897e4f36b4a762f4f4",
+      "S03.U01": "9d4392e19d0d6e1e428048d06ae92964e0e7d2dd3f79537eebda053caf5c91a8",
+      "S03.U02": "3f0f523a338583e5816f371321d99c636a974d9e9e9243d8509ed4c87c3052c2",
+      "S03.U03": "bf126394d7f958d86c17d6ef3db1255ce3fae48244f6794e5fc8f87af3b72c8f",
+      "S03.U04": "7b4727b0a59f4ce3a5c4d4d6f023f8b8c611ffcbb3b6648bd0cbf696a76f731a",
+      "S03.U05": "a2c10ee72a601e85e6978150c222bc31a7df11f92908a5da1ee14265f97ee07a",
+      "S03.U06": "43099a4c5eb16e72aad676f7f77d08f6263585d207027a4cb80e9628f6dc32a3",
+      "S03.U07": "34fcd58e9d825560f07823540cfc5765ca9ad4b847cf1e57adb786d45d12c394",
+      "S03.U08": "78028dda63de73992011bef8eed14047e8d97ae37d982786722e99524316e978",
+      "S03.U09": "ce7aeb4faf01e331c43ea123529aca61d6702d21739ebfda75db8d3df7794da3",
+      "S03.U10": "7900e763ef72075af1848ca3fa24a2002a1a50d14177f0218a2736a0fa767822",
+      "S04.U01": "c20d542a254bcce428540a8b4be39bd4cd8355fe6a15f8715feace683247e626",
+      "S04.U02": "771117b627f9b04ef9e79243710cc515237aac5ee9db5af01688e70cab8ef3eb",
+      "S04.U03": "b90167be697599a01be84d4b6928c94f7e4d716ce85021ba24189a26b79ac1f7",
+      "S04.U04": "86b6af96416ec3b0a9ffb7d2ae88b86055bbaa0f7f71c7f6afa9146f37b909db",
+      "S04.U05": "13f99731104f7efa7f8ad539231c94ba5443c43769415c6fdf86de212685e4e5",
+      "S04.U06": "44951d2baa2e02b8849a8efed27de08344b97553daf6ffe88d556ee0ed45bc8c",
+      "S04.U07": "d876e998fd87a3ecd1f4de8db627cd01d1749bee4c1a9fef929d8b44bf8bd045",
+      "S04.U08": "4d9b54dcf234182dfc9826b5a682adc7751878822a772afecc7dcceeee6e3f1d",
+      "S04.U09": "16f70dcce0d328ef8874e174b992531a08b01a72850b1f9088aabef411a845fe",
+      "S04.U10": "5f2926525a16ab9579e23547e1a834a562e5451e1442a027ae6149ebe03a7c1f",
+      "S04.U11": "f78d882e0b2505cb0d011dabc23a9c50a3d4ba562fc6c952c1bb68d28362bd3d",
+      "S04.U12": "277625da41ccf30166344991d99c765985bf42b2361d95f8fac2de6313705ebe",
+      "S04.U13": "449e7ce28045a1bae1d7916542f806e940a14afa07c04bc5dd5c4acc90810d6f",
+      "S05.U01": "708ce37ccfd6c9f27d0f86a1c855d11af44fb8b25ae846a83caade85bc0956e0",
+      "S05.U02": "c4ad5982cbf12fb2bc04cc3f459bc5f676bdf96d77c0777d9d1b9d654e6c9053",
+      "S05.U03": "85127136b7479f7ff6c3a505c9f64c81cffbdf0dda8984468ce6c7309ffdcae4",
+      "S05.U04": "5099192f685fd29cf1a780ccbdebf27da5780f348c75cca724e6133aee6e4ee6",
+      "S05.U05": "93020622790fb6823baa8035b54c94afa4160549e6f9a3897ab3f4c82c1e4cf3",
+      "S05.U06": "1a27f81b12e6c832d58c62f657aaa2b27a1f6f02808b14fd3b716fb5b2c9571c",
+      "S05.U07": "a62036b3314ae06e607c0561ebe0d23f912e21ebe0acfbc806c2361760e13c3b",
+      "S05.U08": "37aa4312588f07ae3992c84dd5a25e6e97f2847346982740db3cb2139cc8f9ad",
+      "S05.U09": "83e2213d0fcca53f5816a57564967c48cc9ba8213337182534b372b682e33d9b",
+      "S05.U10": "9e4a098a073cc533811193b6ff42ee628538363ac3adcd67711dfce1f35db602",
+      "S05.U11": "98d0ad9e2cf798575ac614fda373a85b0d626bb3c44781582b1c47725a4709f1",
+      "S05.U12": "18db00ca0b7d87428be4e96a5184edb3ebd89918b401f7186fd00bb61675042a",
+      "S05.U13": "788a07d2b1fddee60d20d30f101d2a53234554a9407588bab5692616057a8aa3",
+      "S05.U14": "ea04f1b2c7947891bfb6bb165bd6df4c4b69ccd95a9d8ed7f5961acc83d4428b",
+      "S05.U15": "9ec478c0efaab4387b82b71d2455186548e49a2cb61b76ccb2798f67198efff2",
+      "S05.U16": "c8b322b6617d644a3ccc08dc30f2200f511f21f499ee0c24682ea3ee11c41d8c",
+      "S05.U17": "f8d902dabcc96d6ddb4de92968c365562a0d030693c53877096fa1e34943fd1f",
+      "S05.U18": "b9632d2c6e2ddf7e4d69d4964a8d194fd881ffd76ff795f113ccbe5d77660901",
+      "S05.U19": "32e91c1629d9d6bf71d988e79e4f09ad5a5015029fa4e29c2f3fe767c313963c",
+      "S05.U20": "4bc7289395bbb2b2fe4340f8209571d5e20612d7b9d78770e4ee5b003926668e",
+      "S05.U21": "99895501e4d4dfbe18fcd9af5f541e9f8ddf3720a93582a05450d13805a9fe3c",
+      "S05.U22": "2ab5012fe67073cc17f096b4b90d75764274355ef7c0f45e73a026b6461af3cd"
+    },
+    "input_plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+    "input_plan_revision": 2,
+    "is_selected_current_receipt": false
+  },
+  {
+    "sequence": 2635,
+    "timestamp": "2026-09-23T09:55:00.286744+00:00",
+    "integrity": "PASS",
+    "payload": {
+      "evidence_key": "runs/a45be503af594ce8aae0bb1e4c30184b/feedback-reviews/b4f65b4a7e5e106d37462281/receipt-1-reviewed.json",
+      "evidence_sha256": "885de593854f3f02296bf6c065ae9ca61b59b697eb4bf2636bec00bfbf4d0135",
+      "feedback_hash": "06234869adb0ea50ef8f5edb9e5da5f7fe690e3e7f6abfd2093d47d8640497dd",
+      "identity_hash": "b4f65b4a7e5e106d374622814929485399e8bad784705910ead83f6648386b36",
+      "items": [
+        {
+          "id": "F1",
+          "objective_evidence": [
+            {
+              "field": "objectives",
+              "quote": "能够运用代数变形、夹逼思想和基本极限完成初等计算。",
+              "section_id": "S02"
+            },
+            {
+              "field": "lecture.exercises",
+              "quote": "with_answers",
+              "section_id": null
+            }
+          ],
+          "reason": "现稿已在批准的 S02 目标内提供学生独立使用夹逼定理的练习及对应答案，并未改写 U04 的原有示范。U12 的附加小问要求学生自行构造上下界、确认同一去心趋近过程并求共同极限；U13 随后给出完整核查、夹逼结论及不需要计算振荡函数极限的说明。因此该反馈所要求的练习—答案配对已经实际完成。",
+          "repair_instruction": null,
+          "repair_unit_ids": [],
+          "status": "satisfied",
+          "unit_evidence": [
+            {
+              "kind": "worked_example",
+              "quote": "附加小问：用夹逼定理计算\n\\[\n\\lim_{x\\to0}\\frac{x^2}{2+\\cos(1/x)}.\n\\]\n请自行构造上下界，确认原式与上下界在同一去心邻域内有定义，说明所考察的同一趋近过程，计算两端的共同极限，再给出结论。",
+              "unit_id": "S02.U12"
+            },
+            {
+              "kind": "worked_example",
+              "quote": "附加小问解答：在去心邻域 $0<|x|<1$ 内，$1/x$ 有定义。由余弦函数的有界性，\n\\[\n-1\\leq\\cos(1/x)\\leq1,\n\\qquad\n1\\leq2+\\cos(1/x)\\leq3.\n\\]\n因此分母始终为正，原式在该去心邻域内有定义。对上述正数取倒数，再乘以非负数 $x^2$，得到\n\\[\n\\frac{x^2}{3}\\leq\\frac{x^2}{2+\\cos(1/x)}\\leq x^2.\n\\]\n上下界也在同一去心邻域内有定义，三者均考察双侧趋近过程 $x\\to0$。由 $\\lim_{x\\to0}x=0$ 及极限的积与常数倍法则，\n\\[\n\\lim_{x\\to0}\\frac{x^2}{3}=0,\n\\qquad\n\\lim_{x\\to0}x^2=0.\n\\]\n两端趋于同一有限数，故由夹逼定理，\n\\[\n\\lim_{x\\to0}\\frac{x^2}{2+\\cos(1/x)}=0.\n\\]\n这里仅使用余弦函数的有界性与代数极限，不需要求 $\\cos(1/x)$ 的极限，也不需要在 $x=0$ 处定义原式。",
+              "unit_id": "S02.U13"
+            }
+          ],
+          "unit_ids": [
+            "S02.U12",
+            "S02.U13"
+          ]
+        },
+        {
+          "id": "F2",
+          "objective_evidence": [
+            {
+              "field": "objectives",
+              "quote": "理解等价无穷小的定义，并能在乘积和商的极限中进行规范替换。",
+              "section_id": "S03"
+            },
+            {
+              "field": "lecture.exercises",
+              "quote": "with_answers",
+              "section_id": null
+            }
+          ],
+          "reason": "现稿已在既有 U07/U08 题解配对中给出具体的加减抵消反例，而不是只重复一般警告。文本明确验证 $x+x^2\\sim x$，原式的实际结果为 $1$，直接替换后所得结果为 $0$，并解释这是加减式中的项替换而非定理允许的整体乘积因子或商结构。该反例满足初等代数核查要求，且保留了原题和正确解答。",
+          "repair_instruction": null,
+          "repair_unit_ids": [],
+          "status": "satisfied",
+          "unit_evidence": [
+            {
+              "kind": "counterexample",
+              "quote": "再说明加减式中不能无条件逐项替换等价无穷小。对 $x\\to0$ 且 $x\\neq0$，有\n\\[\n\\frac{x+x^2}{x}=1+x\\longrightarrow1,\n\\]\n所以 $x+x^2\\sim x$；同时分母 $x^2\\neq0$。但是\n\\[\n\\frac{(x+x^2)-x}{x^2}=\\frac{x^2}{x^2}=1,\n\\]\n故原式的极限为 $1$。若把加减项 $x+x^2$ 逐项替换为等价无穷小 $x$，则得到\n\\[\n\\frac{x-x}{x^2}=0,\n\\]\n其极限为 $0$，与原式不同。这里被替换的是加减式中的一个加项，而不是等价无穷小替换定理所许可的整体乘积因子或商结构；因此不能仅由等价关系和表达式有定义就进行这种替换，必须另行检验替换后的整体极限。",
+              "unit_id": "S03.U08"
+            }
+          ],
+          "unit_ids": [
+            "S03.U08"
+          ]
+        },
+        {
+          "id": "F3",
+          "objective_evidence": [
+            {
+              "field": "objectives",
+              "quote": "能够将连续性定理用于判断方程根的存在性及简单经济学模型的可行性。",
+              "section_id": "S05"
+            },
+            {
+              "field": "lecture.example_focus",
+              "quote": "balanced",
+              "section_id": null
+            }
+          ],
+          "reason": "现稿已在两道经济模型题面及其答案中明确给出价格、数量的计量单位和共同时间尺度，并在数值结论中保持一致。U13/U14 使用元/千克、同一固定一周和千克；U18/U22 同样使用元/千克、同一固定一周和千克，并明确这些是简化教学模型中的统一单位数值而非真实市场事实。原有区间、端点数据、连续性论证、存在性与唯一性区分均被保留，因此无需修复。",
+          "repair_instruction": null,
+          "repair_unit_ids": [],
+          "status": "satisfied",
+          "unit_evidence": [
+            {
+              "kind": "worked_example",
+              "quote": "考虑某商品的简化教学模型：$p$ 为以元/千克计的价格数值，$D(p)$ 与 $S(p)$ 分别为同一个固定的一周内、以千克计的需求量和供给量数值。下列公式是这些统一单位下数值之间的假设关系，并非对真实市场的事实描述。在价格范围 $p\\in[0,8]$（即每千克 $0$ 至 $8$ 元）内，某商品的需求量与供给量分别为\n\\[\nD(p)=24-2p,\\qquad S(p)=4+p.\n\\]\n先用连续性说明该价格范围内存在供需相等的均衡价格，再求出均衡价格与交易量，并说明唯一性的依据。",
+              "unit_id": "S05.U13"
+            },
+            {
+              "kind": "worked_example",
+              "quote": "沿用题面的简化教学模型及单位：价格以元/千克计，供需数量均为同一个固定的一周内以千克计的数值。在 $[0,8]$ 上，两种数量均非负，且 $D,S$ 均为连续函数。定义超额需求\n\\[\nE(p)=D(p)-S(p)=20-3p\\qquad(p\\in[0,8]).\n\\]\n这里 $E(p)$ 也是该周内以千克计的数量差数值，价格区间 $[0,8]$ 对应每千克 $0$ 至 $8$ 元。它在闭区间上连续，且 $E(0)=20>0$，$E(8)=-4<0$，分别表示该周的需求量比供给量多 $20$ 千克和少 $4$ 千克。由零点存在性定理，存在 $p_*\\in(0,8)$ 使 $E(p_*)=0$，即供需相等。",
+              "unit_id": "S05.U14"
+            },
+            {
+              "kind": "worked_example",
+              "quote": "考虑某商品的简化教学模型：$p$ 为以元/千克计的价格数值，需求函数 $D$ 和供给函数 $S$ 的值分别为同一个固定的一周内、以千克计的需求量和供给量数值。以下条件是统一单位下数值之间的教学假设，并非对真实市场的事实描述。某商品在 $p\\in[1,5]$（即每千克 $1$ 至 $5$ 元）上的需求函数 $D$ 和供给函数 $S$ 均连续且非负，满足\n\\[\nD(1)=12,\\quad S(1)=3,\\qquad D(5)=4,\\quad S(5)=8.\n\\]\n证明存在区间内部的均衡价格。若进一步知道 $D$ 严格递减、$S$ 严格递增，证明均衡价格唯一。仅凭最初给出的条件能否断言唯一？",
+              "unit_id": "S05.U18"
+            },
+            {
+              "kind": "worked_example",
+              "quote": "沿用题面的简化教学模型，价格以元/千克计，需求量与供给量均指同一个固定的一周内以千克计的数量。令 $E(p)=D(p)-S(p)$，$p\\in[1,5]$，其中 $E(p)$ 为该周超额需求的千克数，价格区间对应每千克 $1$ 至 $5$ 元。由连续函数的差仍连续，$E$ 在 $[1,5]$ 上连续，且\n\\[\nE(1)=9>0,\\qquad E(5)=-4<0.\n\\]\n这分别表示该周的需求量比供给量多 $9$ 千克和少 $4$ 千克。所以存在 $p_*\\in(1,5)$ 使 $E(p_*)=0$，即 $D(p_*)=S(p_*)$。均衡价格为 $p_*$ 元/千克，位于每千克 $1$ 元与 $5$ 元之间；相等的供需数量是该周以千克计的均衡交易量。",
+              "unit_id": "S05.U22"
+            }
+          ],
+          "unit_ids": [
+            "S05.U13",
+            "S05.U14",
+            "S05.U18",
+            "S05.U22"
+          ]
+        }
+      ],
+      "job_id": "89467291c05a478b9b525da3ce65b50f",
+      "limitations": [
+        "本评估依据所提供的完整正文、批准计划和反馈数据进行文本核对，不等同于形式化数学证明。",
+        "未执行真实 TeX 编译、PDF 全页视觉检查或教师审核；本结果不构成教师数学或视觉验收。"
+      ],
+      "mock": false,
+      "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+      "plan_revision": 2,
+      "schema_version": 1,
+      "status": "reviewed",
+      "teacher_review": "NOT_RUN"
+    },
+    "matches_current_job_and_plan": true,
+    "observed_at": "2026-09-24T03:15:41.941117+00:00",
+    "receipt_file_sha256": "885de593854f3f02296bf6c065ae9ca61b59b697eb4bf2636bec00bfbf4d0135",
+    "state_file_sha256": "894c9b3ba3f86685f8f45bdeb1bd6c134dba01f2230bc2ece0de6d918557f28d",
+    "state_status": "REVIEWED",
+    "identity": {
+      "job_id": "89467291c05a478b9b525da3ce65b50f",
+      "plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+      "plan_revision": 2,
+      "feedback_hash": "06234869adb0ea50ef8f5edb9e5da5f7fe690e3e7f6abfd2093d47d8640497dd",
+      "context_hash": "d8de76ae3c964b0d7857530aa848ce097bf1c4d404bd19b90e55b117f370ae86",
+      "contract": {
+        "version": 1,
+        "helper_sha256": "021ca341a903d516d1c270c38c5806d4386adca89e08528c36353f529d26b965",
+        "provider_sha256": "adaac69a8e12ff4956a8b251170176ab3cae80da787bd7f76bd729f116303685",
+        "prompt_sha256": "7a33796275fd68cf28108cfe896039080cc8b6c69fd4789c6352ef194450d736",
+        "schema_sha256": "c41c7e8f5b4a564445660e9d3ffaae7c48b3a6f5bf82da7d7d46045bbca8e419"
+      },
+      "model_id": "gpt6",
+      "configured_gpt_model": "gpt-6-astra"
+    },
+    "dependencies": [
+      {
+        "name": "input.json",
+        "sha256": "9da9e50023b29347df0886b900266794a076c1108c7984a7d8d684440f06b8b3",
+        "archive": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration4\\final-live-evidence\\20260924-031540-688381\\CH03\\feedback-evidence\\b4f65b4a7e5e106d37462281\\input.json"
+      },
+      {
+        "name": "response-1.json",
+        "sha256": "222b792ea929cbf342879e0fef90aa9664e1923ceb3f01f33d10ac07b1211e41",
+        "archive": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration4\\final-live-evidence\\20260924-031540-688381\\CH03\\feedback-evidence\\b4f65b4a7e5e106d37462281\\response-1.json"
+      },
+      {
+        "name": "receipt-1-reviewed.json",
+        "sha256": "885de593854f3f02296bf6c065ae9ca61b59b697eb4bf2636bec00bfbf4d0135",
+        "archive": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\reports\\iteration4\\final-live-evidence\\20260924-031540-688381\\CH03\\feedback-evidence\\b4f65b4a7e5e106d37462281\\receipt-1-reviewed.json"
+      }
+    ],
+    "saved_response_revalidation": "PASS_PURE_VALIDATION_NO_MODEL_CALL",
+    "body_unit_payload_sha256": "5ca85b481f82b9b866dd0f8e88873903ab4c31058d62270fcba428ca4ea2e753",
+    "body_unit_sha256": {
+      "S01.U01": "68c5fcb187366f90f2688711d942458ea5f356649d886003e0e5a6b1d5351ad8",
+      "S01.U02": "9e90be1466d8c611ebe7205200f32450c0ed123adbeedb5975781c8feee1bab5",
+      "S01.U03": "533f48b852ee5e6891b695131608a1614de54d35cc2d25704f60187fde3206f3",
+      "S01.U04": "4d7179a5af0663ace1ab1163c3ec7072c9fc9e749aea92d74db8f6beef8b3ff5",
+      "S01.U05": "00165e0bd0806337b80dbeb8b2895821bd8d09e256f59e42c4961749cdf56dd3",
+      "S01.U06": "e1448852147a80230379eec5c3c49c9ce2d25aa2ca57b5f0284809cb41aba248",
+      "S01.U07": "354ccd6282f04181f1fff4a6c7a13c87897c3580d95034be3694b2ec5550cdcb",
+      "S01.U08": "29e77fa9dac6b7ef652a2ffb3449f55d1267de253eefebf6d50c92d860c9f582",
+      "S01.U09": "07d1a07180b12368095c93c5c62f738ddab14432e1ace6b91df32224ff9a05bc",
+      "S01.U10": "0329933bea32f6df8d1f643a2d45f1ef362070a1687b44899a77ac70ecb8b418",
+      "S01.U11": "293bb9b1e5bf643485dd93f375a02d5fbd67413788c2a5384cb144b57185a88c",
+      "S01.U12": "0696ed2c268cdccbd8b5ef938427529c79a7bf8cbd461f5f2ec9bd22928f2e3b",
+      "S01.U13": "f4bc496559c02df2ac3f159e3359ba99c9c45f4e52c008f01e6cf722905e9751",
+      "S02.U01": "294dc2bbce8134c422f851cd8b133d66a7b26e177dc628fbe7279815aa1f1128",
+      "S02.U02": "1565af6dd0a4a9b47c65cf0f33cba93ec91bfe3b88eff2a596820b2c9e555686",
+      "S02.U03": "1364b96e89206a0def1a08eab6e3132fccc06355e04dc1da3f32b41aa811ed3e",
+      "S02.U04": "61d14ebdcec0d1515854a0cac3ecea736001ad473ec63f1aeb78a66dbfbdff62",
+      "S02.U05": "756ba4b1bcfb24d27675e9d57c7b23f0466d8c1d1917fab358d5a87bf435cd09",
+      "S02.U06": "5309cb283938ec0c5a083eda5451e660f940e3f27332ab1dbec0df064a4c0d4d",
+      "S02.U07": "ec43b96ef13093e158cd48d90a6ba05e2e79c552df077d8a9f90e587ec5a329f",
+      "S02.U08": "d85dfc180e4b6e38a50834a4dcf968121b8fb0facf8789fd2207a2fa4f1961be",
+      "S02.U09": "302cc8a205870ddae7d090e2d5a926542c5390110943fb2cec63b3492bfb5088",
+      "S02.U10": "696af6dd48c5602e484518365c003561bde5c77ae1c4434983a9f7b3fcb1d49d",
+      "S02.U11": "ecb6fc480aa60aa1e93c054b104255eec6e48a108bbdc2b0b6ffc793eea0a0ec",
+      "S02.U12": "c126bb09a304482c81e953560d59dfd10a1d66044b92a7d9983eb57cdf4ef7f4",
+      "S02.U13": "ec558243f3cb2eef1c7e3db743fdef16946f86728420d159f2319cb59b51c277",
+      "S03.U01": "9d4392e19d0d6e1e428048d06ae92964e0e7d2dd3f79537eebda053caf5c91a8",
+      "S03.U02": "3f0f523a338583e5816f371321d99c636a974d9e9e9243d8509ed4c87c3052c2",
+      "S03.U03": "bf126394d7f958d86c17d6ef3db1255ce3fae48244f6794e5fc8f87af3b72c8f",
+      "S03.U04": "7b4727b0a59f4ce3a5c4d4d6f023f8b8c611ffcbb3b6648bd0cbf696a76f731a",
+      "S03.U05": "a2c10ee72a601e85e6978150c222bc31a7df11f92908a5da1ee14265f97ee07a",
+      "S03.U06": "43099a4c5eb16e72aad676f7f77d08f6263585d207027a4cb80e9628f6dc32a3",
+      "S03.U07": "54ee7fdcd801b14c002bfd6cf1079db40fcb9f232d60eac2d19517543a368c9f",
+      "S03.U08": "2a933adc17a2dafbf4e5293ac942bdad1fc8d3b8afba8a7333e3d4bf740d4f74",
+      "S03.U09": "ce7aeb4faf01e331c43ea123529aca61d6702d21739ebfda75db8d3df7794da3",
+      "S03.U10": "7900e763ef72075af1848ca3fa24a2002a1a50d14177f0218a2736a0fa767822",
+      "S04.U01": "c20d542a254bcce428540a8b4be39bd4cd8355fe6a15f8715feace683247e626",
+      "S04.U02": "771117b627f9b04ef9e79243710cc515237aac5ee9db5af01688e70cab8ef3eb",
+      "S04.U03": "b90167be697599a01be84d4b6928c94f7e4d716ce85021ba24189a26b79ac1f7",
+      "S04.U04": "86b6af96416ec3b0a9ffb7d2ae88b86055bbaa0f7f71c7f6afa9146f37b909db",
+      "S04.U05": "13f99731104f7efa7f8ad539231c94ba5443c43769415c6fdf86de212685e4e5",
+      "S04.U06": "44951d2baa2e02b8849a8efed27de08344b97553daf6ffe88d556ee0ed45bc8c",
+      "S04.U07": "d876e998fd87a3ecd1f4de8db627cd01d1749bee4c1a9fef929d8b44bf8bd045",
+      "S04.U08": "4d9b54dcf234182dfc9826b5a682adc7751878822a772afecc7dcceeee6e3f1d",
+      "S04.U09": "16f70dcce0d328ef8874e174b992531a08b01a72850b1f9088aabef411a845fe",
+      "S04.U10": "5f2926525a16ab9579e23547e1a834a562e5451e1442a027ae6149ebe03a7c1f",
+      "S04.U11": "f78d882e0b2505cb0d011dabc23a9c50a3d4ba562fc6c952c1bb68d28362bd3d",
+      "S04.U12": "277625da41ccf30166344991d99c765985bf42b2361d95f8fac2de6313705ebe",
+      "S04.U13": "449e7ce28045a1bae1d7916542f806e940a14afa07c04bc5dd5c4acc90810d6f",
+      "S05.U01": "708ce37ccfd6c9f27d0f86a1c855d11af44fb8b25ae846a83caade85bc0956e0",
+      "S05.U02": "c4ad5982cbf12fb2bc04cc3f459bc5f676bdf96d77c0777d9d1b9d654e6c9053",
+      "S05.U03": "85127136b7479f7ff6c3a505c9f64c81cffbdf0dda8984468ce6c7309ffdcae4",
+      "S05.U04": "5099192f685fd29cf1a780ccbdebf27da5780f348c75cca724e6133aee6e4ee6",
+      "S05.U05": "93020622790fb6823baa8035b54c94afa4160549e6f9a3897ab3f4c82c1e4cf3",
+      "S05.U06": "1a27f81b12e6c832d58c62f657aaa2b27a1f6f02808b14fd3b716fb5b2c9571c",
+      "S05.U07": "a62036b3314ae06e607c0561ebe0d23f912e21ebe0acfbc806c2361760e13c3b",
+      "S05.U08": "37aa4312588f07ae3992c84dd5a25e6e97f2847346982740db3cb2139cc8f9ad",
+      "S05.U09": "83e2213d0fcca53f5816a57564967c48cc9ba8213337182534b372b682e33d9b",
+      "S05.U10": "9e4a098a073cc533811193b6ff42ee628538363ac3adcd67711dfce1f35db602",
+      "S05.U11": "98d0ad9e2cf798575ac614fda373a85b0d626bb3c44781582b1c47725a4709f1",
+      "S05.U12": "18db00ca0b7d87428be4e96a5184edb3ebd89918b401f7186fd00bb61675042a",
+      "S05.U13": "911bf0e5ff3031baa8a5ddfa9b7011c9f5798d8c4571a0bc4989431c25b89c64",
+      "S05.U14": "09870f03093231e7ec7b8f55177a479c98f20695f253d51c8ca699a3214a4912",
+      "S05.U15": "9ec478c0efaab4387b82b71d2455186548e49a2cb61b76ccb2798f67198efff2",
+      "S05.U16": "c8b322b6617d644a3ccc08dc30f2200f511f21f499ee0c24682ea3ee11c41d8c",
+      "S05.U17": "f8d902dabcc96d6ddb4de92968c365562a0d030693c53877096fa1e34943fd1f",
+      "S05.U18": "f5663dd4b749fa06e50d772f4db4a7d15f9ab6fc7cc3df5cd6571a8e366cf9f8",
+      "S05.U19": "32e91c1629d9d6bf71d988e79e4f09ad5a5015029fa4e29c2f3fe767c313963c",
+      "S05.U20": "4bc7289395bbb2b2fe4340f8209571d5e20612d7b9d78770e4ee5b003926668e",
+      "S05.U21": "99895501e4d4dfbe18fcd9af5f541e9f8ddf3720a93582a05450d13805a9fe3c",
+      "S05.U22": "f7bae41159a4c160bf5938c211517adf77e9790336df6c89df67dd45261a5a95"
+    },
+    "input_plan_hash": "fbd172c8df0c12fca976e9067b04afe5210016559e210ca8dd0c3e7d37f3f1f7",
+    "input_plan_revision": 2,
+    "is_selected_current_receipt": true
+  }
+]

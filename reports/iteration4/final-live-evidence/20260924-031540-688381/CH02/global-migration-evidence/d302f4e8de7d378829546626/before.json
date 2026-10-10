@@ -1,0 +1,477 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "7e9b8e62373d98616c6c6b722016615ac6f25d79af483a25d81445a15a934227",
+    "model": "gpt-6-astra",
+    "provider": "live",
+    "repair_prompt_hash": "46c1ff3b8ea3f0fba7afe1f6a3b99f3286324551522140dc61d8b646807759f9",
+    "written_schema_hash": "4e9b07e27f359212c0460381e3cbd6e548d18a48490e553e60b0c56d30d9ada7",
+    "normalizer_hash": "25d2fff448b21fcad71b5e7aae512cf6ab27f66bdeefd9e459ca57652a1fd74c"
+  },
+  "rounds_used": 3,
+  "phase": "repair_pending",
+  "sections": {
+    "S02": {
+      "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/global-repairs/r3-a84bbd84/S02-before.json",
+      "candidate_hash": "d0d1ecb1b60e318b6042f4b63eb779a84dbbb2b3fe58a8e5923de5f4a4b8ee87"
+    },
+    "S03": {
+      "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/global-repairs/r3-a84bbd84/S03-before.json",
+      "candidate_hash": "53d90cd93d59b5ab4d9dea22e2a3cd1fcc158f33d041e6d4051bf4a1e5d0f3d3"
+    },
+    "S04": {
+      "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/global-repairs/r3-a84bbd84/S04-before.json",
+      "candidate_hash": "02d65dfd2d6b949d8f5f101807d995f2da6068fb2df2c52224838bce9fa11f39"
+    },
+    "S05": {
+      "candidate_key": "runs/fd6736af6ef14be3839e019e86ca1e5c/global-repairs/r3-a84bbd84/S05-before.json",
+      "candidate_hash": "8fb78f817e93c2b6ca85d97b94a7281e0e7ea7a12d24e29c2fb586f4988aba03"
+    }
+  },
+  "pending": [
+    {
+      "section_id": "S02",
+      "issues": [
+        {
+          "unit_id": "S02.U14",
+          "severity": "blocking",
+          "message": "有限项改变定理的证明在端点指标处写错：由定理假设仅能推出对 n>N 有 a_n=b_n，因此对 n≥N+1 才有 B_n-A_n=∑_{k=1}^{N}(b_k-a_k)。正文写成“对所有整数 n≥N”，在 n=N 时未必成立，导致证明中的恒等式不被现有假设推出。应将该处改为 n≥N+1，或相应调整假设与求和上限。",
+          "evidence": "S02.U13 的假设是“对所有整数 n>N 都有 a_n=b_n”；S02.U14 却断言“对所有整数 n≥N，B_n-A_n=∑_{k=1}^{N}(b_k-a_k)”。例如 N=1、a_1=0、b_1=1 且 n>1 时 a_n=b_n=0，满足全部定理假设，但在 n=N=1 时 B_1-A_1=1，而右端 b_1-a_1=1（若按证明中的差分与后续固定尾部解释则应从 N+1 起论证）；当前证明的 n≥N 边界没有由假设支持，需修正指标后才能完成证明。"
+        }
+      ],
+      "allowed_unit_ids": [
+        "S02.U14"
+      ],
+      "neighbors": [
+        {
+          "section": {
+            "id": "S01",
+            "objectives": [
+              "定义无穷级数及其部分和数列",
+              "说明级数收敛与部分和数列极限之间的关系",
+              "掌握级数收敛、发散和级数和的基本表述",
+              "通过基础例题计算部分和或判断简单级数的收敛性"
+            ],
+            "prerequisites": [],
+            "reference_labels": [
+              "def:series",
+              "def:partial-sum",
+              "def:convergence",
+              "thm:series-limit"
+            ],
+            "required_kinds": [
+              "definition",
+              "theorem",
+              "example",
+              "solution",
+              "proof",
+              "exercise"
+            ],
+            "title": "级数与部分和的基本概念"
+          },
+          "generated": {
+            "section_id": "S01",
+            "units": [
+              {
+                "id": "S01.U01",
+                "kind": "definition",
+                "tex": "给定一个数列 $\\{a_n\\}_{n=1}^{\\infty}$，形式表达式\n\\[\n\\sum_{n=1}^{\\infty}a_n=a_1+a_2+a_3+\\cdots\n\\]\n称为无穷级数，简称级数；其中 $a_n$ 称为该级数的通项。记号 $\\sum_{n=1}^{\\infty}a_n$ 表示按照下标 $n=1,2,3,\\ldots$ 依次相加的过程，而不是有限项的和。\\label{def:series}",
+                "relates_to": null
+              },
+              {
+                "id": "S01.U02",
+                "kind": "definition",
+                "tex": "对于级数 $\\sum_{n=1}^{\\infty}a_n$，定义其第 $n$ 个部分和为\n\\[\nS_n=\\sum_{k=1}^{n}a_k=a_1+a_2+\\cdots+a_n,\\qquad n=1,2,3,\\ldots.\n\\]\n由此得到数列 $\\{S_n\\}_{n=1}^{\\infty}$，称为该级数的部分和数列。\\label{def:partial-sum}",
+                "relates_to": null
+              },
+              {
+                "id": "S01.U03",
+                "kind": "definition",
+                "tex": "若部分和数列 $\\{S_n\\}_{n=1}^{\\infty}$ 收敛，即存在有限实数 $S$ 使得\n\\[\n\\lim_{n\\to\\infty}S_n=S,\n\\]\n则称级数 $\\sum_{n=1}^{\\infty}a_n$ 收敛，并称 $S$ 为该级数的和，记作\n\\[\n\\sum_{n=1}^{\\infty}a_n=S.\n\\]\n若部分和数列不收敛，则称级数 $\\sum_{n=1}^{\\infty}a_n$ 发散。\\label{def:convergence}",
+                "relates_to": null
+              },
+              {
+                "id": "S01.U04",
+                "kind": "theorem",
+                "tex": "级数 $\\sum_{n=1}^{\\infty}a_n$ 收敛，当且仅当其部分和数列 $\\{S_n\\}_{n=1}^{\\infty}$ 收敛。若\n\\[\n\\lim_{n\\to\\infty}S_n=S,\n\\]\n则\n\\[\n\\sum_{n=1}^{\\infty}a_n=S.\n\\]\n\\label{thm:series-limit}",
+                "relates_to": null
+              },
+              {
+                "id": "S01.U05",
+                "kind": "proof",
+                "tex": "由定义，级数 $\\sum_{n=1}^{\\infty}a_n$ 的第 $n$ 个部分和就是 $S_n=\\sum_{k=1}^{n}a_k$。因此，级数收敛的定义正是部分和数列 $\\{S_n\\}$ 收敛，即存在有限实数 $S$ 满足\n\\[\n\\lim_{n\\to\\infty}S_n=S.\n\\]\n所以，级数收敛当且仅当其部分和数列收敛；在这种情况下，级数的和按定义就是部分和数列的极限 $S$。证毕。",
+                "relates_to": "S01.U04"
+              },
+              {
+                "id": "S01.U06",
+                "kind": "example",
+                "tex": "考虑级数\n\\[\n\\sum_{n=1}^{\\infty}\\frac{1}{2^n}.\n\\]\n求其前 $3$ 项部分和，并说明如何根据部分和数列判断该级数是否收敛。",
+                "relates_to": null
+              },
+              {
+                "id": "S01.U07",
+                "kind": "solution",
+                "tex": "该级数的前 $3$ 项部分和为\n\\[\nS_3=\\frac12+\\frac14+\\frac18=\\frac78.\n\\]\n一般地，对任意正整数 $n$，其部分和为\n\\[\nS_n=\\sum_{k=1}^{n}\\frac{1}{2^k}.\n\\]\n若能够证明 $\\{S_n\\}$ 有有限极限 $S$，则由定理 \\ref{thm:series-limit} 可知原级数收敛且其和为 $S$。本例的部分和可写为\n\\[\nS_n=1-\\frac{1}{2^n},\n\\]\n因此\n\\[\n\\lim_{n\\to\\infty}S_n=1,\n\\]\n从而\n\\[\n\\sum_{n=1}^{\\infty}\\frac{1}{2^n}=1.\n\\]",
+                "relates_to": "S01.U06"
+              },
+              {
+                "id": "S01.U08",
+                "kind": "exercise",
+                "tex": "设级数\n\\[\n\\sum_{n=1}^{\\infty}a_n,\n\\qquad a_n=\\frac{1}{n(n+1)}.\n\\]\n写出其第 $3$ 个部分和 $S_3$，并根据级数收敛的定义说明判断该级数收敛性时需要考察哪个数列的极限。",
+                "relates_to": null
+              },
+              {
+                "id": "S01.U09",
+                "kind": "solution",
+                "tex": "由部分和的定义，\n\\[\nS_3=a_1+a_2+a_3\n=\\frac{1}{1\\cdot2}+\\frac{1}{2\\cdot3}+\\frac{1}{3\\cdot4}\n=\\frac12+\\frac16+\\frac1{12}\n=\\frac34.\n\\]\n判断该级数是否收敛时，需要考察部分和数列\n\\[\nS_n=\\sum_{k=1}^{n}\\frac{1}{k(k+1)}\n\\]\n是否存在有限极限。若 $\\lim_{n\\to\\infty}S_n$ 存在，则级数收敛；否则级数发散。",
+                "relates_to": "S01.U08"
+              }
+            ],
+            "calculations": [
+              {
+                "assumptions": {},
+                "id": "S01.C01",
+                "kind": "equivalence",
+                "lhs": {
+                  "args": [
+                    {
+                      "op": "Rational",
+                      "p": 1,
+                      "q": 2
+                    },
+                    {
+                      "op": "Rational",
+                      "p": 1,
+                      "q": 4
+                    },
+                    {
+                      "op": "Rational",
+                      "p": 1,
+                      "q": 8
+                    }
+                  ],
+                  "op": "Add"
+                },
+                "rhs": {
+                  "op": "Rational",
+                  "p": 7,
+                  "q": 8
+                },
+                "unit_id": "S01.U07"
+              }
+            ],
+            "calculation_limitations": [],
+            "uncertainties": []
+          }
+        },
+        {
+          "section": {
+            "id": "S03",
+            "objectives": [
+              "理解正项级数部分和单调性的作用",
+              "掌握比较判别法、极限比较判别法和积分判别法的使用条件",
+              "掌握几何级数和p级数等基本参照级数",
+              "能够选择合适判别法判断正项级数的收敛性"
+            ],
+            "prerequisites": [
+              "S01",
+              "S02"
+            ],
+            "reference_labels": [
+              "def:positive-series",
+              "def:p-series",
+              "thm:monotone-partial-sums",
+              "thm:comparison",
+              "thm:limit-comparison",
+              "thm:integral-test"
+            ],
+            "required_kinds": [
+              "definition",
+              "theorem",
+              "example",
+              "solution",
+              "proof",
+              "exercise"
+            ],
+            "title": "正项级数及其判别法"
+          },
+          "generated": {
+            "section_id": "S03",
+            "units": [
+              {
+                "id": "S03.U01",
+                "kind": "definition",
+                "tex": "若级数 $\\sum_{n=1}^{\\infty}a_n$ 满足 $a_n\\geq 0$ 对每个正整数 $n$ 都成立，则称其为正项级数。记部分和为\n\\[\nS_n=\\sum_{k=1}^{n}a_k.\n\\]\n由于 $a_{n+1}\\geq0$，有\n\\[\nS_{n+1}=S_n+a_{n+1}\\geq S_n,\n\\]\n所以正项级数的部分和数列是单调不减数列。\\label{def:positive-series}",
+                "relates_to": null
+              },
+              {
+                "id": "S03.U02",
+                "kind": "definition",
+                "tex": "对实数 $p$，称\n\\[\n\\sum_{n=1}^{\\infty}\\frac{1}{n^p}\n\\]\n为 $p$-级数。其中对正整数 $n$，当 $p\\leq0$ 时，通项 $1/n^p$ 不趋于零；当 $p>0$ 时，通项趋于零，但这还不能单独说明级数收敛。\\label{def:p-series}",
+                "relates_to": null
+              },
+              {
+                "id": "S03.U03",
+                "kind": "theorem",
+                "tex": "设 $\\sum_{n=1}^{\\infty}a_n$ 为正项级数，部分和为 $S_n$。则该级数收敛，当且仅当数列 $\\{S_n\\}$ 有上界。\\label{thm:monotone-partial-sums}",
+                "relates_to": null
+              },
+              {
+                "id": "S03.U04",
+                "kind": "proof",
+                "tex": "由定义，正项级数的部分和数列满足 $S_{n+1}\\geq S_n$，因此它是单调不减数列。\n\n若级数收敛，则 $S_n$ 收敛于某个有限实数 $S$。收敛数列有界，所以存在常数 $M$，使得 $S_n\\leq M$ 对所有正整数 $n$ 成立。\n\n反过来，若 $\\{S_n\\}$ 有上界，则它是有上界的单调不减数列。由单调有界数列收敛定理，存在有限实数 $S$，使得\n\\[\n\\lim_{n\\to\\infty}S_n=S.\n\\]\n根据级数收敛的定义，$\\sum_{n=1}^{\\infty}a_n$ 收敛。故结论成立。",
+                "relates_to": "S03.U03"
+              },
+              {
+                "id": "S03.U05",
+                "kind": "theorem",
+                "tex": "设 $\\sum_{n=1}^{\\infty}a_n$ 和 $\\sum_{n=1}^{\\infty}b_n$ 为正项级数，且对某个正整数 $N$ 以及所有整数 $n\\geq N$，有\n\\[\n0\\leq a_n\\leq b_n.\n\\]\n则：\n\\begin{enumerate}\n\\item 若 $\\sum_{n=1}^{\\infty}b_n$ 收敛，则 $\\sum_{n=1}^{\\infty}a_n$ 收敛；\n\\item 若 $\\sum_{n=1}^{\\infty}a_n$ 发散，则 $\\sum_{n=1}^{\\infty}b_n$ 发散。\n\\end{enumerate}\n这称为正项级数的比较判别法。\\label{thm:comparison}",
+                "relates_to": null
+              },
+              {
+                "id": "S03.U06",
+                "kind": "proof",
+                "tex": "设\n\\[\nA_n=\\sum_{k=1}^{n}a_k,\\qquad B_n=\\sum_{k=1}^{n}b_k.\n\\]\n将比较条件中的 $N$ 换成 $\\max\\{N,2\\}$ 不影响条件成立，因此不失一般性取 $N\\geq2$。对 $n\\geq N$，由 $0\\leq a_k\\leq b_k$ 得\n\\[\nA_n=\\sum_{k=1}^{N-1}a_k+\\sum_{k=N}^{n}a_k\n\\leq \\sum_{k=1}^{N-1}a_k+\\sum_{k=N}^{n}b_k.\n\\]\n若 $\\sum b_n$ 收敛，则 $B_n$ 有上界。由于 $b_k\\geq0$，有 $\\sum_{k=N}^{n}b_k\\leq B_n$，因此上式右端有上界，从而 $n\\geq N$ 时的 $A_n$ 有共同上界。再计入有限个初始部分和 $A_1,\\ldots,A_{N-1}$，可知整个部分和数列有上界。由定理 \\ref{thm:monotone-partial-sums}，$\\sum a_n$ 收敛。\n\n第二个结论是第一个结论的逆否命题。若 $\\sum b_n$ 收敛，则由第一部分 $\\sum a_n$ 也收敛；因此若 $\\sum a_n$ 发散，就不可能有 $\\sum b_n$ 收敛，故 $\\sum b_n$ 发散。",
+                "relates_to": "S03.U05"
+              },
+              {
+                "id": "S03.U07",
+                "kind": "theorem",
+                "tex": "设 $a_n>0$、$b_n>0$ 对所有正整数 $n$ 成立，并且\n\\[\n\\lim_{n\\to\\infty}\\frac{a_n}{b_n}=L,\n\\qquad 0<L<\\infty.\n\\]\n则正项级数 $\\sum_{n=1}^{\\infty}a_n$ 与 $\\sum_{n=1}^{\\infty}b_n$ 同时收敛或同时发散。这称为极限比较判别法。\\label{thm:limit-comparison}",
+                "relates_to": null
+              },
+              {
+                "id": "S03.U08",
+                "kind": "proof",
+                "tex": "由 $a_n/b_n\\to L$ 且 $L>0$，取 $\\varepsilon=L/2$。存在正整数 $N$，使得当 $n\\geq N$ 时，\n\\[\n\\left|\\frac{a_n}{b_n}-L\\right|<\\frac{L}{2}.\n\\]\n因为 $a_n$ 与 $b_n$ 均为正数，所以\n\\[\n\\frac{L}{2}<\\frac{a_n}{b_n}<\\frac{3L}{2},\n\\]\n从而\n\\[\n\\frac{L}{2}b_n<a_n<\\frac{3L}{2}b_n.\n\\]\n若 $\\sum b_n$ 收敛，则比较判别法说明 $\\sum a_n$ 收敛；若 $\\sum b_n$ 发散，则由\n\\[\n\\frac{L}{2}b_n\\leq a_n\n\\]\n以及比较判别法的第二部分，知 $\\sum a_n$ 发散。交换 $a_n$ 与 $b_n$ 的位置可得反向结论，故两级数同敛散。",
+                "relates_to": "S03.U07"
+              },
+              {
+                "id": "S03.U09",
+                "kind": "theorem",
+                "tex": "对 $p$-级数\n\\[\n\\sum_{n=1}^{\\infty}\\frac{1}{n^p},\n\\]\n有\n\\[\n\\sum_{n=1}^{\\infty}\\frac{1}{n^p}\n\\begin{cases}\n\\text{收敛},&p>1,\\\\\n\\text{发散},&p\\leq1.\n\\end{cases}\n\\]\n\\label{thm:p-series}\n\n另一类基本参照级数是几何级数。本节使用其非负项情形：首项 $a>0$，公比 $r>0$，起点为 $n=1$，即\n\\[\n\\sum_{n=1}^{\\infty}ar^{n-1}=a+ar+ar^2+\\cdots.\n\\]\n当 $0<r<1$ 时它收敛，和为 $a/(1-r)$；当 $r\\geq1$ 时它发散。边界 $r=0$ 时，将各项明确取为 $a,0,0,\\ldots$，级数收敛且和为 $a$。这里不讨论负公比的符号交替情形。",
+                "relates_to": null
+              },
+              {
+                "id": "S03.U10",
+                "kind": "proof",
+                "tex": "当 $p\\leq0$ 时，通项 $1/n^p=n^{-p}$ 不趋于零，所以级数发散。\n\n设 $0<p\\leq1$。此时通项确实趋于零，但这只是级数收敛的必要条件，不能据此推出级数收敛。对每个正整数 $j$，考虑区间 $2^{j-1}<n\\leq2^j$。其中共有 $2^{j-1}$ 个整数，并且 $n\\leq2^j$，所以\n\\[\n\\frac{1}{n^p}\\geq\\frac{1}{(2^j)^p}=2^{-jp}.\n\\]\n因此\n\\[\n\\sum_{n=2^{j-1}+1}^{2^j}\\frac{1}{n^p}\n\\geq 2^{j-1}2^{-jp}=\\frac12\\,2^{j(1-p)}.\n\\]\n当 $p=1$ 时，每组和至少为 $1/2$；当 $0<p<1$ 时，每组和随 $j$ 增大而不减且不趋于零。于是部分和数列无界，级数发散。\n\n最后设 $p>1$。取 $q=p-1>0$。对每个正整数 $n\\geq2$，函数 $x^{-p}$ 在区间 $[n-1,n]$ 上递减，所以\n\\[\n\\frac{1}{n^p}\\leq\\int_{n-1}^{n}x^{-p}\\,dx.\n\\]\n于是对任意整数 $m\\geq2$，\n\\[\n\\sum_{n=2}^{m}\\frac{1}{n^p}\n\\leq\\int_{1}^{m}x^{-p}\\,dx\n=\\frac{1-m^{1-p}}{p-1}\n\\leq\\frac{1}{p-1}.\n\\]\n首个部分和为 $S_1=1$；对 $m\\geq2$，上述估计给出 $S_m\\leq1+1/(p-1)$。因此全部部分和有共同上界，故由定理 \\ref{thm:monotone-partial-sums}，级数收敛。\n\n几何级数的结论直接来自有限等比求和。对 $a>0$、$r>0$ 且 $r\\ne1$，第 $m$ 个部分和为\n\\[\n\\sum_{n=1}^{m}ar^{n-1}=\\frac{a(1-r^m)}{1-r}.\n\\]\n当 $0<r<1$ 时，$r^m\\to0$，故部分和趋于 $a/(1-r)$。当 $r>1$ 时，$r^m\\to+\\infty$，部分和 $a(r^m-1)/(r-1)$ 趋于 $+\\infty$，所以级数发散。当 $r=1$ 时，部分和为 $ma$，也趋于 $+\\infty$。当 $r=0$ 时，按上述明确给出的各项，所有部分和都等于 $a$，故级数收敛且和为 $a$。",
+                "relates_to": "S03.U09"
+              },
+              {
+                "id": "S03.U11",
+                "kind": "theorem",
+                "tex": "设函数 $f$ 在区间 $[1,\\infty)$ 上连续、正值且单调递减，并满足\n\\[\nf(n)=a_n\\qquad(n=1,2,3,\\ldots).\n\\]\n则正项级数 $\\sum_{n=1}^{\\infty}a_n$ 收敛，当且仅当反常积分\n\\[\n\\int_{1}^{\\infty}f(x)\\,dx\n=\\lim_{t\\to\\infty}\\int_{1}^{t}f(x)\\,dx\n\\]\n收敛。这称为积分判别法。\\label{thm:integral-test}",
+                "relates_to": null
+              },
+              {
+                "id": "S03.U12",
+                "kind": "proof",
+                "tex": "下面仅用基本积分估计和单调有界数列收敛定理，补全积分判别法的双向论证；不系统展开反常积分的一般理论或更高阶证明细节。\n\n在定理的条件下，由 $f$ 单调递减，对 $x\\in[n,n+1]$ 有 $f(n+1)\\leq f(x)\\leq f(n)$，故\n\\[\nf(n+1)\\leq\\int_n^{n+1}f(x)\\,dx\\leq f(n).\n\\]\n这说明曲线下的面积夹在相邻的矩形面积之间。记\n\\[\nS_m=\\sum_{n=1}^{m}a_n,\\qquad I(t)=\\int_1^t f(x)\\,dx\\quad(t\\geq1).\n\\]\n连续性保证每个有限区间上的积分存在，正值性保证 $I(t)$ 单调不减。将上述估计对 $n=1,\\ldots,m$ 求和，得到\n\\[\nS_{m+1}-a_1\\leq I(m+1)\\leq S_m\\qquad(m\\geq1).\n\\]\n\n若反常积分收敛，记其有限极限为 $L$。由 $I(t)$ 单调不减可知 $I(t)\\leq L$，于是\n\\[\nS_{m+1}\\leq a_1+I(m+1)\\leq a_1+L.\n\\]\n再计入 $S_1=a_1$，所有部分和都有共同上界。因此由定理 \\ref{thm:monotone-partial-sums}，级数收敛。\n\n反过来，若级数收敛，则其部分和有上界，设 $S_m\\leq M$。由上面的估计，$I(m+1)\\leq M$；且 $I(1)=0$，故数列 $\\{I(m)\\}$ 单调不减且有上界。由单调有界数列收敛定理，存在有限实数 $L$，使得 $I(m)\\to L$。对任意实数 $t\\geq1$，取整数 $m$ 使 $m\\leq t<m+1$，则\n\\[\nI(m)\\leq I(t)\\leq I(m+1).\n\\]\n当 $t\\to\\infty$ 时，$m\\to\\infty$，两端均趋于 $L$，由夹逼定理得 $I(t)\\to L$。这正是反常积分收敛的定义。两方向均已证明，因此级数与反常积分同敛散。\n\n应用定理 \\ref{thm:integral-test} 时，应先核对 $f(n)=a_n$，以及 $f$ 在所用区间上的连续性、正值性和单调递减性，再判断反常积分是否收敛。该判别法给出的是同敛散关系，并不说明级数的和等于积分值。",
+                "relates_to": "S03.U11"
+              },
+              {
+                "id": "S03.U13",
+                "kind": "example",
+                "tex": "判断下列正项级数的敛散性，并说明所使用的判别法：\n\\[\n\\text{(1)}\\quad\\sum_{n=1}^{\\infty}\\frac{3n+1}{n^3+2};\n\\qquad\n\\text{(2)}\\quad\\sum_{n=1}^{\\infty}\\frac{1}{n^2+1};\n\\qquad\n\\text{(3)}\\quad\\sum_{n=2}^{\\infty}\\frac{1}{n\\ln n}.\n\\]\n其中第 (3) 个级数从 $n=2$ 开始，此时 $\\ln n>0$，分母不为零。",
+                "relates_to": null
+              },
+              {
+                "id": "S03.U14",
+                "kind": "solution",
+                "tex": "(1) 直接比较可得，对正整数 $n$，有\n\\[\n0<\\frac{3n+1}{n^3+2}\\leq\\frac{4n}{n^3}=\\frac{4}{n^2},\n\\]\n因为 $n\\geq1$ 时 $3n+1\\leq4n$ 且 $n^3+2\\geq n^3$。由 $p$-级数 $\\sum 1/n^2$ 收敛以及比较判别法，原级数收敛。\n\n也可以使用极限比较判别法。令\n\\[\na_n=\\frac{3n+1}{n^3+2},\\qquad b_n=\\frac1{n^2}.\n\\]\n对每个正整数 $n$，$a_n>0$ 且 $b_n>0$，并且\n\\[\n\\frac{a_n}{b_n}=\\frac{(3n+1)n^2}{n^3+2}\n=\\frac{3+1/n}{1+2/n^3}\\longrightarrow3.\n\\]\n由于 $3\\in(0,\\infty)$，由极限比较判别法，$\\sum a_n$ 与 $\\sum b_n$ 同敛散。又因为 $\\sum b_n=\\sum 1/n^2$ 收敛，所以原级数收敛。该解法展示了在正项性和比值极限为有限正数的条件下，如何选择极限比较判别法。\n\n(2) 有\n\\[\n0<\\frac{1}{n^2+1}\\leq\\frac{1}{n^2}.\n\\]\n右侧的 $p$-级数收敛，所以原级数收敛。\n\n(3) 令 $f(x)=1/(x\\ln x)$，其中 $x\\geq2$。函数为正且连续，并且在 $[2,\\infty)$ 上单调递减。由换元 $u=\\ln x$，得到\n\\[\n\\int_2^t\\frac{1}{x\\ln x}\\,dx\n=\\int_{\\ln2}^{\\ln t}\\frac{1}{u}\\,du\n=\\ln(\\ln t)-\\ln(\\ln2).\n\\]\n当 $t\\to\\infty$ 时，右端趋于 $+\\infty$，所以积分发散。由积分判别法，级数\n\\[\n\\sum_{n=2}^{\\infty}\\frac{1}{n\\ln n}\n\\]\n发散。",
+                "relates_to": "S03.U13"
+              },
+              {
+                "id": "S03.U15",
+                "kind": "exercise",
+                "tex": "判断下列正项级数的敛散性，并写出主要理由：\n\\[\n\\text{(1)}\\quad\\sum_{n=1}^{\\infty}\\frac{1}{n^{3/2}};\n\\qquad\n\\text{(2)}\\quad\\sum_{n=1}^{\\infty}\\frac{n+1}{n^2+3};\n\\qquad\n\\text{(3)}\\quad\\sum_{n=1}^{\\infty}\\frac{1}{\\sqrt{n^2+n}}.\n\\]\n",
+                "relates_to": null
+              },
+              {
+                "id": "S03.U16",
+                "kind": "solution",
+                "tex": "(1) 这是 $p=3/2>1$ 的 $p$-级数，因此收敛。\n\n(2) 对正整数 $n$，有\n\\[\n\\frac{n+1}{n^2+3}\\geq\\frac{n}{n^2+3}\\geq\\frac{n}{4n^2}=\\frac{1}{4n},\n\\]\n其中 $n^2+3\\leq4n^2$。由于调和级数发散，由比较判别法知原级数发散。\n\n(3) 对正整数 $n$，有\n\\[\n\\sqrt{n^2+n}\\leq\\sqrt{2n^2}=\\sqrt{2}\\,n,\n\\]\n所以\n\\[\n\\frac{1}{\\sqrt{n^2+n}}\\geq\\frac{1}{\\sqrt{2}}\\frac{1}{n}.\n\\]\n由调和级数发散及比较判别法，原级数发散。",
+                "relates_to": "S03.U15"
+              }
+            ],
+            "calculations": [
+              {
+                "assumptions": {
+                  "n": {
+                    "integer": true,
+                    "positive": true
+                  }
+                },
+                "end": {
+                  "op": "Infinity"
+                },
+                "expected_convergent": true,
+                "id": "S03.C01",
+                "kind": "series",
+                "start": {
+                  "op": "Integer",
+                  "value": 1
+                },
+                "term": {
+                  "args": [
+                    {
+                      "name": "n",
+                      "op": "Symbol"
+                    },
+                    {
+                      "op": "Integer",
+                      "value": -2
+                    }
+                  ],
+                  "op": "Pow"
+                },
+                "unit_id": "S03.U09",
+                "variable": "n"
+              },
+              {
+                "assumptions": {
+                  "n": {
+                    "integer": true,
+                    "positive": true
+                  }
+                },
+                "end": {
+                  "op": "Infinity"
+                },
+                "expected_convergent": false,
+                "id": "S03.C02",
+                "kind": "series",
+                "start": {
+                  "op": "Integer",
+                  "value": 1
+                },
+                "term": {
+                  "args": [
+                    {
+                      "name": "n",
+                      "op": "Symbol"
+                    },
+                    {
+                      "op": "Integer",
+                      "value": -1
+                    }
+                  ],
+                  "op": "Pow"
+                },
+                "unit_id": "S03.U09",
+                "variable": "n"
+              },
+              {
+                "assumptions": {
+                  "n": {
+                    "integer": true,
+                    "positive": true
+                  }
+                },
+                "direction": "-",
+                "expected": {
+                  "op": "Integer",
+                  "value": 3
+                },
+                "expression": {
+                  "op": "Mul",
+                  "args": [
+                    {
+                      "op": "Add",
+                      "args": [
+                        {
+                          "op": "Integer",
+                          "value": 3
+                        },
+                        {
+                          "op": "Pow",
+                          "args": [
+                            {
+                              "op": "Symbol",
+                              "name": "n"
+                            },
+                            {
+                              "op": "Integer",
+                              "value": -1
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "Pow",
+                      "args": [
+                        {
+                          "op": "Add",
+                          "args": [
+                            {
+                              "op": "Integer",
+                              "value": 1
+                            },
+                            {
+                              "op": "Mul",
+                              "args": [
+                                {
+                                  "op": "Integer",
+                                  "value": 2
+                                },
+                                {
+                                  "op": "Pow",
+                                  "args": [
+                                    {
+                                      "op": "Symbol",
+                                      "name": "n"
+                                    },
+                                    {
+                                      "op": "Integer",
+                                      "value": -3
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "Integer",
+                          "value": -1
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "id": "S03.C03",
+                "kind": "limit",
+                "point": {
+                  "op": "Infinity"
+                },
+                "unit_id": "S03.U14",
+                "variable": "n"
+              }
+            ],
+            "calculation_limitations": [
+              "协议的 series 核算只能对给定的具体幂指数核对收敛性，不能直接表达定理中对所有实数 $p$ 的量词；比较判别法、极限比较判别法和积分判别法的普遍证明由正文完成。",
+              "S03.U12 使用一般连续正值单调递减函数的积分比较及部分和有界性；现有核算协议不支持一般函数、定积分或不等式证明，不能直接核算本次修复中的两向推理。",
+              "新增的几何级数说明涉及有限求和及公比区间 0<r<1、r>1 的分类。现有 JSON AST 不支持有限求和表达式，布尔假设也不能直接表示这些区间约束；本次未对该一般参数结论新增符号核算，依据在正文中以有限等比求和和数列极限给出。原有两项具体 p-级数核算保持不变。",
+              "新增核算仅覆盖 S03.U14 中第 (1) 项极限比较解法的比值极限。正项性、比较判别法及 $p=2$ 级数收敛性由正文结论承担，现有核算协议不能替代这些一般论证。",
+              "本次 S03.U12 仅保留积分比较的基本估计与使用条件说明，不再展开积分判别法两方向的完整证明。保留的估计涉及一般函数、定积分及不等式，现有核算协议不能表达，故本次不新增核算请求；既有核算不变。",
+              "本次 S03.U12 候选补全了由矩形积分估计到双向同敛散的基本论证，并用整数端点夹逼说明实变量上限的极限。此前关于该单元仅保留比较思路的限制记录描述的是旧正文。当前协议不支持一般函数的定积分、求和不等式、单调有界性及夹逼推理，故未新增核算请求；这些论证仍须由正文复核，既有核算保持不变。"
+            ],
+            "uncertainties": []
+          }
+        }
+      ]
+    }
+  ],
+  "teacher_visual_review": "NOT_RUN",
+  "round_directory": "runs/fd6736af6ef14be3839e019e86ca1e5c/global-repairs/r3-a84bbd84",
+  "issues": [
+    {
+      "unit_id": "S02.U14",
+      "severity": "blocking",
+      "message": "有限项改变定理的证明在端点指标处写错：由定理假设仅能推出对 n>N 有 a_n=b_n，因此对 n≥N+1 才有 B_n-A_n=∑_{k=1}^{N}(b_k-a_k)。正文写成“对所有整数 n≥N”，在 n=N 时未必成立，导致证明中的恒等式不被现有假设推出。应将该处改为 n≥N+1，或相应调整假设与求和上限。",
+      "evidence": "S02.U13 的假设是“对所有整数 n>N 都有 a_n=b_n”；S02.U14 却断言“对所有整数 n≥N，B_n-A_n=∑_{k=1}^{N}(b_k-a_k)”。例如 N=1、a_1=0、b_1=1 且 n>1 时 a_n=b_n=0，满足全部定理假设，但在 n=N=1 时 B_1-A_1=1，而右端 b_1-a_1=1（若按证明中的差分与后续固定尾部解释则应从 N+1 起论证）；当前证明的 n≥N 边界没有由假设支持，需修正指标后才能完成证明。"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "created_at": "2026-09-20T16:04:04.347946+00:00",
+  "source_sha256": "1bd1cdb00baf631e68ba35924e19cceeaae8618d5bd80d214f0a6eb836c2ab10",
+  "checks": [
+    "Python syntax",
+    "headers-only HTTP 200 is uncertain",
+    "SCHEMA_VALIDATED only is success",
+    "HTTP 200 + TOTAL_TIMEOUT is failure",
+    "HTTP 504 is failure"
+  ],
+  "synthetic_request_summary": {
+    "by_model": {
+      "gpt6": {
+        "attempts": 4,
+        "validated_successes": 1,
+        "recorded_failures": 2,
+        "completion_uncertain": 1,
+        "billing_uncertain": 3,
+        "statuses": {
+          "HTTP_200": 1,
+          "SCHEMA_VALIDATED": 1,
+          "TOTAL_TIMEOUT": 1,
+          "HTTP_504": 1
+        }
+      }
+    },
+    "totals": {
+      "attempts": 4,
+      "validated_successes": 1,
+      "recorded_failures": 2,
+      "completion_uncertain": 1,
+      "billing_uncertain": 3
+    },
+    "success_definition": "SCHEMA_VALIDATED only; not mathematical correctness or teacher acceptance.",
+    "uncertainty_definition": "No definitive success/failure recorded; HTTP 200 headers alone are uncertain. Timeouts are recorded client failures and may still have been handled/billed by the server.",
+    "known_usage_sum": {
+      "prompt_tokens": 1,
+      "completion_tokens": 2,
+      "total_tokens": 3
+    },
+    "usage_reporting_complete": false,
+    "price_status": "NOT_PROVIDED"
+  },
+  "real_api": "NOT_RUN",
+  "live_database_read": "NOT_RUN",
+  "final_collection": "NOT_RUN"
+}
