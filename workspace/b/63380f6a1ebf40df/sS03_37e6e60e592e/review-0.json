@@ -1,0 +1,192 @@
+{
+  "section_id": "S03",
+  "math": {
+    "schema_version": 1,
+    "status": "FAIL",
+    "issues": [
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "S03.U08 原先给出的截距为 -1/6 与该数据不一致；已按含截距最小二乘条件改为由数据重新计算，需复核练习题与答案之间的教学意图是否保持一致。",
+        "location": {},
+        "resolution_status": "open"
+      },
+      {
+        "rule_id": "SYMBOLIC_COUNTERCHECK_FAILED",
+        "severity": "blocking",
+        "message": "在声明假设下符号结果与预期不一致。",
+        "location": {
+          "calculation_id": "S03.C01",
+          "unit_id": "S03.U07"
+        },
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "kind": "equivalence",
+        "assumptions": {},
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "FAIL",
+        "evidence_type": "symbolic_check_failed",
+        "result": "29/28",
+        "message": "在声明假设下符号结果与预期不一致。",
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U07"
+      },
+      {
+        "kind": "equivalence",
+        "assumptions": {},
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "9/2",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S03.C02",
+        "unit_id": "S03.U07"
+      }
+    ],
+    "coverage": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "符号核算仅覆盖 S03.U07 中的有理数平方和与决定系数等式；未对含多个观测值的全部文字推导或异常观测影响作形式化证明。"
+    ]
+  },
+  "llm_review": {
+    "issues": [
+      {
+        "unit_id": "S03.U07",
+        "severity": "review",
+        "message": "工具检查报告的结果与正文中的决定系数计算不一致，需核对该检查所使用的完整表达式或预期值。按正文逐步计算，结论 $R^2=27/28$ 是一致的：$\\operatorname{TSS}=14/3$、$\\operatorname{RSS}=1/6$，故 $1-(1/6)/(14/3)=1-1/28=27/28$；工具报告的结果 $29/28$ 无法由正文所示公式得到。因此目前不能将其判定为正文数学错误，但该自动核查不一致尚未解释。",
+        "evidence": "S03.U07 明确写出 $\\operatorname{TSS}=14/3$、$\\operatorname{RSS}=1/6$，并计算 $R^2=1-\\frac{1/6}{14/3}=1-\\frac{1}{28}=\\frac{27}{28}$。同时，tool_checks 对 S03.C01 报告 symbolic_check_failed，result 为 $29/28$，但未提供足以复现该结果的完整输入表达式。"
+      }
+    ],
+    "checked_unit_ids": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09"
+    ],
+    "limitations": [
+      "已逐单元核对 S03.U01–S03.U09 的实际数学正文、公式与解释文字；未将 pending_sections 视为本节遗漏。",
+      "对 S03.U07 的正文计算进行了直接分数复核，但无法从所给数据重建失败的 S03.C01 完整符号表达式，因此只能将该冲突标为 review，不能据此断言正文错误。",
+      "本审阅检查了定义条件、含截距假设、残差正交性、平方和分解、端点条件（TSS>0）及例题计算；普通模型审阅不等于形式化证明，也未对所有可能的代数推导进行机器证明。"
+    ]
+  },
+  "issues": [
+    {
+      "rule_id": "SYMBOLIC_COUNTERCHECK_FAILED",
+      "severity": "blocking",
+      "message": "在声明假设下符号结果与预期不一致。",
+      "location": {
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U07"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S03.U07",
+      "severity": "review",
+      "message": "工具检查报告的结果与正文中的决定系数计算不一致，需核对该检查所使用的完整表达式或预期值。按正文逐步计算，结论 $R^2=27/28$ 是一致的：$\\operatorname{TSS}=14/3$、$\\operatorname{RSS}=1/6$，故 $1-(1/6)/(14/3)=1-1/28=27/28$；工具报告的结果 $29/28$ 无法由正文所示公式得到。因此目前不能将其判定为正文数学错误，但该自动核查不一致尚未解释。",
+      "evidence": "S03.U07 明确写出 $\\operatorname{TSS}=14/3$、$\\operatorname{RSS}=1/6$，并计算 $R^2=1-\\frac{1/6}{14/3}=1-\\frac{1}{28}=\\frac{27}{28}$。同时，tool_checks 对 S03.C01 报告 symbolic_check_failed，result 为 $29/28$，但未提供足以复现该结果的完整输入表达式。"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "uncertainty_review": {
+    "identity_hash": "6cf90e694a11780fdcf7e11b28f322a2450c00151b8d426d7807bd48da035de4",
+    "assessment": {
+      "items": [
+        {
+          "uncertainty_id": "D001-46bc3acc864ad401",
+          "unit_id": "S03.U08",
+          "disposition": "resolved_by_current_body",
+          "reason": "当前 S03.U08 与 S03.U09 已直接处理原疑点：练习明确把 -1/6 作为待检查的错误说法，随后依据给定数据计算出 \\bar x=2、\\bar y=7/3、S_{xx}=2、S_{xy}=3，从而得到斜率 3/2、截距 -2/3，并说明 -1/6 对应的残差和不为零，不能是含截距最小二乘直线。练习与答案的教学意图因此保持一致：先识别错误答案，再用正规条件重新计算并完成后续平方和与经济解释任务。该结论不依赖外部材料或新增授权。",
+          "evidence": [
+            {
+              "source_key": "current:S03.U08",
+              "source_sha256": "f0f1b74cffee2c08ecabcb822cda90b383bbed4edca1870158ff88d1423f1b49",
+              "quote": "一位同学声称含截距的一元最小二乘拟合直线为\n\\[\n\\hat y=-\\frac{1}{6}+\\frac{3}{2}x.\n\\]\n请检查这一说法，并用数据重新计算正确的最小二乘直线。然后完成下列任务："
+            },
+            {
+              "source_key": "current:S03.U09",
+              "source_sha256": "638fe5403bf8825fcdd7eeec64bcb06140b0f01f10bbf4a65580f972012aa5c8",
+              "quote": "因此正确的最小二乘斜率和截距分别为\n\\[\n\\hat b=\\frac{S_{xy}}{S_{xx}}=\\frac{3}{2},\n\\qquad\n\\hat a=\\bar y-\\hat b\\bar x\n=\\frac{7}{3}-\\frac{3}{2}\\cdot2=-\\frac{2}{3}.\n\\]\n所以正确的拟合直线为\n\\[\n\\hat y=-\\frac{2}{3}+\\frac{3}{2}x.\n\\]\n题目中给出的截距 $-1/6$ 不正确；其对应残差和不为零，因而不可能是这组含截距数据的最小二乘直线。"
+            },
+            {
+              "source_key": "prior:S01.U04",
+              "source_sha256": "b3fd4d759b40a0502d7b63390fbfef783744167fa89c7dd0daa41afe7e328298",
+              "quote": "第一条正规方程给出\n\\[\nn\\hat a+\\hat b\\sum_{i=1}^{n}x_i=\\sum_{i=1}^{n}y_i,\n\\]\n从而\n\\[\n\\hat a=\\bar y-\\hat b\\bar x.\n\\]"
+            }
+          ],
+          "remaining_dependency": false,
+          "repair_instruction": null
+        }
+      ],
+      "limitations": [
+        "本裁定依据所提供的当前正文、先修正文及来源证据；未将普通 reviewer 对 S03.U07 的工具结果冲突移作本疑点的归属。",
+        "模型审阅确认了该具体例题的条件、计算和教学衔接，但不等同于形式化证明或教师验收。"
+      ]
+    },
+    "evidence_key": "runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/6cf90e694a11780fdcf7e11b/state.json",
+    "evidence_sha256": "c43691f5cd74d6622282600db31d4e87ff3fb3817e317d06d1a519132a56be00",
+    "teacher_review": "NOT_RUN"
+  },
+  "uncertainty_legacy_mapping": [],
+  "local_recovery": {
+    "applied_rounds": 1,
+    "proposal_calls": 3,
+    "rejected_proposals": 2,
+    "preserved_issues": [
+      {
+        "rule_id": "SYMBOLIC_COUNTERCHECK_FAILED",
+        "severity": "blocking",
+        "message": "在声明假设下符号结果与预期不一致。",
+        "location": {
+          "calculation_id": "S03.C01",
+          "unit_id": "S03.U07"
+        },
+        "resolution_status": "open"
+      },
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "S03.U08 原先给出的截距为 -1/6 与该数据不一致；已按含截距最小二乘条件改为由数据重新计算，需复核练习题与答案之间的教学意图是否保持一致。",
+        "location": {
+          "unit_id": "S03.U08"
+        },
+        "uncertainty_id": "D001-46bc3acc864ad401",
+        "original_sha256": "46bc3acc864ad401041de84b1d1106bdfccdd506628edfb373b73f47f1c77349",
+        "resolution_status": "open"
+      }
+    ],
+    "review_identity": {
+      "candidate_hash": "b7826d35043fabf2a7c51b22ed08d0a13006528e5bc84e5ac721031d5e0ce3f5",
+      "tool_checks_hash": "841584a1f620d487af213a46de273c8160066579fa9eacb965afcbb76f14d55c",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "c1c89a6bca40285774f0a76918bfcf77c2220cd70c0395cce26a9a5509682a13",
+      "deterministic_checks_hash": "bc0813970f1de4bed6ca0bf23d2cd60bafdea26d5c7a2efc2a8ceb7b90d81b91",
+      "uncertainty_identity": "6cf90e694a11780fdcf7e11b28f322a2450c00151b8d426d7807bd48da035de4",
+      "uncertainty_assessment_hash": "2bf413d5d674c042b32429ecf2d71dfe576ecdd7c8da0e6fff12d5703cfeff27"
+    }
+  }
+}

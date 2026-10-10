@@ -1,0 +1,418 @@
+{
+  "additions": [],
+  "decision_ids": [
+    "6423d30885e841d293e3a40c35dae7ea",
+    "bf0ee2555784492c8b7c0b6c6e5bafee",
+    "ef45dd76434e488992570638357c8c06",
+    "241ecf1df9b642e8af3eb7f2a3247e6c",
+    "19ef1e69d52d4a5495a031792b0c1eff"
+  ],
+  "decisions": [
+    {
+      "actor": "local_user",
+      "id": "6423d30885e841d293e3a40c35dae7ea",
+      "resolved_effects": {
+        "section_order": null,
+        "section_titles": {
+          "S01": "一元最小二乘拟合：从平方误差到正规方程",
+          "S02": "多元最小二乘与矩阵表示",
+          "S03": "残差性质、拟合优度与经济解释"
+        },
+        "title": "最小二乘法讲义计划"
+      },
+      "timestamp": "2026-10-07T04:32:27.845111+00:00",
+      "type": "outline"
+    },
+    {
+      "actor": "local_user",
+      "affected_fields": [
+        "lecture.proof_policy"
+      ],
+      "custom_input": "",
+      "id": "bf0ee2555784492c8b7c0b6c6e5bafee",
+      "question_id": "Q-PROOF",
+      "question_revision": 1,
+      "resolved_effects": {
+        "value": "key"
+      },
+      "selected_option_ids": [
+        "KEY"
+      ],
+      "timestamp": "2026-10-07T04:33:34.558287+00:00"
+    },
+    {
+      "actor": "local_user",
+      "affected_fields": [
+        "lecture.example_focus"
+      ],
+      "custom_input": "",
+      "id": "ef45dd76434e488992570638357c8c06",
+      "question_id": "Q-EXAMPLE",
+      "question_revision": 1,
+      "resolved_effects": {
+        "value": "balanced"
+      },
+      "selected_option_ids": [
+        "BALANCED"
+      ],
+      "timestamp": "2026-10-07T04:33:34.558287+00:00"
+    },
+    {
+      "actor": "local_user",
+      "affected_fields": [
+        "lecture.exercises"
+      ],
+      "custom_input": "",
+      "id": "241ecf1df9b642e8af3eb7f2a3247e6c",
+      "question_id": "Q-EXERCISE",
+      "question_revision": 1,
+      "resolved_effects": {
+        "value": "with_answers"
+      },
+      "selected_option_ids": [
+        "WITH"
+      ],
+      "timestamp": "2026-10-07T04:33:34.558287+00:00"
+    },
+    {
+      "actor": "local_user",
+      "affected_fields": [
+        "lecture.answers_location"
+      ],
+      "custom_input": "",
+      "id": "19ef1e69d52d4a5495a031792b0c1eff",
+      "question_id": "Q-ANSWERS",
+      "question_revision": 1,
+      "resolved_effects": {
+        "value": "end"
+      },
+      "selected_option_ids": [
+        "END"
+      ],
+      "timestamp": "2026-10-07T04:33:34.558287+00:00"
+    }
+  ],
+  "diff": [],
+  "difficulty": "经济学本科一年级微积分",
+  "exclusions": [
+    "不讲概率论、抽样分布、假设检验和置信区间。",
+    "不讲异方差、自相关、内生性等计量经济学进阶问题。",
+    "不讲加权最小二乘、广义最小二乘、岭回归和其他正则化方法。",
+    "不讲非线性最小二乘和数值优化算法。",
+    "不把最小二乘拟合结果解释为因果关系。",
+    "不深入讨论高等线性代数，仅使用矩阵乘法、转置、秩和正交投影的基础概念。"
+  ],
+  "input_snapshot_hash": "ea5d03bb07ee87f9c202bf105f88564960581b816c97cb021a96382fd3882e9c",
+  "lecture": {
+    "answers_location": "end",
+    "example_focus": "balanced",
+    "exercises": "with_answers",
+    "proof_policy": "key"
+  },
+  "model_id": "gpt6",
+  "objectives": [
+    "建立最小二乘法的几何与微积分直观，理解其在经济数据拟合中的基本用途。",
+    "从一元线性拟合推广到多元线性回归的矩阵表达，掌握正规方程、残差与投影的关系。",
+    "能够解释拟合优度、残差分解及模型结果的经济含义，同时明确方法的适用边界。"
+  ],
+  "omissions": [],
+  "prerequisites": [
+    "实数运算与代数变形",
+    "一元函数、导数及极值判别",
+    "有限求和与平方和",
+    "平面直角坐标系与直线方程",
+    "经济学中的变量、观测值与简单数据表"
+  ],
+  "provider": "live",
+  "questions": [
+    {
+      "affected_fields": [
+        "lecture.proof_policy"
+      ],
+      "blocking": true,
+      "custom_input": "",
+      "id": "Q-PROOF",
+      "options": [
+        {
+          "effects": {
+            "value": "key"
+          },
+          "id": "KEY",
+          "label": "关键定理完整证明，其余说明",
+          "recommended": true
+        },
+        {
+          "effects": {
+            "value": "all"
+          },
+          "id": "ALL",
+          "label": "所有定理完整证明",
+          "recommended": false
+        },
+        {
+          "id": "CUSTOM",
+          "label": "自定义输入",
+          "recommended": false
+        }
+      ],
+      "prompt": "定理证明采用哪种深度？",
+      "reason": "此项影响写作内容，需由用户选择。",
+      "revision": 1,
+      "selected_option_ids": [
+        "KEY"
+      ],
+      "selection_mode": "single"
+    },
+    {
+      "affected_fields": [
+        "lecture.example_focus"
+      ],
+      "blocking": true,
+      "custom_input": "",
+      "id": "Q-EXAMPLE",
+      "options": [
+        {
+          "effects": {
+            "value": "balanced"
+          },
+          "id": "BALANCED",
+          "label": "概念与计算均衡",
+          "recommended": true
+        },
+        {
+          "effects": {
+            "value": "economics"
+          },
+          "id": "ECONOMICS",
+          "label": "更多经济应用",
+          "recommended": false
+        },
+        {
+          "id": "CUSTOM",
+          "label": "自定义输入",
+          "recommended": false
+        }
+      ],
+      "prompt": "例题侧重什么？",
+      "reason": "此项影响写作内容，需由用户选择。",
+      "revision": 1,
+      "selected_option_ids": [
+        "BALANCED"
+      ],
+      "selection_mode": "single"
+    },
+    {
+      "affected_fields": [
+        "lecture.exercises"
+      ],
+      "blocking": true,
+      "custom_input": "",
+      "id": "Q-EXERCISE",
+      "options": [
+        {
+          "effects": {
+            "value": "with_answers"
+          },
+          "id": "WITH",
+          "label": "安排练习并附答案",
+          "recommended": true
+        },
+        {
+          "effects": {
+            "value": "none"
+          },
+          "id": "NONE",
+          "label": "不安排额外练习",
+          "recommended": false
+        },
+        {
+          "id": "CUSTOM",
+          "label": "自定义输入",
+          "recommended": false
+        }
+      ],
+      "prompt": "是否安排练习与答案？",
+      "reason": "此项影响写作内容，需由用户选择。",
+      "revision": 1,
+      "selected_option_ids": [
+        "WITH"
+      ],
+      "selection_mode": "single"
+    },
+    {
+      "affected_fields": [
+        "lecture.answers_location"
+      ],
+      "blocking": true,
+      "custom_input": "",
+      "id": "Q-ANSWERS",
+      "options": [
+        {
+          "effects": {
+            "value": "section"
+          },
+          "id": "SECTION",
+          "label": "各节之后",
+          "recommended": true
+        },
+        {
+          "effects": {
+            "value": "end"
+          },
+          "id": "END",
+          "label": "讲义末尾",
+          "recommended": false
+        },
+        {
+          "id": "CUSTOM",
+          "label": "自定义输入",
+          "recommended": false
+        }
+      ],
+      "prompt": "练习答案放在哪里？",
+      "reason": "此项影响写作内容，需由用户选择。",
+      "revision": 1,
+      "selected_option_ids": [
+        "END"
+      ],
+      "selection_mode": "single"
+    }
+  ],
+  "reference_context": {
+    "reason": "No matching chapter; no unrelated example injected.",
+    "status": "NOT_APPLICABLE"
+  },
+  "reference_registry": {
+    "def:coefficient-of-determination": "S03",
+    "def:design-matrix": "S02",
+    "def:ols-objective": "S01",
+    "def:orthogonal-residual": "S03",
+    "def:residual": "S01",
+    "def:residual-vector": "S02",
+    "def:total-sum-of-squares": "S03",
+    "sec:S01": "S01",
+    "sec:S02": "S02",
+    "sec:S03": "S03",
+    "thm:matrix-normal-equation": "S02",
+    "thm:normal-equations": "S01",
+    "thm:quadratic-unique-minimum": "S01",
+    "thm:sum-of-squares-decomposition": "S03",
+    "thm:unique-least-squares-solution": "S02"
+  },
+  "revision": 5,
+  "rules": {
+    "allowed_text_sizes": [
+      "footnotesize",
+      "small",
+      "normalsize",
+      "large"
+    ],
+    "rule_version": 1,
+    "summary_frames": false
+  },
+  "schema_version": 1,
+  "sections": [
+    {
+      "id": "S01",
+      "objectives": [
+        "定义观测点、拟合直线、残差和平方误差函数。",
+        "用一元微积分推导截距与斜率的最小二乘估计条件。",
+        "证明平方误差目标函数具有唯一最小值，并理解样本均值与拟合直线的关系。",
+        "通过经济学数据例题计算拟合直线、残差和预测值。"
+      ],
+      "prerequisites": [],
+      "reference_labels": [
+        "def:ols-objective",
+        "def:residual",
+        "thm:quadratic-unique-minimum",
+        "thm:normal-equations"
+      ],
+      "required_kinds": [
+        "definition",
+        "theorem",
+        "example",
+        "solution",
+        "proof",
+        "exercise"
+      ],
+      "title": "一元最小二乘拟合：从平方误差到正规方程"
+    },
+    {
+      "id": "S02",
+      "objectives": [
+        "定义设计矩阵、参数向量、响应向量和残差向量。",
+        "将一元最小二乘推广为矩阵形式的平方误差最小化问题。",
+        "推导并解释正规方程，说明在列满秩条件下解的唯一性。",
+        "通过含两个解释变量的经济学例题展示矩阵计算、系数求解和预测。"
+      ],
+      "prerequisites": [
+        "S01"
+      ],
+      "reference_labels": [
+        "def:design-matrix",
+        "def:residual-vector",
+        "thm:matrix-normal-equation",
+        "thm:unique-least-squares-solution"
+      ],
+      "required_kinds": [
+        "definition",
+        "theorem",
+        "example",
+        "solution",
+        "proof",
+        "exercise"
+      ],
+      "title": "多元最小二乘与矩阵表示"
+    },
+    {
+      "id": "S03",
+      "objectives": [
+        "定义残差正交性、总平方和、残差平方和与决定系数。",
+        "证明在含截距模型中总平方和的分解关系。",
+        "解释决定系数的含义、局限性及其与因果关系的区别。",
+        "通过经济学案例计算残差分解和决定系数，并讨论异常观测与外推风险。"
+      ],
+      "prerequisites": [
+        "S02"
+      ],
+      "reference_labels": [
+        "def:orthogonal-residual",
+        "def:total-sum-of-squares",
+        "def:coefficient-of-determination",
+        "thm:sum-of-squares-decomposition"
+      ],
+      "required_kinds": [
+        "definition",
+        "theorem",
+        "example",
+        "solution",
+        "proof",
+        "exercise"
+      ],
+      "title": "残差性质、拟合优度与经济解释"
+    }
+  ],
+  "symbols": {
+    "RSS": "残差平方和",
+    "R^2": "决定系数",
+    "S(a,b)": "一元拟合中的平方误差目标函数",
+    "TSS": "总平方和",
+    "X": "多元线性模型的设计矩阵",
+    "\\beta": "回归系数列向量",
+    "\\hat{\\beta}": "最小二乘估计的系数列向量",
+    "\\hat{y}_i": "第i个观测的拟合值或预测值",
+    "a": "一元拟合直线的截距参数",
+    "b": "一元拟合直线的斜率参数",
+    "e": "残差向量",
+    "e_i": "第i个观测的残差",
+    "n": "观测数量",
+    "x_i": "第i个观测的解释变量或解释变量向量",
+    "y": "被解释变量观测值组成的列向量",
+    "y_i": "第i个观测的被解释变量值"
+  },
+  "theme": "default",
+  "title": "最小二乘法讲义计划",
+  "unresolved_blocking_questions": [],
+  "workflow_id": "lecture.generate",
+  "hash": "82e757fb09ac695a50694cf8a2ec4ee2877b86324aa80954200dbcc4bf4edb32"
+}

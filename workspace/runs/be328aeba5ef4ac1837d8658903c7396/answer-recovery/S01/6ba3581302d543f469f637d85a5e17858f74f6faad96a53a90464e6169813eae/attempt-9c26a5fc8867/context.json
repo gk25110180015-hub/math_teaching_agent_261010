@@ -1,0 +1,1139 @@
+{
+  "operation": "append_missing_answers",
+  "section_id": "S01",
+  "source_section_hash": "08b288982a04bd10ecce251a7f251d0ed42c558d29c29be2d07e10e1d4717c8b",
+  "existing_section": {
+    "section_id": "S01",
+    "units": [
+      {
+        "id": "S01.U01",
+        "kind": "explanation",
+        "tex": "对同一个量重复测量时，读数往往并不完全相同。如果要用一个数代表这些读数，应当如何选择？最小二乘法先规定误差的度量，再寻找使这种误差最小的模型参数。本节从常数拟合入手，只使用有限求和、一元求导和配方法。",
+        "relates_to": null
+      },
+      {
+        "id": "S01.U02",
+        "kind": "definition",
+        "tex": "设 $n\\geq 1$ 为整数，$y_i\\in\\mathbb{R}$ 是第 $i$ 次观测的响应值，$i=1,\\ldots,n$。若记录中还有自变量，则用 $x_i\\in\\mathbb{R}$ 表示第 $i$ 次观测的输入。给定模型及其参数后，模型对第 $i$ 次观测给出的数值记为 $\\hat{y}_i$，称为拟合值。\n\n约定残差为观测值减去拟合值：\n\\[\nr_i=y_i-\\hat{y}_i,\\qquad i=1,\\ldots,n.\n\\]\n因此，$r_i>0$ 表示模型低估了该观测值，$r_i<0$ 表示模型高估了该观测值。残差平方和定义为\n\\[\nQ=\\sum_{i=1}^{n}r_i^2=\\sum_{i=1}^{n}(y_i-\\hat{y}_i)^2.\n\\]\n最小二乘准则是：在选定模型的允许参数范围内，寻找使 $Q$ 取得最小值的参数。这里最小化的是所选模型对已有数据的残差平方和，而不是保证每个残差都分别最小。",
+        "relates_to": null
+      },
+      {
+        "id": "S01.U03",
+        "kind": "explanation",
+        "tex": "为什么不直接用残差之和度量拟合误差？正负残差可能互相抵消。例如，两个残差为 $1$ 与 $-1$ 时，残差之和为零，但两个拟合值都没有命中观测值。平方后各项非负，不能发生这种抵消；并且\n\\[\n\\sum_{i=1}^{n}r_i^2=0\\quad\\Longleftrightarrow\\quad r_i=0\\ \\text{对所有 }i=1,\\ldots,n.\n\\]\n平方也会使较大的残差更显著地影响目标函数。如果响应值有计量单位，残差与响应值同单位，而残差平方和具有该单位的平方。比较不同候选模型的平方和时，本节始终使用同一组数据和相同单位。",
+        "relates_to": null
+      },
+      {
+        "id": "S01.U04",
+        "kind": "definition",
+        "tex": "设 $n\\geq1$ 为整数，观测值为 $y_1,\\ldots,y_n\\in\\mathbb{R}$。常数模型用同一个待定实数 $c$ 拟合所有观测值，即\n\\[\n\\hat{y}_i=c,\\qquad i=1,\\ldots,n,\\qquad c\\in\\mathbb{R}.\n\\]\n相应的目标函数是\n\\[\nQ(c)=\\sum_{i=1}^{n}(y_i-c)^2,\\qquad c\\in\\mathbb{R}.\n\\]\n这些观测值的样本算术平均数记为\n\\[\n\\bar{y}=\\frac{1}{n}\\sum_{i=1}^{n}y_i.\n\\]\n在优化过程中，观测值以及由它们算出的 $\\bar{y}$ 都是固定的，只有参数 $c$ 发生变化。",
+        "relates_to": null
+      },
+      {
+        "id": "S01.U05",
+        "kind": "theorem",
+        "tex": "设 $n\\geq1$ 为整数，$y_1,\\ldots,y_n\\in\\mathbb{R}$，并令 $\\bar{y}=\\frac{1}{n}\\sum_{i=1}^{n}y_i$。则常数模型的残差平方和满足：对每个 $c\\in\\mathbb{R}$，\n\\[\nQ(c)=\\sum_{i=1}^{n}(y_i-\\bar{y})^2+n(c-\\bar{y})^2.\n\\]\n因此，$Q(c)$ 在且仅在 $c=\\bar{y}$ 时取得全局最小值，最小值为\n\\[\nQ(\\bar{y})=\\sum_{i=1}^{n}(y_i-\\bar{y})^2.\n\\]",
+        "relates_to": null
+      },
+      {
+        "id": "S01.U06",
+        "kind": "proof",
+        "tex": "先用一元求导寻找候选参数。对任意 $c\\in\\mathbb{R}$，有限项逐项求导得\n\\[\nQ'(c)=2\\sum_{i=1}^{n}(c-y_i)=2n(c-\\bar{y}).\n\\]\n所以 $Q'(c)=0$ 当且仅当 $c=\\bar{y}$。由于参数范围是整个实数轴，可微函数若在某点取得最小值，该点必须满足导数为零。不过，求出驻点本身还不是全局最小性的证明。\n\n下面直接比较所有参数对应的函数值。由平均数的定义，\n\\[\n\\sum_{i=1}^{n}(y_i-\\bar{y})=\\sum_{i=1}^{n}y_i-n\\bar{y}=0.\n\\]\n于是，对任意 $c\\in\\mathbb{R}$，平方展开得到\n\\[\n\\begin{aligned}\nQ(c)&=\\sum_{i=1}^{n}\\bigl((y_i-\\bar{y})+(\\bar{y}-c)\\bigr)^2\\\\\n&=\\sum_{i=1}^{n}(y_i-\\bar{y})^2\n +2(\\bar{y}-c)\\sum_{i=1}^{n}(y_i-\\bar{y})\n +n(\\bar{y}-c)^2\\\\\n&=Q(\\bar{y})+n(c-\\bar{y})^2.\n\\end{aligned}\n\\]\n因为 $n>0$，最后一项对所有实数 $c$ 都非负，且仅在 $c=\\bar{y}$ 时为零。这既证明了最小值存在，也证明了全局最小点唯一。",
+        "relates_to": "S01.U05"
+      },
+      {
+        "id": "S01.U07",
+        "kind": "example",
+        "tex": "某个保持不变的量经过三次测量，读数依次为 $2,3,7$，单位相同。用常数模型拟合这些读数：写出目标函数，求最优常数及最小残差平方和，并与候选常数 $c=3$ 比较。",
+        "relates_to": null
+      },
+      {
+        "id": "S01.U08",
+        "kind": "solution",
+        "tex": "对 $c\\in\\mathbb{R}$，目标函数为\n\\[\n\\begin{aligned}\nQ(c)&=(2-c)^2+(3-c)^2+(7-c)^2\\\\\n&=3c^2-24c+62\\\\\n&=3(c-4)^2+14.\n\\end{aligned}\n\\]\n三个读数的平均数是 $\\bar{y}=(2+3+7)/3=4$，所以唯一最优常数为 $c=4$。这也可从 $Q'(c)=6c-24$ 和上述配方看出。\n\n将两个候选常数的残差列在一起：\n\\[\n\\begin{array}{c|rrr|r}\n\\text{候选常数}&r_1&r_2&r_3&Q(c)\\\\ \\hline\nc=3&-1&0&4&17\\\\\nc=4&-2&-1&3&14\n\\end{array}\n\\]\n因此最小平方和为 $Q(4)=4+1+9=14$，而 $Q(3)=1+0+16=17$。从 $c=3$ 改为 $c=4$ 后，前两个残差的绝对值反而增大，但总平方和减小了 $3$。这说明最小二乘法优化的是整体指标，并不要求每次测量的拟合误差都同时减小。",
+        "relates_to": "S01.U07"
+      },
+      {
+        "id": "S01.U09",
+        "kind": "explanation",
+        "tex": "常数拟合给出了一个可重复使用的思路：先明确参数与目标函数，再求导寻找候选点，最后用平方和分解证明全局最优性。恒等式 $Q(c)-Q(\\bar{y})=n(c-\\bar{y})^2$ 还定量说明了偏离最优参数的代价。\n\n最优常数模型的残差之和为 $\\sum_{i=1}^{n}(y_i-\\bar{y})=0$，但残差平方和不一定为零；它为零当且仅当所有观测值相同。第\\ref{sec:S02}节将把这里的常数拟合结论用于直线拟合，仍然只需要一元求导与配方。",
+        "relates_to": null
+      },
+      {
+        "id": "S01.U10",
+        "kind": "exercise",
+        "tex": "对同单位的四次测量值 $1,2,4,5$ 作常数拟合。写出 $Q(c)$ 的平方和形式，求最优常数、各个残差及最小平方和；再计算 $Q(2)$，并用平方和分解解释它与最小值之差。本题答案统一置于讲义末尾。",
+        "relates_to": null
+      },
+      {
+        "id": "S01.U11",
+        "kind": "exercise",
+        "tex": "设 $n\\geq1$ 为整数，$y_1,\\ldots,y_n\\in\\mathbb{R}$，常数模型的残差为 $r_i=y_i-c$，其中 $c\\in\\mathbb{R}$。判断并说明理由：\n\n（1）若 $\\sum_{i=1}^{n}r_i=0$，则 $c$ 是该常数模型的唯一最优参数。\n\n（2）若 $\\sum_{i=1}^{n}r_i=0$，则每一个残差都等于零。\n\n（3）当 $n=1$ 时，常数模型仍有唯一最优参数。\n\n本题答案统一置于讲义末尾。",
+        "relates_to": null
+      }
+    ],
+    "calculations": [
+      {
+        "id": "S01.C01",
+        "unit_id": "S01.U08",
+        "kind": "equivalence",
+        "assumptions": {
+          "c": {
+            "real": true
+          }
+        },
+        "lhs": {
+          "op": "Add",
+          "args": [
+            {
+              "op": "Pow",
+              "args": [
+                {
+                  "op": "Add",
+                  "args": [
+                    {
+                      "op": "Integer",
+                      "value": 2
+                    },
+                    {
+                      "op": "Mul",
+                      "args": [
+                        {
+                          "op": "Integer",
+                          "value": -1
+                        },
+                        {
+                          "op": "Symbol",
+                          "name": "c"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "Integer",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "op": "Pow",
+              "args": [
+                {
+                  "op": "Add",
+                  "args": [
+                    {
+                      "op": "Integer",
+                      "value": 3
+                    },
+                    {
+                      "op": "Mul",
+                      "args": [
+                        {
+                          "op": "Integer",
+                          "value": -1
+                        },
+                        {
+                          "op": "Symbol",
+                          "name": "c"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "Integer",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "op": "Pow",
+              "args": [
+                {
+                  "op": "Add",
+                  "args": [
+                    {
+                      "op": "Integer",
+                      "value": 7
+                    },
+                    {
+                      "op": "Mul",
+                      "args": [
+                        {
+                          "op": "Integer",
+                          "value": -1
+                        },
+                        {
+                          "op": "Symbol",
+                          "name": "c"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "Integer",
+                  "value": 2
+                }
+              ]
+            }
+          ]
+        },
+        "rhs": {
+          "op": "Add",
+          "args": [
+            {
+              "op": "Mul",
+              "args": [
+                {
+                  "op": "Integer",
+                  "value": 3
+                },
+                {
+                  "op": "Pow",
+                  "args": [
+                    {
+                      "op": "Add",
+                      "args": [
+                        {
+                          "op": "Symbol",
+                          "name": "c"
+                        },
+                        {
+                          "op": "Integer",
+                          "value": -4
+                        }
+                      ]
+                    },
+                    {
+                      "op": "Integer",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "op": "Integer",
+              "value": 14
+            }
+          ]
+        }
+      },
+      {
+        "id": "S01.C02",
+        "unit_id": "S01.U08",
+        "kind": "derivative",
+        "assumptions": {
+          "c": {
+            "real": true
+          }
+        },
+        "expression": {
+          "op": "Add",
+          "args": [
+            {
+              "op": "Mul",
+              "args": [
+                {
+                  "op": "Integer",
+                  "value": 3
+                },
+                {
+                  "op": "Pow",
+                  "args": [
+                    {
+                      "op": "Symbol",
+                      "name": "c"
+                    },
+                    {
+                      "op": "Integer",
+                      "value": 2
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "op": "Mul",
+              "args": [
+                {
+                  "op": "Integer",
+                  "value": -24
+                },
+                {
+                  "op": "Symbol",
+                  "name": "c"
+                }
+              ]
+            },
+            {
+              "op": "Integer",
+              "value": 62
+            }
+          ]
+        },
+        "variable": "c",
+        "expected": {
+          "op": "Add",
+          "args": [
+            {
+              "op": "Mul",
+              "args": [
+                {
+                  "op": "Integer",
+                  "value": 6
+                },
+                {
+                  "op": "Symbol",
+                  "name": "c"
+                }
+              ]
+            },
+            {
+              "op": "Integer",
+              "value": -24
+            }
+          ]
+        }
+      }
+    ],
+    "calculation_limitations": [
+      "协议的表达式树不能表示带任意数据列的有限求和，因此核算仅覆盖三次测量例题中的配方与求导；一般常数拟合定理的全局最小性和唯一性由正文完整证明。",
+      "对后文第\\ref{sec:S02}节的引用使用已登记标签，其编号需待全文编译验证。"
+    ],
+    "uncertainties": []
+  },
+  "targets": [
+    {
+      "target_id": "S01.U10",
+      "answer_unit_id": "S01.U10.answer",
+      "problem": {
+        "id": "S01.U10",
+        "kind": "exercise",
+        "tex": "对同单位的四次测量值 $1,2,4,5$ 作常数拟合。写出 $Q(c)$ 的平方和形式，求最优常数、各个残差及最小平方和；再计算 $Q(2)$，并用平方和分解解释它与最小值之差。本题答案统一置于讲义末尾。",
+        "relates_to": null
+      }
+    },
+    {
+      "target_id": "S01.U11",
+      "answer_unit_id": "S01.U11.answer",
+      "problem": {
+        "id": "S01.U11",
+        "kind": "exercise",
+        "tex": "设 $n\\geq1$ 为整数，$y_1,\\ldots,y_n\\in\\mathbb{R}$，常数模型的残差为 $r_i=y_i-c$，其中 $c\\in\\mathbb{R}$。判断并说明理由：\n\n（1）若 $\\sum_{i=1}^{n}r_i=0$，则 $c$ 是该常数模型的唯一最优参数。\n\n（2）若 $\\sum_{i=1}^{n}r_i=0$，则每一个残差都等于零。\n\n（3）当 $n=1$ 时，常数模型仍有唯一最优参数。\n\n本题答案统一置于讲义末尾。",
+        "relates_to": null
+      }
+    }
+  ],
+  "remaining_unit_slots": 89,
+  "remaining_calculation_slots": 98,
+  "calculation_protocol": {
+    "schema_version": 1,
+    "purpose": "为本节已实际写出的数学结论提交1至3个受支持的代表性核算；核算不是对整节内容的证明。",
+    "output_field": "calculations",
+    "limitations_output_field": "calculation_limitations",
+    "uncertainties_output_field": "uncertainties",
+    "selection_rules": [
+      "unit_id必须精确等于当前返回units中真实存在且包含该结论的id；id是本节唯一的核算ID。示例ID仅用于演示，不能直接借用。",
+      "只复算本节实际出现且符合课程范围的式子，不为凑1至3项新增例题、升级难度或虚构结论。",
+      "确无适用核算时返回calculations=[]，并在calculation_limitations说明具体覆盖限制；真正数学疑点另外保留在uncertainties。",
+      "只填写请求，不能在请求中增加status、evidence或通过结论；程序运行后才产生证据。"
+    ],
+    "request_common_fields": {
+      "required": [
+        "id",
+        "unit_id",
+        "kind",
+        "assumptions"
+      ],
+      "id": "本节唯一字符串，例如S01.C01",
+      "unit_id": "当前units中的实际ID，例如S01.U04；结论、变量、预期结果须与该单元一致",
+      "assumptions": "符号名到白名单布尔假设的对象；所有Symbol和variable都必须声明。常量式可用{}。",
+      "extra_fields_allowed": false
+    },
+    "request_kinds": {
+      "equivalence": {
+        "required": [
+          "lhs",
+          "rhs"
+        ],
+        "ast_fields": [
+          "lhs",
+          "rhs"
+        ]
+      },
+      "derivative": {
+        "required": [
+          "expression",
+          "variable",
+          "expected"
+        ],
+        "ast_fields": [
+          "expression",
+          "expected"
+        ],
+        "variable": "已在assumptions声明的符号名字符串"
+      },
+      "limit": {
+        "required": [
+          "expression",
+          "variable",
+          "point",
+          "direction",
+          "expected"
+        ],
+        "ast_fields": [
+          "expression",
+          "point",
+          "expected"
+        ],
+        "variable": "已声明的符号名字符串",
+        "direction_values": [
+          "+",
+          "-",
+          "+-"
+        ],
+        "direction_note": "有限点+为右极限、-为左极限、+-为双侧；示例的正无穷极限使用-。"
+      },
+      "series": {
+        "required": [
+          "term",
+          "variable",
+          "start",
+          "end",
+          "expected_convergent"
+        ],
+        "ast_fields": [
+          "term",
+          "start",
+          "end"
+        ],
+        "variable": "已声明的求和符号名字符串",
+        "expected_convergent": "JSON布尔值，只核对收敛性；此kind不核对级数和"
+      },
+      "numeric_spotcheck": {
+        "required": [
+          "lhs",
+          "rhs",
+          "points"
+        ],
+        "ast_fields": [
+          "lhs",
+          "rhs"
+        ],
+        "points": "1至20个对象，每个对象覆盖所有声明变量；值为有限JSON数，绝对值不超过10^9，且满足声明假设",
+        "warning": "仅有限指定点数值一致，不能证明一般结论；返回numeric_spotcheck_passed仍需复核。"
+      }
+    },
+    "assumptions": {
+      "symbol_name_pattern": "[A-Za-z][A-Za-z0-9_]{0,30}",
+      "allowed_boolean_flags": [
+        "real",
+        "positive",
+        "negative",
+        "nonnegative",
+        "nonpositive",
+        "integer",
+        "nonzero",
+        "finite",
+        "rational"
+      ],
+      "rules": [
+        "布尔值必须是真正的JSON true/false，不能写字符串、集合、区间或Python表达式。未明确的属性不要写false，保留未声明。",
+        "假设来自单元明示条件，不得为了得到PASS而擅自加强条件。实对数参数为正；含倒数的恒等变形需保留非零条件；根号求导需检查正值区间与边界。",
+        "白名单不能表达的一般区间/复合约束必须说明限制，不能用更弱或更强的单一布尔属性冒充。系统的域检查不完整，仍须核对原结论条件。"
+      ]
+    },
+    "expression_ast": {
+      "encoding": "表达式只能是以下JSON对象树，不接受TeX、数学字符串或Python代码；所有节点不允许额外字段。",
+      "nodes": {
+        "Integer": {
+          "keys": [
+            "op",
+            "value"
+          ],
+          "value": "JSON整数，绝对值<=10^9；不能用布尔值或小数"
+        },
+        "Rational": {
+          "keys": [
+            "op",
+            "p",
+            "q"
+          ],
+          "p_q": "有界JSON整数，q不为0；小数尽量写精确有理数"
+        },
+        "Symbol": {
+          "keys": [
+            "op",
+            "name"
+          ],
+          "name": "assumptions已声明的符号名"
+        },
+        "Infinity": {
+          "keys": [
+            "op"
+          ],
+          "meaning": "正无穷；负无穷可用Mul(Integer(-1),Infinity)的JSON树"
+        },
+        "Add": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": "1..16"
+        },
+        "Mul": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": "1..16"
+        },
+        "Pow": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 2,
+          "note": "第二项为指数AST；数值指数绝对值<=100"
+        },
+        "sin": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1
+        },
+        "cos": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1
+        },
+        "tan": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1
+        },
+        "exp": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1
+        },
+        "log": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1,
+          "note": "自然对数，检查正实定义域"
+        },
+        "sqrt": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1
+        },
+        "Abs": {
+          "keys": [
+            "op",
+            "args"
+          ],
+          "arity": 1
+        }
+      },
+      "syntax_notes": [
+        "乘方用Pow；除以x用Mul(分子,Pow(x,Integer(-1)))；减法用Add(左式,Mul(Integer(-1),右式))，均展开成JSON对象树。",
+        "不要发明Div、Subtract、Float、Limit、Sum、pi或Python等op/kind。初等常数e可写exp(Integer(1))；不支持的表达式留为覆盖限制。"
+      ]
+    },
+    "budgets": {
+      "per_calculation_timeout_seconds": 8,
+      "per_section_timeout_seconds": 60,
+      "max_request_utf8_bytes": 65536,
+      "max_ast_nodes": 256,
+      "max_ast_depth": 20,
+      "max_function_arguments": 16,
+      "max_declared_symbols": 20,
+      "recommended_requests_per_section": [
+        1,
+        3
+      ]
+    },
+    "evidence_interpretation": {
+      "symbolic_check_passed": "只有所请求表达式在所声明假设下符号核对一致；不是一般定理的形式化证明，也不是整节审核通过。",
+      "numeric_spotcheck_passed": "只通过所列点数值抽查，仍NEEDS_REVIEW，不是一般证明。",
+      "symbolic_check_failed": "请求与核算结果冲突，属于须定位到原单元的数学问题。",
+      "not_checked": "未执行、超时、域条件不完整或无法决定；不得视为PASS。"
+    },
+    "examples": [
+      {
+        "description": "数列1/n的正无穷极限；请求绑定实际含该结论的单元。",
+        "unit": {
+          "id": "EX_LIMIT.U1",
+          "kind": "explanation",
+          "tex": "对正整数 $n$，数列 $a_n=1/n$ 满足 $\\lim_{n\\to\\infty}a_n=0$。",
+          "relates_to": null
+        },
+        "calculation": {
+          "id": "EX_LIMIT.C1",
+          "unit_id": "EX_LIMIT.U1",
+          "kind": "limit",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "expression": {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Symbol",
+                "name": "n"
+              },
+              {
+                "op": "Integer",
+                "value": -1
+              }
+            ]
+          },
+          "variable": "n",
+          "point": {
+            "op": "Infinity"
+          },
+          "direction": "-",
+          "expected": {
+            "op": "Integer",
+            "value": 0
+          }
+        },
+        "expected_result": "0"
+      },
+      {
+        "description": "正项p级数p=2的收敛性；此请求不声称计算其和。",
+        "unit": {
+          "id": "EX_SERIES.U1",
+          "kind": "explanation",
+          "tex": "正项级数 $\\sum_{n=1}^{\\infty}1/n^2$ 收敛。",
+          "relates_to": null
+        },
+        "calculation": {
+          "id": "EX_SERIES.C1",
+          "unit_id": "EX_SERIES.U1",
+          "kind": "series",
+          "assumptions": {
+            "n": {
+              "integer": true,
+              "positive": true
+            }
+          },
+          "term": {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Symbol",
+                "name": "n"
+              },
+              {
+                "op": "Integer",
+                "value": -2
+              }
+            ]
+          },
+          "variable": "n",
+          "start": {
+            "op": "Integer",
+            "value": 1
+          },
+          "end": {
+            "op": "Infinity"
+          },
+          "expected_convergent": true
+        },
+        "expected_result": true
+      },
+      {
+        "description": "在正实定义域内核对log(x)导数，不把公式外推到x<=0。",
+        "unit": {
+          "id": "EX_DERIVATIVE.U1",
+          "kind": "explanation",
+          "tex": "在 $x>0$ 上，$f(x)=\\ln x$ 的导数为 $f'(x)=1/x$。",
+          "relates_to": null
+        },
+        "calculation": {
+          "id": "EX_DERIVATIVE.C1",
+          "unit_id": "EX_DERIVATIVE.U1",
+          "kind": "derivative",
+          "assumptions": {
+            "x": {
+              "real": true,
+              "positive": true
+            }
+          },
+          "expression": {
+            "op": "log",
+            "args": [
+              {
+                "op": "Symbol",
+                "name": "x"
+              }
+            ]
+          },
+          "variable": "x",
+          "expected": {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Symbol",
+                "name": "x"
+              },
+              {
+                "op": "Integer",
+                "value": -1
+              }
+            ]
+          }
+        },
+        "expected_result": "1/x"
+      }
+    ]
+  },
+  "requirements": [
+    "Only return solutions for exactly the listed targets; no existing unit may be replaced, removed, or reordered.",
+    "Each new calculation.unit_id must equal one listed answer_unit_id; calculation IDs must not collide with existing IDs.",
+    "Existing uncertainty/limitation notes remain; new doubts may only be appended. This response is unchecked."
+  ],
+  "approved_plan": {
+    "additions": [],
+    "decision_ids": [
+      "6e78bf73deeb4348a0ccd00c33c560fe",
+      "f2b51c6bffab4dddb111117305a96ade",
+      "8e692f8d46f248dbb1e1fdd4dd8141ed",
+      "9951ff58b41e46f4a6c868b5250c413c",
+      "8be689ed017f4e0582f6cb1f161b60f6"
+    ],
+    "decisions": [
+      {
+        "actor": "local_user",
+        "id": "6e78bf73deeb4348a0ccd00c33c560fe",
+        "resolved_effects": {
+          "section_order": null,
+          "section_titles": {
+            "S01": "误差如何度量：从残差到常数拟合",
+            "S02": "直线最小二乘：消去截距并求解正规方程",
+            "S03": "结果检验、退化情形与工程解释"
+          },
+          "title": "最小二乘法讲义"
+        },
+        "timestamp": "2026-10-07T08:15:47.549187+00:00",
+        "type": "outline"
+      },
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "custom_input": "",
+        "id": "f2b51c6bffab4dddb111117305a96ade",
+        "question_id": "Q-PROOF",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "key"
+        },
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "timestamp": "2026-10-07T08:16:39.079445+00:00"
+      },
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "custom_input": "",
+        "id": "8e692f8d46f248dbb1e1fdd4dd8141ed",
+        "question_id": "Q-EXAMPLE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "balanced"
+        },
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "timestamp": "2026-10-07T08:16:39.079445+00:00"
+      },
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "custom_input": "",
+        "id": "9951ff58b41e46f4a6c868b5250c413c",
+        "question_id": "Q-EXERCISE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "with_answers"
+        },
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "timestamp": "2026-10-07T08:16:39.079445+00:00"
+      },
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "custom_input": "",
+        "id": "8be689ed017f4e0582f6cb1f161b60f6",
+        "question_id": "Q-ANSWERS",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "end"
+        },
+        "selected_option_ids": [
+          "END"
+        ],
+        "timestamp": "2026-10-07T08:16:39.079445+00:00"
+      }
+    ],
+    "diff": [],
+    "difficulty": "工科本科一年级微积分",
+    "exclusions": [
+      "不要求预先掌握多元微积分；不使用海森矩阵或多元极值判别法。",
+      "不展开矩阵形式、投影理论、伪逆、QR分解及奇异值分解。",
+      "不讨论多元线性回归、非线性最小二乘与迭代优化算法。",
+      "不推导统计推断、置信区间、显著性检验或高斯—马尔可夫定理。",
+      "不展开加权最小二乘、正则化与稳健回归。",
+      "不混入其他专题的例题，不依赖编程工具或外部参考文献。"
+    ],
+    "input_snapshot_hash": "70047096256856f70f2e6ec25f023097d44184399be93fbae3f92a0ca5aa30f0",
+    "lecture": {
+      "answers_location": "end",
+      "example_focus": "balanced",
+      "exercises": "with_answers",
+      "proof_policy": "key"
+    },
+    "model_id": "gpt6",
+    "objectives": [
+      "理解最小二乘法以残差平方和衡量拟合误差的基本思想。",
+      "在工科本科一年级微积分水平上，利用求导和配方推导常数拟合与直线拟合公式。",
+      "理解正规方程、最优解存在性及唯一性所需的条件。",
+      "能够完成小规模数据的手算拟合，解释残差并辨析拟合与预测的适用范围。"
+    ],
+    "omissions": [],
+    "prerequisites": [
+      "实数运算、有限求和及求和符号",
+      "一次函数及其图像",
+      "一元函数求导与极值的基本概念",
+      "二元一次方程组的求解",
+      "平方展开与配方法"
+    ],
+    "provider": "live",
+    "questions": [
+      {
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-PROOF",
+        "options": [
+          {
+            "effects": {
+              "value": "key"
+            },
+            "id": "KEY",
+            "label": "关键定理完整证明，其余说明",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "all"
+            },
+            "id": "ALL",
+            "label": "所有定理完整证明",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "定理证明采用哪种深度？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXAMPLE",
+        "options": [
+          {
+            "effects": {
+              "value": "balanced"
+            },
+            "id": "BALANCED",
+            "label": "概念与计算均衡",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "economics"
+            },
+            "id": "ECONOMICS",
+            "label": "更多经济应用",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "例题侧重什么？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXERCISE",
+        "options": [
+          {
+            "effects": {
+              "value": "with_answers"
+            },
+            "id": "WITH",
+            "label": "安排练习并附答案",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "none"
+            },
+            "id": "NONE",
+            "label": "不安排额外练习",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "是否安排练习与答案？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-ANSWERS",
+        "options": [
+          {
+            "effects": {
+              "value": "section"
+            },
+            "id": "SECTION",
+            "label": "各节之后",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "end"
+            },
+            "id": "END",
+            "label": "讲义末尾",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "练习答案放在哪里？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "END"
+        ],
+        "selection_mode": "single"
+      }
+    ],
+    "reference_context": {
+      "reason": "No matching chapter; no unrelated example injected.",
+      "status": "NOT_APPLICABLE"
+    },
+    "reference_registry": {
+      "sec:S01": "S01",
+      "sec:S02": "S02",
+      "sec:S03": "S03"
+    },
+    "revision": 5,
+    "rules": {
+      "allowed_text_sizes": [
+        "footnotesize",
+        "small",
+        "normalsize",
+        "large"
+      ],
+      "rule_version": 1,
+      "summary_frames": false
+    },
+    "schema_version": 1,
+    "sections": [
+      {
+        "id": "S01",
+        "objectives": [
+          "必需定义：观测值、拟合值、残差、残差平方和与最小二乘准则；明确残差的符号约定。",
+          "必需定义：常数模型及样本算术平均数。",
+          "必需定理：常数模型的残差平方和在样本平均数处取得唯一最小值。",
+          "证明安排：结合一元求导与平方和分解，区分驻点条件与全局最小性的依据。",
+          "必需例题：对三次测量值2、3、7进行常数拟合，并比较候选常数3与最优常数。",
+          "必需解答：列出目标函数、求得最优常数4、算出最小平方和14，并与常数3对应的平方和17比较。"
+        ],
+        "prerequisites": [],
+        "reference_labels": [],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "proof",
+          "example",
+          "solution",
+          "exercise"
+        ],
+        "title": "误差如何度量：从残差到常数拟合"
+      },
+      {
+        "id": "S02",
+        "objectives": [
+          "必需定义：带截距的直线拟合模型、中心化数据、S_{xx}与S_{xy}，以及本模型的正规方程。",
+          "推导安排：先固定斜率，利用S01的常数拟合结论求最优截距，再将目标函数化为斜率的一元二次函数；不预设偏导数知识。",
+          "必需定理：当S_{xx}>0时，最小二乘直线唯一，斜率为S_{xy}/S_{xx}，截距为bar{y}减去斜率乘bar{x}；它满足两条正规方程。",
+          "证明安排：通过消元与配方说明所得参数是全局最优解，并解释S_{xx}>0等价于自变量观测值不全相同。",
+          "必需例题：对数据点(0,1)、(1,2)、(2,2)求最小二乘直线。",
+          "必需解答：展示均值、中心化求和及参数计算，得到截距7/6、斜率1/2；列出残差−1/6、1/3、−1/6及平方和1/6，并核对正规方程。"
+        ],
+        "prerequisites": [
+          "S01"
+        ],
+        "reference_labels": [],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "proof",
+          "example",
+          "solution",
+          "exercise"
+        ],
+        "title": "直线最小二乘：消去截距并求解正规方程"
+      },
+      {
+        "id": "S03",
+        "objectives": [
+          "必需定义：残差表、插值、拟合、区间内预测与外推；区分拟合值和未来实际观测值。",
+          "必需定理：对带截距的最小二乘直线，残差之和为零，且直线经过数据均值点；说明这些性质的模型前提。",
+          "必需定理：当所有x_i相同时，最优参数对不唯一，但在该共同自变量处的拟合值唯一，等于bar{y}。",
+          "证明安排：从S02的正规方程解释残差性质；将退化情形归结为S01的常数拟合。",
+          "必需例题：把S02的数据解释为某传感器的输入输出记录，检查残差并估计输入1.5时的输出，讨论输入10时外推的局限。",
+          "必需解答：核验残差和为零与均值点性质，求得输入1.5时的拟合输出23/12，并指出平方和最小不保证外推可靠或模型具有因果含义。",
+          "必需例题：对数据点(2,1)、(2,3)、(2,5)分析最小二乘拟合。",
+          "必需解答：给出全部最优参数满足a+2b=3，说明最小平方和为8、参数不唯一，以及无法据此唯一确定其他输入位置的拟合值。"
+        ],
+        "prerequisites": [
+          "S01",
+          "S02"
+        ],
+        "reference_labels": [],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "proof",
+          "example",
+          "solution",
+          "exercise"
+        ],
+        "title": "结果检验、退化情形与工程解释"
+      }
+    ],
+    "symbols": {
+      "Q": "残差平方和，视具体模型写为Q(c)或Q(a,b)",
+      "S_{xx}": "自变量中心化平方和，即Σ(x_i−bar{x})²",
+      "S_{xy}": "自变量与响应的中心化乘积和，即Σ(x_i−bar{x})(y_i−bar{y})",
+      "a": "直线拟合模型的截距",
+      "a_*": "最小二乘拟合的最优截距",
+      "b": "直线拟合模型的斜率",
+      "b_*": "最小二乘拟合的最优斜率",
+      "bar{x}": "自变量观测值的算术平均数",
+      "bar{y}": "响应观测值的算术平均数",
+      "c": "常数拟合模型的待定参数",
+      "hat{y}_i": "模型在x_i处的拟合值",
+      "i": "观测数据的索引，取值为1至n",
+      "n": "观测数据的个数，为正整数",
+      "r_i": "残差，约定为y_i减去拟合值",
+      "x_i": "第i个观测的自变量值",
+      "y_i": "第i个观测的响应值"
+    },
+    "theme": "default",
+    "title": "最小二乘法讲义",
+    "unresolved_blocking_questions": [],
+    "workflow_id": "lecture.generate",
+    "hash": "e319d880fac13042cc16f67fe0096f663d1f2ed2974111aef7ba94a6edeb82e4"
+  },
+  "section_spec": {
+    "id": "S01",
+    "objectives": [
+      "必需定义：观测值、拟合值、残差、残差平方和与最小二乘准则；明确残差的符号约定。",
+      "必需定义：常数模型及样本算术平均数。",
+      "必需定理：常数模型的残差平方和在样本平均数处取得唯一最小值。",
+      "证明安排：结合一元求导与平方和分解，区分驻点条件与全局最小性的依据。",
+      "必需例题：对三次测量值2、3、7进行常数拟合，并比较候选常数3与最优常数。",
+      "必需解答：列出目标函数、求得最优常数4、算出最小平方和14，并与常数3对应的平方和17比较。"
+    ],
+    "prerequisites": [],
+    "reference_labels": [],
+    "required_kinds": [
+      "definition",
+      "theorem",
+      "proof",
+      "example",
+      "solution",
+      "exercise"
+    ],
+    "title": "误差如何度量：从残差到常数拟合"
+  },
+  "prior_sections": []
+}

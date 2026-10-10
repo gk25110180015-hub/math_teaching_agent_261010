@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "uncertainty_id": "D001-6e31a6936c94d510",
+      "unit_id": null,
+      "disposition": "open_dependency",
+      "reason": "当前正文已在 S01.U10 中写出样本均值、两个分数平方和、斜率与截距、三个拟合值、残差及残差和的直接代入结果；但原疑点要求用符号核算协议逐项验证全部分数运算，而所提供工具证据只覆盖少量表达式，不能据此证明其余分数运算已逐项核验。该疑点原声明的 unit_id 为 null，且不能在本裁定中改写为 S01.U10，因此无法按现有绑定范围发出只针对某一 unit_id 的可执行修复指令。",
+      "evidence": [
+        {
+          "source_key": "current:S01.U10",
+          "source_sha256": "904be7b01d48530958ccea9dcf604685785cbf545dc2d9239ee4cc459f66626f",
+          "quote": "答案如下：\n\\[\n\\bar x=\\frac{1+2+4}{3}=\\frac73,\n\\qquad\n\\bar y=\\frac{4+5+8}{3}=\\frac{17}{3}\\text{。}\n\\]\n进一步有\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)(y_i-\\bar y)=\\frac{19}{3},\n\\qquad\n\\sum_{i=1}^{3}(x_i-\\bar x)^2=\\frac{14}{3}\\text{。}\n\\]\n所以\n\\[\n\\hat b=\\frac{19/3}{14/3}=\\frac{19}{14},\n\\qquad\n\\hat a=\\frac{17}{3}-\\frac{19}{14}\\cdot\\frac73=\\frac52\\text{。}\n\\]\n拟合直线为\n\\[\n\\hat y=\\frac52+\\frac{19}{14}x\\text{。}\n\\]\n三个拟合值和残差为\n\\[\n\\begin{array}{c|c|c}\n i&\\hat y_i&\\hat e_i=y_i-\\hat y_i\\\\ \\hline\n 1&\\frac{27}{7}&\\frac17\\\\\n 2&\\frac{73}{14}&-\\frac{3}{14}\\\\\n 3&\\frac{111}{14}&\\frac{1}{14}\n\\end{array}\n\\]\n残差之和为\n\\[\n\\frac17-\\frac{3}{14}+\\frac{1}{14}=0\\text{。}\n\\]\n最后，$x=3$ 时的拟合值为\n\\[\n\\hat y(3)=\\frac52+\\frac{19}{14}\\cdot3=\\frac{46}{7}\\text{。}\n\\]\n由于 $3$ 位于样本解释变量的最小值 $1$ 与最大值 $4$ 之间，这是样本区间内的插值。"
+        }
+      ],
+      "remaining_dependency": false,
+      "repair_instruction": null
+    }
+  ],
+  "limitations": [
+    "模型审阅确认了正文中显式列出的数值关系，但普通审阅不等于形式化证明。",
+    "所提供的符号工具检查未覆盖 S01.U10 中全部分数运算；数值或局部抽查不能证明逐项符号核算协议已经完成。",
+    "原声明的 unit_id 为 null，因而本裁定不能把该疑点重新绑定到 S01.U10 或发出改变绑定范围的修复指令。"
+  ]
+}

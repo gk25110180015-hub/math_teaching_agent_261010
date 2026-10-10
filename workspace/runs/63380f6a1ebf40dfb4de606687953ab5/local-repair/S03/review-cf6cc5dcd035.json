@@ -1,0 +1,196 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "3ae11403039855a6723e6e47ba9c7b94df4ed60f57ed9f1e900f37f630efddc8",
+    "tool_checks_hash": "730a35d14b39801a2d1f81c51c19c2321bbdc64581d2bd037cebdc7ddcd13f0b",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "aeacf0882d74811eb101d11f264092cd9a50b4b270a4e0bf40199c41c68cb84d",
+    "deterministic_checks_hash": "b0a06ddd5366cc88850931b693224fb59e6d69e09fe24dbc033d4ae8f23d62fc"
+  },
+  "report": {
+    "section_id": "S03",
+    "math": {
+      "schema_version": 1,
+      "status": "FAIL",
+      "issues": [
+        {
+          "rule_id": "SYMBOLIC_COUNTERCHECK_FAILED",
+          "severity": "blocking",
+          "message": "在声明假设下符号结果与预期不一致。",
+          "location": {
+            "calculation_id": "S03.C01",
+            "unit_id": "S03.U07"
+          },
+          "resolution_status": "open"
+        },
+        {
+          "rule_id": "MATH_CHECK_UNKNOWN",
+          "severity": "review",
+          "message": "ValueError: 幂指数超出受限预算。",
+          "location": {
+            "calculation_id": "S03.C02",
+            "unit_id": "S03.U07"
+          },
+          "resolution_status": "open"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "equivalence",
+          "assumptions": {},
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "FAIL",
+          "evidence_type": "symbolic_check_failed",
+          "result": "29/28",
+          "message": "在声明假设下符号结果与预期不一致。",
+          "calculation_id": "S03.C01",
+          "unit_id": "S03.U07"
+        },
+        {
+          "status": "UNKNOWN",
+          "evidence_type": "not_checked",
+          "message": "ValueError: 幂指数超出受限预算。",
+          "calculation_id": "S03.C02",
+          "unit_id": "S03.U07"
+        }
+      ],
+      "coverage": [
+        "S03.U01",
+        "S03.U02",
+        "S03.U03",
+        "S03.U04",
+        "S03.U05",
+        "S03.U06",
+        "S03.U07",
+        "S03.U08",
+        "S03.U09"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+      ]
+    },
+    "llm_review": {
+      "issues": [
+        {
+          "unit_id": "S03.U08",
+          "severity": "blocking",
+          "message": "练习给出的“已知含截距的一元最小二乘拟合直线”不是该数据的最小二乘直线，题设错误。",
+          "evidence": "数据为 (1,1),(2,2),(3,4)，均值 \\bar x=2,\\bar y=7/3；Sxx=2，Sxy=3，所以正确斜率 \\hat b=3/2、截距 \\hat a=7/3-(3/2)2=-2/3。题设直线 \\hat y=-1/6+3/2x 的残差为 -1/3,-5/6,-1/3，其和为 -3/2≠0，违反含截距最小二乘的正规方程；S03.U09 也已指出该直线与数据不一致。"
+        },
+        {
+          "unit_id": "S03.U09",
+          "severity": "review",
+          "message": "解答虽正确指出题设直线与数据不一致，但未完成练习要求的 TSS、RSS、R^2 计算，也未给出修正后的最小二乘直线和平方和分解验证。",
+          "evidence": "S03.U08 要求计算 \\bar y、拟合值、残差、TSS、RSS、R^2，并利用平方和分解验证 TSS=ESS+RSS；S03.U09 只对错误给定直线算到残差和不为零后停止，正文说“正确的最小二乘直线应先由数据重新计算”，但没有实际给出该直线或后续数值，因此该练习未按题面完成。"
+        },
+        {
+          "unit_id": "S03.U07",
+          "severity": "review",
+          "message": "S03 目标要求通过案例讨论异常观测与外推风险，但案例解答只讨论了外推风险和因果解释，未讨论异常观测对拟合或 R^2 的影响。",
+          "evidence": "锁定目标 S03 第 4 条为“通过经济学案例计算残差分解和决定系数，并讨论异常观测与外推风险”；S03.U06 要求说明解释边界，S03.U07 只说不能保证样本外准确和不能证明因果，未出现异常观测/离群点相关讨论。"
+        }
+      ],
+      "checked_unit_ids": [
+        "S03.U01",
+        "S03.U02",
+        "S03.U03",
+        "S03.U04",
+        "S03.U05",
+        "S03.U06",
+        "S03.U07",
+        "S03.U08",
+        "S03.U09"
+      ],
+      "limitations": [
+        "普通数学审阅，不等于形式化证明；未对最终 PDF 渲染和答案位置做最终验收。",
+        "本节仅审阅 S03，使用提供的 S01/S02 正文作为先修依据，未重新检查其他章节。",
+        "自动符号核对 S03.C01 报告 29/28 FAIL、S03.C02 UNKNOWN；人工复算 S03.U07 的 TSS=14/3、RSS=1/6、ESS=9/2、R^2=27/28 与正文一致，故未将工具 FAIL 作为该单元正文错误计入，但形式化验证仍受工具限制。"
+      ]
+    },
+    "issues": [
+      {
+        "rule_id": "SYMBOLIC_COUNTERCHECK_FAILED",
+        "severity": "blocking",
+        "message": "在声明假设下符号结果与预期不一致。",
+        "location": {
+          "calculation_id": "S03.C01",
+          "unit_id": "S03.U07"
+        },
+        "resolution_status": "open"
+      },
+      {
+        "rule_id": "MATH_CHECK_UNKNOWN",
+        "severity": "review",
+        "message": "ValueError: 幂指数超出受限预算。",
+        "location": {
+          "calculation_id": "S03.C02",
+          "unit_id": "S03.U07"
+        },
+        "resolution_status": "open"
+      },
+      {
+        "unit_id": "S03.U08",
+        "severity": "blocking",
+        "message": "练习给出的“已知含截距的一元最小二乘拟合直线”不是该数据的最小二乘直线，题设错误。",
+        "evidence": "数据为 (1,1),(2,2),(3,4)，均值 \\bar x=2,\\bar y=7/3；Sxx=2，Sxy=3，所以正确斜率 \\hat b=3/2、截距 \\hat a=7/3-(3/2)2=-2/3。题设直线 \\hat y=-1/6+3/2x 的残差为 -1/3,-5/6,-1/3，其和为 -3/2≠0，违反含截距最小二乘的正规方程；S03.U09 也已指出该直线与数据不一致。"
+      },
+      {
+        "unit_id": "S03.U09",
+        "severity": "review",
+        "message": "解答虽正确指出题设直线与数据不一致，但未完成练习要求的 TSS、RSS、R^2 计算，也未给出修正后的最小二乘直线和平方和分解验证。",
+        "evidence": "S03.U08 要求计算 \\bar y、拟合值、残差、TSS、RSS、R^2，并利用平方和分解验证 TSS=ESS+RSS；S03.U09 只对错误给定直线算到残差和不为零后停止，正文说“正确的最小二乘直线应先由数据重新计算”，但没有实际给出该直线或后续数值，因此该练习未按题面完成。"
+      },
+      {
+        "unit_id": "S03.U07",
+        "severity": "review",
+        "message": "S03 目标要求通过案例讨论异常观测与外推风险，但案例解答只讨论了外推风险和因果解释，未讨论异常观测对拟合或 R^2 的影响。",
+        "evidence": "锁定目标 S03 第 4 条为“通过经济学案例计算残差分解和决定系数，并讨论异常观测与外推风险”；S03.U06 要求说明解释边界，S03.U07 只说不能保证样本外准确和不能证明因果，未出现异常观测/离群点相关讨论。"
+      }
+    ],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": [
+    {
+      "rule_id": "SYMBOLIC_COUNTERCHECK_FAILED",
+      "severity": "blocking",
+      "message": "在声明假设下符号结果与预期不一致。",
+      "location": {
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U07"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "rule_id": "MATH_CHECK_UNKNOWN",
+      "severity": "review",
+      "message": "ValueError: 幂指数超出受限预算。",
+      "location": {
+        "calculation_id": "S03.C02",
+        "unit_id": "S03.U07"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S03.U08",
+      "severity": "blocking",
+      "message": "练习给出的“已知含截距的一元最小二乘拟合直线”不是该数据的最小二乘直线，题设错误。",
+      "evidence": "数据为 (1,1),(2,2),(3,4)，均值 \\bar x=2,\\bar y=7/3；Sxx=2，Sxy=3，所以正确斜率 \\hat b=3/2、截距 \\hat a=7/3-(3/2)2=-2/3。题设直线 \\hat y=-1/6+3/2x 的残差为 -1/3,-5/6,-1/3，其和为 -3/2≠0，违反含截距最小二乘的正规方程；S03.U09 也已指出该直线与数据不一致。"
+    },
+    {
+      "unit_id": "S03.U09",
+      "severity": "review",
+      "message": "解答虽正确指出题设直线与数据不一致，但未完成练习要求的 TSS、RSS、R^2 计算，也未给出修正后的最小二乘直线和平方和分解验证。",
+      "evidence": "S03.U08 要求计算 \\bar y、拟合值、残差、TSS、RSS、R^2，并利用平方和分解验证 TSS=ESS+RSS；S03.U09 只对错误给定直线算到残差和不为零后停止，正文说“正确的最小二乘直线应先由数据重新计算”，但没有实际给出该直线或后续数值，因此该练习未按题面完成。"
+    },
+    {
+      "unit_id": "S03.U07",
+      "severity": "review",
+      "message": "S03 目标要求通过案例讨论异常观测与外推风险，但案例解答只讨论了外推风险和因果解释，未讨论异常观测对拟合或 R^2 的影响。",
+      "evidence": "锁定目标 S03 第 4 条为“通过经济学案例计算残差分解和决定系数，并讨论异常观测与外推风险”；S03.U06 要求说明解释边界，S03.U07 只说不能保证样本外准确和不能证明因果，未出现异常观测/离群点相关讨论。"
+    }
+  ]
+}

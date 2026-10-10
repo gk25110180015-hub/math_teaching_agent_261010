@@ -1,0 +1,53 @@
+{
+  "items": [
+    {
+      "uncertainty_id": "D001-46bc3acc864ad401",
+      "unit_id": "S03.U08",
+      "disposition": "resolved_by_current_body",
+      "reason": "当前正文已在原批准的练习单元内直接处理该疑点：先给出数据与含截距拟合任务，再由 S03.U09 计算得到斜率 3/2、截距 -2/3，并明确指出原先的 -1/6 不正确且其残差和不为零，因此不可能是该数据的含截距最小二乘直线。练习与答案的教学意图也通过“检查错误说法—重新计算—完成后续 TSS、RSS、R^2 与限制说明”的任务结构保持一致，无需外部授权或材料。",
+      "evidence": [
+        {
+          "source_key": "current:S03.U08",
+          "source_sha256": "f0f1b74cffee2c08ecabcb822cda90b383bbed4edca1870158ff88d1423f1b49",
+          "quote": "某企业三年的培训支出与劳动生产率观测值为\n\\[\n(x_1,y_1)=(1,1),\\qquad (x_2,y_2)=(2,2),\\qquad (x_3,y_3)=(3,4).\n\\]\n一位同学声称含截距的一元最小二乘拟合直线为\n\\[\n\\hat y=-\\frac{1}{6}+\\frac{3}{2}x.\n\\]\n请检查这一说法，并用数据重新计算正确的最小二乘直线。然后完成下列任务："
+        },
+        {
+          "source_key": "current:S03.U09",
+          "source_sha256": "638fe5403bf8825fcdd7eeec64bcb06140b0f01f10bbf4a65580f972012aa5c8",
+          "quote": "因此正确的最小二乘斜率和截距分别为\n\\[\n\\hat b=\\frac{S_{xy}}{S_{xx}}=\\frac{3}{2},\n\\qquad\n\\hat a=\\bar y-\\hat b\\bar x\n=\\frac{7}{3}-\\frac{3}{2}\\cdot2=-\\frac{2}{3}.\n\\]\n所以正确的拟合直线为\n\\[\n\\hat y=-\\frac{2}{3}+\\frac{3}{2}x.\n\\]\n题目中给出的截距 $-1/6$ 不正确；其对应残差和不为零，因而不可能是这组含截距数据的最小二乘直线。"
+        }
+      ],
+      "remaining_dependency": false,
+      "repair_instruction": null
+    },
+    {
+      "uncertainty_id": "D002-2490c62126ff2c26",
+      "unit_id": null,
+      "disposition": "open_dependency",
+      "reason": "当前 S03.U07 正文已明确由 TSS=14/3、RSS=1/6 得到 R^2=27/28，且当前完整 AST 的核算也通过，因此当前数学结论已得到正文与工具的一致支持。但原疑点还包含一条未提供完整表达式、来源和预期依据的 29/28 记录的 provenance 冲突；现有材料只能说明已知旧 AST 因缺少负号得到 29/28，不能确认那条未定位记录是否就是该旧请求，也没有外部授权材料可核验其来源或预期值。由于疑点的剩余部分无法在已绑定的 S03 正文单元内合法补足，仍依赖外部记录确认。",
+      "evidence": [
+        {
+          "source_key": "current:S03.U07",
+          "source_sha256": "ff23522a1ec3c0cc4fb3cfffea4ee508cc1e75dedccb3d77fbf81cf70f17965c",
+          "quote": "残差平方和为\n\\[\n\\operatorname{RSS}\n=\\left(\\frac{1}{6}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{1}{6}\\right)^2\n=\\frac{1}{6}.\n\\]\n由平方和分解，解释平方和为\n\\[\n\\operatorname{ESS}=\\operatorname{TSS}-\\operatorname{RSS}\n=\\frac{14}{3}-\\frac{1}{6}=\\frac{9}{2}.\n\\]\n所以决定系数为\n\\[\nR^2=1-\\frac{1/6}{14/3}\n=1-\\frac{1}{28}\n=\\frac{27}{28}.\n\\]"
+        },
+        {
+          "source_key": "calculation:c51d42e44c1745e401f8ee3d166ece1d44386eddd41ab8b46c8d52e0cf584c3f",
+          "source_sha256": "819f3fb50e3156707981fa4918bc3b6fb007d6174a1316d7be4f2962e0db7200",
+          "quote": "历史完整请求（JSON AST）：{\"assumptions\":{},\"id\":\"S03.C01\",\"kind\":\"equivalence\",\"lhs\":{\"args\":[{\"op\":\"Integer\",\"value\":1},{\"args\":[{\"op\":\"Rational\",\"p\":1,\"q\":6},{\"args\":[{\"op\":\"Rational\",\"p\":14,\"q\":3},{\"op\":\"Integer\",\"value\":-1}],\"op\":\"Pow\"}],\"op\":\"Mul\"}],\"op\":\"Add\"},\"rhs\":{\"op\":\"Rational\",\"p\":27,\"q\":28},\"unit_id\":\"S03.U07\"}\n历史归档核算：FAIL；结果 \"29/28\"。"
+        },
+        {
+          "source_key": "calculation:c51d42e44c1745e401f8ee3d166ece1d44386eddd41ab8b46c8d52e0cf584c3f",
+          "source_sha256": "819f3fb50e3156707981fa4918bc3b6fb007d6174a1316d7be4f2962e0db7200",
+          "quote": "当前完整请求（JSON AST）：{\"assumptions\":{},\"id\":\"S03.C01\",\"kind\":\"equivalence\",\"lhs\":{\"args\":[{\"op\":\"Integer\",\"value\":1},{\"args\":[{\"op\":\"Integer\",\"value\":-1},{\"args\":[{\"op\":\"Rational\",\"p\":1,\"q\":6},{\"args\":[{\"op\":\"Rational\",\"p\":14,\"q\":3},{\"op\":\"Integer\",\"value\":-1}],\"op\":\"Pow\"}],\"op\":\"Mul\"}],\"op\":\"Mul\"}],\"op\":\"Add\"},\"rhs\":{\"op\":\"Rational\",\"p\":27,\"q\":28},\"unit_id\":\"S03.U07\"}\n当前核算：PASS；结果 \"27/28\"。"
+        }
+      ],
+      "remaining_dependency": true,
+      "repair_instruction": null
+    }
+  ],
+  "limitations": [
+    "本评估依据所提供的当前正文、先修正文、批准计划、工具核算及来源摘录；未进行教师验收或形式化证明。",
+    "当前核算只支持所提交的明确 AST；它能区分旧请求与当前请求，但不能为未提供完整表达式的历史 29/28 记录补齐来源或外部预期。"
+  ]
+}

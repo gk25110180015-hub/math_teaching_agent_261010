@@ -1,0 +1,72 @@
+{
+  "runtime_version": 2,
+  "code": "function draw(ctx,t,p){\nconst edges=[0,.12,.30,.42,.64,.84,1];let si=0;while(si<5&&t>=edges[si+1])si++;const u=(t-edges[si])/(edges[si+1]-edges[si]),ex=p.$mode==='explore';\nconst clamp=(v,l,h)=>Math.max(l,Math.min(h,v));const get=(k,d,l,h)=>typeof p[k]==='number'&&Number.isFinite(p[k])?clamp(p[k],l,h):d;\nlet v={a:get('a',1,-2,2),b:get('b',1,-2,2),morph:get('morph',0,0,1),lambda:get('lambda',0,0,1),section:get('section',0,0,1),c:get('c',1,-2,2),angle:get('angle',35,20,70)};\nif(!ex){v.a=si===0?1.5*Math.sin(u*Math.PI*2):si===1?-1:1;v.b=1;v.morph=si===0?0:si===1?clamp((u-.15)/.7,0,1):1;v.lambda=si<3?0:si===3?clamp((u-.38)/.48,0,1):1;v.section=si===4&&u>=.5?1:0;v.c=si===4?1.5*Math.sin((u% .5)*Math.PI*2):1;v.angle=35;}\nconst disabled={};if(si!==0&&si!==1&&si!==2&&si!==5)disabled.a='本镜头观察曲面生成或截面，未选取单个输入点';if(si!==5)disabled.b='仅在最后一镜控制平面输入点';if(si!==1)disabled.morph='仅在直线到抛物线的形变镜头使用';if(si!==3)disabled.lambda='仅在柱面到碗形的生成镜头使用';if(si!==4){disabled.section='仅在截面镜头选择固定变量';disabled.c='仅在截面镜头移动截平面';}if(si<2)disabled.angle='二维坐标图不使用三维视角';\nconst m=si===0?0:si===1?v.morph:1,L=si===3?v.lambda:1,f=x=>(1-m)*x+m*x*x,F=(x,y)=>x*x+L*y*y;const fixedX=v.section>=.5;const fmt=x=>Math.abs(x)<.0005?'0':x.toFixed(2);const blue='#176bad',orange='#d56c16',green='#16847c',ink='#24384b';\nctx.fillStyle='#f7fafc';ctx.fillRect(0,0,960,540);ctx.save();ctx.beginPath();ctx.rect(35,85,890,335);ctx.clip();ctx.lineJoin='round';ctx.lineCap='round';\nfunction text(s,x,y,col=ink,size=18){ctx.fillStyle=col;ctx.font=size+'px sans-serif';ctx.fillText(s,x,y);}\nfunction wrap(s,x,y,w,col=ink,size=18){ctx.font=size+'px sans-serif';let row='';for(let ch of s){if(ctx.measureText(row+ch).width>w){text(row,x,y,col,size);y+=25;row='';}row+=ch;}if(row)text(row,x,y,col,size);return y+25;}\nfunction line(a,b,col=ink,w=1.5,dash=false){ctx.strokeStyle=col;ctx.lineWidth=w;ctx.setLineDash(dash?[5,5]:[]);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();ctx.setLineDash([]);}\nfunction path(points,col,w=2){ctx.strokeStyle=col;ctx.lineWidth=w;ctx.beginPath();points.forEach((q,i)=>i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]));ctx.stroke();}\nfunction dot(q,col=orange,hollow=false){ctx.beginPath();ctx.arc(q[0],q[1],5,0,Math.PI*2);ctx.fillStyle=hollow?'#f7fafc':col;ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=2;ctx.stroke();}\nfunction poly(points,col){ctx.beginPath();points.forEach((q,i)=>i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]));ctx.closePath();ctx.fillStyle=col;ctx.fill();}\nfunction sample(fn,n=80){let qs=[];for(let i=0;i<=n;i++)qs.push(fn(-2+4*i/n));return qs;}\nfunction chart(x,y,w,h,ymin,ymax,fun,label,ghost){const X=q=>x+(q+2.3)/4.6*w,Y=z=>y+h-(z-ymin)/(ymax-ymin)*h;for(let q=-2;q<=2;q++){line([X(q),y],[X(q),y+h],'#e2e9ef',1);text(''+q,X(q)-7,Y(0)+21,ink,17);}line([x,Y(0)],[x+w,Y(0)],ink);line([X(0),y],[X(0),y+h],ink);text(label,x+w-12,Y(0)-10);text('z',X(0)+8,y+18);for(let z=Math.ceil(ymin);z<=ymax;z+=2){line([X(0)-4,Y(z)],[X(0)+4,Y(z)],ink);if(z!==0)text(''+z,X(0)+8,Y(z)+5,ink,17);}if(ghost)path(sample(q=>[X(q),Y(q)]),'#bdcbd6',2);path(sample(q=>[X(q),Y(fun(q))]),blue,3);return {X,Y};}\nconst tilt=si===2&&!ex?clamp(u/.45,0,1):1,theta=v.angle*Math.PI/180;const small=si===5,ox=small?738:300,oy=small?344:344,sx=small?37:68,sy=small?15:23,sz=small?22:25;\nfunction P(x,y,z){return [ox+sx*((1-tilt)*x+tilt*(x*Math.cos(theta)-y*Math.sin(theta))),oy+sy*tilt*(x*Math.sin(theta)+y*Math.cos(theta))-sz*z];}\nfunction base(){poly([P(-2,-2,0),P(2,-2,0),P(2,2,0),P(-2,2,0)],si>=3?'#dcefe9':'#e8eef5');for(let q=-2;q<=2;q++){line(P(q,-2,0),P(q,2,0),'#c2d9d8',1);line(P(-2,q,0),P(2,q,0),'#c2d9d8',1);}line(P(-2.2,0,0),P(2.3,0,0),ink);line(P(0,-2.2,0),P(0,2.3,0),ink);line(P(0,0,0),P(0,0,8.5),ink);let q=P(2.3,0,0);text('x',q[0]+4,q[1]);q=P(0,2.3,0);text('y',q[0]-10,q[1]+18);q=P(0,0,8.5);text('z',q[0]+9,q[1]+10);}\nfunction surface(){let count=si===3&&!ex?Math.max(1,Math.floor(clamp(u/.32,0,1)*16)):16;for(let i=0;i<=count;i++){let y=-2+i/4;path(sample(x=>P(x,y,F(x,y))),'#74a9bb',1.3);}if(count===16){for(let i=0;i<=16;i++){let x=-2+i/4;path(sample(y=>P(x,y,F(x,y))),'#9cbdcb',1);}}}\nlet title='',caption='',output=si<2?f(v.a):si===2?v.a*v.a:si===5?F(v.a,v.b):'本镜头展示函数族';\nif(si<2){let g=chart(70,100,460,270,-2.7,4.8,f,'x',si===1);let a0=[g.X(v.a),g.Y(0)],ap=[g.X(v.a),g.Y(f(v.a))];line(a0,ap,orange,2,true);dot(a0,green);dot(ap);text('a',a0[0]-17,a0[1]-10,green);let yy=125;yy=wrap(si===0?'g(x)=x':'gₜ(x)=(1−t)x+tx²',580,yy,325,blue,21);yy=wrap('输入 a='+fmt(v.a)+' → 实数输出 '+fmt(f(v.a)),580,yy+10,325);yy=wrap('输入变量：x（一个）',580,yy+10,325);if(si===1){yy=wrap('选取函数的参数：t='+fmt(m),580,yy+6,325);wrap('固定 t 后仍为 gₜ: ℝ → ℝ。淡线是起始直线。',580,yy+6,325);}else wrap('g: ℝ → ℝ\\n',580,yy+6,325);text('只画出 −2 ≤ x ≤ 2；窗口不是定义域边界',70,411,ink,17);title=si===0?'直线已经是一元函数图像':'连续变弯，但输入仍只有一个';caption=si===0?'直线 z=x 已经是一元函数图像。输入 a='+fmt(v.a)+'，得到唯一实数输出 '+fmt(output)+'。':'形变参数 t='+fmt(m)+'；输入 a='+fmt(v.a)+' → 输出 '+fmt(output)+'。固定参数后，输入仍只有 x；形状变化没有增加输入变量。';\n}else if(si===2){base();path(sample(x=>P(x,0,x*x)),blue,3);line(P(v.a,0,0),P(v.a,0,v.a*v.a),orange,2,true);dot(P(v.a,0,v.a*v.a));dot(P(v.a,1.4,0),orange,true);text('(a,0,a²)',400,205,orange);text('空心点：尚未指定输出',385,392,orange,17);wrap('C={(x,0,x²): x∈ℝ}',575,130,330,blue,21);wrap('抛物线始终位于 y=0 平面。',575,184,330);wrap('增加一个坐标轴，只改变展示环境。空心输入点没有对应的输出高度。',575,234,330);title='进入三维坐标，曲线仍是曲线';caption='加入 y 轴后，抛物线仍在 y=0 平面内。要得到二元函数，还必须规定一般平面输入 (x,y) 的输出。';\n}else if(si===3){base();surface();path(sample(x=>P(x,0,F(x,0))),blue,3);path(sample(x=>P(x,1,F(x,1))),orange,3);let y=wrap('Fλ(x,y)=x²+λy²',580,120,325,blue,22);y=wrap('λ='+fmt(L)+'；Fλ: ℝ² → ℝ',580,y+12,325);y=wrap('蓝色：y=0，高度 x²',580,y+10,325,blue);y=wrap('橙色：y=1，高度 x²+λ',580,y+4,325,orange);y=wrap(L===0?'λ=0：输出不依赖 y，但定义域仍是 ℝ²。':'λ>0：输出也受 y 影响。',580,y+12,325);wrap('每个底面输入都已被赋予实数高度。',580,y+4,325);text('本图只绘制 [−2,2]² 对应部分',70,411,ink,17);title='从柱面到碗形：第二个输入影响高度';caption=L===0?'先为每个平面输入赋予高度 x²，沿 y 复制抛物线形成柱面。即使输出不依赖 y，它仍是定义在 ℝ² 上的二元函数。':'固定 λ='+fmt(L)+'，Fλ(x,y)=x²+λy²。y=1 的截线升高 λ，y=0 的截线保持不变。';\n}else if(si===4){base();surface();const Q=(q,z)=>fixedX?P(v.c,q,z):P(q,v.c,z);poly([Q(-2,0),Q(2,0),Q(2,8),Q(-2,8)],'rgba(238,158,66,.17)');for(let c of [-1.5,-.75,0,.75,1.5])path(sample(q=>fixedX?P(c,q,c*c+q*q):P(q,c,q*q+c*c)),'rgba(213,108,22,.22)',1.5);path(sample(q=>Q(q,q*q+v.c*v.c)),orange,4);text((fixedX?'固定 x=':'固定 y=')+fmt(v.c),65,110,orange,20);wrap('淡线仅示意部分截线；图中只画 [−2,2]² 对应部分。',65,411,500,ink,17);text(fixedX?'剩余输入：y；输出：z':'剩余输入：x；输出：z',585,110,ink,18);chart(585,132,290,230,-.8,8.8,q=>q*q+v.c*v.c,fixedX?'y':'x',false);wrap(fixedX?'h꜀(y)=c²+y²':'g꜀(x)=x²+c²',600,397,300,blue,20);title='固定x或y，都能截出一条曲线';caption=(fixedX?'固定 x='+fmt(v.c)+'，剩下 y 决定高度；截线位于 x=c 平面。':'固定 y='+fmt(v.c)+'，剩下 x 决定高度；截线位于 y=c 平面。')+'右侧为对应的一元图像。淡线仅示意部分截线；遍历所有 c∈ℝ，完整截线的并集构成整个图像，图中仅画有限窗口。';\n}else{const IX=x=>165+47*x,IY=y=>250-47*y;for(let q=-2;q<=2;q++){line([IX(q),IY(-2)],[IX(q),IY(2)],'#d5e2ea',1);line([IX(-2),IY(q)],[IX(2),IY(q)],'#d5e2ea',1);}line([IX(-2.2),IY(0)],[IX(2.2),IY(0)],ink);line([IX(0),IY(-2.2)],[IX(0),IY(2.2)],ink);text('x',275,246);text('y',175,145);text('−2',62,274,ink,17);text('2',252,274,ink,17);dot([IX(v.a),IY(v.b)],green);text('输入平面点 (a,b)',65,108,green,19);text('('+fmt(v.a)+', '+fmt(v.b)+')',70,373,green,18);const NY=z=>345-25*z;line([425,NY(0)],[425,NY(8)],ink,2);for(let z=0;z<=8;z+=2){line([420,NY(z)],[430,NY(z)],ink);text(''+z,438,NY(z)+6,ink,17);}dot([425,NY(output)]);text('实数输出',377,108,orange,19);text('z='+fmt(output),375,373,orange,18);base();surface();line(P(v.a,v.b,0),P(v.a,v.b,output),orange,3,true);dot(P(v.a,v.b,0),green);dot(P(v.a,v.b,output),orange);text('曲面图像点 (a,b,z)',641,108,blue,19);line([IX(v.a),IY(v.b)],[425,NY(output)],'rgba(213,108,22,.4)',1.5,true);line([425,NY(output)],P(v.a,v.b,output),'rgba(213,108,22,.4)',1.5,true);text('函数：f: ℝ² → ℝ，(a,b) ↦ a²+b²',65,405,ink,18);text('图像：Γf={(x,y,z): z=x²+y²}',515,405,ink,18);text('直线、抛物线：1个输入；曲面：2个输入',510,376,ink,17);title='平面上的一个点，映射到一个实数';caption='('+fmt(v.a)+','+fmt(v.b)+') 映射到实数 '+fmt(output)+'。函数是映射规则；(a,b,z) 是表示对应关系的图像点，不是函数的输出。';}\nctx.restore();return {controls:v,disabled,title,caption,metrics:{镜头:'S'+(si+1),输入维数:si<2?1:si===2?'尚未指定整个平面的映射':2,形变参数:m,曲面参数:si>=3?L:'本镜头不使用',输入a:v.a,输入b:si===5?v.b:'本镜头不使用',输出:output,截面:si===4?{固定变量:fixedX?'x':'y',位置:v.c,常数项:v.c*v.c,自由变量:fixedX?'y':'x'}:'本镜头不使用',关注点:si<2?[v.a,f(v.a)]:si===2?[v.a,0,v.a*v.a]:si===5?[v.a,v.b,output]:'观察整个函数图像',绘制范围:si<2?{xmin:-2,xmax:2,zmin:-2.7,zmax:4.8}:{xmin:-2,xmax:2,ymin:-2,ymax:2,zmin:0,zmax:8},视角:v.angle,函数与图像不同:true}};\n}",
+  "controls": [
+    {
+      "id": "a",
+      "label": "输入 a",
+      "min": -2.0,
+      "max": 2.0,
+      "step": 0.01,
+      "value": 1.0
+    },
+    {
+      "id": "b",
+      "label": "输入 b",
+      "min": -2.0,
+      "max": 2.0,
+      "step": 0.01,
+      "value": 1.0
+    },
+    {
+      "id": "morph",
+      "label": "形变参数 t（不是时间轴）",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "value": 0.0
+    },
+    {
+      "id": "lambda",
+      "label": "曲面参数 λ",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "value": 0.0
+    },
+    {
+      "id": "section",
+      "label": "截面方向：0 固定y，1 固定x",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 1.0,
+      "value": 0.0
+    },
+    {
+      "id": "c",
+      "label": "截平面位置 c",
+      "min": -2.0,
+      "max": 2.0,
+      "step": 0.01,
+      "value": 1.0
+    },
+    {
+      "id": "angle",
+      "label": "三维视角（度）",
+      "min": 20.0,
+      "max": 70.0,
+      "step": 1.0,
+      "value": 35.0
+    }
+  ],
+  "covered_decision_ids": [
+    "df3cc55db5ef4fb0b3b2bcfc854f272f",
+    "40ff9bf36ee74fd49cd6a2e60a9df6a4"
+  ],
+  "explanation": "保留原运行契约、全部控件及100秒累计分镜，仅修复本轮两项问题及相关字幕。\n逐镜核查：S1（0–12秒）保留xz直线、输入点和竖直对应线；S2（12–30秒）保留淡色直线轮廓及连续形变，演示输入改为a=−1，原有起止停留阶段分别显示输出−1与1，中途输出连续移动，字幕同步取实际值；S3（30–42秒）保留投影插值、y=0抛物线及无输出高度的空心点；S4（42–64秒）保留逐条复制形成柱面、λ形变，以及蓝色y=0和橙色y=1截线；S5（64–84秒）保留两种截平面、高亮截线、五条淡色示意线及同步二维图，画面明确部分截线与有限窗口，字幕说明遍历所有c∈ℝ所得完整截线的并集才构成整个图像；S6（84–100秒）保留输入平面、实数数轴和曲面点的三方联动及映射/图像区别。探索模式的用户选择和现有数学计算均未改变。",
+  "limitations": [
+    "曲面采用离散线框采样绘制，展示的是定义在整个平面上的多项式函数在[-2,2]²内的图像部分。",
+    "三维采用正交投影与半透明截平面，强调对应关系和截线结构，不进行实体遮挡渲染。",
+    "本示例只讨论所选多项式函数，不引入偏导数，也不将其光滑性推广到任意二元函数。"
+  ]
+}

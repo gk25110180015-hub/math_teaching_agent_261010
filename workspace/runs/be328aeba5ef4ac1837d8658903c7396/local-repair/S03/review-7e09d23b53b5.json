@@ -1,0 +1,107 @@
+{
+  "prior_issues": [],
+  "review_identity": {
+    "candidate_hash": "b1e544e2a078d4617b4f44a7481ef24f64b4f81b6a32fad816c5dc7e9a3ac5a6",
+    "tool_checks_hash": "d7901295c2c03bfaa0d96fcc07ebd97a4482490b3dfdeccdd8d12f70c660e080",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "554e01619b2b41c2c26c0c33cb7ee17022e82288c6561ff4fa1beab6cbd151d3",
+    "deterministic_checks_hash": "8f64a2a248dc479f3db7ef6748799152ab6a3fdc53cf7535833eb0f5525bf148"
+  },
+  "report": {
+    "section_id": "S03",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "equivalence",
+          "assumptions": {},
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "23/12",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S03.C01",
+          "unit_id": "S03.U07"
+        },
+        {
+          "kind": "equivalence",
+          "assumptions": {
+            "a": {
+              "real": true
+            },
+            "b": {
+              "real": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "(-a - 2*b + 1)**2 + (-a - 2*b + 3)**2 + (-a - 2*b + 5)**2",
+          "message": "在声明假设下符号差为零。",
+          "calculation_id": "S03.C02",
+          "unit_id": "S03.U11"
+        }
+      ],
+      "coverage": [
+        "S03.U01",
+        "S03.U02",
+        "S03.U03",
+        "S03.U04",
+        "S03.U05",
+        "S03.U06",
+        "S03.U07",
+        "S03.U08",
+        "S03.U09",
+        "S03.U10",
+        "S03.U11",
+        "S03.U12",
+        "S03.U13",
+        "S03.U14",
+        "S03.U13.answer",
+        "S03.U14.answer"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "代表核算仅覆盖传感器例题中的区间内预测数值和退化例题的平方和分解。协议的表达式树不能直接表示任意长度数据列的有限求和、全局最优性的量词或参数唯一性命题；这些结论由正文证明。",
+        "外推的工程可靠性、未来实测值与模型值的区别以及因果解释不属于本协议的符号核算操作范围。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S03.U01",
+        "S03.U02",
+        "S03.U03",
+        "S03.U04",
+        "S03.U05",
+        "S03.U06",
+        "S03.U07",
+        "S03.U08",
+        "S03.U09",
+        "S03.U10",
+        "S03.U11",
+        "S03.U12",
+        "S03.U13",
+        "S03.U13.answer",
+        "S03.U14",
+        "S03.U14.answer"
+      ],
+      "limitations": [
+        "本次为 section_local 审阅，已逐一阅读所列16个实际单元，并逐项对照S03的锁定目标；提供的S01、S02正文仅作为定义与证明依赖的核对依据，不代表本次完成整份讲义的覆盖复核。",
+        "在所提供正文中未发现需报告的数学错误或重大缺口。已核对残差符号、正规方程的使用条件、自由截距前提、退化情形的全部最优参数及量词、n=1边界、区间内预测的端点归属，以及例题和练习答案的具体计算。S03的定义、一般定理、证明及指定应用目标均有实际正文承载。",
+        "按 rendering_contract，两个独立练习解答单元由程序移至讲义末尾；其 relates_to 均指向实际练习单元，不能据JSON中的排列位置认定答案位置不合要求。本次未检查最终PDF的实际组装、引用编号及排版。",
+        "本次是普通模型对数学正文的审阅，不是形式化证明，也不以作者自评或所附符号检查的PASS状态代替正文核查。工程预测的实际可靠性与因果关系不能由这些数据和代数推导验证；正文已明确说明相应限制。"
+      ]
+    },
+    "issues": [],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false
+  },
+  "retained_issues": []
+}

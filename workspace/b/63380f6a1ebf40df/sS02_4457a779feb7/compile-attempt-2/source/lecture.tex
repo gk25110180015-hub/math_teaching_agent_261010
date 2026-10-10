@@ -1,0 +1,505 @@
+\documentclass[UTF8,fontset=fandol,11pt]{ctexart}
+\usepackage[a4paper,margin=24mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,graphicx,tabularx,booktabs,hyperref}
+\newtheorem{definition}{定义}[section]
+\newtheorem{theorem}[definition]{定理}
+\newtheorem{example}[definition]{例题}
+\newtheorem{exercise}[definition]{练习}
+\hypersetup{unicode=true,colorlinks=true,linkcolor=blue}
+\title{最小二乘法讲义计划}
+\date{}
+\begin{document}
+\maketitle
+\section{一元最小二乘拟合：从平方误差到正规方程}\label{sec:S01}
+% UNIT S01.U01
+\begin{definition}
+设有 $n\geq 2$ 个观测点 $(x_i,y_i)$，其中 $x_i,y_i\in\mathbb{R}$，$i=1,\ldots,n$。用直线
+\[
+\hat y_i=a+bx_i
+\]
+拟合被解释变量 $y_i$，其中 $a,b\in\mathbb{R}$ 分别为截距参数和斜率参数。定义平方误差目标函数为
+\begin{equation}
+S(a,b)=\sum_{i=1}^{n}\bigl[y_i-(a+bx_i)\bigr]^2.
+\label{def:ols-objective}
+\end{equation}
+一元最小二乘估计 $(\hat a,\hat b)$ 是使 $S(a,b)$ 在 $\mathbb{R}^2$ 上达到最小值的参数对。
+\end{definition}
+% UNIT S01.U02
+\begin{definition}
+对给定的参数 $a,b$，第 $i$ 个观测的残差定义为观测值与拟合值之差：
+\begin{equation}
+e_i=y_i-(a+bx_i).
+\label{def:residual}
+\end{equation}
+当参数取最小二乘估计 $(\hat a,\hat b)$ 时，记
+\[
+\hat y_i=\hat a+\hat b x_i,
+\qquad
+\hat e_i=y_i-\hat y_i.
+\]
+此时平方误差目标函数的最小值为残差平方和 $\sum_{i=1}^n\hat e_i^2$。
+\end{definition}
+% UNIT S01.U03
+\begin{theorem}
+设 $x_i,y_i\in\mathbb{R}$，且
+\label{thm:quadratic-unique-minimum}
+\[
+\sum_{i=1}^{n}(x_i-\bar x)^2>0,
+\qquad
+\bar x=\frac{1}{n}\sum_{i=1}^{n}x_i,
+\qquad
+\bar y=\frac{1}{n}\sum_{i=1}^{n}y_i.
+\]
+则平方误差函数 $S(a,b)$ 在 $\mathbb{R}^2$ 上具有唯一最小点 $(\hat a,\hat b)$。该最小点满足正规方程
+\begin{equation}
+\sum_{i=1}^{n}\bigl[y_i-(\hat a+\hat b x_i)\bigr]=0,
+\qquad
+\sum_{i=1}^{n}x_i\bigl[y_i-(\hat a+\hat b x_i)\bigr]=0,
+\label{thm:normal-equations}
+\end{equation}
+并且
+\[
+\hat b=\frac{\sum_{i=1}^{n}(x_i-\bar x)(y_i-\bar y)}{\sum_{i=1}^{n}(x_i-\bar x)^2},
+\qquad
+\hat a=\bar y-\hat b\bar x.
+\]
+\end{theorem}
+% UNIT S01.U04
+\begin{proof}
+将 $S(a,b)$ 展开得
+\[
+S(a,b)=\sum_{i=1}^{n}\bigl[y_i-a-bx_i\bigr]^2.
+\]
+对 $a$ 和 $b$ 分别求偏导，得到
+\[
+\frac{\partial S}{\partial a}=-2\sum_{i=1}^{n}\bigl[y_i-a-bx_i\bigr],
+\qquad
+\frac{\partial S}{\partial b}=-2\sum_{i=1}^{n}x_i\bigl[y_i-a-bx_i\bigr].
+\]
+因此，最小点必须满足式 \eqref{thm:normal-equations}。第一条正规方程给出
+\[
+n\hat a+\hat b\sum_{i=1}^{n}x_i=\sum_{i=1}^{n}y_i,
+\]
+从而
+\[
+\hat a=\bar y-\hat b\bar x.
+\]
+把它代入第二条正规方程，并利用
+\[
+\sum_{i=1}^{n}(x_i-\bar x)=0,
+\qquad
+\sum_{i=1}^{n}(y_i-\bar y)=0,
+\]
+可得
+\[
+\hat b\sum_{i=1}^{n}(x_i-\bar x)^2
+=\sum_{i=1}^{n}(x_i-\bar x)(y_i-\bar y).
+\]
+由于分母严格为正，故 $\hat b$ 唯一确定，随后 $\hat a$ 也唯一确定。
+
+下面验证由上述公式给出的 $(\hat a,\hat b)$ 确实满足正规方程。对第一条，有
+\[
+\sum_{i=1}^{n}\bigl[y_i-(\hat a+\hat b x_i)\bigr]
+=\sum_{i=1}^{n}y_i-n\hat a-\hat b\sum_{i=1}^{n}x_i
+=n\bar y-n(\bar y-\hat b\bar x)-\hat b n\bar x=0.
+\]
+对第二条，利用 $\sum_{i=1}^{n}(x_i-\bar x)=0$ 和 $\sum_{i=1}^{n}(y_i-\bar y)=0$，有
+\[
+\sum_{i=1}^{n}x_i\bigl[y_i-(\hat a+\hat b x_i)\bigr]
+=\sum_{i=1}^{n}(x_i-\bar x)(y_i-\bar y)
+-\hat b\sum_{i=1}^{n}(x_i-\bar x)^2=0,
+\]
+最后一步由 $\hat b$ 的定义得到。因此 $(\hat a,\hat b)$ 满足式 \eqref{thm:normal-equations}。
+
+为说明这是唯一的全局最小点，令 $u=a-\hat a$，$v=b-\hat b$。由于 $(\hat a,\hat b)$ 满足正规方程，直接展开平方项可得
+\[
+S(a,b)=S(\hat a,\hat b)+\sum_{i=1}^{n}(u+vx_i)^2.
+\]
+再将 $x_i=(x_i-\bar x)+\bar x$ 代入，并令 $w=u+v\bar x$，得到
+\[
+\sum_{i=1}^{n}(u+vx_i)^2
+=nw^2+v^2\sum_{i=1}^{n}(x_i-\bar x)^2\geq 0.
+\]
+当且仅当 $w=0$ 且 $v=0$ 时等号成立；由此 $u=0$。所以 $(\hat a,\hat b)$ 是唯一最小点。
+\end{proof}
+% UNIT S01.U05
+\begin{theorem}
+在定理 \eqref{thm:normal-equations} 的条件下，最小二乘拟合直线经过样本均值点 $(\bar x,\bar y)$，即
+\[
+\hat y(\bar x)=\hat a+\hat b\bar x=\bar y.
+\]
+等价地，含截距的一元最小二乘拟合满足
+\[
+\sum_{i=1}^{n}\hat e_i=0.
+\]
+\end{theorem}
+% UNIT S01.U06
+\begin{proof}
+由定理 \eqref{thm:normal-equations} 给出的截距公式，
+\[
+\hat a=\bar y-\hat b\bar x.
+\]
+因此
+\[
+\hat a+\hat b\bar x=\bar y.
+\]
+另一方面，第一条正规方程为
+\[
+\sum_{i=1}^{n}\hat e_i=\sum_{i=1}^{n}\bigl[y_i-(\hat a+\hat b x_i)\bigr]=0\text{，}
+\]
+故拟合残差的总和为零。
+\end{proof}
+% UNIT S01.U07
+\begin{example}
+某地区三年的广告支出 $x$ 与销售额 $y$ 的观测数据为
+\[
+(x_1,y_1)=(1,2),\qquad (x_2,y_2)=(2,3),\qquad (x_3,y_3)=(3,5)\text{。}
+\]
+这三个观测点的样本均值为
+\[
+\bar x=\frac{1+2+3}{3}=2,\qquad \bar y=\frac{2+3+5}{3}=\frac{10}{3}\text{。}
+\]
+用一元直线拟合销售额与广告支出之间的线性关系。
+\end{example}
+% UNIT S01.U08
+\par\noindent\textbf{解：}样本均值为
+\[
+\bar x=2,
+\qquad
+\bar y=\frac{10}{3}.
+\]
+因此
+\[
+\sum_{i=1}^{3}(x_i-\bar x)(y_i-\bar y)
+=(-1)\left(-\frac43\right)+0\left(-\frac13\right)+1\left(\frac53\right)=3,
+\]
+且
+\[
+\sum_{i=1}^{3}(x_i-\bar x)^2=(-1)^2+0^2+1^2=2\text{。}
+\]
+所以
+\[
+\hat b=\frac{3}{2},
+\qquad
+\hat a=\frac{10}{3}-\frac32\cdot2=\frac13\text{。}
+\]
+拟合直线为
+\[
+\hat y=\frac13+\frac32x\text{。}
+\]
+三个观测点的拟合值和残差分别为
+\[
+\begin{array}{c|c|c}
+ i&\hat y_i&\hat e_i=y_i-\hat y_i\\ \hline
+ 1&\frac{11}{6}&\frac16\\
+ 2&\frac{10}{3}&-\frac13\\
+ 3&\frac{29}{6}&\frac16
+\end{array}
+\]
+可见 $\hat e_1+\hat e_2+\hat e_3=0$，且拟合直线经过 $(\bar x,\bar y)=(2,10/3)$。在经济解释上，该直线描述样本内广告支出与销售额的线性拟合关系，但不能仅凭拟合结果断言广告支出对销售额具有因果影响。\par
+% UNIT S01.U09
+\begin{exercise}
+\label{mathagent:exercise:41706b9e371cbf8283a4f1192e660b4426644ffb8f650af52f47cef5491b1ca0}
+设三家企业的培训支出 $x$ 与劳动生产率 $y$ 的数据为
+\[
+(x_1,y_1)=(1,4),\qquad (x_2,y_2)=(2,5),\qquad (x_3,y_3)=(4,8)\text{。}
+\]
+完成下列任务：
+\begin{enumerate}
+\item 计算 $\bar x$ 和 $\bar y$；
+\item 求最小二乘拟合直线 $\hat y=\hat a+\hat b x$；
+\item 计算三个观测点的残差，并验证残差之和为零；
+\item 求培训支出为 $x=3$ 时的拟合值，并说明这是样本区间内的插值。
+\end{enumerate}
+\end{exercise}
+\section{多元最小二乘与矩阵表示}\label{sec:S02}
+% UNIT S02.U01
+\begin{definition}
+\label{def:design-matrix}设有 $n\geq 1$ 个观测，每个观测包含一个被解释变量 $y_i\in\mathbb{R}$ 和 $p-1$ 个解释变量 $x_{i1},\ldots,x_{i,p-1}\in\mathbb{R}$。设计矩阵 $X\in\mathbb{R}^{n\times p}$ 定义如下：当 $p\geq 2$ 时，
+\[
+X=\begin{bmatrix}
+1&x_{11}&\cdots&x_{1,p-1}\\
+1&x_{21}&\cdots&x_{2,p-1}\\
+\vdots&\vdots&\ddots&\vdots\\
+1&x_{n1}&\cdots&x_{n,p-1}
+\end{bmatrix};
+\]
+当 $p=1$ 时，模型仅含截距项，$X=\begin{bmatrix}1&\cdots&1\end{bmatrix}^{\mathsf T}\in\mathbb{R}^{n\times 1}$。在后一情形中，约定空和 $\sum_{j=1}^{0}(\cdot)=0$。第一列的 $1$ 表示模型含有截距项。令参数列向量、响应列向量分别为
+\[
+\beta=\begin{bmatrix}\beta_0\\\beta_1\\\vdots\\\beta_{p-1}\end{bmatrix}\in\mathbb{R}^{p},
+\qquad
+y=\begin{bmatrix}y_1\\y_2\\\vdots\\y_n\end{bmatrix}\in\mathbb{R}^{n}.
+\]
+矩阵形式的线性拟合值为 $X\beta$，第 $i$ 个拟合值为 $\beta_0+\sum_{j=1}^{p-1}\beta_jx_{ij}$；特别地，当 $p=1$ 时，该式按上述空和约定退化为 $\beta_0$。
+\end{definition}
+% UNIT S02.U02
+\begin{definition}
+对任意参数向量 $\beta\in\mathbb{R}^{p}$，残差向量定义为
+\begin{equation}
+e(\beta)=y-X\beta.
+\label{def:residual-vector}
+\end{equation}
+其第 $i$ 个分量为
+\[
+e_i(\beta)=y_i-\left(\beta_0+\sum_{j=1}^{p-1}\beta_jx_{ij}\right).
+\]
+矩阵形式的平方误差目标函数定义为
+\[
+Q(\beta)=e(\beta)^{\mathsf T}e(\beta)=(y-X\beta)^{\mathsf T}(y-X\beta)=\sum_{i=1}^{n}e_i(\beta)^2.
+\]
+当 $p=2$ 且 $X$ 的第二列为 $(x_1,\ldots,x_n)^{\mathsf T}$ 时，$Q(\beta)$ 就是前文的一元目标函数 $S(a,b)$，其中 $\beta=(a,b)^{\mathsf T}$。
+\end{definition}
+% UNIT S02.U03
+\begin{definition}
+若设计矩阵 $X\in\mathbb{R}^{n\times p}$ 的列向量线性无关，则称 $X$ 列满秩，即 $\operatorname{rank}(X)=p$。这要求 $p\leq n$，并且不存在非零向量 $v\in\mathbb{R}^{p}$ 使得 $Xv=0$。在列满秩条件下，矩阵 $X^{\mathsf T}X\in\mathbb{R}^{p\times p}$ 可逆。
+\end{definition}
+% UNIT S02.U04
+\begin{theorem}
+\label{thm:unique-least-squares-solution}设 $X\in\mathbb{R}^{n\times p}$，$y\in\mathbb{R}^{n}$，且 $X$ 列满秩，即 $\operatorname{rank}(X)=p$。定义 $Q(\beta)=(y-X\beta)^{\mathsf T}(y-X\beta)$。则 $Q$ 在 $\mathbb{R}^{p}$ 上存在唯一最小点 $\hat\beta$，并且该最小点满足矩阵正规方程
+\begin{equation}
+X^{\mathsf T}X\hat\beta=X^{\mathsf T}y.
+\label{thm:matrix-normal-equation}
+\end{equation}
+由于 $X^{\mathsf T}X$ 可逆，唯一最小二乘解为
+\[
+\hat\beta=(X^{\mathsf T}X)^{-1}X^{\mathsf T}y.
+\]
+对应的拟合值和残差分别为 $\hat y=X\hat\beta$ 与 $\hat e=y-X\hat\beta$。
+\end{theorem}
+% UNIT S02.U05
+\begin{proof}
+将目标函数展开为
+\[
+Q(\beta)=y^{\mathsf T}y-2\beta^{\mathsf T}X^{\mathsf T}y+\beta^{\mathsf T}X^{\mathsf T}X\beta.
+\]
+对 $\beta$ 的各个分量求偏导，得到梯度
+\[
+\nabla Q(\beta)=-2X^{\mathsf T}y+2X^{\mathsf T}X\beta.
+\]
+因此，最小点必须满足 $\nabla Q(\hat\beta)=0$，也就是
+\[
+X^{\mathsf T}X\hat\beta=X^{\mathsf T}y,
+\]
+这就是式 \eqref{thm:matrix-normal-equation}。
+
+由于 $X$ 列满秩，对任意非零向量 $v\in\mathbb{R}^{p}$，都有 $Xv\neq 0$，从而
+\[
+v^{\mathsf T}X^{\mathsf T}Xv=(Xv)^{\mathsf T}(Xv)=\sum_{i=1}^{n}(Xv)_i^2>0.
+\]
+所以 $X^{\mathsf T}X$ 可逆，正规方程至多有一个解，并且该解为
+\[
+\hat\beta=(X^{\mathsf T}X)^{-1}X^{\mathsf T}y.
+\]
+
+还需说明该解确实给出全局最小值。令 $h=\beta-\hat\beta$，则 $\beta=\hat\beta+h$，并且
+\[
+y-X\beta=(y-X\hat\beta)-Xh.
+\]
+展开平方误差可得
+\[
+Q(\beta)=Q(\hat\beta)-2h^{\mathsf T}X^{\mathsf T}(y-X\hat\beta)+h^{\mathsf T}X^{\mathsf T}Xh.
+\]
+由正规方程，$X^{\mathsf T}(y-X\hat\beta)=0$，因此
+\[
+Q(\beta)=Q(\hat\beta)+h^{\mathsf T}X^{\mathsf T}Xh
+=Q(\hat\beta)+(Xh)^{\mathsf T}(Xh)\geq Q(\hat\beta).
+\]
+当且仅当 $Xh=0$ 时等号成立。列满秩又保证 $Xh=0$ 只能推出 $h=0$，即 $\beta=\hat\beta$。所以 $\hat\beta$ 是唯一的全局最小点。
+\end{proof}
+% UNIT S02.U06
+\begin{theorem}
+在定理 \eqref{thm:matrix-normal-equation} 的条件下，最小二乘残差 $\hat e=y-X\hat\beta$ 满足
+\[
+X^{\mathsf T}\hat e=0.
+\]
+也就是说，残差向量与设计矩阵的每一列都正交。特别地，当模型含截距项时，$X$ 的第一列为全 $1$ 向量，于是
+\[
+\sum_{i=1}^{n}\hat e_i=0.
+\]
+当模型还包含解释变量列 $(x_{1j},\ldots,x_{nj})^{\mathsf T}$ 时，还满足
+\[
+\sum_{i=1}^{n}x_{ij}\hat e_i=0,
+\qquad j=1,\ldots,p-1.
+\]
+\end{theorem}
+% UNIT S02.U07
+\begin{proof}
+由定理 \eqref{thm:matrix-normal-equation} 的正规方程，
+\[
+X^{\mathsf T}X\hat\beta=X^{\mathsf T}y.
+\]
+移项得到
+\[
+X^{\mathsf T}(y-X\hat\beta)=0.
+\]
+根据残差向量的定义 \eqref{def:residual-vector}，这就是
+\[
+X^{\mathsf T}\hat e=0.
+\]
+矩阵乘积的第 $j$ 个分量等于设计矩阵第 $j$ 列与残差向量的内积，因此每一列都与残差向量正交。若第一列为全 $1$ 向量，则对应内积为 $\sum_{i=1}^{n}\hat e_i$；若第 $j+1$ 列为解释变量 $x_j$，则对应内积为 $\sum_{i=1}^{n}x_{ij}\hat e_i$。
+\end{proof}
+% UNIT S02.U08
+\begin{example}
+某企业有三次观测，$y$ 表示劳动生产率，$x_1$ 表示培训支出，$x_2$ 表示设备投入。观测数据为
+\[
+\begin{array}{c|c|c|c}
+ i&x_{i1}&x_{i2}&y_i\\ \hline
+ 1&1&0&4\\
+ 2&0&1&3\\
+ 3&1&1&5
+\end{array}
+\]
+考虑含截距的模型
+\[
+y_i=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+e_i.
+\]
+写出设计矩阵 $X$、响应向量 $y$，并利用矩阵正规方程求最小二乘估计。
+\end{example}
+% UNIT S02.U09
+\par\noindent\textbf{解：}由数据可得
+\[
+X=\begin{bmatrix}1&1&0\\1&0&1\\1&1&1\end{bmatrix},
+\qquad
+ y=\begin{bmatrix}4\\3\\5\end{bmatrix}.
+\]
+计算得到
+\[
+X^{\mathsf T}X=
+\begin{bmatrix}3&2&2\\2&2&1\\2&1&2\end{bmatrix},
+\qquad
+X^{\mathsf T}y=
+\begin{bmatrix}12\\9\\8\end{bmatrix}.
+\]
+因此正规方程为
+\[
+\begin{bmatrix}3&2&2\\2&2&1\\2&1&2\end{bmatrix}
+\begin{bmatrix}\hat\beta_0\\\hat\beta_1\\\hat\beta_2\end{bmatrix}
+=
+\begin{bmatrix}12\\9\\8\end{bmatrix}.
+\]
+直接检验可得
+\[
+\hat\beta=
+\begin{bmatrix}2\\2\\1\end{bmatrix},
+\]
+因为
+\[
+\begin{bmatrix}3&2&2\\2&2&1\\2&1&2\end{bmatrix}
+\begin{bmatrix}2\\2\\1\end{bmatrix}
+=
+\begin{bmatrix}12\\9\\8\end{bmatrix}.
+\]
+所以拟合方程为
+\[
+\hat y=2+2x_1+x_2.
+\]
+三个观测的拟合值依次为 $4,3,5$，因此残差向量为
+\[
+\hat e=y-X\hat\beta=
+\begin{bmatrix}0\\0\\0\end{bmatrix}.
+\]
+在这个例子中，三个观测点恰好被模型完全拟合。若给定一个新的解释变量取值 $(x_1,x_2)=(2,1)$，则将其代入拟合方程可得样本外预测值
+\[
+\widehat y(2,1)=2+2\times 2+1=7.
+\]
+由于样本中 $x_1$ 只取过 $0$ 和 $1$，这里的预测涉及超出样本观测范围的外推，应谨慎解释其可靠性。这个计算说明矩阵正规方程可以同时处理多个解释变量，但拟合关系仍然只是样本内的线性拟合，不能据此断言培训支出或设备投入对劳动生产率具有因果影响。\par
+% UNIT S02.U10
+\begin{exercise}
+\label{mathagent:exercise:49ae28350c6a4abd6936597716c61d2e3cb07c4268424bce9420505d640e7b34}
+设三次观测的设计矩阵和响应向量为
+\[
+X=\begin{bmatrix}1&0&1\\1&1&0\\1&1&1\end{bmatrix},
+\qquad
+ y=\begin{bmatrix}2\\4\\5\end{bmatrix}.
+\]
+完成下列任务：
+\begin{enumerate}
+\item 计算 $X^{\mathsf T}X$ 和 $X^{\mathsf T}y$；
+\item 利用正规方程求 $\hat\beta=(\hat\beta_0,\hat\beta_1,\hat\beta_2)^{\mathsf T}$；
+\item 写出拟合方程 $\hat y=\hat\beta_0+\hat\beta_1x_1+\hat\beta_2x_2$；
+\item 计算残差向量，并验证它与 $X$ 的每一列正交。\end{enumerate}
+\end{exercise}
+\section*{练习答案}
+% UNIT S01.U10
+\par\noindent\textbf{\hyperref[mathagent:exercise:41706b9e371cbf8283a4f1192e660b4426644ffb8f650af52f47cef5491b1ca0]{练习 \ref*{mathagent:exercise:41706b9e371cbf8283a4f1192e660b4426644ffb8f650af52f47cef5491b1ca0} 的解答：}}答案如下：
+\[
+\bar x=\frac{1+2+4}{3}=\frac73,
+\qquad
+\bar y=\frac{4+5+8}{3}=\frac{17}{3}\text{。}
+\]
+进一步有
+\[
+\sum_{i=1}^{3}(x_i-\bar x)(y_i-\bar y)=\frac{19}{3},
+\qquad
+\sum_{i=1}^{3}(x_i-\bar x)^2=\frac{14}{3}\text{。}
+\]
+所以
+\[
+\hat b=\frac{19/3}{14/3}=\frac{19}{14},
+\qquad
+\hat a=\frac{17}{3}-\frac{19}{14}\cdot\frac73=\frac52\text{。}
+\]
+拟合直线为
+\[
+\hat y=\frac52+\frac{19}{14}x\text{。}
+\]
+三个拟合值和残差为
+\[
+\begin{array}{c|c|c}
+ i&\hat y_i&\hat e_i=y_i-\hat y_i\\ \hline
+ 1&\frac{27}{7}&\frac17\\
+ 2&\frac{73}{14}&-\frac{3}{14}\\
+ 3&\frac{111}{14}&\frac{1}{14}
+\end{array}
+\]
+残差之和为
+\[
+\frac17-\frac{3}{14}+\frac{1}{14}=0\text{。}
+\]
+最后，$x=3$ 时的拟合值为
+\[
+\hat y(3)=\frac52+\frac{19}{14}\cdot3=\frac{46}{7}\text{。}
+\]
+由于 $3$ 位于样本解释变量的最小值 $1$ 与最大值 $4$ 之间，这是样本区间内的插值。\par
+% UNIT S02.U11
+\par\noindent\textbf{\hyperref[mathagent:exercise:49ae28350c6a4abd6936597716c61d2e3cb07c4268424bce9420505d640e7b34]{练习 \ref*{mathagent:exercise:49ae28350c6a4abd6936597716c61d2e3cb07c4268424bce9420505d640e7b34} 的解答：}}先计算矩阵乘积：
+\[
+X^{\mathsf T}X=
+\begin{bmatrix}3&2&2\\2&2&1\\2&1&2\end{bmatrix},
+\qquad
+X^{\mathsf T}y=
+\begin{bmatrix}11\\9\\7\end{bmatrix}.
+\]
+正规方程为
+\[
+\begin{bmatrix}3&2&2\\2&2&1\\2&1&2\end{bmatrix}
+\begin{bmatrix}\hat\beta_0\\\hat\beta_1\\\hat\beta_2\end{bmatrix}
+=
+\begin{bmatrix}11\\9\\7\end{bmatrix}.
+\]
+解得
+\[
+\hat\beta=
+\begin{bmatrix}1\\3\\1\end{bmatrix}.
+\]
+因此拟合方程为
+\[
+\hat y=1+3x_1+x_2.
+\]
+拟合值为
+\[
+X\hat\beta=
+\begin{bmatrix}2\\4\\5\end{bmatrix}=y,
+\]
+故残差向量为
+\[
+\hat e=y-X\hat\beta=
+\begin{bmatrix}0\\0\\0\end{bmatrix}.
+\]
+于是
+\[
+X^{\mathsf T}\hat e=
+\begin{bmatrix}0\\0\\0\end{bmatrix},
+\]
+这验证了残差向量与设计矩阵的每一列正交。\par
+\end{document}

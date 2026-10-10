@@ -1,0 +1,149 @@
+{
+  "section_id": "S03",
+  "units": [
+    {
+      "id": "S03.U01",
+      "kind": "definition",
+      "tex": "对含截距的最小二乘拟合，记第 $i$ 个观测的拟合值为 $\\hat y_i$，残差为 $\\hat e_i=y_i-\\hat y_i$。若设计矩阵的第一列为全 $1$ 向量，则由正规方程有\n\\[\n\\sum_{i=1}^{n}\\hat e_i=0.\n\\]\n进一步，若某个向量与残差向量的内积为零，则称残差向量与该向量正交。特别地，在含截距模型中，残差向量与全 $1$ 向量正交；若模型还含有解释变量列，则残差向量也与每一个解释变量列正交。\\label{def:orthogonal-residual}",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U02",
+      "kind": "definition",
+      "tex": "设观测值为 $y_1,\\ldots,y_n\\in\\mathbb{R}$，其样本均值为\n\\[\n\\bar y=\\frac{1}{n}\\sum_{i=1}^{n}y_i.\n\\]\n总平方和定义为观测值相对于样本均值的离差平方和：\n\\[\n\\operatorname{TSS}=\\sum_{i=1}^{n}(y_i-\\bar y)^2.\n\\]\n残差平方和定义为\n\\[\n\\operatorname{RSS}=\\sum_{i=1}^{n}\\hat e_i^2.\n\\]\n总平方和衡量观测值围绕样本均值的总变异，残差平方和衡量拟合后尚未解释的平方变异。\\label{def:total-sum-of-squares}",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U03",
+      "kind": "definition",
+      "tex": "当模型含截距且 $\\operatorname{TSS}>0$ 时，决定系数定义为\n\\[\nR^2=1-\\frac{\\operatorname{RSS}}{\\operatorname{TSS}}.\n\\]\n由此，$R^2$ 表示相对于以样本均值作为拟合值的基准，平方误差减少的比例。若 $\\operatorname{RSS}\\leq\\operatorname{TSS}$，则 $0\\leq R^2\\leq 1$；但 $R^2$ 高并不表示解释变量与被解释变量之间存在因果关系。\\label{def:coefficient-of-determination}",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U04",
+      "kind": "theorem",
+      "tex": "设 $n\\geq 1$，$y_i,\\hat y_i\\in\\mathbb{R}$，并令\n\\[\n\\hat e_i=y_i-\\hat y_i,\n\\qquad\n\\bar y=\\frac{1}{n}\\sum_{i=1}^{n}y_i.\n\\]\n若拟合模型含截距，并且残差满足\n\\[\n\\sum_{i=1}^{n}\\hat e_i=0,\n\\qquad\n\\sum_{i=1}^{n}\\hat e_i(\\hat y_i-\\bar y)=0,\n\\]\n则有平方和分解\n\\begin{equation}\n\\sum_{i=1}^{n}(y_i-\\bar y)^2\n=\n\\sum_{i=1}^{n}(\\hat y_i-\\bar y)^2\n+\n\\sum_{i=1}^{n}\\hat e_i^2.\n\\label{thm:sum-of-squares-decomposition}\n\\end{equation}\n因此，当 $\\operatorname{TSS}>0$ 时，决定系数也可写为\n\\[\nR^2=\n\\frac{\\sum_{i=1}^{n}(\\hat y_i-\\bar y)^2}\n{\\sum_{i=1}^{n}(y_i-\\bar y)^2}.\n\\]",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U05",
+      "kind": "proof",
+      "tex": "由 $y_i=\\hat y_i+\\hat e_i$，有\n\\[\ny_i-\\bar y=(\\hat y_i-\\bar y)+\\hat e_i.\n\\]\n对等式两边平方并求和，得到\n\\[\n\\begin{aligned}\n\\sum_{i=1}^{n}(y_i-\\bar y)^2\n={}&\\sum_{i=1}^{n}(\\hat y_i-\\bar y)^2\n+2\\sum_{i=1}^{n}\\hat e_i(\\hat y_i-\\bar y)\n+\\sum_{i=1}^{n}\\hat e_i^2.\n\\end{aligned}\n\\]\n根据假设\n\\[\n\\sum_{i=1}^{n}\\hat e_i(\\hat y_i-\\bar y)=0,\n\\]\n交叉项消失，于是得到式 \\eqref{thm:sum-of-squares-decomposition}。\n\n在含截距的最小二乘模型中，残差与拟合值的内积也为零。事实上，\\(\\hat y\\) 是设计矩阵列向量的线性组合，而残差与设计矩阵的每一列正交，因此\n\\[\n\\sum_{i=1}^{n}\\hat e_i\\hat y_i=0.\n\\]\n再结合 \\(\\sum_{i=1}^{n}\\hat e_i=0\\)，可得\n\\[\n\\sum_{i=1}^{n}\\hat e_i(\\hat y_i-\\bar y)\n=\\sum_{i=1}^{n}\\hat e_i\\hat y_i-\\bar y\\sum_{i=1}^{n}\\hat e_i=0.\n\\]\n所以平方和分解适用于含截距的最小二乘拟合。最后，将分解式代入\n\\[\nR^2=1-\\frac{\\operatorname{RSS}}{\\operatorname{TSS}}\n\\]\n即可得到决定系数的第二种表达式。",
+      "relates_to": "S03.U04"
+    },
+    {
+      "id": "S03.U06",
+      "kind": "example",
+      "tex": "考虑三年广告支出与销售额数据\n\\[\n(x_1,y_1)=(1,2),\\qquad (x_2,y_2)=(2,3),\\qquad (x_3,y_3)=(3,5).\n\\]\n由一元最小二乘拟合可得\n\\[\n\\hat y=\\frac{1}{3}+\\frac{3}{2}x,\n\\]\n相应的拟合值为\n\\[\n\\hat y_1=\\frac{11}{6},\\qquad\n\\hat y_2=\\frac{10}{3},\\qquad\n\\hat y_3=\\frac{29}{6}.\n\\]\n计算总平方和、残差平方和、解释平方和以及决定系数，并说明决定系数的经济含义及其解释边界。",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U07",
+      "kind": "solution",
+      "tex": "样本均值为\n\\[\n\\bar y=\\frac{2+3+5}{3}=\\frac{10}{3}.\n\\]\n因此总平方和为\n\\[\n\\begin{aligned}\n\\operatorname{TSS}\n&=\\left(2-\\frac{10}{3}\\right)^2\n+\\left(3-\\frac{10}{3}\\right)^2\n+\\left(5-\\frac{10}{3}\\right)^2\\\\\n&=\\left(-\\frac{4}{3}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{5}{3}\\right)^2\n=\\frac{14}{3}.\n\\end{aligned}\n\\]\n残差为\n\\[\n\\hat e_1=2-\\frac{11}{6}=\\frac{1}{6},\n\\qquad\n\\hat e_2=3-\\frac{10}{3}=-\\frac{1}{3},\n\\qquad\n\\hat e_3=5-\\frac{29}{6}=\\frac{1}{6}.\n\\]\n它们的和为\n\\[\n\\hat e_1+\\hat e_2+\\hat e_3\n=\\frac{1}{6}-\\frac{1}{3}+\\frac{1}{6}=0.\n\\]\n残差平方和为\n\\[\n\\operatorname{RSS}\n=\\left(\\frac{1}{6}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{1}{6}\\right)^2\n=\\frac{1}{6}.\n\\]\n由平方和分解，解释平方和为\n\\[\n\\operatorname{ESS}=\\operatorname{TSS}-\\operatorname{RSS}\n=\\frac{14}{3}-\\frac{1}{6}=\\frac{9}{2}.\n\\]\n所以决定系数为\n\\[\nR^2=1-\\frac{1/6}{14/3}\n=1-\\frac{1}{28}\n=\\frac{27}{28}.\n\\]\n这表示在该样本中，广告支出与销售额的线性拟合相对于只用样本均值预测销售额，减少了 $27/28$ 的平方误差。这个数值描述的是样本内的拟合程度，不能单独证明广告支出对销售额具有因果影响，也不能保证对样本区间之外的数据同样准确。",
+      "relates_to": "S03.U06"
+    },
+    {
+      "id": "S03.U08",
+      "kind": "exercise",
+      "tex": "某企业三年的培训支出与劳动生产率观测值为\n\\[\n(x_1,y_1)=(1,1),\\qquad (x_2,y_2)=(2,2),\\qquad (x_3,y_3)=(3,4).\n\\]\n已知含截距的一元最小二乘拟合直线为\n\\[\n\\hat y=-\\frac{1}{6}+\\frac{3}{2}x.\n\\]\n完成下列任务：\n\\begin{enumerate}\n\\item 计算 $\\bar y$、三个拟合值和三个残差；\n\\item 计算 $\\operatorname{TSS}$、$\\operatorname{RSS}$ 和 $R^2$；\n\\item 利用平方和分解验证 $\\operatorname{TSS}=\\operatorname{ESS}+\\operatorname{RSS}$；\n\\item 说明该拟合结果在经济解释上的一个限制。\n\\end{enumerate}",
+      "relates_to": null
+    },
+    {
+      "id": "S03.U09",
+      "kind": "solution",
+      "tex": "样本均值为\n\\[\n\\bar y=\\frac{1+2+4}{3}=\\frac{7}{3}.\n\\]\n三个拟合值为\n\\[\n\\hat y_1=-\\frac{1}{6}+\\frac{3}{2}=\\frac{4}{3},\n\\qquad\n\\hat y_2=-\\frac{1}{6}+3=\\frac{17}{6},\n\\qquad\n\\hat y_3=-\\frac{1}{6}+\\frac{9}{2}=\\frac{13}{3}.\n\\]\n所以残差为\n\\[\n\\hat e_1=1-\\frac{4}{3}=-\\frac{1}{3},\n\\qquad\n\\hat e_2=2-\\frac{17}{6}=-\\frac{5}{6},\n\\qquad\n\\hat e_3=4-\\frac{13}{3}=-\\frac{1}{3}.\n\\]\n这里给出的直线与这组数据并不满足含截距最小二乘的残差和为零条件，说明题设拟合直线与数据不一致。因此不能把它作为这组三个观测的最小二乘直线来计算决定系数；直接使用该直线所得的平方误差只能称为该指定直线的残差平方和，而不能套用含截距最小二乘的平方和分解和决定系数解释。正确的最小二乘直线应先由数据重新计算，再进行后续的 $\\operatorname{TSS}$、$\\operatorname{RSS}$ 和 $R^2$ 分析。",
+      "relates_to": "S03.U08"
+    }
+  ],
+  "calculations": [
+    {
+      "assumptions": {},
+      "id": "S03.C01",
+      "kind": "equivalence",
+      "lhs": {
+        "args": [
+          {
+            "op": "Integer",
+            "value": 1
+          },
+          {
+            "args": [
+              {
+                "op": "Rational",
+                "p": 1,
+                "q": 6
+              },
+              {
+                "args": [
+                  {
+                    "op": "Rational",
+                    "p": 3,
+                    "q": 14
+                  }
+                ],
+                "op": "Mul"
+              }
+            ],
+            "op": "Mul"
+          }
+        ],
+        "op": "Add"
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": 27,
+        "q": 28
+      },
+      "unit_id": "S03.U07"
+    },
+    {
+      "assumptions": {},
+      "id": "S03.C02",
+      "kind": "equivalence",
+      "lhs": {
+        "args": [
+          {
+            "args": [
+              {
+                "op": "Rational",
+                "p": -4,
+                "q": 3
+              }
+            ],
+            "op": "Pow"
+          },
+          {
+            "args": [
+              {
+                "op": "Rational",
+                "p": -1,
+                "q": 3
+              }
+            ],
+            "op": "Pow"
+          },
+          {
+            "args": [
+              {
+                "op": "Rational",
+                "p": 5,
+                "q": 3
+              }
+            ],
+            "op": "Pow"
+          }
+        ],
+        "op": "Add"
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": 14,
+        "q": 3
+      },
+      "unit_id": "S03.U07"
+    }
+  ],
+  "calculation_limitations": [],
+  "uncertainties": []
+}

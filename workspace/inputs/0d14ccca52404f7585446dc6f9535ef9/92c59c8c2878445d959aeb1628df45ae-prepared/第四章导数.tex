@@ -1,0 +1,2664 @@
+%!TEX program = xelatex
+\documentclass[fontset=fandol]{ctexart}
+\IfFontExistsTF{Times New Roman}
+  {\setmainfont{Times New Roman}}
+  {
+    \IfFontExistsTF{TeX Gyre Termes}
+      {\setmainfont{TeX Gyre Termes}}
+      {
+        \IfFontExistsTF{Liberation Serif}
+          {\setmainfont{Liberation Serif}}
+          {}
+      }
+  }
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{mathrsfs,bm}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs,longtable,array,tabularx,multirow}
+\usepackage{xparse,xstring}
+\usepackage{lastpage}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,angles,positioning,shapes.geometric,graphs}
+\usepackage[framemethod=TikZ]{mdframed}
+
+\lhead{大学数学（$ \mathrm{I} $）}
+\rhead{第 \thepage\ 页，共 \pageref{LastPage} 页}
+\cfoot{}
+\setlength{\headheight}{13pt}
+\pagestyle{fancy}
+
+\mdfdefinestyle{extrastyle}{%
+    linecolor=gray,
+    linewidth=0.8pt,
+    frametitlerule=true,
+    frametitlebackgroundcolor=gray!10,
+    backgroundcolor=gray!5,
+    skipabove=10pt,
+    skipbelow=10pt,
+    innertopmargin=6pt,
+    innerbottommargin=6pt
+}
+\newenvironment{extra}{\begin{mdframed}[style=extrastyle, frametitle={* 选读内容（不要求掌握）}]}{\end{mdframed}}
+
+\newcounter{DefinitionCounter}[section]
+\newcounter{TheoremCounter}[section]
+\newcounter{PropositionCounter}[section]
+\newcounter{ExampleCounter}[section]
+\newcounter{ExerciseCounter}[section]
+\newcounter{ProblemCounter}[section]
+\newcounter{ConclusionCounter}[section]
+\renewcommand{\theDefinitionCounter}{\thesection.\arabic{DefinitionCounter}}
+\renewcommand{\theTheoremCounter}{\thesection.\arabic{TheoremCounter}}
+\renewcommand{\thePropositionCounter}{\thesection.\arabic{PropositionCounter}}
+\renewcommand{\theExampleCounter}{\thesection.\arabic{ExampleCounter}}
+\renewcommand{\theExerciseCounter}{\thesection.\arabic{ExerciseCounter}}
+\renewcommand{\theProblemCounter}{\thesection.\arabic{ProblemCounter}}
+\renewcommand{\theConclusionCounter}{\thesection.\arabic{ConclusionCounter}}
+\NewDocumentEnvironment{definition}{O{}}
+{\par\noindent\refstepcounter{DefinitionCounter}\textbf{定义~\theDefinitionCounter\IfStrEq{#1}{}{}{（#1）}}\quad}
+{\par\vspace{0.8em}}
+\NewDocumentEnvironment{theorem}{O{}}
+{\par\noindent\refstepcounter{TheoremCounter}\textbf{定理~\theTheoremCounter\IfStrEq{#1}{}{}{（#1）}}\quad}
+{\par\vspace{0.8em}}
+\NewDocumentEnvironment{proposition}{O{}}
+{\par\noindent\refstepcounter{PropositionCounter}\textbf{性质~\thePropositionCounter\IfStrEq{#1}{}{}{（#1）}}\quad}
+{\par\vspace{0.8em}}
+\NewDocumentEnvironment{example}{O{}}
+{\par\noindent\refstepcounter{ExampleCounter}\textbf{例~\theExampleCounter\IfStrEq{#1}{}{}{（#1）}}\quad}
+{\par\vspace{0.8em}}
+\NewDocumentEnvironment{exercise}{O{}}
+{\par\noindent\refstepcounter{ExerciseCounter}\textbf{练习~\theExerciseCounter\IfStrEq{#1}{}{}{（#1）}}\quad}
+{\par\vspace{0.8em}}
+\NewDocumentEnvironment{problem}{O{}}
+{\par\noindent\refstepcounter{ProblemCounter}\textbf{问题~\theProblemCounter\IfStrEq{#1}{}{}{（#1）}}\quad}
+{\par\vspace{0.8em}}
+\NewDocumentEnvironment{conclusion}{O{}}
+{\par\noindent\refstepcounter{ConclusionCounter}\textbf{结论~\theConclusionCounter\IfStrEq{#1}{}{}{（#1）}}\quad}
+{\par\vspace{0.8em}}
+\newenvironment{custom}[1]{\par\noindent\textbf{#1}\quad}{\par\vspace{0.8em}}
+\newenvironment{proofdetail}{\par\noindent\textbf{证明}\quad}{\hfill$\square$\par\vspace{0.8em}}
+\newenvironment{solution}{\par\noindent\textbf{解}\quad}{\hfill$\square$\par\vspace{0.8em}}
+\newenvironment{idea}{\par\noindent\textbf{思路}\quad}{\par\vspace{0.4em}}
+\newenvironment{warning}{\par\noindent\textbf{注：}\quad}{\par\vspace{0.8em}}
+\newenvironment{remark}{\par\noindent\textbf{注}\quad}{\par\vspace{0.8em}}
+\newenvironment{intuition}{\par\noindent\textbf{直观理解}\quad}{\par\vspace{0.8em}}
+
+\newtheorem{corollary}{推论}[section] \newtheorem{property}{性质}[section] 
+\NewDocumentEnvironment{application}{O{}}
+{\par\noindent\textbf{应用拓展\IfStrEq{#1}{}{}{——#1}}\quad}
+{\par\vspace{0.8em}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\upcite}[1]{\textsuperscript{\textsuperscript{\cite{#1}}}}
+\newcommand{\bec}{\kern 0.56em\bigcirc \kern -0.85em {\small \because}\kern 0.56em}
+\DeclareMathOperator*{\argmax}{\mathrm{arg\,max}}
+\DeclareMathOperator*{\argmin}{\mathrm{arg\,min}}
+\renewcommand{\textfraction}{0.15}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.65}
+\renewcommand{\floatpagefraction}{0.60}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\setlength{\belowcaptionskip}{4pt}
+\setlength{\abovecaptionskip}{4pt}
+
+\title{大学数学（$ \mathrm{I} $）}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+\vspace{-1em}
+
+
+
+\section{导数的概念与计算}
+
+本章讨论一元函数微分学的起点：导数。 在前面学习极限与连续时，我们已经能够描述“函数值是否趋近某个数”“函数图像是否断开”。 但在许多问题中，仅知道函数连续是不够的；还需要知道变量变化得快还是慢、曲线在一点附近朝哪个方向延伸、经济变量在当前水平下继续增加一个单位会带来多大影响。 这些问题都指向同一个数学对象：函数改变量与自变量改变量之比的极限。
+
+
+\subsection{导数的概念}
+\subsubsection*{从变化率到导数}
+
+微分学研究变量变化的快慢。 按照常见教材的处理，导数可以从两个典型问题抽象出来。
+
+\begin{definition}[平均变化率]
+设函数 $y=f(x)$ 在区间 $[x_1,x_2]$ 上有定义，且 $x_1\neq x_2$。 比值
+\[
+\frac{f(x_2)-f(x_1)}{x_2-x_1}
+\]
+称为 $f$ 在 $[x_1,x_2]$ 上的平均变化率。 若记 $x_2=x_1+\Delta x$，则平均变化率也可写成
+\[
+\frac{\Delta y}{\Delta x}
+=\frac{f(x_1+\Delta x)-f(x_1)}{\Delta x}.
+\]
+它描述的是函数值在一段区间上的平均增减速度。
+\end{definition}
+
+第一，设物体作直线运动，路程为 $s=s(t)$。 在时间区间 $[t_0,t_0+\Delta t]$ 上的平均速度为
+\[
+\frac{\Delta s}{\Delta t}
+=\frac{s(t_0+\Delta t)-s(t_0)}{\Delta t}.
+\]
+当 $\Delta t\to0$ 时，若这个平均速度有极限，则该极限定义为时刻 $t_0$ 的瞬时速度。
+
+第二，设曲线为 $y=f(x)$，曲线上两点 $(x_0,f(x_0))$ 与 $(x_0+\Delta x,f(x_0+\Delta x))$ 所确定割线的斜率为
+\[
+\frac{\Delta y}{\Delta x}
+=\frac{f(x_0+\Delta x)-f(x_0)}{\Delta x}.
+\]
+当 $\Delta x\to0$ 时，若割线斜率有极限，则该极限就是曲线在点 $(x_0,f(x_0))$ 处切线的斜率。 两个问题的共同数学形式都是“函数改变量与自变量改变量之比的极限”，这就是导数。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+  \draw[->] (-0.2,0)--(5.4,0) node[right] {$x$};
+  \draw[->] (0,-0.2)--(0,3.6) node[above] {$y$};
+  \draw[domain=0.45:4.75,smooth,variable=\x,thick]
+    plot ({\x},{0.16*(\x-2.2)*(\x-2.2)+0.8});
+  \coordinate (M) at (2.0,0.806);
+  \coordinate (P) at (4.0,1.318);
+  \fill (M) circle (1.5pt) node[below left] {$M_0$};
+  \fill (P) circle (1.5pt) node[above right] {$M$};
+  \draw[thick,dashed] ($(M)!-0.45!(P)$)--($(M)!1.35!(P)$) node[right] {割线};
+  \draw[thick] ($(M)+(-1.05,-0.067)$)--($(M)+(1.35,0.086)$) node[right] {切线};
+  \draw[dashed] (M)--(2.0,0) node[below] {$x_0$};
+  \draw[dashed] (P)--(4.0,0) node[below] {$x_0+\Delta x$};
+  \node at (3.05,0.45) {$\Delta x$};
+  \node at (4.35,1.05) {$\Delta y$};
+\end{tikzpicture}
+\end{center}
+
+\begin{example}[平均速度与瞬时速度]
+设自由落体的路程函数为
+\[
+s(t)=\frac12gt^2,
+\]
+其中 $g>0$ 为重力加速度。 求 $t_0$ 到 $t_0+\Delta t$ 这段时间内的平均速度，并求时刻 $t_0$ 的瞬时速度。
+\end{example}
+\begin{solution}
+平均速度为
+\[
+\frac{s(t_0+\Delta t)-s(t_0)}{\Delta t}
+=\frac{\frac12g(t_0+\Delta t)^2-\frac12gt_0^2}{\Delta t}
+=gt_0+\frac12g\Delta t.
+\]
+令 $\Delta t\to0$，得瞬时速度
+\[
+v(t_0)=\lim_{\Delta t\to0}\left(gt_0+\frac12g\Delta t\right)=gt_0.
+\]
+这个例子说明：平均速度依赖一段时间，而瞬时速度是平均速度在时间间隔收缩到 $0$ 时的极限。
+\end{solution}
+
+\begin{definition}[导数]
+设函数 $f$ 在点 $x_0$ 的某邻域内有定义。 若极限
+\[
+\lim_{\Delta x\to0}\frac{f(x_0+\Delta x)-f(x_0)}{\Delta x}
+\]
+存在且为有限实数，则称 $f$ 在 $x_0$ 处可导，并称该极限为 $f$ 在 $x_0$ 处的导数，记作
+\[
+f'(x_0),\quad \left.\frac{\dd y}{\dd x}\right|_{x=x_0},\quad \left.\frac{\dd f}{\dd x}\right|_{x=x_0}.
+\]
+若上述极限不存在，则称 $f$ 在 $x_0$ 处不可导。 若差商趋于无穷大，本讲义不把它称为有限导数；有些教材会说该点“导数为无穷大”，其含义是切线为垂直方向，而不是导数作为实数存在。
+\end{definition}
+
+令 $x=x_0+\Delta x$，导数定义也可写成
+\[
+f'(x_0)=\lim_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0}.
+\]
+
+\begin{definition}[左导数与右导数]
+若
+\[
+f'_-(x_0)=\lim_{\Delta x\to0-}\frac{f(x_0+\Delta x)-f(x_0)}{\Delta x},\quad
+f'_+(x_0)=\lim_{\Delta x\to0+}\frac{f(x_0+\Delta x)-f(x_0)}{\Delta x}
+\]
+存在，则分别称为左导数与右导数。
+\end{definition}
+
+\begin{proposition}[可导的充要条件]
+$f$ 在 $x_0$ 处可导，当且仅当 $f'_-(x_0)$ 与 $f'_+(x_0)$ 都存在且相等。 此时共同值等于 $f'(x_0)$。
+\end{proposition}
+\begin{proofdetail}
+这是函数极限左右极限判别准则在差商函数
+\[
+\varphi(\Delta x)=\frac{f(x_0+\Delta x)-f(x_0)}{\Delta x}\quad(\Delta x\neq0)
+\]
+上的直接应用。 若 $\lim_{\Delta x\to0}\varphi(\Delta x)$ 存在，则左右极限存在且等于该极限。 反过来，若左右极限均存在且相等，记共同值为 $A$，则由一元函数极限存在的左右极限定理，$\lim_{\Delta x\to0}\varphi(\Delta x)=A$，故 $f'(x_0)=A$。
+\end{proofdetail}
+
+\begin{theorem}[可导必连续]
+若 $f$ 在 $x_0$ 处可导，则 $f$ 在 $x_0$ 处连续。
+\end{theorem}
+\begin{proofdetail}
+对 $x\neq x_0$，写成
+\[
+f(x)-f(x_0)=\frac{f(x)-f(x_0)}{x-x_0}(x-x_0).
+\]
+令 $x\to x_0$。 因 $f$ 在 $x_0$ 可导，
+\[
+\lim_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0}=f'(x_0)
+\]
+为有限数，而 $\lim_{x\to x_0}(x-x_0)=0$。 由极限乘法法则，
+\[
+\lim_{x\to x_0}[f(x)-f(x_0)]=f'(x_0)\cdot0=0.
+\]
+于是 $\lim_{x\to x_0}f(x)=f(x_0)$，即 $f$ 在 $x_0$ 连续。
+\end{proofdetail}
+
+\begin{example}[用定义求导]
+用导数定义求 函数 $f(x) = ax^2 + bx + c$ 在 $x_0$ 处的导数。
+\end{example}
+\begin{solution}
+根据导数的定义，函数 $f(x) = ax^2 + bx + c$ 在 $x_0$ 处的导数为：
+
+\begin{align*}
+	f'(x_0) &= \lim_{\Delta x \to 0} \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x} \\
+	&= \lim_{\Delta x \to 0} \frac{[a(x_0 + \Delta x)^2 + b(x_0 + \Delta x) + c] - (ax_0^2 + bx_0 + c)}{\Delta x} \\
+	&= \lim_{\Delta x \to 0} \frac{a(x_0^2 + 2x_0\Delta x + (\Delta x)^2) + bx_0 + b\Delta x + c - ax_0^2 - bx_0 - c}{\Delta x} \\
+	&= \lim_{\Delta x \to 0} \frac{2ax_0\Delta x + a(\Delta x)^2 + b\Delta x}{\Delta x} \\
+	&= \lim_{\Delta x \to 0} \frac{\Delta x(2ax_0 + a\Delta x + b)}{\Delta x} \\
+	&= \lim_{\Delta x \to 0} (2ax_0 + a\Delta x + b) \\
+	&= 2ax_0 + b
+\end{align*}
+\end{solution}
+\begin{idea}
+定义法的关键是先做代数化简，使差商中的 $\Delta x$ 可以约去，然后再取极限。
+\end{idea}
+
+\begin{example}[用定义求根式函数的导数]
+用定义求 $f(x)=\sqrt{x}$ 在 $x_0>0$ 处的导数。
+\end{example}
+\begin{solution}
+当 $\Delta x$ 足够小时 $x_0+\Delta x>0$。 差商为
+\[
+\frac{\sqrt{x_0+\Delta x}-\sqrt{x_0}}{\Delta x}.
+\]
+分子有根式差，先有理化：
+\[
+\frac{\sqrt{x_0+\Delta x}-\sqrt{x_0}}{\Delta x}
+=\frac{(\sqrt{x_0+\Delta x}-\sqrt{x_0})(\sqrt{x_0+\Delta x}+\sqrt{x_0})}{\Delta x(\sqrt{x_0+\Delta x}+\sqrt{x_0})}
+=\frac1{\sqrt{x_0+\Delta x}+\sqrt{x_0}}.
+\]
+令 $\Delta x\to0$，得
+\[
+f'(x_0)=\frac1{2\sqrt{x_0}}.
+\]
+\end{solution}
+\begin{idea}
+含根式的定义法求导常用有理化。 这一步不是技巧炫耀，而是为了把分子中隐藏的 $\Delta x$ 提取出来。
+\end{idea}
+
+\begin{example}[连续但不可导]
+证明 $f(x)=|x|$ 在 $0$ 处连续但不可导。
+\end{example}
+\begin{solution}
+连续性：$\lim_{x\to0}|x|=0=f(0)$。
+
+左、右导数分别为
+\[
+f'_-(0)=\lim_{\Delta x\to0-}\frac{|\Delta x|-0}{\Delta x}
+=\lim_{\Delta x\to0-}\frac{-\Delta x}{\Delta x}=-1,
+\]
+\[
+f'_+(0)=\lim_{\Delta x\to0+}\frac{|\Delta x|-0}{\Delta x}
+=\lim_{\Delta x\to0+}\frac{\Delta x}{\Delta x}=1.
+\]
+左右导数不相等，故 $f$ 在 $0$ 处不可导。
+\end{solution}
+
+\begin{example}[竖切线与有限导数]
+讨论 $f(x)=\sqrt[3]{x}$ 在 $0$ 处的可导性。
+\end{example}
+\begin{solution}
+$f$ 在 $0$ 处连续，因为 $\lim_{x\to0}\sqrt[3]{x}=0=f(0)$。 其差商为
+\[
+\frac{f(0+h)-f(0)}{h}=\frac{\sqrt[3]{h}}{h}=\frac1{h^{2/3}}.
+\]
+当 $h\to0$ 时，$\frac1{h^{2/3}}\to+\infty$，不存在有限实数极限。 因此 $f$ 在 $0$ 处不可导。
+
+从图像上看，曲线 $y=\sqrt[3]{x}$ 在原点处有竖直切线。 本讲义中“可导”要求导数为有限实数，所以竖直切线不算可导。
+\end{solution}
+
+\begin{example}[分段函数在衔接点的导数]
+设
+\[
+f(x)=
+\begin{cases}
+x,&x<0,\\
+\sin x,&x\geq0.
+\end{cases}
+\]
+求 $f'(0)$。
+\end{example}
+\begin{solution}
+$f(0)=0$。 当 $\Delta x<0$ 时，
+\[
+\frac{f(0+\Delta x)-f(0)}{\Delta x}=\frac{\Delta x}{\Delta x}=1.
+\]
+当 $\Delta x>0$ 时，
+\[
+\frac{f(0+\Delta x)-f(0)}{\Delta x}=\frac{\sin\Delta x}{\Delta x}\to1.
+\]
+左右差商极限都存在且相等，所以 $f'(0)=1$。
+\end{solution}
+\begin{warning}
+分段函数在分界点处求导，必须使用同一个函数值 $f(0)$ 分别计算左、右差商；不能只对两侧表达式分别求导后直接代入。
+\end{warning}
+
+\begin{example}[边际成本]
+若总成本函数为 $C(q)=200+5q+0.02q^2$，求产量 $q=100$ 时的边际成本，并解释含义。
+\end{example}
+\begin{solution}
+边际成本是总成本对产量的导数：
+\[
+C'(q)=5+0.04q,\qquad C'(100)=9.
+\]
+含义是：在产量 $100$ 附近，产量增加 $1$ 个单位时，总成本约增加 $9$ 个成本单位。 这是局部线性近似，不等于任意大幅增产时的平均增量。
+\end{solution}
+
+\begin{definition}[边际函数]
+在经济学中，“边际”通常指一个经济变量对另一个经济变量的瞬时变化率。 设产量或销售量为 $x$。
+
+常见经济函数包括：
+\begin{itemize}[leftmargin=2em]
+\item 成本函数 $C(x)$：生产 $x$ 单位产品所需总成本；
+\item 收入函数 $R(x)$：销售 $x$ 单位产品获得的总收入；
+\item 利润函数 $L(x)$：总收入减总成本，即 $L(x)=R(x)-C(x)$；
+\item 需求函数 $x=Q(p)$：价格为 $p$ 时市场需求量为 $Q(p)$；
+\item 反需求函数 $p=p(x)$：销售量为 $x$ 时对应的价格。 若收入按销售量表示，则通常有 $R(x)=xp(x)$。
+\end{itemize}
+
+若总成本为 $C=C(x)$，则
+\[
+C'(x)=\lim_{\Delta x\to0}\frac{C(x+\Delta x)-C(x)}{\Delta x}
+\]
+称为产量为 $x$ 时的边际成本。 当 $\Delta x$ 较小时，
+\[
+C(x+\Delta x)-C(x)\approx C'(x)\Delta x.
+\]
+特别地，当产量单位取得合适时，$C'(x)$ 常被解释为“在产量 $x$ 附近再生产一个单位产品所增加的成本”的近似值。
+
+若总收入为 $R=R(x)$，则 $R'(x)$ 称为边际收入；若总利润为 $L=L(x)$，则 $L'(x)$ 称为边际利润。 由于
+\[
+L(x)=R(x)-C(x),
+\]
+只要 $R,C$ 可导，就有
+\[
+L'(x)=R'(x)-C'(x),
+\]
+即边际利润等于边际收入减边际成本。
+\end{definition}
+
+\begin{definition}[弹性]
+设经济变量 $y=f(x)$ 可导，且 $x\neq0,\ f(x)\neq0$。 比值
+\[
+\frac{\Delta y/f(x)}{\Delta x/x}
+\]
+称为从 $x$ 到 $x+\Delta x$ 的弧弹性；若极限存在，则
+\[
+E_y^x(x)=\lim_{\Delta x\to0}\frac{\Delta y/f(x)}{\Delta x/x}
+=\frac{x}{f(x)}f'(x)
+\]
+称为 $y=f(x)$ 在点 $x$ 处关于 $x$ 的点弹性。 弹性刻画的是相对变化率：$x$ 变化 $1\%$ 时，$y$ 近似变化百分之几。 它不依赖变量所采用的具体计量单位。
+\end{definition}
+
+从数学上看，边际函数就是导数，弹性则是经过无量纲化的导数。 二者都来自局部线性近似：
+\[
+f(x+\Delta x)-f(x)\approx f'(x)\Delta x.
+\]
+
+\begin{example}[需求价格弹性]
+设某商品需求函数为 $Q(p)=400-100p$，其中 $p$ 为价格，$Q$ 为需求量。 求 $p=1,2,3$ 时的需求价格弹性，并解释结果。
+\end{example}
+\begin{solution}
+由定义，
+\[
+E_Q^p(p)=\frac{p}{Q(p)}Q'(p)=\frac{p}{400-100p}(-100)=-\frac{p}{4-p}.
+\]
+因此
+\[
+E_Q^p(1)=-\frac13,\qquad E_Q^p(2)=-1,\qquad E_Q^p(3)=-3.
+\]
+负号表示价格上升时需求下降。 从绝对值看，$p=1$ 时 $|E|<1$，需求对价格低弹性；$p=2$ 时 $|E|=1$，为单位弹性；$p=3$ 时 $|E|>1$，需求对价格高弹性。 这里的结论完全来自函数的相对变化率，不需要附加虚构情境。
+\end{solution}
+
+\begin{example}[边际成本、边际收入与边际利润]
+某厂每月固定成本为 $1000$ 元，生产 $x$ 单位产品的可变成本为
+\[
+0.01x^2+10x
+\]
+元，每单位产品售价为 $30$ 元。 求边际成本、利润函数，并求边际利润为零时的产量。
+\end{example}
+\begin{solution}
+总成本为固定成本与可变成本之和：
+\[
+C(x)=0.01x^2+10x+1000.
+\]
+因此边际成本为
+\[
+C'(x)=0.02x+10.
+\]
+总收入为
+\[
+R(x)=30x.
+\]
+利润函数为
+\[
+L(x)=R(x)-C(x)=30x-(0.01x^2+10x+1000)
+=-0.01x^2+20x-1000.
+\]
+边际利润为
+\[
+L'(x)=-0.02x+20.
+\]
+令 $L'(x)=0$，得
+\[
+-0.02x+20=0,\qquad x=1000.
+\]
+这说明当月产量为 $1000$ 单位时，利润函数的瞬时变化率为零；若进一步结合二阶导数或单调性，可判断这是利润由增转减的临界产量。
+\end{solution}
+
+\begin{example}[需求函数与边际收入]
+设某产品的需求函数为
+\[
+x=100-5p,
+\]
+其中 $p$ 为价格，$x$ 为需求量。 求收入函数 $R(x)$、边际收入函数 $R'(x)$，并解释 $x=20,50,70$ 时的边际收入。
+\end{example}
+\begin{solution}
+由需求函数解出反需求函数：
+\[
+p=20-\frac{x}{5}.
+\]
+收入等于价格乘以销量，故
+\[
+R(x)=xp=x\left(20-\frac{x}{5}\right)=20x-\frac{x^2}{5}.
+\]
+边际收入为
+\[
+R'(x)=20-\frac{2x}{5}.
+\]
+于是
+\[
+R'(20)=12,\qquad R'(50)=0,\qquad R'(70)=-8.
+\]
+其含义是：当销售量为 $20$ 时，附近再多销售一个单位，总收入约增加 $12$；当销售量为 $50$ 时，收入的瞬时变化率为 $0$，处于由增转减的临界状态；当销售量为 $70$ 时，再多销售一个单位反而使总收入约减少 $8$。
+\end{solution}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{>{\bfseries}p{1.4cm} p{2.0cm} X}
+\toprule
+专业 & 函数 & 导数的含义 \\
+\midrule
+物理 & $s(t)$ & $s'(t)$：瞬时速度，若 $[s]=\mathrm m$、$[t]=\mathrm s$，则单位为 $\mathrm{m/s}$ \\
+工程 & $V(t)$ & $V'(t)$：体积流量，单位可为 $\mathrm{m^3/h}$ \\
+农业 & $H(t)$ & $H'(t)$：作物高度的瞬时生长率 \\
+医学 & $C(t)$ & $C'(t)$：浓度随时间的瞬时变化率 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+导数是“瞬时变化率”的统一数学语言；不同学科改变的是变量的实际含义，而不是极限定义和运算法则。应用中应同时记录变量单位，因为导数的单位等于“因变量单位除以自变量单位”。
+
+
+\begin{application}[导数与梯度下降的基本思想]
+	
+	导数还可以解释机器学习中最常见的优化步骤。 在监督学习中，模型含有参数，训练的目标通常是让损失函数尽量小。 损失函数衡量预测值与真实值之间的差距；例如一元线性模型 $\hat y=wx$ 对单个样本 $(x,y)$ 的平方损失可以写成
+	\[
+	L(w)=\frac12(wx-y)^2.
+	\]
+	这里 $w$ 是待学习参数，$L(w)$ 是关于参数的函数。 若 $L'(w)>0$，则在 $w$ 附近增大 $w$ 会使损失增大，减小 $w$ 有助于降低损失；若 $L'(w)<0$，则增大 $w$ 有助于降低损失。 因此，一维梯度下降更新为
+	\[
+	w_{k+1}=w_k-\eta L'(w_k),
+	\]
+	其中 $\eta>0$ 称为学习率。
+	
+	\begin{example}
+		设损失函数 $L(w)=\frac12(w-3)^2$。 用梯度下降
+		\[
+		w_{k+1}=w_k-\eta L'(w_k)
+		\]
+		讨论 $0<\eta<2$ 时 $w_k$ 是否收敛到最小点。
+	\end{example}
+	\begin{solution}
+		先求导：
+		\[
+		L'(w)=w-3.
+		\]
+		因此
+		\[
+		w_{k+1}=w_k-\eta(w_k-3)=(1-\eta)w_k+3\eta.
+		\]
+		两边同时减去 $3$，得
+		\[
+		w_{k+1}-3=(1-\eta)(w_k-3).
+		\]
+		递推得到
+		\[
+		w_k-3=(1-\eta)^k(w_0-3).
+		\]
+		当 $0<\eta<2$ 时，$|1-\eta|<1$，所以 $(1-\eta)^k\to0$，于是 $w_k\to3$。 这说明学习率过大可能破坏收敛，而合适的学习率使参数逐步靠近损失函数的最小点。
+	\end{solution}
+	
+\end{application}
+
+
+\subsubsection*{导数的几何意义}
+
+\begin{definition}[切线与法线]
+若 $f$ 在 $x_0$ 处可导，则曲线 $y=f(x)$ 在点 $(x_0,f(x_0))$ 的切线斜率为 $f'(x_0)$，切线方程为
+\[
+y-f(x_0)=f'(x_0)(x-x_0).
+\]
+若 $f'(x_0)\neq0$，法线斜率为 $-1/f'(x_0)$，法线方程为
+\[
+y-f(x_0)=-\frac{1}{f'(x_0)}(x-x_0).
+\]
+若 $f'(x_0)=0$，切线水平，法线为直线 $x=x_0$。
+\end{definition}
+
+\begin{definition}[导函数]
+若 $f$ 在区间 $I$ 中每一点可导，则可定义新函数
+\[
+f':I\to\RR,\qquad x\mapsto f'(x),
+\]
+称为 $f$ 的导函数。
+\end{definition}
+
+\begin{example}[切线与法线]
+求抛物线 $y=x^2$ 在点 $(-1,1)$ 处的切线方程和法线方程。
+\end{example}
+\begin{solution}
+由 $y'=2x$，在 $x=-1$ 处切线斜率为 $-2$。 切线方程为
+\[
+y-1=-2(x+1),
+\]
+即
+\[
+2x+y+1=0.
+\]
+法线斜率为 $-\frac1{-2}=\frac12$，故法线方程为
+\[
+y-1=\frac12(x+1),
+\]
+即
+\[
+x-2y+3=0.
+\]
+\end{solution}
+
+\begin{example}[切线与参数]
+求 $a$，使曲线 $y=x^3+ax$ 在 $x=1$ 处的切线经过点 $(0,0)$。
+\end{example}
+\begin{solution}
+$f(1)=1+a,\ f'(x)=3x^2+a$，故 $f'(1)=3+a$。 切线为
+\[
+y-(1+a)=(3+a)(x-1).
+\]
+代入 $(0,0)$ 得
+\[
+-(1+a)=-(3+a),
+\]
+即 $1+a=3+a$，矛盾。 因此不存在这样的 $a$。
+\end{solution}
+\begin{warning}
+本题不是所有带参数题都有解。 参数同时出现在点坐标和斜率中，代入条件后必须接受方程无解的可能。
+\end{warning}
+
+\begin{example}[由切线条件反求函数值]
+设 $f$ 在 $1$ 处可导，且
+\[
+\lim_{x\to1}\frac{xf(1)-f(x)}{x-1}=2.
+\]
+求 $f(1)$ 与 $f'(1)$ 的关系。
+\end{example}
+\begin{solution}
+将分子拆为
+\[
+xf(1)-f(x)=(x-1)f(1)+f(1)-f(x).
+\]
+因此
+\[
+\frac{xf(1)-f(x)}{x-1}
+=f(1)-\frac{f(x)-f(1)}{x-1}.
+\]
+令 $x\to1$，由 $f$ 在 $1$ 处可导，得到
+\[
+2=f(1)-f'(1).
+\]
+故 $f(1)-f'(1)=2$。
+\end{solution}
+
+\subsection{导数的计算}
+
+
+\subsubsection*{线性组合、积、商与复合函数求导}
+
+最常见的函数是由若干简单函数通过加减、常数倍、乘除和复合构成的。 求导时先辨认函数结构，再选择相应法则。 例如
+\[
+(3x^2-1)^5
+\]
+不是幂函数 $x^5$，而是由 $u=3x^2-1$ 与 $y=u^5$ 复合而成；这类问题需要链式法则。
+
+\begin{theorem}[函数线性组合、积、商的求导法则]
+若 $u,v$ 在 $x$ 处可导，$a,b$ 为常数，则
+\[
+[au+bv]'(x)=au'(x)+bv'(x),
+\]
+\[
+(uv)'(x)=u'(x)v(x)+u(x)v'(x).
+\]
+若 $v(x)\neq0$，则
+\[
+\left(\frac{u}{v}\right)'(x)=\frac{u'(x)v(x)-u(x)v'(x)}{v^2(x)}.
+\]
+\end{theorem}
+\begin{proofdetail}
+先证线性组合。 对任意足够小的 $h\neq0$，
+\[
+\frac{[au+bv](x+h)-[au+bv](x)}{h}
+=a\frac{u(x+h)-u(x)}{h}
++b\frac{v(x+h)-v(x)}{h}.
+\]
+令 $h\to0$，由 $u,v$ 在 $x$ 处可导以及极限的线性运算法则，得到
+\[
+[au+bv]'(x)=au'(x)+bv'(x).
+\]
+
+再证乘法公式：
+\[
+\frac{u(x+h)v(x+h)-u(x)v(x)}{h}
+=\frac{[u(x+h)-u(x)]v(x+h)}{h}+u(x)\frac{v(x+h)-v(x)}{h}.
+\]
+令 $h\to0$。 可导必连续，所以 $v(x+h)\to v(x)$。 于是极限为
+\[
+u'(x)v(x)+u(x)v'(x).
+\]
+商法可由 $\frac{u}{v}=u\cdot\frac1v$ 推出。 先求
+\[
+\frac{\frac1{v(x+h)}-\frac1{v(x)}}{h}
+=-\frac{v(x+h)-v(x)}{h\,v(x+h)v(x)}.
+\]
+因 $v(x)\neq0$ 且 $v$ 连续，$h$ 足够小时 $v(x+h)\neq0$，令 $h\to0$ 得 $(1/v)'(x)=-v'(x)/v^2(x)$。 再用乘法法则得商法公式。
+\end{proofdetail}
+
+\begin{example}[线性组合求导]
+求
+\[
+y=3x^2+4\ln x-5\cos x,\qquad x>0
+\]
+的导数。
+\end{example}
+\begin{solution}
+该函数由幂函数、对数函数、三角函数作线性组合得到。 逐项求导：
+\[
+y'=3\cdot 2x+4\cdot\frac1x-5(-\sin x)
+=6x+\frac4x+5\sin x.
+\]
+这里要求 $x>0$，是因为 $\ln x$ 只在正数上有定义。
+\end{solution}
+
+\begin{example}[乘积与商的求导]
+求
+\[
+y=\frac{x^2\sin x}{1+x^2}
+\]
+的导数。
+\end{example}
+\begin{solution}
+先把分子看作乘积 $u=x^2\sin x$，则
+\[
+u'=2x\sin x+x^2\cos x.
+\]
+再对 $y=u/(1+x^2)$ 用商法：
+\[
+y'=\frac{(2x\sin x+x^2\cos x)(1+x^2)-x^2\sin x\cdot2x}{(1+x^2)^2}.
+\]
+若需要化简，可展开并合并含 $\sin x$ 的项：
+\[
+y'=\frac{2x\sin x+x^2\cos x+x^4\cos x}{(1+x^2)^2}.
+\]
+\end{solution}
+\begin{warning}
+乘积求导不能写成 $(uv)'=u'v'$。 商求导也不是分子导数除以分母导数。 这两个错误都可以用简单例子检验：若 $u=v=x$，则 $(uv)'=(x^2)'=2x$，而 $u'v'=1$。
+\end{warning}
+
+\begin{theorem}[复合函数求导法则]
+设 $u=g(x)$ 在 $x$ 处可导，$y=f(u)$ 在 $u_0=g(x)$ 处可导，则复合函数 $f(g(x))$ 在 $x$ 处可导，且
+\[
+(f\circ g)'(x)=f'(g(x))g'(x).
+\]
+\end{theorem}
+\begin{proofdetail}
+由 $f$ 在 $u_0$ 处可导，存在函数 $\alpha(\Delta u)$，满足 $\lim_{\Delta u\to0}\alpha(\Delta u)=0$，使得
+\[
+f(u_0+\Delta u)-f(u_0)=f'(u_0)\Delta u+\alpha(\Delta u)\Delta u.
+\]
+这是因为当 $\Delta u\neq0$ 时可令
+\[
+\alpha(\Delta u)=\frac{f(u_0+\Delta u)-f(u_0)}{\Delta u}-f'(u_0),
+\]
+并定义 $\alpha(0)=0$。 令 $\Delta u=g(x+h)-g(x)$。 由于 $g$ 在 $x$ 可导，所以 $g$ 在 $x$ 连续，故 $h\to0$ 时 $\Delta u\to0$。 于是
+\[
+f(g(x+h))-f(g(x))
+=\bigl[f'(u_0)+\alpha(\Delta u)\bigr]\,[g(x+h)-g(x)].
+\]
+两边除以 $h$，令 $h\to0$，得
+\[
+\lim_{h\to0}\frac{f(g(x+h))-f(g(x))}{h}
+=\bigl[f'(u_0)+0\bigr]g'(x).
+\]
+\end{proofdetail}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \node[draw,rounded corners,fill=gray!10,minimum width=2.2cm,minimum height=0.75cm] (x) at (0,0) {$x$};
+  \node[draw,rounded corners,fill=gray!10,minimum width=2.8cm,minimum height=0.75cm] (u) at (3.4,0) {$u=g(x)$};
+  \node[draw,rounded corners,fill=gray!10,minimum width=2.8cm,minimum height=0.75cm] (y) at (7.1,0) {$y=f(u)$};
+  \draw[->,thick] (x) -- node[above] {$g'(x)$} (u);
+  \draw[->,thick] (u) -- node[above] {$f'(u)$} (y);
+  \draw[->,thick,bend right=30] (x.south) to node[below] {$\frac{\dd y}{\dd x}=\frac{\dd y}{\dd u}\frac{\dd u}{\dd x}$} (y.south);
+\end{tikzpicture}
+\end{center}
+
+\begin{remark}
+链式法则的关键是分清“外层函数”和“内层函数”。 若 $y=f(u)$、$u=g(x)$，则先对外层变量 $u$ 求导，再乘以内层对 $x$ 的导数。 多层复合时逐层相乘。
+\end{remark}
+
+
+
+
+
+\subsubsection*{反函数求导}
+
+有些函数本身不是由初等四则运算直接给出，而是作为另一个函数的反函数出现。 例如 $\ln x$ 是 $\ee^x$ 的反函数，$\arcsin x$ 是适当限制定义域后的 $\sin x$ 的反函数。 反函数求导公式说明：若 $y=f(x)$ 可反解为 $x=\varphi(y)$，则反函数图像在对应点的切线斜率等于原函数切线斜率的倒数。
+
+\begin{theorem}[反函数求导公式]
+设 $y=f(x)$ 在点 $x_0$ 的某邻域内严格单调、连续，且 $f$ 在 $x_0$ 处可导，$f'(x_0)\neq0$。 设反函数为 $x=\varphi(y)$，$y_0=f(x_0)$。 若 $\varphi$ 在 $y_0$ 处连续，则 $\varphi$ 在 $y_0$ 处可导，且
+\[
+\varphi'(y_0)=\frac{1}{f'(x_0)}.
+\]
+\end{theorem}
+\begin{proofdetail}
+当 $\Delta y\neq0$ 时，由严格单调性知对应的 $\Delta x=\varphi(y_0+\Delta y)-\varphi(y_0)$ 也不为 $0$，并且
+\[
+\frac{\Delta x}{\Delta y}
+=\frac{1}{\frac{f(x_0+\Delta x)-f(x_0)}{\Delta x}}.
+\]
+由 $\varphi$ 在 $y_0$ 连续，$\Delta y\to0$ 时 $\Delta x\to0$。 因 $f'(x_0)\neq0$，
+\[
+\lim_{\Delta y\to0}\frac{\Delta x}{\Delta y}
+=\frac{1}{\lim_{\Delta x\to0}\frac{f(x_0+\Delta x)-f(x_0)}{\Delta x}}
+=\frac1{f'(x_0)}.
+\]
+故反函数在 $y_0$ 处可导，公式成立。
+\end{proofdetail}
+
+\begin{example}[由反函数推出对数函数导数]
+由 $y=\log_a x\ (a>0,\ a\neq1,\ x>0)$，推出其导数公式。
+\end{example}
+\begin{solution}
+令 $y=\log_a x$，则 $x=a^y$。 把 $x$ 看成 $y$ 的函数，有
+\[
+\frac{\dd x}{\dd y}=a^y\ln a=x\ln a.
+\]
+由反函数求导公式，
+\[
+\frac{\dd y}{\dd x}
+=\frac{1}{\dd x/\dd y}
+=\frac{1}{x\ln a}.
+\]
+当 $a=\ee$ 时得到
+\[
+(\ln x)'=\frac1x.
+\]
+\end{solution}
+
+\begin{example}[反三角函数导数]
+求 $y=\arcsin x$ 与 $y=\arctan x$ 的导数。
+\end{example}
+\begin{solution}
+若 $y=\arcsin x$，则
+\[
+x=\sin y,\qquad y\in\left[-\frac{\pi}{2},\frac{\pi}{2}\right].
+\]
+在 $|x|<1$ 时，$\cos y>0$，故
+\[
+\frac{\dd x}{\dd y}=\cos y=\sqrt{1-\sin^2y}=\sqrt{1-x^2}.
+\]
+由反函数求导公式，
+\[
+(\arcsin x)'=\frac{1}{\sqrt{1-x^2}},\qquad |x|<1.
+\]
+
+若 $y=\arctan x$，则 $x=\tan y$，$y\in(-\pi/2,\pi/2)$。 因而
+\[
+\frac{\dd x}{\dd y}=\sec^2y=1+\tan^2y=1+x^2,
+\]
+所以
+\[
+(\arctan x)'=\frac1{1+x^2},\qquad x\in\RR.
+\]
+\end{solution}
+
+
+\begin{proposition}[常用基本导数公式]
+	在相应定义域内，下列公式成立。 其中 $a>0,\ a\neq1$；对一般实数 $\alpha$，公式 $(x^\alpha)'=\alpha x^{\alpha-1}$ 通常在 $x>0$ 上使用，若 $\alpha$ 为整数或有理数，还需按函数本身的定义域作相应调整。
+	\[
+	(C)'=0,\quad (x^\alpha)'=\alpha x^{\alpha-1},\quad (a^x)'=a^x\ln a,\quad (\ee^x)'=\ee^x,
+	\]
+	\[
+	(\log_a |x|)'=\frac1{x\ln a},\quad (\ln |x|)'=\frac1x,
+	\]
+	\[
+	(\sin x)'=\cos x,\quad (\cos x)'=-\sin x,\quad
+	(\tan x)'=\sec^2x,\quad (\cot x)'=-\csc^2x,
+	\]
+	\[
+	(\sec x)'=\sec x\tan x,\quad (\csc x)'=-\csc x\cot x,
+	\]
+	\[
+	(\arcsin x)'=\frac1{\sqrt{1-x^2}},\quad
+	(\arccos x)'=-\frac1{\sqrt{1-x^2}},
+	\]
+	\[
+	(\arctan x)'=\frac1{1+x^2},\quad
+	(\operatorname{arccot}x)'=-\frac1{1+x^2}.
+	\]
+\end{proposition}remark
+\begin{remark}
+	这些公式是求导计算的基础。 不宜只背公式：三角函数公式来自导数定义与基本极限，指数与反三角函数公式分别依赖反函数求导和链式法则。以下是灵活运用各种求导法则的例子。
+\end{remark}
+
+
+\begin{example}[公式求导]
+	求 $y=(3x^2-1)^5$ 的导数。
+\end{example}
+\begin{solution}
+	令 $u=3x^2-1$，$y=u^5$。 由链式法则
+	\[
+	y'=5(3x^2-1)^4\cdot6x=30x(3x^2-1)^4.
+	\]
+\end{solution}
+
+\begin{example}[多层复合求导]
+	求
+	\[
+	y=\ee^{\sqrt{x}},\qquad x>0
+	\]
+	的导数。
+\end{example}
+\begin{solution}
+	这里有两层复合：
+	\[
+	x\longmapsto \sqrt{x}\longmapsto \ee^{\sqrt{x}}.
+	\]
+	因此
+	\[
+	y'=\ee^{\sqrt{x}}\cdot(\sqrt{x})'
+	=\ee^{\sqrt{x}}\cdot\frac{1}{2\sqrt{x}}
+	=\frac{\ee^{\sqrt{x}}}{2\sqrt{x}}.
+	\]
+	在 $x=0$ 处函数有定义，但上述导数公式不适用；事实上右差商趋于无穷大，因此在通常有限导数意义下不可导。
+\end{solution}
+
+\begin{example}[复合与乘积同时出现]
+	求
+	\[
+	y=\ee^{-x}\sin\sqrt{2x},\qquad x>0
+	\]
+	的导数。
+\end{example}
+\begin{solution}
+	这是两个函数的乘积，其中第二个函数又是复合函数。 由乘积法则，
+	\[
+	y'=(-\ee^{-x})\sin\sqrt{2x}
+	+\ee^{-x}\cdot\frac{\dd}{\dd x}\sin\sqrt{2x}.
+	\]
+	对第二项用链式法则：
+	\[
+	\frac{\dd}{\dd x}\sin\sqrt{2x}
+	=\cos\sqrt{2x}\cdot\frac{\dd}{\dd x}(2x)^{1/2}
+	=\cos\sqrt{2x}\cdot\frac1{\sqrt{2x}}.
+	\]
+	故
+	\[
+	y'=\ee^{-x}\left(\frac{\cos\sqrt{2x}}{\sqrt{2x}}-\sin\sqrt{2x}\right).
+	\]
+\end{solution}
+
+\begin{example}[对数求导]
+	求 $y=x^x\ (x>0)$ 的导数。
+\end{example}
+\begin{solution}
+	取对数得 $\ln y=x\ln x$。 两边求导：
+	\[
+	\frac{y'}{y}=\ln x+1.
+	\]
+	因此
+	\[
+	y'=x^x(\ln x+1).
+	\]
+\end{solution}
+\begin{warning}
+	$x^x$ 不能直接套用幂函数 $x^a$ 或指数函数 $a^x$ 的公式，因为底数和指数都含 $x$。
+\end{warning}
+
+\begin{example}[变底变指数函数]
+	求
+	\[
+	y=(\cot x)^{\cos x}
+	\]
+	的导数，其中在所讨论的区间内 $\cot x>0$。
+\end{example}
+\begin{solution}
+	由于底数和指数都含 $x$，采用对数求导。 取对数：
+	\[
+	\ln y=\cos x\ln(\cot x).
+	\]
+	两边对 $x$ 求导：
+	\[
+	\frac{y'}{y}
+	=-\sin x\ln(\cot x)+\cos x\cdot\frac{(\cot x)'}{\cot x}.
+	\]
+	又
+	\[
+	(\cot x)'=-\csc^2x,\qquad
+	\frac{(\cot x)'}{\cot x}
+	=-\frac{\csc^2x}{\cot x}
+	=-\frac{1}{\sin x\cos x}.
+	\]
+	于是
+	\[
+	\frac{y'}{y}
+	=-\sin x\ln(\cot x)-\frac1{\sin x}.
+	\]
+	因此
+	\[
+	y'=(\cot x)^{\cos x}\left[-\sin x\ln(\cot x)-\frac1{\sin x}\right].
+	\]
+\end{solution}
+
+\begin{example}[对数求导]
+	设
+	\[
+	y=\sqrt{\frac{(x-1)(x-2)}{(x-3)(x-4)}},
+	\]
+	其中 $x$ 取在使根式内的分式严格为正的区间内。 求 $y'$。
+\end{example}
+\begin{solution}
+	取对数得
+	\[
+	\ln y=\frac12\left[\ln|x-1|+\ln|x-2|-\ln|x-3|-\ln|x-4|\right].
+	\]
+	两边求导：
+	\[
+	\frac{y'}{y}
+	=\frac12\left(\frac1{x-1}+\frac1{x-2}-\frac1{x-3}-\frac1{x-4}\right).
+	\]
+	因此
+	\[
+	y'=\frac12\sqrt{\frac{(x-1)(x-2)}{(x-3)(x-4)}}
+	\left(\frac1{x-1}+\frac1{x-2}-\frac1{x-3}-\frac1{x-4}\right).
+	\]
+\end{solution}
+
+
+\subsubsection*{高阶导数}
+
+\begin{definition}[高阶导数]
+若 $f'$ 在区间上仍可导，则其导数称为 $f$ 的二阶导数，记作 $f''$ 或 $\frac{\dd^2y}{\dd x^2}$。 递推地，$f^{(n)}=(f^{(n-1)})'$ 称为 $n$ 阶导数。
+\end{definition}
+
+如果 $s(t)$ 表示直线运动位移，则 $s'(t)$ 是速度，$s''(t)$ 是加速度。 在经济学中，边际函数的导数也有意义：例如 $C''(x)$ 描述边际成本随产量变化的快慢。 因此高阶导数不仅是形式计算，也常用于判断变化趋势、凹凸性和近似公式。
+
+\begin{example}[常用函数高阶导数]
+求 $f(x)=\ee^{ax}$ 与 $g(x)=\sin x$ 的 $n$ 阶导数。
+\end{example}
+\begin{solution}
+对指数函数，逐次求导得
+\[
+f^{(n)}(x)=a^n\ee^{ax}.
+\]
+对正弦函数，导数每四次循环：
+\[
+g^{(n)}(x)=\sin\left(x+\frac{n\pi}{2}\right).
+\]
+可用数学归纳法验证：$n=0$ 成立；若 $g^{(n)}(x)=\sin(x+n\pi/2)$，则
+\[
+g^{(n+1)}(x)=\cos\left(x+\frac{n\pi}{2}\right)=\sin\left(x+\frac{(n+1)\pi}{2}\right).
+\]
+\end{solution}
+
+\begin{example}[对数函数的高阶导数]
+求 $y=\ln(1+x)$ 的 $n$ 阶导数，其中 $x>-1$。
+\end{example}
+\begin{solution}
+逐次求导：
+\[
+y'=\frac1{1+x},\qquad
+y''=-\frac1{(1+x)^2},\qquad
+y'''=\frac{2!}{(1+x)^3}.
+\]
+由此归纳得到
+\[
+y^{(n)}=(-1)^{n-1}\frac{(n-1)!}{(1+x)^n},\qquad n=1,2,3,\ldots.
+\]
+验证如下。 当 $n=1$ 时公式成立。 若
+\[
+y^{(n)}=(-1)^{n-1}(n-1)!(1+x)^{-n},
+\]
+则
+\[
+y^{(n+1)}
+=(-1)^{n-1}(n-1)![-n(1+x)^{-n-1}]
+=(-1)^n\frac{n!}{(1+x)^{n+1}}.
+\]
+故公式对所有正整数 $n$ 成立。
+\end{solution}
+
+\begin{example}[验证二阶导数关系]
+设 $y=\ee^x\sin x$，证明
+\[
+y''-2y'+2y=0.
+\]
+\end{example}
+\begin{solution}
+先求一阶导数：
+\[
+y'=\ee^x\sin x+\ee^x\cos x=\ee^x(\sin x+\cos x).
+\]
+再求二阶导数：
+\[
+y''=\ee^x(\sin x+\cos x)+\ee^x(\cos x-\sin x)=2\ee^x\cos x.
+\]
+因此
+\[
+y''-2y'+2y
+=2\ee^x\cos x-2\ee^x(\sin x+\cos x)+2\ee^x\sin x=0.
+\]
+等式成立。
+\end{solution}
+
+
+\begin{extra}
+\begin{theorem}[莱布尼茨公式]
+若 $u,v$ 均有 $n$ 阶导数，则
+\[
+(uv)^{(n)}=\sum_{k=0}^{n}\binom{n}{k}u^{(k)}v^{(n-k)}.
+\]
+\end{theorem}
+\begin{proofdetail}
+用数学归纳法。 当 $n=1$ 时即乘法求导法则。 假设公式对 $n$ 成立，则
+\[
+(uv)^{(n+1)}
+=\frac{\dd}{\dd x}\sum_{k=0}^{n}\binom{n}{k}u^{(k)}v^{(n-k)}
+\]
+\[
+=\sum_{k=0}^{n}\binom{n}{k}u^{(k+1)}v^{(n-k)}
++\sum_{k=0}^{n}\binom{n}{k}u^{(k)}v^{(n-k+1)}.
+\]
+第一和中令 $j=k+1$，得
+\[
+\sum_{j=1}^{n+1}\binom{n}{j-1}u^{(j)}v^{(n+1-j)}
++\sum_{j=0}^{n}\binom{n}{j}u^{(j)}v^{(n+1-j)}.
+\]
+合并同类项，端点系数为 $1$，中间项系数为$\binom{n}{j-1}+\binom{n}{j}$.
+
+
+
+根据二项式系数的阶乘定义 $\binom{n}{k} = \frac{n!}{k!(n-k)!}$，将中间项系数展开：
+
+\begin{align*}
+	\binom{n}{j-1} + \binom{n}{j} &= \frac{n!}{(j-1)!(n - (j-1))!} + \frac{n!}{j!(n-j)!} \\
+	&= \frac{n!}{(j-1)!(n-j+1)!} + \frac{n!}{j!(n-j)!}
+\end{align*}
+
+为了将这两项相加，我们需要进行通分。注意到阶乘的性质 $j! = j \cdot (j-1)!$ 以及 $(n-j+1)! = (n-j+1) \cdot (n-j)!$，因此这两项的最小公倍数（通分母）为 $j!(n-j+1)!$。
+
+将第一项的分子分母同乘 $j$，第二项的分子分母同乘 $(n-j+1)$，得到：
+
+\begin{align*}
+	\binom{n}{j-1} + \binom{n}{j} &= \frac{n! \cdot j}{j \cdot (j-1)!(n-j+1)!} + \frac{n! \cdot (n-j+1)}{j!(n-j+1) \cdot (n-j)!} \\
+	&= \frac{j \cdot n!}{j!(n-j+1)!} + \frac{(n-j+1) \cdot n!}{j!(n-j+1)!}
+\end{align*}
+
+现在分母相同，将分子相加并提取公因式 $n!$：
+
+\begin{align*}
+	\binom{n}{j-1} + \binom{n}{j} &= \frac{n! \cdot [j + (n-j+1)]}{j!(n-j+1)!} \\
+	&= \frac{n! \cdot (n+1)}{j!(n+1-j)!}
+\end{align*}
+
+根据阶乘的定义，$n! \cdot (n+1) = (n+1)!$。代入上式得到：
+
+\begin{align*}
+	\binom{n}{j-1} + \binom{n}{j} &= \frac{(n+1)!}{j!((n+1)-j)!}
+\end{align*}
+
+根据二项式系数的定义，上式右侧恰好是 $\binom{n+1}{j}$ 的展开形式。
+
+因此，中间项系数 $\binom{n}{j-1} + \binom{n}{j} = \binom{n+1}{j}$ ,于是
+\[
+(uv)^{(n+1)}=\sum_{j=0}^{n+1}\binom{n+1}{j}u^{(j)}v^{(n+1-j)}.
+\]
+归纳完成。
+\end{proofdetail}
+
+\begin{example}[莱布尼茨（Leibniz）公式]
+	求 $y=x^2\ee^x$ 的 $n$ 阶导数。
+\end{example}
+\begin{solution}
+	莱布尼茨公式为
+	\[
+	(uv)^{(n)}=\sum_{k=0}^n\binom nk u^{(k)}v^{(n-k)}.
+	\]
+	取 $u=x^2,\ v=\ee^x$。 当 $k\geq3$ 时 $u^{(k)}=0$，故
+	\[
+	y^{(n)}=\binom n0x^2\ee^x+\binom n1(2x)\ee^x+\binom n2(2)\ee^x
+	=\ee^x\left[x^2+2nx+n(n-1)\right].
+	\]
+\end{solution}
+\end{extra}
+\begin{application}[物理：简谐运动与高阶导数]
+设质点位移为
+\[
+x(t)=A\cos(\omega t+\varphi),
+\]
+其中 $A$ 为振幅，$\omega$ 为角频率。则速度和加速度分别为
+\[
+v(t)=x'(t)=-A\omega\sin(\omega t+\varphi),
+\]
+\[
+a(t)=x''(t)=-A\omega^2\cos(\omega t+\varphi)
+=-\omega^2x(t).
+\]
+若 $[x]=\mathrm m$、$[t]=\mathrm s$，则 $[v]=\mathrm{m/s}$、$[a]=\mathrm{m/s^2}$。这说明一阶、二阶导数分别描述速度和加速度，高阶导数并非纯粹的符号运算。模型假设理想无阻尼小振动。
+\end{application}
+
+
+
+\subsubsection*{参数方程求导}
+
+
+\iffalse
+前面讨论的函数大多写成 $y=f(x)$，这种形式称为显函数。 但在实际问题和几何问题中，变量之间常由方程给出，例如
+\[
+x^2+y^2=1,\qquad x^2+xy+y^2=3.
+\]
+它们未必能方便地解出 $y=f(x)$。 由方程 $F(x,y)=0$ 在某个范围内确定的函数称为隐函数。 例如
+\[
+\sqrt{y}+x^2-1=0
+\]
+在满足 $1-x^2\geq0$ 且 $\sqrt{y}=1-x^2$ 的范围内可写成
+\[
+y=(1-x^2)^2.
+\]
+但并不是每个方程都在任意点附近确定唯一函数。 本讲义在求导时默认题目所给方程已经在所讨论点附近确定了可导函数；更一般的存在唯一性条件将在多元函数课程中进一步解释。
+
+\begin{center}
+\begin{tikzpicture}[scale=1.15,>=Stealth]
+  \draw[->] (-1.9,0) -- (1.9,0) node[right] {$x$};
+  \draw[->] (0,-1.55) -- (0,1.55) node[above] {$y$};
+  \draw[thick,domain=0:360,samples=160] plot ({cos(\x)},{sin(\x)});
+  \fill (0.6,0.8) circle (1.5pt) node[above right] {$P(x,y)$};
+  \draw[dashed] (0.6,0) -- (0.6,0.8) -- (0,0.8);
+  \node at (0,-1.85) {$x^2+y^2=1$ 给出的曲线可在局部看作 $y=y(x)$};
+\end{tikzpicture}
+\end{center}
+
+\begin{proposition}[隐函数一阶求导]
+若方程 $F(x,y)=0$ 在某区间上确定可导函数 $y=y(x)$，且 $F$ 有连续偏导数、$F_y(x,y)\neq0$，则
+\[
+y'=-\frac{F_x}{F_y},
+\]
+其中右端在 $(x,y(x))$ 处取值。
+\end{proposition}
+\begin{proofdetail}
+由恒等式 $F(x,y(x))\equiv0$ 对 $x$ 求导。 复合函数求导给出
+\[
+F_x(x,y(x))+F_y(x,y(x))y'(x)=0.
+\]
+由于 $F_y(x,y(x))\neq0$，移项并相除得到公式。
+\end{proofdetail}
+
+\begin{example}[隐函数一阶导数]
+由方程 $x^2+xy+y^2=3$ 确定 $y=y(x)$，求 $y'$。
+\end{example}
+\begin{solution}
+两边对 $x$ 求导：
+\[
+2x+y+xy'+2yy'=0.
+\]
+整理得
+\[
+y'=-\frac{2x+y}{x+2y}.
+\]
+该公式在 $x+2y\neq0$ 的点成立。
+\end{solution}
+
+\begin{example}[先说明隐函数再求导]
+设方程
+\[
+\sqrt{y}+x^2-1=0
+\]
+在 $|x|<1$ 附近确定函数 $y=y(x)$。 用两种方法求 $y'$。
+\end{example}
+\begin{solution}
+方法一：先解出显函数。 由方程得
+\[
+\sqrt{y}=1-x^2.
+\]
+当 $|x|<1$ 时右端为正，故
+\[
+y=(1-x^2)^2.
+\]
+于是
+\[
+y'=2(1-x^2)(-2x)=-4x(1-x^2).
+\]
+
+方法二：直接对原方程求导。 注意
+\[
+\frac{\dd}{\dd x}\sqrt{y}
+=\frac{1}{2\sqrt{y}}y',
+\]
+因此
+\[
+\frac{y'}{2\sqrt{y}}+2x=0,
+\qquad
+y'=-4x\sqrt{y}.
+\]
+再代入 $\sqrt{y}=1-x^2$，得
+\[
+y'=-4x(1-x^2).
+\]
+两种方法结果一致。
+\end{solution}
+
+\begin{example}[隐函数二阶导数]
+设 $x^2+y^2=1$ 在点附近确定 $y=y(x)$，求 $y''$。
+\end{example}
+\begin{solution}
+一阶求导得
+\[
+2x+2yy'=0,\qquad y'=-\frac{x}{y}\quad(y\neq0).
+\]
+对 $2x+2yy'=0$ 再求导：
+\[
+2+2(y')^2+2yy''=0.
+\]
+故
+\[
+y''=-\frac{1+(y')^2}{y}=-\frac{1+x^2/y^2}{y}
+=-\frac{x^2+y^2}{y^3}=-\frac1{y^3}.
+\]
+\end{solution}
+
+\begin{example}[隐函数切线]
+求曲线
+\[
+xy-\ee^x+\ee^y=0
+\]
+在点 $(0,0)$ 处的切线方程。
+\end{example}
+\begin{solution}
+把 $y$ 看成 $x$ 的函数，对方程两边求导，得
+\[
+y+xy'-\ee^x+\ee^y y'=0.
+\]
+整理得
+\[
+(x+\ee^y)y'=\ee^x-y,\qquad
+y'=\frac{\ee^x-y}{x+\ee^y}.
+\]
+在 $(0,0)$ 处，
+\[
+y'(0)=\frac{1-0}{0+1}=1.
+\]
+因此切线方程为 $y=x$。
+\end{solution}
+
+\fi
+
+
+\begin{proposition}[参数方程求导]
+若曲线由 $x=\varphi(t),\,y=\psi(t)$ 给出，且 $\varphi'(t)\neq0$，则
+\[
+\frac{\dd y}{\dd x}=\frac{\psi'(t)}{\varphi'(t)}.
+\]
+若还存在二阶导数，则
+\[
+\frac{\dd^2y}{\dd x^2}
+=\frac{1}{\varphi'(t)}\frac{\dd}{\dd t}\left(\frac{\psi'(t)}{\varphi'(t)}\right).
+\]
+\end{proposition}
+\begin{proofdetail}
+当 $\varphi'(t)\neq0$ 时，局部可把 $t$ 看成 $x$ 的函数。 由链式法则，
+\[
+\frac{\dd y}{\dd t}=\frac{\dd y}{\dd x}\frac{\dd x}{\dd t}.
+\]
+两边除以 $\dd x/\dd t=\varphi'(t)$ 得第一式。 对第一式再关于 $x$ 求导，而 $\frac{\dd}{\dd x}=\frac1{\varphi'(t)}\frac{\dd}{\dd t}$，得第二式。
+\end{proofdetail}
+
+\begin{application}[工程与物理：抛射运动的轨迹斜率]
+忽略空气阻力并把重力加速度 $g$ 视为常数。初速度为 $v_0$、发射角为 $\theta$ 的理想抛射可写成
+\[
+x(t)=v_0\cos\theta\,t,\qquad
+y(t)=v_0\sin\theta\,t-\frac12gt^2.
+\]
+当 $v_0\cos\theta\neq0$ 时，
+\[
+\frac{\dd y}{\dd x}
+=\frac{\dd y/\dd t}{\dd x/\dd t}
+=\frac{v_0\sin\theta-gt}{v_0\cos\theta}.
+\]
+因此参数方程中的轨迹斜率可由时间参数直接求得；分子等于竖直速度，分母等于水平速度。在最高点，$v_0\sin\theta-gt=0$，所以轨迹切线水平。
+\end{application}
+
+\begin{example}[参数方程求切线]
+曲线由
+\[
+x=t^2,\qquad y=t^3
+\]
+给出。 求 $t=1$ 处的切线方程。
+\end{example}
+\begin{solution}
+当 $t=1$ 时，曲线上的点为 $(1,1)$。 又
+\[
+\frac{\dd y}{\dd x}
+=\frac{\dd y/\dd t}{\dd x/\dd t}
+=\frac{3t^2}{2t}
+=\frac{3t}{2}\qquad(t\neq0).
+\]
+在 $t=1$ 处斜率为 $3/2$，故切线方程为
+\[
+y-1=\frac32(x-1).
+\]
+\end{solution}
+
+\begin{example}[增长率]
+某种药物在血液中的浓度 $C$ 与时间 $t$ 的关系为 $C(t)=t\ee^{-0.5t}$，求浓度变化率，并判断 $t=2$ 时浓度是增加还是减少。
+\end{example}
+\begin{solution}
+\[
+C'(t)=\ee^{-0.5t}-0.5t\ee^{-0.5t}=\ee^{-0.5t}(1-0.5t).
+\]
+当 \(t<2\) 时 \(C'(t)>0\)，当 \(t>2\) 时 \(C'(t)<0\)，且 \(C'(2)=0\)。因此浓度在 \(t=2\) 时由增加转为减少，并在此处达到峰值。
+\end{solution}
+
+\begin{example}[边际成本变化率]
+某产品总成本函数为
+\[
+C(x)=0.02x^2+6x+300,\qquad x\geq0.
+\]
+求边际成本和边际成本的变化率，并解释 $C''(x)$ 的含义。
+\end{example}
+\begin{solution}
+边际成本是总成本对产量的导数：
+\[
+C'(x)=0.04x+6.
+\]
+边际成本的变化率为
+\[
+C''(x)=0.04.
+\]
+这说明产量每增加一个单位，边际成本按近似 $0.04$ 的速度增加。 这里 $C'(x)$ 表示“在产量为 $x$ 附近多生产一个单位所增加的成本”，而 $C''(x)$ 描述这个边际成本本身随产量增加而上升的快慢。
+\end{solution}
+
+\subsection{一元函数的微分与线性近似}
+
+前两章中，导数描述的是函数在一点的瞬时变化率。 微分进一步强调另一件事：在自变量改变量很小时，函数增量的主要部分是一个线性函数。 这正是“用直线近似曲线”“用切平面近似曲面”的数学基础。
+
+以正方形面积为例。 设边长为 $x$，面积为 $S=x^2$。 当边长由 $x$ 增加到 $x+\Delta x$，其中图中取 $\Delta x>0$，面积增量为
+\[
+\Delta S=(x+\Delta x)^2-x^2=2x\Delta x+(\Delta x)^2.
+\]
+这里 $2x\Delta x$ 是关于 $\Delta x$ 的线性主部，$(\Delta x)^2$ 是比 $\Delta x$ 高阶的误差项。 因而当 $|\Delta x|$ 很小时，
+\[
+\Delta S\approx 2x\Delta x.
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.05]
+  \fill[gray!8] (0,0) rectangle (2,2);
+  \fill[gray!20] (2,0) rectangle (2.6,2);
+  \fill[gray!35] (0,2) rectangle (2,2.6);
+  \fill[gray!55] (2,2) rectangle (2.6,2.6);
+  \draw[thick] (0,0) rectangle (2,2);
+  \draw[thick] (0,0) rectangle (2.6,2.6);
+  \draw[dashed] (2,0)--(2,2.6);
+  \draw[dashed] (0,2)--(2.6,2);
+  \draw[<->] (0,-0.25)--(2,-0.25) node[midway,below] {$x$};
+  \draw[<->] (2,-0.25)--(2.6,-0.25) node[midway,below] {$\Delta x$};
+  \draw[<->] (-0.25,0)--(-0.25,2) node[midway,left] {$x$};
+  \draw[<->] (-0.25,2)--(-0.25,2.6) node[midway,left] {$\Delta x$};
+  \node at (1,1) {$x^2$};
+  \node at (2.3,1) {$x\Delta x$};
+  \node at (1,2.3) {$x\Delta x$};
+  \node at (2.3,2.3) {\scriptsize $(\Delta x)^2$};
+  \node at (1.3,3.0) {\small $\Delta S=2x\Delta x+(\Delta x)^2$};
+\end{tikzpicture}
+\end{center}
+
+\begin{definition}[一元函数可微与微分]
+设函数 $y=f(x)$ 在 $x$ 附近有定义。 当自变量增量为 $\Delta x$ 时，函数增量为
+\[
+\Delta y=f(x+\Delta x)-f(x).
+\]
+若存在与 $\Delta x$ 无关的常数 $A$，使得
+\[
+\Delta y=A\Delta x+o(\Delta x)\qquad(\Delta x\to0),
+\]
+则称 $f$ 在 $x$ 处可微，并称线性主部 $A\Delta x$ 为 $f$ 在 $x$ 处的微分，记作
+\[
+\dd y=A\Delta x.
+\]
+通常记 $\dd x=\Delta x$，于是微分写成 $\dd y=A\dd x$。
+\end{definition}
+
+\begin{theorem}[一元可导与可微等价]
+$f$ 在 $x$ 处可微，当且仅当 $f$ 在 $x$ 处可导。 此时
+\[
+A=f'(x),\qquad \dd y=f'(x)\dd x.
+\]
+\end{theorem}
+\begin{proofdetail}
+若 $f$ 在 $x$ 处可微，则
+\[
+f(x+\Delta x)-f(x)=A\Delta x+o(\Delta x).
+\]
+当 $\Delta x\neq0$ 时，两边除以 $\Delta x$，得
+\[
+\frac{f(x+\Delta x)-f(x)}{\Delta x}
+=A+\frac{o(\Delta x)}{\Delta x}.
+\]
+由 $o(\Delta x)$ 的定义，
+\[
+\frac{o(\Delta x)}{\Delta x}\to0\qquad(\Delta x\to0),
+\]
+所以导数存在，且 $f'(x)=A$。
+
+反过来，若 $f$ 在 $x$ 处可导，则
+\[
+\frac{f(x+\Delta x)-f(x)}{\Delta x}\to f'(x).
+\]
+定义
+\[
+\alpha(\Delta x)=
+\begin{cases}
+\dfrac{f(x+\Delta x)-f(x)}{\Delta x}-f'(x),&\Delta x\neq0,\\[0.8em]
+0,&\Delta x=0.
+\end{cases}
+\]
+则 $\alpha(\Delta x)\to0$，并且
+\[
+\Delta y=f'(x)\Delta x+\alpha(\Delta x)\Delta x
+=f'(x)\Delta x+o(\Delta x).
+\]
+因此 $f$ 在 $x$ 处可微，且 $\dd y=f'(x)\dd x$。
+\end{proofdetail}
+
+\begin{proposition}[微分运算法则]
+若 $u=u(x),v=v(x)$ 在 $x$ 处可微，$c$ 为常数，则
+\[
+\dd(cu)=c\,\dd u,\qquad \dd(u+v)=\dd u+\dd v,
+\]
+\[
+\dd(uv)=u\,\dd v+v\,\dd u,
+\]
+若 $v\neq0$，则
+\[
+\dd\left(\frac{u}{v}\right)=\frac{v\,\dd u-u\,\dd v}{v^2}.
+\]
+若 $y=f(u)$，$u=g(x)$，且相应函数可微，则
+\[
+\dd y=f'(u)\dd u.
+\]
+\end{proposition}
+\begin{proofdetail}
+由一元可导与可微等价，$u,v$ 可微等价于可导。 前四个公式分别由常数倍、和、积、商的求导法则乘以 $\dd x$ 得到。 例如
+\[
+\dd(uv)=(uv)'\dd x=(u'v+uv')\dd x=v(u'\dd x)+u(v'\dd x)=v\,\dd u+u\,\dd v.
+\]
+复合情形中，链式法则给出
+\[
+\dd y=\frac{\dd y}{\dd x}\dd x=f'(u)g'(x)\dd x=f'(u)\dd u.
+\]
+这说明无论 $u$ 是自变量还是 $x$ 的函数，微分形式 $\dd y=f'(u)\dd u$ 保持不变。
+\end{proofdetail}
+
+\begin{proposition}[微分的几何意义]
+若 $f$ 在 $x_0$ 处可导，则曲线 $y=f(x)$ 在点 $M=(x_0,f(x_0))$ 附近可用切线作局部近似：
+\[
+f(x_0+\Delta x)-f(x_0)=f'(x_0)\Delta x+o(\Delta x).
+\]
+其中 $\Delta y=f(x_0+\Delta x)-f(x_0)$ 是真实增量，$\dd y=f'(x_0)\Delta x$ 是切线给出的线性近似，二者差为高阶误差。
+\end{proposition}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+  \draw[->] (-0.2,0)--(6.4,0) node[right] {$x$};
+  \draw[->] (0,0.35)--(0,3.1) node[above] {$y$};
+  \draw[domain=0.55:4.9,smooth,variable=\x,thick] plot ({\x},{0.16*(\x-1)*(\x-1)+1});
+  \coordinate (M) at (2,1.16);
+  \coordinate (T) at (3.4,1.608);
+  \coordinate (N) at (3.4,1.922);
+  \coordinate (B) at (3.4,1.16);
+  \draw[thick] (0.7,0.744)--(5.15,2.168);
+  \draw[dashed] (M)--(2,0) node[below] {$x_0$};
+  \draw[dashed] (N)--(3.4,0) node[below] {$x_0+\Delta x$};
+  \draw[dashed] (M)--(B);
+  \draw[dashed] (N)--(T);
+  \draw[dashed] (T)--(B);
+  \draw[<->] (2,0.55)--(3.4,0.55) node[midway,below] {$\Delta x$};
+  \draw[<->] (3.66,1.16)--(3.66,1.608);
+  \draw[<->] (3.66,1.608)--(3.66,1.922);
+  \draw[thin] (3.66,1.384)--(4.65,1.34) node[right] {$\dd y$};
+  \draw[thin] (3.66,1.765)--(4.65,1.78) node[right] {\scriptsize $\Delta y-\dd y$};
+  \fill (M) circle (1.5pt) node[above left] {$M$};
+  \fill (T) circle (1.4pt) node[below left] {$T$};
+  \fill (N) circle (1.5pt) node[above left] {$N$};
+  \node[fill=white,inner sep=1pt] at (4.95,2.35) {切线};
+\end{tikzpicture}
+\end{center}
+
+\begin{example}[近似计算]
+用微分近似计算 $\sqrt{4.04}$。
+\end{example}
+\begin{solution}
+取 $f(x)=\sqrt{x}$，在 $x=4$ 处线性化。 有
+\[
+f(4)=2,\qquad f'(x)=\frac{1}{2\sqrt{x}},\qquad f'(4)=\frac14.
+\]
+当 $\Delta x=0.04$ 时，
+\[
+\sqrt{4.04}=f(4+0.04)\approx f(4)+f'(4)\Delta x
+=2+\frac14\cdot0.04=2.01.
+\]
+\end{solution}
+\begin{warning}
+微分近似不是等式。 本题真实值约为 $2.009975\cdots$，近似值 $2.01$ 的误差很小，是因为 $\Delta x=0.04$ 相对基点 $4$ 很小。
+\end{warning}
+
+\begin{example}[相对误差]
+球的半径 $r$ 测量有小误差 $\Delta r$。 设体积 $V=\frac43\pi r^3$。 用微分估计体积的相对误差。
+\end{example}
+\begin{solution}
+体积微分为
+\[
+\dd V=4\pi r^2\dd r.
+\]
+当 $\Delta r$ 很小时，$\Delta V\approx \dd V=4\pi r^2\Delta r$。 因此体积相对误差近似为
+\[
+\frac{\Delta V}{V}\approx
+\frac{\dd V}{V}
+=\frac{4\pi r^2\dd r}{\frac43\pi r^3}
+=3\frac{\dd r}{r}.
+\]
+这说明半径的相对误差约放大为体积相对误差的三倍。 该结论来自数学模型 $V=\frac43\pi r^3$，不依赖具体计量单位。
+\end{solution}
+
+\begin{example}[微分形式不变性]
+求函数
+\[
+y=\ee^{1-3x}\sin2x
+\]
+的微分。
+\end{example}
+\begin{solution}
+由乘积微分法则，
+\[
+\dd y=\sin2x\,\dd(\ee^{1-3x})+\ee^{1-3x}\,\dd(\sin2x).
+\]
+利用微分形式不变性，
+\[
+\dd(\ee^{1-3x})=\ee^{1-3x}\dd(1-3x)=-3\ee^{1-3x}\dd x,
+\]
+\[
+\dd(\sin2x)=\cos2x\,\dd(2x)=2\cos2x\,\dd x.
+\]
+故
+\[
+\dd y=\ee^{1-3x}(2\cos2x-3\sin2x)\dd x.
+\]
+\end{solution}
+
+
+
+\subsection{偏导数与全微分}
+
+	
+	上一章讲述了二元函数的极限以及二元函数的连续性，描述函数在所有方向上的整体趋近行为；偏导数只考察平行于坐标轴的两个方向；可微性则要求函数增量能够由一个统一的线性表达式逼近。下面将依次学习偏导数与全微分，并进一步说明
+	\[
+	\text{可微}\Longrightarrow\text{连续},
+	\]
+	而偏导数存在一般不能推出连续。
+
+\subsubsection*{偏导数}
+
+二元函数 $z=f(x,y)$ 的输入是平面上的点。 若只让 $x$ 改变而保持 $y$ 不变，就得到沿平行于 $x$ 轴方向的变化率；若只让 $y$ 改变而保持 $x$ 不变，就得到沿平行于 $y$ 轴方向的变化率。 这两个变化率分别称为偏导数。
+
+\begin{definition}[偏导数]
+设 $z=f(x,y)$ 在点 $(x_0,y_0)$ 的某邻域内有定义。 若极限
+\[
+\lim_{h\to0}\frac{f(x_0+h,y_0)-f(x_0,y_0)}{h}
+\]
+存在，则称其为 $f$ 对 $x$ 的偏导数，记为
+\[
+f_x(x_0,y_0),\qquad \frac{\partial f}{\partial x}(x_0,y_0).
+\]
+若极限
+\[
+\lim_{k\to0}\frac{f(x_0,y_0+k)-f(x_0,y_0)}{k}
+\]
+存在，则称其为 $f$ 对 $y$ 的偏导数，记为 $f_y(x_0,y_0)$ 或 $\frac{\partial f}{\partial y}(x_0,y_0)$。
+\end{definition}
+
+\begin{example}[偏导计算]
+设 $f(x,y)=x^2y+\sin(xy)$，求 $f_x,f_y$。
+\end{example}
+\begin{solution}
+求 $f_x$ 时把 $y$ 看作常数：
+\[
+f_x=2xy+y\cos(xy).
+\]
+求 $f_y$ 时把 $x$ 看作常数：
+\[
+f_y=x^2+x\cos(xy).
+\]
+偏导计算中的“把另一个变量看作常数”不是说另一个变量永远不变，而是说此刻只沿一个坐标方向取变化率。
+\end{solution}
+
+\begin{example}[边际产量]
+设 Cobb-Douglas 型生产函数为
+\[
+Q(K,L)=A K^\alpha L^\beta,\qquad A>0,\quad K>0,\quad L>0.
+\]
+其中 $K$ 表示资本投入，$L$ 表示劳动投入，$Q$ 表示产出。 求资本的边际产量和劳动的边际产量。
+\end{example}
+\begin{solution}
+资本的边际产量指在劳动投入 $L$ 固定时，产出对资本投入 $K$ 的偏导数：
+\[
+Q_K=A\alpha K^{\alpha-1}L^\beta.
+\]
+劳动的边际产量指在资本投入 $K$ 固定时，产出对劳动投入 $L$ 的偏导数：
+\[
+Q_L=A\beta K^\alpha L^{\beta-1}.
+\]
+这两个量分别表示在当前投入水平附近，单独增加一单位资本或一单位劳动时，产出的近似增量。
+\end{solution}
+
+\begin{definition}[二阶偏导数]
+若一阶偏导函数 $f_x,f_y$ 仍有偏导数，则称这些偏导数为二阶偏导数，记作
+\[
+f_{xx}=\frac{\partial^2 f}{\partial x^2},\qquad
+f_{xy}=\frac{\partial^2 f}{\partial y\partial x},
+\]
+\[
+f_{yx}=\frac{\partial^2 f}{\partial x\partial y},\qquad
+f_{yy}=\frac{\partial^2 f}{\partial y^2}.
+\]
+这里 $f_{xy}$ 表示先对 $x$ 求偏导，再对 $y$ 求偏导；$f_{yx}$ 表示先对 $y$ 求偏导，再对 $x$ 求偏导。
+\end{definition}
+
+\begin{theorem}[混合偏导相等的充分条件]
+若 $f_{xy}$ 与 $f_{yx}$ 在点 $(x_0,y_0)$ 的某邻域内存在，并且都在 $(x_0,y_0)$ 连续，则
+\[
+f_{xy}(x_0,y_0)=f_{yx}(x_0,y_0).
+\]
+\end{theorem}
+\begin{proofdetail}
+取充分小的非零 $h,k$，记
+\[
+\Delta=f(x_0+h,y_0+k)-f(x_0+h,y_0)-f(x_0,y_0+k)+f(x_0,y_0).
+\]
+先把 $\Delta$ 写为
+\[
+\Delta=\bigl[f(x_0+h,y_0+k)-f(x_0,y_0+k)\bigr]
+-\bigl[f(x_0+h,y_0)-f(x_0,y_0)\bigr].
+\]
+对函数
+\[
+\Phi(y)=f(x_0+h,y)-f(x_0,y)
+\]
+在区间端点 $y_0,y_0+k$ 使用一元中值定理，存在 $\eta$ 介于 $0$ 与 $k$ 之间，使
+\[
+\Delta=\Phi'(y_0+\eta)k
+=\bigl[f_y(x_0+h,y_0+\eta)-f_y(x_0,y_0+\eta)\bigr]k.
+\]
+再对函数 $x\mapsto f_y(x,y_0+\eta)$ 在 $x_0,x_0+h$ 上使用中值定理，存在 $\xi$ 介于 $0$ 与 $h$ 之间，使
+\[
+\Delta=f_{yx}(x_0+\xi,y_0+\eta)hk.
+\]
+因此
+\[
+\frac{\Delta}{hk}=f_{yx}(x_0+\xi,y_0+\eta).
+\]
+
+另一方面，把 $\Delta$ 写为
+\[
+\Delta=\bigl[f(x_0+h,y_0+k)-f(x_0+h,y_0)\bigr]
+-\bigl[f(x_0,y_0+k)-f(x_0,y_0)\bigr],
+\]
+同理可得存在 $\xi_1$ 介于 $0$ 与 $h$ 之间、$\eta_1$ 介于 $0$ 与 $k$ 之间，使
+\[
+\frac{\Delta}{hk}=f_{xy}(x_0+\xi_1,y_0+\eta_1).
+\]
+令 $(h,k)\to(0,0)$，由 $f_{xy},f_{yx}$ 在 $(x_0,y_0)$ 连续，两种表示的极限分别为 $f_{xy}(x_0,y_0)$ 与 $f_{yx}(x_0,y_0)$，而左端是同一个量的极限，故两者相等。
+\end{proofdetail}
+
+\begin{example}[二阶偏导]
+设 $f(x,y)=x^3y^2+\ee^{xy}$，求 $f_{xy}$ 与 $f_{yx}$。
+\end{example}
+\begin{solution}
+先求
+\[
+f_x=3x^2y^2+y\ee^{xy},
+\]
+再对 $y$ 求偏导：
+\[
+f_{xy}=6x^2y+\ee^{xy}+xy\ee^{xy}.
+\]
+另一方面，
+\[
+f_y=2x^3y+x\ee^{xy},
+\]
+再对 $x$ 求偏导：
+\[
+f_{yx}=6x^2y+\ee^{xy}+xy\ee^{xy}.
+\]
+两者相等。 这里函数由初等函数复合而成，各相关偏导连续，因此符合混合偏导相等的充分条件。
+\end{solution}
+
+\begin{example}[偏导存在不推出连续]
+设
+\[
+f(x,y)=
+\begin{cases}
+\dfrac{xy}{x^2+y^2},&(x,y)\neq(0,0),\\[0.6em]
+0,&(x,y)=(0,0).
+\end{cases}
+\]
+证明 $f_x(0,0),f_y(0,0)$ 存在，但 $f$ 在 $(0,0)$ 不连续。
+\end{example}
+\begin{solution}
+按定义，
+\[
+f_x(0,0)=\lim_{h\to0}\frac{f(h,0)-f(0,0)}{h}=0,\qquad
+f_y(0,0)=\lim_{h\to0}\frac{f(0,h)-f(0,0)}{h}=0.
+\]
+但沿直线 $y=x$，
+\[
+f(x,x)=\frac{x^2}{2x^2}=\frac12\quad(x\neq0),
+\]
+故 $\lim_{(x,y)\to(0,0)}f(x,y)$ 不等于 $0$，函数在原点不连续。
+\end{solution}
+\begin{warning}
+偏导数只检测坐标轴方向的变化，不能控制所有趋近方向。因此“两个偏导数都存在”远弱于“二元函数可微”，也不能保证函数连续。
+\end{warning}
+
+\subsubsection*{隐函数求导}
+
+前面讨论的函数大多写成 $y=f(x)$，这种形式称为显函数。 但在实际问题和几何问题中，变量之间常由方程给出，例如
+\[
+x^2+y^2=1,\qquad x^2+xy+y^2=3.
+\]
+它们未必能方便地解出 $y=f(x)$。 由方程 $F(x,y)=0$ 在某个范围内确定的函数称为隐函数。 例如
+\[
+\sqrt{y}+x^2-1=0
+\]
+在满足 $1-x^2\geq0$ 且 $\sqrt{y}=1-x^2$ 的范围内可写成
+\[
+y=(1-x^2)^2.
+\]
+但并不是每个方程都在任意点附近确定唯一函数。 本讲义在求导时默认题目所给方程已经在所讨论点附近确定了可导函数；更一般的存在唯一性条件将在多元函数课程中进一步解释。
+
+\begin{center}
+	\begin{tikzpicture}[scale=1.15,>=Stealth]
+		\draw[->] (-1.9,0) -- (1.9,0) node[right] {$x$};
+		\draw[->] (0,-1.55) -- (0,1.55) node[above] {$y$};
+		\draw[thick,domain=0:360,samples=160] plot ({cos(\x)},{sin(\x)});
+		\fill (0.6,0.8) circle (1.5pt) node[above right] {$P(x,y)$};
+		\draw[dashed] (0.6,0) -- (0.6,0.8) -- (0,0.8);
+		\node at (0,-1.85) {$x^2+y^2=1$ 给出的曲线可在局部看作 $y=y(x)$};
+	\end{tikzpicture}
+\end{center}
+
+\begin{proposition}[隐函数一阶求导]
+	若方程 $F(x,y)=0$ 在某区间上确定可导函数 $y=y(x)$，且 $F$ 有连续偏导数、$F_y(x,y)\neq0$，则
+	\[
+	y'=-\frac{F_x}{F_y},
+	\]
+	其中右端在 $(x,y(x))$ 处取值。
+\end{proposition}
+\begin{proofdetail}
+	由恒等式 $F(x,y(x))\equiv0$ 对 $x$ 求导。 复合函数求导给出
+	\[
+	F_x(x,y(x))+F_y(x,y(x))y'(x)=0.
+	\]
+	由于 $F_y(x,y(x))\neq0$，移项并相除得到公式。
+\end{proofdetail}
+
+\begin{example}[隐函数一阶导数]
+	由方程 $x^2+xy+y^2=3$ 确定 $y=y(x)$，求 $y'$。
+\end{example}
+\begin{solution}
+	两边对 $x$ 求导：
+	\[
+	2x+y+xy'+2yy'=0.
+	\]
+	整理得
+	\[
+	y'=-\frac{2x+y}{x+2y}.
+	\]
+	该公式在 $x+2y\neq0$ 的点成立。
+\end{solution}
+
+\begin{example}[先说明隐函数再求导]
+	设方程
+	\[
+	\sqrt{y}+x^2-1=0
+	\]
+	在 $|x|<1$ 附近确定函数 $y=y(x)$。 用两种方法求 $y'$。
+\end{example}
+\begin{solution}
+	方法一：先解出显函数。 由方程得
+	\[
+	\sqrt{y}=1-x^2.
+	\]
+	当 $|x|<1$ 时右端为正，故
+	\[
+	y=(1-x^2)^2.
+	\]
+	于是
+	\[
+	y'=2(1-x^2)(-2x)=-4x(1-x^2).
+	\]
+	
+	方法二：直接对原方程求导。 注意
+	\[
+	\frac{\dd}{\dd x}\sqrt{y}
+	=\frac{1}{2\sqrt{y}}y',
+	\]
+	因此
+	\[
+	\frac{y'}{2\sqrt{y}}+2x=0,
+	\qquad
+	y'=-4x\sqrt{y}.
+	\]
+	再代入 $\sqrt{y}=1-x^2$，得
+	\[
+	y'=-4x(1-x^2).
+	\]
+	两种方法结果一致。
+\end{solution}
+
+\begin{example}[隐函数二阶导数]
+	设 $x^2+y^2=1$ 在点附近确定 $y=y(x)$，求 $y''$。
+\end{example}
+\begin{solution}
+	一阶求导得
+	\[
+	2x+2yy'=0,\qquad y'=-\frac{x}{y}\quad(y\neq0).
+	\]
+	对 $2x+2yy'=0$ 再求导：
+	\[
+	2+2(y')^2+2yy''=0.
+	\]
+	故
+	\[
+	y''=-\frac{1+(y')^2}{y}=-\frac{1+x^2/y^2}{y}
+	=-\frac{x^2+y^2}{y^3}=-\frac1{y^3}.
+	\]
+\end{solution}
+
+\begin{example}[隐函数切线]
+	求曲线
+	\[
+	xy-\ee^x+\ee^y=0
+	\]
+	在点 $(0,0)$ 处的切线方程。
+\end{example}
+\begin{solution}
+	把 $y$ 看成 $x$ 的函数，对方程两边求导，得
+	\[
+	y+xy'-\ee^x+\ee^y y'=0.
+	\]
+	整理得
+	\[
+	(x+\ee^y)y'=\ee^x-y,\qquad
+	y'=\frac{\ee^x-y}{x+\ee^y}.
+	\]
+	在 $(0,0)$ 处，
+	\[
+	y'(0)=\frac{1-0}{0+1}=1.
+	\]
+	因此切线方程为 $y=x$。
+\end{solution}
+
+
+
+\subsubsection*{全微分与多元链式法则}
+
+二元函数的偏导数只给出两个坐标方向的变化率。 若要像一元函数那样用一个线性表达式近似总增量，就需要全微分。 全微分的线性主部同时包含 $\Delta x$ 与 $\Delta y$：
+\[
+\Delta z\approx f_x(x_0,y_0)\Delta x+f_y(x_0,y_0)\Delta y.
+\]
+
+\begin{definition}[二元函数可微与全微分]
+设 $z=f(x,y)$ 在 $(x_0,y_0)$ 附近有定义。 若
+\[
+\Delta z=f(x_0+\Delta x,y_0+\Delta y)-f(x_0,y_0)
+\]
+可写成
+\[
+\Delta z=A\Delta x+B\Delta y+o(\rho),
+\qquad \rho=\sqrt{(\Delta x)^2+(\Delta y)^2},
+\]
+则称 $f$ 在 $(x_0,y_0)$ 可微，并称
+\[
+\dd z=A\dd x+B\dd y
+\]
+为 $f$ 在该点的全微分。
+\end{definition}
+
+\begin{theorem}[可微推出连续且偏导存在]
+若 $f$ 在 $(x_0,y_0)$ 可微，则 $f$ 在该点连续，且 $f_x(x_0,y_0),f_y(x_0,y_0)$ 存在，并且
+\[
+\dd z=f_x(x_0,y_0)\dd x+f_y(x_0,y_0)\dd y.
+\]
+\end{theorem}
+\begin{proofdetail}
+由可微性，
+\[
+\Delta z=A\Delta x+B\Delta y+o(\rho).
+\]
+由于 $|\Delta x|\leq\rho,\ |\Delta y|\leq\rho$，当 $\rho\to0$ 时，
+\[
+A\Delta x+B\Delta y\to0,\qquad o(\rho)\to0.
+\]
+故 $\Delta z\to0$，即 $f$ 在 $(x_0,y_0)$ 连续。
+
+取 $\Delta y=0$，则 $\rho=|\Delta x|$，且
+\[
+f(x_0+\Delta x,y_0)-f(x_0,y_0)=A\Delta x+o(|\Delta x|).
+\]
+当 $\Delta x\neq0$ 时除以 $\Delta x$ 并令 $\Delta x\to0$，得
+\[
+f_x(x_0,y_0)=A.
+\]
+同理取 $\Delta x=0$ 得 $f_y(x_0,y_0)=B$。 因此
+\[
+\dd z=f_x(x_0,y_0)\dd x+f_y(x_0,y_0)\dd y.
+\]
+\end{proofdetail}
+
+\begin{theorem}[偏导连续推出可微]
+若 $f_x,f_y$ 在 $(x_0,y_0)$ 的某邻域内存在，并且在 $(x_0,y_0)$ 连续，则 $f$ 在 $(x_0,y_0)$ 可微。
+\end{theorem}
+\begin{proofdetail}
+记
+\[
+\Delta z=f(x_0+\Delta x,y_0+\Delta y)-f(x_0,y_0).
+\]
+分两段改变变量：
+\[
+\Delta z=[f(x_0+\Delta x,y_0+\Delta y)-f(x_0,y_0+\Delta y)]
++[f(x_0,y_0+\Delta y)-f(x_0,y_0)].
+\]
+对第一项把 $y_0+\Delta y$ 固定，对一元函数 $x\mapsto f(x,y_0+\Delta y)$ 使用中值定理。 当 $\Delta x\neq0$ 时，存在 $\theta_1\in(0,1)$ 使
+\[
+f(x_0+\Delta x,y_0+\Delta y)-f(x_0,y_0+\Delta y)
+=f_x(x_0+\theta_1\Delta x,y_0+\Delta y)\Delta x.
+\]
+当 $\Delta x=0$ 时该等式也成立，因为两边均为 $0$，$\theta_1$ 可任取。 对第二项同理，存在 $\theta_2\in(0,1)$ 使
+\[
+f(x_0,y_0+\Delta y)-f(x_0,y_0)
+=f_y(x_0,y_0+\theta_2\Delta y)\Delta y.
+\]
+于是
+\[
+\Delta z=f_x(x_0,y_0)\Delta x+f_y(x_0,y_0)\Delta y+R,
+\]
+其中
+\[
+R=[f_x(x_0+\theta_1\Delta x,y_0+\Delta y)-f_x(x_0,y_0)]\Delta x
+\]
+\[
+\quad+[f_y(x_0,y_0+\theta_2\Delta y)-f_y(x_0,y_0)]\Delta y.
+\]
+由 $f_x,f_y$ 在 $(x_0,y_0)$ 连续，两个方括号中的差都趋于 $0$。 又 $|\Delta x|\leq\rho,\ |\Delta y|\leq\rho$，所以 $R=o(\rho)$。 因此 $f$ 可微。
+\end{proofdetail}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+  \draw[->] (-0.2,0)--(5.2,0) node[right] {$x$};
+  \draw[->] (0,-0.2)--(0,3.4) node[above] {$y$};
+  \coordinate (P) at (1.3,1.0);
+  \coordinate (A) at (4.2,1.0);
+  \coordinate (B) at (4.2,2.75);
+  \coordinate (C) at (1.3,2.75);
+  \draw[dashed] (P)--(A)--(B);
+  \draw[dashed] (P)--(C)--(B);
+  \draw[->,thick] (P)--(A) node[midway,below] {$\Delta x$};
+  \draw[->,thick] (A)--(B) node[midway,right] {$\Delta y$};
+  \draw[->,thick] (P)--(C) node[midway,left] {$\Delta y$};
+  \draw[->,thick] (C)--(B) node[midway,above] {$\Delta x$};
+  \fill (P) circle (1.5pt) node[below left] {$(x_0,y_0)$};
+  \fill (B) circle (1.5pt) node[right=3pt] {$(x_0+\Delta x,y_0+\Delta y)$};
+  \node at (2.75,3.55) {\small 总增量可沿两段坐标方向分解};
+\end{tikzpicture}
+\end{center}
+
+\begin{example}[全微分近似]
+估计 $f(x,y)=x^2y+\ln y$ 在 $(2,1)$ 附近，当 $x$ 增加 $0.01$、$y$ 减少 $0.02$ 时的函数增量。
+\end{example}
+\begin{solution}
+\[
+f_x=2xy,\qquad f_y=x^2+\frac1y.
+\]
+在 $(2,1)$ 处，
+\[
+f_x(2,1)=4,\qquad f_y(2,1)=5.
+\]
+故
+\[
+\Delta f\approx \dd f=4(0.01)+5(-0.02)=0.04-0.10=-0.06.
+\]
+这里的 $-0.06$ 是函数真实增量的线性近似；若要得到真实增量，需要代入原函数计算。
+\end{solution}
+
+\begin{example}[可微性判断]
+证明函数
+\[
+f(x,y)=x^2+y^2+xy
+\]
+在任意点可微，并求其全微分。
+\end{example}
+\begin{solution}
+先求偏导数：
+\[
+f_x=2x+y,\qquad f_y=2y+x.
+\]
+这两个偏导函数在全平面连续。 由偏导连续推出可微的定理，$f$ 在任意点可微，且
+\[
+\dd z=(2x+y)\dd x+(2y+x)\dd y.
+\]
+\end{solution}
+
+\begin{theorem}[二元链式法则：一元参数情形]
+设 $z=f(x,y)$ 在点 $(x(t),y(t))$ 处可微，且 $x=x(t),y=y(t)$ 在 $t$ 处可导，则复合函数 $z=f(x(t),y(t))$ 在 $t$ 处可导，且
+\[
+\frac{\dd z}{\dd t}=f_x\frac{\dd x}{\dd t}+f_y\frac{\dd y}{\dd t},
+\]
+其中 $f_x,f_y$ 在点 $(x(t),y(t))$ 处取值。
+\end{theorem}
+\begin{proofdetail}
+由 $f$ 可微，
+\[
+\Delta z=f_x\Delta x+f_y\Delta y+o(\rho),
+\qquad \rho=\sqrt{(\Delta x)^2+(\Delta y)^2}.
+\]
+两边除以 $\Delta t$。 因 $x,y$ 在 $t$ 处可导，故
+\[
+\Delta x=x'(t)\Delta t+o(\Delta t),\qquad
+\Delta y=y'(t)\Delta t+o(\Delta t).
+\]
+于是 $\rho=O(|\Delta t|)$。 因此
+\[
+\frac{o(\rho)}{\Delta t}
+=\frac{o(\rho)}{\rho}\cdot\frac{\rho}{\Delta t}\to0,
+\]
+其中第二个因子有界。 令 $\Delta t\to0$，得到
+\[
+\frac{\dd z}{\dd t}=f_x x'(t)+f_y y'(t).
+\]
+\end{proofdetail}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=1.0]
+  \node[draw,rounded corners,fill=gray!10,minimum width=2cm,minimum height=0.7cm] (t) at (0,0) {$t$};
+  \node[draw,rounded corners,fill=gray!10,minimum width=2.4cm,minimum height=0.7cm] (x) at (3,0.9) {$x=x(t)$};
+  \node[draw,rounded corners,fill=gray!10,minimum width=2.4cm,minimum height=0.7cm] (y) at (3,-0.9) {$y=y(t)$};
+  \node[draw,rounded corners,fill=gray!10,minimum width=2cm,minimum height=0.7cm] (z) at (6.2,0) {$z=f(x,y)$};
+  \draw[->,thick] (t)--(x) node[midway,above left] {$x'(t)$};
+  \draw[->,thick] (t)--(y) node[midway,below left] {$y'(t)$};
+  \draw[->,thick] (x)--(z) node[midway,above right] {$f_x$};
+  \draw[->,thick] (y)--(z) node[midway,below right] {$f_y$};
+  \node at (3.1,-1.65) {$\displaystyle \frac{\dd z}{\dd t}=f_xx'(t)+f_yy'(t)$};
+\end{tikzpicture}
+\end{center}
+
+\begin{example}[多元链式法则]
+设
+\[
+z=x^2y+\sin y,\qquad x=t^2,\qquad y=\ee^t.
+\]
+求 $\frac{\dd z}{\dd t}$。
+\end{example}
+\begin{solution}
+先求
+\[
+z_x=2xy,\qquad z_y=x^2+\cos y.
+\]
+又
+\[
+\frac{\dd x}{\dd t}=2t,\qquad \frac{\dd y}{\dd t}=\ee^t.
+\]
+由链式法则，
+\[
+\frac{\dd z}{\dd t}
+=z_x\frac{\dd x}{\dd t}+z_y\frac{\dd y}{\dd t}
+=2xy\cdot2t+(x^2+\cos y)\ee^t.
+\]
+代入 $x=t^2,\ y=\ee^t$，得
+\[
+\frac{\dd z}{\dd t}
+=4t^3\ee^t+(t^4+\cos(\ee^t))\ee^t.
+\]
+\end{solution}
+
+\begin{theorem}[二元链式法则：二元中间变量情形]
+设 $z=f(u,v)$ 在相应点可微，且
+\[
+u=u(x,y),\qquad v=v(x,y)
+\]
+在 $(x,y)$ 处有连续偏导数，则复合函数 $z=f(u(x,y),v(x,y))$ 在该点的偏导数为
+\[
+\frac{\partial z}{\partial x}=f_u\frac{\partial u}{\partial x}+f_v\frac{\partial v}{\partial x},
+\qquad
+\frac{\partial z}{\partial y}=f_u\frac{\partial u}{\partial y}+f_v\frac{\partial v}{\partial y}.
+\]
+\end{theorem}
+\begin{proofdetail}
+只证关于 $x$ 的公式，关于 $y$ 的公式同理。 固定 $y$，令 $x$ 改变为 $x+\Delta x$。 由于 $u,v$ 对 $x$ 可导，
+\[
+\Delta u=u_x\Delta x+o(\Delta x),\qquad
+\Delta v=v_x\Delta x+o(\Delta x).
+\]
+由 $f$ 在 $(u,v)$ 处可微，
+\[
+\Delta z=f_u\Delta u+f_v\Delta v+o(\rho),
+\qquad \rho=\sqrt{(\Delta u)^2+(\Delta v)^2}.
+\]
+又 $\Delta u=O(\Delta x),\Delta v=O(\Delta x)$，故 $\rho=O(|\Delta x|)$，从而 $o(\rho)=o(\Delta x)$。 代入得
+\[
+\Delta z=(f_u u_x+f_v v_x)\Delta x+o(\Delta x).
+\]
+两边除以 $\Delta x$ 并令 $\Delta x\to0$，得到
+\[
+\frac{\partial z}{\partial x}=f_u u_x+f_v v_x.
+\]
+\end{proofdetail}
+
+\begin{example}[二元复合函数偏导]
+设 $z=f(x^2+y,xy)$，其中 $f$ 有连续一阶偏导数。 求 $\frac{\partial z}{\partial x}$ 与 $\frac{\partial z}{\partial y}$。
+\end{example}
+\begin{solution}
+令
+\[
+u=x^2+y,\qquad v=xy.
+\]
+则 $z=f(u,v)$。 记 $f_u,f_v$ 分别为 $f$ 对第一、第二个变量的偏导数，并在 $(u,v)=(x^2+y,xy)$ 处取值。 由链式法则，
+\[
+\frac{\partial z}{\partial x}
+=f_u\frac{\partial u}{\partial x}+f_v\frac{\partial v}{\partial x}
+=2x f_u+y f_v,
+\]
+\[
+\frac{\partial z}{\partial y}
+=f_u\frac{\partial u}{\partial y}+f_v\frac{\partial v}{\partial y}
+=f_u+x f_v.
+\]
+\end{solution}
+
+
+
+\begin{application}[作物产量对水分和氮肥的敏感性]
+设简化产量模型为
+\[
+Y=Y(W,N),
+\]
+其中 $W$ 是灌溉量（$\mathrm{m^3/ha}$），$N$ 是氮肥投入量（$\mathrm{kg/ha}$），$Y$ 是产量（$\mathrm{t/ha}$）。在其他条件暂时保持不变的局部分析中，
+\[
+\frac{\partial Y}{\partial W}
+\]
+表示施肥条件不变时，灌溉量微小改变对产量的局部影响；而
+\[
+\frac{\partial Y}{\partial N}
+\]
+表示水分条件不变时，氮肥投入微小改变的局部影响。若 $Y$ 可微，且 $\Delta W,\Delta N$ 较小，则
+\[
+\Delta Y\approx Y_W\Delta W+Y_N\Delta N.
+\]
+这正体现了偏导数与全微分的区别。真实产量还受温度、土壤、品种、病虫害以及水肥交互作用影响，因此该局部模型不能直接给出灌溉或施肥处方。\upcite{TaizPlant}
+\end{application}
+
+
+\begin{application}[偏导数在多参数机器学习模型中的应用]
+	
+	多元函数的偏导数可以直接解释多参数模型训练。 设有 $m$ 个样本 $(x_i,y_i)$，用一元线性模型
+	\[
+	\hat y_i=wx_i+b
+	\]
+	进行预测。 常用的均方误差损失为
+	\[
+	J(w,b)=\frac{1}{2m}\sum_{i=1}^{m}(wx_i+b-y_i)^2.
+	\]
+	这里 $J$ 是关于两个变量 $w,b$ 的函数。 对 $w$ 和 $b$ 分别求偏导，得
+	\[
+	\frac{\partial J}{\partial w}
+	=\frac{1}{m}\sum_{i=1}^{m}(wx_i+b-y_i)x_i,
+	\qquad
+	\frac{\partial J}{\partial b}
+	=\frac{1}{m}\sum_{i=1}^{m}(wx_i+b-y_i).
+	\]
+	梯度下降更新为
+	\[
+	w_{k+1}=w_k-\eta\frac{\partial J}{\partial w}(w_k,b_k),\qquad
+	b_{k+1}=b_k-\eta\frac{\partial J}{\partial b}(w_k,b_k).
+	\]
+	
+	\begin{example}
+		对两个样本 $(1,2),(2,3)$，写出线性模型 $\hat y=wx+b$ 的损失函数，并求 $\nabla J(0,0)$。
+	\end{example}
+	\begin{solution}
+		此时 $m=2$，
+		\[
+		J(w,b)=\frac14\left[(w+b-2)^2+(2w+b-3)^2\right].
+		\]
+		由上面的公式，
+		\[
+		\frac{\partial J}{\partial w}
+		=\frac12\left[(w+b-2)\cdot1+(2w+b-3)\cdot2\right],
+		\]
+		\[
+		\frac{\partial J}{\partial b}
+		=\frac12\left[(w+b-2)+(2w+b-3)\right].
+		\]
+		代入 $(w,b)=(0,0)$，
+		\[
+		\frac{\partial J}{\partial w}(0,0)=\frac12[-2+2(-3)]=-4,\qquad
+		\frac{\partial J}{\partial b}(0,0)=\frac12(-2-3)=-\frac52.
+		\]
+		故
+		\[
+		\nabla J(0,0)=\left(-4,-\frac52\right).
+		\]
+		若学习率为 $\eta$，第一次更新为
+		\[
+		(w_1,b_1)=\left(0,0\right)-\eta\left(-4,-\frac52\right)
+		=\left(4\eta,\frac52\eta\right).
+		\]
+	\end{solution}
+	
+	
+	
+	
+\end{application}
+
+
+
+
+
+\iffalse
+
+\subsection*{第5章课后习题}
+\addcontentsline{toc}{subsection}{第5章课后习题}
+
+\subsubsection*{第5.1--5.3节\quad 导数的概念与意义}
+
+\begin{enumerate}[label=\textbf{练习\arabic*.},leftmargin=2.2em]
+\item 判断下列函数在指定点是否可导：
+\[
+|x-1|\text{ 在 }x=1;\qquad
+x^{2/3}\text{ 在 }x=0;\qquad
+\begin{cases}x\sin\frac1x,&x\neq0,\\0,&x=0,\end{cases}\text{ 在 }x=0.
+\]
+\item 求曲线 $y=x^2-2x$ 在点 $(1,-1)$ 处的切线方程和法线方程。
+\item 设总成本函数 $C(x)=0.02x^2+8x+500$，求边际成本函数，并解释 $C'(100)$ 的含义。
+\item 用导数定义求 $f(x)=\frac1x$ 在 $x_0\neq0$ 处的导数。
+\item 设需求函数 $x=80-2p$。 求收入函数 $R(x)$ 与边际收入函数，并求 $x=30$ 时的边际收入。
+\item 设
+\[
+f(x)=
+\begin{cases}
+ax+b,&x<1,\\
+x^2,&x\geq1.
+\end{cases}
+\]
+求 $a,b$，使 $f$ 在 $x=1$ 处可导。
+\end{enumerate}
+
+\subsubsection*{第5.4--5.6节\quad 一元函数求导法则}
+
+\begin{enumerate}[label=\textbf{练习\arabic*.},leftmargin=2.2em]
+\item 求下列函数的导数：
+\[
+y=3x^2+4\ln x-5\cos x,\qquad
+y=\ln(\sin x),\qquad
+y=\ee^{\sqrt{x}}.
+\]
+\item 求
+\[
+y=\frac{x^2\sin x}{1+x^2}
+\]
+的导数，并说明用到了哪些求导法则。
+\item 求下列函数的导数：
+\[
+y=(1+x^2)^{\arctan x},\qquad
+y=(\cot x)^{\cos x}.
+\]
+\item 由反函数求导公式推出 $y=\arccos x$ 的导数。
+\item 求 $y=x^2\ln x$ 的二阶导数，其中 $x>0$。
+\item 求 $y=x^2\ee^x$ 的 $n$ 阶导数。
+\item 设 $x^3+y^3-3xy=0$ 确定 $y=y(x)$，求 $y'$。
+\item 求曲线
+\[
+xy+\ln y=1
+\]
+在点 $(1,1)$ 处的切线方程。
+\item 曲线由参数方程
+\[
+x=t-\sin t,\qquad y=1-\cos t
+\]
+给出，求 $\frac{\dd y}{\dd x}$。
+\item 某产品总收入函数为
+\[
+R(x)=50x-0.1x^2.
+\]
+求边际收入函数和边际收入的变化率，并解释 $R''(x)$ 的经济含义。
+\end{enumerate}
+
+\subsubsection*{第5.7--5.11节\quad 微分、偏导数与多元微分}
+
+\begin{enumerate}[label=\textbf{练习\arabic*.},leftmargin=2.2em]
+\item 判断下列命题真伪，并说明理由：偏导数存在必连续；连续且偏导存在必可微；偏导数连续必可微；可微必连续。
+\item 求 $z=x^2y+\ee^{xy}$ 的全微分。
+\item 用微分近似计算 $\sqrt{9.06}$。
+\item 用微分估计 $\ln(1.02)$。
+\item 设 $f(x,y)=x^3y^2+\ee^{xy}$，求 $f_x,f_y,f_{xy},f_{yx}$。
+\item 设生产函数 $Q(K,L)=10K^{1/2}L^{1/2}$。 求 $Q_K,Q_L$，并解释它们的意义。
+\item 证明函数 $f(x,y)=x^2+y^2-2xy$ 在任意点可微，并写出全微分。
+\item 设 $z=x^2y+\sin y,\ x=t^2,\ y=\ee^t$。 求 $\frac{\dd z}{\dd t}$。
+\item 设 $z=f(x^2+y,xy)$，其中 $f$ 有连续一阶偏导数。 求 $\frac{\partial z}{\partial x}$ 与 $\frac{\partial z}{\partial y}$。
+\item 设
+\[
+f(x,y)=
+\begin{cases}
+\dfrac{x^2y}{x^2+y^2},&(x,y)\neq(0,0),\\[0.6em]
+0,&(x,y)=(0,0).
+\end{cases}
+\]
+求 $f_x(0,0),f_y(0,0)$，并判断 $f$ 在 $(0,0)$ 是否连续。
+\end{enumerate}
+
+\subsection*{第5章参考答案与提示}
+\addcontentsline{toc}{subsection}{第5章参考答案与提示}
+
+\subsubsection*{第5.1--5.3节\quad 导数的概念与意义}
+
+\begin{enumerate}[label=\textbf{练习\arabic*.},leftmargin=2.2em]
+\item $|x-1|$ 在 $x=1$ 左导数为 $-1$，右导数为 $1$，不可导；$x^{2/3}$ 在 $0$ 处差商为 $h^{-1/3}$，极限不存在，作为有限导数不可导；第三个函数在 $0$ 处差商为 $\sin(1/h)$，极限不存在，故不可导。
+\item $y'=2x-2$，在 $x=1$ 处斜率为 $0$。 切线为 $y=-1$，法线为 $x=1$。
+\item $C'(x)=0.04x+8$，故 $C'(100)=12$。 它表示产量在 $100$ 附近增加一个单位时，总成本约增加 $12$ 个成本单位。
+\item
+\[
+\frac{f(x_0+h)-f(x_0)}{h}
+=\frac{\frac1{x_0+h}-\frac1{x_0}}{h}
+=-\frac1{x_0(x_0+h)}.
+\]
+令 $h\to0$，得 $f'(x_0)=-\frac1{x_0^2}$。
+\item 由 $x=80-2p$ 得 $p=40-\frac{x}{2}$。 因此
+\[
+R(x)=xp=40x-\frac{x^2}{2},\qquad R'(x)=40-x.
+\]
+故 $R'(30)=10$，表示销量为 $30$ 附近多销售一个单位时，总收入约增加 $10$。
+\item 可导必连续，先由连续性得
+\[
+a+b=1.
+\]
+左导数为 $a$，右导数为 $2$，可导要求 $a=2$。 代回得 $b=-1$。
+\end{enumerate}
+
+上一章给出了导数的定义。 如果每遇到一个函数都从差商
+\[
+\frac{f(x+h)-f(x)}{h}
+\]
+出发求极限，理论上可行，但实际计算会非常繁琐。 本章的任务是把“从定义求导”的工作整理成一套可靠的计算规则：简单函数用基本公式，复杂函数先分解结构，再按线性组合、乘积、商、复合、反函数、隐函数或参数方程分别处理。
+
+求导法则不是独立于导数定义之外的技巧，而是由极限运算法则和可导函数的连续性推出的。 因此使用公式时必须同时注意两个问题：第一，函数在所讨论的点是否有定义；第二，公式中的分母、根式、反函数条件等是否允许这样求导。
+
+\subsubsection*{第5.4--5.6节\quad 一元函数求导法则}
+
+\begin{enumerate}[label=\textbf{练习\arabic*.},leftmargin=2.2em]
+\item
+\[
+(3x^2+4\ln x-5\cos x)'=6x+\frac4x+5\sin x.
+\]
+又
+\[
+(\ln\sin x)'=\frac{\cos x}{\sin x}=\cot x,
+\]
+其中需 $\sin x>0$ 或至少在选定区间内 $\ln(\sin x)$ 有定义。 最后
+\[
+(\ee^{\sqrt{x}})'=\ee^{\sqrt{x}}\cdot\frac1{2\sqrt{x}}
+=\frac{\ee^{\sqrt{x}}}{2\sqrt{x}},\qquad x>0.
+\]
+\item 先对分子用乘积法则，再对整体用商法：
+\[
+\left(x^2\sin x\right)'=2x\sin x+x^2\cos x,
+\]
+\[
+y'=\frac{(2x\sin x+x^2\cos x)(1+x^2)-2x\cdot x^2\sin x}{(1+x^2)^2}.
+\]
+化简得
+\[
+y'=\frac{2x\sin x+x^2\cos x+x^4\cos x}{(1+x^2)^2}.
+\]
+\item 对第一个函数取对数：
+\[
+\ln y=(\arctan x)\ln(1+x^2),
+\]
+故
+\[
+y'=(1+x^2)^{\arctan x}\left[\frac{\ln(1+x^2)}{1+x^2}+\frac{2x\arctan x}{1+x^2}\right].
+\]
+对第二个函数，取对数得
+\[
+\ln y=\cos x\ln(\cot x).
+\]
+因此
+\[
+y'=(\cot x)^{\cos x}\left[-\sin x\ln(\cot x)-\frac1{\sin x}\right],
+\]
+其中要求在所讨论区间内 $\cot x>0$。
+\item 令 $y=\arccos x$，则 $x=\cos y$，$y\in[0,\pi]$。 当 $-1<x<1$ 时，$\sin y>0$，故
+\[
+\frac{\dd x}{\dd y}=-\sin y=-\sqrt{1-x^2}.
+\]
+由反函数求导公式，
+\[
+(\arccos x)'=-\frac1{\sqrt{1-x^2}},\qquad -1<x<1.
+\]
+\item
+\[
+y'=2x\ln x+x,\qquad y''=2\ln x+3.
+\]
+\item 由莱布尼茨公式，取 $u=x^2,\ v=\ee^x$。 因 $u^{(k)}=0\ (k\geq3)$，得
+\[
+y^{(n)}=\ee^x\left[x^2+2nx+n(n-1)\right].
+\]
+\item 两边对 $x$ 求导：
+\[
+3x^2+3y^2y'-3y-3xy'=0,
+\]
+故
+\[
+y'=\frac{y-x^2}{y^2-x}.
+\]
+\item 将 $y$ 看成 $x$ 的函数。 对
+\[
+xy+\ln y=1
+\]
+两边求导：
+\[
+y+xy'+\frac{y'}{y}=0.
+\]
+在 $(1,1)$ 处，
+\[
+1+y'+y'=0,\qquad y'=-\frac12.
+\]
+故切线方程为
+\[
+y-1=-\frac12(x-1).
+\]
+\item
+\[
+\frac{\dd y}{\dd x}=\frac{\sin t}{1-\cos t},
+\]
+其中 $1-\cos t\neq0$。
+\item
+\[
+R'(x)=50-0.2x,\qquad R''(x)=-0.2.
+\]
+其中 $R'(x)$ 为边际收入，表示销量在 $x$ 附近增加一个单位时收入的近似增量；$R''(x)=-0.2$ 表示边际收入随销量增加而下降，且下降速度为常数 $0.2$。
+\end{enumerate}
+
+\subsubsection*{第5.7--5.11节\quad 微分、偏导数与多元微分}
+
+\begin{enumerate}[label=\textbf{练习\arabic*.},leftmargin=2.2em]
+\item 偏导数存在不一定连续，反例可取本章例题
+\[
+f(x,y)=\frac{xy}{x^2+y^2},\quad f(0,0)=0.
+\]
+连续且偏导存在不一定可微；例如
+\[
+f(x,y)=
+\begin{cases}
+\dfrac{xy}{\sqrt{x^2+y^2}},&(x,y)\neq(0,0),\\[0.6em]
+0,&(x,y)=(0,0).
+\end{cases}
+\]
+在原点连续，且
+\[
+f_x(0,0)=\lim_{h\to0}\frac{f(h,0)-0}{h}=0,\qquad
+f_y(0,0)=\lim_{k\to0}\frac{f(0,k)-0}{k}=0.
+\]
+若它在原点可微，则线性主部应为 $0\cdot x+0\cdot y=0$。 但沿 $y=x$，
+\[
+\frac{f(x,x)-0}{\sqrt{x^2+x^2}}
+=\frac{x^2/\sqrt{2x^2}}{\sqrt{2x^2}}
+=\frac12\qquad(x\neq0),
+\]
+不趋于 $0$，故不可微。 偏导数在邻域内存在且在该点连续可推出可微；可微必连续。
+\item
+\[
+z_x=2xy+y\ee^{xy},\qquad z_y=x^2+x\ee^{xy},
+\]
+所以
+\[
+\dd z=(2xy+y\ee^{xy})\dd x+(x^2+x\ee^{xy})\dd y.
+\]
+\item 取 $f(x)=\sqrt{x}$，在 $x=9$ 处线性化：
+\[
+\sqrt{9.06}\approx3+\frac{1}{2\sqrt9}\cdot0.06=3.01.
+\]
+\item 取 $f(x)=\ln x$，在 $x=1$ 处线性化。 因 $f(1)=0,\ f'(1)=1$，且 $\Delta x=0.02$，
+\[
+\ln(1.02)\approx0+1\cdot0.02=0.02.
+\]
+\item
+\[
+f_x=3x^2y^2+y\ee^{xy},\qquad
+f_y=2x^3y+x\ee^{xy}.
+\]
+进一步，
+\[
+f_{xy}=6x^2y+\ee^{xy}+xy\ee^{xy},
+\]
+\[
+f_{yx}=6x^2y+\ee^{xy}+xy\ee^{xy}.
+\]
+\item
+\[
+Q_K=10\cdot\frac12K^{-1/2}L^{1/2}
+=5\sqrt{\frac{L}{K}},
+\]
+\[
+Q_L=10\cdot\frac12K^{1/2}L^{-1/2}
+=5\sqrt{\frac{K}{L}}.
+\]
+$Q_K$ 表示劳动投入固定时资本投入增加一单位带来的产出近似增量；$Q_L$ 表示资本投入固定时劳动投入增加一单位带来的产出近似增量。
+\item
+\[
+f_x=2x-2y,\qquad f_y=2y-2x.
+\]
+二者在全平面连续，故 $f$ 处处可微，且
+\[
+\dd f=(2x-2y)\dd x+(2y-2x)\dd y.
+\]
+\item
+\[
+z_x=2xy,\qquad z_y=x^2+\cos y,
+\]
+\[
+\frac{\dd x}{\dd t}=2t,\qquad \frac{\dd y}{\dd t}=\ee^t.
+\]
+故
+\[
+\frac{\dd z}{\dd t}=2xy\cdot2t+(x^2+\cos y)\ee^t.
+\]
+代入 $x=t^2,\ y=\ee^t$ 得
+\[
+\frac{\dd z}{\dd t}=4t^3\ee^t+(t^4+\cos(\ee^t))\ee^t.
+\]
+\item 令 $u=x^2+y,\ v=xy$。 则
+\[
+\frac{\partial z}{\partial x}=f_u(u,v)\cdot2x+f_v(u,v)\cdot y,
+\]
+\[
+\frac{\partial z}{\partial y}=f_u(u,v)+f_v(u,v)\cdot x,
+\]
+其中 $(u,v)=(x^2+y,xy)$。
+\item 按定义，
+\[
+f_x(0,0)=\lim_{h\to0}\frac{f(h,0)-f(0,0)}{h}=0,
+\]
+\[
+f_y(0,0)=\lim_{k\to0}\frac{f(0,k)-f(0,0)}{k}=0.
+\]
+沿任意直线 $y=mx$，
+\[
+f(x,mx)=\frac{x^2(mx)}{x^2+m^2x^2}
+=\frac{mx}{1+m^2}\to0.
+\]
+但连续性不能只看直线。 由估计
+\[
+\left|\frac{x^2y}{x^2+y^2}\right|
+\leq |y|\frac{x^2}{x^2+y^2}\leq |y|,
+\]
+当 $(x,y)\to(0,0)$ 时右端趋于 $0$，故 $f$ 在原点连续。
+\end{enumerate}
+
+
+\fi
+
+
+
+% Bibliography entries copied verbatim from the recorded manuscript; see provenance JSON.
+\begin{thebibliography}{99}
+\bibitem{TaizPlant} TAIZ L, ZEIGER E, M{\o}LLER I M, et al. \emph{Plant Physiology and Development}（6th ed.）[M]. Sunderland, MA: Sinauer Associates, 2015.
+\end{thebibliography}
+\end{document}
+

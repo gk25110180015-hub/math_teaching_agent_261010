@@ -1,0 +1,28 @@
+{
+  "status": "UNCHECKED_REPAIRED",
+  "state_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S01.json",
+  "candidate_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S01/candidate-a482d7d94c52.json",
+  "candidate_hash": "3f269f134b5c44bb666655d49fa09cec44f4969134e0d85e30ff330b50a05dbb",
+  "applied_rounds": 2,
+  "proposal_calls": 2,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "练习答案中使用了直接代入与有限求和，未用符号核算协议逐项验证全部分数运算。\n显式裁定：当前正文已在 S01.U10 中写出样本均值、两个分数平方和、斜率与截距、三个拟合值、残差及残差和的直接代入结果；但原疑点要求用符号核算协议逐项验证全部分数运算，而所提供工具证据只覆盖少量表达式，不能据此证明其余分数运算已逐项核验。该疑点原声明的 unit_id 为 null，且不能在本裁定中改写为 S01.U10，因此无法按现有绑定范围发出只针对某一 unit_id 的可执行修复指令。",
+      "location": {},
+      "uncertainty_id": "D001-6e31a6936c94d510",
+      "original_sha256": "6e31a6936c94d510e52c7f19c60263f3f1950ed502d0cc6f04706d0bf95610e7",
+      "resolution_status": "open",
+      "disposition": "open_dependency",
+      "disposition_evidence": [
+        {
+          "source_key": "current:S01.U10",
+          "source_sha256": "904be7b01d48530958ccea9dcf604685785cbf545dc2d9239ee4cc459f66626f",
+          "quote": "答案如下：\n\\[\n\\bar x=\\frac{1+2+4}{3}=\\frac73,\n\\qquad\n\\bar y=\\frac{4+5+8}{3}=\\frac{17}{3}\\text{。}\n\\]\n进一步有\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)(y_i-\\bar y)=\\frac{19}{3},\n\\qquad\n\\sum_{i=1}^{3}(x_i-\\bar x)^2=\\frac{14}{3}\\text{。}\n\\]\n所以\n\\[\n\\hat b=\\frac{19/3}{14/3}=\\frac{19}{14},\n\\qquad\n\\hat a=\\frac{17}{3}-\\frac{19}{14}\\cdot\\frac73=\\frac52\\text{。}\n\\]\n拟合直线为\n\\[\n\\hat y=\\frac52+\\frac{19}{14}x\\text{。}\n\\]\n三个拟合值和残差为\n\\[\n\\begin{array}{c|c|c}\n i&\\hat y_i&\\hat e_i=y_i-\\hat y_i\\\\ \\hline\n 1&\\frac{27}{7}&\\frac17\\\\\n 2&\\frac{73}{14}&-\\frac{3}{14}\\\\\n 3&\\frac{111}{14}&\\frac{1}{14}\n\\end{array}\n\\]\n残差之和为\n\\[\n\\frac17-\\frac{3}{14}+\\frac{1}{14}=0\\text{。}\n\\]\n最后，$x=3$ 时的拟合值为\n\\[\n\\hat y(3)=\\frac52+\\frac{19}{14}\\cdot3=\\frac{46}{7}\\text{。}\n\\]\n由于 $3$ 位于样本解释变量的最小值 $1$ 与最大值 $4$ 之间，这是样本区间内的插值。"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "section_id": "S01",
+  "replacements": [
+    {
+      "unit_id": "S01.U04",
+      "tex": "将 $S(a,b)$ 展开得\n\\[\nS(a,b)=\\sum_{i=1}^{n}\\bigl[y_i-a-bx_i\\bigr]^2.\n\\]\n对 $a$ 和 $b$ 分别求偏导，得到\n\\[\n\\frac{\\partial S}{\\partial a}=-2\\sum_{i=1}^{n}\\bigl[y_i-a-bx_i\\bigr],\n\\qquad\n\\frac{\\partial S}{\\partial b}=-2\\sum_{i=1}^{n}x_i\\bigl[y_i-a-bx_i\\bigr].\n\\]\n因此，最小点必须满足式 \\eqref{thm:normal-equations}。第一条正规方程给出\n\\[\nn\\hat a+\\hat b\\sum_{i=1}^{n}x_i=\\sum_{i=1}^{n}y_i,\n\\]\n从而\n\\[\n\\hat a=\\bar y-\\hat b\\bar x.\n\\]\n把它代入第二条正规方程，并利用\n\\[\n\\sum_{i=1}^{n}(x_i-\\bar x)=0,\n\\qquad\n\\sum_{i=1}^{n}(y_i-\\bar y)=0,\n\\]\n可得\n\\[\n\\hat b\\sum_{i=1}^{n}(x_i-\\bar x)^2\n=\\sum_{i=1}^{n}(x_i-\\bar x)(y_i-\\bar y).\n\\]\n由于分母严格为正，故 $\\hat b$ 唯一确定，随后 $\\hat a$ 也唯一确定。\n\n下面验证由上述公式给出的 $(\\hat a,\\hat b)$ 确实满足正规方程。对第一条，有\n\\[\n\\sum_{i=1}^{n}\\bigl[y_i-(\\hat a+\\hat b x_i)\\bigr]\n=\\sum_{i=1}^{n}y_i-n\\hat a-\\hat b\\sum_{i=1}^{n}x_i\n=n\\bar y-n(\\bar y-\\hat b\\bar x)-\\hat b n\\bar x=0.\n\\]\n对第二条，利用 $\\sum_{i=1}^{n}(x_i-\\bar x)=0$ 和 $\\sum_{i=1}^{n}(y_i-\\bar y)=0$，有\n\\[\n\\sum_{i=1}^{n}x_i\\bigl[y_i-(\\hat a+\\hat b x_i)\\bigr]\n=\\sum_{i=1}^{n}(x_i-\\bar x)(y_i-\\bar y)\n-\\hat b\\sum_{i=1}^{n}(x_i-\\bar x)^2=0,\n\\]\n最后一步由 $\\hat b$ 的定义得到。因此 $(\\hat a,\\hat b)$ 满足式 \\eqref{thm:normal-equations}。\n\n为说明这是唯一的全局最小点，令 $u=a-\\hat a$，$v=b-\\hat b$。由于 $(\\hat a,\\hat b)$ 满足正规方程，直接展开平方项可得\n\\[\nS(a,b)=S(\\hat a,\\hat b)+\\sum_{i=1}^{n}(u+vx_i)^2.\n\\]\n再将 $x_i=(x_i-\\bar x)+\\bar x$ 代入，并令 $w=u+v\\bar x$，得到\n\\[\n\\sum_{i=1}^{n}(u+vx_i)^2\n=nw^2+v^2\\sum_{i=1}^{n}(x_i-\\bar x)^2\\geq 0.\n\\]\n当且仅当 $w=0$ 且 $v=0$ 时等号成立；由此 $u=0$。所以 $(\\hat a,\\hat b)$ 是唯一最小点。"
+    },
+    {
+      "unit_id": "S01.U07",
+      "tex": "某地区三年的广告支出 $x$ 与销售额 $y$ 的观测数据为\n\\[\n(x_1,y_1)=(1,2),\\qquad (x_2,y_2)=(2,3),\\qquad (x_3,y_3)=(3,5)\\text{。}\n\\]\n这三个观测点的样本均值为\n\\[\n\\bar x=\\frac{1+2+3}{3}=2,\\qquad \\bar y=\\frac{2+3+5}{3}=\\frac{10}{3}\\text{。}\n\\]\n用一元直线拟合销售额与广告支出之间的线性关系。"
+    },
+    {
+      "unit_id": "S01.U10",
+      "tex": "答案如下：\n\\[\n\\bar x=\\frac{1+2+4}{3}=\\frac73,\n\\qquad\n\\bar y=\\frac{4+5+8}{3}=\\frac{17}{3}\\text{。}\n\\]\n进一步有\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)(y_i-\\bar y)=\\frac{19}{3},\n\\qquad\n\\sum_{i=1}^{3}(x_i-\\bar x)^2=\\frac{14}{3}\\text{。}\n\\]\n所以\n\\[\n\\hat b=\\frac{19/3}{14/3}=\\frac{19}{14},\n\\qquad\n\\hat a=\\frac{17}{3}-\\frac{19}{14}\\cdot\\frac73=\\frac52\\text{。}\n\\]\n拟合直线为\n\\[\n\\hat y=\\frac52+\\frac{19}{14}x\\text{。}\n\\]\n三个拟合值和残差为\n\\[\n\\begin{array}{c|c|c}\n i&\\hat y_i&\\hat e_i=y_i-\\hat y_i\\\\ \\hline\n 1&\\frac{27}{7}&\\frac17\\\\\n 2&\\frac{73}{14}&-\\frac{3}{14}\\\\\n 3&\\frac{111}{14}&\\frac{1}{14}\n\\end{array}\n\\]\n残差之和为\n\\[\n\\frac17-\\frac{3}{14}+\\frac{1}{14}=0\\text{。}\n\\]\n最后，$x=3$ 时的拟合值为\n\\[\n\\hat y(3)=\\frac52+\\frac{19}{14}\\cdot3=\\frac{46}{7}\\text{。}\n\\]\n由于 $3$ 位于样本解释变量的最小值 $1$ 与最大值 $4$ 之间，这是样本区间内的插值。"
+    }
+  ],
+  "calculation_updates": [
+    {
+      "id": "S01.C02",
+      "unit_id": "S01.U07",
+      "kind": "equivalence",
+      "assumptions": {},
+      "lhs": {
+        "op": "Mul",
+        "args": [
+          {
+            "op": "Rational",
+            "p": 1,
+            "q": 3
+          },
+          {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Integer",
+                "value": 2
+              },
+              {
+                "op": "Integer",
+                "value": 3
+              },
+              {
+                "op": "Integer",
+                "value": 5
+              }
+            ]
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": 10,
+        "q": 3
+      }
+    }
+  ],
+  "calculation_additions": [],
+  "uncertainties_append": [],
+  "calculation_limitations_append": [
+    "S01.C02 已由数值点抽查改为对样本均值的等价性核算；未对拟合直线的残差进行逐点符号核算。"
+  ]
+}

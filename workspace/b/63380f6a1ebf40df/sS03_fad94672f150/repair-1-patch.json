@@ -1,0 +1,137 @@
+{
+  "section_id": "S03",
+  "replacements": [
+    {
+      "unit_id": "S03.U07",
+      "tex": "样本均值为\n\\[\n\\bar y=\\frac{2+3+5}{3}=\\frac{10}{3}.\n\\]\n因此总平方和为\n\\[\n\\begin{aligned}\n\\operatorname{TSS}\n&=\\left(2-\\frac{10}{3}\\right)^2\n+\\left(3-\\frac{10}{3}\\right)^2\n+\\left(5-\\frac{10}{3}\\right)^2\\\\\n&=\\left(-\\frac{4}{3}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{5}{3}\\right)^2\n=\\frac{14}{3}.\n\\end{aligned}\n\\]\n残差为\n\\[\n\\hat e_1=2-\\frac{11}{6}=\\frac{1}{6},\n\\qquad\n\\hat e_2=3-\\frac{10}{3}=-\\frac{1}{3},\n\\qquad\n\\hat e_3=5-\\frac{29}{6}=\\frac{1}{6}.\n\\]\n它们的和为\n\\[\n\\hat e_1+\\hat e_2+\\hat e_3\n=\\frac{1}{6}-\\frac{1}{3}+\\frac{1}{6}=0.\n\\]\n残差平方和为\n\\[\n\\operatorname{RSS}\n=\\left(\\frac{1}{6}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{1}{6}\\right)^2\n=\\frac{1}{6}.\n\\]\n由平方和分解，解释平方和为\n\\[\n\\operatorname{ESS}=\\operatorname{TSS}-\\operatorname{RSS}\n=\\frac{14}{3}-\\frac{1}{6}=\\frac{9}{2}.\n\\]\n所以决定系数为\n\\[\nR^2=1-\\frac{1/6}{14/3}\n=1-\\frac{1}{28}\n=\\frac{27}{28}.\n\\]\n这表示在该样本中，广告支出与销售额的线性拟合相对于只用样本均值预测销售额，减少了 $27/28$ 的平方误差。这个数值描述的是样本内的拟合程度，不能单独证明广告支出对销售额具有因果影响，也不能保证对样本区间之外的数据同样准确。\n\n还应检查异常观测的影响。若某个观测的响应值或解释变量取值明显偏离其余观测，它可能显著改变拟合直线、残差平方和以及 $R^2$；因此可通过比较删去该观测前后的拟合结果来进行敏感性分析。本例中不能仅凭三个观测就断定存在异常观测，但不应把较高的 $R^2$ 解释为不存在异常观测或模型一定可靠。"
+    },
+    {
+      "unit_id": "S03.U08",
+      "tex": "某企业三年的培训支出与劳动生产率观测值为\n\\[\n(x_1,y_1)=(1,1),\\qquad (x_2,y_2)=(2,2),\\qquad (x_3,y_3)=(3,4).\n\\]\n题面给出的直线为\n\\[\n\\hat y=-\\frac{1}{6}+\\frac{3}{2}x.\n\\]\n请完成下列任务：\n\\begin{enumerate}\n\\item 计算 $\\bar y$、该给定直线对应的三个拟合值和三个残差，并检查残差和是否满足含截距最小二乘的必要条件；\n\\item 根据数据重新计算真正的含截距一元最小二乘拟合直线；\n\\item 使用重新计算的拟合直线，计算三个拟合值、三个残差、$\\operatorname{TSS}$、$\\operatorname{RSS}$ 和 $R^2$；\n\\item 利用平方和分解验证 $\\operatorname{TSS}=\\operatorname{ESS}+\\operatorname{RSS}$；\n\\item 说明该拟合结果在经济解释上的一个限制，并讨论异常观测或样本区间外推可能带来的风险。\n\\end{enumerate}"
+    },
+    {
+      "unit_id": "S03.U09",
+      "tex": "样本均值为\n\\[\n\\bar y=\\frac{1+2+4}{3}=\\frac{7}{3}.\n\\]\n先检验题面给出的直线 $\\hat y=-\\frac{1}{6}+\\frac{3}{2}x$。它产生的拟合值为\n\\[\n\\hat y_1=\\frac{4}{3},\n\\qquad\n\\hat y_2=\\frac{17}{6},\n\\qquad\n\\hat y_3=\\frac{13}{3},\n\\]\n相应残差为\n\\[\n-\\frac{1}{3},\\qquad -\\frac{5}{6},\\qquad -\\frac{1}{3},\n\\]\n其和为 $-\\frac{3}{2}\\ne0$。因此，这条直线不是这组三个观测的含截距最小二乘拟合直线。\n\n由\n\\[\n\\bar x=\\frac{1+2+3}{3}=2,\n\\qquad\nS_{xx}=\\sum_{i=1}^{3}(x_i-\\bar x)^2=2,\n\\]\n以及\n\\[\nS_{xy}=\\sum_{i=1}^{3}(x_i-\\bar x)(y_i-\\bar y)=3,\n\\]\n可得真正的最小二乘斜率和截距为\n\\[\n\\hat b=\\frac{S_{xy}}{S_{xx}}=\\frac{3}{2},\n\\qquad\n\\hat a=\\bar y-\\hat b\\bar x\n=\\frac{7}{3}-3=-\\frac{2}{3}.\n\\]\n所以正确的拟合直线为\n\\[\n\\hat y=-\\frac{2}{3}+\\frac{3}{2}x.\n\\]\n三个拟合值为\n\\[\n\\hat y_1=\\frac{5}{6},\n\\qquad\n\\hat y_2=\\frac{7}{3},\n\\qquad\n\\hat y_3=\\frac{23}{6}.\n\\]\n相应残差为\n\\[\n\\hat e_1=1-\\frac{5}{6}=\\frac{1}{6},\n\\qquad\n\\hat e_2=2-\\frac{7}{3}=-\\frac{1}{3},\n\\qquad\n\\hat e_3=4-\\frac{23}{6}=\\frac{1}{6},\n\\]\n其和为零。\n\n总平方和为\n\\[\n\\begin{aligned}\n\\operatorname{TSS}\n&=\\left(1-\\frac{7}{3}\\right)^2\n+\\left(2-\\frac{7}{3}\\right)^2\n+\\left(4-\\frac{7}{3}\\right)^2\\\\\n&=\\left(-\\frac{4}{3}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{5}{3}\\right)^2\n=\\frac{14}{3}.\n\\end{aligned}\n\\]\n残差平方和为\n\\[\n\\operatorname{RSS}\n=\\left(\\frac{1}{6}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{1}{6}\\right)^2\n=\\frac{1}{6}.\n\\]\n因此\n\\[\n\\operatorname{ESS}=\\operatorname{TSS}-\\operatorname{RSS}\n=\\frac{14}{3}-\\frac{1}{6}=\\frac{9}{2},\n\\]\n并且\n\\[\n\\operatorname{TSS}=\\operatorname{ESS}+\\operatorname{RSS}\n=\\frac{9}{2}+\\frac{1}{6}=\\frac{14}{3}.\n\\]\n决定系数为\n\\[\nR^2=1-\\frac{\\operatorname{RSS}}{\\operatorname{TSS}}\n=1-\\frac{1/6}{14/3}\n=1-\\frac{1}{28}\n=\\frac{27}{28}.\n\\]\n这说明该线性关系在这三个样本内具有较高的拟合程度，但 $R^2$ 不能证明培训支出对劳动生产率存在因果影响。若某个观测是异常观测，它可能明显改变斜率、残差平方和和 $R^2$；同时，将该直线外推到样本区间之外也可能产生较大误差。"
+    },
+    {
+      "unit_id": "S03.U07",
+      "tex": "样本均值为\n\\[\n\\bar y=\\frac{2+3+5}{3}=\\frac{10}{3}.\n\\]\n因此总平方和为\n\\[\n\\begin{aligned}\n\\operatorname{TSS}\n&=\\left(2-\\frac{10}{3}\\right)^2\n+\\left(3-\\frac{10}{3}\\right)^2\n+\\left(5-\\frac{10}{3}\\right)^2\\\\\n&=\\left(-\\frac{4}{3}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{5}{3}\\right)^2\n=\\frac{14}{3}.\n\\end{aligned}\n\\]\n残差为\n\\[\n\\hat e_1=2-\\frac{11}{6}=\\frac{1}{6},\n\\qquad\n\\hat e_2=3-\\frac{10}{3}=-\\frac{1}{3},\n\\qquad\n\\hat e_3=5-\\frac{29}{6}=\\frac{1}{6}.\n\\]\n它们的和为\n\\[\n\\hat e_1+\\hat e_2+\\hat e_3\n=\\frac{1}{6}-\\frac{1}{3}+\\frac{1}{6}=0.\n\\]\n残差平方和为\n\\[\n\\operatorname{RSS}\n=\\left(\\frac{1}{6}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{1}{6}\\right)^2\n=\\frac{1}{6}.\n\\]\n由平方和分解，解释平方和为\n\\[\n\\operatorname{ESS}=\\operatorname{TSS}-\\operatorname{RSS}\n=\\frac{14}{3}-\\frac{1}{6}=\\frac{9}{2}.\n\\]\n所以决定系数为\n\\[\nR^2=1-\\frac{1/6}{14/3}\n=1-\\frac{1}{28}\n=\\frac{27}{28}.\n\\]\n这表示在该样本中，广告支出与销售额的线性拟合相对于只用样本均值预测销售额，减少了 $27/28$ 的平方误差。这个数值描述的是样本内的拟合程度，不能单独证明广告支出对销售额具有因果影响，也不能保证对样本区间之外的数据同样准确。\n\n还应检查异常观测的影响。若某个观测的响应值或解释变量取值明显偏离其余观测，它可能显著改变拟合直线、残差平方和以及 $R^2$；因此可通过比较删去该观测前后的拟合结果来进行敏感性分析。本例中不能仅凭三个观测就断定存在异常观测，但不应把较高的 $R^2$ 解释为不存在异常观测或模型一定可靠。"
+    }
+  ],
+  "calculation_updates": [
+    {
+      "id": "S03.C01",
+      "unit_id": "S03.U07",
+      "kind": "equivalence",
+      "assumptions": {},
+      "lhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Integer",
+            "value": 1
+          },
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Integer",
+                "value": -1
+              },
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Rational",
+                    "p": 1,
+                    "q": 6
+                  },
+                  {
+                    "op": "Pow",
+                    "args": [
+                      {
+                        "op": "Rational",
+                        "p": 14,
+                        "q": 3
+                      },
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": 27,
+        "q": 28
+      }
+    },
+    {
+      "id": "S03.C02",
+      "unit_id": "S03.U07",
+      "kind": "equivalence",
+      "assumptions": {},
+      "lhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Rational",
+                "p": -4,
+                "q": 3
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Rational",
+                "p": -1,
+                "q": 3
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Rational",
+                "p": 5,
+                "q": 3
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": 14,
+        "q": 3
+      }
+    }
+  ],
+  "calculation_additions": [],
+  "uncertainties_append": [],
+  "calculation_limitations_append": []
+}

@@ -1,0 +1,47 @@
+{
+  "code": "function draw(ctx, t, p) {\n  const W = 960, H = 540;\n  const TAU = Math.PI * 2;\n  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));\n  const lerp = (a, b, u) => a + (b - a) * u;\n  const num = (v, d) => Number.isFinite(Number(v)) ? Number(v) : d;\n  const fmt = (v, n) => (Number.isFinite(v) ? v.toFixed(n == null ? 2 : n) : \"—\");\n  const x0raw = clamp(num(p.x0, 1), -2, 2);\n  const mag = clamp(num(p.h, 0.5), 0.02, 2);\n  const side = num(p.side, 1) < 0 ? -1 : 1;\n  const example = num(p.example, 0) >= 0.5 ? 1 : 0;\n  const sceneEnds = [8, 22, 36, 50, 64, 78];\n  const sec = clamp(t, 0, 1) * 78;\n  let si = 0;\n  while (si < 5 && sec >= sceneEnds[si]) si++;\n  const start = si === 0 ? 0 : sceneEnds[si - 1];\n  const local = clamp((sec - start) / (sceneEnds[si] - start), 0, 1);\n  const isAbs = si === 5 || example === 1;\n  const x0 = isAbs ? 0 : x0raw;\n  let h = side * mag;\n  if (si === 2) h = side * lerp(1, 0.02, local);\n  if (si === 3) h = side * mag;\n  if (si === 5) h = side * mag;\n  const f = x => isAbs ? Math.abs(x) : x * x;\n  const deriv = isAbs ? (x0 < 0 ? -1 : x0 > 0 ? 1 : NaN) : 2 * x0;\n  const qx = x0 + h;\n  const fp = f(x0), fq = f(qx);\n  const slope = h !== 0 ? (fq - fp) / h : deriv;\n  const tangent = Number.isFinite(deriv) ? (x => fp + deriv * (x - x0)) : null;\n  const residual = isAbs ? NaN : fq - (fp + deriv * h);\n\n  ctx.fillStyle = \"#f7fafc\";\n  ctx.fillRect(0, 0, W, H);\n  ctx.fillStyle = \"#18324a\";\n  ctx.font = \"bold 23px sans-serif\";\n  ctx.fillText(\"割线旋转成切线：导数的极限定义\", 35, 42);\n  ctx.font = \"17px sans-serif\";\n  ctx.fillStyle = \"#536b7d\";\n  ctx.fillText(\"时间轴按 78 秒累计推进镜头；h 始终非零\", 650, 42);\n\n  const gx0 = 55, gx1 = 650, gy0 = 100, gy1 = 405;\n  const xmin = -3, xmax = 3, ymin = -1, ymax = 9;\n  const X = x => gx0 + (x - xmin) / (xmax - xmin) * (gx1 - gx0);\n  const Y = y => gy1 - (y - ymin) / (ymax - ymin) * (gy1 - gy0);\n  const safeY = y => clamp(y, ymin, ymax);\n\n  ctx.fillStyle = \"#ffffff\";\n  ctx.fillRect(gx0, gy0, gx1 - gx0, gy1 - gy0);\n  ctx.strokeStyle = \"#dbe7ef\";\n  ctx.lineWidth = 1;\n  for (let x = -3; x <= 3; x++) { ctx.beginPath(); ctx.moveTo(X(x), gy0); ctx.lineTo(X(x), gy1); ctx.stroke(); }\n  for (let y = 0; y <= 9; y++) { ctx.beginPath(); ctx.moveTo(gx0, Y(y)); ctx.lineTo(gx1, Y(y)); ctx.stroke(); }\n  ctx.strokeStyle = \"#35566d\";\n  ctx.lineWidth = 2;\n  ctx.beginPath(); ctx.moveTo(gx0, Y(0)); ctx.lineTo(gx1, Y(0)); ctx.stroke();\n  ctx.beginPath(); ctx.moveTo(X(0), gy1); ctx.lineTo(X(0), gy0); ctx.stroke();\n  ctx.fillStyle = \"#35566d\";\n  ctx.font = \"16px sans-serif\";\n  for (let x = -3; x <= 3; x++) ctx.fillText(String(x), X(x) - 5, Y(0) + 22);\n  for (let y = 0; y <= 9; y += 2) ctx.fillText(String(y), X(0) + 8, Y(y) + 5);\n  ctx.fillText(\"x\", gx1 - 12, Y(0) - 8);\n  ctx.fillText(\"y\", X(0) + 10, gy0 + 14);\n\n  function curve(fn, color, width, dash) {\n    ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = width || 3;\n    ctx.setLineDash(dash || []); ctx.beginPath();\n    let first = true;\n    for (let i = 0; i <= 180; i++) {\n      const x = xmin + (xmax - xmin) * i / 180, y = fn(x);\n      const px = X(x), py = Y(safeY(y));\n      if (first) { ctx.moveTo(px, py); first = false; } else ctx.lineTo(px, py);\n    }\n    ctx.stroke(); ctx.restore();\n  }\n  curve(f, \"#236fb5\", 3);\n  if (!isAbs && tangent && si >= 2) curve(tangent, \"#9b55b6\", 2, [8, 6]);\n\n  function point(x, y, color, r) {\n    ctx.fillStyle = color; ctx.beginPath(); ctx.arc(X(x), Y(safeY(y)), r || 6, 0, TAU); ctx.fill();\n  }\n  function lineWorld(xa, ya, xb, yb, color, width, dash) {\n    ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = width || 2; ctx.setLineDash(dash || []);\n    ctx.beginPath(); ctx.moveTo(X(xa), Y(safeY(ya))); ctx.lineTo(X(xb), Y(safeY(yb))); ctx.stroke(); ctx.restore();\n  }\n\n  const showQ = si !== 0 || local > 0.15;\n  point(x0, fp, \"#f28e2b\", 7);\n  if (showQ) {\n    point(qx, fq, \"#7a4aa8\", 6);\n    lineWorld(x0, fp, qx, fq, \"#7a4aa8\", 3);\n    lineWorld(x0, fp, qx, fp, \"#e58b32\", 2, [5, 5]);\n    lineWorld(qx, fp, qx, fq, \"#e58b32\", 2, [5, 5]);\n  }\n  if (si >= 4 && !isAbs) {\n    lineWorld(qx, fq, qx, fp + deriv * h, \"#d84b4b\", 4);\n    point(qx, fp + deriv * h, \"#d84b4b\", 4);\n  }\n\n  ctx.fillStyle = \"#18324a\";\n  ctx.font = \"bold 19px sans-serif\";\n  ctx.fillText(isAbs ? \"示例：f(x)=|x|\" : \"主例：f(x)=x²\", 70, 125);\n  ctx.font = \"17px sans-serif\";\n  ctx.fillStyle = \"#334e60\";\n  ctx.fillText(\"P\", X(x0) + 9, Y(fp) - 10);\n  if (showQ) ctx.fillText(\"Q\", X(qx) + 9, Y(fq) - 8);\n  ctx.fillStyle = \"#e58b32\";\n  ctx.fillText(\"Δx = h = \" + fmt(h, 3), 410, 385);\n  if (showQ) ctx.fillText(\"Δy = \" + fmt(fq - fp, 3), 415, 365);\n\n  const bx = 680, by = 92, bw = 245;\n  ctx.fillStyle = \"#edf4f8\"; ctx.fillRect(bx, by, bw, 315);\n  ctx.strokeStyle = \"#c6d9e5\"; ctx.strokeRect(bx, by, bw, 315);\n  ctx.fillStyle = \"#18324a\"; ctx.font = \"bold 18px sans-serif\";\n  const titles = [\"固定点与附近的动点\", \"用增量构造割线斜率\", \"从右侧逼近切线\", \"左右极限必须一致\", \"切线为何能近似曲线\", \"连续的尖点为何不可导\"];\n  ctx.fillText(\"S\" + (si + 1) + \"  \" + titles[si], bx + 14, by + 28);\n  ctx.font = \"17px sans-serif\"; ctx.fillStyle = \"#334e60\";\n  const rows = isAbs ? [\n    \"x₀ = 0（尖点固定）\", \"|h| = \" + fmt(Math.abs(h), 3), \"m(h) = |h| / h = \" + fmt(slope, 2),\n    \"左侧斜率 = -1\", \"右侧斜率 = 1\", \"连续，但不可导\"\n  ] : [\n    \"x₀ = \" + fmt(x0, 2), \"|h| = \" + fmt(Math.abs(h), 3), \"m(h) = 2x₀ + h = \" + fmt(slope, 3),\n    \"f′(x₀) = 2x₀ = \" + fmt(deriv, 2), \"h² 误差 = \" + fmt(Math.abs(residual), 5),\n    \"误差比 = \" + fmt(Math.abs(residual) / Math.abs(h), 5)\n  ];\n  for (let i = 0; i < rows.length; i++) ctx.fillText(rows[i], bx + 16, by + 66 + i *  thirty(), bw - 28);\n  function thirty() { return 34; }\n\n  ctx.fillStyle = \"#18324a\"; ctx.font = \"bold 18px sans-serif\";\n  ctx.fillText(\"关键关系\", 680, 430);\n  ctx.font = \"17px sans-serif\"; ctx.fillStyle = \"#334e60\";\n  let formula = isAbs ? \"m(h)=|h|/h；左右极限不相等\" : (si >= 4 ? \"L(x)=x₀²+2x₀(x−x₀)，误差=h²\" : \"m(h)=[f(x₀+h)−f(x₀)]/h=2x₀+h\");\n  ctx.fillText(formula, 780, 430);\n  ctx.fillStyle = \"#236fb5\"; ctx.fillText(\"蓝：曲线\", 55, 425);\n  ctx.fillStyle = \"#f28e2b\"; ctx.fillText(\"橙：P、增量\", 160, 425);\n  ctx.fillStyle = \"#7a4aa8\"; ctx.fillText(\"紫：割线/切线\", 300, 425);\n\n  return { metrics: {\n    scene: si + 1,\n    elapsedSeconds: sec,\n    x0: x0,\n    h: h,\n    slope: Number.isFinite(slope) ? slope : \"不存在\",\n    derivative: Number.isFinite(deriv) ? deriv : \"不存在\",\n    residual: Number.isFinite(residual) ? residual : \"不适用\"\n  }};\n}",
+  "controls": [
+    {
+      "id": "h",
+      "label": "步长 |h|",
+      "min": 0.02,
+      "max": 2.0,
+      "step": 0.01,
+      "value": 0.5
+    },
+    {
+      "id": "side",
+      "label": "趋近方向（负/正）",
+      "min": -1.0,
+      "max": 1.0,
+      "step": 2.0,
+      "value": 1.0
+    },
+    {
+      "id": "x0",
+      "label": "固定点 x₀",
+      "min": -2.0,
+      "max": 2.0,
+      "step": 0.1,
+      "value": 1.0
+    },
+    {
+      "id": "example",
+      "label": "示例函数（0:x²，1:|x|）",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 1.0,
+      "value": 0.0
+    }
+  ],
+  "covered_decision_ids": [
+    "ef80e9169fd64af685004a20aeb7274f",
+    "5c9563c276f242c8905c942a42455e44"
+  ],
+  "explanation": "程序严格按已确认方案的 78 秒累计镜头绘制：平方函数为主例，先以 x₀=1 展示差商，再允许滑杆探索 x₀；h 使用非零步长大小与正负方向控制；第 3 镜头由时间轴将步长从 1 连续缩小到 0.02；第 4 镜头比较左右差商；第 5 镜头显示切线及 h² 误差；第 6 镜头切换到 |x| 在原点的连续但不可导反例。返回值包含可验证的 h、差商斜率、导数和误差。",
+  "limitations": [
+    "有限动画只能展示趋近过程，不能单独替代极限存在性的数学证明。",
+    "|x| 示例切换后按已确认方案锁定 x₀=0，以突出原点尖点。",
+    "Canvas 文字使用普通 Unicode 数学符号排版，不使用外部字体或 LaTeX 渲染。"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "items": [
+    {
+      "uncertainty_id": "D001-46bc3acc864ad401",
+      "unit_id": "S03.U08",
+      "disposition": "resolved_by_current_body",
+      "reason": "当前练习与答案已经明确围绕原先的错误截距展开复核：S03.U08 保留了待检查的 -1/6，并要求按数据重算；S03.U09 明确计算均值、S_{xx}、S_{xy}，得到斜率 3/2、截距 -2/3，并说明原截距不正确。练习任务、答案和教学目标均已对齐，原数学缺口已由当前正文补足。不存在仍待核实的外部数学前提。",
+      "evidence": [
+        {
+          "source_key": "current:S03.U08",
+          "source_sha256": "f0f1b74cffee2c08ecabcb822cda90b383bbed4edca1870158ff88d1423f1b49",
+          "quote": "一位同学声称含截距的一元最小二乘拟合直线为\n\\[\n\\hat y=-\\frac{1}{6}+\\frac{3}{2}x.\n\\]\n请检查这一说法，并用数据重新计算正确的最小二乘直线。然后完成下列任务："
+        },
+        {
+          "source_key": "current:S03.U09",
+          "source_sha256": "638fe5403bf8825fcdd7eeec64bcb06140b0f01f10bbf4a65580f972012aa5c8",
+          "quote": "因此正确的最小二乘斜率和截距分别为\n\\[\n\\hat b=\\frac{S_{xy}}{S_{xx}}=\\frac{3}{2},\n\\qquad\n\\hat a=\\bar y-\\hat b\\bar x\n=\\frac{7}{3}-\\frac{3}{2}\\cdot2=-\\frac{2}{3}.\n\\]\n所以正确的拟合直线为\n\\[\n\\hat y=-\\frac{2}{3}+\\frac{3}{2}x.\n\\]\n题目中给出的截距 $-1/6$ 不正确；其对应残差和不为零，因而不可能是这组含截距数据的最小二乘直线。"
+        }
+      ],
+      "remaining_dependency": false,
+      "repair_instruction": null
+    },
+    {
+      "uncertainty_id": "D002-2490c62126ff2c26",
+      "unit_id": null,
+      "disposition": "open_dependency",
+      "reason": "当前正文对 S03.U07 的 TSS、RSS、ESS 和决定系数给出了完整推导，并明确得到 27/28；因此当前可定位的数学计算没有显示出 29/28 的错误。可是原疑点还包含一条声称 29/28 的历史核查记录，所提供材料没有该记录的完整表达式、定位或可核验来源，无法判断它是否对应同一计算、不同定义或历史输入错误。现有批准范围只能补充或核对当前正文，不能合法重建这条未定位的外部记录，因此该 provenance 依赖仍未消解。",
+      "evidence": [
+        {
+          "source_key": "current:S03.U07",
+          "source_sha256": "ff23522a1ec3c0cc4fb3cfffea4ee508cc1e75dedccb3d77fbf81cf70f17965c",
+          "quote": "残差平方和为\n\\[\n\\operatorname{RSS}\n=\\left(\\frac{1}{6}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{1}{6}\\right)^2\n=\\frac{1}{6}.\n\\]\n由平方和分解，解释平方和为\n\\[\n\\operatorname{ESS}=\\operatorname{TSS}-\\operatorname{RSS}\n=\\frac{14}{3}-\\frac{1}{6}=\\frac{9}{2}.\n\\]\n所以决定系数为\n\\[\nR^2=1-\\frac{1/6}{14/3}\n=1-\\frac{1}{28}\n=\\frac{27}{28}.\n\\]"
+        }
+      ],
+      "remaining_dependency": true,
+      "repair_instruction": null
+    }
+  ],
+  "limitations": [
+    "本评估只能核对所提供的当前正文、先修正文和来源片段；未提供的 29/28 历史表达式、来源及定位无法被重建或解释。",
+    "S03.U07 的工具核查支持当前提交的 27/28 等式，但工具核查不等同于对整节文字推导或历史 provenance 的形式化证明。"
+  ]
+}

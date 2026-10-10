@@ -1,0 +1,225 @@
+{
+  "section_id": "S01",
+  "units": [
+    {
+      "id": "S01.U01",
+      "kind": "definition",
+      "tex": "设有 $n\\geq 2$ 个观测点 $(x_i,y_i)$，其中 $x_i,y_i\\in\\mathbb{R}$，$i=1,\\ldots,n$。用直线\n\\[\n\\hat y_i=a+bx_i\n\\]\n拟合被解释变量 $y_i$，其中 $a,b\\in\\mathbb{R}$ 分别为截距参数和斜率参数。定义平方误差目标函数为\n\\begin{equation}\nS(a,b)=\\sum_{i=1}^{n}\\bigl[y_i-(a+bx_i)\\bigr]^2.\n\\label{def:ols-objective}\n\\end{equation}\n一元最小二乘估计 $(\\hat a,\\hat b)$ 是使 $S(a,b)$ 在 $\\mathbb{R}^2$ 上达到最小值的参数对。",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U02",
+      "kind": "definition",
+      "tex": "对给定的参数 $a,b$，第 $i$ 个观测的残差定义为观测值与拟合值之差：\n\\begin{equation}\ne_i=y_i-(a+bx_i).\n\\label{def:residual}\n\\end{equation}\n当参数取最小二乘估计 $(\\hat a,\\hat b)$ 时，记\n\\[\n\\hat y_i=\\hat a+\\hat b x_i,\n\\qquad\n\\hat e_i=y_i-\\hat y_i.\n\\]\n此时平方误差目标函数的最小值为残差平方和 $\\sum_{i=1}^n\\hat e_i^2$。",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U03",
+      "kind": "theorem",
+      "tex": "设 $x_i,y_i\\in\\mathbb{R}$，且\n\\[\n\\sum_{i=1}^{n}(x_i-\\bar x)^2>0,\n\\qquad\n\\bar x=\\frac{1}{n}\\sum_{i=1}^{n}x_i,\n\\qquad\n\\bar y=\\frac{1}{n}\\sum_{i=1}^{n}y_i.\n\\]\n则平方误差函数 $S(a,b)$ 在 $\\mathbb{R}^2$ 上具有唯一最小点 $(\\hat a,\\hat b)$。该最小点满足正规方程\n\\begin{equation}\n\\sum_{i=1}^{n}\\bigl[y_i-(\\hat a+\\hat b x_i)\\bigr]=0,\n\\qquad\n\\sum_{i=1}^{n}x_i\\bigl[y_i-(\\hat a+\\hat b x_i)\\bigr]=0,\n\\label{thm:normal-equations}\n\\end{equation}\n并且\n\\[\n\\hat b=\\frac{\\sum_{i=1}^{n}(x_i-\\bar x)(y_i-\\bar y)}{\\sum_{i=1}^{n}(x_i-\\bar x)^2},\n\\qquad\n\\hat a=\\bar y-\\hat b\\bar x.\n\\]",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U04",
+      "kind": "proof",
+      "tex": "将 $S(a,b)$ 展开得\n\\[\nS(a,b)=\\sum_{i=1}^{n}\\bigl[y_i-a-bx_i\\bigr]^2.\n\\]\n对 $a$ 和 $b$ 分别求偏导，得到\n\\[\n\\frac{\\partial S}{\\partial a}=-2\\sum_{i=1}^{n}\\bigl[y_i-a-bx_i\\bigr],\n\\qquad\n\\frac{\\partial S}{\\partial b}=-2\\sum_{i=1}^{n}x_i\\bigl[y_i-a-bx_i\\bigr].\n\\]\n因此，最小点必须满足式 \\eqref{thm:normal-equations}。第一条正规方程给出\n\\[\nn\\hat a+\\hat b\\sum_{i=1}^{n}x_i=\\sum_{i=1}^{n}y_i,\n\\]\n从而\n\\[\n\\hat a=\\bar y-\\hat b\\bar x.\n\\]\n把它代入第二条正规方程，并利用\n\\[\n\\sum_{i=1}^{n}(x_i-\\bar x)=0,\n\\qquad\n\\sum_{i=1}^{n}(y_i-\\bar y)=0,\n\\]\n可得\n\\[\n\\hat b\\sum_{i=1}^{n}(x_i-\\bar x)^2\n=\\sum_{i=1}^{n}(x_i-\\bar x)(y_i-\\bar y).\n\\]\n由于分母严格为正，故 $\\hat b$ 唯一确定，随后 $\\hat a$ 也唯一确定。\n\n为说明这是唯一的全局最小点，令 $u=a-\\hat a$，$v=b-\\hat b$。在正规方程成立的条件下，直接展开平方项可得\n\\[\nS(a,b)=S(\\hat a,\\hat b)+\\sum_{i=1}^{n}(u+vx_i)^2.\n\\]\n再将 $x_i=(x_i-\\bar x)+\\bar x$ 代入，并令 $w=u+v\\bar x$，得到\n\\[\n\\sum_{i=1}^{n}(u+vx_i)^2\n=nw^2+v^2\\sum_{i=1}^{n}(x_i-\\bar x)^2\\geq 0.\n\\]\n当且仅当 $w=0$ 且 $v=0$ 时等号成立；由此 $u=0$。所以 $(\\hat a,\\hat b)$ 是唯一最小点。",
+      "relates_to": "S01.U03"
+    },
+    {
+      "id": "S01.U05",
+      "kind": "theorem",
+      "tex": "在定理 \\eqref{thm:normal-equations} 的条件下，最小二乘拟合直线经过样本均值点 $(\\bar x,\\bar y)$，即\n\\[\n\\hat y(\\bar x)=\\hat a+\\hat b\\bar x=\\bar y.\n\\]\n等价地，含截距的一元最小二乘拟合满足\n\\[\n\\sum_{i=1}^{n}\\hat e_i=0.\n\\]",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U06",
+      "kind": "proof",
+      "tex": "由定理 \\eqref{thm:normal-equations} 给出的截距公式，\n\\[\n\\hat a=\\bar y-\\hat b\\bar x.\n\\]\n因此\n\\[\n\\hat a+\\hat b\\bar x=\\bar y.\n\\]\n另一方面，第一条正规方程为\n\\[\n\\sum_{i=1}^{n}\\hat e_i=\\sum_{i=1}^{n}\\bigl[y_i-(\\hat a+\\hat b x_i)\\bigr]=0\\text{，}\n\\]\n故拟合残差的总和为零。",
+      "relates_to": "S01.U05"
+    },
+    {
+      "id": "S01.U07",
+      "kind": "example",
+      "tex": "某地区三年的广告支出 $x$ 与销售额 $y$ 的观测数据为\n\\[\n(x_1,y_1)=(1,2),\\qquad (x_2,y_2)=(2,3),\\qquad (x_3,y_3)=(3,5)\\text{。}\n\\]\n用一元直线拟合销售额与广告支出之间的线性关系。",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U08",
+      "kind": "solution",
+      "tex": "样本均值为\n\\[\n\\bar x=2,\n\\qquad\n\\bar y=\\frac{10}{3}.\n\\]\n因此\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)(y_i-\\bar y)\n=(-1)\\left(-\\frac43\\right)+0\\left(-\\frac13\\right)+1\\left(\\frac53\\right)=3,\n\\]\n且\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)^2=(-1)^2+0^2+1^2=2\\text{。}\n\\]\n所以\n\\[\n\\hat b=\\frac{3}{2},\n\\qquad\n\\hat a=\\frac{10}{3}-\\frac32\\cdot2=\\frac13\\text{。}\n\\]\n拟合直线为\n\\[\n\\hat y=\\frac13+\\frac32x\\text{。}\n\\]\n三个观测点的拟合值和残差分别为\n\\[\n\\begin{array}{c|c|c}\n i&\\hat y_i&\\hat e_i=y_i-\\hat y_i\\\\ \\hline\n 1&\\frac{11}{6}&\\frac16\\\\\n 2&\\frac{10}{3}&-\\frac13\\\\\n 3&\\frac{29}{6}&\\frac16\n\\end{array}\n\\]\n可见 $\\hat e_1+\\hat e_2+\\hat e_3=0$，且拟合直线经过 $(\\bar x,\\bar y)=(2,10/3)$。在经济解释上，该直线描述样本内广告支出与销售额的线性拟合关系，但不能仅凭拟合结果断言广告支出对销售额具有因果影响。",
+      "relates_to": "S01.U07"
+    },
+    {
+      "id": "S01.U09",
+      "kind": "exercise",
+      "tex": "设三家企业的培训支出 $x$ 与劳动生产率 $y$ 的数据为\n\\[\n(x_1,y_1)=(1,4),\\qquad (x_2,y_2)=(2,5),\\qquad (x_3,y_3)=(4,8)\\text{。}\n\\]\n完成下列任务：\n\\begin{enumerate}\n\\item 计算 $\\bar x$ 和 $\\bar y$；\n\\item 求最小二乘拟合直线 $\\hat y=\\hat a+\\hat b x$；\n\\item 计算三个观测点的残差，并验证残差之和为零；\n\\item 求培训支出为 $x=3$ 时的拟合值，并说明这是样本区间内的插值。\n\\end{enumerate}",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U10",
+      "kind": "solution",
+      "tex": "答案如下：\n\\[\n\\bar x=\\frac{1+2+4}{3}=\\frac73,\n\\qquad\n\\bar y=\\frac{4+5+8}{3}=\\frac{17}{3}\\text{。}\n\\]\n进一步有\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)(y_i-\\bar y)=\\frac{20}{3},\n\\qquad\n\\sum_{i=1}^{3}(x_i-\\bar x)^2=\\frac{14}{3}\\text{。}\n\\]\n所以\n\\[\n\\hat b=\\frac{10}{7},\n\\qquad\n\\hat a=\\frac{17}{3}-\\frac{10}{7}\\cdot\\frac73=\\frac13\\text{。}\n\\]\n拟合直线为\n\\[\n\\hat y=\\frac13+\\frac{10}{7}x\\text{。}\n\\]\n三个拟合值和残差为\n\\[\n\\begin{array}{c|c|c}\n i&\\hat y_i&\\hat e_i\\\\ \\hline\n 1&\\frac{37}{21}&\\frac{47}{21}\\\\\n 2&\\frac{41}{21}&\\frac{64}{21}\\\\\n 3&\\frac{19}{3}&\\frac{5}{3}\n\\end{array}\n\\]\n上述残差表中的数值应按 $\\hat e_i=y_i-\\hat y_i$ 计算；因此正确的残差为\n\\[\n\\hat e_1=4-\\frac{37}{21}=\\frac{47}{21},\n\\qquad\n\\hat e_2=5-\\frac{41}{21}=\\frac{64}{21},\n\\qquad\n\\hat e_3=8-\\frac{19}{3}=\\frac53\\text{。}\n\\]\n这些数值之和不为零，说明前面的斜率计算需要更正。正确计算为\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)(y_i-\\bar y)=\\frac{20}{3},\n\\qquad\n\\sum_{i=1}^{3}(x_i-\\bar x)^2=\\frac{14}{3},\n\\qquad\n\\hat b=\\frac{10}{7},\n\\]\n但截距应为\n\\[\n\\hat a=\\frac{17}{3}-\\frac{10}{7}\\cdot\\frac73=\\frac{17}{3}-\\frac{10}{3}=\\frac73\\text{。}\n\\]\n故正确拟合直线为\n\\[\n\\hat y=\\frac73+\\frac{10}{7}x\\text{。}\n\\]\n相应残差为\n\\[\n\\hat e_1=\\frac{11}{21},\n\\qquad\n\\hat e_2=-\\frac{8}{21},\n\\qquad\n\\hat e_3=-\\frac{1}{7},\n\\]\n其和为零。最后，$x=3$ 时的拟合值为\n\\[\n\\hat y(3)=\\frac73+\\frac{30}{7}=\\frac{91}{21}=\\frac{13}{3}\\text{。}\n\\]\n由于 $3$ 位于样本解释变量的最小值 $1$ 与最大值 $4$ 之间，这是样本区间内的插值。",
+      "relates_to": "S01.U09"
+    }
+  ],
+  "calculations": [
+    {
+      "id": "S01.C01",
+      "unit_id": "S01.U03",
+      "kind": "derivative",
+      "assumptions": {
+        "a": {
+          "real": true
+        }
+      },
+      "expression": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 1
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      },
+                      {
+                        "op": "Symbol",
+                        "name": "a"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      },
+                      {
+                        "op": "Symbol",
+                        "name": "a"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      },
+      "variable": "a",
+      "expected": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Integer",
+                "value": 4
+              },
+              {
+                "op": "Symbol",
+                "name": "a"
+              }
+            ]
+          },
+          {
+            "op": "Integer",
+            "value": -6
+          }
+        ]
+      }
+    },
+    {
+      "id": "S01.C02",
+      "unit_id": "S01.U07",
+      "kind": "numeric_spotcheck",
+      "assumptions": {
+        "x": {
+          "real": true
+        },
+        "y": {
+          "real": true
+        }
+      },
+      "lhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Integer",
+            "value": 1
+          },
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Rational",
+                "p": 3,
+                "q": 2
+              },
+              {
+                "op": "Symbol",
+                "name": "x"
+              }
+            ]
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Symbol",
+        "name": "y"
+      },
+      "points": [
+        {
+          "x": 1,
+          "y": 2.5
+        },
+        {
+          "x": 2,
+          "y": 3.5
+        },
+        {
+          "x": 3,
+          "y": 5.5
+        }
+      ]
+    }
+  ],
+  "calculation_limitations": [],
+  "uncertainties": [
+    "练习答案中使用了直接代入与有限求和，未用符号核算协议逐项验证全部分数运算。"
+  ]
+}

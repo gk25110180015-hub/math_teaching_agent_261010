@@ -1,0 +1,2592 @@
+{
+  "content": {
+    "status": "PASS",
+    "evidence": [
+      "实际 TeX 与保留源单元对照"
+    ],
+    "limitations": []
+  },
+  "math": {
+    "status": "NEEDS_REVIEW",
+    "evidence": [
+      "原文保真；未自动修正源讲义数学结论"
+    ],
+    "limitations": [
+      "教师须复核原文的具体数学疑点"
+    ]
+  },
+  "fidelity": {
+    "status": "PASS",
+    "issues": [],
+    "evidence": "Independent comparison of actual source payload strings and exact contiguous original intervals; scaffold fingerprint checked when supplied",
+    "checked_units": 121,
+    "limitations": [
+      "Whitespace/comments ignored; no claim of semantic equivalence for rewritten mathematics"
+    ]
+  },
+  "compile": {
+    "status": "PASS",
+    "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\9c8ca5301d30410e\\v1f0ba228178f\\build-7\\slides.pdf",
+    "issues": [],
+    "log_paths": [
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\9c8ca5301d30410e\\v1f0ba228178f\\build-7\\pass-1.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\9c8ca5301d30410e\\v1f0ba228178f\\build-7\\pass-1.tex.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\9c8ca5301d30410e\\v1f0ba228178f\\build-7\\pass-2.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\9c8ca5301d30410e\\v1f0ba228178f\\build-7\\pass-2.tex.log"
+    ],
+    "engine": {
+      "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+    },
+    "passes": 2,
+    "compile_mode": "trusted_local",
+    "isolation": "NOT_IMPLEMENTED",
+    "limitations": [
+      "原生可信本机编译不是文件系统或网络隔离沙箱。"
+    ],
+    "command": [
+      "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "-no-shell-escape",
+      "-recorder",
+      "-synctex=1",
+      "-jobname=slides",
+      "-output-directory=.",
+      "slides.tex"
+    ],
+    "elapsed_seconds": 9.953,
+    "page_count": 127,
+    "pdf_sha256": "301cba0bdee769012299a9a6907c777e34b899956514c46f32855f592de93e43",
+    "auxiliary_hashes": {
+      ".aux": "d291da1c4bdc14053ba1173852cf9db62b4d05e9bb32246ead85bb73f6ffed6c",
+      ".toc": "7e0ed145455671e672ac77b439e402ecd24a9c2eaf6f6967be1a45f93f28077a",
+      ".nav": "4ca3c15c35614aaedced85540306214802df9eee34448ac811f324b62c40e3aa",
+      ".snm": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      ".out": "2d652b1eaef93e23a139bca0b084e25618792426eaeda6cc8427face7bd87b18"
+    }
+  },
+  "layout": {
+    "status": "NEEDS_REVIEW",
+    "evidence": {
+      "page_count": 127,
+      "all_rendered": true
+    },
+    "limitations": [
+      "几何检查是启发式，只能定位可测风险，不能证明所有正文均无裁切或遮挡。",
+      "尚未做模型视觉复核或教师人工逐页审核；每页图片及哈希供独立审核。",
+      "数学上下标的自然小字号不判为违规；PDF 文字提取不是数学内容真值。",
+      "正文安全区来自匹配模板的实际 measured_probe；仍是单个探针估计，不是完整版式校准。"
+    ]
+  },
+  "policy": {
+    "status": "PASS",
+    "evidence": {
+      "schema_version": 1,
+      "decisions": [
+        {
+          "decision_id": "ff33ab4391a24c809c5accd8eed9cd65",
+          "resolved_effects": [
+            "U0001",
+            "U0002"
+          ],
+          "status": "PASS",
+          "artifact": "slides.tex",
+          "artifact_hash": "3881cab3cb4875690bbf98468873c352f2415f981d25b3936ff51041e4268c3e",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        },
+        {
+          "decision_id": "9d093603d61d476bba955c80f31c5b39",
+          "resolved_effects": [],
+          "status": "PASS",
+          "artifact": "slides.tex",
+          "artifact_hash": "3881cab3cb4875690bbf98468873c352f2415f981d25b3936ff51041e4268c3e",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        }
+      ],
+      "limitations": [
+        "语义自定义不能仅凭模型自评当作落实；发布前须人工审阅质量报告。"
+      ]
+    },
+    "limitations": []
+  },
+  "security": {
+    "status": "PASS",
+    "evidence": [
+      "回环服务、受控源码、编译参数及白名单子进程环境"
+    ],
+    "limitations": [
+      "trusted_local 不是文件系统/网络隔离沙箱"
+    ]
+  },
+  "schema_version": 1,
+  "provider": "live",
+  "human_visual_review": "NOT_RUN",
+  "model_visual_review": "NOT_RUN",
+  "issues": [
+    {
+      "rule_id": "BODY_REGION_CONTACT",
+      "severity": "review",
+      "message": "正文文字接近或跨过实测探针估计的标题/页脚安全边界，需结合页面复核。",
+      "evidence": [
+        {
+          "text": "解",
+          "bbox": [
+            28.346,
+            48.254,
+            36.316,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "：",
+          "bbox": [
+            36.316,
+            48.254,
+            44.286,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "设",
+          "bbox": [
+            44.287,
+            48.254,
+            52.257,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        }
+      ],
+      "location": {
+        "physical_page": 17
+      }
+    },
+    {
+      "rule_id": "BODY_REGION_CONTACT",
+      "severity": "review",
+      "message": "正文文字接近或跨过实测探针估计的标题/页脚安全边界，需结合页面复核。",
+      "evidence": [
+        {
+          "text": "解",
+          "bbox": [
+            28.346,
+            48.254,
+            36.316,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "：",
+          "bbox": [
+            36.316,
+            48.254,
+            44.286,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "令",
+          "bbox": [
+            44.287,
+            48.254,
+            52.257,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        }
+      ],
+      "location": {
+        "physical_page": 19
+      }
+    },
+    {
+      "rule_id": "BODY_REGION_CONTACT",
+      "severity": "review",
+      "message": "正文文字接近或跨过实测探针估计的标题/页脚安全边界，需结合页面复核。",
+      "evidence": [
+        {
+          "text": "证",
+          "bbox": [
+            28.346,
+            48.254,
+            36.316,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "明",
+          "bbox": [
+            36.316,
+            48.254,
+            44.286,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "：",
+          "bbox": [
+            44.286,
+            48.254,
+            52.256,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "先",
+          "bbox": [
+            52.257,
+            48.254,
+            60.227,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "证",
+          "bbox": [
+            60.227,
+            48.254,
+            68.197,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "为",
+          "bbox": [
+            78.447,
+            48.254,
+            86.417,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "有",
+          "bbox": [
+            86.417,
+            48.254,
+            94.387,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "限",
+          "bbox": [
+            94.387,
+            48.254,
+            102.357,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "数",
+          "bbox": [
+            102.357,
+            48.254,
+            110.327,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "的",
+          "bbox": [
+            110.327,
+            48.254,
+            118.298,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "情",
+          "bbox": [
+            118.298,
+            48.254,
+            126.268,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "形",
+          "bbox": [
+            126.268,
+            48.254,
+            134.238,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "。",
+          "bbox": [
+            134.238,
+            48.254,
+            142.208,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "任",
+          "bbox": [
+            142.208,
+            48.254,
+            150.178,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "取",
+          "bbox": [
+            150.178,
+            48.254,
+            158.148,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "，",
+          "bbox": [
+            180.405,
+            48.254,
+            188.375,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "由",
+          "bbox": [
+            188.375,
+            48.254,
+            196.345,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "f",
+          "bbox": [
+            200.978,
+            47.192,
+            202.921,
+            53.17
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "′",
+          "bbox": [
+            202.92,
+            44.521,
+            205.112,
+            49.502
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "→",
+          "bbox": [
+            209.779,
+            47.298,
+            218.243,
+            55.268
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "，",
+          "bbox": [
+            225.206,
+            48.254,
+            233.176,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "存",
+          "bbox": [
+            233.176,
+            48.254,
+            241.146,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "在",
+          "bbox": [
+            241.146,
+            48.254,
+            249.116,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "，",
+          "bbox": [
+            271.509,
+            48.254,
+            279.479,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "当",
+          "bbox": [
+            279.479,
+            48.254,
+            287.449,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "时",
+          "bbox": [
+            342.106,
+            48.254,
+            350.076,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "，",
+          "bbox": [
+            350.076,
+            48.254,
+            358.046,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "g",
+          "bbox": [
+            29.542,
+            237.524,
+            32.716,
+            243.502
+          ],
+          "region": "body",
+          "boundary": "footer"
+        },
+        {
+          "text": "g",
+          "bbox": [
+            94.034,
+            237.524,
+            97.208,
+            243.502
+          ],
+          "region": "body",
+          "boundary": "footer"
+        },
+        {
+          "text": "(",
+          "bbox": [
+            97.208,
+            237.524,
+            100.083,
+            243.502
+          ],
+          "region": "body",
+          "boundary": "footer"
+        }
+      ],
+      "location": {
+        "physical_page": 47
+      }
+    },
+    {
+      "rule_id": "BODY_REGION_CONTACT",
+      "severity": "review",
+      "message": "正文文字接近或跨过实测探针估计的标题/页脚安全边界，需结合页面复核。",
+      "evidence": [
+        {
+          "text": "证",
+          "bbox": [
+            28.346,
+            48.254,
+            36.316,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "明",
+          "bbox": [
+            36.316,
+            48.254,
+            44.286,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "：",
+          "bbox": [
+            44.286,
+            48.254,
+            52.256,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "证",
+          "bbox": [
+            52.257,
+            48.254,
+            60.227,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "明",
+          "bbox": [
+            60.227,
+            48.254,
+            68.197,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "有",
+          "bbox": [
+            68.197,
+            48.254,
+            76.167,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "限",
+          "bbox": [
+            76.167,
+            48.254,
+            84.137,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "的",
+          "bbox": [
+            94.387,
+            48.254,
+            102.357,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "情",
+          "bbox": [
+            102.357,
+            48.254,
+            110.327,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "形",
+          "bbox": [
+            110.327,
+            48.254,
+            118.297,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "。",
+          "bbox": [
+            118.297,
+            48.254,
+            126.267,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "任",
+          "bbox": [
+            126.267,
+            48.254,
+            134.238,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "取",
+          "bbox": [
+            134.238,
+            48.254,
+            142.208,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "，",
+          "bbox": [
+            164.465,
+            48.254,
+            172.435,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "由",
+          "bbox": [
+            172.435,
+            48.254,
+            180.405,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "f",
+          "bbox": [
+            185.037,
+            47.192,
+            186.98,
+            53.17
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "′",
+          "bbox": [
+            186.98,
+            44.521,
+            189.172,
+            49.502
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "→",
+          "bbox": [
+            193.838,
+            47.298,
+            202.302,
+            55.268
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "，",
+          "bbox": [
+            209.266,
+            48.254,
+            217.236,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "存",
+          "bbox": [
+            217.236,
+            48.254,
+            225.206,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "在",
+          "bbox": [
+            225.206,
+            48.254,
+            233.176,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "，",
+          "bbox": [
+            255.569,
+            48.254,
+            263.539,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "使",
+          "bbox": [
+            263.539,
+            48.254,
+            271.509,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "得",
+          "bbox": [
+            271.509,
+            48.254,
+            279.479,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "任",
+          "bbox": [
+            279.479,
+            48.254,
+            287.449,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "意",
+          "bbox": [
+            287.449,
+            48.254,
+            295.42,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "∈",
+          "bbox": [
+            304.969,
+            47.298,
+            310.612,
+            55.268
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "都",
+          "bbox": [
+            348.664,
+            48.254,
+            356.634,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "满",
+          "bbox": [
+            356.634,
+            48.254,
+            364.604,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "足",
+          "bbox": [
+            364.604,
+            48.254,
+            372.574,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        }
+      ],
+      "location": {
+        "physical_page": 49
+      }
+    },
+    {
+      "rule_id": "BODY_REGION_CONTACT",
+      "severity": "review",
+      "message": "正文文字接近或跨过实测探针估计的标题/页脚安全边界，需结合页面复核。",
+      "evidence": [
+        {
+          "text": "证",
+          "bbox": [
+            28.346,
+            48.254,
+            36.316,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "明",
+          "bbox": [
+            36.316,
+            48.254,
+            44.286,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "：",
+          "bbox": [
+            44.286,
+            48.254,
+            52.256,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "若",
+          "bbox": [
+            52.257,
+            48.254,
+            60.227,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "∞",
+          "bbox": [
+            85.533,
+            47.298,
+            93.997,
+            55.268
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "，",
+          "bbox": [
+            94.001,
+            48.254,
+            101.971,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "任",
+          "bbox": [
+            101.971,
+            48.254,
+            109.941,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "取",
+          "bbox": [
+            109.941,
+            48.254,
+            117.911,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "，",
+          "bbox": [
+            143.646,
+            48.254,
+            151.616,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "令",
+          "bbox": [
+            151.616,
+            48.254,
+            159.586,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "充",
+          "bbox": [
+            169.135,
+            48.254,
+            177.105,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "分",
+          "bbox": [
+            177.105,
+            48.254,
+            185.075,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "接",
+          "bbox": [
+            185.075,
+            48.254,
+            193.045,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "近",
+          "bbox": [
+            193.045,
+            48.254,
+            201.015,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "，",
+          "bbox": [
+            207.902,
+            48.254,
+            215.872,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "使",
+          "bbox": [
+            215.872,
+            48.254,
+            223.842,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "柯",
+          "bbox": [
+            223.842,
+            48.254,
+            231.812,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "西",
+          "bbox": [
+            231.812,
+            48.254,
+            239.782,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "中",
+          "bbox": [
+            239.782,
+            48.254,
+            247.752,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "值",
+          "bbox": [
+            247.752,
+            48.254,
+            255.723,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "定",
+          "bbox": [
+            255.723,
+            48.254,
+            263.693,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "理",
+          "bbox": [
+            263.693,
+            48.254,
+            271.663,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "给",
+          "bbox": [
+            271.663,
+            48.254,
+            279.633,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "出",
+          "bbox": [
+            279.633,
+            48.254,
+            287.603,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "的",
+          "bbox": [
+            287.603,
+            48.254,
+            295.573,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "差",
+          "bbox": [
+            295.573,
+            48.254,
+            303.543,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "商",
+          "bbox": [
+            303.543,
+            48.254,
+            311.513,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "大",
+          "bbox": [
+            311.513,
+            48.254,
+            319.483,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "于",
+          "bbox": [
+            319.483,
+            48.254,
+            327.454,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "，",
+          "bbox": [
+            341.897,
+            48.254,
+            349.867,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        }
+      ],
+      "location": {
+        "physical_page": 50
+      }
+    },
+    {
+      "rule_id": "BODY_REGION_CONTACT",
+      "severity": "review",
+      "message": "正文文字接近或跨过实测探针估计的标题/页脚安全边界，需结合页面复核。",
+      "evidence": [
+        {
+          "text": "注",
+          "bbox": [
+            28.346,
+            48.254,
+            36.316,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "：",
+          "bbox": [
+            36.316,
+            48.254,
+            44.286,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "洛",
+          "bbox": [
+            55.078,
+            48.254,
+            63.048,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "必",
+          "bbox": [
+            63.048,
+            48.254,
+            71.018,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "达",
+          "bbox": [
+            71.018,
+            48.254,
+            78.988,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "法",
+          "bbox": [
+            78.988,
+            48.254,
+            86.958,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "则",
+          "bbox": [
+            86.958,
+            48.254,
+            94.928,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "只",
+          "bbox": [
+            94.928,
+            48.254,
+            102.899,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "给",
+          "bbox": [
+            102.899,
+            48.254,
+            110.869,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "出",
+          "bbox": [
+            110.869,
+            48.254,
+            118.839,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "一",
+          "bbox": [
+            118.839,
+            48.254,
+            126.809,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "组",
+          "bbox": [
+            126.809,
+            48.254,
+            134.779,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "充",
+          "bbox": [
+            134.779,
+            48.254,
+            142.749,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "分",
+          "bbox": [
+            142.749,
+            48.254,
+            150.719,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "条",
+          "bbox": [
+            150.719,
+            48.254,
+            158.689,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "件",
+          "bbox": [
+            158.689,
+            48.254,
+            166.659,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "，",
+          "bbox": [
+            166.659,
+            48.254,
+            174.63,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "不",
+          "bbox": [
+            174.63,
+            48.254,
+            182.6,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "能",
+          "bbox": [
+            182.6,
+            48.254,
+            190.57,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "反",
+          "bbox": [
+            190.57,
+            48.254,
+            198.54,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "向",
+          "bbox": [
+            198.54,
+            48.254,
+            206.51,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "使",
+          "bbox": [
+            206.51,
+            48.254,
+            214.48,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "用",
+          "bbox": [
+            214.48,
+            48.254,
+            222.45,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "。",
+          "bbox": [
+            222.45,
+            48.254,
+            230.42,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "即",
+          "bbox": [
+            230.42,
+            48.254,
+            238.39,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "使",
+          "bbox": [
+            238.39,
+            48.254,
+            246.36,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "存",
+          "bbox": [
+            297.211,
+            48.254,
+            305.181,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "在",
+          "bbox": [
+            305.181,
+            48.254,
+            313.151,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "，",
+          "bbox": [
+            313.151,
+            48.254,
+            321.121,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "′",
+          "bbox": [
+            336.879,
+            46.478,
+            339.061,
+            52.456
+          ],
+          "region": "body",
+          "boundary": "header"
+        }
+      ],
+      "location": {
+        "physical_page": 51
+      }
+    },
+    {
+      "rule_id": "BODY_REGION_CONTACT",
+      "severity": "review",
+      "message": "正文文字接近或跨过实测探针估计的标题/页脚安全边界，需结合页面复核。",
+      "evidence": [
+        {
+          "text": "证",
+          "bbox": [
+            28.346,
+            48.254,
+            36.316,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "明",
+          "bbox": [
+            36.316,
+            48.254,
+            44.286,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "：",
+          "bbox": [
+            44.286,
+            48.254,
+            52.256,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "只",
+          "bbox": [
+            52.257,
+            48.254,
+            60.227,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "证",
+          "bbox": [
+            60.227,
+            48.254,
+            68.197,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "′",
+          "bbox": [
+            73.609,
+            46.478,
+            75.791,
+            52.456
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "′",
+          "bbox": [
+            75.791,
+            46.478,
+            77.973,
+            52.456
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "的",
+          "bbox": [
+            96.826,
+            48.254,
+            104.796,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "情",
+          "bbox": [
+            104.796,
+            48.254,
+            112.766,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "形",
+          "bbox": [
+            112.766,
+            48.254,
+            120.736,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "。",
+          "bbox": [
+            120.736,
+            48.254,
+            128.706,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "任",
+          "bbox": [
+            128.706,
+            48.254,
+            136.677,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "取",
+          "bbox": [
+            136.677,
+            48.254,
+            144.647,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "∈",
+          "bbox": [
+            157.877,
+            47.298,
+            163.52,
+            55.268
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "，",
+          "bbox": [
+            184.665,
+            48.254,
+            192.635,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "点",
+          "bbox": [
+            192.635,
+            48.254,
+            200.605,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "处",
+          "bbox": [
+            241.888,
+            48.254,
+            249.858,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "切",
+          "bbox": [
+            249.858,
+            48.254,
+            257.828,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "线",
+          "bbox": [
+            257.828,
+            48.254,
+            265.798,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "为",
+          "bbox": [
+            265.798,
+            48.254,
+            273.768,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        }
+      ],
+      "location": {
+        "physical_page": 99
+      }
+    },
+    {
+      "rule_id": "BODY_REGION_CONTACT",
+      "severity": "review",
+      "message": "正文文字接近或跨过实测探针估计的标题/页脚安全边界，需结合页面复核。",
+      "evidence": [
+        {
+          "text": "解",
+          "bbox": [
+            28.346,
+            48.254,
+            36.316,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "：",
+          "bbox": [
+            36.316,
+            48.254,
+            44.286,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        }
+      ],
+      "location": {
+        "physical_page": 105
+      }
+    },
+    {
+      "rule_id": "BODY_REGION_CONTACT",
+      "severity": "review",
+      "message": "正文文字接近或跨过实测探针估计的标题/页脚安全边界，需结合页面复核。",
+      "evidence": [
+        {
+          "text": "应",
+          "bbox": [
+            28.346,
+            48.254,
+            36.316,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "用",
+          "bbox": [
+            36.316,
+            48.254,
+            44.286,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "拓",
+          "bbox": [
+            44.286,
+            48.254,
+            52.256,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "展",
+          "bbox": [
+            52.256,
+            48.254,
+            60.226,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "—",
+          "bbox": [
+            60.226,
+            48.254,
+            68.197,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "—",
+          "bbox": [
+            67.79,
+            48.254,
+            75.76,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "凸",
+          "bbox": [
+            75.76,
+            48.254,
+            83.73,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "性",
+          "bbox": [
+            83.73,
+            48.254,
+            91.7,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "与",
+          "bbox": [
+            91.7,
+            48.254,
+            99.67,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "机",
+          "bbox": [
+            99.67,
+            48.254,
+            107.641,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "器",
+          "bbox": [
+            107.641,
+            48.254,
+            115.611,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "学",
+          "bbox": [
+            115.611,
+            48.254,
+            123.581,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "习",
+          "bbox": [
+            123.581,
+            48.254,
+            131.551,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "优",
+          "bbox": [
+            131.551,
+            48.254,
+            139.521,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "化",
+          "bbox": [
+            139.521,
+            48.254,
+            147.491,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "凸",
+          "bbox": [
+            158.275,
+            48.254,
+            166.245,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "性",
+          "bbox": [
+            166.245,
+            48.254,
+            174.215,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "在",
+          "bbox": [
+            174.215,
+            48.254,
+            182.185,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "优",
+          "bbox": [
+            182.185,
+            48.254,
+            190.155,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "化",
+          "bbox": [
+            190.155,
+            48.254,
+            198.126,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "问",
+          "bbox": [
+            198.126,
+            48.254,
+            206.096,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "题",
+          "bbox": [
+            206.096,
+            48.254,
+            214.066,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "中",
+          "bbox": [
+            214.066,
+            48.254,
+            222.036,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "非",
+          "bbox": [
+            222.036,
+            48.254,
+            230.006,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "常",
+          "bbox": [
+            230.006,
+            48.254,
+            237.976,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "重",
+          "bbox": [
+            237.976,
+            48.254,
+            245.946,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "要",
+          "bbox": [
+            245.946,
+            48.254,
+            253.916,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "。",
+          "bbox": [
+            253.916,
+            48.254,
+            261.886,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "直",
+          "bbox": [
+            261.886,
+            48.254,
+            269.856,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "观",
+          "bbox": [
+            269.856,
+            48.254,
+            277.827,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        }
+      ],
+      "location": {
+        "physical_page": 114
+      }
+    },
+    {
+      "rule_id": "BODY_REGION_CONTACT",
+      "severity": "review",
+      "message": "正文文字接近或跨过实测探针估计的标题/页脚安全边界，需结合页面复核。",
+      "evidence": [
+        {
+          "text": "证",
+          "bbox": [
+            28.346,
+            48.254,
+            36.316,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "明",
+          "bbox": [
+            36.316,
+            48.254,
+            44.286,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "：",
+          "bbox": [
+            44.286,
+            48.254,
+            52.256,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "记",
+          "bbox": [
+            52.257,
+            48.254,
+            60.227,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        }
+      ],
+      "location": {
+        "physical_page": 117
+      }
+    },
+    {
+      "rule_id": "BODY_REGION_CONTACT",
+      "severity": "review",
+      "message": "正文文字接近或跨过实测探针估计的标题/页脚安全边界，需结合页面复核。",
+      "evidence": [
+        {
+          "text": "证",
+          "bbox": [
+            28.346,
+            48.254,
+            36.316,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "明",
+          "bbox": [
+            36.316,
+            48.254,
+            44.286,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "：",
+          "bbox": [
+            44.286,
+            48.254,
+            52.256,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "对",
+          "bbox": [
+            52.257,
+            48.254,
+            60.227,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "在",
+          "bbox": [
+            70.716,
+            48.254,
+            78.686,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "以",
+          "bbox": [
+            78.686,
+            48.254,
+            86.656,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "为",
+          "bbox": [
+            108.024,
+            48.254,
+            115.994,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "端",
+          "bbox": [
+            115.994,
+            48.254,
+            123.964,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "点",
+          "bbox": [
+            123.964,
+            48.254,
+            131.934,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "的",
+          "bbox": [
+            131.934,
+            48.254,
+            139.904,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "区",
+          "bbox": [
+            139.904,
+            48.254,
+            147.875,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "间",
+          "bbox": [
+            147.875,
+            48.254,
+            155.845,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "反",
+          "bbox": [
+            155.845,
+            48.254,
+            163.815,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "复",
+          "bbox": [
+            163.815,
+            48.254,
+            171.785,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "使",
+          "bbox": [
+            171.785,
+            48.254,
+            179.755,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "用",
+          "bbox": [
+            179.755,
+            48.254,
+            187.725,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "罗",
+          "bbox": [
+            187.725,
+            48.254,
+            195.695,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "尔",
+          "bbox": [
+            195.695,
+            48.254,
+            203.665,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "定",
+          "bbox": [
+            203.665,
+            48.254,
+            211.635,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "理",
+          "bbox": [
+            211.635,
+            48.254,
+            219.605,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "：",
+          "bbox": [
+            219.605,
+            48.254,
+            227.576,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "由",
+          "bbox": [
+            227.576,
+            48.254,
+            235.546,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "，",
+          "bbox": [
+            300.01,
+            48.254,
+            307.98,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "存",
+          "bbox": [
+            307.98,
+            48.254,
+            315.95,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "在",
+          "bbox": [
+            315.95,
+            48.254,
+            323.92,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "一",
+          "bbox": [
+            323.92,
+            48.254,
+            331.89,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "点",
+          "bbox": [
+            331.89,
+            48.254,
+            339.861,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "使",
+          "bbox": [
+            339.861,
+            48.254,
+            347.831,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "′",
+          "bbox": [
+            355.498,
+            46.478,
+            357.68,
+            52.456
+          ],
+          "region": "body",
+          "boundary": "header"
+        },
+        {
+          "text": "；",
+          "bbox": [
+            373.708,
+            48.254,
+            381.678,
+            56.224
+          ],
+          "region": "body",
+          "boundary": "header"
+        }
+      ],
+      "location": {
+        "physical_page": 118
+      }
+    },
+    {
+      "rule_id": "BODY_REGION_CONTACT",
+      "severity": "review",
+      "message": "正文文字接近或跨过实测探针估计的标题/页脚安全边界，需结合页面复核。",
+      "evidence": [
+        {
+          "text": "≈",
+          "bbox": [
+            366.575,
+            47.796,
+            374.316,
+            57.759
+          ],
+          "region": "body",
+          "boundary": "header"
+        }
+      ],
+      "location": {
+        "physical_page": 126
+      }
+    }
+  ]
+}

@@ -1,0 +1,311 @@
+{
+  "section_id": "S02",
+  "units": [
+    {
+      "id": "S02.U01",
+      "kind": "explanation",
+      "tex": "第\\ref{sec:S01}节用一个常数代表一组观测值。本节允许拟合值随输入作线性变化，用直线描述数据的整体趋势。虽然有截距和斜率两个参数，我们仍只用一元微积分：先固定斜率求最佳截距，再求最佳斜率，最后用配方证明全局最优性。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U02",
+      "kind": "definition",
+      "tex": "设 $n\\geq1$ 为整数，给定数据点 $(x_i,y_i)\\in\\mathbb{R}^2$，$i=1,\\ldots,n$。带截距的直线拟合模型为\n\\[\n\\hat{y}_i=a+bx_i,\\qquad a,b\\in\\mathbb{R},\n\\]\n其中 $a$ 是截距，$b$ 是斜率。残差与目标函数分别为\n\\[\nr_i=y_i-a-bx_i,\\qquad\nQ(a,b)=\\sum_{i=1}^{n}(y_i-a-bx_i)^2.\n\\]\n最小二乘直线指使 $Q(a,b)$ 在所有实参数对 $(a,b)$ 中取得最小值的直线。这里截距也是待定参数，并未要求直线经过原点。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U03",
+      "kind": "definition",
+      "tex": "对上述数据，定义均值\n\\[\n\\bar{x}=\\frac1n\\sum_{i=1}^{n}x_i,\\qquad\n\\bar{y}=\\frac1n\\sum_{i=1}^{n}y_i.\n\\]\n中心化数据是 $x_i-\\bar{x}$ 与 $y_i-\\bar{y}$，其各自的和均为零。定义\n\\[\nS_{xx}=\\sum_{i=1}^{n}(x_i-\\bar{x})^2,\\qquad\nS_{xy}=\\sum_{i=1}^{n}(x_i-\\bar{x})(y_i-\\bar{y}).\n\\]\n平方展开并利用均值定义，可得便于手算的形式\n\\[\nS_{xx}=\\sum_{i=1}^{n}x_i^2-n\\bar{x}^2,\\qquad\nS_{xy}=\\sum_{i=1}^{n}x_i y_i-n\\bar{x}\\bar{y}.\n\\]\n这些量都只由观测数据决定，与待定参数 $a,b$ 无关。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U04",
+      "kind": "explanation",
+      "tex": "固定任意 $b\\in\\mathbb{R}$，把 $y_i-bx_i$ 看作新的观测值。它们的平均数是 $\\bar{y}-b\\bar{x}$。由第\\ref{sec:S01}节的常数拟合结论，此时唯一最优截距是\n\\[\na=\\bar{y}-b\\bar{x}.\n\\]\n更具体地，对所有 $a,b\\in\\mathbb{R}$，有分解\n\\[\nQ(a,b)=F(b)+n(a+b\\bar{x}-\\bar{y})^2,\n\\]\n其中\n\\[\n\\begin{aligned}\nF(b)&=Q(\\bar{y}-b\\bar{x},b)\\\\\n&=\\sum_{i=1}^{n}\\bigl((y_i-\\bar{y})-b(x_i-\\bar{x})\\bigr)^2\\\\\n&=\\sum_{i=1}^{n}(y_i-\\bar{y})^2-2bS_{xy}+b^2S_{xx}.\n\\end{aligned}\n\\]\n因此，先把截距选为对应斜率下的最优值，再最小化一元函数 $F$，不会漏掉更好的参数对。若 $S_{xx}>0$，则\n\\[\nF'(b)=2S_{xx}b-2S_{xy},\n\\]\n导数为零给出候选斜率 $b=S_{xy}/S_{xx}$。下面用配方说明它确实给出唯一全局最优解。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U05",
+      "kind": "definition",
+      "tex": "对给定的 $n$ 个实数据点，本模型关于未知参数 $a,b\\in\\mathbb{R}$ 的正规方程是二元一次方程组\n\\[\n\\begin{cases}\nna+b\\displaystyle\\sum_{i=1}^{n}x_i=\\displaystyle\\sum_{i=1}^{n}y_i,\\\\\na\\displaystyle\\sum_{i=1}^{n}x_i+b\\displaystyle\\sum_{i=1}^{n}x_i^2=\\displaystyle\\sum_{i=1}^{n}x_i y_i.\n\\end{cases}\n\\]\n按残差 $r_i=y_i-a-bx_i$ 的约定，这也就是\n\\[\n\\sum_{i=1}^{n}r_i=0,\\qquad \\sum_{i=1}^{n}x_i r_i=0.\n\\]\n这两个等式不表示每个残差分别为零。它们与最小二乘解的联系将在下面通过消元与配方建立，不需要偏导数。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U06",
+      "kind": "theorem",
+      "tex": "设 $n\\geq1$ 为整数，$(x_i,y_i)\\in\\mathbb{R}^2$，$i=1,\\ldots,n$。条件 $S_{xx}>0$ 等价于 $x_1,\\ldots,x_n$ 不全相同。在此条件下，$Q(a,b)$ 在 $\\mathbb{R}^2$ 上有唯一全局最小点\n\\[\nb_* =\\frac{S_{xy}}{S_{xx}},\\qquad a_* =\\bar{y}-b_*\\bar{x}.\n\\]\n参数对 $(a_*,b_*)$ 也是正规方程的唯一解。对任意 $a,b\\in\\mathbb{R}$，有\n\\[\nQ(a,b)=Q(a_*,b_*)+S_{xx}(b-b_*)^2+n(a+b\\bar{x}-\\bar{y})^2,\n\\]\n其中\n\\[\nQ(a_*,b_*)=\\sum_{i=1}^{n}(y_i-\\bar{y})^2-\\frac{S_{xy}^2}{S_{xx}}.\n\\]",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U07",
+      "kind": "proof",
+      "tex": "由于 $S_{xx}$ 是非负项之和，$S_{xx}=0$ 当且仅当每个 $x_i-\\bar{x}=0$，也就是所有 $x_i$ 相同。因此 $S_{xx}>0$ 当且仅当自变量观测值不全相同。\n\n以下设 $S_{xx}>0$。对消去截距后的一元二次函数配方，得到对所有实数 $b$ 成立的恒等式\n\\[\n\\begin{aligned}\nF(b)\n&=\\sum_{i=1}^{n}(y_i-\\bar{y})^2-2bS_{xy}+b^2S_{xx}\\\\\n&=\\sum_{i=1}^{n}(y_i-\\bar{y})^2-\\frac{S_{xy}^2}{S_{xx}}\n  +S_{xx}\\left(b-\\frac{S_{xy}}{S_{xx}}\\right)^2.\n\\end{aligned}\n\\]\n令 $b_*=S_{xy}/S_{xx}$、$a_*=\\bar{y}-b_*\\bar{x}$，再代入前面的截距分解，便得到定理中的 $Q(a,b)$ 分解式。右侧两个附加平方项都非负；它们同时为零当且仅当 $b=b_*$ 且 $a+b\\bar{x}-\\bar{y}=0$，即 $(a,b)=(a_*,b_*)$。故最小值存在，且全局最小点唯一。\n\n最后用消元联系正规方程。第一条正规方程除以 $n>0$ 后等价于\n\\[\na+b\\bar{x}=\\bar{y}.\n\\]\n将第二条正规方程减去第一条的 $\\bar{x}$ 倍，利用 $\\sum x_i=n\\bar{x}$，得到\n\\[\nb\\left(\\sum_{i=1}^{n}x_i^2-n\\bar{x}^2\\right)\n=\\sum_{i=1}^{n}x_i y_i-n\\bar{x}\\bar{y},\n\\]\n也就是 $bS_{xx}=S_{xy}$。上述消元可逆，所以正规方程等价于\n\\[\na+b\\bar{x}=\\bar{y},\\qquad bS_{xx}=S_{xy}.\n\\]\n由于 $S_{xx}>0$，其唯一解正是 $(a_*,b_*)$。这同时证明了最优参数满足正规方程，以及在本条件下解正规方程足以求得唯一最优参数。",
+      "relates_to": "S02.U06"
+    },
+    {
+      "id": "S02.U08",
+      "kind": "example",
+      "tex": "对数据点 $(0,1)$、$(1,2)$、$(2,2)$ 求带截距的最小二乘直线。列出均值、中心化求和、最优参数、各个残差及最小残差平方和，并核对两条正规方程。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U09",
+      "kind": "solution",
+      "tex": "均值为\n\\[\n\\bar{x}=\\frac{0+1+2}{3}=1,\\qquad\n\\bar{y}=\\frac{1+2+2}{3}=\\frac53.\n\\]\n中心化计算如下：\n\\[\n\\begin{array}{c|r|r|r|r}\ni&x_i-\\bar{x}&y_i-\\bar{y}&(x_i-\\bar{x})^2&(x_i-\\bar{x})(y_i-\\bar{y})\\\\ \\hline\n1&-1&-2/3&1&2/3\\\\\n2&0&1/3&0&0\\\\\n3&1&1/3&1&1/3\n\\end{array}\n\\]\n因此 $S_{xx}=2>0$、$S_{xy}=1$，唯一最优参数为\n\\[\nb_* =\\frac12,\\qquad a_* =\\frac53-\\frac12=\\frac76.\n\\]\n最小二乘直线是 $\\hat{y}=\\frac76+\\frac12x$。逐点计算拟合值和残差：\n\\[\n\\begin{array}{c|r|r|r|r}\ni&x_i&y_i&\\hat{y}_i&r_i\\\\ \\hline\n1&0&1&7/6&-1/6\\\\\n2&1&2&5/3&1/3\\\\\n3&2&2&13/6&-1/6\n\\end{array}\n\\]\n故最小平方和为\n\\[\nQ(a_*,b_*)=\\frac1{36}+\\frac19+\\frac1{36}=\\frac16.\n\\]\n原始数据给出 $\\sum x_i=3$、$\\sum y_i=5$、$\\sum x_i^2=5$、$\\sum x_i y_i=6$，所以正规方程为\n\\[\n3a+3b=5,\\qquad 3a+5b=6.\n\\]\n代入最优参数，分别有 $7/2+3/2=5$ 与 $7/2+5/2=6$。等价地，残差满足\n\\[\n-\\frac16+\\frac13-\\frac16=0,\\qquad\n0\\left(-\\frac16\\right)+1\\left(\\frac13\\right)+2\\left(-\\frac16\\right)=0.\n\\]\n还可以把全局最优性具体写为：对所有 $a,b\\in\\mathbb{R}$，\n\\[\n\\begin{aligned}\nQ(a,b)&=(1-a)^2+(2-a-b)^2+(2-a-2b)^2\\\\\n&=\\frac16+2\\left(b-\\frac12\\right)^2+3\\left(a+b-\\frac53\\right)^2.\n\\end{aligned}\n\\]\n本例中三个点不在同一条直线上，因而最优残差也不全为零；最小二乘拟合并不是强行让直线通过每一个数据点。",
+      "relates_to": "S02.U08"
+    },
+    {
+      "id": "S02.U10",
+      "kind": "explanation",
+      "tex": "手算时可按以下顺序进行：先算 $\\bar{x},\\bar{y}$，再算 $S_{xx},S_{xy}$；确认 $S_{xx}>0$ 后才作除法求 $b_*$，随后求 $a_*$；最后计算残差平方和，并用正规方程核对参数。\n\n注意，$S_{xy}=0$ 并不意味着公式失效：只要 $S_{xx}>0$，最优斜率就是零，最优直线为水平线 $\\hat{y}=\\bar{y}$。真正不能直接使用除法公式的是 $S_{xx}=0$ 的情形。它的参数唯一性问题，以及残差和均值点的解释，将在第\\ref{sec:S03}节讨论。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U11",
+      "kind": "exercise",
+      "tex": "对数据点 $(0,1)$、$(1,1)$、$(2,3)$ 求带截距的最小二乘直线。计算 $\\bar{x},\\bar{y},S_{xx},S_{xy}$，列出残差及最小平方和，并核对正规方程。答案统一置于讲义末尾。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U12",
+      "kind": "exercise",
+      "tex": "设 $n\\geq2$ 为整数，给定实数据点 $(x_i,y_i)$，$i=1,\\ldots,n$，且 $S_{xx}>0$。判断下列说法并说明理由。\n\n（1）若 $S_{xy}=0$，则所有 $y_i$ 必须相同。\n\n（2）任意满足 $\\sum_{i=1}^{n}(y_i-a-bx_i)=0$ 的实参数对 $(a,b)$，都是最小二乘解。\n\n（3）若某实参数对同时满足两条正规方程，则它是唯一最小二乘解。\n\n答案统一置于讲义末尾。",
+      "relates_to": null
+    },
+    {
+      "id": "S02.U11.answer",
+      "kind": "solution",
+      "tex": "均值为 $\\bar{x}=1$、$\\bar{y}=5/3$。中心化数据依次为\n\\[\n(x_i-\\bar{x})_{i=1}^{3}=(-1,0,1),\\qquad\n(y_i-\\bar{y})_{i=1}^{3}=(-2/3,-2/3,4/3).\n\\]\n所以\n\\[\nS_{xx}=1+0+1=2,\\qquad S_{xy}=\\frac23+0+\\frac43=2.\n\\]\n由此 $b_*=1$、$a_*=2/3$，最小二乘直线为 $\\hat{y}=2/3+x$。拟合值依次为 $2/3,5/3,8/3$，残差依次为 $1/3,-2/3,1/3$，最小平方和为\n\\[\nQ(a_*,b_*)=\\frac19+\\frac49+\\frac19=\\frac23.\n\\]\n本题的正规方程是 $3a+3b=5$、$3a+5b=7$；代入 $a=2/3,b=1$，左侧分别为 $2+3=5$ 与 $2+5=7$，均与右侧相等。",
+      "relates_to": "S02.U11"
+    },
+    {
+      "id": "S02.U12.answer",
+      "kind": "solution",
+      "tex": "（1）错误。例如数据点 $(-1,1)$、$(0,0)$、$(1,1)$ 满足 $\\bar{x}=0$、$\\bar{y}=2/3$、$S_{xx}=2>0$，且\n\\[\nS_{xy}=(-1)\\frac13+0\\left(-\\frac23\\right)+1\\frac13=0,\n\\]\n但三个响应值不全相同。此时最优直线是 $\\hat{y}=2/3$。\n\n（2）错误。残差和为零仅等价于 $a+b\\bar{x}=\\bar{y}$，即截距对于当前斜率已最优，却没有保证斜率也最优。例如对本节例题中的数据 $(0,1)$、$(1,2)$、$(2,2)$，取 $a=5/3,b=0$，残差和为零，但平方和为 $2/3$，大于最小值 $1/6$。\n\n（3）正确。在 $S_{xx}>0$ 的前提下，消元使正规方程等价于 $a+b\\bar{x}=\\bar{y}$ 与 $bS_{xx}=S_{xy}$，故其唯一解为 $b_*=S_{xy}/S_{xx}$、$a_*=\\bar{y}-b_*\\bar{x}$。由全局平方和分解，这正是唯一最小二乘解。",
+      "relates_to": "S02.U12"
+    }
+  ],
+  "calculations": [
+    {
+      "id": "S02.C01",
+      "unit_id": "S02.U09",
+      "kind": "equivalence",
+      "assumptions": {
+        "a": {
+          "real": true
+        },
+        "b": {
+          "real": true
+        }
+      },
+      "lhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 1
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      },
+                      {
+                        "op": "Symbol",
+                        "name": "a"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      },
+                      {
+                        "op": "Symbol",
+                        "name": "a"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      },
+                      {
+                        "op": "Symbol",
+                        "name": "b"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      },
+                      {
+                        "op": "Symbol",
+                        "name": "a"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -2
+                      },
+                      {
+                        "op": "Symbol",
+                        "name": "b"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Rational",
+            "p": 1,
+            "q": 6
+          },
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Integer",
+                "value": 2
+              },
+              {
+                "op": "Pow",
+                "args": [
+                  {
+                    "op": "Add",
+                    "args": [
+                      {
+                        "op": "Symbol",
+                        "name": "b"
+                      },
+                      {
+                        "op": "Rational",
+                        "p": -1,
+                        "q": 2
+                      }
+                    ]
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Integer",
+                "value": 3
+              },
+              {
+                "op": "Pow",
+                "args": [
+                  {
+                    "op": "Add",
+                    "args": [
+                      {
+                        "op": "Symbol",
+                        "name": "a"
+                      },
+                      {
+                        "op": "Symbol",
+                        "name": "b"
+                      },
+                      {
+                        "op": "Rational",
+                        "p": -5,
+                        "q": 3
+                      }
+                    ]
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "calculation_limitations": [
+    "核算请求覆盖具体例题的二元平方和分解。协议不直接表示任意长度数据列的有限求和及唯一性量词；一般定理的消元、全局最优性和唯一性由正文证明。",
+    "对后文第\\ref{sec:S03}节的引用使用已登记章节标签，编号需待全文编译验证。"
+  ],
+  "uncertainties": []
+}

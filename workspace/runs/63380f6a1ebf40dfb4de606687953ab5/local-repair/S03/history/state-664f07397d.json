@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "82e757fb09ac695a50694cf8a2ec4ee2877b86324aa80954200dbcc4bf4edb32",
+    "section_id": "S03",
+    "context_hash": "c1c89a6bca40285774f0a76918bfcf77c2220cd70c0395cce26a9a5509682a13",
+    "base_hash": "b7826d35043fabf2a7c51b22ed08d0a13006528e5bc84e5ac721031d5e0ce3f5",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "UNCHECKED_REPAIRED",
+  "applied_rounds": 3,
+  "proposal_calls": 5,
+  "rejected_proposals": 2,
+  "pending_issues": [
+    {
+      "unit_id": "S03.U07",
+      "severity": "review",
+      "message": "正文中的决定系数计算本身一致，但提供的核查证据存在未解释的冲突，需确认所使用的完整自动核查输入或预期值。",
+      "evidence": "S03.U07明确给出 TSS=14/3、RSS=1/6，并计算 R^2=1-(1/6)/(14/3)=1-1/28=27/28；当前 tool_checks 对 S03.C01 也记录 result=27/28、status=PASS。另一方面，local_recovery.unresolved_issues 保留了一条针对同一 S03.U07/S03.C01 的开放记录，称工具结果为 29/28，且未提供可复现的完整表达式。按实际正文逐步计算，27/28是正确结果，因此目前不能据此判定正文数学错误，但两份核查记录仍未统一。"
+    }
+  ],
+  "unit_applied_counts": {
+    "S03.U08": 1,
+    "S03.U09": 1,
+    "S03.U07": 2
+  },
+  "proposal_counts_by_key": {
+    "unit:S03.U07": 5,
+    "unit:S03.U08": 2,
+    "unit:S03.U09": 2
+  },
+  "rejected_counts_by_key": {
+    "unit:S03.U07": 2,
+    "unit:S03.U08": 1,
+    "unit:S03.U09": 1
+  },
+  "evidence_dependencies": [
+    {
+      "key": "b/63380f6a1ebf40df/sS03_eda411118a99/repair-2-patch.json",
+      "hash": "1d7d2939579911fe08ea51bf6ad60e5241e0de0adef87ef6a1abe94ee5023f16",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/63380f6a1ebf40df/sS03_37e6e60e592e/repair-4-patch.json",
+      "hash": "d50d61ed2c30b71df4a9c2bdcd2fdd4b8b369808b07f3c0960780beaa9b30b64",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/63380f6a1ebf40df/sS03_37e6e60e592e/repair-5-patch.json",
+      "hash": "83a8aebbb0b8c21167c60bbba596039e5f2e53cc95bba9a2043bc13f630a8245",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "2774541b9e4136e2216272905cd22dbe9b4d39e04686574a39d7115daa82bf7e",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S03/candidate-da3a3d935e79.json",
+  "candidate_hash": "2266a8415ad8d785710e2b1c61ffa5040e38f70a5b12a898632b6d47ff4e5277",
+  "last_review_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S03/review-5861844ca4ea.json",
+  "pending_operation": "strict_local_patch",
+  "pending_keys": [
+    "unit:S03.U07"
+  ],
+  "request_count_before": 37,
+  "last_rejection": {
+    "code": "REPAIR_SCOPE_VIOLATION",
+    "message": "无效疑点裁定后的独立修复必须实际修改正文；仅改备注、核算、空白或注释不能重新抽取裁定"
+  },
+  "patch_evidence": {
+    "schema_version": 1,
+    "operation": "strict_local_patch",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "e3d0de0ce7eea23056024fdc7fce3e66153236d2eb8d6fdd76ca9a6016b6ed1b",
+    "patch_hash": "646ce4a5c9ed22f0e53791e41fa6d86aebfafa1e8b1bab2f5d44529eb071521a",
+    "result_section_hash": "e77495e6aea03d35fdb25e6c42368927058049fc533ba64747b11bfd11378c59",
+    "allowed_unit_ids": [
+      "S03.U07"
+    ],
+    "changed_unit_ids": [],
+    "unit_order_preserved": true,
+    "unit_identity_and_metadata_preserved": true,
+    "non_target_units_preserved": true,
+    "original_calculation_count": 2,
+    "calculation_updates": [],
+    "calculation_additions": [],
+    "non_target_calculations_preserved": true,
+    "old_uncertainties_preserved": true,
+    "old_calculation_limitations_preserved": true,
+    "normalization": "NOT_RUN",
+    "math_check": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "proposal_key": "b/63380f6a1ebf40df/sS03_37e6e60e592e/repair-5-patch.json"
+  },
+  "reason": "Explicit global-repair seed; existing local counters retained"
+}

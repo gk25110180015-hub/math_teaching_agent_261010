@@ -1,0 +1,11 @@
+{
+  "approved": false,
+  "issues": [
+    "runtime_evidence 返回 status=FAIL，错误为“动画必须返回有限的数学 metrics，用于验证数值与交互”。当前 draw 返回的 metrics 包含非有限数值字段：`trend`、`extrema`、`domain:'[-2,2]'`、`view:'函数图像'/'导数符号带'` 为字符串，`stationary` 为布尔值；宿主验证要求有限数学量，导致运行失败，无法采样 controls/scenes。修复：metrics 只保留有限数值，例如 `{x:x, f:fx, derivative:dx, view:view, stationary:stationary?1:0, atLeft:atLeft?1:0, atRight:atRight?1:0}`，把趋势/极值/区间文字移入 title/caption 或另用数值编码。"
+  ],
+  "limitations": [
+    "runtime_evidence 为 FAIL，未提供实际 controls/scenes 采样，因此无法验证浏览器中的交互同步与动画分镜。",
+    "未提供视频或截图，未进行人工视觉审阅；以上仅基于代码、确认方案与给定运行采样。",
+    "S2 末尾从 x=1 回到 x=-1，下一镜头 S3 从 x=-2 开始，存在场景切换跳变；不影响数学结论，但可能影响观感。"
+  ]
+}

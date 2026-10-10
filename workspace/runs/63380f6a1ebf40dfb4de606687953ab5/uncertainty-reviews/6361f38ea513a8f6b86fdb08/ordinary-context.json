@@ -1,0 +1,1885 @@
+{
+  "plan": {
+    "additions": [],
+    "decision_ids": [
+      "6423d30885e841d293e3a40c35dae7ea",
+      "bf0ee2555784492c8b7c0b6c6e5bafee",
+      "ef45dd76434e488992570638357c8c06",
+      "241ecf1df9b642e8af3eb7f2a3247e6c",
+      "19ef1e69d52d4a5495a031792b0c1eff"
+    ],
+    "decisions": [
+      {
+        "actor": "local_user",
+        "id": "6423d30885e841d293e3a40c35dae7ea",
+        "resolved_effects": {
+          "section_order": null,
+          "section_titles": {
+            "S01": "一元最小二乘拟合：从平方误差到正规方程",
+            "S02": "多元最小二乘与矩阵表示",
+            "S03": "残差性质、拟合优度与经济解释"
+          },
+          "title": "最小二乘法讲义计划"
+        },
+        "timestamp": "2026-10-07T04:32:27.845111+00:00",
+        "type": "outline"
+      },
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "custom_input": "",
+        "id": "bf0ee2555784492c8b7c0b6c6e5bafee",
+        "question_id": "Q-PROOF",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "key"
+        },
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "timestamp": "2026-10-07T04:33:34.558287+00:00"
+      },
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "custom_input": "",
+        "id": "ef45dd76434e488992570638357c8c06",
+        "question_id": "Q-EXAMPLE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "balanced"
+        },
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "timestamp": "2026-10-07T04:33:34.558287+00:00"
+      },
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "custom_input": "",
+        "id": "241ecf1df9b642e8af3eb7f2a3247e6c",
+        "question_id": "Q-EXERCISE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "with_answers"
+        },
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "timestamp": "2026-10-07T04:33:34.558287+00:00"
+      },
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "custom_input": "",
+        "id": "19ef1e69d52d4a5495a031792b0c1eff",
+        "question_id": "Q-ANSWERS",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "end"
+        },
+        "selected_option_ids": [
+          "END"
+        ],
+        "timestamp": "2026-10-07T04:33:34.558287+00:00"
+      }
+    ],
+    "diff": [],
+    "difficulty": "经济学本科一年级微积分",
+    "exclusions": [
+      "不讲概率论、抽样分布、假设检验和置信区间。",
+      "不讲异方差、自相关、内生性等计量经济学进阶问题。",
+      "不讲加权最小二乘、广义最小二乘、岭回归和其他正则化方法。",
+      "不讲非线性最小二乘和数值优化算法。",
+      "不把最小二乘拟合结果解释为因果关系。",
+      "不深入讨论高等线性代数，仅使用矩阵乘法、转置、秩和正交投影的基础概念。"
+    ],
+    "input_snapshot_hash": "ea5d03bb07ee87f9c202bf105f88564960581b816c97cb021a96382fd3882e9c",
+    "lecture": {
+      "answers_location": "end",
+      "example_focus": "balanced",
+      "exercises": "with_answers",
+      "proof_policy": "key"
+    },
+    "model_id": "gpt6",
+    "objectives": [
+      "建立最小二乘法的几何与微积分直观，理解其在经济数据拟合中的基本用途。",
+      "从一元线性拟合推广到多元线性回归的矩阵表达，掌握正规方程、残差与投影的关系。",
+      "能够解释拟合优度、残差分解及模型结果的经济含义，同时明确方法的适用边界。"
+    ],
+    "omissions": [],
+    "prerequisites": [
+      "实数运算与代数变形",
+      "一元函数、导数及极值判别",
+      "有限求和与平方和",
+      "平面直角坐标系与直线方程",
+      "经济学中的变量、观测值与简单数据表"
+    ],
+    "provider": "live",
+    "questions": [
+      {
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-PROOF",
+        "options": [
+          {
+            "effects": {
+              "value": "key"
+            },
+            "id": "KEY",
+            "label": "关键定理完整证明，其余说明",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "all"
+            },
+            "id": "ALL",
+            "label": "所有定理完整证明",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "定理证明采用哪种深度？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXAMPLE",
+        "options": [
+          {
+            "effects": {
+              "value": "balanced"
+            },
+            "id": "BALANCED",
+            "label": "概念与计算均衡",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "economics"
+            },
+            "id": "ECONOMICS",
+            "label": "更多经济应用",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "例题侧重什么？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXERCISE",
+        "options": [
+          {
+            "effects": {
+              "value": "with_answers"
+            },
+            "id": "WITH",
+            "label": "安排练习并附答案",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "none"
+            },
+            "id": "NONE",
+            "label": "不安排额外练习",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "是否安排练习与答案？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-ANSWERS",
+        "options": [
+          {
+            "effects": {
+              "value": "section"
+            },
+            "id": "SECTION",
+            "label": "各节之后",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "end"
+            },
+            "id": "END",
+            "label": "讲义末尾",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "练习答案放在哪里？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "END"
+        ],
+        "selection_mode": "single"
+      }
+    ],
+    "reference_context": {
+      "reason": "No matching chapter; no unrelated example injected.",
+      "status": "NOT_APPLICABLE"
+    },
+    "reference_registry": {
+      "def:coefficient-of-determination": "S03",
+      "def:design-matrix": "S02",
+      "def:ols-objective": "S01",
+      "def:orthogonal-residual": "S03",
+      "def:residual": "S01",
+      "def:residual-vector": "S02",
+      "def:total-sum-of-squares": "S03",
+      "sec:S01": "S01",
+      "sec:S02": "S02",
+      "sec:S03": "S03",
+      "thm:matrix-normal-equation": "S02",
+      "thm:normal-equations": "S01",
+      "thm:quadratic-unique-minimum": "S01",
+      "thm:sum-of-squares-decomposition": "S03",
+      "thm:unique-least-squares-solution": "S02"
+    },
+    "revision": 5,
+    "rules": {
+      "allowed_text_sizes": [
+        "footnotesize",
+        "small",
+        "normalsize",
+        "large"
+      ],
+      "rule_version": 1,
+      "summary_frames": false
+    },
+    "schema_version": 1,
+    "sections": [
+      {
+        "id": "S01",
+        "objectives": [
+          "定义观测点、拟合直线、残差和平方误差函数。",
+          "用一元微积分推导截距与斜率的最小二乘估计条件。",
+          "证明平方误差目标函数具有唯一最小值，并理解样本均值与拟合直线的关系。",
+          "通过经济学数据例题计算拟合直线、残差和预测值。"
+        ],
+        "prerequisites": [],
+        "reference_labels": [
+          "def:ols-objective",
+          "def:residual",
+          "thm:quadratic-unique-minimum",
+          "thm:normal-equations"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "一元最小二乘拟合：从平方误差到正规方程"
+      },
+      {
+        "id": "S02",
+        "objectives": [
+          "定义设计矩阵、参数向量、响应向量和残差向量。",
+          "将一元最小二乘推广为矩阵形式的平方误差最小化问题。",
+          "推导并解释正规方程，说明在列满秩条件下解的唯一性。",
+          "通过含两个解释变量的经济学例题展示矩阵计算、系数求解和预测。"
+        ],
+        "prerequisites": [
+          "S01"
+        ],
+        "reference_labels": [
+          "def:design-matrix",
+          "def:residual-vector",
+          "thm:matrix-normal-equation",
+          "thm:unique-least-squares-solution"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "多元最小二乘与矩阵表示"
+      },
+      {
+        "id": "S03",
+        "objectives": [
+          "定义残差正交性、总平方和、残差平方和与决定系数。",
+          "证明在含截距模型中总平方和的分解关系。",
+          "解释决定系数的含义、局限性及其与因果关系的区别。",
+          "通过经济学案例计算残差分解和决定系数，并讨论异常观测与外推风险。"
+        ],
+        "prerequisites": [
+          "S02"
+        ],
+        "reference_labels": [
+          "def:orthogonal-residual",
+          "def:total-sum-of-squares",
+          "def:coefficient-of-determination",
+          "thm:sum-of-squares-decomposition"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "残差性质、拟合优度与经济解释"
+      }
+    ],
+    "symbols": {
+      "RSS": "残差平方和",
+      "R^2": "决定系数",
+      "S(a,b)": "一元拟合中的平方误差目标函数",
+      "TSS": "总平方和",
+      "X": "多元线性模型的设计矩阵",
+      "\\beta": "回归系数列向量",
+      "\\hat{\\beta}": "最小二乘估计的系数列向量",
+      "\\hat{y}_i": "第i个观测的拟合值或预测值",
+      "a": "一元拟合直线的截距参数",
+      "b": "一元拟合直线的斜率参数",
+      "e": "残差向量",
+      "e_i": "第i个观测的残差",
+      "n": "观测数量",
+      "x_i": "第i个观测的解释变量或解释变量向量",
+      "y": "被解释变量观测值组成的列向量",
+      "y_i": "第i个观测的被解释变量值"
+    },
+    "theme": "default",
+    "title": "最小二乘法讲义计划",
+    "unresolved_blocking_questions": [],
+    "workflow_id": "lecture.generate",
+    "hash": "82e757fb09ac695a50694cf8a2ec4ee2877b86324aa80954200dbcc4bf4edb32"
+  },
+  "prior_sections": [
+    {
+      "section_id": "S01",
+      "units": [
+        {
+          "id": "S01.U01",
+          "kind": "definition",
+          "tex": "设有 $n\\geq 2$ 个观测点 $(x_i,y_i)$，其中 $x_i,y_i\\in\\mathbb{R}$，$i=1,\\ldots,n$。用直线\n\\[\n\\hat y_i=a+bx_i\n\\]\n拟合被解释变量 $y_i$，其中 $a,b\\in\\mathbb{R}$ 分别为截距参数和斜率参数。定义平方误差目标函数为\n\\begin{equation}\nS(a,b)=\\sum_{i=1}^{n}\\bigl[y_i-(a+bx_i)\\bigr]^2.\n\\label{def:ols-objective}\n\\end{equation}\n一元最小二乘估计 $(\\hat a,\\hat b)$ 是使 $S(a,b)$ 在 $\\mathbb{R}^2$ 上达到最小值的参数对。",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U02",
+          "kind": "definition",
+          "tex": "对给定的参数 $a,b$，第 $i$ 个观测的残差定义为观测值与拟合值之差：\n\\begin{equation}\ne_i=y_i-(a+bx_i).\n\\label{def:residual}\n\\end{equation}\n当参数取最小二乘估计 $(\\hat a,\\hat b)$ 时，记\n\\[\n\\hat y_i=\\hat a+\\hat b x_i,\n\\qquad\n\\hat e_i=y_i-\\hat y_i.\n\\]\n此时平方误差目标函数的最小值为残差平方和 $\\sum_{i=1}^n\\hat e_i^2$。",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U03",
+          "kind": "theorem",
+          "tex": "设 $x_i,y_i\\in\\mathbb{R}$，且\n\\label{thm:quadratic-unique-minimum}\n\\[\n\\sum_{i=1}^{n}(x_i-\\bar x)^2>0,\n\\qquad\n\\bar x=\\frac{1}{n}\\sum_{i=1}^{n}x_i,\n\\qquad\n\\bar y=\\frac{1}{n}\\sum_{i=1}^{n}y_i.\n\\]\n则平方误差函数 $S(a,b)$ 在 $\\mathbb{R}^2$ 上具有唯一最小点 $(\\hat a,\\hat b)$。该最小点满足正规方程\n\\begin{equation}\n\\sum_{i=1}^{n}\\bigl[y_i-(\\hat a+\\hat b x_i)\\bigr]=0,\n\\qquad\n\\sum_{i=1}^{n}x_i\\bigl[y_i-(\\hat a+\\hat b x_i)\\bigr]=0,\n\\label{thm:normal-equations}\n\\end{equation}\n并且\n\\[\n\\hat b=\\frac{\\sum_{i=1}^{n}(x_i-\\bar x)(y_i-\\bar y)}{\\sum_{i=1}^{n}(x_i-\\bar x)^2},\n\\qquad\n\\hat a=\\bar y-\\hat b\\bar x.\n\\]",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U04",
+          "kind": "proof",
+          "tex": "将 $S(a,b)$ 展开得\n\\[\nS(a,b)=\\sum_{i=1}^{n}\\bigl[y_i-a-bx_i\\bigr]^2.\n\\]\n对 $a$ 和 $b$ 分别求偏导，得到\n\\[\n\\frac{\\partial S}{\\partial a}=-2\\sum_{i=1}^{n}\\bigl[y_i-a-bx_i\\bigr],\n\\qquad\n\\frac{\\partial S}{\\partial b}=-2\\sum_{i=1}^{n}x_i\\bigl[y_i-a-bx_i\\bigr].\n\\]\n因此，最小点必须满足式 \\eqref{thm:normal-equations}。第一条正规方程给出\n\\[\nn\\hat a+\\hat b\\sum_{i=1}^{n}x_i=\\sum_{i=1}^{n}y_i,\n\\]\n从而\n\\[\n\\hat a=\\bar y-\\hat b\\bar x.\n\\]\n把它代入第二条正规方程，并利用\n\\[\n\\sum_{i=1}^{n}(x_i-\\bar x)=0,\n\\qquad\n\\sum_{i=1}^{n}(y_i-\\bar y)=0,\n\\]\n可得\n\\[\n\\hat b\\sum_{i=1}^{n}(x_i-\\bar x)^2\n=\\sum_{i=1}^{n}(x_i-\\bar x)(y_i-\\bar y).\n\\]\n由于分母严格为正，故 $\\hat b$ 唯一确定，随后 $\\hat a$ 也唯一确定。\n\n下面验证由上述公式给出的 $(\\hat a,\\hat b)$ 确实满足正规方程。对第一条，有\n\\[\n\\sum_{i=1}^{n}\\bigl[y_i-(\\hat a+\\hat b x_i)\\bigr]\n=\\sum_{i=1}^{n}y_i-n\\hat a-\\hat b\\sum_{i=1}^{n}x_i\n=n\\bar y-n(\\bar y-\\hat b\\bar x)-\\hat b n\\bar x=0.\n\\]\n对第二条，利用 $\\sum_{i=1}^{n}(x_i-\\bar x)=0$ 和 $\\sum_{i=1}^{n}(y_i-\\bar y)=0$，有\n\\[\n\\sum_{i=1}^{n}x_i\\bigl[y_i-(\\hat a+\\hat b x_i)\\bigr]\n=\\sum_{i=1}^{n}(x_i-\\bar x)(y_i-\\bar y)\n-\\hat b\\sum_{i=1}^{n}(x_i-\\bar x)^2=0,\n\\]\n最后一步由 $\\hat b$ 的定义得到。因此 $(\\hat a,\\hat b)$ 满足式 \\eqref{thm:normal-equations}。\n\n为说明这是唯一的全局最小点，令 $u=a-\\hat a$，$v=b-\\hat b$。由于 $(\\hat a,\\hat b)$ 满足正规方程，直接展开平方项可得\n\\[\nS(a,b)=S(\\hat a,\\hat b)+\\sum_{i=1}^{n}(u+vx_i)^2.\n\\]\n再将 $x_i=(x_i-\\bar x)+\\bar x$ 代入，并令 $w=u+v\\bar x$，得到\n\\[\n\\sum_{i=1}^{n}(u+vx_i)^2\n=nw^2+v^2\\sum_{i=1}^{n}(x_i-\\bar x)^2\\geq 0.\n\\]\n当且仅当 $w=0$ 且 $v=0$ 时等号成立；由此 $u=0$。所以 $(\\hat a,\\hat b)$ 是唯一最小点。",
+          "relates_to": "S01.U03"
+        },
+        {
+          "id": "S01.U05",
+          "kind": "theorem",
+          "tex": "在定理 \\eqref{thm:normal-equations} 的条件下，最小二乘拟合直线经过样本均值点 $(\\bar x,\\bar y)$，即\n\\[\n\\hat y(\\bar x)=\\hat a+\\hat b\\bar x=\\bar y.\n\\]\n等价地，含截距的一元最小二乘拟合满足\n\\[\n\\sum_{i=1}^{n}\\hat e_i=0.\n\\]",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U06",
+          "kind": "proof",
+          "tex": "由定理 \\eqref{thm:normal-equations} 给出的截距公式，\n\\[\n\\hat a=\\bar y-\\hat b\\bar x.\n\\]\n因此\n\\[\n\\hat a+\\hat b\\bar x=\\bar y.\n\\]\n另一方面，第一条正规方程为\n\\[\n\\sum_{i=1}^{n}\\hat e_i=\\sum_{i=1}^{n}\\bigl[y_i-(\\hat a+\\hat b x_i)\\bigr]=0\\text{，}\n\\]\n故拟合残差的总和为零。",
+          "relates_to": "S01.U05"
+        },
+        {
+          "id": "S01.U07",
+          "kind": "example",
+          "tex": "某地区三年的广告支出 $x$ 与销售额 $y$ 的观测数据为\n\\[\n(x_1,y_1)=(1,2),\\qquad (x_2,y_2)=(2,3),\\qquad (x_3,y_3)=(3,5)\\text{。}\n\\]\n这三个观测点的样本均值为\n\\[\n\\bar x=\\frac{1+2+3}{3}=2,\\qquad \\bar y=\\frac{2+3+5}{3}=\\frac{10}{3}\\text{。}\n\\]\n用一元直线拟合销售额与广告支出之间的线性关系。",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U08",
+          "kind": "solution",
+          "tex": "样本均值为\n\\[\n\\bar x=2,\n\\qquad\n\\bar y=\\frac{10}{3}.\n\\]\n因此\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)(y_i-\\bar y)\n=(-1)\\left(-\\frac43\\right)+0\\left(-\\frac13\\right)+1\\left(\\frac53\\right)=3,\n\\]\n且\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)^2=(-1)^2+0^2+1^2=2\\text{。}\n\\]\n所以\n\\[\n\\hat b=\\frac{3}{2},\n\\qquad\n\\hat a=\\frac{10}{3}-\\frac32\\cdot2=\\frac13\\text{。}\n\\]\n拟合直线为\n\\[\n\\hat y=\\frac13+\\frac32x\\text{。}\n\\]\n三个观测点的拟合值和残差分别为\n\\[\n\\begin{array}{c|c|c}\n i&\\hat y_i&\\hat e_i=y_i-\\hat y_i\\\\ \\hline\n 1&\\frac{11}{6}&\\frac16\\\\\n 2&\\frac{10}{3}&-\\frac13\\\\\n 3&\\frac{29}{6}&\\frac16\n\\end{array}\n\\]\n可见 $\\hat e_1+\\hat e_2+\\hat e_3=0$，且拟合直线经过 $(\\bar x,\\bar y)=(2,10/3)$。在经济解释上，该直线描述样本内广告支出与销售额的线性拟合关系，但不能仅凭拟合结果断言广告支出对销售额具有因果影响。",
+          "relates_to": "S01.U07"
+        },
+        {
+          "id": "S01.U09",
+          "kind": "exercise",
+          "tex": "设三家企业的培训支出 $x$ 与劳动生产率 $y$ 的数据为\n\\[\n(x_1,y_1)=(1,4),\\qquad (x_2,y_2)=(2,5),\\qquad (x_3,y_3)=(4,8)\\text{。}\n\\]\n完成下列任务：\n\\begin{enumerate}\n\\item 计算 $\\bar x$ 和 $\\bar y$；\n\\item 求最小二乘拟合直线 $\\hat y=\\hat a+\\hat b x$；\n\\item 计算三个观测点的残差，并验证残差之和为零；\n\\item 求培训支出为 $x=3$ 时的拟合值，并说明这是样本区间内的插值。\n\\end{enumerate}",
+          "relates_to": null
+        },
+        {
+          "id": "S01.U10",
+          "kind": "solution",
+          "tex": "答案如下：\n\\[\n\\bar x=\\frac{1+2+4}{3}=\\frac73,\n\\qquad\n\\bar y=\\frac{4+5+8}{3}=\\frac{17}{3}\\text{。}\n\\]\n进一步有\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)(y_i-\\bar y)=\\frac{19}{3},\n\\qquad\n\\sum_{i=1}^{3}(x_i-\\bar x)^2=\\frac{14}{3}\\text{。}\n\\]\n所以\n\\[\n\\hat b=\\frac{19/3}{14/3}=\\frac{19}{14},\n\\qquad\n\\hat a=\\frac{17}{3}-\\frac{19}{14}\\cdot\\frac73=\\frac52\\text{。}\n\\]\n拟合直线为\n\\[\n\\hat y=\\frac52+\\frac{19}{14}x\\text{。}\n\\]\n三个拟合值和残差为\n\\[\n\\begin{array}{c|c|c}\n i&\\hat y_i&\\hat e_i=y_i-\\hat y_i\\\\ \\hline\n 1&\\frac{27}{7}&\\frac17\\\\\n 2&\\frac{73}{14}&-\\frac{3}{14}\\\\\n 3&\\frac{111}{14}&\\frac{1}{14}\n\\end{array}\n\\]\n残差之和为\n\\[\n\\frac17-\\frac{3}{14}+\\frac{1}{14}=0\\text{。}\n\\]\n最后，$x=3$ 时的拟合值为\n\\[\n\\hat y(3)=\\frac52+\\frac{19}{14}\\cdot3=\\frac{46}{7}\\text{。}\n\\]\n由于 $3$ 位于样本解释变量的最小值 $1$ 与最大值 $4$ 之间，这是样本区间内的插值。",
+          "relates_to": "S01.U09"
+        }
+      ],
+      "calculations": [
+        {
+          "id": "S01.C01",
+          "unit_id": "S01.U03",
+          "kind": "derivative",
+          "assumptions": {
+            "a": {
+              "real": true
+            }
+          },
+          "expression": {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Pow",
+                "args": [
+                  {
+                    "op": "Add",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": 1
+                      },
+                      {
+                        "op": "Mul",
+                        "args": [
+                          {
+                            "op": "Integer",
+                            "value": -1
+                          },
+                          {
+                            "op": "Symbol",
+                            "name": "a"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  }
+                ]
+              },
+              {
+                "op": "Pow",
+                "args": [
+                  {
+                    "op": "Add",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": 2
+                      },
+                      {
+                        "op": "Mul",
+                        "args": [
+                          {
+                            "op": "Integer",
+                            "value": -1
+                          },
+                          {
+                            "op": "Symbol",
+                            "name": "a"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          },
+          "variable": "a",
+          "expected": {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 4
+                  },
+                  {
+                    "op": "Symbol",
+                    "name": "a"
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": -6
+              }
+            ]
+          }
+        },
+        {
+          "id": "S01.C02",
+          "unit_id": "S01.U07",
+          "kind": "equivalence",
+          "assumptions": {},
+          "lhs": {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Rational",
+                "p": 1,
+                "q": 3
+              },
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 3
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 5
+                  }
+                ]
+              }
+            ]
+          },
+          "rhs": {
+            "op": "Rational",
+            "p": 10,
+            "q": 3
+          }
+        },
+        {
+          "id": "S01.U10.EXACT.MEAN_X",
+          "unit_id": "S01.U10",
+          "kind": "equivalence",
+          "assumptions": {},
+          "lhs": {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 1
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 4
+                  }
+                ]
+              },
+              {
+                "op": "Rational",
+                "p": 1,
+                "q": 3
+              }
+            ]
+          },
+          "rhs": {
+            "op": "Rational",
+            "p": 7,
+            "q": 3
+          }
+        },
+        {
+          "id": "S01.U10.EXACT.MEAN_Y",
+          "unit_id": "S01.U10",
+          "kind": "equivalence",
+          "assumptions": {},
+          "lhs": {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 4
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 5
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 8
+                  }
+                ]
+              },
+              {
+                "op": "Rational",
+                "p": 1,
+                "q": 3
+              }
+            ]
+          },
+          "rhs": {
+            "op": "Rational",
+            "p": 17,
+            "q": 3
+          }
+        },
+        {
+          "id": "S01.U10.EXACT.SXY",
+          "unit_id": "S01.U10",
+          "kind": "equivalence",
+          "assumptions": {},
+          "lhs": {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Add",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": 1
+                      },
+                      {
+                        "op": "Mul",
+                        "args": [
+                          {
+                            "op": "Integer",
+                            "value": -1
+                          },
+                          {
+                            "op": "Rational",
+                            "p": 7,
+                            "q": 3
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "Add",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": 4
+                      },
+                      {
+                        "op": "Mul",
+                        "args": [
+                          {
+                            "op": "Integer",
+                            "value": -1
+                          },
+                          {
+                            "op": "Rational",
+                            "p": 17,
+                            "q": 3
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Add",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": 2
+                      },
+                      {
+                        "op": "Mul",
+                        "args": [
+                          {
+                            "op": "Integer",
+                            "value": -1
+                          },
+                          {
+                            "op": "Rational",
+                            "p": 7,
+                            "q": 3
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "Add",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": 5
+                      },
+                      {
+                        "op": "Mul",
+                        "args": [
+                          {
+                            "op": "Integer",
+                            "value": -1
+                          },
+                          {
+                            "op": "Rational",
+                            "p": 17,
+                            "q": 3
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Add",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": 4
+                      },
+                      {
+                        "op": "Mul",
+                        "args": [
+                          {
+                            "op": "Integer",
+                            "value": -1
+                          },
+                          {
+                            "op": "Rational",
+                            "p": 7,
+                            "q": 3
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "Add",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": 8
+                      },
+                      {
+                        "op": "Mul",
+                        "args": [
+                          {
+                            "op": "Integer",
+                            "value": -1
+                          },
+                          {
+                            "op": "Rational",
+                            "p": 17,
+                            "q": 3
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "rhs": {
+            "op": "Rational",
+            "p": 19,
+            "q": 3
+          }
+        },
+        {
+          "id": "S01.U10.EXACT.SXX",
+          "unit_id": "S01.U10",
+          "kind": "equivalence",
+          "assumptions": {},
+          "lhs": {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Pow",
+                "args": [
+                  {
+                    "op": "Add",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": 1
+                      },
+                      {
+                        "op": "Mul",
+                        "args": [
+                          {
+                            "op": "Integer",
+                            "value": -1
+                          },
+                          {
+                            "op": "Rational",
+                            "p": 7,
+                            "q": 3
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  }
+                ]
+              },
+              {
+                "op": "Pow",
+                "args": [
+                  {
+                    "op": "Add",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": 2
+                      },
+                      {
+                        "op": "Mul",
+                        "args": [
+                          {
+                            "op": "Integer",
+                            "value": -1
+                          },
+                          {
+                            "op": "Rational",
+                            "p": 7,
+                            "q": 3
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  }
+                ]
+              },
+              {
+                "op": "Pow",
+                "args": [
+                  {
+                    "op": "Add",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": 4
+                      },
+                      {
+                        "op": "Mul",
+                        "args": [
+                          {
+                            "op": "Integer",
+                            "value": -1
+                          },
+                          {
+                            "op": "Rational",
+                            "p": 7,
+                            "q": 3
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          },
+          "rhs": {
+            "op": "Rational",
+            "p": 14,
+            "q": 3
+          }
+        },
+        {
+          "id": "S01.U10.EXACT.SLOPE",
+          "unit_id": "S01.U10",
+          "kind": "equivalence",
+          "assumptions": {},
+          "lhs": {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Rational",
+                "p": 19,
+                "q": 3
+              },
+              {
+                "op": "Pow",
+                "args": [
+                  {
+                    "op": "Rational",
+                    "p": 14,
+                    "q": 3
+                  },
+                  {
+                    "op": "Integer",
+                    "value": -1
+                  }
+                ]
+              }
+            ]
+          },
+          "rhs": {
+            "op": "Rational",
+            "p": 19,
+            "q": 14
+          }
+        },
+        {
+          "id": "S01.U10.EXACT.INTERCEPT",
+          "unit_id": "S01.U10",
+          "kind": "equivalence",
+          "assumptions": {},
+          "lhs": {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Rational",
+                "p": 17,
+                "q": 3
+              },
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": -1
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Rational",
+                        "p": 19,
+                        "q": 14
+                      },
+                      {
+                        "op": "Rational",
+                        "p": 7,
+                        "q": 3
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "rhs": {
+            "op": "Rational",
+            "p": 5,
+            "q": 2
+          }
+        },
+        {
+          "id": "S01.U10.EXACT.FITTED_1",
+          "unit_id": "S01.U10",
+          "kind": "equivalence",
+          "assumptions": {},
+          "lhs": {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Rational",
+                "p": 5,
+                "q": 2
+              },
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Rational",
+                    "p": 19,
+                    "q": 14
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          },
+          "rhs": {
+            "op": "Rational",
+            "p": 27,
+            "q": 7
+          }
+        },
+        {
+          "id": "S01.U10.EXACT.FITTED_2",
+          "unit_id": "S01.U10",
+          "kind": "equivalence",
+          "assumptions": {},
+          "lhs": {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Rational",
+                "p": 5,
+                "q": 2
+              },
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Rational",
+                    "p": 19,
+                    "q": 14
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          },
+          "rhs": {
+            "op": "Rational",
+            "p": 73,
+            "q": 14
+          }
+        },
+        {
+          "id": "S01.U10.EXACT.FITTED_3",
+          "unit_id": "S01.U10",
+          "kind": "equivalence",
+          "assumptions": {},
+          "lhs": {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Rational",
+                "p": 5,
+                "q": 2
+              },
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Rational",
+                    "p": 19,
+                    "q": 14
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 4
+                  }
+                ]
+              }
+            ]
+          },
+          "rhs": {
+            "op": "Rational",
+            "p": 111,
+            "q": 14
+          }
+        },
+        {
+          "id": "S01.U10.EXACT.RESIDUAL_1",
+          "unit_id": "S01.U10",
+          "kind": "equivalence",
+          "assumptions": {},
+          "lhs": {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Integer",
+                "value": 4
+              },
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": -1
+                  },
+                  {
+                    "op": "Rational",
+                    "p": 27,
+                    "q": 7
+                  }
+                ]
+              }
+            ]
+          },
+          "rhs": {
+            "op": "Rational",
+            "p": 1,
+            "q": 7
+          }
+        },
+        {
+          "id": "S01.U10.EXACT.RESIDUAL_2",
+          "unit_id": "S01.U10",
+          "kind": "equivalence",
+          "assumptions": {},
+          "lhs": {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Integer",
+                "value": 5
+              },
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": -1
+                  },
+                  {
+                    "op": "Rational",
+                    "p": 73,
+                    "q": 14
+                  }
+                ]
+              }
+            ]
+          },
+          "rhs": {
+            "op": "Rational",
+            "p": -3,
+            "q": 14
+          }
+        },
+        {
+          "id": "S01.U10.EXACT.RESIDUAL_3",
+          "unit_id": "S01.U10",
+          "kind": "equivalence",
+          "assumptions": {},
+          "lhs": {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Integer",
+                "value": 8
+              },
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": -1
+                  },
+                  {
+                    "op": "Rational",
+                    "p": 111,
+                    "q": 14
+                  }
+                ]
+              }
+            ]
+          },
+          "rhs": {
+            "op": "Rational",
+            "p": 1,
+            "q": 14
+          }
+        },
+        {
+          "id": "S01.U10.EXACT.RESIDUAL_SUM",
+          "unit_id": "S01.U10",
+          "kind": "equivalence",
+          "assumptions": {},
+          "lhs": {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Rational",
+                "p": 1,
+                "q": 7
+              },
+              {
+                "op": "Rational",
+                "p": -3,
+                "q": 14
+              },
+              {
+                "op": "Rational",
+                "p": 1,
+                "q": 14
+              }
+            ]
+          },
+          "rhs": {
+            "op": "Integer",
+            "value": 0
+          }
+        },
+        {
+          "id": "S01.U10.EXACT.PREDICT_X3",
+          "unit_id": "S01.U10",
+          "kind": "equivalence",
+          "assumptions": {},
+          "lhs": {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Rational",
+                "p": 5,
+                "q": 2
+              },
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Rational",
+                    "p": 19,
+                    "q": 14
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 3
+                  }
+                ]
+              }
+            ]
+          },
+          "rhs": {
+            "op": "Rational",
+            "p": 46,
+            "q": 7
+          }
+        }
+      ],
+      "calculation_limitations": [
+        "S01.C02 已由数值点抽查改为对样本均值的等价性核算；未对拟合直线的残差进行逐点符号核算。"
+      ],
+      "uncertainties": [
+        "练习答案中使用了直接代入与有限求和，未用符号核算协议逐项验证全部分数运算。"
+      ]
+    },
+    {
+      "section_id": "S02",
+      "units": [
+        {
+          "id": "S02.U01",
+          "kind": "definition",
+          "tex": "\\label{def:design-matrix}设有 $n\\geq 1$ 个观测，每个观测包含一个被解释变量 $y_i\\in\\mathbb{R}$ 和 $p-1$ 个解释变量 $x_{i1},\\ldots,x_{i,p-1}\\in\\mathbb{R}$。设计矩阵 $X\\in\\mathbb{R}^{n\\times p}$ 定义如下：当 $p\\geq 2$ 时，\n\\[\nX=\\begin{bmatrix}\n1&x_{11}&\\cdots&x_{1,p-1}\\\\\n1&x_{21}&\\cdots&x_{2,p-1}\\\\\n\\vdots&\\vdots&\\ddots&\\vdots\\\\\n1&x_{n1}&\\cdots&x_{n,p-1}\n\\end{bmatrix};\n\\]\n当 $p=1$ 时，模型仅含截距项，$X=\\begin{bmatrix}1&\\cdots&1\\end{bmatrix}^{\\mathsf T}\\in\\mathbb{R}^{n\\times 1}$。在后一情形中，约定空和 $\\sum_{j=1}^{0}(\\cdot)=0$。第一列的 $1$ 表示模型含有截距项。令参数列向量、响应列向量分别为\n\\[\n\\beta=\\begin{bmatrix}\\beta_0\\\\\\beta_1\\\\\\vdots\\\\\\beta_{p-1}\\end{bmatrix}\\in\\mathbb{R}^{p},\n\\qquad\ny=\\begin{bmatrix}y_1\\\\y_2\\\\\\vdots\\\\y_n\\end{bmatrix}\\in\\mathbb{R}^{n}.\n\\]\n矩阵形式的线性拟合值为 $X\\beta$，第 $i$ 个拟合值为 $\\beta_0+\\sum_{j=1}^{p-1}\\beta_jx_{ij}$；特别地，当 $p=1$ 时，该式按上述空和约定退化为 $\\beta_0$。",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U02",
+          "kind": "definition",
+          "tex": "对任意参数向量 $\\beta\\in\\mathbb{R}^{p}$，残差向量定义为\n\\begin{equation}\ne(\\beta)=y-X\\beta.\n\\label{def:residual-vector}\n\\end{equation}\n其第 $i$ 个分量为\n\\[\ne_i(\\beta)=y_i-\\left(\\beta_0+\\sum_{j=1}^{p-1}\\beta_jx_{ij}\\right).\n\\]\n矩阵形式的平方误差目标函数定义为\n\\[\nQ(\\beta)=e(\\beta)^{\\mathsf T}e(\\beta)=(y-X\\beta)^{\\mathsf T}(y-X\\beta)=\\sum_{i=1}^{n}e_i(\\beta)^2.\n\\]\n当 $p=2$ 且 $X$ 的第二列为 $(x_1,\\ldots,x_n)^{\\mathsf T}$ 时，$Q(\\beta)$ 就是前文的一元目标函数 $S(a,b)$，其中 $\\beta=(a,b)^{\\mathsf T}$。",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U03",
+          "kind": "definition",
+          "tex": "若设计矩阵 $X\\in\\mathbb{R}^{n\\times p}$ 的列向量线性无关，则称 $X$ 列满秩，即 $\\operatorname{rank}(X)=p$。这要求 $p\\leq n$，并且不存在非零向量 $v\\in\\mathbb{R}^{p}$ 使得 $Xv=0$。在列满秩条件下，矩阵 $X^{\\mathsf T}X\\in\\mathbb{R}^{p\\times p}$ 可逆。",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U04",
+          "kind": "theorem",
+          "tex": "\\label{thm:unique-least-squares-solution}设 $X\\in\\mathbb{R}^{n\\times p}$，$y\\in\\mathbb{R}^{n}$，且 $X$ 列满秩，即 $\\operatorname{rank}(X)=p$。定义 $Q(\\beta)=(y-X\\beta)^{\\mathsf T}(y-X\\beta)$。则 $Q$ 在 $\\mathbb{R}^{p}$ 上存在唯一最小点 $\\hat\\beta$，并且该最小点满足矩阵正规方程\n\\begin{equation}\nX^{\\mathsf T}X\\hat\\beta=X^{\\mathsf T}y.\n\\label{thm:matrix-normal-equation}\n\\end{equation}\n由于 $X^{\\mathsf T}X$ 可逆，唯一最小二乘解为\n\\[\n\\hat\\beta=(X^{\\mathsf T}X)^{-1}X^{\\mathsf T}y.\n\\]\n对应的拟合值和残差分别为 $\\hat y=X\\hat\\beta$ 与 $\\hat e=y-X\\hat\\beta$。",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U05",
+          "kind": "proof",
+          "tex": "将目标函数展开为\n\\[\nQ(\\beta)=y^{\\mathsf T}y-2\\beta^{\\mathsf T}X^{\\mathsf T}y+\\beta^{\\mathsf T}X^{\\mathsf T}X\\beta.\n\\]\n对 $\\beta$ 的各个分量求偏导，得到梯度\n\\[\n\\nabla Q(\\beta)=-2X^{\\mathsf T}y+2X^{\\mathsf T}X\\beta.\n\\]\n因此，最小点必须满足 $\\nabla Q(\\hat\\beta)=0$，也就是\n\\[\nX^{\\mathsf T}X\\hat\\beta=X^{\\mathsf T}y,\n\\]\n这就是式 \\eqref{thm:matrix-normal-equation}。\n\n由于 $X$ 列满秩，对任意非零向量 $v\\in\\mathbb{R}^{p}$，都有 $Xv\\neq 0$，从而\n\\[\nv^{\\mathsf T}X^{\\mathsf T}Xv=(Xv)^{\\mathsf T}(Xv)=\\sum_{i=1}^{n}(Xv)_i^2>0.\n\\]\n所以 $X^{\\mathsf T}X$ 可逆，正规方程至多有一个解，并且该解为\n\\[\n\\hat\\beta=(X^{\\mathsf T}X)^{-1}X^{\\mathsf T}y.\n\\]\n\n还需说明该解确实给出全局最小值。令 $h=\\beta-\\hat\\beta$，则 $\\beta=\\hat\\beta+h$，并且\n\\[\ny-X\\beta=(y-X\\hat\\beta)-Xh.\n\\]\n展开平方误差可得\n\\[\nQ(\\beta)=Q(\\hat\\beta)-2h^{\\mathsf T}X^{\\mathsf T}(y-X\\hat\\beta)+h^{\\mathsf T}X^{\\mathsf T}Xh.\n\\]\n由正规方程，$X^{\\mathsf T}(y-X\\hat\\beta)=0$，因此\n\\[\nQ(\\beta)=Q(\\hat\\beta)+h^{\\mathsf T}X^{\\mathsf T}Xh\n=Q(\\hat\\beta)+(Xh)^{\\mathsf T}(Xh)\\geq Q(\\hat\\beta).\n\\]\n当且仅当 $Xh=0$ 时等号成立。列满秩又保证 $Xh=0$ 只能推出 $h=0$，即 $\\beta=\\hat\\beta$。所以 $\\hat\\beta$ 是唯一的全局最小点。",
+          "relates_to": "S02.U04"
+        },
+        {
+          "id": "S02.U06",
+          "kind": "theorem",
+          "tex": "在定理 \\eqref{thm:matrix-normal-equation} 的条件下，最小二乘残差 $\\hat e=y-X\\hat\\beta$ 满足\n\\[\nX^{\\mathsf T}\\hat e=0.\n\\]\n也就是说，残差向量与设计矩阵的每一列都正交。特别地，当模型含截距项时，$X$ 的第一列为全 $1$ 向量，于是\n\\[\n\\sum_{i=1}^{n}\\hat e_i=0.\n\\]\n当模型还包含解释变量列 $(x_{1j},\\ldots,x_{nj})^{\\mathsf T}$ 时，还满足\n\\[\n\\sum_{i=1}^{n}x_{ij}\\hat e_i=0,\n\\qquad j=1,\\ldots,p-1.\n\\]",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U07",
+          "kind": "proof",
+          "tex": "由定理 \\eqref{thm:matrix-normal-equation} 的正规方程，\n\\[\nX^{\\mathsf T}X\\hat\\beta=X^{\\mathsf T}y.\n\\]\n移项得到\n\\[\nX^{\\mathsf T}(y-X\\hat\\beta)=0.\n\\]\n根据残差向量的定义 \\eqref{def:residual-vector}，这就是\n\\[\nX^{\\mathsf T}\\hat e=0.\n\\]\n矩阵乘积的第 $j$ 个分量等于设计矩阵第 $j$ 列与残差向量的内积，因此每一列都与残差向量正交。若第一列为全 $1$ 向量，则对应内积为 $\\sum_{i=1}^{n}\\hat e_i$；若第 $j+1$ 列为解释变量 $x_j$，则对应内积为 $\\sum_{i=1}^{n}x_{ij}\\hat e_i$。",
+          "relates_to": "S02.U06"
+        },
+        {
+          "id": "S02.U08",
+          "kind": "example",
+          "tex": "某企业有三次观测，$y$ 表示劳动生产率，$x_1$ 表示培训支出，$x_2$ 表示设备投入。观测数据为\n\\[\n\\begin{array}{c|c|c|c}\n i&x_{i1}&x_{i2}&y_i\\\\ \\hline\n 1&1&0&4\\\\\n 2&0&1&3\\\\\n 3&1&1&5\n\\end{array}\n\\]\n考虑含截距的模型\n\\[\ny_i=\\beta_0+\\beta_1x_{i1}+\\beta_2x_{i2}+e_i.\n\\]\n写出设计矩阵 $X$、响应向量 $y$，并利用矩阵正规方程求最小二乘估计。",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U09",
+          "kind": "solution",
+          "tex": "由数据可得\n\\[\nX=\\begin{bmatrix}1&1&0\\\\1&0&1\\\\1&1&1\\end{bmatrix},\n\\qquad\n y=\\begin{bmatrix}4\\\\3\\\\5\\end{bmatrix}.\n\\]\n计算得到\n\\[\nX^{\\mathsf T}X=\n\\begin{bmatrix}3&2&2\\\\2&2&1\\\\2&1&2\\end{bmatrix},\n\\qquad\nX^{\\mathsf T}y=\n\\begin{bmatrix}12\\\\9\\\\8\\end{bmatrix}.\n\\]\n因此正规方程为\n\\[\n\\begin{bmatrix}3&2&2\\\\2&2&1\\\\2&1&2\\end{bmatrix}\n\\begin{bmatrix}\\hat\\beta_0\\\\\\hat\\beta_1\\\\\\hat\\beta_2\\end{bmatrix}\n=\n\\begin{bmatrix}12\\\\9\\\\8\\end{bmatrix}.\n\\]\n直接检验可得\n\\[\n\\hat\\beta=\n\\begin{bmatrix}2\\\\2\\\\1\\end{bmatrix},\n\\]\n因为\n\\[\n\\begin{bmatrix}3&2&2\\\\2&2&1\\\\2&1&2\\end{bmatrix}\n\\begin{bmatrix}2\\\\2\\\\1\\end{bmatrix}\n=\n\\begin{bmatrix}12\\\\9\\\\8\\end{bmatrix}.\n\\]\n所以拟合方程为\n\\[\n\\hat y=2+2x_1+x_2.\n\\]\n三个观测的拟合值依次为 $4,3,5$，因此残差向量为\n\\[\n\\hat e=y-X\\hat\\beta=\n\\begin{bmatrix}0\\\\0\\\\0\\end{bmatrix}.\n\\]\n在这个例子中，三个观测点恰好被模型完全拟合。若给定一个新的解释变量取值 $(x_1,x_2)=(2,1)$，则将其代入拟合方程可得样本外预测值\n\\[\n\\widehat y(2,1)=2+2\\times 2+1=7.\n\\]\n由于样本中 $x_1$ 只取过 $0$ 和 $1$，这里的预测涉及超出样本观测范围的外推，应谨慎解释其可靠性。这个计算说明矩阵正规方程可以同时处理多个解释变量，但拟合关系仍然只是样本内的线性拟合，不能据此断言培训支出或设备投入对劳动生产率具有因果影响。",
+          "relates_to": "S02.U08"
+        },
+        {
+          "id": "S02.U10",
+          "kind": "exercise",
+          "tex": "设三次观测的设计矩阵和响应向量为\n\\[\nX=\\begin{bmatrix}1&0&1\\\\1&1&0\\\\1&1&1\\end{bmatrix},\n\\qquad\n y=\\begin{bmatrix}2\\\\4\\\\5\\end{bmatrix}.\n\\]\n完成下列任务：\n\\begin{enumerate}\n\\item 计算 $X^{\\mathsf T}X$ 和 $X^{\\mathsf T}y$；\n\\item 利用正规方程求 $\\hat\\beta=(\\hat\\beta_0,\\hat\\beta_1,\\hat\\beta_2)^{\\mathsf T}$；\n\\item 写出拟合方程 $\\hat y=\\hat\\beta_0+\\hat\\beta_1x_1+\\hat\\beta_2x_2$；\n\\item 计算残差向量，并验证它与 $X$ 的每一列正交。\\end{enumerate}",
+          "relates_to": null
+        },
+        {
+          "id": "S02.U11",
+          "kind": "solution",
+          "tex": "先计算矩阵乘积：\n\\[\nX^{\\mathsf T}X=\n\\begin{bmatrix}3&2&2\\\\2&2&1\\\\2&1&2\\end{bmatrix},\n\\qquad\nX^{\\mathsf T}y=\n\\begin{bmatrix}11\\\\9\\\\7\\end{bmatrix}.\n\\]\n正规方程为\n\\[\n\\begin{bmatrix}3&2&2\\\\2&2&1\\\\2&1&2\\end{bmatrix}\n\\begin{bmatrix}\\hat\\beta_0\\\\\\hat\\beta_1\\\\\\hat\\beta_2\\end{bmatrix}\n=\n\\begin{bmatrix}11\\\\9\\\\7\\end{bmatrix}.\n\\]\n解得\n\\[\n\\hat\\beta=\n\\begin{bmatrix}1\\\\3\\\\1\\end{bmatrix}.\n\\]\n因此拟合方程为\n\\[\n\\hat y=1+3x_1+x_2.\n\\]\n拟合值为\n\\[\nX\\hat\\beta=\n\\begin{bmatrix}2\\\\4\\\\5\\end{bmatrix}=y,\n\\]\n故残差向量为\n\\[\n\\hat e=y-X\\hat\\beta=\n\\begin{bmatrix}0\\\\0\\\\0\\end{bmatrix}.\n\\]\n于是\n\\[\nX^{\\mathsf T}\\hat e=\n\\begin{bmatrix}0\\\\0\\\\0\\end{bmatrix},\n\\]\n这验证了残差向量与设计矩阵的每一列正交。",
+          "relates_to": "S02.U10"
+        }
+      ],
+      "calculations": [
+        {
+          "id": "S02.C01",
+          "unit_id": "S02.U09",
+          "kind": "equivalence",
+          "assumptions": {},
+          "lhs": {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Integer",
+                "value": 2
+              },
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 1
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          },
+          "rhs": {
+            "op": "Integer",
+            "value": 5
+          }
+        },
+        {
+          "assumptions": {},
+          "id": "S02.C02",
+          "kind": "equivalence",
+          "lhs": {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Integer",
+                "value": 2
+              },
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": 1
+              }
+            ]
+          },
+          "rhs": {
+            "op": "Integer",
+            "value": 7
+          },
+          "unit_id": "S02.U09"
+        }
+      ],
+      "calculation_limitations": [],
+      "uncertainties": []
+    }
+  ],
+  "tool_checks": {
+    "schema_version": 1,
+    "status": "NEEDS_REVIEW",
+    "issues": [
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "S03.U08 原先给出的截距为 -1/6 与该数据不一致；已按含截距最小二乘条件改为由数据重新计算，需复核练习题与答案之间的教学意图是否保持一致。",
+        "location": {},
+        "resolution_status": "open"
+      },
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "关于 S03.U07 的决定系数，正文按 TSS=14/3、RSS=1/6 逐步计算得到 27/28，现有 S03.C01 也核对为 27/28；另有一条未提供完整表达式的记录声称结果为 29/28，无法据此定位或复现冲突，因此该核查记录的来源与预期值仍需外部确认。",
+        "location": {},
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "kind": "equivalence",
+        "assumptions": {},
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "27/28",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U07"
+      },
+      {
+        "kind": "equivalence",
+        "assumptions": {},
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "9/2",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S03.C02",
+        "unit_id": "S03.U07"
+      }
+    ],
+    "coverage": [
+      "S03.U01",
+      "S03.U02",
+      "S03.U03",
+      "S03.U04",
+      "S03.U05",
+      "S03.U06",
+      "S03.U07",
+      "S03.U08",
+      "S03.U09"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "符号核算仅覆盖 S03.U07 中的有理数平方和与决定系数等式；未对含多个观测值的全部文字推导或异常观测影响作形式化证明。",
+      "现有受支持的等式核算只能核对 S03.C01 中明确提交的 AST（结果为 27/28），不能复现或解释未提供完整表达式的 29/28 记录；因此工具核算无法覆盖两份历史核查记录之间的 provenance 冲突。"
+    ]
+  },
+  "calculation_requests": [
+    {
+      "assumptions": {},
+      "id": "S03.C01",
+      "kind": "equivalence",
+      "lhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Integer",
+            "value": 1
+          },
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Integer",
+                "value": -1
+              },
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Rational",
+                    "p": 1,
+                    "q": 6
+                  },
+                  {
+                    "op": "Pow",
+                    "args": [
+                      {
+                        "op": "Rational",
+                        "p": 14,
+                        "q": 3
+                      },
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": 27,
+        "q": 28
+      },
+      "unit_id": "S03.U07"
+    },
+    {
+      "assumptions": {},
+      "id": "S03.C02",
+      "kind": "equivalence",
+      "lhs": {
+        "args": [
+          {
+            "op": "Rational",
+            "p": 14,
+            "q": 3
+          },
+          {
+            "args": [
+              {
+                "op": "Integer",
+                "value": -1
+              },
+              {
+                "op": "Rational",
+                "p": 1,
+                "q": 6
+              }
+            ],
+            "op": "Mul"
+          }
+        ],
+        "op": "Add"
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": 9,
+        "q": 2
+      },
+      "unit_id": "S03.U07"
+    }
+  ],
+  "reference_recovery": null,
+  "local_recovery": {
+    "unresolved_issues": [
+      {
+        "unit_id": "S03.U01",
+        "severity": "review",
+        "message": "残差正交性的表述范围大于当前已提供的证明依赖。正文对所有“含截距的最小二乘拟合”直接称由正规方程得到残差和为零，并进一步陈述残差与各解释变量列正交；但先修 S02.U06 的定理明确继承 S02.U04 的列满秩条件。若本节意图覆盖可能列不满秩的含截距模型，当前上下文没有给出无列满秩假设时最小二乘解存在及正规方程仍成立的论证；若只讨论列满秩模型，则应在此处明确该限制。",
+        "evidence": "S03.U01 仅假设“设计矩阵的第一列为全1向量”，未声明 rank(X)=p；其依据“由正规方程”只能直接由先修 S02.U06 在列满秩条件下推出。该结论在通常最小二乘框架下可对秩亏情形成立，但本次提供的先修正文没有证明或声明这一更一般版本。"
+      },
+      {
+        "unit_id": "S03.U05",
+        "severity": "review",
+        "message": "平方和分解的代数证明本身正确，但后半段将“含截距的最小二乘模型”作为一般对象，并通过先修 S02.U06 证明残差与拟合值正交；所引用的先修定理带有列满秩条件，而本单元没有保留该条件。因此，对秩亏但含截距的模型，结论虽仍可成立，当前正文的证明链条并未覆盖其实际声称范围。应补充列满秩假设，或提供不依赖列满秩的正规方程/正交投影论证。",
+        "evidence": "S03.U05 写道“在含截距的最小二乘模型中，残差与拟合值的内积也为零”，随后明确依据“残差与设计矩阵的每一列正交”；但 S02.U06 的条件是“在定理 thm:matrix-normal-equation 的条件下”，而 S02.U04 的该条件包括 rank(X)=p。S03.U04 的定理也只把残差正交条件作为假设，没有补足这一步对一般含截距模型的证明。"
+      },
+      {
+        "unit_id": "S03.U07",
+        "severity": "review",
+        "message": "正文中的决定系数计算可由实际表达式复核为 27/28，未发现正文算术错误；但提供的核查记录仍存在无法复现的冲突，需保留为未决核查不确定性，而不能据此宣布完全通过。",
+        "evidence": "S03.U07 明确计算 TSS=14/3、RSS=1/6，并得到 R^2=1-(1/6)/(14/3)=27/28；tool_checks 的 S03.C01 也记录 result=27/28、status=PASS。另一方面，local_recovery.unresolved_issues 保留一条称同一项结果为 29/28 的记录，但没有完整表达式，当前无法复现或解释该历史值。"
+      },
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "关于 S03.U07 的决定系数，正文按 TSS=14/3、RSS=1/6 逐步计算得到 27/28，现有 S03.C01 也核对为 27/28；另有一条未提供完整表达式的记录声称结果为 29/28，无法据此定位或复现冲突，因此该核查记录的来源与预期值仍需外部确认。\n显式裁定：当前正文和已提供核算都支持 S03.U07 的结果为 27/28，并且正文给出了 TSS、RSS 及代入计算；但原疑点还包含一条声称结果为 29/28 的历史核查记录。该记录没有提供完整表达式、可定位单元或可核验来源，因此无法判断它是否对应同一题、不同定义或计算错误。这个 provenance 冲突不能在现有批准正文范围内通过补写数学推导消除，仍需外部提供并核实该记录的完整依据。",
+        "location": {},
+        "uncertainty_id": "D002-2490c62126ff2c26",
+        "original_sha256": "2490c62126ff2c269735a9861caadc8b95c0defa23f979fccf6fd41e6069f933",
+        "resolution_status": "open",
+        "disposition": "open_dependency",
+        "disposition_evidence": [
+          {
+            "source_key": "current:S03.U07",
+            "source_sha256": "ff23522a1ec3c0cc4fb3cfffea4ee508cc1e75dedccb3d77fbf81cf70f17965c",
+            "quote": "残差平方和为\n\\[\n\\operatorname{RSS}\n=\\left(\\frac{1}{6}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{1}{6}\\right)^2\n=\\frac{1}{6}.\n\\]\n由平方和分解，解释平方和为\n\\[\n\\operatorname{ESS}=\\operatorname{TSS}-\\operatorname{RSS}\n=\\frac{14}{3}-\\frac{1}{6}=\\frac{9}{2}.\n\\]\n所以决定系数为\n\\[\nR^2=1-\\frac{1/6}{14/3}\n=1-\\frac{1}{28}\n=\\frac{27}{28}.\n\\]"
+          }
+        ]
+      }
+    ],
+    "prior_review_context_hash": "0d5c63ae114a7814b69c3f41594ca7a02a83ed269e2cd685f01be3de34f49e55",
+    "current_review_identity": {
+      "candidate_hash": "e77495e6aea03d35fdb25e6c42368927058049fc533ba64747b11bfd11378c59",
+      "tool_checks_hash": "1e107c5df0a6e6e06b11c4f3d0e23bf76bf2c77e2663513a68a69591cd7d7bf3",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "c1c89a6bca40285774f0a76918bfcf77c2220cd70c0395cce26a9a5509682a13",
+      "deterministic_checks_hash": "313d0b1c4eb508e8f82c1c35a89a9bfe1655e53b3500d0a95a8d0b9e0d0c8ea4"
+    },
+    "legacy_evidence": null,
+    "instruction": "Explicitly reconsider the preserved issues against the actual body and locked plan. Do not erase a doubt merely because this is a retry; state unresolved issues against actual units. A changed review policy is not teacher approval."
+  },
+  "scope": {
+    "kind": "section_local",
+    "current_section": {
+      "id": "S03",
+      "objectives": [
+        "定义残差正交性、总平方和、残差平方和与决定系数。",
+        "证明在含截距模型中总平方和的分解关系。",
+        "解释决定系数的含义、局限性及其与因果关系的区别。",
+        "通过经济学案例计算残差分解和决定系数，并讨论异常观测与外推风险。"
+      ],
+      "prerequisites": [
+        "S02"
+      ],
+      "reference_labels": [
+        "def:orthogonal-residual",
+        "def:total-sum-of-squares",
+        "def:coefficient-of-determination",
+        "thm:sum-of-squares-decomposition"
+      ],
+      "required_kinds": [
+        "definition",
+        "theorem",
+        "example",
+        "solution",
+        "proof",
+        "exercise"
+      ],
+      "title": "残差性质、拟合优度与经济解释"
+    },
+    "pending_sections": []
+  },
+  "calculation_recovery_evidence": {
+    "schema_version": 1,
+    "status": "HISTORICAL_FAILURE_REPRODUCED_CURRENT_CHECK_PASSED",
+    "section_id": "S03",
+    "corrections": [
+      {
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U07",
+        "expression_field": "lhs",
+        "previous_request": {
+          "assumptions": {},
+          "id": "S03.C01",
+          "kind": "equivalence",
+          "lhs": {
+            "args": [
+              {
+                "op": "Integer",
+                "value": 1
+              },
+              {
+                "args": [
+                  {
+                    "op": "Rational",
+                    "p": 1,
+                    "q": 6
+                  },
+                  {
+                    "args": [
+                      {
+                        "op": "Rational",
+                        "p": 14,
+                        "q": 3
+                      },
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      }
+                    ],
+                    "op": "Pow"
+                  }
+                ],
+                "op": "Mul"
+              }
+            ],
+            "op": "Add"
+          },
+          "rhs": {
+            "op": "Rational",
+            "p": 27,
+            "q": 28
+          },
+          "unit_id": "S03.U07"
+        },
+        "current_request": {
+          "assumptions": {},
+          "id": "S03.C01",
+          "kind": "equivalence",
+          "lhs": {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Integer",
+                "value": 1
+              },
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": -1
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Rational",
+                        "p": 1,
+                        "q": 6
+                      },
+                      {
+                        "op": "Pow",
+                        "args": [
+                          {
+                            "op": "Rational",
+                            "p": 14,
+                            "q": 3
+                          },
+                          {
+                            "op": "Integer",
+                            "value": -1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "rhs": {
+            "op": "Rational",
+            "p": 27,
+            "q": 28
+          },
+          "unit_id": "S03.U07"
+        },
+        "previous_evidence": {
+          "kind": "equivalence",
+          "assumptions": {},
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "FAIL",
+          "evidence_type": "symbolic_check_failed",
+          "result": "29/28",
+          "message": "在声明假设下符号结果与预期不一致。",
+          "calculation_id": "S03.C01",
+          "unit_id": "S03.U07"
+        },
+        "current_evidence": {
+          "kind": "equivalence",
+          "assumptions": {},
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "27/28",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S03.C01",
+          "unit_id": "S03.U07"
+        },
+        "source": {
+          "input_key": "runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/6cf90e694a11780fdcf7e11b/input.json",
+          "input_sha256": "d87d05b456786ad2a2ec0d9148f82905dfb60c70e588951038c8dfd95a19158c",
+          "identity_hash": "6cf90e694a11780fdcf7e11b28f322a2450c00151b8d426d7807bd48da035de4",
+          "context_hash": "b4249b8a769ed15a42d7b5441a88308375387f8369c428c91d76885cc537acf0"
+        },
+        "reproduced_previous_evidence": {
+          "kind": "equivalence",
+          "assumptions": {},
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "FAIL",
+          "evidence_type": "symbolic_check_failed",
+          "result": "29/28",
+          "message": "在声明假设下符号结果与预期不一致。",
+          "calculation_id": "S03.C01",
+          "unit_id": "S03.U07"
+        }
+      }
+    ],
+    "instruction": "These are different frozen calculation requests for the same calculation ID. Compare the exact previous and current ASTs and their results. The previous failure remains historical evidence; it is not a second result for the current request. Reconsider retained issues using these actual inputs without deleting them automatically. This packet neither proves the whole section correct nor grants teacher approval.",
+    "teacher_review": "NOT_RUN"
+  }
+}

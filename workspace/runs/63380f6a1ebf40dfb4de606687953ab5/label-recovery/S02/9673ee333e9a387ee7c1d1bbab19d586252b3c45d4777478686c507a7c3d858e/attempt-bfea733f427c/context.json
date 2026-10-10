@@ -1,0 +1,585 @@
+{
+  "section": {
+    "section_id": "S02",
+    "units": [
+      {
+        "id": "S02.U01",
+        "kind": "definition",
+        "tex": "设有 $n\\geq 1$ 个观测，每个观测包含一个被解释变量 $y_i\\in\\mathbb{R}$ 和 $p-1$ 个解释变量 $x_{i1},\\ldots,x_{i,p-1}\\in\\mathbb{R}$。设计矩阵 $X\\in\\mathbb{R}^{n\\times p}$ 定义为\n\\[\nX=\\begin{bmatrix}\n1&x_{11}&\\cdots&x_{1,p-1}\\\\\n1&x_{21}&\\cdots&x_{2,p-1}\\\\\n\\vdots&\\vdots&\\ddots&\\vdots\\\\\n1&x_{n1}&\\cdots&x_{n,p-1}\n\\end{bmatrix},\n\\qquad p\\geq 1.\n\\]\n第一列的 $1$ 表示模型含有截距项。令参数列向量、响应列向量分别为\n\\[\n\\beta=\\begin{bmatrix}\\beta_0\\\\\\beta_1\\\\\\vdots\\\\\\beta_{p-1}\\end{bmatrix}\\in\\mathbb{R}^{p},\n\\qquad\ny=\\begin{bmatrix}y_1\\\\y_2\\\\\\vdots\\\\y_n\\end{bmatrix}\\in\\mathbb{R}^{n}.\n\\]\n矩阵形式的线性拟合值为 $X\\beta$，第 $i$ 个拟合值为 $\\beta_0+\\sum_{j=1}^{p-1}\\beta_jx_{ij}$。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U02",
+        "kind": "definition",
+        "tex": "对任意参数向量 $\\beta\\in\\mathbb{R}^{p}$，残差向量定义为\n\\begin{equation}\ne(\\beta)=y-X\\beta.\n\\label{def:residual-vector}\n\\end{equation}\n其第 $i$ 个分量为\n\\[\ne_i(\\beta)=y_i-\\left(\\beta_0+\\sum_{j=1}^{p-1}\\beta_jx_{ij}\\right).\n\\]\n矩阵形式的平方误差目标函数定义为\n\\[\nQ(\\beta)=e(\\beta)^{\\mathsf T}e(\\beta)=(y-X\\beta)^{\\mathsf T}(y-X\\beta)=\\sum_{i=1}^{n}e_i(\\beta)^2.\n\\]\n当 $p=2$ 且 $X$ 的第二列为 $(x_1,\\ldots,x_n)^{\\mathsf T}$ 时，$Q(\\beta)$ 就是前文的一元目标函数 $S(a,b)$，其中 $\\beta=(a,b)^{\\mathsf T}$。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U03",
+        "kind": "definition",
+        "tex": "若设计矩阵 $X\\in\\mathbb{R}^{n\\times p}$ 的列向量线性无关，则称 $X$ 列满秩，即 $\\operatorname{rank}(X)=p$。这要求 $p\\leq n$，并且不存在非零向量 $v\\in\\mathbb{R}^{p}$ 使得 $Xv=0$。在列满秩条件下，矩阵 $X^{\\mathsf T}X\\in\\mathbb{R}^{p\\times p}$ 可逆。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U04",
+        "kind": "theorem",
+        "tex": "设 $X\\in\\mathbb{R}^{n\\times p}$，$y\\in\\mathbb{R}^{n}$，且 $X$ 列满秩，即 $\\operatorname{rank}(X)=p$。定义 $Q(\\beta)=(y-X\\beta)^{\\mathsf T}(y-X\\beta)$。则 $Q$ 在 $\\mathbb{R}^{p}$ 上存在唯一最小点 $\\hat\\beta$，并且该最小点满足矩阵正规方程\n\\begin{equation}\nX^{\\mathsf T}X\\hat\\beta=X^{\\mathsf T}y.\n\\label{thm:matrix-normal-equation}\n\\end{equation}\n由于 $X^{\\mathsf T}X$ 可逆，唯一最小二乘解为\n\\[\n\\hat\\beta=(X^{\\mathsf T}X)^{-1}X^{\\mathsf T}y.\n\\]\n对应的拟合值和残差分别为 $\\hat y=X\\hat\\beta$ 与 $\\hat e=y-X\\hat\\beta$。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U05",
+        "kind": "proof",
+        "tex": "将目标函数展开为\n\\[\nQ(\\beta)=y^{\\mathsf T}y-2\\beta^{\\mathsf T}X^{\\mathsf T}y+\\beta^{\\mathsf T}X^{\\mathsf T}X\\beta.\n\\]\n对 $\\beta$ 的各个分量求偏导，得到梯度\n\\[\n\\nabla Q(\\beta)=-2X^{\\mathsf T}y+2X^{\\mathsf T}X\\beta.\n\\]\n因此，最小点必须满足 $\\nabla Q(\\hat\\beta)=0$，也就是\n\\[\nX^{\\mathsf T}X\\hat\\beta=X^{\\mathsf T}y,\n\\]\n这就是式 \\eqref{thm:matrix-normal-equation}。\n\n由于 $X$ 列满秩，对任意非零向量 $v\\in\\mathbb{R}^{p}$，都有 $Xv\\neq 0$，从而\n\\[\nv^{\\mathsf T}X^{\\mathsf T}Xv=(Xv)^{\\mathsf T}(Xv)=\\sum_{i=1}^{n}(Xv)_i^2>0.\n\\]\n所以 $X^{\\mathsf T}X$ 可逆，正规方程至多有一个解，并且该解为\n\\[\n\\hat\\beta=(X^{\\mathsf T}X)^{-1}X^{\\mathsf T}y.\n\\]\n\n还需说明该解确实给出全局最小值。令 $h=\\beta-\\hat\\beta$，则 $\\beta=\\hat\\beta+h$，并且\n\\[\ny-X\\beta=(y-X\\hat\\beta)-Xh.\n\\]\n展开平方误差可得\n\\[\nQ(\\beta)=Q(\\hat\\beta)-2h^{\\mathsf T}X^{\\mathsf T}(y-X\\hat\\beta)+h^{\\mathsf T}X^{\\mathsf T}Xh.\n\\]\n由正规方程，$X^{\\mathsf T}(y-X\\hat\\beta)=0$，因此\n\\[\nQ(\\beta)=Q(\\hat\\beta)+h^{\\mathsf T}X^{\\mathsf T}Xh\n=Q(\\hat\\beta)+(Xh)^{\\mathsf T}(Xh)\\geq Q(\\hat\\beta).\n\\]\n当且仅当 $Xh=0$ 时等号成立。列满秩又保证 $Xh=0$ 只能推出 $h=0$，即 $\\beta=\\hat\\beta$。所以 $\\hat\\beta$ 是唯一的全局最小点。",
+        "relates_to": "S02.U04"
+      },
+      {
+        "id": "S02.U06",
+        "kind": "theorem",
+        "tex": "在定理 \\eqref{thm:matrix-normal-equation} 的条件下，最小二乘残差 $\\hat e=y-X\\hat\\beta$ 满足\n\\[\nX^{\\mathsf T}\\hat e=0.\n\\]\n也就是说，残差向量与设计矩阵的每一列都正交。特别地，当模型含截距项时，$X$ 的第一列为全 $1$ 向量，于是\n\\[\n\\sum_{i=1}^{n}\\hat e_i=0.\n\\]\n当模型还包含解释变量列 $(x_{1j},\\ldots,x_{nj})^{\\mathsf T}$ 时，还满足\n\\[\n\\sum_{i=1}^{n}x_{ij}\\hat e_i=0,\n\\qquad j=1,\\ldots,p-1.\n\\]",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U07",
+        "kind": "proof",
+        "tex": "由定理 \\eqref{thm:matrix-normal-equation} 的正规方程，\n\\[\nX^{\\mathsf T}X\\hat\\beta=X^{\\mathsf T}y.\n\\]\n移项得到\n\\[\nX^{\\mathsf T}(y-X\\hat\\beta)=0.\n\\]\n根据残差向量的定义 \\eqref{def:residual-vector}，这就是\n\\[\nX^{\\mathsf T}\\hat e=0.\n\\]\n矩阵乘积的第 $j$ 个分量等于设计矩阵第 $j$ 列与残差向量的内积，因此每一列都与残差向量正交。若第一列为全 $1$ 向量，则对应内积为 $\\sum_{i=1}^{n}\\hat e_i$；若第 $j+1$ 列为解释变量 $x_j$，则对应内积为 $\\sum_{i=1}^{n}x_{ij}\\hat e_i$。",
+        "relates_to": "S02.U06"
+      },
+      {
+        "id": "S02.U08",
+        "kind": "example",
+        "tex": "某企业有三次观测，$y$ 表示劳动生产率，$x_1$ 表示培训支出，$x_2$ 表示设备投入。观测数据为\n\\[\n\\begin{array}{c|c|c|c}\n i&x_{i1}&x_{i2}&y_i\\\\ \\hline\n 1&1&0&4\\\\\n 2&0&1&3\\\\\n 3&1&1&5\n\\end{array}\n\\]\n考虑含截距的模型\n\\[\ny_i=\\beta_0+\\beta_1x_{i1}+\\beta_2x_{i2}+e_i.\n\\]\n写出设计矩阵 $X$、响应向量 $y$，并利用矩阵正规方程求最小二乘估计。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U09",
+        "kind": "solution",
+        "tex": "由数据可得\n\\[\nX=\\begin{bmatrix}1&1&0\\\\1&0&1\\\\1&1&1\\end{bmatrix},\n\\qquad\n y=\\begin{bmatrix}4\\\\3\\\\5\\end{bmatrix}.\n\\]\n计算得到\n\\[\nX^{\\mathsf T}X=\n\\begin{bmatrix}3&2&2\\\\2&2&1\\\\2&1&2\\end{bmatrix},\n\\qquad\nX^{\\mathsf T}y=\n\\begin{bmatrix}12\\\\9\\\\8\\end{bmatrix}.\n\\]\n因此正规方程为\n\\[\n\\begin{bmatrix}3&2&2\\\\2&2&1\\\\2&1&2\\end{bmatrix}\n\\begin{bmatrix}\\hat\\beta_0\\\\\\hat\\beta_1\\\\\\hat\\beta_2\\end{bmatrix}\n=\n\\begin{bmatrix}12\\\\9\\\\8\\end{bmatrix}.\n\\]\n直接检验可得\n\\[\n\\hat\\beta=\n\\begin{bmatrix}2\\\\2\\\\1\\end{bmatrix},\n\\]\n因为\n\\[\n\\begin{bmatrix}3&2&2\\\\2&2&1\\\\2&1&2\\end{bmatrix}\n\\begin{bmatrix}2\\\\2\\\\1\\end{bmatrix}\n=\n\\begin{bmatrix}12\\\\9\\\\8\\end{bmatrix}.\n\\]\n所以拟合方程为\n\\[\n\\hat y=2+2x_1+x_2.\n\\]\n三个观测的拟合值依次为 $4,3,5$，因此残差向量为\n\\[\n\\hat e=y-X\\hat\\beta=\n\\begin{bmatrix}0\\\\0\\\\0\\end{bmatrix}.\n\\]\n在这个例子中，三个观测点恰好被模型完全拟合。这个计算说明矩阵正规方程可以同时处理多个解释变量，但拟合关系仍然只是样本内的线性拟合，不能据此断言培训支出或设备投入对劳动生产率具有因果影响。",
+        "relates_to": "S02.U08"
+      },
+      {
+        "id": "S02.U10",
+        "kind": "exercise",
+        "tex": "设三次观测的设计矩阵和响应向量为\n\\[\nX=\\begin{bmatrix}1&0&1\\\\1&1&0\\\\1&1&1\\end{bmatrix},\n\\qquad\n y=\\begin{bmatrix}2\\\\4\\\\5\\end{bmatrix}.\n\\]\n完成下列任务：\n\\begin{enumerate}\n\\item 计算 $X^{\\mathsf T}X$ 和 $X^{\\mathsf T}y$；\n\\item 利用正规方程求 $\\hat\\beta=(\\hat\\beta_0,\\hat\\beta_1,\\hat\\beta_2)^{\\mathsf T}$；\n\\item 写出拟合方程 $\\hat y=\\hat\\beta_0+\\hat\\beta_1x_1+\\hat\\beta_2x_2$；\n\\item 计算残差向量，并验证它与 $X$ 的每一列正交。\\end{enumerate}",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U11",
+        "kind": "solution",
+        "tex": "先计算矩阵乘积：\n\\[\nX^{\\mathsf T}X=\n\\begin{bmatrix}3&2&2\\\\2&2&1\\\\2&1&2\\end{bmatrix},\n\\qquad\nX^{\\mathsf T}y=\n\\begin{bmatrix}11\\\\9\\\\7\\end{bmatrix}.\n\\]\n正规方程为\n\\[\n\\begin{bmatrix}3&2&2\\\\2&2&1\\\\2&1&2\\end{bmatrix}\n\\begin{bmatrix}\\hat\\beta_0\\\\\\hat\\beta_1\\\\\\hat\\beta_2\\end{bmatrix}\n=\n\\begin{bmatrix}11\\\\9\\\\7\\end{bmatrix}.\n\\]\n解得\n\\[\n\\hat\\beta=\n\\begin{bmatrix}1\\\\3\\\\1\\end{bmatrix}.\n\\]\n因此拟合方程为\n\\[\n\\hat y=1+3x_1+x_2.\n\\]\n拟合值为\n\\[\nX\\hat\\beta=\n\\begin{bmatrix}2\\\\4\\\\5\\end{bmatrix}=y,\n\\]\n故残差向量为\n\\[\n\\hat e=y-X\\hat\\beta=\n\\begin{bmatrix}0\\\\0\\\\0\\end{bmatrix}.\n\\]\n于是\n\\[\nX^{\\mathsf T}\\hat e=\n\\begin{bmatrix}0\\\\0\\\\0\\end{bmatrix},\n\\]\n这验证了残差向量与设计矩阵的每一列正交。",
+        "relates_to": "S02.U10"
+      }
+    ],
+    "calculations": [
+      {
+        "id": "S02.C01",
+        "unit_id": "S02.U09",
+        "kind": "equivalence",
+        "assumptions": {},
+        "lhs": {
+          "op": "Add",
+          "args": [
+            {
+              "op": "Integer",
+              "value": 2
+            },
+            {
+              "op": "Mul",
+              "args": [
+                {
+                  "op": "Integer",
+                  "value": 2
+                },
+                {
+                  "op": "Integer",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "op": "Mul",
+              "args": [
+                {
+                  "op": "Integer",
+                  "value": 1
+                },
+                {
+                  "op": "Integer",
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        },
+        "rhs": {
+          "op": "Integer",
+          "value": 5
+        }
+      }
+    ],
+    "calculation_limitations": [],
+    "uncertainties": []
+  },
+  "section_spec": {
+    "id": "S02",
+    "objectives": [
+      "定义设计矩阵、参数向量、响应向量和残差向量。",
+      "将一元最小二乘推广为矩阵形式的平方误差最小化问题。",
+      "推导并解释正规方程，说明在列满秩条件下解的唯一性。",
+      "通过含两个解释变量的经济学例题展示矩阵计算、系数求解和预测。"
+    ],
+    "prerequisites": [
+      "S01"
+    ],
+    "reference_labels": [
+      "def:design-matrix",
+      "def:residual-vector",
+      "thm:matrix-normal-equation",
+      "thm:unique-least-squares-solution"
+    ],
+    "required_kinds": [
+      "definition",
+      "theorem",
+      "example",
+      "solution",
+      "proof",
+      "exercise"
+    ],
+    "title": "多元最小二乘与矩阵表示"
+  },
+  "missing_labels": [
+    "def:design-matrix",
+    "thm:unique-least-squares-solution"
+  ],
+  "approved_plan": {
+    "additions": [],
+    "decision_ids": [
+      "6423d30885e841d293e3a40c35dae7ea",
+      "bf0ee2555784492c8b7c0b6c6e5bafee",
+      "ef45dd76434e488992570638357c8c06",
+      "241ecf1df9b642e8af3eb7f2a3247e6c",
+      "19ef1e69d52d4a5495a031792b0c1eff"
+    ],
+    "decisions": [
+      {
+        "actor": "local_user",
+        "id": "6423d30885e841d293e3a40c35dae7ea",
+        "resolved_effects": {
+          "section_order": null,
+          "section_titles": {
+            "S01": "一元最小二乘拟合：从平方误差到正规方程",
+            "S02": "多元最小二乘与矩阵表示",
+            "S03": "残差性质、拟合优度与经济解释"
+          },
+          "title": "最小二乘法讲义计划"
+        },
+        "timestamp": "2026-10-07T04:32:27.845111+00:00",
+        "type": "outline"
+      },
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "custom_input": "",
+        "id": "bf0ee2555784492c8b7c0b6c6e5bafee",
+        "question_id": "Q-PROOF",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "key"
+        },
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "timestamp": "2026-10-07T04:33:34.558287+00:00"
+      },
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "custom_input": "",
+        "id": "ef45dd76434e488992570638357c8c06",
+        "question_id": "Q-EXAMPLE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "balanced"
+        },
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "timestamp": "2026-10-07T04:33:34.558287+00:00"
+      },
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "custom_input": "",
+        "id": "241ecf1df9b642e8af3eb7f2a3247e6c",
+        "question_id": "Q-EXERCISE",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "with_answers"
+        },
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "timestamp": "2026-10-07T04:33:34.558287+00:00"
+      },
+      {
+        "actor": "local_user",
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "custom_input": "",
+        "id": "19ef1e69d52d4a5495a031792b0c1eff",
+        "question_id": "Q-ANSWERS",
+        "question_revision": 1,
+        "resolved_effects": {
+          "value": "end"
+        },
+        "selected_option_ids": [
+          "END"
+        ],
+        "timestamp": "2026-10-07T04:33:34.558287+00:00"
+      }
+    ],
+    "diff": [],
+    "difficulty": "经济学本科一年级微积分",
+    "exclusions": [
+      "不讲概率论、抽样分布、假设检验和置信区间。",
+      "不讲异方差、自相关、内生性等计量经济学进阶问题。",
+      "不讲加权最小二乘、广义最小二乘、岭回归和其他正则化方法。",
+      "不讲非线性最小二乘和数值优化算法。",
+      "不把最小二乘拟合结果解释为因果关系。",
+      "不深入讨论高等线性代数，仅使用矩阵乘法、转置、秩和正交投影的基础概念。"
+    ],
+    "input_snapshot_hash": "ea5d03bb07ee87f9c202bf105f88564960581b816c97cb021a96382fd3882e9c",
+    "lecture": {
+      "answers_location": "end",
+      "example_focus": "balanced",
+      "exercises": "with_answers",
+      "proof_policy": "key"
+    },
+    "model_id": "gpt6",
+    "objectives": [
+      "建立最小二乘法的几何与微积分直观，理解其在经济数据拟合中的基本用途。",
+      "从一元线性拟合推广到多元线性回归的矩阵表达，掌握正规方程、残差与投影的关系。",
+      "能够解释拟合优度、残差分解及模型结果的经济含义，同时明确方法的适用边界。"
+    ],
+    "omissions": [],
+    "prerequisites": [
+      "实数运算与代数变形",
+      "一元函数、导数及极值判别",
+      "有限求和与平方和",
+      "平面直角坐标系与直线方程",
+      "经济学中的变量、观测值与简单数据表"
+    ],
+    "provider": "live",
+    "questions": [
+      {
+        "affected_fields": [
+          "lecture.proof_policy"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-PROOF",
+        "options": [
+          {
+            "effects": {
+              "value": "key"
+            },
+            "id": "KEY",
+            "label": "关键定理完整证明，其余说明",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "all"
+            },
+            "id": "ALL",
+            "label": "所有定理完整证明",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "定理证明采用哪种深度？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "KEY"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.example_focus"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXAMPLE",
+        "options": [
+          {
+            "effects": {
+              "value": "balanced"
+            },
+            "id": "BALANCED",
+            "label": "概念与计算均衡",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "economics"
+            },
+            "id": "ECONOMICS",
+            "label": "更多经济应用",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "例题侧重什么？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "BALANCED"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.exercises"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-EXERCISE",
+        "options": [
+          {
+            "effects": {
+              "value": "with_answers"
+            },
+            "id": "WITH",
+            "label": "安排练习并附答案",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "none"
+            },
+            "id": "NONE",
+            "label": "不安排额外练习",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "是否安排练习与答案？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "WITH"
+        ],
+        "selection_mode": "single"
+      },
+      {
+        "affected_fields": [
+          "lecture.answers_location"
+        ],
+        "blocking": true,
+        "custom_input": "",
+        "id": "Q-ANSWERS",
+        "options": [
+          {
+            "effects": {
+              "value": "section"
+            },
+            "id": "SECTION",
+            "label": "各节之后",
+            "recommended": true
+          },
+          {
+            "effects": {
+              "value": "end"
+            },
+            "id": "END",
+            "label": "讲义末尾",
+            "recommended": false
+          },
+          {
+            "id": "CUSTOM",
+            "label": "自定义输入",
+            "recommended": false
+          }
+        ],
+        "prompt": "练习答案放在哪里？",
+        "reason": "此项影响写作内容，需由用户选择。",
+        "revision": 1,
+        "selected_option_ids": [
+          "END"
+        ],
+        "selection_mode": "single"
+      }
+    ],
+    "reference_context": {
+      "reason": "No matching chapter; no unrelated example injected.",
+      "status": "NOT_APPLICABLE"
+    },
+    "reference_registry": {
+      "def:coefficient-of-determination": "S03",
+      "def:design-matrix": "S02",
+      "def:ols-objective": "S01",
+      "def:orthogonal-residual": "S03",
+      "def:residual": "S01",
+      "def:residual-vector": "S02",
+      "def:total-sum-of-squares": "S03",
+      "sec:S01": "S01",
+      "sec:S02": "S02",
+      "sec:S03": "S03",
+      "thm:matrix-normal-equation": "S02",
+      "thm:normal-equations": "S01",
+      "thm:quadratic-unique-minimum": "S01",
+      "thm:sum-of-squares-decomposition": "S03",
+      "thm:unique-least-squares-solution": "S02"
+    },
+    "revision": 5,
+    "rules": {
+      "allowed_text_sizes": [
+        "footnotesize",
+        "small",
+        "normalsize",
+        "large"
+      ],
+      "rule_version": 1,
+      "summary_frames": false
+    },
+    "schema_version": 1,
+    "sections": [
+      {
+        "id": "S01",
+        "objectives": [
+          "定义观测点、拟合直线、残差和平方误差函数。",
+          "用一元微积分推导截距与斜率的最小二乘估计条件。",
+          "证明平方误差目标函数具有唯一最小值，并理解样本均值与拟合直线的关系。",
+          "通过经济学数据例题计算拟合直线、残差和预测值。"
+        ],
+        "prerequisites": [],
+        "reference_labels": [
+          "def:ols-objective",
+          "def:residual",
+          "thm:quadratic-unique-minimum",
+          "thm:normal-equations"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "一元最小二乘拟合：从平方误差到正规方程"
+      },
+      {
+        "id": "S02",
+        "objectives": [
+          "定义设计矩阵、参数向量、响应向量和残差向量。",
+          "将一元最小二乘推广为矩阵形式的平方误差最小化问题。",
+          "推导并解释正规方程，说明在列满秩条件下解的唯一性。",
+          "通过含两个解释变量的经济学例题展示矩阵计算、系数求解和预测。"
+        ],
+        "prerequisites": [
+          "S01"
+        ],
+        "reference_labels": [
+          "def:design-matrix",
+          "def:residual-vector",
+          "thm:matrix-normal-equation",
+          "thm:unique-least-squares-solution"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "多元最小二乘与矩阵表示"
+      },
+      {
+        "id": "S03",
+        "objectives": [
+          "定义残差正交性、总平方和、残差平方和与决定系数。",
+          "证明在含截距模型中总平方和的分解关系。",
+          "解释决定系数的含义、局限性及其与因果关系的区别。",
+          "通过经济学案例计算残差分解和决定系数，并讨论异常观测与外推风险。"
+        ],
+        "prerequisites": [
+          "S02"
+        ],
+        "reference_labels": [
+          "def:orthogonal-residual",
+          "def:total-sum-of-squares",
+          "def:coefficient-of-determination",
+          "thm:sum-of-squares-decomposition"
+        ],
+        "required_kinds": [
+          "definition",
+          "theorem",
+          "example",
+          "solution",
+          "proof",
+          "exercise"
+        ],
+        "title": "残差性质、拟合优度与经济解释"
+      }
+    ],
+    "symbols": {
+      "RSS": "残差平方和",
+      "R^2": "决定系数",
+      "S(a,b)": "一元拟合中的平方误差目标函数",
+      "TSS": "总平方和",
+      "X": "多元线性模型的设计矩阵",
+      "\\beta": "回归系数列向量",
+      "\\hat{\\beta}": "最小二乘估计的系数列向量",
+      "\\hat{y}_i": "第i个观测的拟合值或预测值",
+      "a": "一元拟合直线的截距参数",
+      "b": "一元拟合直线的斜率参数",
+      "e": "残差向量",
+      "e_i": "第i个观测的残差",
+      "n": "观测数量",
+      "x_i": "第i个观测的解释变量或解释变量向量",
+      "y": "被解释变量观测值组成的列向量",
+      "y_i": "第i个观测的被解释变量值"
+    },
+    "theme": "default",
+    "title": "最小二乘法讲义计划",
+    "unresolved_blocking_questions": [],
+    "workflow_id": "lecture.generate",
+    "hash": "82e757fb09ac695a50694cf8a2ec4ee2877b86324aa80954200dbcc4bf4edb32"
+  },
+  "supported_prefix_kinds": {
+    "def": "definition",
+    "definition": "definition",
+    "thm": "theorem",
+    "theorem": "theorem",
+    "lem": "theorem",
+    "lemma": "theorem",
+    "prop": "theorem",
+    "cor": "theorem",
+    "ex": "example",
+    "example": "example",
+    "exercise": "exercise"
+  },
+  "instruction": "Map only exact existing definitions. Multiple labels may share a unit. Abstain on ambiguity, negations, equation anchors, or absent content."
+}

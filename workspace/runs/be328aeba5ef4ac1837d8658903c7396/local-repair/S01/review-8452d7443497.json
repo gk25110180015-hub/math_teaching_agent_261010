@@ -1,0 +1,182 @@
+{
+  "prior_issues": [
+    {
+      "rule_id": "MISSING_ASSOCIATED_ANSWER",
+      "severity": "blocking",
+      "unit_id": "S01.U10",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "rule_id": "MISSING_ASSOCIATED_ANSWER",
+      "severity": "blocking",
+      "unit_id": "S01.U11",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "unit_id": "S01.U10",
+      "severity": "review",
+      "message": "本题承诺附答案，但当前实际正文没有对应的独立解答单元，尚未落实锁定的“安排练习并附答案”要求。应补充关联本题的解答，由渲染程序集中置于讲义末尾，而非将答案写入题干。",
+      "evidence": "锁定设置为 lecture.exercises=\"with_answers\"、lecture.answers_location=\"end\"。本单元写明“本题答案统一置于讲义末尾”，但提供的全部当前节单元中，唯一的 solution 是关联例题 S01.U07 的 S01.U08，没有关联本题的 solution。rendering_contract 仅搬移已有的关联练习解答，并不生成答案。应有的数学结果为最优常数3、残差−2、−1、1、2、最小平方和10，Q(2)=14，且 Q(c)=10+4(c−3)^2。"
+    },
+    {
+      "unit_id": "S01.U11",
+      "severity": "review",
+      "message": "本判断练习同样缺少承诺的答案及理由。题中的待判断命题不应视为正文直接断言的数学错误，但需要独立解答落实锁定的附答案要求。",
+      "evidence": "本单元末尾承诺“本题答案统一置于讲义末尾”，实际当前节 units 中没有 relates_to 为 S01.U11 的解答单元。三个判断应分别为：真，因为残差和为 n(ȳ−c)，n≥1 时为零推出 c=ȳ；假，例如 n=2、观测值1与3、c=2时残差为−1与1；真，n=1时 Q(c)=(y_1−c)^2 在 c=y_1 处唯一最小。现有例题解答不能替代本题答案。"
+    }
+  ],
+  "review_identity": {
+    "candidate_hash": "238c35553f8041b1284cc4017a8b33fe358d79acbabb1f53da38564d7cfdb679",
+    "tool_checks_hash": "fec143d6a589681d6c8c356c1642aa7e9e709db87c479c54952333a973b95034",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "2adaa24ac388829872551c67b6a245d5c22b3c2971d5f1fb31650e5c4de2acac",
+    "deterministic_checks_hash": "1eba5ddc5d48ff70677a97a2bd3ea98cf702dee37bbaf682deb584c3a1e7b747"
+  },
+  "report": {
+    "section_id": "S01",
+    "math": {
+      "schema_version": 1,
+      "status": "PASS",
+      "issues": [],
+      "evidence": [
+        {
+          "kind": "equivalence",
+          "assumptions": {
+            "c": {
+              "real": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "(2 - c)**2 + (3 - c)**2 + (7 - c)**2",
+          "message": "在声明假设下符号差为零。",
+          "calculation_id": "S01.C01",
+          "unit_id": "S01.U08"
+        },
+        {
+          "kind": "derivative",
+          "assumptions": {
+            "c": {
+              "real": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "6*c - 24",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S01.C02",
+          "unit_id": "S01.U08"
+        },
+        {
+          "kind": "equivalence",
+          "assumptions": {
+            "c": {
+              "real": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "(1 - c)**2 + (2 - c)**2 + (4 - c)**2 + (5 - c)**2",
+          "message": "在声明假设下符号差为零。",
+          "calculation_id": "S01.C03",
+          "unit_id": "S01.U10.answer"
+        }
+      ],
+      "coverage": [
+        "S01.U01",
+        "S01.U02",
+        "S01.U03",
+        "S01.U04",
+        "S01.U05",
+        "S01.U06",
+        "S01.U07",
+        "S01.U08",
+        "S01.U09",
+        "S01.U10",
+        "S01.U11",
+        "S01.U10.answer",
+        "S01.U11.answer"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "协议的表达式树不能表示带任意数据列的有限求和，因此核算仅覆盖三次测量例题中的配方与求导；一般常数拟合定理的全局最小性和唯一性由正文完整证明。",
+        "对后文第\\ref{sec:S02}节的引用使用已登记标签，其编号需待全文编译验证。",
+        "新增核算仅请求核对 S01.U10.answer 中的平方和分解。S01.U11.answer 涉及任意长度数据列的有限求和及判断命题，协议不直接表达此类求和与逻辑推论；其理由由答案正文给出，不能以该代数核算替代。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S01.U01",
+        "S01.U02",
+        "S01.U03",
+        "S01.U04",
+        "S01.U05",
+        "S01.U06",
+        "S01.U07",
+        "S01.U08",
+        "S01.U09",
+        "S01.U10",
+        "S01.U10.answer",
+        "S01.U11",
+        "S01.U11.answer"
+      ],
+      "limitations": [
+        "本次仅审阅 S01 实际提供的全部13个单元，并逐项对照该节锁定目标；未审阅尚未生成的 S02、S03，也未作整份讲义的教学覆盖结论。",
+        "已核对残差的符号约定、实数参数范围、正整数样本量、有限求和指标及 n=1 边界，以及常数拟合定理的求导、平方和分解、全局最小值存在性和唯一性。已独立复核例题与两道练习答案；未发现需要报告的具体数学错误或核心目标缺口。本节不涉及极限或级数判别条件。",
+        "已重新核对保留的缺答案问题：当前 S01.U10.answer 和 S01.U11.answer 分别通过 relates_to 关联相应练习，且答案与理由完整，因此此前缺少关联答案的判断不适用于当前正文。依 rendering_contract，这两个独立解答将集中置于讲义末尾；题干未内嵌答案。此判断不等于实际 PDF 的答案位置检查。",
+        "正文中对后续章节的引用使用已登记的 TeX 标签 sec:S02，而非学生可见的内部单元编号；引用的最终编号、链接及版面仍需全文编译后检查。",
+        "本次为普通模型对实际正文的数学与教学审阅，不是形式化证明，也不以作者自评或工具 PASS 代替逐单元核对；未发现问题不保证不存在遗漏。"
+      ]
+    },
+    "issues": [],
+    "reference_recovery": null,
+    "answer_recovery": {
+      "schema_version": 1,
+      "operation": "append_missing_answers",
+      "status": "APPLIED_UNCHECKED",
+      "source_section_hash": "08b288982a04bd10ecce251a7f251d0ed42c558d29c29be2d07e10e1d4717c8b",
+      "patch_hash": "ee5a25262a8e908f1b2a509f9b404757cdfd3b8c33e554d376f7e4852b7d1c27",
+      "result_section_hash": "238c35553f8041b1284cc4017a8b33fe358d79acbabb1f53da38564d7cfdb679",
+      "target_ids": [
+        "S01.U10",
+        "S01.U11"
+      ],
+      "new_unit_ids": [
+        "S01.U10.answer",
+        "S01.U11.answer"
+      ],
+      "new_unit_hashes": {
+        "S01.U10.answer": "3b505c9deecead43a8dc777dae2a0bd380b46a9307ddc7677910f11d186881f1",
+        "S01.U11.answer": "97e2148279d21fc058ff2b7292519dbbdd1aea91d93a86bbed78a8a222c63a0f"
+      },
+      "original_unit_count": 11,
+      "added_unit_count": 2,
+      "original_units_preserved": true,
+      "original_calculations_preserved": true,
+      "new_calculation_count": 1,
+      "math_check": "NOT_RUN",
+      "normalization": "NOT_RUN",
+      "teacher_review": "NOT_RUN",
+      "identity": {
+        "context_hash": "ffa315d1a21a18c7fc545923327cebf6aa5ffac7d2e92f2e485333a487f2f1e6",
+        "model": "gpt-6-astra",
+        "provider": "live",
+        "prompt_hash": "3f4beaf0cea232c9067c05d0326b08ebba71227e57fd50b283fb3401d8340da3",
+        "schema_hash": "33f1dd4a1048269d000f52f3663cc9fdac32afe07edfda814a6c018869562c33",
+        "implementation_hash": "3ec9e3ba686daea8447efbe4832827ef86797ed21965a6184dd29540d321baf8"
+      },
+      "proposal_key": "runs/be328aeba5ef4ac1837d8658903c7396/answer-recovery/S01/6ba3581302d543f469f637d85a5e17858f74f6faad96a53a90464e6169813eae/attempt-9c26a5fc8867/proposal.json",
+      "reused_proposal": false
+    },
+    "mock": false
+  },
+  "retained_issues": []
+}

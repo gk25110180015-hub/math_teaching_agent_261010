@@ -1,0 +1,112 @@
+{
+  "section_id": "S02",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "equivalence",
+        "assumptions": {},
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "5",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S02.C01",
+        "unit_id": "S02.U09"
+      }
+    ],
+    "coverage": [
+      "S02.U01",
+      "S02.U02",
+      "S02.U03",
+      "S02.U04",
+      "S02.U05",
+      "S02.U06",
+      "S02.U07",
+      "S02.U08",
+      "S02.U09",
+      "S02.U10",
+      "S02.U11"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。"
+    ]
+  },
+  "llm_review": {
+    "issues": [
+      {
+        "unit_id": "S02.U01",
+        "severity": "warning",
+        "message": "定义允许 p=1，但拟合值公式含有从 j=1 到 p-1=0 的求和，正文未明确空和约定。建议说明此时该和为 0，从而拟合值为 beta_0；否则 p=1 的边界情形在形式上不完全明确。",
+        "evidence": "正文先规定 p\\geq1，随后写第 i 个拟合值为 \\beta_0+\\sum_{j=1}^{p-1}\\beta_jx_{ij}。当 p=1 时该求和没有指标，需明确采用空和等于 0 的约定。"
+      },
+      {
+        "unit_id": "S02.U08",
+        "severity": "warning",
+        "message": "同一单元将 e_i 用作模型方程中的误差项，随后解答使用残差向量 \\hat e；虽然按前文定义可作一致理解，但未明确区分一般参数下的残差 e_i(\\beta)、最小二乘残差 \\hat e_i 与模型方程中的 e_i，可能造成符号指代混淆。",
+        "evidence": "S02.U02 定义的是 e_i(\\beta)=y_i-(\\beta_0+\\sum_j\\beta_jx_{ij})；S02.U08 却直接写 y_i=\\beta_0+\\beta_1x_{i1}+\\beta_2x_{i2}+e_i，S02.U09 再写 \\hat e=y-X\\hat\\beta。建议在 S02.U08 明确 e_i 是该参数向量下的残差，或统一使用 e_i(\\beta) 与 \\hat e_i。"
+      }
+    ],
+    "checked_unit_ids": [
+      "S02.U01",
+      "S02.U02",
+      "S02.U03",
+      "S02.U04",
+      "S02.U05",
+      "S02.U06",
+      "S02.U07",
+      "S02.U08",
+      "S02.U09",
+      "S02.U10",
+      "S02.U11"
+    ],
+    "limitations": [
+      "已逐一核对本次提供的 S02.U01–S02.U11，并使用所提供的 S01 正文作为先修依据；S03 尚未生成，不属于本节局部审阅范围。",
+      "各定理、证明、矩阵计算和练习答案已作普通数学审阅；这不等同于形式化证明，也未对最终排版后的 PDF、所有可能输入数据或未提供章节进行验证。"
+    ]
+  },
+  "issues": [
+    {
+      "rule_id": "PLANNED_LABEL_MISSING",
+      "severity": "blocking",
+      "message": "本节缺少计划标签：def:design-matrix"
+    },
+    {
+      "rule_id": "PLANNED_LABEL_MISSING",
+      "severity": "blocking",
+      "message": "本节缺少计划标签：thm:unique-least-squares-solution"
+    },
+    {
+      "unit_id": "S02.U01",
+      "severity": "warning",
+      "message": "定义允许 p=1，但拟合值公式含有从 j=1 到 p-1=0 的求和，正文未明确空和约定。建议说明此时该和为 0，从而拟合值为 beta_0；否则 p=1 的边界情形在形式上不完全明确。",
+      "evidence": "正文先规定 p\\geq1，随后写第 i 个拟合值为 \\beta_0+\\sum_{j=1}^{p-1}\\beta_jx_{ij}。当 p=1 时该求和没有指标，需明确采用空和等于 0 的约定。"
+    },
+    {
+      "unit_id": "S02.U08",
+      "severity": "warning",
+      "message": "同一单元将 e_i 用作模型方程中的误差项，随后解答使用残差向量 \\hat e；虽然按前文定义可作一致理解，但未明确区分一般参数下的残差 e_i(\\beta)、最小二乘残差 \\hat e_i 与模型方程中的 e_i，可能造成符号指代混淆。",
+      "evidence": "S02.U02 定义的是 e_i(\\beta)=y_i-(\\beta_0+\\sum_j\\beta_jx_{ij})；S02.U08 却直接写 y_i=\\beta_0+\\beta_1x_{i1}+\\beta_2x_{i2}+e_i，S02.U09 再写 \\hat e=y-X\\hat\\beta。建议在 S02.U08 明确 e_i 是该参数向量下的残差，或统一使用 e_i(\\beta) 与 \\hat e_i。"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 0,
+    "proposal_calls": 0,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "b4ae93b6a9d071f50ed00b6a374a417810dd6c1a16593dc08ba3d43fa6912daa",
+      "tool_checks_hash": "1dbd2099b8ec57753d4765c48e55d14a13fd92aa109c73162607554d6e2c467c",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "8e8e77174269a13b4985cc7f3bba62be902a69f64fa252a56f14529ed2bb1b0b",
+      "deterministic_checks_hash": "cb6a79ee28c57bc02fd2bf19bc550cdb57b3fce89e264f50d3eeb5928918e731"
+    }
+  }
+}

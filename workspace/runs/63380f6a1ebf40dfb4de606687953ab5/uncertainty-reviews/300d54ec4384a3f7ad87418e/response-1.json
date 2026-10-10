@@ -1,0 +1,23 @@
+{
+  "items": [
+    {
+      "uncertainty_id": "D001-6e31a6936c94d510",
+      "unit_id": "S01.U10",
+      "disposition": "open_actionable",
+      "reason": "当前 S01.U10 仍保留有限求和、斜率、截距、残差和预测值的算术错误与自相矛盾，未能消解原声明的分数运算核查疑点。正文先给出错误的协方差和与斜率，随后仅更正截距和部分结果，最终仍保留错误斜率；因此练习答案整体尚未通过逐项直接代入核对。该缺口可在已批准的练习答案单元内修复，不需要外部依据或新增授权。",
+      "evidence": [
+        {
+          "source_key": "current:S01.U10",
+          "source_sha256": "6d05b085c3c0de3360b17595ed2efa52db9ea13674aabc6cbfde3c35f3de86d9",
+          "quote": "进一步有\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)(y_i-\\bar y)=\\frac{20}{3},\n\\qquad\n\\sum_{i=1}^{3}(x_i-\\bar x)^2=\\frac{14}{3}\\text{。}\n\\]\n所以\n\\[\n\\hat b=\\frac{10}{7},\n\\qquad\n\\hat a=\\frac{17}{3}-\\frac{10}{7}\\cdot\\frac73=\\frac13\\text{。}\n\\]\n拟合直线为\n\\[\n\\hat y=\\frac13+\\frac{10}{7}x\\text{。}\n\\]\n三个拟合值和残差为\n\\[\n\\begin{array}{c|c|c}\n i&\\hat y_i&\\hat e_i\\\\ \\hline\n 1&\\frac{37}{21}&\\frac{47}{21}\\\\\n 2&\\frac{41}{21}&\\frac{64}{21}\\\\\n 3&\\frac{19}{3}&\\frac{5}{3}\n\\end{array}\n\\]\n上述残差表中的数值应按 $\\hat e_i=y_i-\\hat y_i$ 计算；因此正确的残差为\n\\[\n\\hat e_1=4-\\frac{37}{21}=\\frac{47}{21},\n\\qquad\n\\hat e_2=5-\\frac{41}{21}=\\frac{64}{21},\n\\qquad\n\\hat e_3=8-\\frac{19}{3}=\\frac53\\text{。}\n\\]\n这些数值之和不为零，说明前面的斜率计算需要更正。正确计算为\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)(y_i-\\bar y)=\\frac{20}{3},\n\\qquad\n\\sum_{i=1}^{3}(x_i-\\bar x)^2=\\frac{14}{3},\n\\qquad\n\\hat b=\\frac{10}{7},\n\\]\n但截距应为\n\\[\n\\hat a=\\frac{17}{3}-\\frac{10}{7}\\cdot\\frac73=\\frac{17}{3}-\\frac{10}{3}=\\frac73\\text{。}\n\\]\n故正确拟合直线为\n\\[\n\\hat y=\\frac73+\\frac{10}{7}x\\text{。}\\]"
+        }
+      ],
+      "remaining_dependency": false,
+      "repair_instruction": "仅在 S01.U10 内重新逐项核算该数据集：先计算三个离均差乘积及其和，核对分母平方和；再由 \\hat b=\\sum (x_i-\\bar x)(y_i-\\bar y)/\\sum (x_i-\\bar x)^2 计算斜率，并用 \\hat a=\\bar y-\\hat b\\bar x 计算截距。随后逐个代入拟合直线核对三个拟合值、残差及残差和，最后核对 x=3 的预测值。删除相互矛盾的旧结果，只保留一套前后一致的精确分数计算和结论。"
+    }
+  ],
+  "limitations": [
+    "本评估依据当前 S01 正文和所提供的工具检查；模型审阅不等同于形式化证明或教师验收。",
+    "工具只执行了有限的符号与数值检查，不能替代对 S01.U10 全部有限求和和分数运算的逐项人工核算。"
+  ]
+}

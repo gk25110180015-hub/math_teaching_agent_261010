@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "82e757fb09ac695a50694cf8a2ec4ee2877b86324aa80954200dbcc4bf4edb32",
+    "section_id": "S01",
+    "context_hash": "0b2d0208873ad91a0710799ce918979fcd89e02514b8f0d5e0b592e89cbc0470",
+    "base_hash": "a4b0f96c3749dd1bc1418950b338e4e45f177d0956a29dcbfd92dc058eec161f",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "NEEDS_REPAIR",
+  "applied_rounds": 0,
+  "proposal_calls": 0,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "rule_id": "PLANNED_LABEL_MISSING",
+      "severity": "blocking",
+      "message": "本节缺少计划标签：thm:quadratic-unique-minimum"
+    },
+    {
+      "rule_id": "SYMBOLIC_COUNTERCHECK_FAILED",
+      "severity": "blocking",
+      "message": "指定数值点发现反例。",
+      "location": {
+        "calculation_id": "S01.C02",
+        "unit_id": "S01.U07"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S01.U10",
+      "severity": "blocking",
+      "message": "练习答案的协方差和、斜率及最终拟合结果均错误，且正文内部自相矛盾。对于数据 (1,4),(2,5),(4,8)，应有 Σ(x_i−x̄)(y_i−ȳ)=19/3，而不是 20/3；因此斜率应为 (19/3)/(14/3)=19/14，而不是 10/7。正确截距为 5/2，拟合直线为 ŷ=5/2+(19/14)x，残差为 1/7、−3/14、1/14，x=3 时拟合值为 46/7。当前答案先给出错误的截距与残差，随后虽声称更正，但仍保留错误斜率，故最终答案及练习要求的计算结论不成立。",
+      "evidence": "S01.U10给出 Σ(x_i−x̄)(y_i−ȳ)=20/3；直接代入 x̄=7/3、ȳ=17/3 得 20/9+2/9+35/9=57/9=19/3。其最终给出的直线 ŷ=7/3+(10/7)x 也不经过样本均值点：(7/3)+(10/7)(7/3)=17/3? 实际该表达式等于 17/3，虽经过均值点，但其斜率仍由错误的协方差得到；按正确斜率计算应为 ŷ=5/2+(19/14)x。该错误直接影响残差和 x=3 的预测值。"
+    },
+    {
+      "unit_id": "S01.U04",
+      "severity": "review",
+      "message": "关键定理的证明从必要条件推出候选公式，但没有明确验证由这些公式构造出的参数对确实满足正规方程，随后却在“正规方程成立的条件下”使用平方和分解来证明全局最小性。该验证是一次直接代入即可完成的常规步骤，但在当前证明中未写出，导致存在从必要条件到候选点存在性及平方和分解适用性的逻辑跳步。",
+      "evidence": "S01.U04先写“最小点必须满足式 ...”，再由正规方程推导出斜率和截距公式；随后直接令 u=a−â、v=b−b̂，并写“在正规方程成立的条件下”得到 S(a,b)=S(â,b̂)+Σ(u+vx_i)^2。正文没有说明或验证按所给公式定义的 (â,b̂) 满足两条正规方程。由于后续全局最小性论证依赖该条件，建议在使用平方和分解前补充代入验证。"
+    },
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "练习答案中使用了直接代入与有限求和，未用符号核算协议逐项验证全部分数运算。",
+      "location": {},
+      "uncertainty_id": "D001-6e31a6936c94d510",
+      "original_sha256": "6e31a6936c94d510e52c7f19c60263f3f1950ed502d0cc6f04706d0bf95610e7",
+      "resolution_status": "open"
+    }
+  ],
+  "unit_applied_counts": {},
+  "proposal_counts_by_key": {},
+  "rejected_counts_by_key": {},
+  "evidence_dependencies": [],
+  "last_review_context_hash": "848e897b64720e318443be0cecf1b16dd87affc196c457f1a7a68ca54ce51ae7",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S01/candidate-02eeba474471.json",
+  "candidate_hash": "f7ba708a922a0425986d7348a0f6369c87fea8ab59c71f6ce2d779369bda5d02",
+  "last_review_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S01/review-c8b5caf7e668.json"
+}

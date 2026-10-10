@@ -1,0 +1,17 @@
+{
+  "bindings": [
+    {
+      "label": "def:design-matrix",
+      "unit_id": "S02.U01",
+      "quote": "设有 $n\\geq 1$ 个观测，每个观测包含一个被解释变量 $y_i\\in\\mathbb{R}$ 和 $p-1$ 个解释变量 $x_{i1},\\ldots,x_{i,p-1}\\in\\mathbb{R}$。设计矩阵 $X\\in\\mathbb{R}^{n\\times p}$ 定义为\n\\[\nX=\\begin{bmatrix}\n1&x_{11}&\\cdots&x_{1,p-1}\\\\\n1&x_{21}&\\cdots&x_{2,p-1}\\\\\n\\vdots&\\vdots&\\ddots&\\vdots\\\\\n1&x_{n1}&\\cdots&x_{n,p-1}\n\\end{bmatrix},\n\\qquad p\\geq 1.\n\\]\n第一列的 $1$ 表示模型含有截距项。",
+      "rationale": "该单元明确给出了设计矩阵的维度、完整矩阵形式、观测变量排列方式以及截距列含义，直接定义了计划中的设计矩阵概念。"
+    },
+    {
+      "label": "thm:unique-least-squares-solution",
+      "unit_id": "S02.U04",
+      "quote": "设 $X\\in\\mathbb{R}^{n\\times p}$，$y\\in\\mathbb{R}^{n}$，且 $X$ 列满秩，即 $\\operatorname{rank}(X)=p$。定义 $Q(\\beta)=(y-X\\beta)^{\\mathsf T}(y-X\\beta)$。则 $Q$ 在 $\\mathbb{R}^{p}$ 上存在唯一最小点 $\\hat\\beta$，并且该最小点满足矩阵正规方程\n\\begin{equation}\nX^{\\mathsf T}X\\hat\\beta=X^{\\mathsf T}y.\n\\label{thm:matrix-normal-equation}\n\\end{equation}\n由于 $X^{\\mathsf T}X$ 可逆，唯一最小二乘解为\n\\[\n\\hat\\beta=(X^{\\mathsf T}X)^{-1}X^{\\mathsf T}y.\n\\]",
+      "rationale": "该定理完整陈述了列满秩条件、平方误差目标函数、唯一最小点以及唯一最小二乘解的显式表达，正是该标签所指的唯一性概念，而非仅说明正规方程存在。"
+    }
+  ],
+  "unresolved_labels": []
+}

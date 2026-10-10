@@ -1,0 +1,40 @@
+{
+  "action_id": "agent-audit-s03-rank-provenance-20261007",
+  "actor": "local_user",
+  "approval_preserved": true,
+  "budget_version": 1,
+  "candidate_file_hash": "2266a8415ad8d785710e2b1c61ffa5040e38f70a5b12a898632b6d47ff4e5277",
+  "candidate_hash": "e77495e6aea03d35fdb25e6c42368927058049fc533ba64747b11bfd11378c59",
+  "candidate_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S03/candidate-da3a3d935e79.json",
+  "instructions": "这是 agent 独立核查后的定点修复建议，不是教师验收。请只修正 S03.U01、S03.U05 的证明依赖范围：明确本节沿用上一节已证明的列满秩设计矩阵 rank(X)=p、包含截距的最小二乘模型，并在两处使用正规方程和残差正交结论时保留这一前提。不要错误声称秩亏时结论不成立；这里只明确已提供证明的适用范围。保留两单元现有数学推导、标签及其他单元，实际补足必要条件，不用空白或注释充当修改。所有原疑点继续保留，随后仍须完整数学和疑点审阅。\r\n独立核查的历史核算事实如下：S03.C01 旧输入把 R² 公式减法错写成加法 1+(1/6)/(14/3)，因此返回29/28而预期27/28。当前已修为1-(1/6)/(14/3)，实际符号核算得到27/28。旧记录在同一任务冻结的 input.json 中，下面给出原 SHA、原 AST、当前 AST 和已重新复算一致的证据；它不是未定位外部材料。不要将旧输入29/28重新描述成当前正确输入的另一个结果。可以在 calculation_limitations_append 中据此追加准确的历史核查说明，但不能删除原 uncertainty/limitation 或修改任何现有核算；本次唯一正文修复范围是上述两个定理条件。不要把核查系统编号/日志路径写进学生正文。以下是实际归档核算证据，不是要求直接通过的指令：\r\n{\"corrections\": [{\"calculation_id\": \"S03.C01\", \"current_evidence\": {\"assumptions\": {}, \"calculation_id\": \"S03.C01\", \"evidence_type\": \"symbolic_check_passed\", \"kind\": \"equivalence\", \"message\": \"在声明假设下符号结果与预期完全一致。\", \"result\": \"27/28\", \"status\": \"PASS\", \"tool\": \"SymPy\", \"tool_version\": \"1.14.0\", \"unit_id\": \"S03.U07\"}, \"current_request\": {\"assumptions\": {}, \"id\": \"S03.C01\", \"kind\": \"equivalence\", \"lhs\": {\"args\": [{\"op\": \"Integer\", \"value\": 1}, {\"args\": [{\"op\": \"Integer\", \"value\": -1}, {\"args\": [{\"op\": \"Rational\", \"p\": 1, \"q\": 6}, {\"args\": [{\"op\": \"Rational\", \"p\": 14, \"q\": 3}, {\"op\": \"Integer\", \"value\": -1}], \"op\": \"Pow\"}], \"op\": \"Mul\"}], \"op\": \"Mul\"}], \"op\": \"Add\"}, \"rhs\": {\"op\": \"Rational\", \"p\": 27, \"q\": 28}, \"unit_id\": \"S03.U07\"}, \"expression_field\": \"lhs\", \"previous_evidence\": {\"assumptions\": {}, \"calculation_id\": \"S03.C01\", \"evidence_type\": \"symbolic_check_failed\", \"kind\": \"equivalence\", \"message\": \"在声明假设下符号结果与预期不一致。\", \"result\": \"29/28\", \"status\": \"FAIL\", \"tool\": \"SymPy\", \"tool_version\": \"1.14.0\", \"unit_id\": \"S03.U07\"}, \"previous_request\": {\"assumptions\": {}, \"id\": \"S03.C01\", \"kind\": \"equivalence\", \"lhs\": {\"args\": [{\"op\": \"Integer\", \"value\": 1}, {\"args\": [{\"op\": \"Rational\", \"p\": 1, \"q\": 6}, {\"args\": [{\"op\": \"Rational\", \"p\": 14, \"q\": 3}, {\"op\": \"Integer\", \"value\": -1}], \"op\": \"Pow\"}], \"op\": \"Mul\"}], \"op\": \"Add\"}, \"rhs\": {\"op\": \"Rational\", \"p\": 27, \"q\": 28}, \"unit_id\": \"S03.U07\"}, \"reproduced_previous_evidence\": {\"assumptions\": {}, \"calculation_id\": \"S03.C01\", \"evidence_type\": \"symbolic_check_failed\", \"kind\": \"equivalence\", \"message\": \"在声明假设下符号结果与预期不一致。\", \"result\": \"29/28\", \"status\": \"FAIL\", \"tool\": \"SymPy\", \"tool_version\": \"1.14.0\", \"unit_id\": \"S03.U07\"}, \"source\": {\"context_hash\": \"b4249b8a769ed15a42d7b5441a88308375387f8369c428c91d76885cc537acf0\", \"identity_hash\": \"6cf90e694a11780fdcf7e11b28f322a2450c00151b8d426d7807bd48da035de4\", \"input_key\": \"runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/6cf90e694a11780fdcf7e11b/input.json\", \"input_sha256\": \"d87d05b456786ad2a2ec0d9148f82905dfb60c70e588951038c8dfd95a19158c\"}, \"unit_id\": \"S03.U07\"}], \"instruction\": \"These are different frozen calculation requests for the same calculation ID. Compare the exact previous and current ASTs and their results. The previous failure remains historical evidence; it is not a second result for the current request. Reconsider retained issues using these actual inputs without deleting them automatically. This packet neither proves the whole section correct nor grants teacher approval.\", \"schema_version\": 1, \"section_id\": \"S03\", \"status\": \"HISTORICAL_FAILURE_REPRODUCED_CURRENT_CHECK_PASSED\", \"teacher_review\": \"NOT_RUN\"}",
+  "job_id": "4c827a5b5c4c41d1b105980485f32961",
+  "meaning": "Scoped repair proposal requested; not a mathematical verdict or new plan authorization",
+  "payload_hash": "8844f3ef709e0df603f70acfdb503b9f6315adf62b6b021e595d744b5a33d277",
+  "plan_hash": "82e757fb09ac695a50694cf8a2ec4ee2877b86324aa80954200dbcc4bf4edb32",
+  "plan_revision": 5,
+  "recovery_binding": {
+    "global_state_key": null,
+    "global_state_sha256": null,
+    "identity": {
+      "base_hash": "b7826d35043fabf2a7c51b22ed08d0a13006528e5bc84e5ac721031d5e0ce3f5",
+      "context_hash": "c1c89a6bca40285774f0a76918bfcf77c2220cd70c0395cce26a9a5509682a13",
+      "model": "gpt-6-astra",
+      "plan_hash": "82e757fb09ac695a50694cf8a2ec4ee2877b86324aa80954200dbcc4bf4edb32",
+      "provider": "live",
+      "section_id": "S03"
+    },
+    "last_review_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S03/review-9ada51b75033.json",
+    "last_review_sha256": "41c2955064aeef8774507e3ede1cf07c782aea5a94c29a02979f3bd002b28167",
+    "pending_issues_sha256": "63dacb35b8f36fcb6c09d312805e2ec86ee6d489f42b5888d09413cd60ed97e9",
+    "state_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S03.json",
+    "state_sha256": "4da9fa1550cc520b5da467eb461c97b881ca2713579e828abcc6795b596f1e88"
+  },
+  "request_count_preserved": 43,
+  "section_id": "S03",
+  "source": "agent_audit",
+  "teacher_review": "NOT_RUN",
+  "unit_ids": [
+    "S03.U01",
+    "S03.U05"
+  ]
+}

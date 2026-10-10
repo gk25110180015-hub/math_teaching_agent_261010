@@ -1,0 +1,160 @@
+{
+  "before_hash": "3fa8985adb0a36ef746be9040f67e53644041f1538f3382e5299f7eb735723a7",
+  "after_hash": "805e92324cde92fe5675df923b4c08ba5a2aee0cefc083c0a3beef8a8a52bf8c",
+  "section": {
+    "section_id": "S02",
+    "units": [
+      {
+        "id": "S02.U01",
+        "kind": "definition",
+        "tex": "\\label{def:design-matrix}设有 $n\\geq 1$ 个观测，每个观测包含一个被解释变量 $y_i\\in\\mathbb{R}$ 和 $p-1$ 个解释变量 $x_{i1},\\ldots,x_{i,p-1}\\in\\mathbb{R}$。设计矩阵 $X\\in\\mathbb{R}^{n\\times p}$ 定义如下：当 $p\\geq 2$ 时，\n\\[\nX=\\begin{bmatrix}\n1&x_{11}&\\cdots&x_{1,p-1}\\\\\n1&x_{21}&\\cdots&x_{2,p-1}\\\\\n\\vdots&\\vdots&\\ddots&\\vdots\\\\\n1&x_{n1}&\\cdots&x_{n,p-1}\n\\end{bmatrix};\n\\]\n当 $p=1$ 时，模型仅含截距项，$X=\\begin{bmatrix}1&\\cdots&1\\end{bmatrix}^{\\mathsf T}\\in\\mathbb{R}^{n\\times 1}$。在后一情形中，约定空和 $\\sum_{j=1}^{0}(\\cdot)=0$。第一列的 $1$ 表示模型含有截距项。令参数列向量、响应列向量分别为\n\\[\n\\beta=\\begin{bmatrix}\\beta_0\\\\\\beta_1\\\\\\vdots\\\\\\beta_{p-1}\\end{bmatrix}\\in\\mathbb{R}^{p},\n\\qquad\ny=\\begin{bmatrix}y_1\\\\y_2\\\\\\vdots\\\\y_n\\end{bmatrix}\\in\\mathbb{R}^{n}.\n\\]\n矩阵形式的线性拟合值为 $X\\beta$，第 $i$ 个拟合值为 $\\beta_0+\\sum_{j=1}^{p-1}\\beta_jx_{ij}$；特别地，当 $p=1$ 时，该式按上述空和约定退化为 $\\beta_0$。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U02",
+        "kind": "definition",
+        "tex": "对任意参数向量 $\\beta\\in\\mathbb{R}^{p}$，残差向量定义为\n\\begin{equation}\ne(\\beta)=y-X\\beta.\n\\label{def:residual-vector}\n\\end{equation}\n其第 $i$ 个分量为\n\\[\ne_i(\\beta)=y_i-\\left(\\beta_0+\\sum_{j=1}^{p-1}\\beta_jx_{ij}\\right).\n\\]\n矩阵形式的平方误差目标函数定义为\n\\[\nQ(\\beta)=e(\\beta)^{\\mathsf T}e(\\beta)=(y-X\\beta)^{\\mathsf T}(y-X\\beta)=\\sum_{i=1}^{n}e_i(\\beta)^2.\n\\]\n当 $p=2$ 且 $X$ 的第二列为 $(x_1,\\ldots,x_n)^{\\mathsf T}$ 时，$Q(\\beta)$ 就是前文的一元目标函数 $S(a,b)$，其中 $\\beta=(a,b)^{\\mathsf T}$。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U03",
+        "kind": "definition",
+        "tex": "若设计矩阵 $X\\in\\mathbb{R}^{n\\times p}$ 的列向量线性无关，则称 $X$ 列满秩，即 $\\operatorname{rank}(X)=p$。这要求 $p\\leq n$，并且不存在非零向量 $v\\in\\mathbb{R}^{p}$ 使得 $Xv=0$。在列满秩条件下，矩阵 $X^{\\mathsf T}X\\in\\mathbb{R}^{p\\times p}$ 可逆。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U04",
+        "kind": "theorem",
+        "tex": "\\label{thm:unique-least-squares-solution}设 $X\\in\\mathbb{R}^{n\\times p}$，$y\\in\\mathbb{R}^{n}$，且 $X$ 列满秩，即 $\\operatorname{rank}(X)=p$。定义 $Q(\\beta)=(y-X\\beta)^{\\mathsf T}(y-X\\beta)$。则 $Q$ 在 $\\mathbb{R}^{p}$ 上存在唯一最小点 $\\hat\\beta$，并且该最小点满足矩阵正规方程\n\\begin{equation}\nX^{\\mathsf T}X\\hat\\beta=X^{\\mathsf T}y.\n\\label{thm:matrix-normal-equation}\n\\end{equation}\n由于 $X^{\\mathsf T}X$ 可逆，唯一最小二乘解为\n\\[\n\\hat\\beta=(X^{\\mathsf T}X)^{-1}X^{\\mathsf T}y.\n\\]\n对应的拟合值和残差分别为 $\\hat y=X\\hat\\beta$ 与 $\\hat e=y-X\\hat\\beta$。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U05",
+        "kind": "proof",
+        "tex": "将目标函数展开为\n\\[\nQ(\\beta)=y^{\\mathsf T}y-2\\beta^{\\mathsf T}X^{\\mathsf T}y+\\beta^{\\mathsf T}X^{\\mathsf T}X\\beta.\n\\]\n对 $\\beta$ 的各个分量求偏导，得到梯度\n\\[\n\\nabla Q(\\beta)=-2X^{\\mathsf T}y+2X^{\\mathsf T}X\\beta.\n\\]\n因此，最小点必须满足 $\\nabla Q(\\hat\\beta)=0$，也就是\n\\[\nX^{\\mathsf T}X\\hat\\beta=X^{\\mathsf T}y,\n\\]\n这就是式 \\eqref{thm:matrix-normal-equation}。\n\n由于 $X$ 列满秩，对任意非零向量 $v\\in\\mathbb{R}^{p}$，都有 $Xv\\neq 0$，从而\n\\[\nv^{\\mathsf T}X^{\\mathsf T}Xv=(Xv)^{\\mathsf T}(Xv)=\\sum_{i=1}^{n}(Xv)_i^2>0.\n\\]\n所以 $X^{\\mathsf T}X$ 可逆，正规方程至多有一个解，并且该解为\n\\[\n\\hat\\beta=(X^{\\mathsf T}X)^{-1}X^{\\mathsf T}y.\n\\]\n\n还需说明该解确实给出全局最小值。令 $h=\\beta-\\hat\\beta$，则 $\\beta=\\hat\\beta+h$，并且\n\\[\ny-X\\beta=(y-X\\hat\\beta)-Xh.\n\\]\n展开平方误差可得\n\\[\nQ(\\beta)=Q(\\hat\\beta)-2h^{\\mathsf T}X^{\\mathsf T}(y-X\\hat\\beta)+h^{\\mathsf T}X^{\\mathsf T}Xh.\n\\]\n由正规方程，$X^{\\mathsf T}(y-X\\hat\\beta)=0$，因此\n\\[\nQ(\\beta)=Q(\\hat\\beta)+h^{\\mathsf T}X^{\\mathsf T}Xh\n=Q(\\hat\\beta)+(Xh)^{\\mathsf T}(Xh)\\geq Q(\\hat\\beta).\n\\]\n当且仅当 $Xh=0$ 时等号成立。列满秩又保证 $Xh=0$ 只能推出 $h=0$，即 $\\beta=\\hat\\beta$。所以 $\\hat\\beta$ 是唯一的全局最小点。",
+        "relates_to": "S02.U04"
+      },
+      {
+        "id": "S02.U06",
+        "kind": "theorem",
+        "tex": "在定理 \\eqref{thm:matrix-normal-equation} 的条件下，最小二乘残差 $\\hat e=y-X\\hat\\beta$ 满足\n\\[\nX^{\\mathsf T}\\hat e=0.\n\\]\n也就是说，残差向量与设计矩阵的每一列都正交。特别地，当模型含截距项时，$X$ 的第一列为全 $1$ 向量，于是\n\\[\n\\sum_{i=1}^{n}\\hat e_i=0.\n\\]\n当模型还包含解释变量列 $(x_{1j},\\ldots,x_{nj})^{\\mathsf T}$ 时，还满足\n\\[\n\\sum_{i=1}^{n}x_{ij}\\hat e_i=0,\n\\qquad j=1,\\ldots,p-1.\n\\]",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U07",
+        "kind": "proof",
+        "tex": "由定理 \\eqref{thm:matrix-normal-equation} 的正规方程，\n\\[\nX^{\\mathsf T}X\\hat\\beta=X^{\\mathsf T}y.\n\\]\n移项得到\n\\[\nX^{\\mathsf T}(y-X\\hat\\beta)=0.\n\\]\n根据残差向量的定义 \\eqref{def:residual-vector}，这就是\n\\[\nX^{\\mathsf T}\\hat e=0.\n\\]\n矩阵乘积的第 $j$ 个分量等于设计矩阵第 $j$ 列与残差向量的内积，因此每一列都与残差向量正交。若第一列为全 $1$ 向量，则对应内积为 $\\sum_{i=1}^{n}\\hat e_i$；若第 $j+1$ 列为解释变量 $x_j$，则对应内积为 $\\sum_{i=1}^{n}x_{ij}\\hat e_i$。",
+        "relates_to": "S02.U06"
+      },
+      {
+        "id": "S02.U08",
+        "kind": "example",
+        "tex": "某企业有三次观测，$y$ 表示劳动生产率，$x_1$ 表示培训支出，$x_2$ 表示设备投入。观测数据为\n\\[\n\\begin{array}{c|c|c|c}\n i&x_{i1}&x_{i2}&y_i\\\\ \\hline\n 1&1&0&4\\\\\n 2&0&1&3\\\\\n 3&1&1&5\n\\end{array}\n\\]\n考虑含截距的模型\n\\[\ny_i=\\beta_0+\\beta_1x_{i1}+\\beta_2x_{i2}+e_i.\n\\]\n写出设计矩阵 $X$、响应向量 $y$，并利用矩阵正规方程求最小二乘估计。",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U09",
+        "kind": "solution",
+        "tex": "由数据可得\n\\[\nX=\\begin{bmatrix}1&1&0\\\\1&0&1\\\\1&1&1\\end{bmatrix},\n\\qquad\n y=\\begin{bmatrix}4\\\\3\\\\5\\end{bmatrix}.\n\\]\n计算得到\n\\[\nX^{\\mathsf T}X=\n\\begin{bmatrix}3&2&2\\\\2&2&1\\\\2&1&2\\end{bmatrix},\n\\qquad\nX^{\\mathsf T}y=\n\\begin{bmatrix}12\\\\9\\\\8\\end{bmatrix}.\n\\]\n因此正规方程为\n\\[\n\\begin{bmatrix}3&2&2\\\\2&2&1\\\\2&1&2\\end{bmatrix}\n\\begin{bmatrix}\\hat\\beta_0\\\\\\hat\\beta_1\\\\\\hat\\beta_2\\end{bmatrix}\n=\n\\begin{bmatrix}12\\\\9\\\\8\\end{bmatrix}.\n\\]\n直接检验可得\n\\[\n\\hat\\beta=\n\\begin{bmatrix}2\\\\2\\\\1\\end{bmatrix},\n\\]\n因为\n\\[\n\\begin{bmatrix}3&2&2\\\\2&2&1\\\\2&1&2\\end{bmatrix}\n\\begin{bmatrix}2\\\\2\\\\1\\end{bmatrix}\n=\n\\begin{bmatrix}12\\\\9\\\\8\\end{bmatrix}.\n\\]\n所以拟合方程为\n\\[\n\\hat y=2+2x_1+x_2.\n\\]\n三个观测的拟合值依次为 $4,3,5$，因此残差向量为\n\\[\n\\hat e=y-X\\hat\\beta=\n\\begin{bmatrix}0\\\\0\\\\0\\end{bmatrix}.\n\\]\n在这个例子中，三个观测点恰好被模型完全拟合。若给定一个新的解释变量取值 $(x_1,x_2)=(2,1)$，则将其代入拟合方程可得样本外预测值\n\\[\n\\widehat y(2,1)=2+2\\times 2+1=7.\n\\]\n由于样本中 $x_1$ 只取过 $0$ 和 $1$，这里的预测涉及超出样本观测范围的外推，应谨慎解释其可靠性。这个计算说明矩阵正规方程可以同时处理多个解释变量，但拟合关系仍然只是样本内的线性拟合，不能据此断言培训支出或设备投入对劳动生产率具有因果影响。",
+        "relates_to": "S02.U08"
+      },
+      {
+        "id": "S02.U10",
+        "kind": "exercise",
+        "tex": "设三次观测的设计矩阵和响应向量为\n\\[\nX=\\begin{bmatrix}1&0&1\\\\1&1&0\\\\1&1&1\\end{bmatrix},\n\\qquad\n y=\\begin{bmatrix}2\\\\4\\\\5\\end{bmatrix}.\n\\]\n完成下列任务：\n\\begin{enumerate}\n\\item 计算 $X^{\\mathsf T}X$ 和 $X^{\\mathsf T}y$；\n\\item 利用正规方程求 $\\hat\\beta=(\\hat\\beta_0,\\hat\\beta_1,\\hat\\beta_2)^{\\mathsf T}$；\n\\item 写出拟合方程 $\\hat y=\\hat\\beta_0+\\hat\\beta_1x_1+\\hat\\beta_2x_2$；\n\\item 计算残差向量，并验证它与 $X$ 的每一列正交。\\end{enumerate}",
+        "relates_to": null
+      },
+      {
+        "id": "S02.U11",
+        "kind": "solution",
+        "tex": "先计算矩阵乘积：\n\\[\nX^{\\mathsf T}X=\n\\begin{bmatrix}3&2&2\\\\2&2&1\\\\2&1&2\\end{bmatrix},\n\\qquad\nX^{\\mathsf T}y=\n\\begin{bmatrix}11\\\\9\\\\7\\end{bmatrix}.\n\\]\n正规方程为\n\\[\n\\begin{bmatrix}3&2&2\\\\2&2&1\\\\2&1&2\\end{bmatrix}\n\\begin{bmatrix}\\hat\\beta_0\\\\\\hat\\beta_1\\\\\\hat\\beta_2\\end{bmatrix}\n=\n\\begin{bmatrix}11\\\\9\\\\7\\end{bmatrix}.\n\\]\n解得\n\\[\n\\hat\\beta=\n\\begin{bmatrix}1\\\\3\\\\1\\end{bmatrix}.\n\\]\n因此拟合方程为\n\\[\n\\hat y=1+3x_1+x_2.\n\\]\n拟合值为\n\\[\nX\\hat\\beta=\n\\begin{bmatrix}2\\\\4\\\\5\\end{bmatrix}=y,\n\\]\n故残差向量为\n\\[\n\\hat e=y-X\\hat\\beta=\n\\begin{bmatrix}0\\\\0\\\\0\\end{bmatrix}.\n\\]\n于是\n\\[\nX^{\\mathsf T}\\hat e=\n\\begin{bmatrix}0\\\\0\\\\0\\end{bmatrix},\n\\]\n这验证了残差向量与设计矩阵的每一列正交。",
+        "relates_to": "S02.U10"
+      }
+    ],
+    "calculations": [
+      {
+        "id": "S02.C01",
+        "unit_id": "S02.U09",
+        "kind": "equivalence",
+        "assumptions": {},
+        "lhs": {
+          "op": "Add",
+          "args": [
+            {
+              "op": "Integer",
+              "value": 2
+            },
+            {
+              "op": "Mul",
+              "args": [
+                {
+                  "op": "Integer",
+                  "value": 2
+                },
+                {
+                  "op": "Integer",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "op": "Mul",
+              "args": [
+                {
+                  "op": "Integer",
+                  "value": 1
+                },
+                {
+                  "op": "Integer",
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        },
+        "rhs": {
+          "op": "Integer",
+          "value": 5
+        }
+      },
+      {
+        "assumptions": {},
+        "id": "S02.C02",
+        "kind": "equivalence",
+        "lhs": {
+          "op": "Add",
+          "args": [
+            {
+              "op": "Integer",
+              "value": 2
+            },
+            {
+              "op": "Mul",
+              "args": [
+                {
+                  "op": "Integer",
+                  "value": 2
+                },
+                {
+                  "op": "Integer",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "op": "Integer",
+              "value": 1
+            }
+          ]
+        },
+        "rhs": {
+          "op": "Integer",
+          "value": 7
+        },
+        "unit_id": "S02.U09"
+      }
+    ],
+    "calculation_limitations": [],
+    "uncertainties": []
+  }
+}

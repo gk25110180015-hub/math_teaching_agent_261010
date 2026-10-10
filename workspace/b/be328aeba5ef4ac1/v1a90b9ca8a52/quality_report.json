@@ -1,0 +1,1123 @@
+{
+  "content": {
+    "status": "PASS",
+    "evidence": [
+      "计划必需类型、题解关联及各节局部检查"
+    ],
+    "limitations": [
+      "课程难度与经济应用等语义要求需教师审核"
+    ]
+  },
+  "math": {
+    "status": "PASS",
+    "evidence": [
+      {
+        "section_id": "S01",
+        "math": {
+          "schema_version": 1,
+          "status": "PASS",
+          "issues": [],
+          "evidence": [
+            {
+              "kind": "equivalence",
+              "assumptions": {
+                "c": {
+                  "real": true
+                }
+              },
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "status": "PASS",
+              "evidence_type": "symbolic_check_passed",
+              "result": "(2 - c)**2 + (3 - c)**2 + (7 - c)**2",
+              "message": "在声明假设下符号差为零。",
+              "calculation_id": "S01.C01",
+              "unit_id": "S01.U08"
+            },
+            {
+              "kind": "derivative",
+              "assumptions": {
+                "c": {
+                  "real": true
+                }
+              },
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "status": "PASS",
+              "evidence_type": "symbolic_check_passed",
+              "result": "6*c - 24",
+              "message": "在声明假设下符号结果与预期完全一致。",
+              "calculation_id": "S01.C02",
+              "unit_id": "S01.U08"
+            },
+            {
+              "kind": "equivalence",
+              "assumptions": {
+                "c": {
+                  "real": true
+                }
+              },
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "status": "PASS",
+              "evidence_type": "symbolic_check_passed",
+              "result": "(1 - c)**2 + (2 - c)**2 + (4 - c)**2 + (5 - c)**2",
+              "message": "在声明假设下符号差为零。",
+              "calculation_id": "S01.C03",
+              "unit_id": "S01.U10.answer"
+            }
+          ],
+          "coverage": [
+            "S01.U01",
+            "S01.U02",
+            "S01.U03",
+            "S01.U04",
+            "S01.U05",
+            "S01.U06",
+            "S01.U07",
+            "S01.U08",
+            "S01.U09",
+            "S01.U10",
+            "S01.U11",
+            "S01.U10.answer",
+            "S01.U11.answer"
+          ],
+          "limitations": [
+            "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+            "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+            "协议的表达式树不能表示带任意数据列的有限求和，因此核算仅覆盖三次测量例题中的配方与求导；一般常数拟合定理的全局最小性和唯一性由正文完整证明。",
+            "对后文第\\ref{sec:S02}节的引用使用已登记标签，其编号需待全文编译验证。",
+            "新增核算仅请求核对 S01.U10.answer 中的平方和分解。S01.U11.answer 涉及任意长度数据列的有限求和及判断命题，协议不直接表达此类求和与逻辑推论；其理由由答案正文给出，不能以该代数核算替代。"
+          ]
+        },
+        "llm_review": {
+          "issues": [],
+          "checked_unit_ids": [
+            "S01.U01",
+            "S01.U02",
+            "S01.U03",
+            "S01.U04",
+            "S01.U05",
+            "S01.U06",
+            "S01.U07",
+            "S01.U08",
+            "S01.U09",
+            "S01.U10",
+            "S01.U10.answer",
+            "S01.U11",
+            "S01.U11.answer"
+          ],
+          "limitations": [
+            "本次仅审阅 S01 实际提供的全部13个单元，并逐项对照该节锁定目标；未审阅尚未生成的 S02、S03，也未作整份讲义的教学覆盖结论。",
+            "已核对残差的符号约定、实数参数范围、正整数样本量、有限求和指标及 n=1 边界，以及常数拟合定理的求导、平方和分解、全局最小值存在性和唯一性。已独立复核例题与两道练习答案；未发现需要报告的具体数学错误或核心目标缺口。本节不涉及极限或级数判别条件。",
+            "已重新核对保留的缺答案问题：当前 S01.U10.answer 和 S01.U11.answer 分别通过 relates_to 关联相应练习，且答案与理由完整，因此此前缺少关联答案的判断不适用于当前正文。依 rendering_contract，这两个独立解答将集中置于讲义末尾；题干未内嵌答案。此判断不等于实际 PDF 的答案位置检查。",
+            "正文中对后续章节的引用使用已登记的 TeX 标签 sec:S02，而非学生可见的内部单元编号；引用的最终编号、链接及版面仍需全文编译后检查。",
+            "本次为普通模型对实际正文的数学与教学审阅，不是形式化证明，也不以作者自评或工具 PASS 代替逐单元核对；未发现问题不保证不存在遗漏。"
+          ]
+        },
+        "issues": [],
+        "reference_recovery": null,
+        "answer_recovery": {
+          "schema_version": 1,
+          "operation": "append_missing_answers",
+          "status": "APPLIED_UNCHECKED",
+          "source_section_hash": "08b288982a04bd10ecce251a7f251d0ed42c558d29c29be2d07e10e1d4717c8b",
+          "patch_hash": "ee5a25262a8e908f1b2a509f9b404757cdfd3b8c33e554d376f7e4852b7d1c27",
+          "result_section_hash": "238c35553f8041b1284cc4017a8b33fe358d79acbabb1f53da38564d7cfdb679",
+          "target_ids": [
+            "S01.U10",
+            "S01.U11"
+          ],
+          "new_unit_ids": [
+            "S01.U10.answer",
+            "S01.U11.answer"
+          ],
+          "new_unit_hashes": {
+            "S01.U10.answer": "3b505c9deecead43a8dc777dae2a0bd380b46a9307ddc7677910f11d186881f1",
+            "S01.U11.answer": "97e2148279d21fc058ff2b7292519dbbdd1aea91d93a86bbed78a8a222c63a0f"
+          },
+          "original_unit_count": 11,
+          "added_unit_count": 2,
+          "original_units_preserved": true,
+          "original_calculations_preserved": true,
+          "new_calculation_count": 1,
+          "math_check": "NOT_RUN",
+          "normalization": "NOT_RUN",
+          "teacher_review": "NOT_RUN",
+          "identity": {
+            "context_hash": "ffa315d1a21a18c7fc545923327cebf6aa5ffac7d2e92f2e485333a487f2f1e6",
+            "model": "gpt-6-astra",
+            "provider": "live",
+            "prompt_hash": "3f4beaf0cea232c9067c05d0326b08ebba71227e57fd50b283fb3401d8340da3",
+            "schema_hash": "33f1dd4a1048269d000f52f3663cc9fdac32afe07edfda814a6c018869562c33",
+            "implementation_hash": "3ec9e3ba686daea8447efbe4832827ef86797ed21965a6184dd29540d321baf8"
+          },
+          "proposal_key": "runs/be328aeba5ef4ac1837d8658903c7396/answer-recovery/S01/6ba3581302d543f469f637d85a5e17858f74f6faad96a53a90464e6169813eae/attempt-9c26a5fc8867/proposal.json",
+          "reused_proposal": false
+        },
+        "mock": false,
+        "local_recovery": {
+          "applied_rounds": 1,
+          "proposal_calls": 1,
+          "rejected_proposals": 0,
+          "preserved_issues": [
+            {
+              "rule_id": "MISSING_ASSOCIATED_ANSWER",
+              "severity": "blocking",
+              "unit_id": "S01.U10",
+              "message": "例题/练习缺少显式关联答案"
+            },
+            {
+              "rule_id": "MISSING_ASSOCIATED_ANSWER",
+              "severity": "blocking",
+              "unit_id": "S01.U11",
+              "message": "例题/练习缺少显式关联答案"
+            },
+            {
+              "unit_id": "S01.U10",
+              "severity": "review",
+              "message": "本题承诺附答案，但当前实际正文没有对应的独立解答单元，尚未落实锁定的“安排练习并附答案”要求。应补充关联本题的解答，由渲染程序集中置于讲义末尾，而非将答案写入题干。",
+              "evidence": "锁定设置为 lecture.exercises=\"with_answers\"、lecture.answers_location=\"end\"。本单元写明“本题答案统一置于讲义末尾”，但提供的全部当前节单元中，唯一的 solution 是关联例题 S01.U07 的 S01.U08，没有关联本题的 solution。rendering_contract 仅搬移已有的关联练习解答，并不生成答案。应有的数学结果为最优常数3、残差−2、−1、1、2、最小平方和10，Q(2)=14，且 Q(c)=10+4(c−3)^2。"
+            },
+            {
+              "unit_id": "S01.U11",
+              "severity": "review",
+              "message": "本判断练习同样缺少承诺的答案及理由。题中的待判断命题不应视为正文直接断言的数学错误，但需要独立解答落实锁定的附答案要求。",
+              "evidence": "本单元末尾承诺“本题答案统一置于讲义末尾”，实际当前节 units 中没有 relates_to 为 S01.U11 的解答单元。三个判断应分别为：真，因为残差和为 n(ȳ−c)，n≥1 时为零推出 c=ȳ；假，例如 n=2、观测值1与3、c=2时残差为−1与1；真，n=1时 Q(c)=(y_1−c)^2 在 c=y_1 处唯一最小。现有例题解答不能替代本题答案。"
+            }
+          ],
+          "review_identity": {
+            "candidate_hash": "238c35553f8041b1284cc4017a8b33fe358d79acbabb1f53da38564d7cfdb679",
+            "tool_checks_hash": "fec143d6a589681d6c8c356c1642aa7e9e709db87c479c54952333a973b95034",
+            "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+            "plan_context_hash": "2adaa24ac388829872551c67b6a245d5c22b3c2971d5f1fb31650e5c4de2acac",
+            "deterministic_checks_hash": "1eba5ddc5d48ff70677a97a2bd3ea98cf702dee37bbaf682deb584c3a1e7b747"
+          }
+        },
+        "compile": {
+          "status": "FAIL",
+          "pdf_path": null,
+          "issues": [
+            {
+              "rule_id": "UNRESOLVED_REFERENCE",
+              "severity": "blocking",
+              "message": "LaTeX Warning: Reference `sec:S02' on page 3 undefined on input line 114.",
+              "location": {
+                "log_line": 608
+              },
+              "resolution_status": "open"
+            },
+            {
+              "rule_id": "UNRESOLVED_REFERENCE",
+              "severity": "blocking",
+              "message": "LaTeX Warning: There were undefined references.",
+              "location": {
+                "log_line": 621
+              },
+              "resolution_status": "open"
+            }
+          ],
+          "log_paths": [
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\be328aeba5ef4ac1\\sS01_008cb34a016f\\compile-attempt-1\\build\\pass-1.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\be328aeba5ef4ac1\\sS01_008cb34a016f\\compile-attempt-1\\build\\pass-1.tex.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\be328aeba5ef4ac1\\sS01_008cb34a016f\\compile-attempt-1\\build\\pass-2.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\be328aeba5ef4ac1\\sS01_008cb34a016f\\compile-attempt-1\\build\\pass-2.tex.log"
+          ],
+          "engine": {
+            "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+          },
+          "passes": 2,
+          "compile_mode": "trusted_local",
+          "isolation": "NOT_IMPLEMENTED",
+          "limitations": [
+            "原生可信本机编译不是文件系统或网络隔离沙箱。"
+          ],
+          "command": [
+            "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "-interaction=nonstopmode",
+            "-halt-on-error",
+            "-file-line-error",
+            "-no-shell-escape",
+            "-recorder",
+            "-synctex=1",
+            "-jobname=lecture",
+            "-output-directory=.",
+            "lecture.tex"
+          ],
+          "elapsed_seconds": 3.344,
+          "page_count": 4
+        },
+        "references": {
+          "status": "PENDING_FULL_REFERENCE_CHECK",
+          "pending_labels": [
+            "sec:S02"
+          ],
+          "evidence": "Only labels registered in later approved sections; original compiler FAIL retained. Full build must resolve all labels."
+        },
+        "compile_attempts": [
+          {
+            "attempt": 1,
+            "section_id": "S01",
+            "candidate_hash": "238c35553f8041b1284cc4017a8b33fe358d79acbabb1f53da38564d7cfdb679",
+            "source_key": "b/be328aeba5ef4ac1/sS01_008cb34a016f/compile-attempt-1/source/lecture.tex",
+            "source_hash": "974d0bc187a09d71c94203f66b3f3a5f913630e2368ae2a07317850ffe5963d9",
+            "compile_status": "FAIL",
+            "compile_key": "b/be328aeba5ef4ac1/sS01_008cb34a016f/compile-attempt-1/compile.json",
+            "compile_hash": "90128e8831e0f45c95abdd15c447678f7da8f70fefd96d51345d9aa0dbb3804f",
+            "teacher_visual_review": "NOT_RUN",
+            "mapping": {
+              "status": "NOT_NEEDED",
+              "issues": []
+            },
+            "dependencies": [
+              {
+                "key": "b/be328aeba5ef4ac1/sS01_008cb34a016f/compile-attempt-1/source/lecture.tex",
+                "hash": "974d0bc187a09d71c94203f66b3f3a5f913630e2368ae2a07317850ffe5963d9",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/be328aeba5ef4ac1/sS01_008cb34a016f/compile-attempt-1/compile.json",
+                "hash": "90128e8831e0f45c95abdd15c447678f7da8f70fefd96d51345d9aa0dbb3804f",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/be328aeba5ef4ac1/sS01_008cb34a016f/compile-attempt-1/build/pass-1.stdout.log",
+                "hash": "eca14238942780f385b40b530b9eb476055beb83d17191b286c9c4269008f047",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/be328aeba5ef4ac1/sS01_008cb34a016f/compile-attempt-1/build/pass-1.tex.log",
+                "hash": "1d0c85027eba7cf4a845818deacf90f2440f409176f9ca7654a60966b2bcb071",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/be328aeba5ef4ac1/sS01_008cb34a016f/compile-attempt-1/build/pass-2.stdout.log",
+                "hash": "dee1867392df3cff434cf2255321e49d47b6d7fce0eb09c280327b3e38d97a9c",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/be328aeba5ef4ac1/sS01_008cb34a016f/compile-attempt-1/build/pass-2.tex.log",
+                "hash": "e30fd505ce8aefe00da3eef978fab0d80c199812154ae45db2a1126cf8e6627e",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/be328aeba5ef4ac1/sS01_008cb34a016f/compile-attempt-1/compile-layout-mapping.json",
+                "hash": "a9e6a95de57f3e1ef36ae65f42f0b6f781ec00824658a0130e0becba00bc4835",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section_id": "S02",
+        "math": {
+          "schema_version": 1,
+          "status": "PASS",
+          "issues": [],
+          "evidence": [
+            {
+              "kind": "equivalence",
+              "assumptions": {
+                "a": {
+                  "real": true
+                },
+                "b": {
+                  "real": true
+                }
+              },
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "status": "PASS",
+              "evidence_type": "symbolic_check_passed",
+              "result": "(1 - a)**2 + (-a - 2*b + 2)**2 + (-a - b + 2)**2",
+              "message": "在声明假设下符号差为零。",
+              "calculation_id": "S02.C01",
+              "unit_id": "S02.U09"
+            }
+          ],
+          "coverage": [
+            "S02.U01",
+            "S02.U02",
+            "S02.U03",
+            "S02.U04",
+            "S02.U05",
+            "S02.U06",
+            "S02.U07",
+            "S02.U08",
+            "S02.U09",
+            "S02.U10",
+            "S02.U11",
+            "S02.U12",
+            "S02.U11.answer",
+            "S02.U12.answer"
+          ],
+          "limitations": [
+            "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+            "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+            "核算请求覆盖具体例题的二元平方和分解。协议不直接表示任意长度数据列的有限求和及唯一性量词；一般定理的消元、全局最优性和唯一性由正文证明。",
+            "对后文第\\ref{sec:S03}节的引用使用已登记章节标签，编号需待全文编译验证。"
+          ]
+        },
+        "llm_review": {
+          "issues": [],
+          "checked_unit_ids": [
+            "S02.U01",
+            "S02.U02",
+            "S02.U03",
+            "S02.U04",
+            "S02.U05",
+            "S02.U06",
+            "S02.U07",
+            "S02.U08",
+            "S02.U09",
+            "S02.U10",
+            "S02.U11",
+            "S02.U11.answer",
+            "S02.U12",
+            "S02.U12.answer"
+          ],
+          "limitations": [
+            "本次为 section_local 审阅，已逐单元阅读所列 S02 正文，并逐项核对本节锁定目标；使用已提供的 S01 常数拟合定理及证明作为先修依据。未审阅尚未生成的 S03，也不将其内容视为本节遗漏。",
+            "已核对实参数范围、n 的最小合法值、残差符号、中心化恒等式、消元的可逆性、Sxx>0 的除法与唯一性条件、全局平方和分解，以及例题和练习答案的计算与反例。未发现需要报告的具体数学错误或本节核心目标缺口；这属于普通模型审阅，不是形式化证明。",
+            "所提供符号工具结果仅覆盖 S02.U09 的具体平方和恒等式，不能据此证明一般定理或全部正文正确；其余结论依据正文推理与直接计算核对。",
+            "按 rendering_contract，两个独立练习解答单元将被移至讲义末尾，不能从 JSON 顺序推断答案位置违规。未检查实际渲染结果、最终 PDF 排版或章节引用编号。"
+          ]
+        },
+        "issues": [],
+        "reference_recovery": null,
+        "answer_recovery": null,
+        "mock": false,
+        "local_recovery": {
+          "applied_rounds": 0,
+          "proposal_calls": 0,
+          "rejected_proposals": 0,
+          "preserved_issues": [],
+          "review_identity": {
+            "candidate_hash": "22e3efbc2b688cccf39b45d505dfcfa2171a35eafdc7939577bcc561fc96b421",
+            "tool_checks_hash": "71995fe1ae1f8da829916895a7a603b31ccd77b396fea83bfb6d39e11181b5c4",
+            "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+            "plan_context_hash": "8739034d19f96fc65c76e971967a89ab920187d3bda61b5a80f1bb81343d14bc",
+            "deterministic_checks_hash": "5ae2e263bb58069f3e776dbe42f5d9a1786c98d12bb651dab6135306b44a289b"
+          }
+        },
+        "compile": {
+          "status": "FAIL",
+          "pdf_path": null,
+          "issues": [
+            {
+              "rule_id": "UNRESOLVED_REFERENCE",
+              "severity": "blocking",
+              "message": "LaTeX Warning: Reference `sec:S03' on page 6 undefined on input line 306.",
+              "location": {
+                "log_line": 614
+              },
+              "resolution_status": "open"
+            },
+            {
+              "rule_id": "UNRESOLVED_REFERENCE",
+              "severity": "blocking",
+              "message": "LaTeX Warning: There were undefined references.",
+              "location": {
+                "log_line": 629
+              },
+              "resolution_status": "open"
+            }
+          ],
+          "log_paths": [
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\be328aeba5ef4ac1\\sS02_32c9dce4ca9a\\build\\pass-1.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\be328aeba5ef4ac1\\sS02_32c9dce4ca9a\\build\\pass-1.tex.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\be328aeba5ef4ac1\\sS02_32c9dce4ca9a\\build\\pass-2.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\be328aeba5ef4ac1\\sS02_32c9dce4ca9a\\build\\pass-2.tex.log"
+          ],
+          "engine": {
+            "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+          },
+          "passes": 2,
+          "compile_mode": "trusted_local",
+          "isolation": "NOT_IMPLEMENTED",
+          "limitations": [
+            "原生可信本机编译不是文件系统或网络隔离沙箱。"
+          ],
+          "command": [
+            "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "-interaction=nonstopmode",
+            "-halt-on-error",
+            "-file-line-error",
+            "-no-shell-escape",
+            "-recorder",
+            "-synctex=1",
+            "-jobname=lecture",
+            "-output-directory=.",
+            "lecture.tex"
+          ],
+          "elapsed_seconds": 3.453,
+          "page_count": 8
+        },
+        "references": {
+          "status": "PENDING_FULL_REFERENCE_CHECK",
+          "pending_labels": [
+            "sec:S03"
+          ],
+          "evidence": "Only labels registered in later approved sections; original compiler FAIL retained. Full build must resolve all labels."
+        },
+        "compile_attempts": [
+          {
+            "attempt": 0,
+            "section_id": "S02",
+            "candidate_hash": "22e3efbc2b688cccf39b45d505dfcfa2171a35eafdc7939577bcc561fc96b421",
+            "source_key": "b/be328aeba5ef4ac1/sS02_32c9dce4ca9a/source/lecture.tex",
+            "source_hash": "b6cedf3a8e27c8d98ca13ab15eebaa4fba7909a865d8c59c8a3d1b5d278c475f",
+            "compile_status": "FAIL",
+            "compile_key": "b/be328aeba5ef4ac1/sS02_32c9dce4ca9a/compile.json",
+            "compile_hash": "5dc1b6b74b6e427b223efa71da99bba4dff012d9066adf4edf821ba9398e5abf",
+            "teacher_visual_review": "NOT_RUN",
+            "mapping": {
+              "status": "NOT_NEEDED",
+              "issues": []
+            },
+            "dependencies": [
+              {
+                "key": "b/be328aeba5ef4ac1/sS02_32c9dce4ca9a/source/lecture.tex",
+                "hash": "b6cedf3a8e27c8d98ca13ab15eebaa4fba7909a865d8c59c8a3d1b5d278c475f",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/be328aeba5ef4ac1/sS02_32c9dce4ca9a/compile.json",
+                "hash": "5dc1b6b74b6e427b223efa71da99bba4dff012d9066adf4edf821ba9398e5abf",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/be328aeba5ef4ac1/sS02_32c9dce4ca9a/build/pass-1.stdout.log",
+                "hash": "6b4b9b6a45d75be93c7c4bd2204e2718f15ae5c3613335d8747e8113aeabacb8",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/be328aeba5ef4ac1/sS02_32c9dce4ca9a/build/pass-1.tex.log",
+                "hash": "e1d07a585c1651a64120739d636f8149af9ddb06549e8b7b8891185a0147c523",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/be328aeba5ef4ac1/sS02_32c9dce4ca9a/build/pass-2.stdout.log",
+                "hash": "674421ca594b85a0788403dcbddfefcdafffd96cde9b1a78954f2357abf2cf73",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/be328aeba5ef4ac1/sS02_32c9dce4ca9a/build/pass-2.tex.log",
+                "hash": "26e102d93bfafffa5f7475bc8e45e46cebe1a0b980f423ff3d8747d6d03eab31",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/be328aeba5ef4ac1/sS02_32c9dce4ca9a/compile-layout-mapping.json",
+                "hash": "a9e6a95de57f3e1ef36ae65f42f0b6f781ec00824658a0130e0becba00bc4835",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section_id": "S03",
+        "math": {
+          "schema_version": 1,
+          "status": "PASS",
+          "issues": [],
+          "evidence": [
+            {
+              "kind": "equivalence",
+              "assumptions": {},
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "status": "PASS",
+              "evidence_type": "symbolic_check_passed",
+              "result": "23/12",
+              "message": "在声明假设下符号结果与预期完全一致。",
+              "calculation_id": "S03.C01",
+              "unit_id": "S03.U07"
+            },
+            {
+              "kind": "equivalence",
+              "assumptions": {
+                "a": {
+                  "real": true
+                },
+                "b": {
+                  "real": true
+                }
+              },
+              "tool": "SymPy",
+              "tool_version": "1.14.0",
+              "status": "PASS",
+              "evidence_type": "symbolic_check_passed",
+              "result": "(-a - 2*b + 1)**2 + (-a - 2*b + 3)**2 + (-a - 2*b + 5)**2",
+              "message": "在声明假设下符号差为零。",
+              "calculation_id": "S03.C02",
+              "unit_id": "S03.U11"
+            }
+          ],
+          "coverage": [
+            "S03.U01",
+            "S03.U02",
+            "S03.U03",
+            "S03.U04",
+            "S03.U05",
+            "S03.U06",
+            "S03.U07",
+            "S03.U08",
+            "S03.U09",
+            "S03.U10",
+            "S03.U11",
+            "S03.U12",
+            "S03.U13",
+            "S03.U14",
+            "S03.U13.answer",
+            "S03.U14.answer"
+          ],
+          "limitations": [
+            "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+            "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+            "代表核算仅覆盖传感器例题中的区间内预测数值和退化例题的平方和分解。协议的表达式树不能直接表示任意长度数据列的有限求和、全局最优性的量词或参数唯一性命题；这些结论由正文证明。",
+            "外推的工程可靠性、未来实测值与模型值的区别以及因果解释不属于本协议的符号核算操作范围。"
+          ]
+        },
+        "llm_review": {
+          "issues": [],
+          "checked_unit_ids": [
+            "S03.U01",
+            "S03.U02",
+            "S03.U03",
+            "S03.U04",
+            "S03.U05",
+            "S03.U06",
+            "S03.U07",
+            "S03.U08",
+            "S03.U09",
+            "S03.U10",
+            "S03.U11",
+            "S03.U12",
+            "S03.U13",
+            "S03.U13.answer",
+            "S03.U14",
+            "S03.U14.answer"
+          ],
+          "limitations": [
+            "本次为 section_local 审阅，已逐一阅读所列16个实际单元，并逐项对照S03的锁定目标；提供的S01、S02正文仅作为定义与证明依赖的核对依据，不代表本次完成整份讲义的覆盖复核。",
+            "在所提供正文中未发现需报告的数学错误或重大缺口。已核对残差符号、正规方程的使用条件、自由截距前提、退化情形的全部最优参数及量词、n=1边界、区间内预测的端点归属，以及例题和练习答案的具体计算。S03的定义、一般定理、证明及指定应用目标均有实际正文承载。",
+            "按 rendering_contract，两个独立练习解答单元由程序移至讲义末尾；其 relates_to 均指向实际练习单元，不能据JSON中的排列位置认定答案位置不合要求。本次未检查最终PDF的实际组装、引用编号及排版。",
+            "本次是普通模型对数学正文的审阅，不是形式化证明，也不以作者自评或所附符号检查的PASS状态代替正文核查。工程预测的实际可靠性与因果关系不能由这些数据和代数推导验证；正文已明确说明相应限制。"
+          ]
+        },
+        "issues": [],
+        "reference_recovery": null,
+        "answer_recovery": null,
+        "mock": false,
+        "local_recovery": {
+          "applied_rounds": 0,
+          "proposal_calls": 0,
+          "rejected_proposals": 0,
+          "preserved_issues": [],
+          "review_identity": {
+            "candidate_hash": "b1e544e2a078d4617b4f44a7481ef24f64b4f81b6a32fad816c5dc7e9a3ac5a6",
+            "tool_checks_hash": "d7901295c2c03bfaa0d96fcc07ebd97a4482490b3dfdeccdd8d12f70c660e080",
+            "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+            "plan_context_hash": "554e01619b2b41c2c26c0c33cb7ee17022e82288c6561ff4fa1beab6cbd151d3",
+            "deterministic_checks_hash": "8f64a2a248dc479f3db7ef6748799152ab6a3fdc53cf7535833eb0f5525bf148"
+          }
+        },
+        "compile": {
+          "status": "PASS",
+          "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\be328aeba5ef4ac1\\sS03_4a97277d664e\\build\\lecture.pdf",
+          "issues": [],
+          "log_paths": [
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\be328aeba5ef4ac1\\sS03_4a97277d664e\\build\\pass-1.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\be328aeba5ef4ac1\\sS03_4a97277d664e\\build\\pass-1.tex.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\be328aeba5ef4ac1\\sS03_4a97277d664e\\build\\pass-2.stdout.log",
+            "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\be328aeba5ef4ac1\\sS03_4a97277d664e\\build\\pass-2.tex.log"
+          ],
+          "engine": {
+            "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+          },
+          "passes": 2,
+          "compile_mode": "trusted_local",
+          "isolation": "NOT_IMPLEMENTED",
+          "limitations": [
+            "原生可信本机编译不是文件系统或网络隔离沙箱。"
+          ],
+          "command": [
+            "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+            "-interaction=nonstopmode",
+            "-halt-on-error",
+            "-file-line-error",
+            "-no-shell-escape",
+            "-recorder",
+            "-synctex=1",
+            "-jobname=lecture",
+            "-output-directory=.",
+            "lecture.tex"
+          ],
+          "elapsed_seconds": 3.531,
+          "page_count": 11,
+          "pdf_sha256": "99f77e0b320fcdd002baa79dc5ce7d05c0bca7ef558eec350c086c7ca2ec75a2",
+          "auxiliary_hashes": {
+            ".aux": "64c599b8781c609bc2169b58eb90fa72549089a8a0a8081b9471ef72a148ffe2",
+            ".out": "fbaa95a06e236f3ac15cf78f2ec6f0503d1995456fe984f1eeffc243c1866236"
+          }
+        },
+        "references": {
+          "status": "PASS",
+          "pending_labels": []
+        },
+        "compile_attempts": [
+          {
+            "attempt": 0,
+            "section_id": "S03",
+            "candidate_hash": "b1e544e2a078d4617b4f44a7481ef24f64b4f81b6a32fad816c5dc7e9a3ac5a6",
+            "source_key": "b/be328aeba5ef4ac1/sS03_4a97277d664e/source/lecture.tex",
+            "source_hash": "ad306ceef9f65f14a9ea6880f365824a4a70b8f22bc06a74fdac9c1893bada16",
+            "compile_status": "PASS",
+            "compile_key": "b/be328aeba5ef4ac1/sS03_4a97277d664e/compile.json",
+            "compile_hash": "4f4e0c0ec725ce1c48062446797db3fefb660903484edf8ea647b201f88369a5",
+            "teacher_visual_review": "NOT_RUN",
+            "mapping": {
+              "status": "NOT_NEEDED",
+              "issues": []
+            },
+            "dependencies": [
+              {
+                "key": "b/be328aeba5ef4ac1/sS03_4a97277d664e/source/lecture.tex",
+                "hash": "ad306ceef9f65f14a9ea6880f365824a4a70b8f22bc06a74fdac9c1893bada16",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/be328aeba5ef4ac1/sS03_4a97277d664e/compile.json",
+                "hash": "4f4e0c0ec725ce1c48062446797db3fefb660903484edf8ea647b201f88369a5",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/be328aeba5ef4ac1/sS03_4a97277d664e/build/pass-1.stdout.log",
+                "hash": "1623ed580e5be0a5210ecc281582adc0ee049a71106601122d534728d8f13d24",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/be328aeba5ef4ac1/sS03_4a97277d664e/build/pass-1.tex.log",
+                "hash": "ca58b710ed0e4119bd10c28a5a6654e66e7fd093ce27c5a9d3a04e7e0585b78d",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/be328aeba5ef4ac1/sS03_4a97277d664e/build/pass-2.stdout.log",
+                "hash": "5bc50a402c4bc4f59cbe7142c209104b34c3500bcf65ffd97b5589eebd827ece",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/be328aeba5ef4ac1/sS03_4a97277d664e/build/pass-2.tex.log",
+                "hash": "9ebf393fc0f1336cded4264171f790e8580850289680d8512e71d66dce20417b",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/be328aeba5ef4ac1/sS03_4a97277d664e/build/lecture.pdf",
+                "hash": "99f77e0b320fcdd002baa79dc5ce7d05c0bca7ef558eec350c086c7ca2ec75a2",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              },
+              {
+                "key": "b/be328aeba5ef4ac1/sS03_4a97277d664e/compile-layout-mapping.json",
+                "hash": "a9e6a95de57f3e1ef36ae65f42f0b6f781ec00824658a0130e0becba00bc4835",
+                "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "global_interface": [
+          "S01",
+          "S02"
+        ],
+        "review": {
+          "issues": [],
+          "checked_unit_ids": [
+            "S01.U01",
+            "S01.U02",
+            "S01.U03",
+            "S01.U04",
+            "S01.U05",
+            "S01.U06",
+            "S01.U07",
+            "S01.U08",
+            "S01.U09",
+            "S01.U10",
+            "S01.U10.answer",
+            "S01.U11",
+            "S01.U11.answer",
+            "S02.U01",
+            "S02.U02",
+            "S02.U03",
+            "S02.U04",
+            "S02.U05",
+            "S02.U06",
+            "S02.U07",
+            "S02.U08",
+            "S02.U09",
+            "S02.U10",
+            "S02.U11",
+            "S02.U11.answer",
+            "S02.U12",
+            "S02.U12.answer"
+          ],
+          "limitations": [
+            "本次仅审阅 adjacent_interface 范围内提供的 S01、S02 全部正文及其依赖衔接，并逐项对照这两节的锁定目标；未审阅 S03，也不据此判断整份讲义的教学覆盖。",
+            "已核对实数参数范围、n≥1 的边界、残差符号、有限求和指标、常数拟合的唯一性、Sxx>0 的等价条件、消去截距与配方推理、正规方程的必要性与充分性，以及所给例题和练习答案的计算。S02 使用的常数拟合依据在实际提供的 S01 正文中已有证明；本次未发现需报告的问题。",
+            "依据 rendering_contract，独立的练习解答单元将移至讲义末尾，例题解答保留原位；已核对所提供的 relates_to 关联，未将 JSON 中的排列位置视为最终答案位置。未执行渲染或最终 PDF 检查，不能确认实际排版与引用显示效果。",
+            "本次为普通模型的数学与教学文本审阅，不是形式化证明或机器验证；未发现问题不保证不存在遗漏。"
+          ]
+        }
+      },
+      {
+        "global_interface": [
+          "S02",
+          "S03"
+        ],
+        "review": {
+          "issues": [],
+          "checked_unit_ids": [
+            "S02.U01",
+            "S02.U02",
+            "S02.U03",
+            "S02.U04",
+            "S02.U05",
+            "S02.U06",
+            "S02.U07",
+            "S02.U08",
+            "S02.U09",
+            "S02.U10",
+            "S02.U11",
+            "S02.U12",
+            "S02.U11.answer",
+            "S02.U12.answer",
+            "S03.U01",
+            "S03.U02",
+            "S03.U03",
+            "S03.U04",
+            "S03.U05",
+            "S03.U06",
+            "S03.U07",
+            "S03.U08",
+            "S03.U09",
+            "S03.U10",
+            "S03.U11",
+            "S03.U12",
+            "S03.U13",
+            "S03.U14",
+            "S03.U13.answer",
+            "S03.U14.answer"
+          ],
+          "limitations": [
+            "本次范围为 adjacent_interface，仅核对所提供 S02、S03 的全部正文、两节锁定目标及依赖接口；所提供 S01 正文用作常数拟合结论和符号约定的先修依据，不构成对 S01 或整份讲义的完整覆盖复核。",
+            "已核对实参数范围、n≥1 的边界、Sxx>0 的除法与唯一性条件、Sxx=0 的退化情形、残差符号、正规方程的必要性与相应条件下的充分性，以及例题和练习答案中的数值。未发现需要报告的具体数学错误或重大缺口；本次内容不涉及极限、无穷级数或递推索引，相应专项检查不适用。",
+            "已按 rendering_contract 将独立且关联到练习的 solution 单元视为由程序移至讲义末尾，未依据 JSON 顺序推断答案位置违规。关联目标均实际存在；最终答案搬移、TeX 引用解析与 PDF 排版仍需实际渲染检查。",
+            "本次为普通模型对正文的数学审阅，未执行形式化证明或外部计算工具核验；无问题记录不等于形式化正确性保证。"
+          ]
+        }
+      },
+      {
+        "chapter_coverage": {
+          "sections": [
+            {
+              "section_id": "S01",
+              "title": "误差如何度量：从残差到常数拟合",
+              "objectives": [
+                "必需定义：观测值、拟合值、残差、残差平方和与最小二乘准则；明确残差的符号约定。",
+                "必需定义：常数模型及样本算术平均数。",
+                "必需定理：常数模型的残差平方和在样本平均数处取得唯一最小值。",
+                "证明安排：结合一元求导与平方和分解，区分驻点条件与全局最小性的依据。",
+                "必需例题：对三次测量值2、3、7进行常数拟合，并比较候选常数3与最优常数。",
+                "必需解答：列出目标函数、求得最优常数4、算出最小平方和14，并与常数3对应的平方和17比较。"
+              ],
+              "unit_ids": [
+                "S01.U01",
+                "S01.U02",
+                "S01.U03",
+                "S01.U04",
+                "S01.U05",
+                "S01.U06",
+                "S01.U07",
+                "S01.U08",
+                "S01.U09",
+                "S01.U10",
+                "S01.U11",
+                "S01.U10.answer",
+                "S01.U11.answer"
+              ]
+            },
+            {
+              "section_id": "S02",
+              "title": "直线最小二乘：消去截距并求解正规方程",
+              "objectives": [
+                "必需定义：带截距的直线拟合模型、中心化数据、S_{xx}与S_{xy}，以及本模型的正规方程。",
+                "推导安排：先固定斜率，利用S01的常数拟合结论求最优截距，再将目标函数化为斜率的一元二次函数；不预设偏导数知识。",
+                "必需定理：当S_{xx}>0时，最小二乘直线唯一，斜率为S_{xy}/S_{xx}，截距为bar{y}减去斜率乘bar{x}；它满足两条正规方程。",
+                "证明安排：通过消元与配方说明所得参数是全局最优解，并解释S_{xx}>0等价于自变量观测值不全相同。",
+                "必需例题：对数据点(0,1)、(1,2)、(2,2)求最小二乘直线。",
+                "必需解答：展示均值、中心化求和及参数计算，得到截距7/6、斜率1/2；列出残差−1/6、1/3、−1/6及平方和1/6，并核对正规方程。"
+              ],
+              "unit_ids": [
+                "S02.U01",
+                "S02.U02",
+                "S02.U03",
+                "S02.U04",
+                "S02.U05",
+                "S02.U06",
+                "S02.U07",
+                "S02.U08",
+                "S02.U09",
+                "S02.U10",
+                "S02.U11",
+                "S02.U12",
+                "S02.U11.answer",
+                "S02.U12.answer"
+              ]
+            },
+            {
+              "section_id": "S03",
+              "title": "结果检验、退化情形与工程解释",
+              "objectives": [
+                "必需定义：残差表、插值、拟合、区间内预测与外推；区分拟合值和未来实际观测值。",
+                "必需定理：对带截距的最小二乘直线，残差之和为零，且直线经过数据均值点；说明这些性质的模型前提。",
+                "必需定理：当所有x_i相同时，最优参数对不唯一，但在该共同自变量处的拟合值唯一，等于bar{y}。",
+                "证明安排：从S02的正规方程解释残差性质；将退化情形归结为S01的常数拟合。",
+                "必需例题：把S02的数据解释为某传感器的输入输出记录，检查残差并估计输入1.5时的输出，讨论输入10时外推的局限。",
+                "必需解答：核验残差和为零与均值点性质，求得输入1.5时的拟合输出23/12，并指出平方和最小不保证外推可靠或模型具有因果含义。",
+                "必需例题：对数据点(2,1)、(2,3)、(2,5)分析最小二乘拟合。",
+                "必需解答：给出全部最优参数满足a+2b=3，说明最小平方和为8、参数不唯一，以及无法据此唯一确定其他输入位置的拟合值。"
+              ],
+              "unit_ids": [
+                "S03.U01",
+                "S03.U02",
+                "S03.U03",
+                "S03.U04",
+                "S03.U05",
+                "S03.U06",
+                "S03.U07",
+                "S03.U08",
+                "S03.U09",
+                "S03.U10",
+                "S03.U11",
+                "S03.U12",
+                "S03.U13",
+                "S03.U14",
+                "S03.U13.answer",
+                "S03.U14.answer"
+              ]
+            }
+          ],
+          "objectives": [
+            "理解最小二乘法以残差平方和衡量拟合误差的基本思想。",
+            "在工科本科一年级微积分水平上，利用求导和配方推导常数拟合与直线拟合公式。",
+            "理解正规方程、最优解存在性及唯一性所需的条件。",
+            "能够完成小规模数据的手算拟合，解释残差并辨析拟合与预测的适用范围。"
+          ],
+          "teacher_acceptance": "NOT_RUN"
+        },
+        "review": {
+          "issues": [],
+          "checked_unit_ids": [
+            "S01.U01",
+            "S01.U02",
+            "S01.U03",
+            "S01.U04",
+            "S01.U05",
+            "S01.U06",
+            "S01.U07",
+            "S01.U08",
+            "S01.U09",
+            "S01.U10",
+            "S01.U10.answer",
+            "S01.U11",
+            "S01.U11.answer",
+            "S02.U01",
+            "S02.U02",
+            "S02.U03",
+            "S02.U04",
+            "S02.U05",
+            "S02.U06",
+            "S02.U07",
+            "S02.U08",
+            "S02.U09",
+            "S02.U10",
+            "S02.U11",
+            "S02.U11.answer",
+            "S02.U12",
+            "S02.U12.answer",
+            "S03.U01",
+            "S03.U02",
+            "S03.U03",
+            "S03.U04",
+            "S03.U05",
+            "S03.U06",
+            "S03.U07",
+            "S03.U08",
+            "S03.U09",
+            "S03.U10",
+            "S03.U11",
+            "S03.U12",
+            "S03.U13",
+            "S03.U13.answer",
+            "S03.U14",
+            "S03.U14.answer"
+          ],
+          "limitations": [
+            "本次按 chapter_coverage 范围阅读全部43个实际单元，并逐项核对三节锁定目标、课程排除项及先修依赖；依据实际定义、证明、例题和答案核查，未采用作者自评。未发现需要报告的数学错误、重大语义缺口或未落实的锁定目标。",
+            "已核对实数参数范围、n≥1的边界、残差符号、有限求和指标、平方和分解、正规方程的适用条件及唯一性结论；特别区分了S_{xx}>0与S_{xx}=0，并复核各例练的数值。正文不涉及无穷级数或极限定义，未将这些不适用项目视为课程遗漏。",
+            "依 rendering_contract，独立且关联有效的练习解答由程序移至讲义末尾，其JSON排列位置不构成答案位置问题。已检查所提供的relates_to及正文引用，未发现悬空关联、题干内嵌所问答案或以内部单元ID代替学生可读引用的情形；未执行渲染或检查最终PDF的编号、位置与排版。",
+            "这是普通模型对所提供正文的数学与教学覆盖审阅，不是形式化证明，也不能保证穷尽所有潜在问题。工程预测部分仅核查其数学解释与适用性措辞，未验证真实传感器或装置的物理行为。"
+          ]
+        }
+      }
+    ],
+    "limitations": [
+      "同模型分角色审阅不是形式化证明；未支持或未请求的核算仍需人工复核"
+    ]
+  },
+  "fidelity": {
+    "status": "NOT_APPLICABLE",
+    "evidence": [],
+    "limitations": []
+  },
+  "compile": {
+    "status": "PASS",
+    "pdf_path": "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\be328aeba5ef4ac1\\v1a90b9ca8a52\\build\\lecture.pdf",
+    "issues": [],
+    "log_paths": [
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\be328aeba5ef4ac1\\v1a90b9ca8a52\\build\\pass-1.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\be328aeba5ef4ac1\\v1a90b9ca8a52\\build\\pass-1.tex.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\be328aeba5ef4ac1\\v1a90b9ca8a52\\build\\pass-2.stdout.log",
+      "D:\\研究生阶段\\数学教学agent\\math-teaching-agent\\workspace\\b\\be328aeba5ef4ac1\\v1a90b9ca8a52\\build\\pass-2.tex.log"
+    ],
+    "engine": {
+      "path": "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "version": "XeTeX 3.141592653-2.6-0.999996 (TeX Live 2024)"
+    },
+    "passes": 2,
+    "compile_mode": "trusted_local",
+    "isolation": "NOT_IMPLEMENTED",
+    "limitations": [
+      "原生可信本机编译不是文件系统或网络隔离沙箱。"
+    ],
+    "command": [
+      "D:\\texlive\\2024\\bin\\windows\\xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "-no-shell-escape",
+      "-recorder",
+      "-synctex=1",
+      "-jobname=lecture",
+      "-output-directory=.",
+      "lecture.tex"
+    ],
+    "elapsed_seconds": 3.578,
+    "page_count": 11,
+    "pdf_sha256": "640eac93a2425a9fefaaad7e74f726ad8482187e6681b8fd37d3337923958327",
+    "auxiliary_hashes": {
+      ".aux": "64c599b8781c609bc2169b58eb90fa72549089a8a0a8081b9471ef72a148ffe2",
+      ".out": "fbaa95a06e236f3ac15cf78f2ec6f0503d1995456fe984f1eeffc243c1866236"
+    }
+  },
+  "layout": {
+    "status": "PASS",
+    "evidence": {
+      "page_count": 11,
+      "all_rendered": true
+    },
+    "limitations": [
+      "几何检查是启发式，只能定位可测风险，不能证明所有正文均无裁切或遮挡。",
+      "尚未做模型视觉复核或教师人工逐页审核；每页图片及哈希供独立审核。",
+      "数学上下标的自然小字号不判为违规；PDF 文字提取不是数学内容真值。",
+      "正文安全区为未校准初始估计，实际主题区域需通过探针和人工复核校准。"
+    ]
+  },
+  "policy": {
+    "status": "NEEDS_REVIEW",
+    "evidence": {
+      "schema_version": 1,
+      "decisions": [
+        {
+          "decision_id": "6e78bf73deeb4348a0ccd00c33c560fe",
+          "resolved_effects": {
+            "section_order": null,
+            "section_titles": {
+              "S01": "误差如何度量：从残差到常数拟合",
+              "S02": "直线最小二乘：消去截距并求解正规方程",
+              "S03": "结果检验、退化情形与工程解释"
+            },
+            "title": "最小二乘法讲义"
+          },
+          "status": "PASS",
+          "artifact": "lecture.tex",
+          "artifact_hash": "ad306ceef9f65f14a9ea6880f365824a4a70b8f22bc06a74fdac9c1893bada16",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        },
+        {
+          "decision_id": "f2b51c6bffab4dddb111117305a96ade",
+          "resolved_effects": {
+            "value": "key"
+          },
+          "status": "NEEDS_REVIEW",
+          "artifact": "lecture.tex",
+          "artifact_hash": "ad306ceef9f65f14a9ea6880f365824a4a70b8f22bc06a74fdac9c1893bada16",
+          "evidence": "需教师检查具体语义是否落实"
+        },
+        {
+          "decision_id": "8e692f8d46f248dbb1e1fdd4dd8141ed",
+          "resolved_effects": {
+            "value": "balanced"
+          },
+          "status": "NEEDS_REVIEW",
+          "artifact": "lecture.tex",
+          "artifact_hash": "ad306ceef9f65f14a9ea6880f365824a4a70b8f22bc06a74fdac9c1893bada16",
+          "evidence": "需教师检查具体语义是否落实"
+        },
+        {
+          "decision_id": "9951ff58b41e46f4a6c868b5250c413c",
+          "resolved_effects": {
+            "value": "with_answers"
+          },
+          "status": "PASS",
+          "artifact": "lecture.tex",
+          "artifact_hash": "ad306ceef9f65f14a9ea6880f365824a4a70b8f22bc06a74fdac9c1893bada16",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        },
+        {
+          "decision_id": "8be689ed017f4e0582f6cb1f161b60f6",
+          "resolved_effects": {
+            "value": "end"
+          },
+          "status": "PASS",
+          "artifact": "lecture.tex",
+          "artifact_hash": "ad306ceef9f65f14a9ea6880f365824a4a70b8f22bc06a74fdac9c1893bada16",
+          "evidence": "范围/练习/题解/答案位置由确定性渲染和来源检查落实"
+        }
+      ],
+      "limitations": [
+        "语义自定义不能仅凭模型自评当作落实；发布前须人工审阅质量报告。"
+      ]
+    },
+    "limitations": []
+  },
+  "security": {
+    "status": "PASS",
+    "evidence": [
+      "回环服务、受控源码、编译参数及白名单子进程环境"
+    ],
+    "limitations": [
+      "trusted_local 不是文件系统/网络隔离沙箱"
+    ]
+  },
+  "schema_version": 1,
+  "provider": "live",
+  "human_visual_review": "NOT_RUN",
+  "model_visual_review": "NOT_RUN",
+  "issues": []
+}

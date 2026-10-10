@@ -1,0 +1,32 @@
+{
+  "runtime_version": 2,
+  "code": "function draw(ctx,t,p){\n  var W=960,H=540;\n  var mode=p&&p.$mode==='explore'?'explore':'presentation';\n  var finite=function(v,d){return typeof v==='number'&&isFinite(v)?v:d;};\n  var clamp=function(v,a,b){return Math.max(a,Math.min(b,v));};\n  var rawX=finite(p&&p.x,0), rawView=finite(p&&p.view,0);\n  var x,view,scene,u;\n  if(mode==='explore'){\n    x=clamp(rawX,-2,2);\n    view=clamp(Math.round(rawView),0,1);\n    scene=Math.min(2,Math.floor(clamp(t,0,0.999999)*3));\n    u=(clamp(t,0,0.999999)*3)%1;\n  }else{\n    var z=clamp(t,0,0.999999)*3;\n    scene=Math.min(2,Math.floor(z)); u=z-scene;\n    if(scene===0) x=-2+4*u;\n    else if(scene===1) x=u<0.5?-1:-1+4*(u-0.5);\n    else x=-2+4*u;\n    view=scene===2&&u>0.48?1:0;\n  }\n  var f=function(q){return q*q*q-3*q;};\n  var d=function(q){return 3*q*q-3;};\n  var fx=f(x),dx=d(x);\n  var cls=dx>0.0001?'递增':dx<-0.0001?'递减':'驻点：需看两侧符号';\n  var extrema='';\n  if(Math.abs(x+1)<0.08) extrema='x=-1：左正右负，局部极大';\n  else if(Math.abs(x-1)<0.08) extrema='x=1：左负右正，局部极小';\n  var plot={l:55,r:610,top:105,bot:395};\n  var X=function(q){return plot.l+(q+2)/4*(plot.r-plot.l);};\n  var Y=function(q){return 250-f(q)*55;};\n  var text=function(s,px,py,size,color,align){ctx.fillStyle=color||'#17202a';ctx.font=(size||18)+'px sans-serif';ctx.textAlign=align||'left';ctx.textBaseline='middle';ctx.fillText(s,px,py);};\n  var line=function(x1,y1,x2,y2,color,w){ctx.strokeStyle=color;ctx.lineWidth=w||2;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();};\n  ctx.clearRect(0,0,W,H);ctx.fillStyle='#fbfcf7';ctx.fillRect(0,0,W,H);\n  ctx.fillStyle='#eef4ef';ctx.fillRect(35,85,890,335);\n  text(view===0?'函数图像视图':'导数符号带视图',650,105,18,'#41615a');\n  text('f(x)=x³−3x',650,137,22,'#17202a');\n  text('f′(x)=3x²−3',650,166,21,'#17202a');\n  text('当前位置 x='+x.toFixed(2)+'， f(x)='+fx.toFixed(2),650,199,18,'#17202a');\n  text('f′(x)='+dx.toFixed(2)+'，'+cls,650,226,18,dx>0?'#13795b':dx<0?'#b23a48':'#805500');\n  if(extrema) text(extrema,650,253,18,'#805500');\n  ctx.save();ctx.beginPath();ctx.rect(plot.l,plot.top,plot.r-plot.l,plot.bot-plot.top);ctx.clip();\n  if(view===0){\n    line(plot.l,250,plot.r,250,'#53636b',1.5);line(X(0),plot.top,X(0),plot.bot,'#53636b',1.5);\n    for(var k=-2;k<=2;k++){line(X(k),246,X(k),254,'#53636b',1);text(String(k),X(k),270,15,'#53636b','center');}\n    ctx.strokeStyle='#176b87';ctx.lineWidth=3;ctx.beginPath();\n    for(var i=0;i<=240;i++){var q=-2+4*i/240,xx=X(q),yy=Y(q);if(i===0)ctx.moveTo(xx,yy);else ctx.lineTo(xx,yy);}ctx.stroke();\n    var xa=X(x),ya=Y(x), slope=dx;\n    var q1=-2,q2=2;line(X(q1),Y(x)+slope*(q1-x)*55,X(q2),Y(x)+slope*(q2-x)*55,'#d26a3a',2);\n    ctx.fillStyle='#d22f45';ctx.beginPath();ctx.arc(xa,ya,6,0,Math.PI*2);ctx.fill();\n    text('P('+x.toFixed(2)+','+fx.toFixed(2)+')',xa+10,ya-15,16,'#b12a3d');\n    if(Math.abs(dx)<0.0001) text('水平切线',xa+12,ya+20,16,'#805500');\n  }else{\n    text('[-2,-1)',105,145,18,'#17202a','center');text('(-1,1)',330,145,18,'#17202a','center');text('(1,2]',535,145,18,'#17202a','center');\n    ctx.fillStyle='#8bd3b5';ctx.fillRect(X(-2),180,X(-1)-X(-2),48);ctx.fillStyle='#f3b4b4';ctx.fillRect(X(-1),180,X(1)-X(-1),48);ctx.fillStyle='#8bd3b5';ctx.fillRect(X(1),180,X(2)-X(1),48);\n    text('＋ 递增',X(-1)-110,204,18,'#155b43','center');text('− 递减',X(0),204,18,'#8a2634','center');text('＋ 递增',X(1)+105,204,18,'#155b43','center');\n    line(X(-2),252,X(2),252,'#53636b',2);line(X(-1),244,X(-1),260,'#53636b',2);line(X(1),244,X(1),260,'#53636b',2);\n    text('-1',X(-1),278,17,'#17202a','center');text('1',X(1),278,17,'#17202a','center');\n  }\n  ctx.restore();\n  var px=X(x),py=Y(x);line(px,py,px,250,'#a24d38',1.5);line(px,250,px+dx*35,250,'#a24d38',2);\n  text('切线斜率 = f′(x)',650,290,18,'#17202a');\n  text('正：上升；负：下降；零：先检查两侧符号',650,320,17,'#41515b');\n  text('播放演示：位置沿曲线移动，不把导数当作运动速度',650,350,16,'#53636b');\n  text('控制：x 选择位置；视图切换函数图像/符号带',650,380,16,'#53636b');\n  var title,caption;\n  if(mode==='presentation'){\n    if(scene===0){title='切线斜率与函数走势';caption='切线向上时导数为正，函数递增；切线向下时导数为负，函数递减。';}\n    else if(scene===1){title='驻点与局部极值';caption='导数为零只说明切线水平；比较两侧符号，才能判断局部极值。';}\n    else{title='用符号表概括增减';caption='符号表把曲线分段：正号上升，负号下降，变号处可判断极值。';}\n  }else{\n    title=view===0?'导数符号与函数走势：图像探索':'导数符号带：查看增减区间';\n    caption=extrema?extrema+'；导数为零不能单独推出极值。':('当前位置 '+x.toFixed(2)+' 处函数'+cls+'，请结合两侧符号判断极值。');\n  }\n  return {metrics:{x:x,f:fx,derivative:dx,trend:cls,extrema:extrema||'当前点不是驻点',domain:'[-2,2]',view:view===0?'函数图像':'导数符号带'},controls:{x:x,view:view},disabled:{},title:title,caption:caption};\n}",
+  "controls": [
+    {
+      "id": "x",
+      "label": "曲线上位置 x",
+      "min": -2.0,
+      "max": 2.0,
+      "step": 0.01,
+      "value": 0.0
+    },
+    {
+      "id": "view",
+      "label": "视图：0图像，1符号带",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 1.0,
+      "value": 0.0
+    }
+  ],
+  "covered_decision_ids": [
+    "a37119a5c56a416ca279d276d5a10bcc",
+    "53f804c90b5049f193797f49cb71542b"
+  ],
+  "explanation": "实现确认方案的三段累计分镜：先展示切线斜率与函数走势，再聚焦两个驻点及其两侧符号，最后用符号带总结增减区间。探索模式使用 x 与视图切换控件的实际值；函数固定为 f(x)=x³−3x，定义域和显示范围固定为 [-2,2]。所有曲线、切线、符号带、标题、字幕和指标均由同一本帧数学状态派生。",
+  "limitations": [
+    "仅提供确认方案中的固定函数 f(x)=x³−3x，不支持任意函数输入。",
+    "符号表结论限于显示区间 [-2,2]。",
+    "运动点用于展示位置变化，不表示导数是运动速度。"
+  ]
+}

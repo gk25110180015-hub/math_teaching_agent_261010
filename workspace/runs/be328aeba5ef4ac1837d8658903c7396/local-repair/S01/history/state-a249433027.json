@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "e319d880fac13042cc16f67fe0096f663d1f2ed2974111aef7ba94a6edeb82e4",
+    "section_id": "S01",
+    "context_hash": "2adaa24ac388829872551c67b6a245d5c22b3c2971d5f1fb31650e5c4de2acac",
+    "base_hash": "08b288982a04bd10ecce251a7f251d0ed42c558d29c29be2d07e10e1d4717c8b",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "NEEDS_REPAIR",
+  "applied_rounds": 0,
+  "proposal_calls": 0,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "rule_id": "MISSING_ASSOCIATED_ANSWER",
+      "severity": "blocking",
+      "unit_id": "S01.U10",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "rule_id": "MISSING_ASSOCIATED_ANSWER",
+      "severity": "blocking",
+      "unit_id": "S01.U11",
+      "message": "例题/练习缺少显式关联答案"
+    },
+    {
+      "unit_id": "S01.U10",
+      "severity": "review",
+      "message": "本题承诺附答案，但当前实际正文没有对应的独立解答单元，尚未落实锁定的“安排练习并附答案”要求。应补充关联本题的解答，由渲染程序集中置于讲义末尾，而非将答案写入题干。",
+      "evidence": "锁定设置为 lecture.exercises=\"with_answers\"、lecture.answers_location=\"end\"。本单元写明“本题答案统一置于讲义末尾”，但提供的全部当前节单元中，唯一的 solution 是关联例题 S01.U07 的 S01.U08，没有关联本题的 solution。rendering_contract 仅搬移已有的关联练习解答，并不生成答案。应有的数学结果为最优常数3、残差−2、−1、1、2、最小平方和10，Q(2)=14，且 Q(c)=10+4(c−3)^2。"
+    },
+    {
+      "unit_id": "S01.U11",
+      "severity": "review",
+      "message": "本判断练习同样缺少承诺的答案及理由。题中的待判断命题不应视为正文直接断言的数学错误，但需要独立解答落实锁定的附答案要求。",
+      "evidence": "本单元末尾承诺“本题答案统一置于讲义末尾”，实际当前节 units 中没有 relates_to 为 S01.U11 的解答单元。三个判断应分别为：真，因为残差和为 n(ȳ−c)，n≥1 时为零推出 c=ȳ；假，例如 n=2、观测值1与3、c=2时残差为−1与1；真，n=1时 Q(c)=(y_1−c)^2 在 c=y_1 处唯一最小。现有例题解答不能替代本题答案。"
+    }
+  ],
+  "unit_applied_counts": {},
+  "proposal_counts_by_key": {},
+  "rejected_counts_by_key": {},
+  "evidence_dependencies": [],
+  "last_review_context_hash": "190031557c7c04dddc7c5ca873165ae7471fecd9ecfe5b883e6269b5c495ddc5",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/be328aeba5ef4ac1837d8658903c7396/local-repair/S01/candidate-311a4a9992fa.json",
+  "candidate_hash": "a1f46c0f06b98f44cbce8cc689211d3c7ced5b47ff643c0ccf7817ff657f94de",
+  "last_review_key": "runs/be328aeba5ef4ac1837d8658903c7396/local-repair/S01/review-2ce99a53fc54.json"
+}

@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "82e757fb09ac695a50694cf8a2ec4ee2877b86324aa80954200dbcc4bf4edb32",
+    "section_id": "S02",
+    "context_hash": "8e8e77174269a13b4985cc7f3bba62be902a69f64fa252a56f14529ed2bb1b0b",
+    "base_hash": "b4ae93b6a9d071f50ed00b6a374a417810dd6c1a16593dc08ba3d43fa6912daa",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "NEEDS_REPAIR",
+  "applied_rounds": 1,
+  "proposal_calls": 1,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "unit_id": "S02.U09",
+      "severity": "review",
+      "message": "本节批准目标要求“通过含两个解释变量的经济学例题展示矩阵计算、系数求解和预测”，但该例题只计算了样本内拟合值，未给出新的解释变量取值下的预测步骤或预测结果。若“预测”意指样本外/给定新观测的预测，应补充相应输入、代入过程及适用边界；若仅指样本内拟合值，应在正文中明确这一解释。",
+      "evidence": "scope.current_section.objectives 的第4项明确要求展示“系数求解和预测”。S02.U08 提出含两个解释变量的经济学数据，S02.U09 计算了 \\hat\\beta、拟合方程和三个既有观测的拟合值，但没有给出新的 (x_1,x_2) 或相应预测值，因此该目标的预测部分无法从现有正文确定为已落实。"
+    }
+  ],
+  "unit_applied_counts": {
+    "S02.U04": 1,
+    "S02.U01": 1
+  },
+  "proposal_counts_by_key": {
+    "label:def:design-matrix": 1,
+    "label:thm:unique-least-squares-solution": 1
+  },
+  "rejected_counts_by_key": {},
+  "evidence_dependencies": [
+    {
+      "key": "runs/63380f6a1ebf40dfb4de606687953ab5/label-recovery/S02/9673ee333e9a387ee7c1d1bbab19d586252b3c45d4777478686c507a7c3d858e/attempt-bfea733f427c/proposal.json",
+      "hash": "a272cc3a2dba4627f5529e9fae9f397e1c5fcd2daba767a96690a47f4beffbe3",
+      "error_code": "LABEL_RECOVERY_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "99d631d982c25e90d2c390aec4de7f92e070751edd6a05c1476ad59d6ac519bf",
+  "reference_recovery": {
+    "schema_version": 1,
+    "status": "INSERTED_PENDING_RECHECK",
+    "section_id": "S02",
+    "bindings": [
+      {
+        "label": "def:design-matrix",
+        "unit_id": "S02.U01",
+        "quote": "设有 $n\\geq 1$ 个观测，每个观测包含一个被解释变量 $y_i\\in\\mathbb{R}$ 和 $p-1$ 个解释变量 $x_{i1},\\ldots,x_{i,p-1}\\in\\mathbb{R}$。设计矩阵 $X\\in\\mathbb{R}^{n\\times p}$ 定义为\n\\[\nX=\\begin{bmatrix}\n1&x_{11}&\\cdots&x_{1,p-1}\\\\\n1&x_{21}&\\cdots&x_{2,p-1}\\\\\n\\vdots&\\vdots&\\ddots&\\vdots\\\\\n1&x_{n1}&\\cdots&x_{n,p-1}\n\\end{bmatrix},\n\\qquad p\\geq 1.\n\\]\n第一列的 $1$ 表示模型含有截距项。",
+        "rationale": "该单元明确给出了设计矩阵的维度、完整矩阵形式、观测变量排列方式以及截距列含义，直接定义了计划中的设计矩阵概念。"
+      },
+      {
+        "label": "thm:unique-least-squares-solution",
+        "unit_id": "S02.U04",
+        "quote": "设 $X\\in\\mathbb{R}^{n\\times p}$，$y\\in\\mathbb{R}^{n}$，且 $X$ 列满秩，即 $\\operatorname{rank}(X)=p$。定义 $Q(\\beta)=(y-X\\beta)^{\\mathsf T}(y-X\\beta)$。则 $Q$ 在 $\\mathbb{R}^{p}$ 上存在唯一最小点 $\\hat\\beta$，并且该最小点满足矩阵正规方程\n\\begin{equation}\nX^{\\mathsf T}X\\hat\\beta=X^{\\mathsf T}y.\n\\label{thm:matrix-normal-equation}\n\\end{equation}\n由于 $X^{\\mathsf T}X$ 可逆，唯一最小二乘解为\n\\[\n\\hat\\beta=(X^{\\mathsf T}X)^{-1}X^{\\mathsf T}y.\n\\]",
+        "rationale": "该定理完整陈述了列满秩条件、平方误差目标函数、唯一最小点以及唯一最小二乘解的显式表达，正是该标签所指的唯一性概念，而非仅说明正规方程存在。"
+      }
+    ],
+    "insertions": {
+      "S02.U01": "\\label{def:design-matrix}",
+      "S02.U04": "\\label{thm:unique-least-squares-solution}"
+    },
+    "before_hash": "b4ae93b6a9d071f50ed00b6a374a417810dd6c1a16593dc08ba3d43fa6912daa",
+    "after_hash": "eb7c7fabf0d76ed576ef910064fb06838a0f0fe77f6799271d003d1b23cbd1af",
+    "preserved_fields": [
+      "unit IDs/order/kinds/relates_to",
+      "all original TeX bytes after inserted prefixes",
+      "calculations",
+      "calculation_limitations",
+      "uncertainties"
+    ],
+    "limitations": [
+      "语义定位来自模型提议；精确引文验证不构成数学证明，必须重新进行单元/引用/数学/模型审阅/编译检查。"
+    ],
+    "teacher_visual_review": "NOT_RUN",
+    "identity": {
+      "context_hash": "02388bdd1b1e5d433ccb6e0409f070721a41d199c92b0f2a647a47754a233ec8",
+      "preceding_hash": "58d94a80fc88b10ce29820baa07269debc8d4da8142e6a885624ac5fb33238bf",
+      "model": "gpt-6-astra",
+      "provider": "live",
+      "prompt_hash": "0b967bf320e6d35e1f145a07a1ee0bd1e6fdd6c6627866a8a4a13a2ea8626f15",
+      "schema_hash": "c19c2bead5c4972e0d4a638e7aea9a23807f8a4c165aa65a07515038e8bb384b",
+      "implementation_hash": "71f0787701e59f0b33b1dc2fd2f72337cc963379a408894d7a8b406d8e62370b"
+    },
+    "proposal_key": "runs/63380f6a1ebf40dfb4de606687953ab5/label-recovery/S02/9673ee333e9a387ee7c1d1bbab19d586252b3c45d4777478686c507a7c3d858e/attempt-bfea733f427c/proposal.json",
+    "reused_proposal": false,
+    "review_instruction": "必须核对标签是否对应其引用定义和批准小节目标；精确引文不代表概念正确。否定形式不能代替正面定义。定位不当须报告实际 unit_id，不能只因标签存在而放行。"
+  },
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S02/candidate-39afef1fe1ce.json",
+  "candidate_hash": "edc16ec824ecb5803ff6ea81b061b6994c7faebca1577c7d7877a044651aa493",
+  "last_review_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S02/review-fab607af598b.json",
+  "pending_operation": "labels",
+  "pending_keys": [
+    "label:def:design-matrix",
+    "label:thm:unique-least-squares-solution"
+  ],
+  "request_count_before": 16,
+  "patch_evidence": null
+}

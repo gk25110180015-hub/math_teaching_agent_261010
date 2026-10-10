@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "82e757fb09ac695a50694cf8a2ec4ee2877b86324aa80954200dbcc4bf4edb32",
+    "section_id": "S01",
+    "context_hash": "0b2d0208873ad91a0710799ce918979fcd89e02514b8f0d5e0b592e89cbc0470",
+    "base_hash": "a4b0f96c3749dd1bc1418950b338e4e45f177d0956a29dcbfd92dc058eec161f",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "UNCHECKED_REPAIRED",
+  "applied_rounds": 2,
+  "proposal_calls": 2,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "rule_id": "PLANNED_LABEL_MISSING",
+      "severity": "blocking",
+      "message": "本节缺少计划标签：thm:quadratic-unique-minimum"
+    },
+    {
+      "unit_id": "S01.U03",
+      "severity": "blocking",
+      "message": "锁定的 S01 章节要求提供标签 `thm:quadratic-unique-minimum`，但承载“平方误差函数在条件下具有唯一最小点”这一结论的定理正文没有该标签。当前单元只定义了 `thm:normal-equations`，因此计划要求的唯一最小值定理标签未在实际正文中落实。",
+      "evidence": "S01.U03 的定理正文明确断言“平方误差函数 S(a,b) 在 R^2 上具有唯一最小点”，但其公式环境仅包含 `\\label{thm:normal-equations}`。锁定 section S01 的 reference_labels 同时要求 `thm:quadratic-unique-minimum` 与 `thm:normal-equations`；在所提供的十个实际单元中未发现 `\\label{thm:quadratic-unique-minimum}`。"
+    },
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "练习答案中使用了直接代入与有限求和，未用符号核算协议逐项验证全部分数运算。",
+      "location": {},
+      "uncertainty_id": "D001-6e31a6936c94d510",
+      "original_sha256": "6e31a6936c94d510e52c7f19c60263f3f1950ed502d0cc6f04706d0bf95610e7",
+      "resolution_status": "open"
+    }
+  ],
+  "unit_applied_counts": {
+    "S01.U07": 1,
+    "S01.U04": 1,
+    "S01.U10": 1,
+    "S01.U03": 1
+  },
+  "proposal_counts_by_key": {
+    "unit:S01.U04": 1,
+    "unit:S01.U07": 1,
+    "unit:S01.U10": 1,
+    "unit:S01.U03": 1
+  },
+  "rejected_counts_by_key": {},
+  "evidence_dependencies": [
+    {
+      "key": "b/63380f6a1ebf40df/sS01_1df705ace85c/repair-1-patch.json",
+      "hash": "3230117ee8a2857ef31f9e3c00937e291a3ce35b60dba75f62f041743733027b",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/63380f6a1ebf40df/sS01_1df705ace85c/repair-2-patch.json",
+      "hash": "6ffb428ddc3e2f7d3f69225fa541c939cd53209b069f21284b93631a65fb1590",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "8f86ad0a8f9e9c3d75f393daf65f29ee7cf33de1458227c728ed819de977179e",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S01/candidate-2675da0140d4.json",
+  "candidate_hash": "3f269f134b5c44bb666655d49fa09cec44f4969134e0d85e30ff330b50a05dbb",
+  "last_review_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S01/review-9157bb3889bf.json",
+  "pending_operation": "strict_local_patch",
+  "pending_keys": [
+    "unit:S01.U03"
+  ],
+  "request_count_before": 8,
+  "patch_evidence": {
+    "schema_version": 1,
+    "operation": "strict_local_patch",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "58ac9c49b2387525a8b2f88f3b5bdade2258b61a450a90b44bfb37f1707b15c4",
+    "patch_hash": "dce69844c32554b0839a41bd481af688affee94055337015d2001e5811e89618",
+    "result_section_hash": "9895ce8cc1c80ccff8efe8d04d33cbb1f441905ad370098a69491505c24a2f1d",
+    "allowed_unit_ids": [
+      "S01.U03"
+    ],
+    "changed_unit_ids": [
+      "S01.U03"
+    ],
+    "unit_order_preserved": true,
+    "unit_identity_and_metadata_preserved": true,
+    "non_target_units_preserved": true,
+    "original_calculation_count": 2,
+    "calculation_updates": [],
+    "calculation_additions": [],
+    "non_target_calculations_preserved": true,
+    "old_uncertainties_preserved": true,
+    "old_calculation_limitations_preserved": true,
+    "normalization": "NOT_RUN",
+    "math_check": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "proposal_key": "b/63380f6a1ebf40df/sS01_1df705ace85c/repair-2-patch.json"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "issues": [
+    {
+      "unit_id": "S01.U05",
+      "severity": "warning",
+      "message": "正文写“在定理 \\eqref{thm:normal-equations} 的条件下”，但 `thm:normal-equations` 是 S01.U03 中 equation 环境的方程标签，不是定理标签。渲染后会变成类似“定理 (方程编号)”的引用，且所引条件实际属于 S01.U03 的定理。应改为引用 `thm:quadratic-unique-minimum`，或用自然语言说明“在上一单元定理条件下”。",
+      "evidence": "S01.U05 原文：“在定理 \\eqref{thm:normal-equations} 的条件下……”；S01.U03 中 `\\label{thm:normal-equations}` 位于正规方程，而定理标签为 `\\label{thm:quadratic-unique-minimum}`。"
+    },
+    {
+      "unit_id": "S01.U06",
+      "severity": "warning",
+      "message": "“由定理 \\eqref{thm:normal-equations} 给出的截距公式”把方程标签当作定理引用；该方程只包含两条正规方程，并不包含截距公式。应改为自然语言，或引用 S01.U03 的定理标签 `thm:quadratic-unique-minimum`。",
+      "evidence": "S01.U06 原文开头：“由定理 \\eqref{thm:normal-equations} 给出的截距公式……”；S01.U03 中 `\\eqref{thm:normal-equations}` 只编号正规方程，截距公式在定理陈述正文中。"
+    },
+    {
+      "unit_id": "S02.U06",
+      "severity": "warning",
+      "message": "“在定理 \\eqref{thm:matrix-normal-equation} 的条件下”引用的是 S02.U04 中 equation 环境的矩阵正规方程标签，不是定理标签。应引用 `thm:unique-least-squares-solution`，或用自然语言说明沿用上一单元定理条件。",
+      "evidence": "S02.U06 原文：“在定理 \\eqref{thm:matrix-normal-equation} 的条件下……”；S02.U04 中 `\\label{thm:matrix-normal-equation}` 位于正规方程，定理标签为 `\\label{thm:unique-least-squares-solution}`。"
+    },
+    {
+      "unit_id": "S02.U07",
+      "severity": "warning",
+      "message": "“由定理 \\eqref{thm:matrix-normal-equation} 的正规方程”把方程标签当作定理引用，渲染后会产生“定理 (方程编号) 的正规方程”这类语义错误。应改为引用定理 `thm:unique-least-squares-solution`，并如需引用方程则单独使用 `\\eqref{thm:matrix-normal-equation}`，或改用自然语言。",
+      "evidence": "S02.U07 原文开头：“由定理 \\eqref{thm:matrix-normal-equation} 的正规方程……”；S02.U04 中 `thm:matrix-normal-equation` 是方程标签，不是定理标签。"
+    },
+    {
+      "unit_id": "S03.U07",
+      "severity": "warning",
+      "message": "答案首次使用 `\\operatorname{ESS}` 表示解释平方和，但前文 S03.U02/U03 只定义了 TSS、RSS、R²，S03.U04 的分解式中间项 `\\sum(\\hat y_i-\\bar y)^2` 未命名为 ESS。学生可见符号缺少定义。建议在 S03.U04 分解式中命名解释平方和，或在 S03.U07 使用前给出 ESS 定义。",
+      "evidence": "S03.U07 原文：“由平方和分解，解释平方和为 \\[\\operatorname{ESS}=\\operatorname{TSS}-\\operatorname{RSS}\\]”；S03.U04 分解式中间项为 `\\sum(\\hat y_i-\\bar y)^2`，未出现 `\\operatorname{ESS}` 的定义。"
+    }
+  ],
+  "checked_unit_ids": [
+    "S01.U01",
+    "S01.U02",
+    "S01.U03",
+    "S01.U04",
+    "S01.U05",
+    "S01.U06",
+    "S01.U07",
+    "S01.U08",
+    "S01.U09",
+    "S01.U10",
+    "S02.U01",
+    "S02.U02",
+    "S02.U03",
+    "S02.U04",
+    "S02.U05",
+    "S02.U06",
+    "S02.U07",
+    "S02.U08",
+    "S02.U09",
+    "S02.U10",
+    "S02.U11",
+    "S03.U01",
+    "S03.U02",
+    "S03.U03",
+    "S03.U04",
+    "S03.U05",
+    "S03.U06",
+    "S03.U07",
+    "S03.U08",
+    "S03.U09"
+  ],
+  "limitations": [
+    "本次审阅基于提供的 JSON 正文单元与锁定计划，未检查最终 PDF 渲染结果；rendering_contract 所述答案迁移按程序行为处理，未据此推断数学正确性。",
+    "普通模型审阅不等于形式化证明；未借助证明助手验证所有代数恒等式。",
+    "问题仅定位到 actual_unit_ids 中的实际单元；未要求或评价尚未生成的章节。",
+    "对引用问题的判断基于标签语义和渲染规则，最终学生可见编号需以实际渲染为准。"
+  ]
+}

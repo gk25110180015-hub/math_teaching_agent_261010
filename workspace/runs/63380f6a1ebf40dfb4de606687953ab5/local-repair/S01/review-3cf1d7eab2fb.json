@@ -1,0 +1,189 @@
+{
+  "prior_issues": [
+    {
+      "rule_id": "PLANNED_LABEL_MISSING",
+      "severity": "blocking",
+      "message": "本节缺少计划标签：thm:quadratic-unique-minimum"
+    },
+    {
+      "unit_id": "S01.U03",
+      "severity": "blocking",
+      "message": "锁定的 S01 章节要求提供标签 `thm:quadratic-unique-minimum`，但承载“平方误差函数在条件下具有唯一最小点”这一结论的定理正文没有该标签。当前单元只定义了 `thm:normal-equations`，因此计划要求的唯一最小值定理标签未在实际正文中落实。",
+      "evidence": "S01.U03 的定理正文明确断言“平方误差函数 S(a,b) 在 R^2 上具有唯一最小点”，但其公式环境仅包含 `\\label{thm:normal-equations}`。锁定 section S01 的 reference_labels 同时要求 `thm:quadratic-unique-minimum` 与 `thm:normal-equations`；在所提供的十个实际单元中未发现 `\\label{thm:quadratic-unique-minimum}`。"
+    },
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "练习答案中使用了直接代入与有限求和，未用符号核算协议逐项验证全部分数运算。",
+      "location": {},
+      "uncertainty_id": "D001-6e31a6936c94d510",
+      "original_sha256": "6e31a6936c94d510e52c7f19c60263f3f1950ed502d0cc6f04706d0bf95610e7",
+      "resolution_status": "open"
+    }
+  ],
+  "review_identity": {
+    "candidate_hash": "9895ce8cc1c80ccff8efe8d04d33cbb1f441905ad370098a69491505c24a2f1d",
+    "tool_checks_hash": "b678882c89e336fa186807c2ccfb3a77cb0f0933d1d62897e6f700d6590cc048",
+    "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+    "plan_context_hash": "0b2d0208873ad91a0710799ce918979fcd89e02514b8f0d5e0b592e89cbc0470",
+    "deterministic_checks_hash": "ef273bb8a566d8f3bb3ab28819b06d298724f56f4067b4711b65470e57f21d00",
+    "uncertainty_identity": "53d4243de16201380d0d7a45c24493e86d074e4403690ca3d07e530fdccd8cae",
+    "uncertainty_assessment_hash": "9dcf6c544cde67742378625a5786463f1cda73c2a0c1d1ae68cad775e7ceef09"
+  },
+  "report": {
+    "section_id": "S01",
+    "math": {
+      "schema_version": 1,
+      "status": "NEEDS_REVIEW",
+      "issues": [
+        {
+          "rule_id": "DECLARED_MATH_UNCERTAINTY",
+          "severity": "review",
+          "message": "练习答案中使用了直接代入与有限求和，未用符号核算协议逐项验证全部分数运算。",
+          "location": {},
+          "resolution_status": "open"
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "derivative",
+          "assumptions": {
+            "a": {
+              "real": true
+            }
+          },
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "4*a - 6",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S01.C01",
+          "unit_id": "S01.U03"
+        },
+        {
+          "kind": "equivalence",
+          "assumptions": {},
+          "tool": "SymPy",
+          "tool_version": "1.14.0",
+          "status": "PASS",
+          "evidence_type": "symbolic_check_passed",
+          "result": "10/3",
+          "message": "在声明假设下符号结果与预期完全一致。",
+          "calculation_id": "S01.C02",
+          "unit_id": "S01.U07"
+        }
+      ],
+      "coverage": [
+        "S01.U01",
+        "S01.U02",
+        "S01.U03",
+        "S01.U04",
+        "S01.U05",
+        "S01.U06",
+        "S01.U07",
+        "S01.U08",
+        "S01.U09",
+        "S01.U10"
+      ],
+      "limitations": [
+        "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+        "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+        "S01.C02 已由数值点抽查改为对样本均值的等价性核算；未对拟合直线的残差进行逐点符号核算。"
+      ]
+    },
+    "llm_review": {
+      "issues": [],
+      "checked_unit_ids": [
+        "S01.U01",
+        "S01.U02",
+        "S01.U03",
+        "S01.U04",
+        "S01.U05",
+        "S01.U06",
+        "S01.U07",
+        "S01.U08",
+        "S01.U09",
+        "S01.U10"
+      ],
+      "limitations": [
+        "本次仅审查 section_local 范围内的 S01 实际单元；S02、S03 尚未生成，不构成本节遗漏。",
+        "已核对 S01.U03 中实际存在的 `\\label{thm:quadratic-unique-minimum}` 和 `\\label{thm:normal-equations}`；因此先前关于前者缺失的判断不符合当前实际正文。",
+        "已复核 S01.U10 的均值、协方差型和平方和、斜率、截距、三个拟合值、残差及 x=3 的预测值，分数运算一致；工具未逐项覆盖并不单独构成数学错误。",
+        "审阅检查了正文中的定义、条件、正规方程推导、唯一极小值论证、端点与指标使用及练习答案，但普通模型审阅不等于形式化证明，也未验证最终排版后标签解析或 PDF 呈现。"
+      ]
+    },
+    "issues": [
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "练习答案中使用了直接代入与有限求和，未用符号核算协议逐项验证全部分数运算。\n显式裁定：当前正文已在 S01.U10 中写出样本均值、两个分数平方和、斜率与截距、三个拟合值、残差及残差和的直接代入结果；但原疑点要求用符号核算协议逐项验证全部分数运算，而所提供工具证据只覆盖少量表达式，不能据此证明其余分数运算已逐项核验。该疑点原声明的 unit_id 为 null，且不能在本裁定中改写为 S01.U10，因此无法按现有绑定范围发出只针对某一 unit_id 的可执行修复指令。",
+        "location": {},
+        "uncertainty_id": "D001-6e31a6936c94d510",
+        "original_sha256": "6e31a6936c94d510e52c7f19c60263f3f1950ed502d0cc6f04706d0bf95610e7",
+        "resolution_status": "open",
+        "disposition": "open_dependency",
+        "disposition_evidence": [
+          {
+            "source_key": "current:S01.U10",
+            "source_sha256": "904be7b01d48530958ccea9dcf604685785cbf545dc2d9239ee4cc459f66626f",
+            "quote": "答案如下：\n\\[\n\\bar x=\\frac{1+2+4}{3}=\\frac73,\n\\qquad\n\\bar y=\\frac{4+5+8}{3}=\\frac{17}{3}\\text{。}\n\\]\n进一步有\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)(y_i-\\bar y)=\\frac{19}{3},\n\\qquad\n\\sum_{i=1}^{3}(x_i-\\bar x)^2=\\frac{14}{3}\\text{。}\n\\]\n所以\n\\[\n\\hat b=\\frac{19/3}{14/3}=\\frac{19}{14},\n\\qquad\n\\hat a=\\frac{17}{3}-\\frac{19}{14}\\cdot\\frac73=\\frac52\\text{。}\n\\]\n拟合直线为\n\\[\n\\hat y=\\frac52+\\frac{19}{14}x\\text{。}\n\\]\n三个拟合值和残差为\n\\[\n\\begin{array}{c|c|c}\n i&\\hat y_i&\\hat e_i=y_i-\\hat y_i\\\\ \\hline\n 1&\\frac{27}{7}&\\frac17\\\\\n 2&\\frac{73}{14}&-\\frac{3}{14}\\\\\n 3&\\frac{111}{14}&\\frac{1}{14}\n\\end{array}\n\\]\n残差之和为\n\\[\n\\frac17-\\frac{3}{14}+\\frac{1}{14}=0\\text{。}\n\\]\n最后，$x=3$ 时的拟合值为\n\\[\n\\hat y(3)=\\frac52+\\frac{19}{14}\\cdot3=\\frac{46}{7}\\text{。}\n\\]\n由于 $3$ 位于样本解释变量的最小值 $1$ 与最大值 $4$ 之间，这是样本区间内的插值。"
+          }
+        ]
+      }
+    ],
+    "reference_recovery": null,
+    "answer_recovery": null,
+    "mock": false,
+    "uncertainty_review": {
+      "identity_hash": "53d4243de16201380d0d7a45c24493e86d074e4403690ca3d07e530fdccd8cae",
+      "assessment": {
+        "items": [
+          {
+            "uncertainty_id": "D001-6e31a6936c94d510",
+            "unit_id": null,
+            "disposition": "open_dependency",
+            "reason": "当前正文已在 S01.U10 中写出样本均值、两个分数平方和、斜率与截距、三个拟合值、残差及残差和的直接代入结果；但原疑点要求用符号核算协议逐项验证全部分数运算，而所提供工具证据只覆盖少量表达式，不能据此证明其余分数运算已逐项核验。该疑点原声明的 unit_id 为 null，且不能在本裁定中改写为 S01.U10，因此无法按现有绑定范围发出只针对某一 unit_id 的可执行修复指令。",
+            "evidence": [
+              {
+                "source_key": "current:S01.U10",
+                "source_sha256": "904be7b01d48530958ccea9dcf604685785cbf545dc2d9239ee4cc459f66626f",
+                "quote": "答案如下：\n\\[\n\\bar x=\\frac{1+2+4}{3}=\\frac73,\n\\qquad\n\\bar y=\\frac{4+5+8}{3}=\\frac{17}{3}\\text{。}\n\\]\n进一步有\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)(y_i-\\bar y)=\\frac{19}{3},\n\\qquad\n\\sum_{i=1}^{3}(x_i-\\bar x)^2=\\frac{14}{3}\\text{。}\n\\]\n所以\n\\[\n\\hat b=\\frac{19/3}{14/3}=\\frac{19}{14},\n\\qquad\n\\hat a=\\frac{17}{3}-\\frac{19}{14}\\cdot\\frac73=\\frac52\\text{。}\n\\]\n拟合直线为\n\\[\n\\hat y=\\frac52+\\frac{19}{14}x\\text{。}\n\\]\n三个拟合值和残差为\n\\[\n\\begin{array}{c|c|c}\n i&\\hat y_i&\\hat e_i=y_i-\\hat y_i\\\\ \\hline\n 1&\\frac{27}{7}&\\frac17\\\\\n 2&\\frac{73}{14}&-\\frac{3}{14}\\\\\n 3&\\frac{111}{14}&\\frac{1}{14}\n\\end{array}\n\\]\n残差之和为\n\\[\n\\frac17-\\frac{3}{14}+\\frac{1}{14}=0\\text{。}\n\\]\n最后，$x=3$ 时的拟合值为\n\\[\n\\hat y(3)=\\frac52+\\frac{19}{14}\\cdot3=\\frac{46}{7}\\text{。}\n\\]\n由于 $3$ 位于样本解释变量的最小值 $1$ 与最大值 $4$ 之间，这是样本区间内的插值。"
+              }
+            ],
+            "remaining_dependency": false,
+            "repair_instruction": null
+          }
+        ],
+        "limitations": [
+          "模型审阅确认了正文中显式列出的数值关系，但普通审阅不等于形式化证明。",
+          "所提供的符号工具检查未覆盖 S01.U10 中全部分数运算；数值或局部抽查不能证明逐项符号核算协议已经完成。",
+          "原声明的 unit_id 为 null，因而本裁定不能把该疑点重新绑定到 S01.U10 或发出改变绑定范围的修复指令。"
+        ]
+      },
+      "evidence_key": "runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/53d4243de16201380d0d7a45/state.json",
+      "evidence_sha256": "8b3888dce67a4bac9da1cf8987367ca37a1d113d5d9c0045361d2fa6cd6f3611",
+      "teacher_review": "NOT_RUN"
+    },
+    "uncertainty_legacy_mapping": []
+  },
+  "retained_issues": [
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "练习答案中使用了直接代入与有限求和，未用符号核算协议逐项验证全部分数运算。\n显式裁定：当前正文已在 S01.U10 中写出样本均值、两个分数平方和、斜率与截距、三个拟合值、残差及残差和的直接代入结果；但原疑点要求用符号核算协议逐项验证全部分数运算，而所提供工具证据只覆盖少量表达式，不能据此证明其余分数运算已逐项核验。该疑点原声明的 unit_id 为 null，且不能在本裁定中改写为 S01.U10，因此无法按现有绑定范围发出只针对某一 unit_id 的可执行修复指令。",
+      "location": {},
+      "uncertainty_id": "D001-6e31a6936c94d510",
+      "original_sha256": "6e31a6936c94d510e52c7f19c60263f3f1950ed502d0cc6f04706d0bf95610e7",
+      "resolution_status": "open",
+      "disposition": "open_dependency",
+      "disposition_evidence": [
+        {
+          "source_key": "current:S01.U10",
+          "source_sha256": "904be7b01d48530958ccea9dcf604685785cbf545dc2d9239ee4cc459f66626f",
+          "quote": "答案如下：\n\\[\n\\bar x=\\frac{1+2+4}{3}=\\frac73,\n\\qquad\n\\bar y=\\frac{4+5+8}{3}=\\frac{17}{3}\\text{。}\n\\]\n进一步有\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)(y_i-\\bar y)=\\frac{19}{3},\n\\qquad\n\\sum_{i=1}^{3}(x_i-\\bar x)^2=\\frac{14}{3}\\text{。}\n\\]\n所以\n\\[\n\\hat b=\\frac{19/3}{14/3}=\\frac{19}{14},\n\\qquad\n\\hat a=\\frac{17}{3}-\\frac{19}{14}\\cdot\\frac73=\\frac52\\text{。}\n\\]\n拟合直线为\n\\[\n\\hat y=\\frac52+\\frac{19}{14}x\\text{。}\n\\]\n三个拟合值和残差为\n\\[\n\\begin{array}{c|c|c}\n i&\\hat y_i&\\hat e_i=y_i-\\hat y_i\\\\ \\hline\n 1&\\frac{27}{7}&\\frac17\\\\\n 2&\\frac{73}{14}&-\\frac{3}{14}\\\\\n 3&\\frac{111}{14}&\\frac{1}{14}\n\\end{array}\n\\]\n残差之和为\n\\[\n\\frac17-\\frac{3}{14}+\\frac{1}{14}=0\\text{。}\n\\]\n最后，$x=3$ 时的拟合值为\n\\[\n\\hat y(3)=\\frac52+\\frac{19}{14}\\cdot3=\\frac{46}{7}\\text{。}\n\\]\n由于 $3$ 位于样本解释变量的最小值 $1$ 与最大值 $4$ 之间，这是样本区间内的插值。"
+        }
+      ]
+    }
+  ]
+}

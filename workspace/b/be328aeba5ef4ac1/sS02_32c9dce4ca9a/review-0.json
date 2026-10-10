@@ -1,0 +1,93 @@
+{
+  "section_id": "S02",
+  "math": {
+    "schema_version": 1,
+    "status": "PASS",
+    "issues": [],
+    "evidence": [
+      {
+        "kind": "equivalence",
+        "assumptions": {
+          "a": {
+            "real": true
+          },
+          "b": {
+            "real": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "(1 - a)**2 + (-a - 2*b + 2)**2 + (-a - b + 2)**2",
+        "message": "在声明假设下符号差为零。",
+        "calculation_id": "S02.C01",
+        "unit_id": "S02.U09"
+      }
+    ],
+    "coverage": [
+      "S02.U01",
+      "S02.U02",
+      "S02.U03",
+      "S02.U04",
+      "S02.U05",
+      "S02.U06",
+      "S02.U07",
+      "S02.U08",
+      "S02.U09",
+      "S02.U10",
+      "S02.U11",
+      "S02.U12",
+      "S02.U11.answer",
+      "S02.U12.answer"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "核算请求覆盖具体例题的二元平方和分解。协议不直接表示任意长度数据列的有限求和及唯一性量词；一般定理的消元、全局最优性和唯一性由正文证明。",
+      "对后文第\\ref{sec:S03}节的引用使用已登记章节标签，编号需待全文编译验证。"
+    ]
+  },
+  "llm_review": {
+    "issues": [],
+    "checked_unit_ids": [
+      "S02.U01",
+      "S02.U02",
+      "S02.U03",
+      "S02.U04",
+      "S02.U05",
+      "S02.U06",
+      "S02.U07",
+      "S02.U08",
+      "S02.U09",
+      "S02.U10",
+      "S02.U11",
+      "S02.U11.answer",
+      "S02.U12",
+      "S02.U12.answer"
+    ],
+    "limitations": [
+      "本次为 section_local 审阅，已逐单元阅读所列 S02 正文，并逐项核对本节锁定目标；使用已提供的 S01 常数拟合定理及证明作为先修依据。未审阅尚未生成的 S03，也不将其内容视为本节遗漏。",
+      "已核对实参数范围、n 的最小合法值、残差符号、中心化恒等式、消元的可逆性、Sxx>0 的除法与唯一性条件、全局平方和分解，以及例题和练习答案的计算与反例。未发现需要报告的具体数学错误或本节核心目标缺口；这属于普通模型审阅，不是形式化证明。",
+      "所提供符号工具结果仅覆盖 S02.U09 的具体平方和恒等式，不能据此证明一般定理或全部正文正确；其余结论依据正文推理与直接计算核对。",
+      "按 rendering_contract，两个独立练习解答单元将被移至讲义末尾，不能从 JSON 顺序推断答案位置违规。未检查实际渲染结果、最终 PDF 排版或章节引用编号。"
+    ]
+  },
+  "issues": [],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "local_recovery": {
+    "applied_rounds": 0,
+    "proposal_calls": 0,
+    "rejected_proposals": 0,
+    "preserved_issues": [],
+    "review_identity": {
+      "candidate_hash": "22e3efbc2b688cccf39b45d505dfcfa2171a35eafdc7939577bcc561fc96b421",
+      "tool_checks_hash": "71995fe1ae1f8da829916895a7a603b31ccd77b396fea83bfb6d39e11181b5c4",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "8739034d19f96fc65c76e971967a89ab920187d3bda61b5a80f1bb81343d14bc",
+      "deterministic_checks_hash": "5ae2e263bb58069f3e776dbe42f5d9a1786c98d12bb651dab6135306b44a289b"
+    }
+  }
+}

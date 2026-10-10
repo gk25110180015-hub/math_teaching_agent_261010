@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "82e757fb09ac695a50694cf8a2ec4ee2877b86324aa80954200dbcc4bf4edb32",
+    "section_id": "S03",
+    "context_hash": "c1c89a6bca40285774f0a76918bfcf77c2220cd70c0395cce26a9a5509682a13",
+    "base_hash": "b7826d35043fabf2a7c51b22ed08d0a13006528e5bc84e5ac721031d5e0ce3f5",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "UNCHECKED_FORCED",
+  "applied_rounds": 1,
+  "proposal_calls": 3,
+  "rejected_proposals": 2,
+  "pending_issues": [
+    {
+      "rule_id": "SYMBOLIC_COUNTERCHECK_FAILED",
+      "severity": "blocking",
+      "message": "在声明假设下符号结果与预期不一致。",
+      "location": {
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U07"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "S03.U08 原先给出的截距为 -1/6 与该数据不一致；已按含截距最小二乘条件改为由数据重新计算，需复核练习题与答案之间的教学意图是否保持一致。",
+      "location": {
+        "unit_id": "S03.U08"
+      },
+      "uncertainty_id": "D001-46bc3acc864ad401",
+      "original_sha256": "46bc3acc864ad401041de84b1d1106bdfccdd506628edfb373b73f47f1c77349",
+      "resolution_status": "open"
+    }
+  ],
+  "unit_applied_counts": {
+    "S03.U08": 1,
+    "S03.U09": 1,
+    "S03.U07": 1
+  },
+  "proposal_counts_by_key": {
+    "unit:S03.U07": 3,
+    "unit:S03.U08": 2,
+    "unit:S03.U09": 2
+  },
+  "rejected_counts_by_key": {
+    "unit:S03.U07": 2,
+    "unit:S03.U08": 1,
+    "unit:S03.U09": 1
+  },
+  "evidence_dependencies": [
+    {
+      "key": "b/63380f6a1ebf40df/sS03_eda411118a99/repair-2-patch.json",
+      "hash": "1d7d2939579911fe08ea51bf6ad60e5241e0de0adef87ef6a1abe94ee5023f16",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "07b6f2aa898f3f5b13162be4584b24ef65321834736b16fbf16320e868fa25e7",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S03/candidate-5d282b70a4f5.json",
+  "candidate_hash": "602e7e0e82085c800ae36097aa39e754ca9d4f27b7b2ebf3992cbb01ff344f85",
+  "last_review_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S03/review-f01ba6f4a5ce.json",
+  "pending_operation": "strict_local_patch",
+  "pending_keys": [
+    "unit:S03.U07"
+  ],
+  "request_count_before": 26,
+  "last_rejection": {
+    "code": "REPAIR_SCOPE_VIOLATION",
+    "message": "无效疑点裁定后的独立修复必须实际修改正文；仅改备注、核算、空白或注释不能重新抽取裁定"
+  },
+  "patch_evidence": {
+    "schema_version": 1,
+    "operation": "strict_local_patch",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "3ae11403039855a6723e6e47ba9c7b94df4ed60f57ed9f1e900f37f630efddc8",
+    "patch_hash": "882168befd804245b4bb15ed4241b3195183b66be042628616f45c6c2762bca1",
+    "result_section_hash": "b7826d35043fabf2a7c51b22ed08d0a13006528e5bc84e5ac721031d5e0ce3f5",
+    "allowed_unit_ids": [
+      "S03.U07",
+      "S03.U08",
+      "S03.U09"
+    ],
+    "changed_unit_ids": [
+      "S03.U07",
+      "S03.U08",
+      "S03.U09"
+    ],
+    "unit_order_preserved": true,
+    "unit_identity_and_metadata_preserved": true,
+    "non_target_units_preserved": true,
+    "original_calculation_count": 2,
+    "calculation_updates": [
+      "S03.C01",
+      "S03.C02"
+    ],
+    "calculation_additions": [],
+    "non_target_calculations_preserved": true,
+    "old_uncertainties_preserved": true,
+    "old_calculation_limitations_preserved": true,
+    "normalization": "NOT_RUN",
+    "math_check": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "proposal_key": "b/63380f6a1ebf40df/sS03_eda411118a99/repair-2-patch.json"
+  },
+  "reason": "Explicit global-repair seed; existing local counters retained"
+}

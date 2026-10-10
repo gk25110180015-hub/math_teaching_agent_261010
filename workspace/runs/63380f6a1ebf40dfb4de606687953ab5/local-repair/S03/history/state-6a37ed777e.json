@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "82e757fb09ac695a50694cf8a2ec4ee2877b86324aa80954200dbcc4bf4edb32",
+    "section_id": "S03",
+    "context_hash": "c1c89a6bca40285774f0a76918bfcf77c2220cd70c0395cce26a9a5509682a13",
+    "base_hash": "b7826d35043fabf2a7c51b22ed08d0a13006528e5bc84e5ac721031d5e0ce3f5",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "NEEDS_REPAIR",
+  "applied_rounds": 4,
+  "proposal_calls": 6,
+  "rejected_proposals": 2,
+  "pending_issues": [
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "关于 S03.U07 的决定系数，正文按 TSS=14/3、RSS=1/6 逐步计算得到 27/28，现有 S03.C01 也核对为 27/28；另有一条未提供完整表达式的记录声称结果为 29/28，无法据此定位或复现冲突，因此该核查记录的来源与预期值仍需外部确认。\n显式裁定：当前 S03.U07 正文已明确由 TSS=14/3、RSS=1/6 得到 R^2=27/28，且当前完整 AST 的核算也通过，因此当前数学结论已得到正文与工具的一致支持。但原疑点还包含一条未提供完整表达式、来源和预期依据的 29/28 记录的 provenance 冲突；现有材料只能说明已知旧 AST 因缺少负号得到 29/28，不能确认那条未定位记录是否就是该旧请求，也没有外部授权材料可核验其来源或预期值。由于疑点的剩余部分无法在已绑定的 S03 正文单元内合法补足，仍依赖外部记录确认。",
+      "location": {},
+      "uncertainty_id": "D002-2490c62126ff2c26",
+      "original_sha256": "2490c62126ff2c269735a9861caadc8b95c0defa23f979fccf6fd41e6069f933",
+      "resolution_status": "open",
+      "disposition": "open_dependency",
+      "disposition_evidence": [
+        {
+          "source_key": "current:S03.U07",
+          "source_sha256": "ff23522a1ec3c0cc4fb3cfffea4ee508cc1e75dedccb3d77fbf81cf70f17965c",
+          "quote": "残差平方和为\n\\[\n\\operatorname{RSS}\n=\\left(\\frac{1}{6}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{1}{6}\\right)^2\n=\\frac{1}{6}.\n\\]\n由平方和分解，解释平方和为\n\\[\n\\operatorname{ESS}=\\operatorname{TSS}-\\operatorname{RSS}\n=\\frac{14}{3}-\\frac{1}{6}=\\frac{9}{2}.\n\\]\n所以决定系数为\n\\[\nR^2=1-\\frac{1/6}{14/3}\n=1-\\frac{1}{28}\n=\\frac{27}{28}.\n\\]"
+        },
+        {
+          "source_key": "calculation:c51d42e44c1745e401f8ee3d166ece1d44386eddd41ab8b46c8d52e0cf584c3f",
+          "source_sha256": "819f3fb50e3156707981fa4918bc3b6fb007d6174a1316d7be4f2962e0db7200",
+          "quote": "历史完整请求（JSON AST）：{\"assumptions\":{},\"id\":\"S03.C01\",\"kind\":\"equivalence\",\"lhs\":{\"args\":[{\"op\":\"Integer\",\"value\":1},{\"args\":[{\"op\":\"Rational\",\"p\":1,\"q\":6},{\"args\":[{\"op\":\"Rational\",\"p\":14,\"q\":3},{\"op\":\"Integer\",\"value\":-1}],\"op\":\"Pow\"}],\"op\":\"Mul\"}],\"op\":\"Add\"},\"rhs\":{\"op\":\"Rational\",\"p\":27,\"q\":28},\"unit_id\":\"S03.U07\"}\n历史归档核算：FAIL；结果 \"29/28\"。"
+        },
+        {
+          "source_key": "calculation:c51d42e44c1745e401f8ee3d166ece1d44386eddd41ab8b46c8d52e0cf584c3f",
+          "source_sha256": "819f3fb50e3156707981fa4918bc3b6fb007d6174a1316d7be4f2962e0db7200",
+          "quote": "当前完整请求（JSON AST）：{\"assumptions\":{},\"id\":\"S03.C01\",\"kind\":\"equivalence\",\"lhs\":{\"args\":[{\"op\":\"Integer\",\"value\":1},{\"args\":[{\"op\":\"Integer\",\"value\":-1},{\"args\":[{\"op\":\"Rational\",\"p\":1,\"q\":6},{\"args\":[{\"op\":\"Rational\",\"p\":14,\"q\":3},{\"op\":\"Integer\",\"value\":-1}],\"op\":\"Pow\"}],\"op\":\"Mul\"}],\"op\":\"Mul\"}],\"op\":\"Add\"},\"rhs\":{\"op\":\"Rational\",\"p\":27,\"q\":28},\"unit_id\":\"S03.U07\"}\n当前核算：PASS；结果 \"27/28\"。"
+        }
+      ]
+    }
+  ],
+  "unit_applied_counts": {
+    "S03.U08": 1,
+    "S03.U09": 1,
+    "S03.U07": 2,
+    "S03.U01": 1,
+    "S03.U05": 1
+  },
+  "proposal_counts_by_key": {
+    "unit:S03.U07": 5,
+    "unit:S03.U08": 2,
+    "unit:S03.U09": 2,
+    "unit:S03.U01": 1,
+    "unit:S03.U05": 1
+  },
+  "rejected_counts_by_key": {
+    "unit:S03.U07": 2,
+    "unit:S03.U08": 1,
+    "unit:S03.U09": 1
+  },
+  "evidence_dependencies": [
+    {
+      "key": "b/63380f6a1ebf40df/sS03_eda411118a99/repair-2-patch.json",
+      "hash": "1d7d2939579911fe08ea51bf6ad60e5241e0de0adef87ef6a1abe94ee5023f16",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/63380f6a1ebf40df/sS03_37e6e60e592e/repair-4-patch.json",
+      "hash": "d50d61ed2c30b71df4a9c2bdcd2fdd4b8b369808b07f3c0960780beaa9b30b64",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "b/63380f6a1ebf40df/sS03_37e6e60e592e/repair-5-patch.json",
+      "hash": "83a8aebbb0b8c21167c60bbba596039e5f2e53cc95bba9a2043bc13f630a8245",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    },
+    {
+      "key": "runs/63380f6a1ebf40dfb4de606687953ab5/repair-guidance/c1ecb35d2fa719136936ad38/proposal.json",
+      "hash": "8dc097c1c80f4f193402655e64f9cca0d0af1739c0069016c404dcde67274690",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "63693961a938d52db805b292c2e3d5acd702b43b928e9b07fe069a35d0e5dc68",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S03/candidate-2957a2e3710a.json",
+  "candidate_hash": "bafc4e831c6253c0eb7e9c822516bc4ad417efc06848c41dc981013e48bc23c7",
+  "last_review_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S03/review-9b04cd0da9a2.json",
+  "pending_operation": "guided_local_patch:88453a77b68c70c39609d208",
+  "pending_keys": [
+    "unit:S03.U01",
+    "unit:S03.U05"
+  ],
+  "request_count_before": 45,
+  "last_rejection": {
+    "code": "REPAIR_SCOPE_VIOLATION",
+    "message": "无效疑点裁定后的独立修复必须实际修改正文；仅改备注、核算、空白或注释不能重新抽取裁定"
+  },
+  "patch_evidence": {
+    "schema_version": 1,
+    "operation": "strict_local_patch",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "e77495e6aea03d35fdb25e6c42368927058049fc533ba64747b11bfd11378c59",
+    "patch_hash": "2855752ca6bd7aa0299d7fb029f805194e3a89d282daa337b212a6947e6d10cc",
+    "result_section_hash": "b651d6ecfd9d99a95278fe5217544af7d0393f26879542f3f07b1d080dc52d5e",
+    "allowed_unit_ids": [
+      "S03.U01",
+      "S03.U05"
+    ],
+    "changed_unit_ids": [
+      "S03.U01",
+      "S03.U05"
+    ],
+    "unit_order_preserved": true,
+    "unit_identity_and_metadata_preserved": true,
+    "non_target_units_preserved": true,
+    "original_calculation_count": 2,
+    "calculation_updates": [],
+    "calculation_additions": [],
+    "non_target_calculations_preserved": true,
+    "old_uncertainties_preserved": true,
+    "old_calculation_limitations_preserved": true,
+    "normalization": "NOT_RUN",
+    "math_check": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "proposal_key": "runs/63380f6a1ebf40dfb4de606687953ab5/repair-guidance/c1ecb35d2fa719136936ad38/proposal.json"
+  },
+  "reason": "Explicit global-repair seed; existing local counters retained",
+  "guidance_acceptances": {
+    "agent-audit-s03-rank-provenance-20261007": {
+      "action_hash": "88453a77b68c70c39609d208581fc204efb5b4a11ee063c546e7a9d29e14b343",
+      "after_hash": "b651d6ecfd9d99a95278fe5217544af7d0393f26879542f3f07b1d080dc52d5e"
+    }
+  }
+}

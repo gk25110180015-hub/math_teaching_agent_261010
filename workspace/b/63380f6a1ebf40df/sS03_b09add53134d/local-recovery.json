@@ -1,0 +1,75 @@
+{
+  "status": "UNCHECKED_REPAIRED",
+  "state_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S03.json",
+  "candidate_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S03/candidate-da3a3d935e79.json",
+  "candidate_hash": "2266a8415ad8d785710e2b1c61ffa5040e38f70a5b12a898632b6d47ff4e5277",
+  "applied_rounds": 3,
+  "proposal_calls": 5,
+  "rejected_proposals": 2,
+  "pending_issues": [
+    {
+      "unit_id": "S03.U01",
+      "severity": "review",
+      "message": "残差正交性的陈述范围大于当前提供的先修证明依赖。正文对含截距的最小二乘拟合直接写“由正规方程有”残差和为零，并进一步声称残差与各解释变量列正交；但当前先修 S02.U06 明确继承 S02.U04 的列满秩条件。若本单元只讨论列满秩模型，应在这里明确该限制；若意图覆盖秩亏设计矩阵，则需要补充无列满秩条件时最小二乘解存在及正规方程成立的依据。该结论本身对任一最小二乘解通常仍可成立，但当前证明链未覆盖正文的全部表述范围。",
+      "evidence": "S03.U01 写道“对含截距的最小二乘拟合……由正规方程有”以及“残差向量也与每一个解释变量列正交”。先修 S02.U06 的完整条件是“在定理 thm:matrix-normal-equation 的条件下”，而 S02.U04 明确要求 rank(X)=p。当前 S03.U01 未声明或证明相应的列满秩限制。"
+    },
+    {
+      "unit_id": "S03.U05",
+      "severity": "review",
+      "message": "平方和展开及交叉项消失的代数证明正确，但随后将“含截距的最小二乘模型”作为一般对象，并用“残差与设计矩阵的每一列正交”推出残差与拟合值正交。该推理对最小二乘解可成立，但当前实际提供的先修定理只在列满秩条件下证明正规方程和残差正交性；S03.U05 没有保留该条件，也没有提供覆盖秩亏情形的论证。",
+      "evidence": "S03.U05 写道“在含截距的最小二乘模型中，残差与拟合值的内积也为零”，并依据“残差与设计矩阵的每一列正交”。对应先修 S02.U06 依赖 S02.U04，而 S02.U04 的假设包括 rank(X)=p。S03.U04 本身只把两个残差正交关系作为定理假设，不能补足这一步对更一般对象的证明依赖。"
+    },
+    {
+      "unit_id": "S03.U07",
+      "severity": "review",
+      "message": "当前正文的决定系数计算已经由完整表达式和现有工具核算一致支持为 27/28；但核查记录中仍保留一条同一 calculation_id 的历史值 29/28，且未提供完整表达式，无法判断其是否对应同一计算、不同定义或历史错误。因此数学正文暂未发现由该记录直接支持的算术错误，但该 provenance 冲突在当前材料中仍不可复核。",
+      "evidence": "S03.U07 明确计算 TSS=14/3、RSS=1/6，并得到 R^2=1-(1/6)/(14/3)=27/28；当前 S03.C01 的完整 AST 也返回 27/28，S03.C02 核对 ESS=9/2。另一方面，local_recovery 中保留了一个声称结果为 29/28 的历史失败记录，但没有完整 AST 或可定位正文，不能复现该值。"
+    },
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "关于 S03.U07 的决定系数，正文按 TSS=14/3、RSS=1/6 逐步计算得到 27/28，现有 S03.C01 也核对为 27/28；另有一条未提供完整表达式的记录声称结果为 29/28，无法据此定位或复现冲突，因此该核查记录的来源与预期值仍需外部确认。\n显式裁定：当前正文对 S03.U07 的 TSS、RSS、ESS 和决定系数给出了完整推导，并明确得到 27/28；因此当前可定位的数学计算没有显示出 29/28 的错误。可是原疑点还包含一条声称 29/28 的历史核查记录，所提供材料没有该记录的完整表达式、定位或可核验来源，无法判断它是否对应同一计算、不同定义或历史输入错误。现有批准范围只能补充或核对当前正文，不能合法重建这条未定位的外部记录，因此该 provenance 依赖仍未消解。",
+      "location": {},
+      "uncertainty_id": "D002-2490c62126ff2c26",
+      "original_sha256": "2490c62126ff2c269735a9861caadc8b95c0defa23f979fccf6fd41e6069f933",
+      "resolution_status": "open",
+      "disposition": "open_dependency",
+      "disposition_evidence": [
+        {
+          "source_key": "current:S03.U07",
+          "source_sha256": "ff23522a1ec3c0cc4fb3cfffea4ee508cc1e75dedccb3d77fbf81cf70f17965c",
+          "quote": "残差平方和为\n\\[\n\\operatorname{RSS}\n=\\left(\\frac{1}{6}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{1}{6}\\right)^2\n=\\frac{1}{6}.\n\\]\n由平方和分解，解释平方和为\n\\[\n\\operatorname{ESS}=\\operatorname{TSS}-\\operatorname{RSS}\n=\\frac{14}{3}-\\frac{1}{6}=\\frac{9}{2}.\n\\]\n所以决定系数为\n\\[\nR^2=1-\\frac{1/6}{14/3}\n=1-\\frac{1}{28}\n=\\frac{27}{28}.\n\\]"
+        }
+      ]
+    },
+    {
+      "unit_id": "S03.U01",
+      "severity": "review",
+      "message": "残差正交性的表述范围大于当前已提供的证明依赖。正文对所有“含截距的最小二乘拟合”直接称由正规方程得到残差和为零，并进一步陈述残差与各解释变量列正交；但先修 S02.U06 的定理明确继承 S02.U04 的列满秩条件。若本节意图覆盖可能列不满秩的含截距模型，当前上下文没有给出无列满秩假设时最小二乘解存在及正规方程仍成立的论证；若只讨论列满秩模型，则应在此处明确该限制。",
+      "evidence": "S03.U01 仅假设“设计矩阵的第一列为全1向量”，未声明 rank(X)=p；其依据“由正规方程”只能直接由先修 S02.U06 在列满秩条件下推出。该结论在通常最小二乘框架下可对秩亏情形成立，但本次提供的先修正文没有证明或声明这一更一般版本。"
+    },
+    {
+      "unit_id": "S03.U05",
+      "severity": "review",
+      "message": "平方和分解的代数证明本身正确，但后半段将“含截距的最小二乘模型”作为一般对象，并通过先修 S02.U06 证明残差与拟合值正交；所引用的先修定理带有列满秩条件，而本单元没有保留该条件。因此，对秩亏但含截距的模型，结论虽仍可成立，当前正文的证明链条并未覆盖其实际声称范围。应补充列满秩假设，或提供不依赖列满秩的正规方程/正交投影论证。",
+      "evidence": "S03.U05 写道“在含截距的最小二乘模型中，残差与拟合值的内积也为零”，随后明确依据“残差与设计矩阵的每一列正交”；但 S02.U06 的条件是“在定理 thm:matrix-normal-equation 的条件下”，而 S02.U04 的该条件包括 rank(X)=p。S03.U04 的定理也只把残差正交条件作为假设，没有补足这一步对一般含截距模型的证明。"
+    },
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "关于 S03.U07 的决定系数，正文按 TSS=14/3、RSS=1/6 逐步计算得到 27/28，现有 S03.C01 也核对为 27/28；另有一条未提供完整表达式的记录声称结果为 29/28，无法据此定位或复现冲突，因此该核查记录的来源与预期值仍需外部确认。\n显式裁定：当前正文和已提供核算都支持 S03.U07 的结果为 27/28，并且正文给出了 TSS、RSS 及代入计算；但原疑点还包含一条声称结果为 29/28 的历史核查记录。该记录没有提供完整表达式、可定位单元或可核验来源，因此无法判断它是否对应同一题、不同定义或计算错误。这个 provenance 冲突不能在现有批准正文范围内通过补写数学推导消除，仍需外部提供并核实该记录的完整依据。",
+      "location": {},
+      "uncertainty_id": "D002-2490c62126ff2c26",
+      "original_sha256": "2490c62126ff2c269735a9861caadc8b95c0defa23f979fccf6fd41e6069f933",
+      "resolution_status": "open",
+      "disposition": "open_dependency",
+      "disposition_evidence": [
+        {
+          "source_key": "current:S03.U07",
+          "source_sha256": "ff23522a1ec3c0cc4fb3cfffea4ee508cc1e75dedccb3d77fbf81cf70f17965c",
+          "quote": "残差平方和为\n\\[\n\\operatorname{RSS}\n=\\left(\\frac{1}{6}\\right)^2\n+\\left(-\\frac{1}{3}\\right)^2\n+\\left(\\frac{1}{6}\\right)^2\n=\\frac{1}{6}.\n\\]\n由平方和分解，解释平方和为\n\\[\n\\operatorname{ESS}=\\operatorname{TSS}-\\operatorname{RSS}\n=\\frac{14}{3}-\\frac{1}{6}=\\frac{9}{2}.\n\\]\n所以决定系数为\n\\[\nR^2=1-\\frac{1/6}{14/3}\n=1-\\frac{1}{28}\n=\\frac{27}{28}.\n\\]"
+        }
+      ]
+    }
+  ]
+}

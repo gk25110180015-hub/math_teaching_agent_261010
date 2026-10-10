@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "82e757fb09ac695a50694cf8a2ec4ee2877b86324aa80954200dbcc4bf4edb32",
+    "section_id": "S03",
+    "context_hash": "aeacf0882d74811eb101d11f264092cd9a50b4b270a4e0bf40199c41c68cb84d",
+    "base_hash": "3ae11403039855a6723e6e47ba9c7b94df4ed60f57ed9f1e900f37f630efddc8",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "UNCHECKED_REPAIRED",
+  "applied_rounds": 1,
+  "proposal_calls": 2,
+  "rejected_proposals": 1,
+  "pending_issues": [
+    {
+      "rule_id": "SYMBOLIC_COUNTERCHECK_FAILED",
+      "severity": "blocking",
+      "message": "在声明假设下符号结果与预期不一致。",
+      "location": {
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U07"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "rule_id": "MATH_CHECK_UNKNOWN",
+      "severity": "review",
+      "message": "ValueError: 幂指数超出受限预算。",
+      "location": {
+        "calculation_id": "S03.C02",
+        "unit_id": "S03.U07"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S03.U08",
+      "severity": "blocking",
+      "message": "练习把一条并非该数据的含截距最小二乘直线声明为“已知”拟合直线，导致题面核心前提错误。",
+      "evidence": "数据为 (1,1)、(2,2)、(3,4)，有 \\bar x=2、\\bar y=7/3、S_{xx}=2、S_{xy}=3，因此真正的最小二乘斜率为 3/2，截距为 \\bar y-(3/2)\\bar x=-2/3，而不是题面给出的 -1/6。题面直线产生的残差为 -1/3、-5/6、-1/3，残差和为 -3/2\\ne0；这违反含截距最小二乘的正规方程。"
+    },
+    {
+      "unit_id": "S03.U09",
+      "severity": "review",
+      "message": "解答正确识别了题设直线与数据不一致，但没有完成练习明确要求的 TSS、RSS、R^2 及平方和分解验证，也没有给出修正后的最小二乘直线和相应数值。",
+      "evidence": "S03.U08 要求计算 \\bar y、拟合值、残差、TSS、RSS、R^2，并验证 TSS=ESS+RSS；S03.U09 只计算到错误直线的残差并说明不能继续使用该直线，随后以“应先重新计算”为结尾，未实际提供修正计算。"
+    },
+    {
+      "unit_id": "S03.U07",
+      "severity": "review",
+      "message": "锁定目标要求经济学案例同时讨论异常观测与外推风险，但当前案例解答只讨论样本内拟合、因果解释和样本区间外预测风险，未讨论异常观测或离群点对拟合、RSS、R^2及解释的影响。",
+      "evidence": "S03 当前 objective 第4项明确要求“讨论异常观测与外推风险”。S03.U07 的经济解释仅说明 R^2 是样本内拟合程度、不能证明因果关系且不能保证样本区间外准确，没有异常观测相关内容。"
+    },
+    {
+      "unit_id": "S03.U08",
+      "severity": "blocking",
+      "message": "练习给出的“已知含截距的一元最小二乘拟合直线”不是该数据的最小二乘直线，题设错误。",
+      "evidence": "数据为 (1,1),(2,2),(3,4)，均值 \\bar x=2,\\bar y=7/3；Sxx=2，Sxy=3，所以正确斜率 \\hat b=3/2、截距 \\hat a=7/3-(3/2)2=-2/3。题设直线 \\hat y=-1/6+3/2x 的残差为 -1/3,-5/6,-1/3，其和为 -3/2≠0，违反含截距最小二乘的正规方程；S03.U09 也已指出该直线与数据不一致。"
+    },
+    {
+      "unit_id": "S03.U09",
+      "severity": "review",
+      "message": "解答虽正确指出题设直线与数据不一致，但未完成练习要求的 TSS、RSS、R^2 计算，也未给出修正后的最小二乘直线和平方和分解验证。",
+      "evidence": "S03.U08 要求计算 \\bar y、拟合值、残差、TSS、RSS、R^2，并利用平方和分解验证 TSS=ESS+RSS；S03.U09 只对错误给定直线算到残差和不为零后停止，正文说“正确的最小二乘直线应先由数据重新计算”，但没有实际给出该直线或后续数值，因此该练习未按题面完成。"
+    },
+    {
+      "unit_id": "S03.U07",
+      "severity": "review",
+      "message": "S03 目标要求通过案例讨论异常观测与外推风险，但案例解答只讨论了外推风险和因果解释，未讨论异常观测对拟合或 R^2 的影响。",
+      "evidence": "锁定目标 S03 第 4 条为“通过经济学案例计算残差分解和决定系数，并讨论异常观测与外推风险”；S03.U06 要求说明解释边界，S03.U07 只说不能保证样本外准确和不能证明因果，未出现异常观测/离群点相关讨论。"
+    }
+  ],
+  "unit_applied_counts": {
+    "S03.U08": 1,
+    "S03.U09": 1,
+    "S03.U07": 1
+  },
+  "proposal_counts_by_key": {
+    "unit:S03.U07": 2,
+    "unit:S03.U08": 2,
+    "unit:S03.U09": 2
+  },
+  "rejected_counts_by_key": {
+    "unit:S03.U07": 1,
+    "unit:S03.U08": 1,
+    "unit:S03.U09": 1
+  },
+  "evidence_dependencies": [
+    {
+      "key": "b/63380f6a1ebf40df/sS03_eda411118a99/repair-2-patch.json",
+      "hash": "1d7d2939579911fe08ea51bf6ad60e5241e0de0adef87ef6a1abe94ee5023f16",
+      "error_code": "LOCAL_REPAIR_CACHE_INVALID"
+    }
+  ],
+  "last_review_context_hash": "299d94c44eec802999fc9e20bd3aa240f720b551a85c4c43d74299aaeea75208",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S03/candidate-e16e7df752a0.json",
+  "candidate_hash": "602e7e0e82085c800ae36097aa39e754ca9d4f27b7b2ebf3992cbb01ff344f85",
+  "last_review_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S03/review-30e6013bc623.json",
+  "pending_operation": "strict_local_patch",
+  "pending_keys": [
+    "unit:S03.U07",
+    "unit:S03.U08",
+    "unit:S03.U09"
+  ],
+  "request_count_before": 23,
+  "last_rejection": {
+    "code": "LocalPatchError",
+    "message": "Replacements must cover each authorized target exactly once and no other unit"
+  },
+  "patch_evidence": {
+    "schema_version": 1,
+    "operation": "strict_local_patch",
+    "status": "APPLIED_UNCHECKED",
+    "source_section_hash": "3ae11403039855a6723e6e47ba9c7b94df4ed60f57ed9f1e900f37f630efddc8",
+    "patch_hash": "882168befd804245b4bb15ed4241b3195183b66be042628616f45c6c2762bca1",
+    "result_section_hash": "b7826d35043fabf2a7c51b22ed08d0a13006528e5bc84e5ac721031d5e0ce3f5",
+    "allowed_unit_ids": [
+      "S03.U07",
+      "S03.U08",
+      "S03.U09"
+    ],
+    "changed_unit_ids": [
+      "S03.U07",
+      "S03.U08",
+      "S03.U09"
+    ],
+    "unit_order_preserved": true,
+    "unit_identity_and_metadata_preserved": true,
+    "non_target_units_preserved": true,
+    "original_calculation_count": 2,
+    "calculation_updates": [
+      "S03.C01",
+      "S03.C02"
+    ],
+    "calculation_additions": [],
+    "non_target_calculations_preserved": true,
+    "old_uncertainties_preserved": true,
+    "old_calculation_limitations_preserved": true,
+    "normalization": "NOT_RUN",
+    "math_check": "NOT_RUN",
+    "teacher_review": "NOT_RUN",
+    "proposal_key": "b/63380f6a1ebf40df/sS03_eda411118a99/repair-2-patch.json"
+  }
+}

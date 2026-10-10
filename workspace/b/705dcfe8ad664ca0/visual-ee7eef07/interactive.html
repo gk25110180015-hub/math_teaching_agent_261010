@@ -1,0 +1,201 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27;; worker-src blob:; style-src &#x27;unsafe-inline&#x27;; img-src data: blob:; media-src blob:; connect-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;">
+<title>在三维碗面上沿负梯度下山</title>
+<style>body{font:16px system-ui,sans-serif;margin:0;padding:20px;background:#edf1f7;color:#18283b}main{max-width:1040px;margin:auto}canvas{width:100%;background:#f7f9fc;border-radius:12px;box-shadow:0 8px 35px #1c36511a}button{padding:9px 20px;border:1px solid #bdcbe5;border-radius:7px;background:white;color:#213d8f;cursor:pointer}.toolbar{display:flex;gap:12px;align-items:center;margin:16px 0}#time{flex:1}#controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}label{display:grid;grid-template-columns:1fr 2fr 50px;gap:8px;align-items:center;background:white;padding:14px;border-radius:8px}#caption{min-height:45px;line-height:1.7}small{color:#607189}#status{color:#a12c2c}input{min-width:0}</style></head>
+<body><style>.control-reason{grid-column:1/-1}.control-reason:empty{display:none}#mode{color:#456087;font-size:14px}</style><main><p><small>调整参数，观察数学过程 · 无声动画与中文字幕 · 待教师复核</small></p>
+<canvas id="scene" width="960" height="540" aria-label="数学概念动画"></canvas>
+<div class="toolbar"><button id="play">播放 / 暂停</button><button id="reset">重置分镜演示</button><input id="time" aria-label="动画进度" type="range" min="0" max="1" step="0.001" value="0"></div>
+<p id="caption"></p><p id="mode"></p><div id="controls"></div><p id="status" role="alert"></p>
+<details><summary>数学说明与适用范围</summary><p>修复等高线为严格恒定的椭圆参数化，补充S4真实函数值序列图和图例，使当前点、指标与选中的固定学习率案例一致；S2加入由实际梯度计算的局部切平面，并将所有运行信息移入绘图区覆盖范围内。探索模式仍完全采用控件数值，函数切换会同步改变曲面、梯度、轨迹、等高线和稳定边界。</p><ul><li>目标函数固定为f(x,y)=0.08x²+0.18y²，唯一最优点为(0,0)</li><li>解析梯度为∇f(x,y)=(0.16x,0.36y)，更新方向为−∇f</li><li>梯度指向局部最陡上升方向，并与等高线正交</li><li>梯度下降更新为θ_{k+1}=θ_k−η∇f(θ_k)</li><li>稳定条件为0&lt;η&lt;2/0.36≈5.56；η=5.5接近边界并产生交替振荡</li><li>函数值和参数距离最优点随时间轴与每一步迭代同步更新</li><li>曲面、等高线、点和路径均使用离线Canvas 2D透视投影表现</li><li>二维Canvas中的三维曲面使用透视投影，不是真正的WebGL三维渲染。</li><li>当学习率超过稳定范围时，轨迹数值可能迅速增大，投影会按实际轨迹范围缩放。</li></ul></details>
+</main><script type="application/json" id="project">{"story": {"interaction_goals": ["用学习率滑杆观察η=0.3、1.5、5.5时轨迹的速度与振荡差异", "用x、y数值滑杆改变初始点并比较不同起点的迭代路径", "用整数切换显示或隐藏梯度箭头与等高线", "用时间轴和播放暂停逐步查看每一次更新", "通过固定示例函数选择确认当前二次目标函数及其参数"], "math_notes": ["目标函数固定为f(x,y)=0.08x²+0.18y²，唯一最优点为(0,0)", "解析梯度为∇f(x,y)=(0.16x,0.36y)，更新方向为−∇f", "梯度指向局部最陡上升方向，并与等高线正交", "梯度下降更新为θ_{k+1}=θ_k−η∇f(θ_k)", "稳定条件为0\u003cη\u003c2/0.36≈5.56；η=5.5接近边界并产生交替振荡", "函数值和参数距离最优点随时间轴与每一步迭代同步更新", "曲面、等高线、点和路径均使用离线Canvas 2D透视投影表现"], "objectives": ["建立梯度、负梯度与局部最陡方向的几何联系", "在三维目标曲面上逐步观察真实梯度下降轨迹", "理解学习率较小、适中和接近稳定边界时的差异", "同步观察函数值与参数距离最优点的变化"], "scenes": [{"id": "S1", "math": "f(x,y)=0.08x²+0.18y²；最优点为(x*,y*)=(0,0)，曲面高度表示目标函数值。", "narration": "把待最小化的函数看成一座山谷，最低处就是最优解。", "seconds": 8, "title": "目标函数变成三维曲面", "visual": "用离线Canvas 2D透视绘制坐标轴、彩色网格曲面和xy平面等高线投影。固定示例函数选择为f(x,y)=0.08x²+0.18y²，标出唯一最低点(0,0)与当前点。"}, {"id": "S2", "math": "∇f(x,y)=(0.16x,0.36y)；更新方向为−∇f。梯度与等高线正交。", "narration": "梯度指向函数上升最快的方向，因此下降应沿它的反方向。", "seconds": 9, "title": "梯度与最陡上升方向", "visual": "在当前点绘制局部曲面、水平等高线、梯度箭头和负梯度箭头；将箭头投影到xy平面，显示梯度与等高线正交。用整数切换控制箭头和等高线显示。"}, {"id": "S3", "math": "θ=(x,y)，θ_{k+1}=θ_k−η∇f(θ_k)；初始点由x、y滑杆设定，η由学习率滑杆设定。", "narration": "每一步都用当前位置的真实负梯度计算，轨迹会随曲率改变。", "seconds": 12, "title": "真实迭代轨迹", "visual": "用x、y数值滑杆设置初始点，用学习率滑杆设置η；通过播放暂停和时间轴逐步执行更新，在曲面上连接每个真实迭代点，并同步显示当前坐标、函数值和箭头。轨迹由解析梯度计算，不预设为直线。"}, {"id": "S4", "math": "H=diag(0.16,0.36)；二次函数稳定条件为0\u003cη\u003c2/0.36≈5.56。η=0.3较慢，η=1.5较快，η=5.5接近边界并振荡。", "narration": "学习率决定步长：太小收敛慢，适中更快，接近边界会交替振荡。", "seconds": 10, "title": "收敛与学习率对比", "visual": "用学习率滑杆选择η=0.3、1.5、5.5三个固定示例值，分屏显示由真实更新生成的三条轨迹，并同步绘制f(θ_k)随迭代次数的折线。标注稳定边界η≈5.56，用播放暂停和时间轴逐步比较。"}], "summary": "以严格凸各向异性二次函数的三维碗面为主线，展示梯度是最陡上升方向，负梯度更新如何生成真实迭代轨迹，并用数值滑杆、时间轴和播放暂停比较不同学习率下的收敛速度与振荡现象。", "title": "在三维碗面上沿负梯度下山"}, "program": {"runtime_version": 2, "code": "function draw(ctx,t,p){\n  var W=960,H=540,mode=p\u0026\u0026p.$mode==='explore'?'explore':'presentation';\n  var D={eta:{min:.1,max:6,step:.1,value:1.5},x0:{min:-6,max:6,step:.1,value:5},y0:{min:-6,max:6,step:.1,value:4},arrows:{min:0,max:1,step:1,value:1},contours:{min:0,max:1,step:1,value:1},func:{min:0,max:1,step:1,value:0}};\n  function get(id){var v=Number(p\u0026\u0026p[id]);return isFinite(v)?Math.max(D[id].min,Math.min(D[id].max,v)):D[id].value}\n  var eta=get('eta'),x0=get('x0'),y0=get('y0'),ar=get('arrows')\u003e=.5,co=get('contours')\u003e=.5,fn=get('func')\u003e=.5;\n  var scene=0,local=t;\n  if(mode==='presentation'){\n    var s=t*39;\n    if(s\u003c8){scene=0;local=s/8;eta=1.5;x0=5;y0=4}\n    else if(s\u003c17){scene=1;local=(s-8)/9;eta=1.5;x0=5;y0=4}\n    else if(s\u003c29){scene=2;local=(s-17)/12;eta=1.5;x0=5;y0=4}\n    else{scene=3;local=(s-29)/10;x0=5;y0=4}\n    ar=true;co=true;\n  }\n  var a=fn?.18:.08,b=.18;\n  function f(x,y){return a*x*x+b*y*y}\n  function gx(x){return 2*a*x} function gy(y){return 2*b*y}\n  function makePath(e,n){var q=[],x=x0,y=y0;q.push([x,y,f(x,y)]);for(var k=0;k\u003cn;k++){x=x-e*gx(x);y=y-e*gy(y);q.push([x,y,f(x,y)])}return q}\n  var steps=mode==='presentation'?(scene\u003c2?0:scene===2?Math.floor(local*18):Math.floor(local*18)):Math.floor(t*18);\n  var cases=[],selected=0;\n  if(scene===3\u0026\u0026mode==='presentation'){\n    cases=[makePath(.3,Math.floor(local*18)),makePath(1.5,Math.floor(local*18)),makePath(5.5,Math.floor(local*18))];\n    selected=local\u003c.34?0:local\u003c.67?1:2;eta=[.3,1.5,5.5][selected];\n  }else{cases=[makePath(eta,steps)]}\n  var main=cases[selected]||cases[0],R=6,Z=Math.max(1,f(6,6));\n  for(var ci=0;ci\u003ccases.length;ci++)for(var qi=0;qi\u003ccases[ci].length;qi++){R=Math.max(R,Math.abs(cases[ci][qi][0]),Math.abs(cases[ci][qi][1]));Z=Math.max(Z,cases[ci][qi][2])}\n  function P(x,y,z){return [350+37*(x-y)/R,285+18*(x+y)/R-105*z/Z]}\n  function line(x1,y1,x2,y2,c,w){ctx.strokeStyle=c;ctx.lineWidth=w||1.5;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()}\n  function text(s,x,y,n,c){ctx.fillStyle=c||'#26364a';ctx.font=(n||17)+'px sans-serif';ctx.fillText(s,x,y)}\n  function arrow(x1,y1,x2,y2,c){line(x1,y1,x2,y2,c,2.5);var q=Math.atan2(y2-y1,x2-x1),l=8;line(x2,y2,x2-l*Math.cos(q-.5),y2-l*Math.sin(q-.5),c,2);line(x2,y2,x2-l*Math.cos(q+.5),y2-l*Math.sin(q+.5),c,2)}\n  ctx.fillStyle='#f7f9fc';ctx.fillRect(0,0,W,H);ctx.save();ctx.beginPath();ctx.rect(35,85,890,335);ctx.clip();\n  text('z=f(x,y) 的透视投影',50,108,18,'#38506b');\n  for(var i=-6;i\u003c=6;i++){var last=null;for(var j=-6;j\u003c=6;j++){var pp=P(i,j,f(i,j));if(last)line(last[0],last[1],pp[0],pp[1],'#b8d5df',1);last=pp}}\n  for(var j=-6;j\u003c=6;j++){var last2=null;for(var i=-6;i\u003c=6;i++){var pp2=P(i,j,f(i,j));if(last2)line(last2[0],last2[1],pp2[0],pp2[1],'#b8d5df',1);last2=pp2}}\n  var org=P(0,0,0);ctx.fillStyle='#176b58';ctx.beginPath();ctx.arc(org[0],org[1],5,0,Math.PI*2);ctx.fill();text('最优点 (0,0)',org[0]+8,org[1]-8,16,'#176b58');\n  if(co){for(var lev=1;lev\u003c=5;lev++){var c=lev;ctx.beginPath();for(var u=0;u\u003c=Math.PI*2+.01;u+=.1){var xx=Math.sqrt(c/a)*Math.cos(u),yy=Math.sqrt(c/b)*Math.sin(u),qq=P(xx,yy,0);if(u===0)ctx.moveTo(qq[0],qq[1]);else ctx.lineTo(qq[0],qq[1])}ctx.strokeStyle='#d4a34e';ctx.lineWidth=1;ctx.stroke()}}\n  if(scene===1){var tc=main[main.length-1],tx=tc[0],ty=tc[1],tz=f(tx,ty);for(var qx=-1.5;qx\u003c=1.5;qx+=.5){var ppA=P(tx+qx,ty-1.5,tz+gx(tx)*qx+gy(ty)*-1.5),ppB=P(tx+qx,ty+1.5,tz+gx(tx)*qx+gy(ty)*1.5);line(ppA[0],ppA[1],ppB[0],ppB[1],'#9b78c5',1)}for(var qy=-1.5;qy\u003c=1.5;qy+=.5){var ppC=P(tx-1.5,ty+qy,tz+gx(tx)*-1.5+gy(ty)*qy),ppD=P(tx+1.5,ty+qy,tz+gx(tx)*1.5+gy(ty)*qy);line(ppC[0],ppC[1],ppD[0],ppD[1],'#9b78c5',1)}text('局部切平面 z≈f+∇f·Δθ',70,132,16,'#76549d')}\n  for(var cc=0;cc\u003ccases.length;cc++){var pa=cases[cc],col=cases.length\u003e1?['#3778c2','#e37b35','#c34e72'][cc]:'#2878bd';ctx.beginPath();for(var k=0;k\u003cpa.length;k++){var q=P(pa[k][0],pa[k][1],pa[k][2]);if(k===0)ctx.moveTo(q[0],q[1]);else ctx.lineTo(q[0],q[1])}ctx.strokeStyle=col;ctx.lineWidth=cc===selected?3.5:2;ctx.stroke();for(var m=0;m\u003cpa.length;m+=Math.max(1,Math.floor(pa.length/9))){var zq=P(pa[m][0],pa[m][1],pa[m][2]);ctx.fillStyle=col;ctx.beginPath();ctx.arc(zq[0],zq[1],3,0,Math.PI*2);ctx.fill()}}\n  var cur=main[main.length-1],cp=P(cur[0],cur[1],cur[2]);ctx.fillStyle='#e34d4d';ctx.beginPath();ctx.arc(cp[0],cp[1],6,0,Math.PI*2);ctx.fill();text('当前点',cp[0]+8,cp[1]-8,16,'#b23b3b');\n  if(ar){var sc=35/R,ux=cur[0]+gx(cur[0])/Math.max(.01,sc),uy=cur[1]+gy(cur[1])/Math.max(.01,sc),dx=cur[0]-gx(cur[0])/Math.max(.01,sc),dy=cur[1]-gy(cur[1])/Math.max(.01,sc),up=P(ux,uy,cur[2]),dn=P(dx,dy,cur[2]);arrow(cp[0],cp[1],up[0],up[1],'#d94a4a');arrow(cp[0],cp[1],dn[0],dn[1],'#238b68');text('∇f',up[0]+5,up[1],16,'#b23b3b');text('−∇f',dn[0]+5,dn[1],16,'#167452')}\n  if(scene===3){var bx=675,by=120,bw=220,bh=145;ctx.strokeStyle='#9aaabd';ctx.strokeRect(bx,by,bw,bh);text('函数值序列 f(θₖ)',bx+10,by+22,17,'#38506b');var maxF=1;for(var zc=0;zc\u003ccases.length;zc++)for(var zz=0;zz\u003ccases[zc].length;zz++)maxF=Math.max(maxF,cases[zc][zz][2]);for(var zc=0;zc\u003ccases.length;zc++){var pp=cases[zc];ctx.beginPath();for(var zi=0;zi\u003cpp.length;zi++){var X=bx+10+zi*200/18,Y=by+125-105*pp[zi][2]/maxF;if(zi===0)ctx.moveTo(X,Y);else ctx.lineTo(X,Y)}ctx.strokeStyle=['#3778c2','#e37b35','#c34e72'][zc];ctx.lineWidth=zc===selected?3:1.5;ctx.stroke()}text('蓝 η=.3  橙 η=1.5  紫 η=5.5',bx+10,by+142,14,'#526579')}\n  ctx.restore();\n  var xv=cur[0],yv=cur[1],fv=f(xv,yv),gxx=gx(xv),gyy=gy(yv),gn=Math.sqrt(gxx*gxx+gyy*gyy),nextx=xv-eta*gxx,nexty=yv-eta*gyy,df=f(nextx,nexty)-fv;\n  text('当前点 ('+xv.toFixed(2)+', '+yv.toFixed(2)+')   f='+fv.toFixed(3)+'   ||∇f||='+gn.toFixed(3),55,395,17,'#26364a');\n  text('η='+eta.toFixed(2)+'   Δf(下一步)='+df.toFixed(3)+'   稳定边界 η\u003c5.56',55,418,16,df\u003c=0?'#237653':'#b23b3b');\n  var title,caption;\n  if(scene===0){title='目标函数变成三维曲面';caption='把待最小化的函数看成一座山谷，最低处就是最优解。'}\n  else if(scene===1){title='梯度与最陡上升方向';caption='梯度指向上升最快方向；切平面给出局部线性近似，下降应沿负梯度。'}\n  else if(scene===2){title='真实迭代轨迹';caption='每一步都把当前位置代入真实梯度，轨迹由递推公式生成，而不是预设直线。'}\n  else{title='收敛与学习率对比';caption=eta===5.5?'η=5.5 接近稳定边界，轨迹交替振荡；函数值序列仍由真实更新计算。':'比较 η=0.3、1.5、5.5 的真实轨迹与函数值序列。'}\n  if(mode==='explore'){title=fn?'各向同性二次碗面中的梯度下降':'各向异性二次碗面中的梯度下降';caption=eta\u003e=5.56?'当前学习率达到或超过稳定边界，目标值可能上升或发散。':'当前轨迹由真实更新 θₖ₊₁=θₖ−η∇f(θₖ) 生成。'}\n  return {metrics:{x:xv,y:yv,f:fv,gradient_norm:gn,step_count:main.length-1,delta_f_next:df,stable_boundary:2/(2*b),formula:fn?'f=0.18x²+0.18y²':'f=0.08x²+0.18y²'},controls:{eta:eta,x0:x0,y0:y0,arrows:ar?1:0,contours:co?1:0,func:fn?1:0},disabled:{},title:title,caption:caption};\n}", "controls": [{"id": "eta", "label": "学习率 η", "min": 0.1, "max": 6.0, "step": 0.1, "value": 1.5}, {"id": "x0", "label": "初始 x", "min": -6.0, "max": 6.0, "step": 0.1, "value": 5.0}, {"id": "y0", "label": "初始 y", "min": -6.0, "max": 6.0, "step": 0.1, "value": 4.0}, {"id": "arrows", "label": "显示梯度箭头", "min": 0.0, "max": 1.0, "step": 1.0, "value": 1.0}, {"id": "contours", "label": "显示等高线", "min": 0.0, "max": 1.0, "step": 1.0, "value": 1.0}, {"id": "func", "label": "函数示例", "min": 0.0, "max": 1.0, "step": 1.0, "value": 0.0}], "covered_decision_ids": ["8bf4d1e13a6d4101b3a001352d42d126", "8ce8628f4a134b5b9d86952f95a256d7"], "explanation": "修复等高线为严格恒定的椭圆参数化，补充S4真实函数值序列图和图例，使当前点、指标与选中的固定学习率案例一致；S2加入由实际梯度计算的局部切平面，并将所有运行信息移入绘图区覆盖范围内。探索模式仍完全采用控件数值，函数切换会同步改变曲面、梯度、轨迹、等高线和稳定边界。", "limitations": ["二维Canvas中的三维曲面使用透视投影，不是真正的WebGL三维渲染。", "当学习率超过稳定范围时，轨迹数值可能迅速增大，投影会按实际轨迹范围缩放。"]}}</script><script>/* Owned runtime. Model code executes only in a disposable, network-blocked worker. */
+"use strict";
+const project = JSON.parse(document.getElementById("project").textContent);
+const canvas = document.getElementById("scene");
+const ctx = canvas.getContext("2d");
+const timeSlider = document.getElementById("time");
+const statusBox = document.getElementById("status");
+const duration = project.story.scenes.reduce((n, s) => n + s.seconds, 0);
+const params = Object.fromEntries(project.program.controls.map(c => [c.id, c.value]));
+const defaults = {...params}, widgets = new Map();
+let mode = 'presentation', effective = {...params};
+const version2 = project.program.runtime_version === 2;
+let position = 0, playing = false, serial = 0, requests = new Map(), broken = null;
+const workerSource = `"use strict";\n${project.program.code}\n;
+const surface = new OffscreenCanvas(960, 540);
+const context = surface.getContext('2d');
+self.onmessage = function(event) {
+  const {id,t,p} = event.data;
+  try {
+    const plotText = [];
+    const originalText = context.fillText;
+    context.fillText = function(text, ...args) { if (plotText.length < 80) plotText.push(String(text).slice(0,200)); return originalText.call(this,text,...args); };
+    surface.width = 960; surface.height = 540;
+    context.fillStyle = '#f7f9fc'; context.fillRect(0,0,960,540);
+    let result;
+    try { context.save(); result = draw(context,t,p); context.restore(); }
+    finally { context.fillText = originalText; }
+    const bitmap = surface.transferToImageBitmap();
+    self.postMessage({id,bitmap,result,plotText}, [bitmap]);
+  } catch (error) { self.postMessage({id,error:String(error.message || error)}); }
+};`;
+const workerURL = URL.createObjectURL(new Blob([workerSource], {type: "text/javascript"}));
+const worker = new Worker(workerURL);
+URL.revokeObjectURL(workerURL);
+function fail(message) {
+  broken = String(message); playing = false; statusBox.textContent = `动画运行失败：${broken}`;
+  worker.terminate();
+  for (const value of requests.values()) { clearTimeout(value.timer); value.reject(new Error(broken)); }
+  requests.clear();
+}
+worker.onerror = e => { e.preventDefault(); fail(e.message || "动画代码无法运行"); };
+worker.onmessage = e => {
+  const item = requests.get(e.data.id);
+  if (!item) { if (e.data.bitmap) e.data.bitmap.close(); return; }
+  requests.delete(e.data.id); clearTimeout(item.timer);
+  if (e.data.error) { item.reject(new Error(e.data.error)); return; }
+  item.resolve(e.data);
+};
+function requestFrame(t, p) {
+  if (broken) return Promise.reject(new Error(broken));
+  return new Promise((resolve,reject) => {
+    const id = ++serial;
+    const timer = setTimeout(() => fail("单帧超过 3 秒，请修复代码后重试"), 3000);
+    requests.set(id, {resolve,reject,timer}); worker.postMessage({id,t,p});
+  });
+}
+function lines(text, x, y, width, lineHeight, maxLines) {
+  let line = "", count = 0;
+  const chars = [...text];
+  for (let index=0;index<chars.length;index++) {
+    const char=chars[index];
+    if (ctx.measureText(line + char).width > width) {
+      if (count === maxLines-1) { ctx.fillText(line.slice(0,-1)+'…',x,y); return; }
+      ctx.fillText(line, x, y); y += lineHeight; line = ""; count++;
+    }
+    line += char;
+  }
+  ctx.fillText(line, x, y);
+}
+function currentScene(t) {
+  let end = 0;
+  return project.story.scenes.find(s => { end += s.seconds; return t * duration < end; }) || project.story.scenes.at(-1);
+}
+async function render(t, overrides = {}, options = {}) {
+  t = Math.max(0, Math.min(1, t));
+  const frameMode = options.mode || (Object.keys(overrides).length ? 'explore' : mode);
+  const inputs = {...(frameMode === 'presentation' ? defaults : params), ...overrides};
+  const frame = await requestFrame(t, {...inputs, $mode:frameMode});
+  const result = frame.result || {};
+  if (version2) {
+    if (!result.controls || typeof result.title !== 'string' || !result.title.trim() || result.title.length>100 ||
+        typeof result.caption !== 'string' || !result.caption.trim() || result.caption.length>120) {
+      frame.bitmap.close(); throw new Error('draw 必须返回有效 controls、title（1–100字）和 caption（1–120字）');
+    }
+    for (const control of project.program.controls) {
+      const v=result.controls[control.id], reason=result.disabled?.[control.id];
+      if (typeof v !== 'number' || !Number.isFinite(v) || v<control.min-1e-8 || v>control.max+1e-8 ||
+          (reason !== undefined && (typeof reason !== 'string' || !reason.trim()))) {
+        frame.bitmap.close(); throw new Error(`有效控件值或禁用说明无效：${control.id}`);
+      }
+      if (frameMode === 'explore' && !reason && Math.abs(v-inputs[control.id])>1e-7) {
+        frame.bitmap.close(); throw new Error(`自由探索控件被忽略或被时间轴覆盖：${control.id}，输入 ${inputs[control.id]}，实际 ${v}`);
+      }
+    }
+    effective = {...result.controls};
+    for (const [id,w] of widgets) {
+      w.input.value=String(effective[id]); w.output.textContent=String(Number(effective[id].toFixed(5)));
+      w.input.disabled=Boolean(result.disabled?.[id]); w.reason.textContent=result.disabled?.[id] || '';
+    }
+  }
+  ctx.setTransform(1,0,0,1,0,0); ctx.drawImage(frame.bitmap,0,0); frame.bitmap.close();
+  // Hash just the plot area, before captions; a changing subtitle cannot pass animation checks.
+  const pixels = ctx.getImageData(0,68,960,367).data;
+  let signature = 2166136261;
+  for (let i=0;i<pixels.length;i+=4) { signature = Math.imul(signature ^ pixels[i],16777619); signature = Math.imul(signature ^ pixels[i+1],16777619); signature = Math.imul(signature ^ pixels[i+2],16777619); }
+  const scene = currentScene(t);
+  const title = version2 ? result.title : scene.title;
+  const caption = version2 ? result.caption : scene.narration;
+  ctx.fillStyle = "#f7f9fc"; ctx.fillRect(0,0,960,68); ctx.fillRect(0,435,960,105);
+  ctx.fillStyle = "#18283b"; ctx.font = "bold 25px sans-serif";
+  lines(project.story.title,28,34,890,28,1);
+  ctx.fillStyle = "#567087"; ctx.font = "16px sans-serif";
+  ctx.fillText(`${title} · ${(t*duration).toFixed(1)} / ${duration} 秒`,28,59);
+  ctx.fillStyle = "#1d3651"; ctx.font = "19px sans-serif";
+  lines(caption,28,460,900,25,3);
+  ctx.fillStyle = "#4562d9"; ctx.fillRect(0,534,960*t,6);
+  position = t; timeSlider.value = String(t);
+  document.getElementById("caption").textContent = caption;
+  document.getElementById("mode").textContent = frameMode==='presentation' ? '分镜演示 · 调整参数可进入自由探索' : '自由探索 · 滑杆控制当前参数，可重置返回分镜演示';
+  return {metrics: result.metrics || {}, plot_signature: String(signature >>> 0), plot_text:frame.plotText,
+          title,caption,controls:version2 ? result.controls : inputs,disabled:result.disabled || {},mode:frameMode,scene_id:scene.id};
+}
+let rendering = false, queued = null;
+async function show(t) {
+  queued=t;
+  if (rendering) return;
+  rendering = true;
+  try { while(queued !== null) { const next=queued; queued=null; await render(next); } } catch (e) { fail(e.message); }
+  finally { rendering = false; }
+}
+for (const control of project.program.controls) {
+  const label = document.createElement("label");
+  const title = document.createElement("span"); title.textContent = control.label;
+  const input = document.createElement("input"); input.type="range";
+  input.min=control.min; input.max=control.max; input.step=control.step; input.value=control.value;
+  input.id=`param-${control.id}`; input.setAttribute("aria-label",control.label);
+  const value = document.createElement("output"); value.textContent=control.value;
+  const reason = document.createElement('small'); reason.className='control-reason';
+  input.oninput = () => { if (version2 && mode==='presentation') Object.assign(params,effective); mode='explore'; params[control.id]=Number(input.value); value.textContent=input.value; playing=false; show(position); };
+  widgets.set(control.id,{input,output:value,reason});
+  label.append(title,input,value,reason); document.getElementById("controls").append(label);
+}
+timeSlider.oninput = () => { playing=false; show(Number(timeSlider.value)); };
+document.getElementById("play").onclick = async () => {
+  if (playing) { playing=false; return; }
+  if (position>=1) position=0;
+  playing=true; const start=performance.now()-position*duration*1000;
+  while(playing && position<1 && !broken) {
+    await show(Math.min(1,(performance.now()-start)/(duration*1000)));
+    await new Promise(resolve=>setTimeout(resolve,33));
+  }
+  playing=false;
+};
+document.getElementById("reset").onclick = () => { playing=false; mode='presentation'; Object.assign(params,defaults); show(0); };
+if (version2) {
+  // A presentation can lock every control. Exploration must still be reachable.
+  const explore = document.createElement('button'); explore.id='explore'; explore.textContent='自由探索';
+  explore.onclick = () => { playing=false; if(mode==='presentation')Object.assign(params,effective); mode='explore'; show(position); };
+  document.getElementById('reset').before(explore);
+}
+async function record() {
+  playing=false; mode='presentation'; await render(0,{}, {mode:'presentation'});
+  const mime = ["video/webm;codecs=vp9","video/webm;codecs=vp8"].find(v=>MediaRecorder.isTypeSupported(v));
+  if (!mime) throw new Error("浏览器不支持 WebM 视频编码");
+  const stream=canvas.captureStream(24);
+  const recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:4000000});
+  const chunks=[]; let size=0;
+  const completed=new Promise((resolve,reject)=>{
+    recorder.ondataavailable=e=>{ chunks.push(e.data); size+=e.data.size; if(size>80*1024*1024){recorder.stop();reject(new Error('视频超过 80MB 限制'));} };
+    recorder.onerror=e=>reject(new Error(e.error?.message || "视频编码失败"));
+    recorder.onstop=resolve;
+  });
+  recorder.start(1000); const start=performance.now(); let frames=0;
+  try {
+    while (performance.now()-start<duration*1000) {
+      await render(Math.min(1,(performance.now()-start)/(duration*1000)),{}, {mode:'presentation'}); frames++;
+      await new Promise(resolve=>setTimeout(resolve,1000/24));
+    }
+    await render(1,{}, {mode:'presentation'}); await new Promise(resolve=>setTimeout(resolve,150));
+    recorder.stop(); await completed;
+  } finally { stream.getTracks().forEach(track=>track.stop()); }
+  const blob=new Blob(chunks,{type:mime});
+  const video=document.createElement("video"); video.muted=true; video.src=URL.createObjectURL(blob);
+  await new Promise((resolve,reject)=>{video.onloadeddata=resolve;video.onerror=()=>reject(new Error('视频解码验证失败'));});
+  const dimensions={width:video.videoWidth,height:video.videoHeight}; URL.revokeObjectURL(video.src);
+  const data=await new Promise(resolve=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result.split(',')[1]);reader.readAsDataURL(blob);});
+  return {data,mime,frames,duration_seconds:duration,recorded_seconds:(performance.now()-start)/1000,...dimensions};
+}
+window.visualization = {render,record,params,duration,ready:render(0)};
+window.visualization.ready.catch(e=>fail(e.message));
+</script></body></html>

@@ -1,0 +1,194 @@
+{
+  "section_id": "S01",
+  "math": {
+    "schema_version": 1,
+    "status": "NEEDS_REVIEW",
+    "issues": [
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "练习答案中使用了直接代入与有限求和，未用符号核算协议逐项验证全部分数运算。",
+        "location": {},
+        "resolution_status": "open"
+      }
+    ],
+    "evidence": [
+      {
+        "kind": "derivative",
+        "assumptions": {
+          "a": {
+            "real": true
+          }
+        },
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "4*a - 6",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S01.C01",
+        "unit_id": "S01.U03"
+      },
+      {
+        "kind": "equivalence",
+        "assumptions": {},
+        "tool": "SymPy",
+        "tool_version": "1.14.0",
+        "status": "PASS",
+        "evidence_type": "symbolic_check_passed",
+        "result": "10/3",
+        "message": "在声明假设下符号结果与预期完全一致。",
+        "calculation_id": "S01.C02",
+        "unit_id": "S01.U07"
+      }
+    ],
+    "coverage": [
+      "S01.U01",
+      "S01.U02",
+      "S01.U03",
+      "S01.U04",
+      "S01.U05",
+      "S01.U06",
+      "S01.U07",
+      "S01.U08",
+      "S01.U09",
+      "S01.U10"
+    ],
+    "limitations": [
+      "只复算显式请求的受支持表达式，并做少量已知错误模式检查；不证明整份讲义正确。",
+      "数值抽查成功不是一般性证明；无法决定的表达式明确标记 UNKNOWN。",
+      "S01.C02 已由数值点抽查改为对样本均值的等价性核算；未对拟合直线的残差进行逐点符号核算。"
+    ]
+  },
+  "llm_review": {
+    "issues": [
+      {
+        "unit_id": "S01.U03",
+        "severity": "blocking",
+        "message": "锁定的 S01 章节要求提供标签 `thm:quadratic-unique-minimum`，但承载“平方误差函数在条件下具有唯一最小点”这一结论的定理正文没有该标签。当前单元只定义了 `thm:normal-equations`，因此计划要求的唯一最小值定理标签未在实际正文中落实。",
+        "evidence": "S01.U03 的定理正文明确断言“平方误差函数 S(a,b) 在 R^2 上具有唯一最小点”，但其公式环境仅包含 `\\label{thm:normal-equations}`。锁定 section S01 的 reference_labels 同时要求 `thm:quadratic-unique-minimum` 与 `thm:normal-equations`；在所提供的十个实际单元中未发现 `\\label{thm:quadratic-unique-minimum}`。"
+      }
+    ],
+    "checked_unit_ids": [
+      "S01.U01",
+      "S01.U02",
+      "S01.U03",
+      "S01.U04",
+      "S01.U05",
+      "S01.U06",
+      "S01.U07",
+      "S01.U08",
+      "S01.U09",
+      "S01.U10"
+    ],
+    "limitations": [
+      "本次仅核对 scope 指定的 S01 实际单元 S01.U01–S01.U10；尚未生成的 S02、S03 不构成本节遗漏。",
+      "审阅已检查定义、条件、求导、正规方程、唯一性证明、例题与练习答案；S01.U04 中已实际包含对候选参数满足两条正规方程的验证，因此未将先前关于该验证缺失的意见保留为问题。",
+      "S01.U10 的均值、协方差和、斜率、截距、拟合值及残差经直接代入核对一致；这属于普通模型审阅，不等同于形式化证明或对最终排版 PDF 的检查。"
+    ]
+  },
+  "issues": [
+    {
+      "rule_id": "PLANNED_LABEL_MISSING",
+      "severity": "blocking",
+      "message": "本节缺少计划标签：thm:quadratic-unique-minimum"
+    },
+    {
+      "unit_id": "S01.U03",
+      "severity": "blocking",
+      "message": "锁定的 S01 章节要求提供标签 `thm:quadratic-unique-minimum`，但承载“平方误差函数在条件下具有唯一最小点”这一结论的定理正文没有该标签。当前单元只定义了 `thm:normal-equations`，因此计划要求的唯一最小值定理标签未在实际正文中落实。",
+      "evidence": "S01.U03 的定理正文明确断言“平方误差函数 S(a,b) 在 R^2 上具有唯一最小点”，但其公式环境仅包含 `\\label{thm:normal-equations}`。锁定 section S01 的 reference_labels 同时要求 `thm:quadratic-unique-minimum` 与 `thm:normal-equations`；在所提供的十个实际单元中未发现 `\\label{thm:quadratic-unique-minimum}`。"
+    },
+    {
+      "rule_id": "DECLARED_MATH_UNCERTAINTY",
+      "severity": "review",
+      "message": "练习答案中使用了直接代入与有限求和，未用符号核算协议逐项验证全部分数运算。",
+      "location": {},
+      "uncertainty_id": "D001-6e31a6936c94d510",
+      "original_sha256": "6e31a6936c94d510e52c7f19c60263f3f1950ed502d0cc6f04706d0bf95610e7",
+      "resolution_status": "open"
+    }
+  ],
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "mock": false,
+  "uncertainty_review": {
+    "identity_hash": "c25ff26458a1f0299336c795ae348e9ffb95d7ce26da1bcf8bc2c46c8a458806",
+    "status": "INVALID",
+    "evidence_key": "runs/63380f6a1ebf40dfb4de606687953ab5/uncertainty-reviews/c25ff26458a1f0299336c795/state.json",
+    "evidence_sha256": "e91219ae2d68d33e97b8a9c824ce1295538477b9f156630bacf98c9197aa2e63",
+    "failure": {
+      "code": "INVALID_MODEL_JSON",
+      "message": "结构修复预算耗尽；错误：[{\"loc\":[\"items\",0,\"evidence\",0,\"unit_id\"],\"type\":\"extra_forbidden\"}]",
+      "at": "2026-10-07T05:23:49.284649+00:00",
+      "retryable_same_slot": false
+    },
+    "teacher_review": "NOT_RUN"
+  },
+  "uncertainty_legacy_mapping": [],
+  "local_recovery": {
+    "applied_rounds": 1,
+    "proposal_calls": 1,
+    "rejected_proposals": 0,
+    "preserved_issues": [
+      {
+        "rule_id": "PLANNED_LABEL_MISSING",
+        "severity": "blocking",
+        "message": "本节缺少计划标签：thm:quadratic-unique-minimum"
+      },
+      {
+        "rule_id": "SYMBOLIC_COUNTERCHECK_FAILED",
+        "severity": "blocking",
+        "message": "指定数值点发现反例。",
+        "location": {
+          "calculation_id": "S01.C02",
+          "unit_id": "S01.U07"
+        },
+        "resolution_status": "open"
+      },
+      {
+        "unit_id": "S01.U10",
+        "severity": "blocking",
+        "message": "练习答案的协方差和、斜率及最终拟合结果均错误，且正文内部自相矛盾。对于数据 (1,4),(2,5),(4,8)，应有 Σ(x_i−x̄)(y_i−ȳ)=19/3，而不是 20/3；因此斜率应为 (19/3)/(14/3)=19/14，而不是 10/7。正确截距为 5/2，拟合直线为 ŷ=5/2+(19/14)x，残差为 1/7、−3/14、1/14，x=3 时拟合值为 46/7。当前答案先给出错误的截距与残差，随后虽声称更正，但仍保留错误斜率，故最终答案及练习要求的计算结论不成立。",
+        "evidence": "S01.U10给出 Σ(x_i−x̄)(y_i−ȳ)=20/3；直接代入 x̄=7/3、ȳ=17/3 得 20/9+2/9+35/9=57/9=19/3。其最终给出的直线 ŷ=7/3+(10/7)x 也不经过样本均值点：(7/3)+(10/7)(7/3)=17/3? 实际该表达式等于 17/3，虽经过均值点，但其斜率仍由错误的协方差得到；按正确斜率计算应为 ŷ=5/2+(19/14)x。该错误直接影响残差和 x=3 的预测值。"
+      },
+      {
+        "unit_id": "S01.U04",
+        "severity": "review",
+        "message": "关键定理的证明从必要条件推出候选公式，但没有明确验证由这些公式构造出的参数对确实满足正规方程，随后却在“正规方程成立的条件下”使用平方和分解来证明全局最小性。该验证是一次直接代入即可完成的常规步骤，但在当前证明中未写出，导致存在从必要条件到候选点存在性及平方和分解适用性的逻辑跳步。",
+        "evidence": "S01.U04先写“最小点必须满足式 ...”，再由正规方程推导出斜率和截距公式；随后直接令 u=a−â、v=b−b̂，并写“在正规方程成立的条件下”得到 S(a,b)=S(â,b̂)+Σ(u+vx_i)^2。正文没有说明或验证按所给公式定义的 (â,b̂) 满足两条正规方程。由于后续全局最小性论证依赖该条件，建议在使用平方和分解前补充代入验证。"
+      },
+      {
+        "rule_id": "DECLARED_MATH_UNCERTAINTY",
+        "severity": "review",
+        "message": "练习答案中使用了直接代入与有限求和，未用符号核算协议逐项验证全部分数运算。",
+        "location": {},
+        "uncertainty_id": "D001-6e31a6936c94d510",
+        "original_sha256": "6e31a6936c94d510e52c7f19c60263f3f1950ed502d0cc6f04706d0bf95610e7",
+        "resolution_status": "open"
+      }
+    ],
+    "review_identity": {
+      "candidate_hash": "58ac9c49b2387525a8b2f88f3b5bdade2258b61a450a90b44bfb37f1707b15c4",
+      "tool_checks_hash": "b678882c89e336fa186807c2ccfb3a77cb0f0933d1d62897e6f700d6590cc048",
+      "reviewer_prompt_hash": "cd75bbcf1516a0fa5ecaa882e753956e82d65da7e0640442db98717a1cf6f92d",
+      "plan_context_hash": "0b2d0208873ad91a0710799ce918979fcd89e02514b8f0d5e0b592e89cbc0470",
+      "deterministic_checks_hash": "b77c93e4507c0638d402eb3aaf8f5250bd305f881cc24e0744872ef08919e9a2",
+      "uncertainty_identity": "c25ff26458a1f0299336c795ae348e9ffb95d7ce26da1bcf8bc2c46c8a458806",
+      "uncertainty_failure_hash": "0519d6487d6aae98297162f2f1b3548a3c36533ea92d050800ff8641445b3175"
+    }
+  },
+  "independent_repair": {
+    "status": "REQUIRED",
+    "issues": [
+      {
+        "unit_id": "S01.U03",
+        "severity": "blocking",
+        "message": "锁定的 S01 章节要求提供标签 `thm:quadratic-unique-minimum`，但承载“平方误差函数在条件下具有唯一最小点”这一结论的定理正文没有该标签。当前单元只定义了 `thm:normal-equations`，因此计划要求的唯一最小值定理标签未在实际正文中落实。",
+        "evidence": "S01.U03 的定理正文明确断言“平方误差函数 S(a,b) 在 R^2 上具有唯一最小点”，但其公式环境仅包含 `\\label{thm:normal-equations}`。锁定 section S01 的 reference_labels 同时要求 `thm:quadratic-unique-minimum` 与 `thm:normal-equations`；在所提供的十个实际单元中未发现 `\\label{thm:quadratic-unique-minimum}`。"
+      }
+    ],
+    "uncertainty_status": "INVALID",
+    "requires_changed_body_and_full_recheck": true
+  }
+}

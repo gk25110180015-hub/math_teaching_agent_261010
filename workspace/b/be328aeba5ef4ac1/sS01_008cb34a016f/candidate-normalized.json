@@ -1,0 +1,303 @@
+{
+  "section_id": "S01",
+  "units": [
+    {
+      "id": "S01.U01",
+      "kind": "explanation",
+      "tex": "对同一个量重复测量时，读数往往并不完全相同。如果要用一个数代表这些读数，应当如何选择？最小二乘法先规定误差的度量，再寻找使这种误差最小的模型参数。本节从常数拟合入手，只使用有限求和、一元求导和配方法。",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U02",
+      "kind": "definition",
+      "tex": "设 $n\\geq 1$ 为整数，$y_i\\in\\mathbb{R}$ 是第 $i$ 次观测的响应值，$i=1,\\ldots,n$。若记录中还有自变量，则用 $x_i\\in\\mathbb{R}$ 表示第 $i$ 次观测的输入。给定模型及其参数后，模型对第 $i$ 次观测给出的数值记为 $\\hat{y}_i$，称为拟合值。\n\n约定残差为观测值减去拟合值：\n\\[\nr_i=y_i-\\hat{y}_i,\\qquad i=1,\\ldots,n.\n\\]\n因此，$r_i>0$ 表示模型低估了该观测值，$r_i<0$ 表示模型高估了该观测值。残差平方和定义为\n\\[\nQ=\\sum_{i=1}^{n}r_i^2=\\sum_{i=1}^{n}(y_i-\\hat{y}_i)^2.\n\\]\n最小二乘准则是：在选定模型的允许参数范围内，寻找使 $Q$ 取得最小值的参数。这里最小化的是所选模型对已有数据的残差平方和，而不是保证每个残差都分别最小。",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U03",
+      "kind": "explanation",
+      "tex": "为什么不直接用残差之和度量拟合误差？正负残差可能互相抵消。例如，两个残差为 $1$ 与 $-1$ 时，残差之和为零，但两个拟合值都没有命中观测值。平方后各项非负，不能发生这种抵消；并且\n\\[\n\\sum_{i=1}^{n}r_i^2=0\\quad\\Longleftrightarrow\\quad r_i=0\\ \\text{对所有 }i=1,\\ldots,n.\n\\]\n平方也会使较大的残差更显著地影响目标函数。如果响应值有计量单位，残差与响应值同单位，而残差平方和具有该单位的平方。比较不同候选模型的平方和时，本节始终使用同一组数据和相同单位。",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U04",
+      "kind": "definition",
+      "tex": "设 $n\\geq1$ 为整数，观测值为 $y_1,\\ldots,y_n\\in\\mathbb{R}$。常数模型用同一个待定实数 $c$ 拟合所有观测值，即\n\\[\n\\hat{y}_i=c,\\qquad i=1,\\ldots,n,\\qquad c\\in\\mathbb{R}.\n\\]\n相应的目标函数是\n\\[\nQ(c)=\\sum_{i=1}^{n}(y_i-c)^2,\\qquad c\\in\\mathbb{R}.\n\\]\n这些观测值的样本算术平均数记为\n\\[\n\\bar{y}=\\frac{1}{n}\\sum_{i=1}^{n}y_i.\n\\]\n在优化过程中，观测值以及由它们算出的 $\\bar{y}$ 都是固定的，只有参数 $c$ 发生变化。",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U05",
+      "kind": "theorem",
+      "tex": "设 $n\\geq1$ 为整数，$y_1,\\ldots,y_n\\in\\mathbb{R}$，并令 $\\bar{y}=\\frac{1}{n}\\sum_{i=1}^{n}y_i$。则常数模型的残差平方和满足：对每个 $c\\in\\mathbb{R}$，\n\\[\nQ(c)=\\sum_{i=1}^{n}(y_i-\\bar{y})^2+n(c-\\bar{y})^2.\n\\]\n因此，$Q(c)$ 在且仅在 $c=\\bar{y}$ 时取得全局最小值，最小值为\n\\[\nQ(\\bar{y})=\\sum_{i=1}^{n}(y_i-\\bar{y})^2.\n\\]",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U06",
+      "kind": "proof",
+      "tex": "先用一元求导寻找候选参数。对任意 $c\\in\\mathbb{R}$，有限项逐项求导得\n\\[\nQ'(c)=2\\sum_{i=1}^{n}(c-y_i)=2n(c-\\bar{y}).\n\\]\n所以 $Q'(c)=0$ 当且仅当 $c=\\bar{y}$。由于参数范围是整个实数轴，可微函数若在某点取得最小值，该点必须满足导数为零。不过，求出驻点本身还不是全局最小性的证明。\n\n下面直接比较所有参数对应的函数值。由平均数的定义，\n\\[\n\\sum_{i=1}^{n}(y_i-\\bar{y})=\\sum_{i=1}^{n}y_i-n\\bar{y}=0.\n\\]\n于是，对任意 $c\\in\\mathbb{R}$，平方展开得到\n\\[\n\\begin{aligned}\nQ(c)&=\\sum_{i=1}^{n}\\bigl((y_i-\\bar{y})+(\\bar{y}-c)\\bigr)^2\\\\\n&=\\sum_{i=1}^{n}(y_i-\\bar{y})^2\n +2(\\bar{y}-c)\\sum_{i=1}^{n}(y_i-\\bar{y})\n +n(\\bar{y}-c)^2\\\\\n&=Q(\\bar{y})+n(c-\\bar{y})^2.\n\\end{aligned}\n\\]\n因为 $n>0$，最后一项对所有实数 $c$ 都非负，且仅在 $c=\\bar{y}$ 时为零。这既证明了最小值存在，也证明了全局最小点唯一。",
+      "relates_to": "S01.U05"
+    },
+    {
+      "id": "S01.U07",
+      "kind": "example",
+      "tex": "某个保持不变的量经过三次测量，读数依次为 $2,3,7$，单位相同。用常数模型拟合这些读数：写出目标函数，求最优常数及最小残差平方和，并与候选常数 $c=3$ 比较。",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U08",
+      "kind": "solution",
+      "tex": "对 $c\\in\\mathbb{R}$，目标函数为\n\\[\n\\begin{aligned}\nQ(c)&=(2-c)^2+(3-c)^2+(7-c)^2\\\\\n&=3c^2-24c+62\\\\\n&=3(c-4)^2+14.\n\\end{aligned}\n\\]\n三个读数的平均数是 $\\bar{y}=(2+3+7)/3=4$，所以唯一最优常数为 $c=4$。这也可从 $Q'(c)=6c-24$ 和上述配方看出。\n\n将两个候选常数的残差列在一起：\n\\[\n\\begin{array}{c|rrr|r}\n\\text{候选常数}&r_1&r_2&r_3&Q(c)\\\\ \\hline\nc=3&-1&0&4&17\\\\\nc=4&-2&-1&3&14\n\\end{array}\n\\]\n因此最小平方和为 $Q(4)=4+1+9=14$，而 $Q(3)=1+0+16=17$。从 $c=3$ 改为 $c=4$ 后，前两个残差的绝对值反而增大，但总平方和减小了 $3$。这说明最小二乘法优化的是整体指标，并不要求每次测量的拟合误差都同时减小。",
+      "relates_to": "S01.U07"
+    },
+    {
+      "id": "S01.U09",
+      "kind": "explanation",
+      "tex": "常数拟合给出了一个可重复使用的思路：先明确参数与目标函数，再求导寻找候选点，最后用平方和分解证明全局最优性。恒等式 $Q(c)-Q(\\bar{y})=n(c-\\bar{y})^2$ 还定量说明了偏离最优参数的代价。\n\n最优常数模型的残差之和为 $\\sum_{i=1}^{n}(y_i-\\bar{y})=0$，但残差平方和不一定为零；它为零当且仅当所有观测值相同。第\\ref{sec:S02}节将把这里的常数拟合结论用于直线拟合，仍然只需要一元求导与配方。",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U10",
+      "kind": "exercise",
+      "tex": "对同单位的四次测量值 $1,2,4,5$ 作常数拟合。写出 $Q(c)$ 的平方和形式，求最优常数、各个残差及最小平方和；再计算 $Q(2)$，并用平方和分解解释它与最小值之差。本题答案统一置于讲义末尾。",
+      "relates_to": null
+    },
+    {
+      "id": "S01.U11",
+      "kind": "exercise",
+      "tex": "设 $n\\geq1$ 为整数，$y_1,\\ldots,y_n\\in\\mathbb{R}$，常数模型的残差为 $r_i=y_i-c$，其中 $c\\in\\mathbb{R}$。判断并说明理由：\n\n（1）若 $\\sum_{i=1}^{n}r_i=0$，则 $c$ 是该常数模型的唯一最优参数。\n\n（2）若 $\\sum_{i=1}^{n}r_i=0$，则每一个残差都等于零。\n\n（3）当 $n=1$ 时，常数模型仍有唯一最优参数。\n\n本题答案统一置于讲义末尾。",
+      "relates_to": null
+    }
+  ],
+  "calculations": [
+    {
+      "id": "S01.C01",
+      "unit_id": "S01.U08",
+      "kind": "equivalence",
+      "assumptions": {
+        "c": {
+          "real": true
+        }
+      },
+      "lhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      },
+                      {
+                        "op": "Symbol",
+                        "name": "c"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 3
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      },
+                      {
+                        "op": "Symbol",
+                        "name": "c"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 7
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      },
+                      {
+                        "op": "Symbol",
+                        "name": "c"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Integer",
+                "value": 3
+              },
+              {
+                "op": "Pow",
+                "args": [
+                  {
+                    "op": "Add",
+                    "args": [
+                      {
+                        "op": "Symbol",
+                        "name": "c"
+                      },
+                      {
+                        "op": "Integer",
+                        "value": -4
+                      }
+                    ]
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "Integer",
+            "value": 14
+          }
+        ]
+      }
+    },
+    {
+      "id": "S01.C02",
+      "unit_id": "S01.U08",
+      "kind": "derivative",
+      "assumptions": {
+        "c": {
+          "real": true
+        }
+      },
+      "expression": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Integer",
+                "value": 3
+              },
+              {
+                "op": "Pow",
+                "args": [
+                  {
+                    "op": "Symbol",
+                    "name": "c"
+                  },
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Integer",
+                "value": -24
+              },
+              {
+                "op": "Symbol",
+                "name": "c"
+              }
+            ]
+          },
+          {
+            "op": "Integer",
+            "value": 62
+          }
+        ]
+      },
+      "variable": "c",
+      "expected": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Integer",
+                "value": 6
+              },
+              {
+                "op": "Symbol",
+                "name": "c"
+              }
+            ]
+          },
+          {
+            "op": "Integer",
+            "value": -24
+          }
+        ]
+      }
+    }
+  ],
+  "calculation_limitations": [
+    "协议的表达式树不能表示带任意数据列的有限求和，因此核算仅覆盖三次测量例题中的配方与求导；一般常数拟合定理的全局最小性和唯一性由正文完整证明。",
+    "对后文第\\ref{sec:S02}节的引用使用已登记标签，其编号需待全文编译验证。"
+  ],
+  "uncertainties": []
+}

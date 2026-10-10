@@ -1,0 +1,8 @@
+{
+  "code": "VISUAL_QUALITY_BLOCKED",
+  "message": "可视化代码/渲染检查未通过：presentation 模式 si===3（S4）仍使用 `mag=si===2?1-.98*local:inputH`，因此 t∈[50,64) 时 h 固定为 inputH（默认 0.5），左右割线不随时间轴旋转；面板显示 m(+|h|)=2x0+|h|、m(−|h|)=2x0−|h|，而字幕称“两侧都趋向同一个有限数 2x₀”。触发：presentation、t=0.55、p.h=0.5。修复：在 si===3 让 |h| 随 local 从 1 缩小到 0.02（并同步 disabled/controls），或修改字幕为当前固定步长下的对比。; explore 模式 si===4（S5）且 example=1、x0≠0 时，caption 固定说“在不跨过原点的局部区间内……误差为 0”，但未判断 Q 是否与 P 同侧；当 |h|>|x0| 时 residual=f(x0+h)-L(x0+h)≠0，面板和 metrics 显示 r(h) 与 r(h)/|h| 非零。触发：explore、t=0.7、example=1、x0=1、side=-1、h=2（qx=-1），面板显示 r(h)=2、r(h)/|h|=1，字幕仍说误差为 0。修复：在 si===4 且 isAbs 时判断 `x0*(x0+h)>0`（或 `Math.abs(h)<Math.abs(x0)`），跨过时动态修改 caption/公式说明当前割线跨过尖点、不适用局部线性结论，或限制 |h| 使 Q 与 P 在同一分支。",
+  "timestamp": "2026-09-28T16:27:17.064193+00:00",
+  "job_id": "735c234d59cd408796e0f7be25d9c9fa",
+  "attempt": 2,
+  "recovery": "已确认方案、选择与失败代码保留；重试将继续修复最后版本，并重新检查控件、数学内容和视频。累计模型请求不会清零。"
+}

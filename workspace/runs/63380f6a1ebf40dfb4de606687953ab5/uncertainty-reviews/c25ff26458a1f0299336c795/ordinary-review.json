@@ -1,0 +1,27 @@
+{
+  "issues": [
+    {
+      "unit_id": "S01.U03",
+      "severity": "blocking",
+      "message": "锁定的 S01 章节要求提供标签 `thm:quadratic-unique-minimum`，但承载“平方误差函数在条件下具有唯一最小点”这一结论的定理正文没有该标签。当前单元只定义了 `thm:normal-equations`，因此计划要求的唯一最小值定理标签未在实际正文中落实。",
+      "evidence": "S01.U03 的定理正文明确断言“平方误差函数 S(a,b) 在 R^2 上具有唯一最小点”，但其公式环境仅包含 `\\label{thm:normal-equations}`。锁定 section S01 的 reference_labels 同时要求 `thm:quadratic-unique-minimum` 与 `thm:normal-equations`；在所提供的十个实际单元中未发现 `\\label{thm:quadratic-unique-minimum}`。"
+    }
+  ],
+  "checked_unit_ids": [
+    "S01.U01",
+    "S01.U02",
+    "S01.U03",
+    "S01.U04",
+    "S01.U05",
+    "S01.U06",
+    "S01.U07",
+    "S01.U08",
+    "S01.U09",
+    "S01.U10"
+  ],
+  "limitations": [
+    "本次仅核对 scope 指定的 S01 实际单元 S01.U01–S01.U10；尚未生成的 S02、S03 不构成本节遗漏。",
+    "审阅已检查定义、条件、求导、正规方程、唯一性证明、例题与练习答案；S01.U04 中已实际包含对候选参数满足两条正规方程的验证，因此未将先前关于该验证缺失的意见保留为问题。",
+    "S01.U10 的均值、协方差和、斜率、截距、拟合值及残差经直接代入核对一致；这属于普通模型审阅，不等同于形式化证明或对最终排版 PDF 的检查。"
+  ]
+}

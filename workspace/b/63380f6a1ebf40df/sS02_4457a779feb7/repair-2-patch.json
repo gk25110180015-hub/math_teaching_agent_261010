@@ -1,0 +1,50 @@
+{
+  "section_id": "S02",
+  "replacements": [
+    {
+      "unit_id": "S02.U09",
+      "tex": "由数据可得\n\\[\nX=\\begin{bmatrix}1&1&0\\\\1&0&1\\\\1&1&1\\end{bmatrix},\n\\qquad\n y=\\begin{bmatrix}4\\\\3\\\\5\\end{bmatrix}.\n\\]\n计算得到\n\\[\nX^{\\mathsf T}X=\n\\begin{bmatrix}3&2&2\\\\2&2&1\\\\2&1&2\\end{bmatrix},\n\\qquad\nX^{\\mathsf T}y=\n\\begin{bmatrix}12\\\\9\\\\8\\end{bmatrix}.\n\\]\n因此正规方程为\n\\[\n\\begin{bmatrix}3&2&2\\\\2&2&1\\\\2&1&2\\end{bmatrix}\n\\begin{bmatrix}\\hat\\beta_0\\\\\\hat\\beta_1\\\\\\hat\\beta_2\\end{bmatrix}\n=\n\\begin{bmatrix}12\\\\9\\\\8\\end{bmatrix}.\n\\]\n直接检验可得\n\\[\n\\hat\\beta=\n\\begin{bmatrix}2\\\\2\\\\1\\end{bmatrix},\n\\]\n因为\n\\[\n\\begin{bmatrix}3&2&2\\\\2&2&1\\\\2&1&2\\end{bmatrix}\n\\begin{bmatrix}2\\\\2\\\\1\\end{bmatrix}\n=\n\\begin{bmatrix}12\\\\9\\\\8\\end{bmatrix}.\n\\]\n所以拟合方程为\n\\[\n\\hat y=2+2x_1+x_2.\n\\]\n三个观测的拟合值依次为 $4,3,5$，因此残差向量为\n\\[\n\\hat e=y-X\\hat\\beta=\n\\begin{bmatrix}0\\\\0\\\\0\\end{bmatrix}.\n\\]\n在这个例子中，三个观测点恰好被模型完全拟合。若给定一个新的解释变量取值 $(x_1,x_2)=(2,1)$，则将其代入拟合方程可得样本外预测值\n\\[\n\\widehat y(2,1)=2+2\\times 2+1=7.\n\\]\n由于样本中 $x_1$ 只取过 $0$ 和 $1$，这里的预测涉及超出样本观测范围的外推，应谨慎解释其可靠性。这个计算说明矩阵正规方程可以同时处理多个解释变量，但拟合关系仍然只是样本内的线性拟合，不能据此断言培训支出或设备投入对劳动生产率具有因果影响。"
+    }
+  ],
+  "calculation_updates": [],
+  "calculation_additions": [
+    {
+      "assumptions": {},
+      "id": "S02.C02",
+      "kind": "equivalence",
+      "lhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Integer",
+            "value": 2
+          },
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Integer",
+                "value": 2
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "op": "Integer",
+            "value": 1
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Integer",
+        "value": 7
+      },
+      "unit_id": "S02.U09"
+    }
+  ],
+  "uncertainties_append": [],
+  "calculation_limitations_append": []
+}

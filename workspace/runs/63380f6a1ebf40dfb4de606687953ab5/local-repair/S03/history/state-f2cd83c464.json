@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "plan_hash": "82e757fb09ac695a50694cf8a2ec4ee2877b86324aa80954200dbcc4bf4edb32",
+    "section_id": "S03",
+    "context_hash": "aeacf0882d74811eb101d11f264092cd9a50b4b270a4e0bf40199c41c68cb84d",
+    "base_hash": "3ae11403039855a6723e6e47ba9c7b94df4ed60f57ed9f1e900f37f630efddc8",
+    "model": "gpt-6-astra",
+    "provider": "live"
+  },
+  "phase": "NEEDS_REPAIR",
+  "applied_rounds": 0,
+  "proposal_calls": 0,
+  "rejected_proposals": 0,
+  "pending_issues": [
+    {
+      "rule_id": "SYMBOLIC_COUNTERCHECK_FAILED",
+      "severity": "blocking",
+      "message": "在声明假设下符号结果与预期不一致。",
+      "location": {
+        "calculation_id": "S03.C01",
+        "unit_id": "S03.U07"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "rule_id": "MATH_CHECK_UNKNOWN",
+      "severity": "review",
+      "message": "ValueError: 幂指数超出受限预算。",
+      "location": {
+        "calculation_id": "S03.C02",
+        "unit_id": "S03.U07"
+      },
+      "resolution_status": "open"
+    },
+    {
+      "unit_id": "S03.U08",
+      "severity": "blocking",
+      "message": "练习给出的“已知含截距的一元最小二乘拟合直线”不是该数据的最小二乘直线，题设错误。",
+      "evidence": "数据为 (1,1),(2,2),(3,4)，均值 \\bar x=2,\\bar y=7/3；Sxx=2，Sxy=3，所以正确斜率 \\hat b=3/2、截距 \\hat a=7/3-(3/2)2=-2/3。题设直线 \\hat y=-1/6+3/2x 的残差为 -1/3,-5/6,-1/3，其和为 -3/2≠0，违反含截距最小二乘的正规方程；S03.U09 也已指出该直线与数据不一致。"
+    },
+    {
+      "unit_id": "S03.U09",
+      "severity": "review",
+      "message": "解答虽正确指出题设直线与数据不一致，但未完成练习要求的 TSS、RSS、R^2 计算，也未给出修正后的最小二乘直线和平方和分解验证。",
+      "evidence": "S03.U08 要求计算 \\bar y、拟合值、残差、TSS、RSS、R^2，并利用平方和分解验证 TSS=ESS+RSS；S03.U09 只对错误给定直线算到残差和不为零后停止，正文说“正确的最小二乘直线应先由数据重新计算”，但没有实际给出该直线或后续数值，因此该练习未按题面完成。"
+    },
+    {
+      "unit_id": "S03.U07",
+      "severity": "review",
+      "message": "S03 目标要求通过案例讨论异常观测与外推风险，但案例解答只讨论了外推风险和因果解释，未讨论异常观测对拟合或 R^2 的影响。",
+      "evidence": "锁定目标 S03 第 4 条为“通过经济学案例计算残差分解和决定系数，并讨论异常观测与外推风险”；S03.U06 要求说明解释边界，S03.U07 只说不能保证样本外准确和不能证明因果，未出现异常观测/离群点相关讨论。"
+    }
+  ],
+  "unit_applied_counts": {},
+  "proposal_counts_by_key": {},
+  "rejected_counts_by_key": {},
+  "evidence_dependencies": [],
+  "last_review_context_hash": "299d94c44eec802999fc9e20bd3aa240f720b551a85c4c43d74299aaeea75208",
+  "reference_recovery": null,
+  "answer_recovery": null,
+  "budget_policy": "per unit accepted modifications<=configured_limit; per repair key proposal calls<=configured_limit+1 and rejected proposals<=max(2,configured_limit); stop before another proposal at a reached limit; explicit local budget increase preserves all counters, candidates and doubts; retain run request cap",
+  "teacher_visual_review": "NOT_RUN",
+  "candidate_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S03/candidate-15fcadc30db5.json",
+  "candidate_hash": "99ef21e2d74feac4bb00368f467c5d6e56758a9abf43c16201f9c21e682d9107",
+  "last_review_key": "runs/63380f6a1ebf40dfb4de606687953ab5/local-repair/S03/review-cf6cc5dcd035.json"
+}

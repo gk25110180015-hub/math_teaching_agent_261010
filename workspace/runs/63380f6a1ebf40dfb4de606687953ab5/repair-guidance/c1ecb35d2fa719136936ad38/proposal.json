@@ -1,0 +1,17 @@
+{
+  "section_id": "S03",
+  "replacements": [
+    {
+      "unit_id": "S03.U01",
+      "tex": "在沿用上一节列满秩设计矩阵 $\\operatorname{rank}(X)=p$ 的设定下，考虑含截距的最小二乘拟合。记第 $i$ 个观测的拟合值为 $\\hat y_i$，残差为 $\\hat e_i=y_i-\\hat y_i$。若设计矩阵的第一列为全 $1$ 向量，则由正规方程有\n\\[\n\\sum_{i=1}^{n}\\hat e_i=0.\n\\]\n进一步，若某个向量与残差向量的内积为零，则称残差向量与该向量正交。特别地，在上述含截距且列满秩的模型中，残差向量与全 $1$ 向量正交；若模型还含有解释变量列，则残差向量也与每一个解释变量列正交。\\label{def:orthogonal-residual}"
+    },
+    {
+      "unit_id": "S03.U05",
+      "tex": "由 $y_i=\\hat y_i+\\hat e_i$，有\n\\[\ny_i-\\bar y=(\\hat y_i-\\bar y)+\\hat e_i.\n\\]\n对等式两边平方并求和，得到\n\\[\n\\begin{aligned}\n\\sum_{i=1}^{n}(y_i-\\bar y)^2\n={}&\\sum_{i=1}^{n}(\\hat y_i-\\bar y)^2\n+2\\sum_{i=1}^{n}\\hat e_i(\\hat y_i-\\bar y)\n+\\sum_{i=1}^{n}\\hat e_i^2.\n\\end{aligned}\n\\]\n根据假设\n\\[\n\\sum_{i=1}^{n}\\hat e_i(\\hat y_i-\\bar y)=0,\n\\]\n交叉项消失，于是得到式 \\eqref{thm:sum-of-squares-decomposition}。\n\n下面沿用上一节的列满秩条件 $\\operatorname{rank}(X)=p$，并假定模型含截距。在这一条件下，残差与拟合值的内积也为零。事实上，\\(\\hat y\\) 是设计矩阵列向量的线性组合，而由正规方程得到的残差与设计矩阵的每一列正交，因此\n\\[\n\\sum_{i=1}^{n}\\hat e_i\\hat y_i=0.\n\\]\n再结合 \\(\\sum_{i=1}^{n}\\hat e_i=0\\)，可得\n\\[\n\\sum_{i=1}^{n}\\hat e_i(\\hat y_i-\\bar y)\n=\\sum_{i=1}^{n}\\hat e_i\\hat y_i-\\bar y\\sum_{i=1}^{n}\\hat e_i=0.\n\\]\n所以平方和分解适用于上述列满秩的含截距最小二乘拟合。最后，将分解式代入\n\\[\nR^2=1-\\frac{\\operatorname{RSS}}{\\operatorname{TSS}}\n\\]\n即可得到决定系数的第二种表达式。"
+    }
+  ],
+  "calculation_updates": [],
+  "calculation_additions": [],
+  "uncertainties_append": [],
+  "calculation_limitations_append": []
+}

@@ -1,0 +1,35 @@
+{
+  "issues": [
+    {
+      "unit_id": "S02.U06",
+      "severity": "warning",
+      "message": "该单元用“定理 \\eqref{thm:matrix-normal-equation} 的条件”指代定理，但该标签位于 S02.U04 的矩阵正规方程环境内，并非定理标签；渲染后学生看到的将是方程编号被冠以“定理”。建议改为引用定理标签 \\eqref{thm:unique-least-squares-solution}，或直接写“在列满秩的最小二乘定理条件下”。",
+      "evidence": "S02.U06 开头：“在定理 \\eqref{thm:matrix-normal-equation} 的条件下”；而 S02.U04 中 \\label{thm:matrix-normal-equation} 位于矩阵正规方程环境内，定理本身使用 \\label{thm:unique-least-squares-solution}。"
+    },
+    {
+      "unit_id": "S02.U07",
+      "severity": "warning",
+      "message": "该单元写“由定理 \\eqref{thm:matrix-normal-equation} 的正规方程”，同样把方程标签当作定理引用；应改为“由正规方程 \\eqref{thm:matrix-normal-equation}”或引用定理标签。",
+      "evidence": "S02.U07 开头：“由定理 \\eqref{thm:matrix-normal-equation} 的正规方程”；该 \\eqref 的目标是 S02.U04 中矩阵正规方程的标签，不是定理标签。"
+    }
+  ],
+  "checked_unit_ids": [
+    "S02.U01",
+    "S02.U02",
+    "S02.U03",
+    "S02.U04",
+    "S02.U05",
+    "S02.U06",
+    "S02.U07",
+    "S02.U08",
+    "S02.U09",
+    "S02.U10",
+    "S02.U11"
+  ],
+  "limitations": [
+    "本次仅做 section_local 审阅，范围限 S02 的实际单元；未审阅尚未生成的 S03，也不对整份讲义或最终 PDF 作结论。",
+    "普通模型审阅不等于形式化证明；工具检查仅覆盖显式请求的算术/符号等价，不证明全部矩阵推导。",
+    "未运行最终排版/编译和教师视觉验收，学生可见引用问题仅据当前 TeX 结构与标签目标判断。",
+    "未发现 blocking 或 review 级数学错误；所列 warning 为非阻塞的引用语义清晰度问题。"
+  ]
+}

@@ -1,0 +1,723 @@
+{
+  "section_id": "S01",
+  "replacements": [
+    {
+      "unit_id": "S01.U10",
+      "tex": "答案如下：\n\\[\n\\bar x=\\frac{1+2+4}{3}=\\frac73,\n\\qquad\n\\bar y=\\frac{4+5+8}{3}=\\frac{17}{3}\\text{。}\n\\]\n进一步有\n\\[\n\\sum_{i=1}^{3}(x_i-\\bar x)(y_i-\\bar y)=\\frac{19}{3},\n\\qquad\n\\sum_{i=1}^{3}(x_i-\\bar x)^2=\\frac{14}{3}\\text{。}\n\\]\n所以\n\\[\n\\hat b=\\frac{19/3}{14/3}=\\frac{19}{14},\n\\qquad\n\\hat a=\\frac{17}{3}-\\frac{19}{14}\\cdot\\frac73=\\frac52\\text{。}\n\\]\n拟合直线为\n\\[\n\\hat y=\\frac52+\\frac{19}{14}x\\text{。}\n\\]\n三个拟合值和残差为\n\\[\n\\begin{array}{c|c|c}\n i&\\hat y_i&\\hat e_i=y_i-\\hat y_i\\\\ \\hline\n 1&\\frac{27}{7}&\\frac17\\\\\n 2&\\frac{73}{14}&-\\frac{3}{14}\\\\\n 3&\\frac{111}{14}&\\frac{1}{14}\n\\end{array}\n\\]\n残差之和为\n\\[\n\\frac17-\\frac{3}{14}+\\frac{1}{14}=0\\text{。}\n\\]\n最后，$x=3$ 时的拟合值为\n\\[\n\\hat y(3)=\\frac52+\\frac{19}{14}\\cdot3=\\frac{46}{7}\\text{。}\n\\]\n由于 $3$ 位于样本解释变量的最小值 $1$ 与最大值 $4$ 之间，这是样本区间内的插值。"
+    }
+  ],
+  "calculation_updates": [],
+  "calculation_additions": [
+    {
+      "id": "S01.U10.EXACT.MEAN_X",
+      "unit_id": "S01.U10",
+      "kind": "equivalence",
+      "assumptions": {},
+      "lhs": {
+        "op": "Mul",
+        "args": [
+          {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Integer",
+                "value": 1
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              },
+              {
+                "op": "Integer",
+                "value": 4
+              }
+            ]
+          },
+          {
+            "op": "Rational",
+            "p": 1,
+            "q": 3
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": 7,
+        "q": 3
+      }
+    },
+    {
+      "id": "S01.U10.EXACT.MEAN_Y",
+      "unit_id": "S01.U10",
+      "kind": "equivalence",
+      "assumptions": {},
+      "lhs": {
+        "op": "Mul",
+        "args": [
+          {
+            "op": "Add",
+            "args": [
+              {
+                "op": "Integer",
+                "value": 4
+              },
+              {
+                "op": "Integer",
+                "value": 5
+              },
+              {
+                "op": "Integer",
+                "value": 8
+              }
+            ]
+          },
+          {
+            "op": "Rational",
+            "p": 1,
+            "q": 3
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": 17,
+        "q": 3
+      }
+    },
+    {
+      "id": "S01.U10.EXACT.SXY",
+      "unit_id": "S01.U10",
+      "kind": "equivalence",
+      "assumptions": {},
+      "lhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 1
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      },
+                      {
+                        "op": "Rational",
+                        "p": 7,
+                        "q": 3
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 4
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      },
+                      {
+                        "op": "Rational",
+                        "p": 17,
+                        "q": 3
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      },
+                      {
+                        "op": "Rational",
+                        "p": 7,
+                        "q": 3
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 5
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      },
+                      {
+                        "op": "Rational",
+                        "p": 17,
+                        "q": 3
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 4
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      },
+                      {
+                        "op": "Rational",
+                        "p": 7,
+                        "q": 3
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 8
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      },
+                      {
+                        "op": "Rational",
+                        "p": 17,
+                        "q": 3
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": 19,
+        "q": 3
+      }
+    },
+    {
+      "id": "S01.U10.EXACT.SXX",
+      "unit_id": "S01.U10",
+      "kind": "equivalence",
+      "assumptions": {},
+      "lhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 1
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      },
+                      {
+                        "op": "Rational",
+                        "p": 7,
+                        "q": 3
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 2
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      },
+                      {
+                        "op": "Rational",
+                        "p": 7,
+                        "q": 3
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Add",
+                "args": [
+                  {
+                    "op": "Integer",
+                    "value": 4
+                  },
+                  {
+                    "op": "Mul",
+                    "args": [
+                      {
+                        "op": "Integer",
+                        "value": -1
+                      },
+                      {
+                        "op": "Rational",
+                        "p": 7,
+                        "q": 3
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": 14,
+        "q": 3
+      }
+    },
+    {
+      "id": "S01.U10.EXACT.SLOPE",
+      "unit_id": "S01.U10",
+      "kind": "equivalence",
+      "assumptions": {},
+      "lhs": {
+        "op": "Mul",
+        "args": [
+          {
+            "op": "Rational",
+            "p": 19,
+            "q": 3
+          },
+          {
+            "op": "Pow",
+            "args": [
+              {
+                "op": "Rational",
+                "p": 14,
+                "q": 3
+              },
+              {
+                "op": "Integer",
+                "value": -1
+              }
+            ]
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": 19,
+        "q": 14
+      }
+    },
+    {
+      "id": "S01.U10.EXACT.INTERCEPT",
+      "unit_id": "S01.U10",
+      "kind": "equivalence",
+      "assumptions": {},
+      "lhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Rational",
+            "p": 17,
+            "q": 3
+          },
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Integer",
+                "value": -1
+              },
+              {
+                "op": "Mul",
+                "args": [
+                  {
+                    "op": "Rational",
+                    "p": 19,
+                    "q": 14
+                  },
+                  {
+                    "op": "Rational",
+                    "p": 7,
+                    "q": 3
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": 5,
+        "q": 2
+      }
+    },
+    {
+      "id": "S01.U10.EXACT.FITTED_1",
+      "unit_id": "S01.U10",
+      "kind": "equivalence",
+      "assumptions": {},
+      "lhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Rational",
+            "p": 5,
+            "q": 2
+          },
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Rational",
+                "p": 19,
+                "q": 14
+              },
+              {
+                "op": "Integer",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": 27,
+        "q": 7
+      }
+    },
+    {
+      "id": "S01.U10.EXACT.FITTED_2",
+      "unit_id": "S01.U10",
+      "kind": "equivalence",
+      "assumptions": {},
+      "lhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Rational",
+            "p": 5,
+            "q": 2
+          },
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Rational",
+                "p": 19,
+                "q": 14
+              },
+              {
+                "op": "Integer",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": 73,
+        "q": 14
+      }
+    },
+    {
+      "id": "S01.U10.EXACT.FITTED_3",
+      "unit_id": "S01.U10",
+      "kind": "equivalence",
+      "assumptions": {},
+      "lhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Rational",
+            "p": 5,
+            "q": 2
+          },
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Rational",
+                "p": 19,
+                "q": 14
+              },
+              {
+                "op": "Integer",
+                "value": 4
+              }
+            ]
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": 111,
+        "q": 14
+      }
+    },
+    {
+      "id": "S01.U10.EXACT.RESIDUAL_1",
+      "unit_id": "S01.U10",
+      "kind": "equivalence",
+      "assumptions": {},
+      "lhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Integer",
+            "value": 4
+          },
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Integer",
+                "value": -1
+              },
+              {
+                "op": "Rational",
+                "p": 27,
+                "q": 7
+              }
+            ]
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": 1,
+        "q": 7
+      }
+    },
+    {
+      "id": "S01.U10.EXACT.RESIDUAL_2",
+      "unit_id": "S01.U10",
+      "kind": "equivalence",
+      "assumptions": {},
+      "lhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Integer",
+            "value": 5
+          },
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Integer",
+                "value": -1
+              },
+              {
+                "op": "Rational",
+                "p": 73,
+                "q": 14
+              }
+            ]
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": -3,
+        "q": 14
+      }
+    },
+    {
+      "id": "S01.U10.EXACT.RESIDUAL_3",
+      "unit_id": "S01.U10",
+      "kind": "equivalence",
+      "assumptions": {},
+      "lhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Integer",
+            "value": 8
+          },
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Integer",
+                "value": -1
+              },
+              {
+                "op": "Rational",
+                "p": 111,
+                "q": 14
+              }
+            ]
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": 1,
+        "q": 14
+      }
+    },
+    {
+      "id": "S01.U10.EXACT.RESIDUAL_SUM",
+      "unit_id": "S01.U10",
+      "kind": "equivalence",
+      "assumptions": {},
+      "lhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Rational",
+            "p": 1,
+            "q": 7
+          },
+          {
+            "op": "Rational",
+            "p": -3,
+            "q": 14
+          },
+          {
+            "op": "Rational",
+            "p": 1,
+            "q": 14
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Integer",
+        "value": 0
+      }
+    },
+    {
+      "id": "S01.U10.EXACT.PREDICT_X3",
+      "unit_id": "S01.U10",
+      "kind": "equivalence",
+      "assumptions": {},
+      "lhs": {
+        "op": "Add",
+        "args": [
+          {
+            "op": "Rational",
+            "p": 5,
+            "q": 2
+          },
+          {
+            "op": "Mul",
+            "args": [
+              {
+                "op": "Rational",
+                "p": 19,
+                "q": 14
+              },
+              {
+                "op": "Integer",
+                "value": 3
+              }
+            ]
+          }
+        ]
+      },
+      "rhs": {
+        "op": "Rational",
+        "p": 46,
+        "q": 7
+      }
+    }
+  ],
+  "uncertainties_append": [],
+  "calculation_limitations_append": []
+}
