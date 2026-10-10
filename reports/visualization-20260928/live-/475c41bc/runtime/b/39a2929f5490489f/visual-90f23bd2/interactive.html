@@ -1,0 +1,156 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27;; worker-src blob:; style-src &#x27;unsafe-inline&#x27;; img-src data: blob:; media-src blob:; connect-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;">
+<title>从割线到切线：导数是瞬时变化率</title>
+<style>body{font:16px system-ui,sans-serif;margin:0;padding:20px;background:#edf1f7;color:#18283b}main{max-width:1040px;margin:auto}canvas{width:100%;background:#f7f9fc;border-radius:12px;box-shadow:0 8px 35px #1c36511a}button{padding:9px 20px;border:1px solid #bdcbe5;border-radius:7px;background:white;color:#213d8f;cursor:pointer}.toolbar{display:flex;gap:12px;align-items:center;margin:16px 0}#time{flex:1}#controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}label{display:grid;grid-template-columns:1fr 2fr 50px;gap:8px;align-items:center;background:white;padding:14px;border-radius:8px}#caption{min-height:45px;line-height:1.7}small{color:#607189}#status{color:#a12c2c}input{min-width:0}</style></head>
+<body><main><p><small>调整参数，观察数学过程 · 无声动画与中文字幕 · 待教师复核</small></p>
+<canvas id="scene" width="960" height="540" aria-label="数学概念动画"></canvas>
+<div class="toolbar"><button id="play">播放 / 暂停</button><button id="reset">从头开始</button><input id="time" aria-label="动画进度" type="range" min="0" max="1" step="0.001" value="0"></div>
+<p id="caption"></p><div id="controls"></div><p id="status" role="alert"></p>
+<details><summary>数学说明与适用范围</summary><p>程序按确认方案的34秒累计时间切换三幕：第一幕只展示割线与真实差商，第二幕按时间从h&gt;0和h&lt;0两侧逼近，并在同一面板比较两侧差商；h=0只标记为极限位置，不参与计算。第三幕使用固定序列1、0.5、0.1、0.01，展示x²的因式分解、约去h和2+h，并高亮切线方程。两个固定预设函数会同步更新A点和公式，显示模式、非零h滑杆和预设切换均有可观察效果。</p><ul><li>割线斜率为 m_sec=[f(a+h)-f(a)]/h，其中 h≠0</li><li>导数定义为 f&#x27;(a)=lim_{h→0}[f(a+h)-f(a)]/h，要求双侧极限存在</li><li>有限个 h 值只能近似展示极限，不能把某一次差商等同于导数</li><li>主示范为 f(x)=x²、a=1，差商化简为 2+h，导数为 2</li><li>第二预设为 f(x)=2x+1、a=1，切换时同步使用 A=(1,3)</li><li>整数切换只选择固定预设函数，不提供任意函数文本输入</li><li>h=0 只作为极限位置，不显示差商数值</li><li>约去 h 的代数步骤建立在 h≠0 的前提上</li><li>双侧差商趋向同一值时，才可将该极限称为导数</li><li>Canvas动画只能用有限个非零h近似双侧极限，不能把某一次差商等同于严格导数。</li><li>函数选择仅限确认方案中的两个固定预设，不提供任意函数文本输入。</li><li>第三幕的h序列按确认方案固定，不由h滑杆缩放；h滑杆主要影响第一、二幕的几何位置和差商。</li></ul></details>
+</main><script type="application/json" id="project">{"story": {"interaction_goals": ["用数值滑杆改变非零 h，观察点 B、Δy 和割线斜率同步变化", "用整数切换在两个固定预设函数示例间选择，并同步更新对应基准点", "用时间轴和播放暂停控制 h 从正、负两侧逐步逼近零", "比较正、负 h 对应的差商是否趋向同一值", "切换显示差商数值、关键代数化简或切线方程", "明确 h=0 只是极限位置，不参与差商计算"], "math_notes": ["割线斜率为 m_sec=[f(a+h)-f(a)]/h，其中 h≠0", "导数定义为 f'(a)=lim_{h→0}[f(a+h)-f(a)]/h，要求双侧极限存在", "有限个 h 值只能近似展示极限，不能把某一次差商等同于导数", "主示范为 f(x)=x²、a=1，差商化简为 2+h，导数为 2", "第二预设为 f(x)=2x+1、a=1，切换时同步使用 A=(1,3)", "整数切换只选择固定预设函数，不提供任意函数文本输入", "h=0 只作为极限位置，不显示差商数值", "约去 h 的代数步骤建立在 h≠0 的前提上", "双侧差商趋向同一值时，才可将该极限称为导数"], "objectives": ["理解导数是函数在一点的瞬时变化率", "观察割线斜率随 h 变小而趋近切线斜率", "掌握差商极限与导数记号", "区分有限 h 下的差商与 h→0 的极限", "能够解释 f(x)=x² 在 a=1 处的切线斜率"], "scenes": [{"id": "S1", "math": "m_sec=Δy/Δx=[f(a+h)-f(a)]/h，其中 h≠0；这里 Δx=h，Δy=f(a+h)-f(a)。", "narration": "两个不同的点确定一条割线。函数值变化量除以自变量变化量，就是区间的平均变化率。", "seconds": 10, "title": "两点确定割线", "visual": "绘制坐标轴和预设函数曲线，默认选择 f(x)=x²，a=1，固定 A=(1,1)，显示 B=(1+h,(1+h)²)。数值滑杆改变非零 h，并标注 h、Δy 和割线 AB。整数切换可选择预设 f(x)=x²、a=1 或 f(x)=2x+1、a=1；切换时同步更新 A 和 B。播放暂停控制预设 h 序列。"}, {"id": "S2", "math": "f'(a)=lim_{h→0}[f(a+h)-f(a)]/h。只有双侧极限存在时，才能称其为 f 在 a 处的导数；有限个非零 h 只能近似展示极限。", "narration": "从左右两侧接近时，差商若趋向同一值，这个极限就是该点的瞬时变化率，也就是导数。", "seconds": 12, "title": "双侧逼近切线", "visual": "保持 A 不动，用时间轴控制 B 从左右两侧接近 A。数值滑杆只选择预设的非零正值或负值 h，播放暂停控制动画。时间轴分成 h\u003e0 与 h\u003c0 两段，分别显示两组差商；h=0 处仅标注“极限位置”，不显示差商。右侧同步显示 h、差商和割线斜率。"}, {"id": "S3", "math": "[f(1+h)-f(1)]/h=[(1+h)²-1]/h=[2h+h²]/h=2+h，因此 f'(1)=lim_{h→0}(2+h)=2；切线为 y-1=2(x-1)。约去 h 只适用于 h≠0。", "narration": "对 f(x)=x² 且 x=1，差商化简为 2+h，趋近 2，所以切线斜率是 2。", "seconds": 12, "title": "x² 的具体计算", "visual": "整数切换选择 f(x)=x²、a=1，时间轴依次呈现 h=1、0.5、0.1、0.01 的 B 点、割线和差商。播放暂停控制步骤；画面依次显示因式分解、约去 h 和结果 2+h，最后高亮切线 y-1=2(x-1)。"}], "summary": "面向经济学本科一年级微积分，以 f(x)=x²、a=1 为主示范，通过数值滑杆、整数切换、时间轴和播放暂停展示割线斜率趋近切线斜率。函数仅从有限预设中选择，不提供任意函数文本输入；差商始终要求 h≠0，并明确有限逼近不等于严格极限。总时长约34秒。", "title": "从割线到切线：导数是瞬时变化率"}, "program": {"code": "function draw(ctx, t, p) {\n  var W = 960, H = 540;\n  var z = Number(t);\n  if (!isFinite(z)) z = 0;\n  z = Math.max(0, Math.min(1, z));\n  var mag = Number(p \u0026\u0026 p.h);\n  if (!isFinite(mag)) mag = 0.5;\n  mag = Math.max(0.01, Math.min(1, mag));\n  var preset = Number(p \u0026\u0026 p.preset);\n  preset = preset \u003e= 0.5 ? 1 : 0;\n  var display = Math.round(Number(p \u0026\u0026 p.display));\n  if (!isFinite(display)) display = 0;\n  display = Math.max(0, Math.min(2, display));\n\n  var sec = z * 34;\n  var scene = sec \u003c 10 ? 1 : (sec \u003c 22 ? 2 : 3);\n  var local = scene === 1 ? sec / 10 : (scene === 2 ? (sec - 10) / 12 : (sec - 22) / 12);\n  var isX2 = preset === 0;\n  var a = 1;\n  function f(x) { return isX2 ? x * x : 2 * x + 1; }\n  function derivative() { return 2; }\n  function fmt(x, n) { return (isFinite(x) ? x : 0).toFixed(n || 2); }\n  function txt(s, x, y, size, color, align) {\n    ctx.font = (size || 17) + 'px sans-serif';\n    ctx.fillStyle = color || '#263238';\n    ctx.textAlign = align || 'left';\n    ctx.textBaseline = 'middle';\n    ctx.fillText(String(s), x, y);\n  }\n  function line(x1, y1, x2, y2, color, width, dash) {\n    ctx.save();\n    ctx.strokeStyle = color || '#263238';\n    ctx.lineWidth = width || 2;\n    ctx.setLineDash(dash || []);\n    ctx.beginPath();\n    ctx.moveTo(x1, y1);\n    ctx.lineTo(x2, y2);\n    ctx.stroke();\n    ctx.restore();\n  }\n  function dot(x, y, r, color) {\n    ctx.fillStyle = color;\n    ctx.beginPath();\n    ctx.arc(x, y, r, 0, Math.PI * 2);\n    ctx.fill();\n  }\n\n  var h;\n  if (scene === 1) {\n    h = mag * (1 - 0.55 * Math.min(1, local));\n  } else if (scene === 2) {\n    var q = local \u003c 0.5 ? local * 2 : (local - 0.5) * 2;\n    var side = local \u003c 0.5 ? 1 : -1;\n    h = side * (0.02 + mag * (1 - q));\n  } else {\n    var seq = [1, 0.5, 0.1, 0.01];\n    var k = Math.min(3, Math.floor(local * 4));\n    h = seq[k];\n  }\n  if (Math.abs(h) \u003c 0.001) h = h \u003c 0 ? -0.001 : 0.001;\n\n  var ya = f(a), xb = a + h, yb = f(xb), dy = yb - ya;\n  var slope = dy / h, tangent = derivative();\n  var hp = scene === 2 ? Math.abs(h) : Math.max(0.01, Math.abs(h));\n  var ym = (f(a - hp) - f(a)) / (-hp);\n  var yp = (f(a + hp) - f(a)) / hp;\n\n  ctx.fillStyle = '#f8fbff';\n  ctx.fillRect(0, 0, W, H);\n  ctx.fillStyle = '#ffffff';\n  ctx.fillRect(35, 85, 890, 350);\n  ctx.strokeStyle = '#d2e0ea';\n  ctx.lineWidth = 1;\n  ctx.strokeRect(35, 85, 890, 350);\n\n  var title = scene === 1 ? '第1幕：两点确定割线' : (scene === 2 ? '第2幕：双侧逼近切线' : '第3幕：具体计算');\n  txt(title, 55, 103, 21, '#6b3fa0');\n\n  var left = 65, top = 120, bottom = 390, plotW = 575, plotH = 255;\n  var xmin = -1, xmax = 3.2, ymin = -1, ymax = 10;\n  function X(x) { return left + (x - xmin) / (xmax - xmin) * plotW; }\n  function Y(y) { return bottom - (y - ymin) / (ymax - ymin) * plotH; }\n\n  for (var gx = -1; gx \u003c= 3; gx++) line(X(gx), Y(ymin), X(gx), Y(ymax), '#e6eef4', 1);\n  for (var gy = 0; gy \u003c= 10; gy += 2) line(X(xmin), Y(gy), X(xmax), Y(gy), '#e6eef4', 1);\n  line(X(xmin), Y(0), X(xmax), Y(0), '#40566b', 2);\n  line(X(0), Y(ymin), X(0), Y(ymax), '#40566b', 2);\n  for (gx = -1; gx \u003c= 3; gx++) txt(gx, X(gx), Y(0) + 16, 14, '#526b7a', 'center');\n  for (gy = 0; gy \u003c= 10; gy += 2) txt(gy, X(0) - 9, Y(gy), 14, '#526b7a', 'right');\n  txt('x', X(xmax) + 12, Y(0), 17, '#263238');\n  txt('y', X(0), Y(ymax) - 8, 17, '#263238');\n\n  ctx.save();\n  ctx.strokeStyle = '#2878c8';\n  ctx.lineWidth = 3;\n  ctx.beginPath();\n  var started = false;\n  for (var i = 0; i \u003c= 260; i++) {\n    var xx = xmin + (xmax - xmin) * i / 260;\n    var yy = f(xx);\n    if (yy \u003e= ymin \u0026\u0026 yy \u003c= ymax) {\n      if (!started) { ctx.moveTo(X(xx), Y(yy)); started = true; }\n      else ctx.lineTo(X(xx), Y(yy));\n    }\n  }\n  ctx.stroke();\n  ctx.restore();\n  txt(isX2 ? 'y=f(x)=x²' : 'y=f(x)=2x+1', 455, 137, 18, '#2878c8');\n\n  var Ax = X(a), Ay = Y(ya), Bx = X(xb), By = Y(yb);\n  var tangentVisible = scene === 3 || (scene === 2 \u0026\u0026 Math.abs(h) \u003c 0.18);\n  if (tangentVisible) {\n    ctx.save();\n    ctx.globalAlpha = scene === 3 ? 1 : Math.max(0, Math.min(1, (0.18 - Math.abs(h)) / 0.16));\n    line(X(xmin), Y(ya + tangent * (xmin - a)), X(xmax), Y(ya + tangent * (xmax - a)), '#8d4bbb', 3, [8, 5]);\n    ctx.restore();\n  }\n\n  line(Ax, Ay, Bx, By, '#ee8b2d', 4);\n  line(Ax, Ay, Bx, Ay, '#ee8b2d', 2, [5, 4]);\n  line(Bx, Ay, Bx, By, '#ee8b2d', 2, [5, 4]);\n  dot(Ax, Ay, 6, '#17324d');\n  dot(Bx, By, 6, '#ee8b2d');\n  txt('A=(1,' + fmt(ya) + ')', Ax + 10, Ay - 17, 16, '#17324d');\n  txt('B=(1+h,' + fmt(yb) + ')', Bx + 8, By - 17, 16, '#b55b12');\n  txt('h=' + fmt(h), (Ax + Bx) / 2, Ay + 20, 17, '#b55b12', 'center');\n  txt('Δy=' + fmt(dy), Bx + 38, (Ay + By) / 2, 16, '#b55b12', 'center');\n\n  var px = 675, py = 120, pw = 230, ph = 270;\n  ctx.fillStyle = '#fdfefe';\n  ctx.fillRect(px, py, pw, ph);\n  ctx.strokeStyle = '#c5d8e5';\n  ctx.strokeRect(px, py, pw, ph);\n  txt('数值与公式', px + pw / 2, py + 22, 19, '#17324d', 'center');\n\n  if (scene === 1) {\n    txt('m割 = Δy / h', px + 15, py + 58, 18, '#b55b12');\n    txt('m割 = ' + fmt(slope, 4), px + 15, py + 88, 19, '#b55b12');\n    txt('Δx = h ≠ 0', px + 15, py + 119, 17, '#263238');\n    txt('平均变化率', px + 15, py + 151, 17, '#2878c8');\n    txt('h=0 不参与差商', px + 15, py + 184, 16, '#6b3fa0');\n    txt('割线 AB 已高亮', px + 15, py + 218, 16, '#ee8b2d');\n  } else if (scene === 2) {\n    txt('f′(a)=lim h→0 差商', px + 15, py + 55, 16, '#6b3fa0');\n    txt('当前 h=' + fmt(h), px + 15, py + 84, 17, '#b55b12');\n    txt('当前差商=' + fmt(slope, 4), px + 15, py + 112, 17, '#b55b12');\n    txt('右侧 h\u003e0：' + fmt(yp, 4), px + 15, py + 148, 16, '#2878c8');\n    txt('左侧 h\u003c0：' + fmt(ym, 4), px + 15, py + 177, 16, '#8d4bbb');\n    txt('两侧都趋向 2', px + 15, py + 210, 17, '#17324d');\n    txt('h=0：极限位置', px + 15, py + 239, 16, '#6b3fa0');\n  } else {\n    if (display === 0) {\n      txt('h=' + fmt(h), px + 15, py + 55, 18, '#b55b12');\n      txt('差商=' + fmt(slope, 4), px + 15, py + 87, 18, '#b55b12');\n      txt('有限差商不等于极限', px + 15, py + 122, 16, '#6b3fa0');\n    } else if (display === 1 \u0026\u0026 isX2) {\n      txt('[f(1+h)-f(1)]/h', px + 15, py + 52, 16, '#263238');\n      txt('=[(1+h)²−1]/h', px + 15, py + 82, 16, '#263238');\n      txt('=[2h+h²]/h', px + 15, py + 112, 17, '#263238');\n      txt('=2+h（h≠0）', px + 15, py + 144, 18, '#b55b12');\n    } else if (display === 1) {\n      txt('[2(1+h)+1−3]/h', px + 15, py + 60, 16, '#263238');\n      txt('=2h/h=2（h≠0）', px + 15, py + 94, 17, '#b55b12');\n      txt('两侧差商均为 2', px + 15, py + 130, 17, '#6b3fa0');\n    } else {\n      txt('切线斜率 f′(1)=2', px + 15, py + 55, 18, '#6b3fa0');\n      txt(isX2 ? 'y−1=2(x−1)' : 'y−3=2(x−1)', px + 15, py + 91, 20, '#2878c8');\n      txt('h=0 仅为极限位置', px + 15, py + 130, 16, '#b55b12');\n      txt('双侧极限相同 ⇒ 可导', px + 15, py + 166, 16, '#6b3fa0');\n    }\n    txt('序列：1，0.5，0.1，0.01', px + 15, py + 218, 15, '#263238');\n    txt('当前步骤 ' + (Math.min(3, Math.floor(local * 4) + 1)) + ' / 4', px + 15, py + 246, 16, '#2878c8');\n  }\n\n  var functionText = isX2 ? '预设①：f(x)=x²，a=1' : '预设②：f(x)=2x+1，a=1';\n  txt(functionText, 55, 413, 16, '#263238');\n  txt('时间 ' + fmt(sec, 1) + ' / 34 秒', 905, 413, 16, '#526b7a', 'right');\n\n  return {\n    metrics: {\n      scene: scene,\n      h: h,\n      delta_y: dy,\n      secant_slope: isFinite(slope) ? slope : 0,\n      right_secant_slope: isFinite(yp) ? yp : 0,\n      left_secant_slope: isFinite(ym) ? ym : 0,\n      derivative: tangent,\n      function: isX2 ? 'x^2' : '2x+1',\n      seconds: sec\n    }\n  };\n}", "controls": [{"id": "h", "label": "非零 h 的大小", "min": 0.01, "max": 1.0, "step": 0.01, "value": 0.5}, {"id": "preset", "label": "预设函数（0:x²，1:2x+1）", "min": 0.0, "max": 1.0, "step": 1.0, "value": 0.0}, {"id": "display", "label": "显示模式（0数值，1化简，2切线）", "min": 0.0, "max": 2.0, "step": 1.0, "value": 0.0}], "covered_decision_ids": ["d59bb3ef51814044aadd8a22ae8e4a06", "a6e098a7cd2844fcbe291a2fa2f9b4ae", "bc3e134305fd4175afe66cdee8d182c3", "8c59c91b2aa34d39b6a58b7a1ac6326a", "e0085af3af3d45808ab281be2d07c615"], "explanation": "程序按确认方案的34秒累计时间切换三幕：第一幕只展示割线与真实差商，第二幕按时间从h\u003e0和h\u003c0两侧逼近，并在同一面板比较两侧差商；h=0只标记为极限位置，不参与计算。第三幕使用固定序列1、0.5、0.1、0.01，展示x²的因式分解、约去h和2+h，并高亮切线方程。两个固定预设函数会同步更新A点和公式，显示模式、非零h滑杆和预设切换均有可观察效果。", "limitations": ["Canvas动画只能用有限个非零h近似双侧极限，不能把某一次差商等同于严格导数。", "函数选择仅限确认方案中的两个固定预设，不提供任意函数文本输入。", "第三幕的h序列按确认方案固定，不由h滑杆缩放；h滑杆主要影响第一、二幕的几何位置和差商。"]}}</script><script>/* Owned runtime. Model code executes only in a disposable, network-blocked worker. */
+"use strict";
+const project = JSON.parse(document.getElementById("project").textContent);
+const canvas = document.getElementById("scene");
+const ctx = canvas.getContext("2d");
+const timeSlider = document.getElementById("time");
+const statusBox = document.getElementById("status");
+const duration = project.story.scenes.reduce((n, s) => n + s.seconds, 0);
+const params = Object.fromEntries(project.program.controls.map(c => [c.id, c.value]));
+let position = 0, playing = false, serial = 0, requests = new Map(), broken = null;
+const workerSource = `"use strict";\n${project.program.code}\n;
+const surface = new OffscreenCanvas(960, 540);
+const context = surface.getContext('2d');
+self.onmessage = function(event) {
+  const {id,t,p} = event.data;
+  try {
+    surface.width = 960; surface.height = 540;
+    context.fillStyle = '#f7f9fc'; context.fillRect(0,0,960,540);
+    context.save(); const result = draw(context,t,p); context.restore();
+    const bitmap = surface.transferToImageBitmap();
+    self.postMessage({id,bitmap,result}, [bitmap]);
+  } catch (error) { self.postMessage({id,error:String(error.message || error)}); }
+};`;
+const workerURL = URL.createObjectURL(new Blob([workerSource], {type: "text/javascript"}));
+const worker = new Worker(workerURL);
+URL.revokeObjectURL(workerURL);
+function fail(message) {
+  broken = String(message); playing = false; statusBox.textContent = `动画运行失败：${broken}`;
+  worker.terminate();
+  for (const value of requests.values()) { clearTimeout(value.timer); value.reject(new Error(broken)); }
+  requests.clear();
+}
+worker.onerror = e => { e.preventDefault(); fail(e.message || "动画代码无法运行"); };
+worker.onmessage = e => {
+  const item = requests.get(e.data.id);
+  if (!item) { if (e.data.bitmap) e.data.bitmap.close(); return; }
+  requests.delete(e.data.id); clearTimeout(item.timer);
+  if (e.data.error) { item.reject(new Error(e.data.error)); return; }
+  item.resolve(e.data);
+};
+function requestFrame(t, p) {
+  if (broken) return Promise.reject(new Error(broken));
+  return new Promise((resolve,reject) => {
+    const id = ++serial;
+    const timer = setTimeout(() => fail("单帧超过 3 秒，请修复代码后重试"), 3000);
+    requests.set(id, {resolve,reject,timer}); worker.postMessage({id,t,p});
+  });
+}
+function lines(text, x, y, width, lineHeight, maxLines) {
+  let line = "", count = 0;
+  const chars = [...text];
+  for (let index=0;index<chars.length;index++) {
+    const char=chars[index];
+    if (ctx.measureText(line + char).width > width) {
+      if (count === maxLines-1) { ctx.fillText(line.slice(0,-1)+'…',x,y); return; }
+      ctx.fillText(line, x, y); y += lineHeight; line = ""; count++;
+    }
+    line += char;
+  }
+  ctx.fillText(line, x, y);
+}
+function currentScene(t) {
+  let end = 0;
+  return project.story.scenes.find(s => { end += s.seconds; return t * duration < end; }) || project.story.scenes.at(-1);
+}
+async function render(t, overrides = {}) {
+  t = Math.max(0, Math.min(1, t));
+  const frame = await requestFrame(t, {...params, ...overrides});
+  ctx.setTransform(1,0,0,1,0,0); ctx.drawImage(frame.bitmap,0,0); frame.bitmap.close();
+  // Hash just the plot area, before captions; a changing subtitle cannot pass animation checks.
+  const pixels = ctx.getImageData(0,68,960,367).data;
+  let signature = 2166136261;
+  for (let i=0;i<pixels.length;i+=4) { signature = Math.imul(signature ^ pixels[i],16777619); signature = Math.imul(signature ^ pixels[i+1],16777619); signature = Math.imul(signature ^ pixels[i+2],16777619); }
+  const scene = currentScene(t);
+  ctx.fillStyle = "#f7f9fc"; ctx.fillRect(0,0,960,68); ctx.fillRect(0,435,960,105);
+  ctx.fillStyle = "#18283b"; ctx.font = "bold 25px sans-serif";
+  lines(project.story.title,28,34,890,28,1);
+  ctx.fillStyle = "#567087"; ctx.font = "16px sans-serif";
+  ctx.fillText(`${scene.title} · ${(t*duration).toFixed(1)} / ${duration} 秒`,28,59);
+  ctx.fillStyle = "#1d3651"; ctx.font = "19px sans-serif";
+  lines(scene.narration,28,460,900,25,3);
+  ctx.fillStyle = "#4562d9"; ctx.fillRect(0,534,960*t,6);
+  position = t; timeSlider.value = String(t);
+  document.getElementById("caption").textContent = scene.narration;
+  return {metrics: frame.result?.metrics || {}, plot_signature: String(signature >>> 0)};
+}
+let rendering = false;
+async function show(t) {
+  if (rendering) return;
+  rendering = true;
+  try { await render(t); } catch (e) { fail(e.message); }
+  finally { rendering = false; }
+}
+for (const control of project.program.controls) {
+  const label = document.createElement("label");
+  const title = document.createElement("span"); title.textContent = control.label;
+  const input = document.createElement("input"); input.type="range";
+  input.min=control.min; input.max=control.max; input.step=control.step; input.value=control.value;
+  input.id=`param-${control.id}`; input.setAttribute("aria-label",control.label);
+  const value = document.createElement("output"); value.textContent=control.value;
+  input.oninput = () => { params[control.id]=Number(input.value); value.textContent=input.value; playing=false; show(position); };
+  label.append(title,input,value); document.getElementById("controls").append(label);
+}
+timeSlider.oninput = () => { playing=false; show(Number(timeSlider.value)); };
+document.getElementById("play").onclick = async () => {
+  if (playing) { playing=false; return; }
+  if (position>=1) position=0;
+  playing=true; const start=performance.now()-position*duration*1000;
+  while(playing && position<1 && !broken) {
+    await show(Math.min(1,(performance.now()-start)/(duration*1000)));
+    await new Promise(resolve=>setTimeout(resolve,33));
+  }
+  playing=false;
+};
+document.getElementById("reset").onclick = () => { playing=false; show(0); };
+async function record() {
+  playing=false; await render(0);
+  const mime = ["video/webm;codecs=vp9","video/webm;codecs=vp8"].find(v=>MediaRecorder.isTypeSupported(v));
+  if (!mime) throw new Error("浏览器不支持 WebM 视频编码");
+  const stream=canvas.captureStream(24);
+  const recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:4000000});
+  const chunks=[]; let size=0;
+  const completed=new Promise((resolve,reject)=>{
+    recorder.ondataavailable=e=>{ chunks.push(e.data); size+=e.data.size; if(size>80*1024*1024){recorder.stop();reject(new Error('视频超过 80MB 限制'));} };
+    recorder.onerror=e=>reject(new Error(e.error?.message || "视频编码失败"));
+    recorder.onstop=resolve;
+  });
+  recorder.start(1000); const start=performance.now(); let frames=0;
+  try {
+    while (performance.now()-start<duration*1000) {
+      await render(Math.min(1,(performance.now()-start)/(duration*1000))); frames++;
+      await new Promise(resolve=>setTimeout(resolve,1000/24));
+    }
+    await render(1); await new Promise(resolve=>setTimeout(resolve,150));
+    recorder.stop(); await completed;
+  } finally { stream.getTracks().forEach(track=>track.stop()); }
+  const blob=new Blob(chunks,{type:mime});
+  const video=document.createElement("video"); video.muted=true; video.src=URL.createObjectURL(blob);
+  await new Promise((resolve,reject)=>{video.onloadeddata=resolve;video.onerror=()=>reject(new Error('视频解码验证失败'));});
+  const dimensions={width:video.videoWidth,height:video.videoHeight}; URL.revokeObjectURL(video.src);
+  const data=await new Promise(resolve=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result.split(',')[1]);reader.readAsDataURL(blob);});
+  return {data,mime,frames,duration_seconds:duration,recorded_seconds:(performance.now()-start)/1000,...dimensions};
+}
+window.visualization = {render,record,params,duration,ready:render(0)};
+window.visualization.ready.catch(e=>fail(e.message));
+</script></body></html>

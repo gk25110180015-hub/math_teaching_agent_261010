@@ -1,0 +1,1123 @@
+{
+  "id": "39a2929f5490489f9d484458beb98dd1",
+  "workflow_id": "visualization.create",
+  "version": 1,
+  "owner_id": "local",
+  "status": "COMPLETED_WITH_WARNINGS",
+  "stage": "visualization.delivered",
+  "input_hash": "36e3373d191750c7ec963d778f067faa56e3aa849ca12f769f11fc6553b9cb58",
+  "active_plan_revision": 11,
+  "created_at": "2026-09-28T13:53:37.656400+00:00",
+  "updated_at": "2026-09-28T14:18:01.007889+00:00",
+  "request_count": 15,
+  "schema_version": 1,
+  "input": {
+    "attachments": [],
+    "difficulty": "经济学本科一年级微积分",
+    "model_id": "gpt6",
+    "provider": "live",
+    "schema_version": 1,
+    "theme": "default",
+    "topic": "导数",
+    "trusted_input": true,
+    "units": [],
+    "use_reference_bibliography": false,
+    "workflow_id": "visualization.create"
+  },
+  "error": null,
+  "plan": {
+    "candidates": [
+      {
+        "id": "C1",
+        "interaction_goals": [
+          "拖动点 B，观察 h 与割线斜率同步变化",
+          "输入函数、基准点 a 和 h 的初始值",
+          "切换显示差商数值或切线方程"
+        ],
+        "math_notes": [
+          "要求函数在所选点附近有定义，并讨论的导数极限存在",
+          "h 只能取非零值；动画中用逐渐变小的正负 h 近似极限",
+          "曲线绘制范围应避开不可定义点或明确显示断点",
+          "数值显示采用有限精度，不把有限次逼近等同于严格极限"
+        ],
+        "objectives": [
+          "理解导数是函数在一点的瞬时变化率",
+          "观察割线斜率如何趋近切线斜率",
+          "掌握差商极限与导数记号"
+        ],
+        "scenes": [
+          {
+            "id": "S1",
+            "math": "割线斜率为 m_sec=Δy/Δx=[f(a+h)-f(a)]/h，其中 h≠0。它表示从 a 到 a+h 的平均变化率。",
+            "narration": "先用两个相邻点计算平均变化率：函数值变化量除以自变量变化量。",
+            "seconds": 10,
+            "title": "两点确定割线",
+            "visual": "画出坐标轴和曲线 y=f(x)，固定点 A=(a,f(a))，另取点 B=(a+h,f(a+h))。用高亮线段连接 A、B，并标注水平增量 h、竖直增量 Δy。h 从较大值开始缓慢减小。"
+          },
+          {
+            "id": "S2",
+            "math": "f'(a)=lim_{h→0}[f(a+h)-f(a)]/h。若极限存在，切线斜率等于导数 f'(a)。",
+            "narration": "当第二个点无限接近第一个点，平均变化率趋向这一点的瞬时变化率。",
+            "seconds": 12,
+            "title": "割线旋转为切线",
+            "visual": "保持 A 不动，让 B 沿曲线向 A 移动；割线逐渐旋转并在 h 接近 0 时与曲线在 A 附近重合为切线。右侧同步显示 h、差商数值和斜率读数。"
+          },
+          {
+            "id": "S3",
+            "math": "[f(1+h)-f(1)]/h=[(1+h)²-1]/h=2+h，故 f'(1)=lim_{h→0}(2+h)=2；切线为 y-1=2(x-1)。",
+            "narration": "例如 f(x)=x² 在 x=1 处的差商不断接近 2，因此切线斜率是 2。",
+            "seconds": 12,
+            "title": "用具体函数检验",
+            "visual": "切换到 f(x)=x²，在 a=1 处显示割线与切线；动画给出 h=1、0.5、0.1、0.01 时的差商，最终切线方程以高亮显示。"
+          }
+        ],
+        "summary": "用动态点和差商收敛展示导数的几何定义，适合建立“局部斜率”直觉。二维坐标系与函数曲线均由离线 Canvas 2D 绘制。",
+        "title": "从割线到切线：导数是瞬时变化率"
+      },
+      {
+        "id": "C2",
+        "interaction_goals": [
+          "拖动产量 q，查看边际成本曲线上的读数",
+          "调节 Δq，比较平均变化率、边际成本和线性近似误差",
+          "切换不同总成本函数并观察固定成本是否影响边际成本"
+        ],
+        "math_notes": [
+          "总成本函数应在所选产量附近可导",
+          "固定成本是常数，其导数为零，因此不改变边际成本",
+          "线性近似只在 Δq 足够小时可靠，不能替代精确成本函数",
+          "经济解释需保证产量和成本处于模型允许的非负范围"
+        ],
+        "objectives": [
+          "理解总成本函数的导数含义",
+          "区分平均变化率与边际变化率",
+          "用导数近似小幅产量变化带来的成本变化"
+        ],
+        "scenes": [
+          {
+            "id": "S1",
+            "math": "平均变化率=[C(q+Δq)-C(q)]/Δq。它描述一段有限产量区间的单位增量成本，不一定等于某个产量处的边际成本。",
+            "narration": "从产量 q 增加到 q+Δq，割线斜率表示这段产量区间的平均成本变化率。",
+            "seconds": 10,
+            "title": "总成本曲线与区间成本",
+            "visual": "横轴为产量 q，纵轴为总成本 C(q)。显示固定成本起点和两个产量点 q、q+Δq，连接对应点形成割线；旁侧列出总成本增量与平均单位增量成本。"
+          },
+          {
+            "id": "S2",
+            "math": "MC(q)=C'(q)=lim_{Δq→0}[C(q+Δq)-C(q)]/Δq。边际成本的单位通常是货币/产量单位。",
+            "narration": "当产量增量足够小时，切线斜率就是该产量水平的边际成本。",
+            "seconds": 12,
+            "title": "边际成本的局部放大",
+            "visual": "将观察窗口缩放到 q 附近，Δq 逐渐缩小，割线趋近总成本曲线的切线；切线旁标注 MC(q)=C'(q)。"
+          },
+          {
+            "id": "S3",
+            "math": "C'(q)=4+0.04q，故 MC(50)=6。ΔC≈C'(50)Δq=6Δq；精确值为 6Δq+0.02(Δq)²，误差来自二次项。",
+            "narration": "导数还能作局部预测：小幅增产的成本变化，约等于边际成本乘以增产量。",
+            "seconds": 12,
+            "title": "边际近似预测成本",
+            "visual": "使用 C(q)=100+4q+0.02q²，在 q=50 处显示切线。用户拖动小增量 Δq，动画同时显示真实成本增量 C(50+Δq)-C(50) 与线性近似 C'(50)Δq，并用两条竖条比较误差。"
+          }
+        ],
+        "summary": "以总成本函数为对象，将割线的平均成本增量与切线的边际成本并置，帮助经济学本科生把导数和“多生产一个单位的近似成本”联系起来。",
+        "title": "边际成本：导数如何解释经济变化"
+      },
+      {
+        "id": "C3",
+        "interaction_goals": [
+          "拖动价格滑杆，观察需求量、弹性和销售额同步变化",
+          "切换线性与非线性需求函数",
+          "显示有符号弹性或绝对值弹性，并标注销售额最大点"
+        ],
+        "math_notes": [
+          "需满足 q(p)>0 才能使用通常的点弹性公式",
+          "价格、需求量和销售额的单位应在界面中明确",
+          "弹性结论依赖局部变化和需求函数模型，不应解释为所有价格区间的必然规律",
+          "销售额极值还需结合允许的价格区间与边界进行判断"
+        ],
+        "objectives": [
+          "理解需求函数导数的方向与含义",
+          "区分斜率和价格弹性",
+          "观察弹性如何影响销售额变化"
+        ],
+        "scenes": [
+          {
+            "id": "S1",
+            "math": "dq/dp=-2。负号表示在该线性需求模型中，价格上升会使需求量下降；这是绝对变化率，不是弹性本身。",
+            "narration": "需求曲线的导数告诉我们，价格发生一单位变化时，需求量在局部大约变化多少。",
+            "seconds": 10,
+            "title": "价格变化与需求变化",
+            "visual": "绘制需求函数 q(p)=120-2p 的价格—需求量图。滑块改变价格 p，点沿需求曲线移动，并显示 Δp、Δq 以及局部切线。"
+          },
+          {
+            "id": "S2",
+            "math": "点弹性 E(p)=(dq/dp)(p/q)。对 q(p)=120-2p，有 E(p)=-2p/(120-2p)。通常关注其绝对值 |E|。",
+            "narration": "弹性把变化改写成百分比：需求量的百分比变化与价格的百分比变化之比。",
+            "seconds": 12,
+            "title": "从斜率到弹性",
+            "visual": "在当前点旁同时显示需求曲线切线斜率和弹性仪表。价格沿滑杆变化时，切线斜率保持不变，而弹性读数随 p、q 的相对比例变化。"
+          },
+          {
+            "id": "S3",
+            "math": "R(p)=p(120-2p)=120p-2p²，R'(p)=120-4p。R'(p)=q(p)[1+E(p)]，因此 E<-1 时降价通常提高销售额，-1<E<0 时降价通常降低销售额。",
+            "narration": "弹性还能解释销售额：在需求富有弹性区域，降价可能增加销售额；在缺乏弹性区域，降价可能减少销售额。",
+            "seconds": 12,
+            "title": "弹性与销售额",
+            "visual": "下方绘制销售额 R(p)=p·q(p) 的曲线；上方拖动价格点，联动显示需求量、销售额和弹性区域。当价格跨过销售额峰值时，用颜色提示销售额上升或下降。"
+          }
+        ],
+        "summary": "通过需求曲线、销售额和弹性读数，展示导数不仅描述绝对变化率，还能构造价格变化引起的相对需求变化。",
+        "title": "需求弹性：导数衡量相对变化"
+      }
+    ],
+    "changes": [
+      "落实函数范围决定：删除任意函数和基准点输入，改为两个固定预设函数；切换时同步更新对应点 A，避免 f(x)=2x+1 与 A=(1,1) 不匹配。",
+      "落实双侧逼近决定：第二幕明确分为 h>0 和 h<0 两段，并比较两侧差商是否趋向同一值。",
+      "落实教学深度决定：第三幕加入因式分解、约去 h 和得到 2+h 的关键代数化简，同时保留几何动画与数值序列。",
+      "将候选中的拖动点 B、输入函数等不可实现承诺统一修订为数值滑杆、整数切换、时间轴和播放暂停。",
+      "明确 h=0 仅为极限位置，不参与差商计算；约去 h 也明确要求 h≠0。",
+      "所有镜头总时长保持34秒，未加入外部数据、在线服务或无法实现的操作。"
+    ],
+    "decision_ids": [
+      "d59bb3ef51814044aadd8a22ae8e4a06",
+      "a6e098a7cd2844fcbe291a2fa2f9b4ae",
+      "bc3e134305fd4175afe66cdee8d182c3",
+      "8c59c91b2aa34d39b6a58b7a1ac6326a",
+      "e0085af3af3d45808ab281be2d07c615"
+    ],
+    "decisions": [
+      {
+        "actor": "benchmark_driver",
+        "answers": [],
+        "candidate": {
+          "id": "C1",
+          "interaction_goals": [
+            "拖动点 B，观察 h 与割线斜率同步变化",
+            "输入函数、基准点 a 和 h 的初始值",
+            "切换显示差商数值或切线方程"
+          ],
+          "math_notes": [
+            "要求函数在所选点附近有定义，并讨论的导数极限存在",
+            "h 只能取非零值；动画中用逐渐变小的正负 h 近似极限",
+            "曲线绘制范围应避开不可定义点或明确显示断点",
+            "数值显示采用有限精度，不把有限次逼近等同于严格极限"
+          ],
+          "objectives": [
+            "理解导数是函数在一点的瞬时变化率",
+            "观察割线斜率如何趋近切线斜率",
+            "掌握差商极限与导数记号"
+          ],
+          "scenes": [
+            {
+              "id": "S1",
+              "math": "割线斜率为 m_sec=Δy/Δx=[f(a+h)-f(a)]/h，其中 h≠0。它表示从 a 到 a+h 的平均变化率。",
+              "narration": "先用两个相邻点计算平均变化率：函数值变化量除以自变量变化量。",
+              "seconds": 10,
+              "title": "两点确定割线",
+              "visual": "画出坐标轴和曲线 y=f(x)，固定点 A=(a,f(a))，另取点 B=(a+h,f(a+h))。用高亮线段连接 A、B，并标注水平增量 h、竖直增量 Δy。h 从较大值开始缓慢减小。"
+            },
+            {
+              "id": "S2",
+              "math": "f'(a)=lim_{h→0}[f(a+h)-f(a)]/h。若极限存在，切线斜率等于导数 f'(a)。",
+              "narration": "当第二个点无限接近第一个点，平均变化率趋向这一点的瞬时变化率。",
+              "seconds": 12,
+              "title": "割线旋转为切线",
+              "visual": "保持 A 不动，让 B 沿曲线向 A 移动；割线逐渐旋转并在 h 接近 0 时与曲线在 A 附近重合为切线。右侧同步显示 h、差商数值和斜率读数。"
+            },
+            {
+              "id": "S3",
+              "math": "[f(1+h)-f(1)]/h=[(1+h)²-1]/h=2+h，故 f'(1)=lim_{h→0}(2+h)=2；切线为 y-1=2(x-1)。",
+              "narration": "例如 f(x)=x² 在 x=1 处的差商不断接近 2，因此切线斜率是 2。",
+              "seconds": 12,
+              "title": "用具体函数检验",
+              "visual": "切换到 f(x)=x²，在 a=1 处显示割线与切线；动画给出 h=1、0.5、0.1、0.01 时的差商，最终切线方程以高亮显示。"
+            }
+          ],
+          "summary": "用动态点和差商收敛展示导数的几何定义，适合建立“局部斜率”直觉。二维坐标系与函数曲线均由离线 Canvas 2D 绘制。",
+          "title": "从割线到切线：导数是瞬时变化率"
+        },
+        "id": "d59bb3ef51814044aadd8a22ae8e4a06",
+        "suggestion": "",
+        "timestamp": "2026-09-28T13:54:24.952398+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "answers": [
+          {
+            "option": {
+              "effect": "保留清晰的代数示范，同时支持有限范围的探索；对函数在 a 附近有定义且可导作提示。",
+              "id": "GUIDED_X2_DEFAULT",
+              "label": "以 f(x)=x²、a=1 为主，并允许输入附近的多项式函数和基准点"
+            },
+            "question": {
+              "id": "Q_FUNCTION_SCOPE",
+              "options": [
+                {
+                  "effect": "保留清晰的代数示范，同时支持有限范围的探索；对函数在 a 附近有定义且可导作提示。",
+                  "id": "GUIDED_X2_DEFAULT",
+                  "label": "以 f(x)=x²、a=1 为主，并允许输入附近的多项式函数和基准点"
+                },
+                {
+                  "effect": "镜头最紧凑、计算最容易跟随，但取消通用函数输入，交互重点放在拖动 h 和观察斜率。",
+                  "id": "FIXED_X2",
+                  "label": "全程固定 f(x)=x²、a=1"
+                },
+                {
+                  "effect": "突出导数定义的普适性，但必须处理不可定义点、非连续点、不可导点及绘图失败等情况，教学负担更高。",
+                  "id": "GENERAL_FUNCTION",
+                  "label": "允许输入任意可计算函数和基准点 a"
+                }
+              ],
+              "prompt": "函数与基准点应采用哪种演示范围？",
+              "reason": "当前 interaction_goals 要求可输入函数和 a，但 S3 又固定使用 f(x)=x²、a=1；需要确定自由度，避免交互承诺与镜头内容不一致。"
+            }
+          },
+          {
+            "option": {
+              "effect": "明确导数要求两侧差商趋向同一值，并可比较两侧斜率；需要在界面中避免 h=0。",
+              "id": "TWO_SIDED",
+              "label": "展示 h>0 与 h<0 的双侧逼近（建议）"
+            },
+            "question": {
+              "id": "Q_APPROACH_DIRECTION",
+              "options": [
+                {
+                  "effect": "明确导数要求两侧差商趋向同一值，并可比较两侧斜率；需要在界面中避免 h=0。",
+                  "id": "TWO_SIDED",
+                  "label": "展示 h>0 与 h<0 的双侧逼近（建议）"
+                },
+                {
+                  "effect": "动画更简单，适合首次建立直觉，但不完整呈现通常的双侧导数定义。",
+                  "id": "POSITIVE_ONLY",
+                  "label": "只展示 h>0 的右侧逼近"
+                },
+                {
+                  "effect": "同时说明何时导数不存在，教学深度更高，但需要额外解释反例并压缩其他内容。",
+                  "id": "TWO_SIDED_CONTRAST",
+                  "label": "先双侧展示，再加入尖点或断点作为反例"
+                }
+              ],
+              "prompt": "h 趋近 0 时，是否要同时展示正、负两个方向的逼近？",
+              "reason": "候选计划提到用正负 h 近似极限，但现有镜头主要描述 B 从一侧移动；这会影响是否讨论双侧极限以及不连续或尖点情形。"
+            }
+          },
+          {
+            "option": {
+              "effect": "保留几何动画，并展示 x² 示例中约去 h、得到 2+h 的过程，兼顾理解与可复核性。",
+              "id": "CONCEPT_PLUS_ALGEBRA",
+              "label": "概念直觉加一段完整代数化简（建议）"
+            },
+            "question": {
+              "id": "Q_TEACHING_DEPTH",
+              "options": [
+                {
+                  "effect": "保留几何动画，并展示 x² 示例中约去 h、得到 2+h 的过程，兼顾理解与可复核性。",
+                  "id": "CONCEPT_PLUS_ALGEBRA",
+                  "label": "概念直觉加一段完整代数化简（建议）"
+                },
+                {
+                  "effect": "节奏更轻，适合先建立直觉，但不详细展示差商如何化简。",
+                  "id": "INTUITION_ONLY",
+                  "label": "只强调图形、数值表和极限趋势"
+                },
+                {
+                  "effect": "数学严谨度更高，可明确导数不存在的情形，但需要减少图形操作或增加讲解密度。",
+                  "id": "FORMAL_LIMIT",
+                  "label": "加入极限存在、双侧一致和可导条件的正式说明"
+                }
+              ],
+              "prompt": "对“差商趋于导数”的代数与概念解释应达到哪一层？",
+              "reason": "经济学本科一年级学生通常需要既能理解局部斜率，也能读懂差商化简；当前 34 秒镜头尚未明确是直觉演示还是较完整推导。"
+            }
+          }
+        ],
+        "id": "a6e098a7cd2844fcbe291a2fa2f9b4ae",
+        "suggestion": "",
+        "timestamp": "2026-09-28T13:56:31.343798+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "answers": [
+          {
+            "option": {
+              "effect": "分别显示 B 从左右两侧接近 A，并比较两侧差商是否趋向同一值；更准确体现通常的双侧导数定义。",
+              "id": "TWO_SIDED_R2",
+              "label": "展示 h>0 与 h<0 的双侧逼近"
+            },
+            "question": {
+              "id": "Q_APPROACH_DIRECTION_R2",
+              "options": [
+                {
+                  "effect": "分别显示 B 从左右两侧接近 A，并比较两侧差商是否趋向同一值；更准确体现通常的双侧导数定义。",
+                  "id": "TWO_SIDED_R2",
+                  "label": "展示 h>0 与 h<0 的双侧逼近"
+                },
+                {
+                  "effect": "动画和讲解最简洁，适合先建立割线变切线的直觉，但不完整呈现双侧极限。",
+                  "id": "POSITIVE_ONLY_R2",
+                  "label": "只展示 h>0 的右侧逼近"
+                },
+                {
+                  "effect": "除 x² 外短暂展示尖点函数，说明两侧斜率不一致时导数不存在；概念深度更高，但会减少代数示范时间。",
+                  "id": "CONTRAST_R2",
+                  "label": "双侧逼近，并加入一个不可导反例"
+                }
+              ],
+              "prompt": "h 趋近 0 时，动画应采用哪种逼近方式？",
+              "reason": "函数范围已确定为以 x² 为主并支持有限多项式探索，但 h 的方向仍会改变导数定义的呈现：单侧更紧凑，双侧更完整，加入反例则会压缩 x² 演示和交互时间。"
+            }
+          },
+          {
+            "option": {
+              "effect": "展示约去 h 并得到 2+h 的关键步骤，同时保留动画和数值表；适合需要复核计算过程的本科生。",
+              "id": "CONCEPT_PLUS_ALGEBRA_R2",
+              "label": "几何直觉加完整代数化简"
+            },
+            "question": {
+              "id": "Q_TEACHING_DEPTH_R2",
+              "options": [
+                {
+                  "effect": "展示约去 h 并得到 2+h 的关键步骤，同时保留动画和数值表；适合需要复核计算过程的本科生。",
+                  "id": "CONCEPT_PLUS_ALGEBRA_R2",
+                  "label": "几何直觉加完整代数化简"
+                },
+                {
+                  "effect": "节奏更轻，突出局部斜率直觉；代数化简只保留最终结论，不展开推导。",
+                  "id": "INTUITION_ONLY_R2",
+                  "label": "只强调图形、数值表和极限趋势"
+                },
+                {
+                  "effect": "明确导数存在的条件，并可联系不可导情形；需要压缩交互或减少代数步骤。",
+                  "id": "FORMAL_LIMIT_R2",
+                  "label": "加入极限存在与双侧一致的正式说明"
+                }
+              ],
+              "prompt": "x² 示例中，差商化简与极限条件应展示到什么程度？",
+              "reason": "当前故事已包含完整的 x² 代数结果，但 34 秒时长有限；需要确定是把化简作为可视化主线，还是只用数值趋势建立直觉，避免讲解密度与教学目标冲突。"
+            }
+          }
+        ],
+        "id": "bc3e134305fd4175afe66cdee8d182c3",
+        "suggestion": "",
+        "timestamp": "2026-09-28T13:58:29.188709+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "answers": [
+          {
+            "option": {
+              "effect": "时间轴分为左右两侧，分别显示两组差商并比较它们是否趋向同一值，准确体现通常的双侧导数定义。",
+              "id": "TWO_SIDED_R3",
+              "label": "展示 h>0 与 h<0 的双侧逼近（建议）"
+            },
+            "question": {
+              "id": "Q_APPROACH_DIRECTION_R3",
+              "options": [
+                {
+                  "effect": "时间轴分为左右两侧，分别显示两组差商并比较它们是否趋向同一值，准确体现通常的双侧导数定义。",
+                  "id": "TWO_SIDED_R3",
+                  "label": "展示 h>0 与 h<0 的双侧逼近（建议）"
+                },
+                {
+                  "effect": "动画更紧凑，集中建立割线变切线的直觉，但不完整呈现双侧导数定义。",
+                  "id": "POSITIVE_ONLY_R3",
+                  "label": "只展示 h>0 的右侧逼近"
+                },
+                {
+                  "effect": "增加尖点反例来说明两侧极限不一致时导数不存在，但会压缩 x² 的计算与交互时间。",
+                  "id": "CONTRAST_R3",
+                  "label": "双侧逼近并加入不可导反例"
+                }
+              ],
+              "prompt": "h 趋近 0 时，第二幕采用哪种逼近方式？",
+              "reason": "这会决定导数定义呈现的完整程度，以及时间轴是单段还是分为左右两侧；当前故事尚未确定该数学范围。"
+            }
+          },
+          {
+            "option": {
+              "effect": "显示约去 h 并得到 2+h 的关键步骤，同时保留动画和数值表；兼顾理解与计算复核。",
+              "id": "CONCEPT_PLUS_ALGEBRA_R3",
+              "label": "几何直觉加关键代数化简（建议）"
+            },
+            "question": {
+              "id": "Q_TEACHING_DEPTH_R3",
+              "options": [
+                {
+                  "effect": "显示约去 h 并得到 2+h 的关键步骤，同时保留动画和数值表；兼顾理解与计算复核。",
+                  "id": "CONCEPT_PLUS_ALGEBRA_R3",
+                  "label": "几何直觉加关键代数化简（建议）"
+                },
+                {
+                  "effect": "节奏最轻，突出局部斜率直觉；代数化简只显示最终结果，不展开过程。",
+                  "id": "INTUITION_ONLY_R3",
+                  "label": "只强调图形、数值表和趋势"
+                },
+                {
+                  "effect": "明确导数成立的正式条件，但需要压缩动画细节或减少数值表内容。",
+                  "id": "FORMAL_LIMIT_R3",
+                  "label": "加入极限存在与双侧一致说明"
+                }
+              ],
+              "prompt": "x² 示例中，差商化简与极限条件展示到什么程度？",
+              "reason": "34秒总时长有限，需要在几何直觉、代数可复核性和正式条件之间取舍，避免字幕与画面过于拥挤。"
+            }
+          }
+        ],
+        "id": "8c59c91b2aa34d39b6a58b7a1ac6326a",
+        "suggestion": "",
+        "timestamp": "2026-09-28T14:00:29.236984+00:00"
+      },
+      {
+        "actor": "benchmark_driver",
+        "answers": [
+          {
+            "option": {
+              "effect": "时间轴分为左右两侧，分别显示两组差商并比较它们是否趋向同一值，准确体现通常的双侧导数定义。",
+              "id": "TWO_SIDED_R4",
+              "label": "展示 h>0 与 h<0 的双侧逼近（建议）"
+            },
+            "question": {
+              "id": "Q_APPROACH_DIRECTION_R4",
+              "options": [
+                {
+                  "effect": "时间轴分为左右两侧，分别显示两组差商并比较它们是否趋向同一值，准确体现通常的双侧导数定义。",
+                  "id": "TWO_SIDED_R4",
+                  "label": "展示 h>0 与 h<0 的双侧逼近（建议）"
+                },
+                {
+                  "effect": "动画和讲解更紧凑，集中建立割线变切线的直觉，但不完整呈现双侧极限。",
+                  "id": "POSITIVE_ONLY_R4",
+                  "label": "只展示 h>0 的右侧逼近"
+                },
+                {
+                  "effect": "增加尖点函数说明两侧斜率不一致时导数不存在，但会压缩 x² 的计算与交互时间。",
+                  "id": "CONTRAST_R4",
+                  "label": "双侧逼近并加入不可导反例"
+                }
+              ],
+              "prompt": "h 趋近 0 时，第二幕采用哪种逼近方式？",
+              "reason": "这会决定时间轴是否分成左右两侧，以及是否完整呈现通常的双侧导数定义；当前计划尚未记录最终选择。"
+            }
+          },
+          {
+            "option": {
+              "effect": "显示约去 h 并得到 2+h 的关键步骤，同时保留动画和数值表，兼顾理解与计算复核。",
+              "id": "CONCEPT_PLUS_ALGEBRA_R4",
+              "label": "几何直觉加关键代数化简（建议）"
+            },
+            "question": {
+              "id": "Q_TEACHING_DEPTH_R4",
+              "options": [
+                {
+                  "effect": "显示约去 h 并得到 2+h 的关键步骤，同时保留动画和数值表，兼顾理解与计算复核。",
+                  "id": "CONCEPT_PLUS_ALGEBRA_R4",
+                  "label": "几何直觉加关键代数化简（建议）"
+                },
+                {
+                  "effect": "节奏最轻，突出局部斜率直觉；代数化简只显示最终结果，不展开过程。",
+                  "id": "INTUITION_ONLY_R4",
+                  "label": "只强调图形、数值表和趋势"
+                },
+                {
+                  "effect": "明确导数成立的正式条件，但需要压缩动画细节或减少数值表内容。",
+                  "id": "FORMAL_LIMIT_R4",
+                  "label": "加入极限存在与双侧一致说明"
+                }
+              ],
+              "prompt": "x² 示例中，差商化简与极限条件展示到什么程度？",
+              "reason": "总时长约34秒，需要在几何直觉、代数可复核性和正式条件之间取舍，避免字幕和画面过于拥挤。"
+            }
+          }
+        ],
+        "id": "e0085af3af3d45808ab281be2d07c615",
+        "suggestion": "",
+        "timestamp": "2026-09-28T14:01:15.644612+00:00"
+      }
+    ],
+    "input_snapshot_hash": "36e3373d191750c7ec963d778f067faa56e3aa849ca12f769f11fc6553b9cb58",
+    "model_id": "gpt6",
+    "pending_refinement": null,
+    "phase": "ready",
+    "provider": "live",
+    "question_history": [
+      {
+        "questions": [],
+        "round": 0
+      },
+      {
+        "questions": [
+          {
+            "id": "Q_FUNCTION_SCOPE",
+            "options": [
+              {
+                "effect": "保留清晰的代数示范，同时支持有限范围的探索；对函数在 a 附近有定义且可导作提示。",
+                "id": "GUIDED_X2_DEFAULT",
+                "label": "以 f(x)=x²、a=1 为主，并允许输入附近的多项式函数和基准点"
+              },
+              {
+                "effect": "镜头最紧凑、计算最容易跟随，但取消通用函数输入，交互重点放在拖动 h 和观察斜率。",
+                "id": "FIXED_X2",
+                "label": "全程固定 f(x)=x²、a=1"
+              },
+              {
+                "effect": "突出导数定义的普适性，但必须处理不可定义点、非连续点、不可导点及绘图失败等情况，教学负担更高。",
+                "id": "GENERAL_FUNCTION",
+                "label": "允许输入任意可计算函数和基准点 a"
+              }
+            ],
+            "prompt": "函数与基准点应采用哪种演示范围？",
+            "reason": "当前 interaction_goals 要求可输入函数和 a，但 S3 又固定使用 f(x)=x²、a=1；需要确定自由度，避免交互承诺与镜头内容不一致。"
+          },
+          {
+            "id": "Q_APPROACH_DIRECTION",
+            "options": [
+              {
+                "effect": "明确导数要求两侧差商趋向同一值，并可比较两侧斜率；需要在界面中避免 h=0。",
+                "id": "TWO_SIDED",
+                "label": "展示 h>0 与 h<0 的双侧逼近（建议）"
+              },
+              {
+                "effect": "动画更简单，适合首次建立直觉，但不完整呈现通常的双侧导数定义。",
+                "id": "POSITIVE_ONLY",
+                "label": "只展示 h>0 的右侧逼近"
+              },
+              {
+                "effect": "同时说明何时导数不存在，教学深度更高，但需要额外解释反例并压缩其他内容。",
+                "id": "TWO_SIDED_CONTRAST",
+                "label": "先双侧展示，再加入尖点或断点作为反例"
+              }
+            ],
+            "prompt": "h 趋近 0 时，是否要同时展示正、负两个方向的逼近？",
+            "reason": "候选计划提到用正负 h 近似极限，但现有镜头主要描述 B 从一侧移动；这会影响是否讨论双侧极限以及不连续或尖点情形。"
+          },
+          {
+            "id": "Q_TEACHING_DEPTH",
+            "options": [
+              {
+                "effect": "保留几何动画，并展示 x² 示例中约去 h、得到 2+h 的过程，兼顾理解与可复核性。",
+                "id": "CONCEPT_PLUS_ALGEBRA",
+                "label": "概念直觉加一段完整代数化简（建议）"
+              },
+              {
+                "effect": "节奏更轻，适合先建立直觉，但不详细展示差商如何化简。",
+                "id": "INTUITION_ONLY",
+                "label": "只强调图形、数值表和极限趋势"
+              },
+              {
+                "effect": "数学严谨度更高，可明确导数不存在的情形，但需要减少图形操作或增加讲解密度。",
+                "id": "FORMAL_LIMIT",
+                "label": "加入极限存在、双侧一致和可导条件的正式说明"
+              }
+            ],
+            "prompt": "对“差商趋于导数”的代数与概念解释应达到哪一层？",
+            "reason": "经济学本科一年级学生通常需要既能理解局部斜率，也能读懂差商化简；当前 34 秒镜头尚未明确是直觉演示还是较完整推导。"
+          }
+        ],
+        "round": 1
+      },
+      {
+        "questions": [
+          {
+            "id": "Q_APPROACH_DIRECTION_R2",
+            "options": [
+              {
+                "effect": "分别显示 B 从左右两侧接近 A，并比较两侧差商是否趋向同一值；更准确体现通常的双侧导数定义。",
+                "id": "TWO_SIDED_R2",
+                "label": "展示 h>0 与 h<0 的双侧逼近"
+              },
+              {
+                "effect": "动画和讲解最简洁，适合先建立割线变切线的直觉，但不完整呈现双侧极限。",
+                "id": "POSITIVE_ONLY_R2",
+                "label": "只展示 h>0 的右侧逼近"
+              },
+              {
+                "effect": "除 x² 外短暂展示尖点函数，说明两侧斜率不一致时导数不存在；概念深度更高，但会减少代数示范时间。",
+                "id": "CONTRAST_R2",
+                "label": "双侧逼近，并加入一个不可导反例"
+              }
+            ],
+            "prompt": "h 趋近 0 时，动画应采用哪种逼近方式？",
+            "reason": "函数范围已确定为以 x² 为主并支持有限多项式探索，但 h 的方向仍会改变导数定义的呈现：单侧更紧凑，双侧更完整，加入反例则会压缩 x² 演示和交互时间。"
+          },
+          {
+            "id": "Q_TEACHING_DEPTH_R2",
+            "options": [
+              {
+                "effect": "展示约去 h 并得到 2+h 的关键步骤，同时保留动画和数值表；适合需要复核计算过程的本科生。",
+                "id": "CONCEPT_PLUS_ALGEBRA_R2",
+                "label": "几何直觉加完整代数化简"
+              },
+              {
+                "effect": "节奏更轻，突出局部斜率直觉；代数化简只保留最终结论，不展开推导。",
+                "id": "INTUITION_ONLY_R2",
+                "label": "只强调图形、数值表和极限趋势"
+              },
+              {
+                "effect": "明确导数存在的条件，并可联系不可导情形；需要压缩交互或减少代数步骤。",
+                "id": "FORMAL_LIMIT_R2",
+                "label": "加入极限存在与双侧一致的正式说明"
+              }
+            ],
+            "prompt": "x² 示例中，差商化简与极限条件应展示到什么程度？",
+            "reason": "当前故事已包含完整的 x² 代数结果，但 34 秒时长有限；需要确定是把化简作为可视化主线，还是只用数值趋势建立直觉，避免讲解密度与教学目标冲突。"
+          }
+        ],
+        "round": 2
+      },
+      {
+        "questions": [
+          {
+            "id": "Q_APPROACH_DIRECTION_R3",
+            "options": [
+              {
+                "effect": "时间轴分为左右两侧，分别显示两组差商并比较它们是否趋向同一值，准确体现通常的双侧导数定义。",
+                "id": "TWO_SIDED_R3",
+                "label": "展示 h>0 与 h<0 的双侧逼近（建议）"
+              },
+              {
+                "effect": "动画更紧凑，集中建立割线变切线的直觉，但不完整呈现双侧导数定义。",
+                "id": "POSITIVE_ONLY_R3",
+                "label": "只展示 h>0 的右侧逼近"
+              },
+              {
+                "effect": "增加尖点反例来说明两侧极限不一致时导数不存在，但会压缩 x² 的计算与交互时间。",
+                "id": "CONTRAST_R3",
+                "label": "双侧逼近并加入不可导反例"
+              }
+            ],
+            "prompt": "h 趋近 0 时，第二幕采用哪种逼近方式？",
+            "reason": "这会决定导数定义呈现的完整程度，以及时间轴是单段还是分为左右两侧；当前故事尚未确定该数学范围。"
+          },
+          {
+            "id": "Q_TEACHING_DEPTH_R3",
+            "options": [
+              {
+                "effect": "显示约去 h 并得到 2+h 的关键步骤，同时保留动画和数值表；兼顾理解与计算复核。",
+                "id": "CONCEPT_PLUS_ALGEBRA_R3",
+                "label": "几何直觉加关键代数化简（建议）"
+              },
+              {
+                "effect": "节奏最轻，突出局部斜率直觉；代数化简只显示最终结果，不展开过程。",
+                "id": "INTUITION_ONLY_R3",
+                "label": "只强调图形、数值表和趋势"
+              },
+              {
+                "effect": "明确导数成立的正式条件，但需要压缩动画细节或减少数值表内容。",
+                "id": "FORMAL_LIMIT_R3",
+                "label": "加入极限存在与双侧一致说明"
+              }
+            ],
+            "prompt": "x² 示例中，差商化简与极限条件展示到什么程度？",
+            "reason": "34秒总时长有限，需要在几何直觉、代数可复核性和正式条件之间取舍，避免字幕与画面过于拥挤。"
+          }
+        ],
+        "round": 3
+      },
+      {
+        "questions": [
+          {
+            "id": "Q_APPROACH_DIRECTION_R4",
+            "options": [
+              {
+                "effect": "时间轴分为左右两侧，分别显示两组差商并比较它们是否趋向同一值，准确体现通常的双侧导数定义。",
+                "id": "TWO_SIDED_R4",
+                "label": "展示 h>0 与 h<0 的双侧逼近（建议）"
+              },
+              {
+                "effect": "动画和讲解更紧凑，集中建立割线变切线的直觉，但不完整呈现双侧极限。",
+                "id": "POSITIVE_ONLY_R4",
+                "label": "只展示 h>0 的右侧逼近"
+              },
+              {
+                "effect": "增加尖点函数说明两侧斜率不一致时导数不存在，但会压缩 x² 的计算与交互时间。",
+                "id": "CONTRAST_R4",
+                "label": "双侧逼近并加入不可导反例"
+              }
+            ],
+            "prompt": "h 趋近 0 时，第二幕采用哪种逼近方式？",
+            "reason": "这会决定时间轴是否分成左右两侧，以及是否完整呈现通常的双侧导数定义；当前计划尚未记录最终选择。"
+          },
+          {
+            "id": "Q_TEACHING_DEPTH_R4",
+            "options": [
+              {
+                "effect": "显示约去 h 并得到 2+h 的关键步骤，同时保留动画和数值表，兼顾理解与计算复核。",
+                "id": "CONCEPT_PLUS_ALGEBRA_R4",
+                "label": "几何直觉加关键代数化简（建议）"
+              },
+              {
+                "effect": "节奏最轻，突出局部斜率直觉；代数化简只显示最终结果，不展开过程。",
+                "id": "INTUITION_ONLY_R4",
+                "label": "只强调图形、数值表和趋势"
+              },
+              {
+                "effect": "明确导数成立的正式条件，但需要压缩动画细节或减少数值表内容。",
+                "id": "FORMAL_LIMIT_R4",
+                "label": "加入极限存在与双侧一致说明"
+              }
+            ],
+            "prompt": "x² 示例中，差商化简与极限条件展示到什么程度？",
+            "reason": "总时长约34秒，需要在几何直觉、代数可复核性和正式条件之间取舍，避免字幕和画面过于拥挤。"
+          }
+        ],
+        "round": 4
+      }
+    ],
+    "questions": [],
+    "refinement_round": 5,
+    "revision": 11,
+    "schema_version": 1,
+    "sections": [],
+    "selected_candidate_id": "C1",
+    "story": {
+      "interaction_goals": [
+        "用数值滑杆改变非零 h，观察点 B、Δy 和割线斜率同步变化",
+        "用整数切换在两个固定预设函数示例间选择，并同步更新对应基准点",
+        "用时间轴和播放暂停控制 h 从正、负两侧逐步逼近零",
+        "比较正、负 h 对应的差商是否趋向同一值",
+        "切换显示差商数值、关键代数化简或切线方程",
+        "明确 h=0 只是极限位置，不参与差商计算"
+      ],
+      "math_notes": [
+        "割线斜率为 m_sec=[f(a+h)-f(a)]/h，其中 h≠0",
+        "导数定义为 f'(a)=lim_{h→0}[f(a+h)-f(a)]/h，要求双侧极限存在",
+        "有限个 h 值只能近似展示极限，不能把某一次差商等同于导数",
+        "主示范为 f(x)=x²、a=1，差商化简为 2+h，导数为 2",
+        "第二预设为 f(x)=2x+1、a=1，切换时同步使用 A=(1,3)",
+        "整数切换只选择固定预设函数，不提供任意函数文本输入",
+        "h=0 只作为极限位置，不显示差商数值",
+        "约去 h 的代数步骤建立在 h≠0 的前提上",
+        "双侧差商趋向同一值时，才可将该极限称为导数"
+      ],
+      "objectives": [
+        "理解导数是函数在一点的瞬时变化率",
+        "观察割线斜率随 h 变小而趋近切线斜率",
+        "掌握差商极限与导数记号",
+        "区分有限 h 下的差商与 h→0 的极限",
+        "能够解释 f(x)=x² 在 a=1 处的切线斜率"
+      ],
+      "scenes": [
+        {
+          "id": "S1",
+          "math": "m_sec=Δy/Δx=[f(a+h)-f(a)]/h，其中 h≠0；这里 Δx=h，Δy=f(a+h)-f(a)。",
+          "narration": "两个不同的点确定一条割线。函数值变化量除以自变量变化量，就是区间的平均变化率。",
+          "seconds": 10,
+          "title": "两点确定割线",
+          "visual": "绘制坐标轴和预设函数曲线，默认选择 f(x)=x²，a=1，固定 A=(1,1)，显示 B=(1+h,(1+h)²)。数值滑杆改变非零 h，并标注 h、Δy 和割线 AB。整数切换可选择预设 f(x)=x²、a=1 或 f(x)=2x+1、a=1；切换时同步更新 A 和 B。播放暂停控制预设 h 序列。"
+        },
+        {
+          "id": "S2",
+          "math": "f'(a)=lim_{h→0}[f(a+h)-f(a)]/h。只有双侧极限存在时，才能称其为 f 在 a 处的导数；有限个非零 h 只能近似展示极限。",
+          "narration": "从左右两侧接近时，差商若趋向同一值，这个极限就是该点的瞬时变化率，也就是导数。",
+          "seconds": 12,
+          "title": "双侧逼近切线",
+          "visual": "保持 A 不动，用时间轴控制 B 从左右两侧接近 A。数值滑杆只选择预设的非零正值或负值 h，播放暂停控制动画。时间轴分成 h>0 与 h<0 两段，分别显示两组差商；h=0 处仅标注“极限位置”，不显示差商。右侧同步显示 h、差商和割线斜率。"
+        },
+        {
+          "id": "S3",
+          "math": "[f(1+h)-f(1)]/h=[(1+h)²-1]/h=[2h+h²]/h=2+h，因此 f'(1)=lim_{h→0}(2+h)=2；切线为 y-1=2(x-1)。约去 h 只适用于 h≠0。",
+          "narration": "对 f(x)=x² 且 x=1，差商化简为 2+h，趋近 2，所以切线斜率是 2。",
+          "seconds": 12,
+          "title": "x² 的具体计算",
+          "visual": "整数切换选择 f(x)=x²、a=1，时间轴依次呈现 h=1、0.5、0.1、0.01 的 B 点、割线和差商。播放暂停控制步骤；画面依次显示因式分解、约去 h 和结果 2+h，最后高亮切线 y-1=2(x-1)。"
+        }
+      ],
+      "summary": "面向经济学本科一年级微积分，以 f(x)=x²、a=1 为主示范，通过数值滑杆、整数切换、时间轴和播放暂停展示割线斜率趋近切线斜率。函数仅从有限预设中选择，不提供任意函数文本输入；差商始终要求 h≠0，并明确有限逼近不等于严格极限。总时长约34秒。",
+      "title": "从割线到切线：导数是瞬时变化率"
+    },
+    "title": "从割线到切线：导数是瞬时变化率",
+    "unresolved_blocking_questions": [],
+    "workflow_id": "visualization.create",
+    "hash": "24967a1aee157520f7bfbed424bca67852032bb92b38503dedf06326d90c4e70"
+  },
+  "approval": {
+    "run_id": "39a2929f5490489f9d484458beb98dd1",
+    "revision": 11,
+    "hash": "24967a1aee157520f7bfbed424bca67852032bb92b38503dedf06326d90c4e70",
+    "input_hash": "36e3373d191750c7ec963d778f067faa56e3aa849ca12f769f11fc6553b9cb58",
+    "action_id": "1cdd2f26a14048b9af780609ce61a38c",
+    "confirmed_at": "2026-09-28T14:02:54.161007+00:00"
+  },
+  "jobs": [
+    {
+      "id": "b52188204f6e457b821047e5444e819c",
+      "kind": "plan",
+      "status": "done",
+      "attempt": 1,
+      "fencing_token": 1
+    },
+    {
+      "id": "331079077822439a8047d0f65b936736",
+      "kind": "plan",
+      "status": "done",
+      "attempt": 1,
+      "fencing_token": 1
+    },
+    {
+      "id": "4cc6162e87254cf4b1e4591982321740",
+      "kind": "plan",
+      "status": "done",
+      "attempt": 1,
+      "fencing_token": 1
+    },
+    {
+      "id": "5f1b611ed23f475b8d3e5d6653f7633d",
+      "kind": "plan",
+      "status": "done",
+      "attempt": 1,
+      "fencing_token": 1
+    },
+    {
+      "id": "0586e887b08b4879a08cf9a662ca9d86",
+      "kind": "plan",
+      "status": "done",
+      "attempt": 1,
+      "fencing_token": 1
+    },
+    {
+      "id": "fa85bb691fed443da6fbe5f08f0c8d98",
+      "kind": "plan",
+      "status": "done",
+      "attempt": 1,
+      "fencing_token": 1
+    },
+    {
+      "id": "49abc8ddddca4bd4afb0860e4d5aba13",
+      "kind": "build",
+      "status": "done",
+      "attempt": 1,
+      "fencing_token": 1
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "af56d45dd0424b9a9b715ccea90f1cb5",
+      "run_id": "39a2929f5490489f9d484458beb98dd1",
+      "revision": 11,
+      "name": "README.txt",
+      "sha256": "0dc58e56e71a1ecc86889d19dd275955894ad01a5e0d73d1807ec82ce61d9ec3",
+      "media_type": "text/plain",
+      "status": "draft",
+      "created_at": "2026-09-28T14:18:00.997297+00:00",
+      "metadata": {
+        "kind": "visualization",
+        "plan_hash": "24967a1aee157520f7bfbed424bca67852032bb92b38503dedf06326d90c4e70",
+        "teacher_review": "NOT_RUN"
+      }
+    },
+    {
+      "artifact_id": "a9e62a0f85e14fb1a1e59a69008577b5",
+      "run_id": "39a2929f5490489f9d484458beb98dd1",
+      "revision": 11,
+      "name": "frame-000.png",
+      "sha256": "d29914b6ccd9383e05377980a0aaabd5e01d4bf795d019f3db7c734a6bc804a0",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-28T14:18:00.997297+00:00",
+      "metadata": {
+        "kind": "visualization",
+        "plan_hash": "24967a1aee157520f7bfbed424bca67852032bb92b38503dedf06326d90c4e70",
+        "teacher_review": "NOT_RUN"
+      }
+    },
+    {
+      "artifact_id": "c06f3ba6d24e481282a857aef5b3901a",
+      "run_id": "39a2929f5490489f9d484458beb98dd1",
+      "revision": 11,
+      "name": "frame-050.png",
+      "sha256": "77314f19938d588d2b49d02677d2ff6dd99baa7013e810fb3618509c6b763c08",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-28T14:18:00.997297+00:00",
+      "metadata": {
+        "kind": "visualization",
+        "plan_hash": "24967a1aee157520f7bfbed424bca67852032bb92b38503dedf06326d90c4e70",
+        "teacher_review": "NOT_RUN"
+      }
+    },
+    {
+      "artifact_id": "5f7a6b07acf449fe983982fe12ec2218",
+      "run_id": "39a2929f5490489f9d484458beb98dd1",
+      "revision": 11,
+      "name": "frame-100.png",
+      "sha256": "287ee86cf2f8a7f8431c60a0caf6cf7992cd3a79e2b843048b7d372d93650c08",
+      "media_type": "image/png",
+      "status": "draft",
+      "created_at": "2026-09-28T14:18:00.997297+00:00",
+      "metadata": {
+        "kind": "visualization",
+        "plan_hash": "24967a1aee157520f7bfbed424bca67852032bb92b38503dedf06326d90c4e70",
+        "teacher_review": "NOT_RUN"
+      }
+    },
+    {
+      "artifact_id": "d22588f7876948d3bbcf42ed6dff651a",
+      "run_id": "39a2929f5490489f9d484458beb98dd1",
+      "revision": 11,
+      "name": "interactive.html",
+      "sha256": "bcabfe2a31350b5b206b992ef9a3f2e5e37bc076e59ed2c43977b79b61f29e61",
+      "media_type": "text/html",
+      "status": "draft",
+      "created_at": "2026-09-28T14:18:00.997297+00:00",
+      "metadata": {
+        "kind": "visualization",
+        "plan_hash": "24967a1aee157520f7bfbed424bca67852032bb92b38503dedf06326d90c4e70",
+        "teacher_review": "NOT_RUN"
+      }
+    },
+    {
+      "artifact_id": "bf2fb43c997f444f9d695b52831672ce",
+      "run_id": "39a2929f5490489f9d484458beb98dd1",
+      "revision": 11,
+      "name": "plan.json",
+      "sha256": "9e931c8dbb0226abfd6d0570832986b3ce7fd7d38e4fe2af82470070d9a77548",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-28T14:18:00.997297+00:00",
+      "metadata": {
+        "kind": "visualization",
+        "plan_hash": "24967a1aee157520f7bfbed424bca67852032bb92b38503dedf06326d90c4e70",
+        "teacher_review": "NOT_RUN"
+      }
+    },
+    {
+      "artifact_id": "119d492271cf41fbb64f824cbd550314",
+      "run_id": "39a2929f5490489f9d484458beb98dd1",
+      "revision": 11,
+      "name": "project.json",
+      "sha256": "74928e107c3865614598271cff61694389ea797f2a6c1fd25d9eb7655841969a",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-28T14:18:00.997297+00:00",
+      "metadata": {
+        "kind": "visualization",
+        "plan_hash": "24967a1aee157520f7bfbed424bca67852032bb92b38503dedf06326d90c4e70",
+        "teacher_review": "NOT_RUN"
+      }
+    },
+    {
+      "artifact_id": "f3a923fa41fd4026924c8658fcc64b52",
+      "run_id": "39a2929f5490489f9d484458beb98dd1",
+      "revision": 11,
+      "name": "quality_report.json",
+      "sha256": "0f0f28e69e75f7869645e16225e772c62b789a5d2255b0a3e54b1d1ea4ec4da4",
+      "media_type": "application/json",
+      "status": "draft",
+      "created_at": "2026-09-28T14:18:00.997297+00:00",
+      "metadata": {
+        "kind": "visualization",
+        "plan_hash": "24967a1aee157520f7bfbed424bca67852032bb92b38503dedf06326d90c4e70",
+        "teacher_review": "NOT_RUN"
+      }
+    },
+    {
+      "artifact_id": "3bea0c272bc74b2799037e308e9da0c4",
+      "run_id": "39a2929f5490489f9d484458beb98dd1",
+      "revision": 11,
+      "name": "scene.js",
+      "sha256": "bed4aeff356831566e296bc611fa77d2b02d6872ed5e60cb00ee66fa8a3eac77",
+      "media_type": "text/javascript",
+      "status": "draft",
+      "created_at": "2026-09-28T14:18:00.997297+00:00",
+      "metadata": {
+        "kind": "visualization",
+        "plan_hash": "24967a1aee157520f7bfbed424bca67852032bb92b38503dedf06326d90c4e70",
+        "teacher_review": "NOT_RUN"
+      }
+    },
+    {
+      "artifact_id": "2f2905f6e4824a60b608bdb9940175cd",
+      "run_id": "39a2929f5490489f9d484458beb98dd1",
+      "revision": 11,
+      "name": "source_bundle.zip",
+      "sha256": "c67c494067fcee220997a29044e2794499996296ac80f6d7b5870ee486e6907d",
+      "media_type": "application/zip",
+      "status": "draft",
+      "created_at": "2026-09-28T14:18:00.997297+00:00",
+      "metadata": {
+        "kind": "visualization",
+        "plan_hash": "24967a1aee157520f7bfbed424bca67852032bb92b38503dedf06326d90c4e70",
+        "teacher_review": "NOT_RUN"
+      }
+    },
+    {
+      "artifact_id": "7b5decbdfde146f288f8d676a62c25c4",
+      "run_id": "39a2929f5490489f9d484458beb98dd1",
+      "revision": 11,
+      "name": "video.webm",
+      "sha256": "17e3b9c7f1262b8543fe2355b5514d52d4280534aebf739fdadb98d59912401b",
+      "media_type": "video/webm",
+      "status": "draft",
+      "created_at": "2026-09-28T14:18:00.997297+00:00",
+      "metadata": {
+        "kind": "visualization",
+        "plan_hash": "24967a1aee157520f7bfbed424bca67852032bb92b38503dedf06326d90c4e70",
+        "teacher_review": "NOT_RUN"
+      }
+    }
+  ],
+  "reviews": [],
+  "model_routing": {
+    "preferred_model_id": "gpt6",
+    "fallback_order": [
+      "gpt6",
+      "deepseek-flash",
+      "deepseek-v4-pro"
+    ],
+    "last_model_id": "deepseek-flash",
+    "last_successful_model_id": "deepseek-flash",
+    "used_models": [
+      "gpt6",
+      "deepseek-flash"
+    ],
+    "successful_models": [
+      "gpt6",
+      "deepseek-flash"
+    ],
+    "fallback_count": 3,
+    "request_counts": {
+      "gpt6": 12,
+      "deepseek-flash": 3
+    },
+    "actual_models": [
+      "gpt-6-astra",
+      "deepseek-flash"
+    ],
+    "last_fallback": {
+      "from_model_id": "gpt6",
+      "to_model_id": "deepseek-flash",
+      "reason": "供应商暂时无法处理请求；本次失败已记录",
+      "code": "PROVIDER_UNAVAILABLE"
+    },
+    "selection_source": "input"
+  },
+  "feedback_review": null,
+  "repair_guidance_context": null,
+  "budget": {
+    "requests": 35,
+    "local_repairs_per_unit": 2,
+    "global_repair_rounds": 2,
+    "version": 0,
+    "initialized": true,
+    "initialized_fields": [
+      "global_repair_rounds",
+      "local_repairs_per_unit",
+      "requests"
+    ],
+    "source": "ACTUAL_EXECUTION_SETTINGS",
+    "baseline_unknown": false,
+    "request_count": 15,
+    "defaults": {
+      "global_repair_rounds": 2,
+      "local_repairs_per_unit": 2,
+      "requests": 35
+    },
+    "overrides": {},
+    "maximums": {
+      "requests": 1000,
+      "local_repairs_per_unit": 20,
+      "global_repair_rounds": 20
+    },
+    "limitations": [],
+    "can_increase": false
+  }
+}

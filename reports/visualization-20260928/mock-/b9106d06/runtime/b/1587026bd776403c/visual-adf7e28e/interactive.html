@@ -1,0 +1,154 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27;; worker-src blob:; style-src &#x27;unsafe-inline&#x27;; img-src data: blob:; media-src blob:; connect-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;">
+<title>割线逼近切线</title>
+<style>body{font:16px system-ui,sans-serif;margin:0;padding:20px;background:#edf1f7;color:#18283b}main{max-width:1040px;margin:auto}canvas{width:100%;background:#f7f9fc;border-radius:12px;box-shadow:0 8px 35px #1c36511a}button{padding:9px 20px;border:1px solid #bdcbe5;border-radius:7px;background:white;color:#213d8f;cursor:pointer}.toolbar{display:flex;gap:12px;align-items:center;margin:16px 0}#time{flex:1}#controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}label{display:grid;grid-template-columns:1fr 2fr 50px;gap:8px;align-items:center;background:white;padding:14px;border-radius:8px}#caption{min-height:45px;line-height:1.7}small{color:#607189}#status{color:#a12c2c}input{min-width:0}</style></head>
+<body><main><p><small>MOCK 离线示例 · 调整参数，观察数学过程 · 无声动画与中文字幕 · 待教师复核</small></p>
+<canvas id="scene" width="960" height="540" aria-label="数学概念动画"></canvas>
+<div class="toolbar"><button id="play">播放 / 暂停</button><button id="reset">从头开始</button><input id="time" aria-label="动画进度" type="range" min="0" max="1" step="0.001" value="0"></div>
+<p id="caption"></p><div id="controls"></div><p id="status" role="alert"></p>
+<details><summary>数学说明与适用范围</summary><p>MOCK 示例：数值随动画时间和参数即时重算。</p><ul><li>割线斜率=[f(x₀+h)−f(x₀)]/h。</li><li>h&gt;0 趋于零，不取零避免除零。</li><li>f(x)=x² 时差商=2x₀+h，导数=2x₀。</li><li>使用 f(x)=x² 与导数 2x</li><li>默认求导点为 1</li><li>此代码来自离线测试样例，未经真实模型或教师审阅。</li></ul></details>
+</main><script type="application/json" id="project">{"story": {"interaction_goals": ["调节求导点、初始间隔以及示例函数"], "math_notes": ["割线斜率=[f(x₀+h)−f(x₀)]/h。", "h\u003e0 趋于零，不取零避免除零。", "f(x)=x² 时差商=2x₀+h，导数=2x₀。", "使用 f(x)=x² 与导数 2x", "默认求导点为 1"], "objectives": ["函数曲线与两个点", "割线逐渐逼近切线", "差商数值收敛到导数"], "scenes": [{"id": "S1", "math": "割线斜率=[f(x₀+h)−f(x₀)]/h。", "narration": "画出 f(x)=x²、P、Q 及割线和切线。", "seconds": 5, "title": "函数曲线与两个点", "visual": "画出 f(x)=x²、P、Q 及割线和切线。"}, {"id": "S2", "math": "h\u003e0 趋于零，不取零避免除零。", "narration": "h 从初始间隔指数减小，两点靠近、橙色割线趋向紫色切线。", "seconds": 5, "title": "割线逐渐逼近切线", "visual": "h 从初始间隔指数减小，两点靠近、橙色割线趋向紫色切线。"}, {"id": "S3", "math": "f(x)=x² 时差商=2x₀+h，导数=2x₀。", "narration": "同步呈现差商、解析导数与绝对误差。", "seconds": 5, "title": "差商数值收敛到导数", "visual": "同步呈现差商、解析导数与绝对误差。"}], "summary": "MOCK 离线教学演示；真实 API 会依据任意概念编写方案及代码。", "title": "割线逼近切线"}, "program": {"code": "\nfunction draw(ctx,t,p) {\n const cubic=p.curve\u003e0.5, f=x=\u003ecubic?Math.sin(x):x*x, df=x=\u003ecubic?Math.cos(x):2*x;\n const x=p.x0, h=p.hstart*Math.pow(0.001,Math.max(0,(t-.2)/.8));\n const slope=(f(x+h)-f(x))/h, exact=df(x);\n const X=x=\u003e290+x*88, Y=y=\u003e365-y*48;\n const line=(a,b,c,d,color,w=2)=\u003e{ctx.strokeStyle=color;ctx.lineWidth=w;ctx.beginPath();ctx.moveTo(a,b);ctx.lineTo(c,d);ctx.stroke();};\n const point=(x,y,color)=\u003e{ctx.fillStyle=color;ctx.beginPath();ctx.arc(X(x),Y(y),6,0,7);ctx.fill();};\n ctx.fillStyle='#f7f9fc';ctx.fillRect(0,0,960,540);\n for(let i=-2;i\u003c=3;i++)line(X(i),95,X(i),410,'#e1e7ef',1);\n line(55,Y(0),555,Y(0),'#91a0b3');line(X(0),90,X(0),413,'#91a0b3');\n ctx.strokeStyle='#4664d8';ctx.lineWidth=3;ctx.beginPath();\n for(let i=0;i\u003c=200;i++){const q=-2.5+i/40;const px=X(q),py=Y(f(q));i?ctx.lineTo(px,py):ctx.moveTo(px,py);}ctx.stroke();\n const a=x-.95,b=x+1.5;\n line(X(a),Y(f(x)+exact*(a-x)),X(b),Y(f(x)+exact*(b-x)),'#7e61b8',3);\n line(X(a),Y(f(x)+slope*(a-x)),X(b),Y(f(x)+slope*(b-x)),'#db742a',3);\n point(x,f(x),'#4664d8');point(x+h,f(x+h),'#db742a');\n ctx.font='18px sans-serif';ctx.fillStyle='#213750';ctx.fillText(cubic?'f(x) = sin(x)':'f(x) = x²',65,103);\n ctx.fillText('x',540,Y(0)-10);ctx.fillText('f(x)',X(0)+9,92);\n ctx.fillText('P',X(x)-18,Y(f(x))-12);ctx.fillText('Q',X(x+h)+10,Y(f(x+h))-10);\n ctx.font='21px sans-serif';ctx.fillText('差商 → 导数',610,125);\n ctx.font='18px sans-serif';ctx.fillText('h = '+h.toFixed(5),610,169);\n ctx.fillStyle='#db742a';ctx.fillText('割线斜率 = '+slope.toFixed(5),610,207);\n ctx.fillStyle='#7e61b8';ctx.fillText('切线斜率 = '+exact.toFixed(5),610,245);\n ctx.fillStyle='#213750';ctx.fillText('|误差| = '+Math.abs(slope-exact).toFixed(5),610,283);\n ctx.fillText('[f(x₀+h) − f(x₀)] / h',610,335);\n line(615,391,615+Math.min(260,Math.abs(slope-exact)*160),391,'#db742a',9);\n return {metrics:{h,slope,derivative:exact,error:Math.abs(slope-exact),x0:x}};\n}\n", "controls": [{"id": "x0", "label": "求导点 x₀", "min": -1.5, "max": 1.5, "step": 0.1, "value": 1.0}, {"id": "hstart", "label": "初始间隔 h", "min": 0.2, "max": 1.5, "step": 0.1, "value": 1.0}, {"id": "curve", "label": "函数：0 为平方，1 为正弦", "min": 0.0, "max": 1.0, "step": 1.0, "value": 0.0}], "covered_decision_ids": ["199d932053a1496d84892eaf2ae4cb44", "d9381f0d5b4742ecaf9af73a552c25c2"], "explanation": "MOCK 示例：数值随动画时间和参数即时重算。", "limitations": ["此代码来自离线测试样例，未经真实模型或教师审阅。"]}}</script><script>/* Owned runtime. Model code executes only in a disposable, network-blocked worker. */
+"use strict";
+const project = JSON.parse(document.getElementById("project").textContent);
+const canvas = document.getElementById("scene");
+const ctx = canvas.getContext("2d");
+const timeSlider = document.getElementById("time");
+const statusBox = document.getElementById("status");
+const duration = project.story.scenes.reduce((n, s) => n + s.seconds, 0);
+const params = Object.fromEntries(project.program.controls.map(c => [c.id, c.value]));
+let position = 0, playing = false, serial = 0, requests = new Map(), broken = null;
+const workerSource = `"use strict";\n${project.program.code}\n;
+const surface = new OffscreenCanvas(960, 540);
+const context = surface.getContext('2d');
+self.onmessage = function(event) {
+  const {id,t,p} = event.data;
+  try {
+    surface.width = 960; surface.height = 540;
+    context.fillStyle = '#f7f9fc'; context.fillRect(0,0,960,540);
+    context.save(); const result = draw(context,t,p); context.restore();
+    const bitmap = surface.transferToImageBitmap();
+    self.postMessage({id,bitmap,result}, [bitmap]);
+  } catch (error) { self.postMessage({id,error:String(error.message || error)}); }
+};`;
+const workerURL = URL.createObjectURL(new Blob([workerSource], {type: "text/javascript"}));
+const worker = new Worker(workerURL);
+URL.revokeObjectURL(workerURL);
+function fail(message) {
+  broken = String(message); playing = false; statusBox.textContent = `动画运行失败：${broken}`;
+  worker.terminate();
+  for (const value of requests.values()) { clearTimeout(value.timer); value.reject(new Error(broken)); }
+  requests.clear();
+}
+worker.onerror = e => { e.preventDefault(); fail(e.message || "动画代码无法运行"); };
+worker.onmessage = e => {
+  const item = requests.get(e.data.id);
+  if (!item) { if (e.data.bitmap) e.data.bitmap.close(); return; }
+  requests.delete(e.data.id); clearTimeout(item.timer);
+  if (e.data.error) { item.reject(new Error(e.data.error)); return; }
+  item.resolve(e.data);
+};
+function requestFrame(t, p) {
+  if (broken) return Promise.reject(new Error(broken));
+  return new Promise((resolve,reject) => {
+    const id = ++serial;
+    const timer = setTimeout(() => fail("单帧超过 3 秒，请修复代码后重试"), 3000);
+    requests.set(id, {resolve,reject,timer}); worker.postMessage({id,t,p});
+  });
+}
+function lines(text, x, y, width, lineHeight, maxLines) {
+  let line = "", count = 0;
+  for (const char of text) {
+    if (ctx.measureText(line + char).width > width) {
+      ctx.fillText(line, x, y); y += lineHeight; line = "";
+      if (++count >= maxLines - 1) break;
+    }
+    line += char;
+  }
+  ctx.fillText(line, x, y);
+}
+function currentScene(t) {
+  let end = 0;
+  return project.story.scenes.find(s => { end += s.seconds; return t * duration < end; }) || project.story.scenes.at(-1);
+}
+async function render(t, overrides = {}) {
+  t = Math.max(0, Math.min(1, t));
+  const frame = await requestFrame(t, {...params, ...overrides});
+  ctx.setTransform(1,0,0,1,0,0); ctx.drawImage(frame.bitmap,0,0); frame.bitmap.close();
+  // Hash just the plot area, before captions; a changing subtitle cannot pass animation checks.
+  const pixels = ctx.getImageData(0,68,960,367).data;
+  let signature = 2166136261;
+  for (let i=0;i<pixels.length;i+=4) { signature = Math.imul(signature ^ pixels[i],16777619); signature = Math.imul(signature ^ pixels[i+1],16777619); signature = Math.imul(signature ^ pixels[i+2],16777619); }
+  const scene = currentScene(t);
+  ctx.fillStyle = "#f7f9fc"; ctx.fillRect(0,0,960,68); ctx.fillRect(0,435,960,105);
+  ctx.fillStyle = "#18283b"; ctx.font = "bold 25px sans-serif";
+  lines(project.story.title,28,34,890,28,1);
+  ctx.fillStyle = "#567087"; ctx.font = "16px sans-serif";
+  ctx.fillText(`${scene.title} · ${(t*duration).toFixed(1)} / ${duration} 秒`,28,59);
+  ctx.fillStyle = "#1d3651"; ctx.font = "20px sans-serif";
+  lines(scene.narration,28,465,900,27,2);
+  ctx.fillStyle = "#4562d9"; ctx.fillRect(0,534,960*t,6);
+  position = t; timeSlider.value = String(t);
+  document.getElementById("caption").textContent = scene.narration;
+  return {metrics: frame.result?.metrics || {}, plot_signature: String(signature >>> 0)};
+}
+let rendering = false;
+async function show(t) {
+  if (rendering) return;
+  rendering = true;
+  try { await render(t); } catch (e) { fail(e.message); }
+  finally { rendering = false; }
+}
+for (const control of project.program.controls) {
+  const label = document.createElement("label");
+  const title = document.createElement("span"); title.textContent = control.label;
+  const input = document.createElement("input"); input.type="range";
+  input.min=control.min; input.max=control.max; input.step=control.step; input.value=control.value;
+  input.id=`param-${control.id}`; input.setAttribute("aria-label",control.label);
+  const value = document.createElement("output"); value.textContent=control.value;
+  input.oninput = () => { params[control.id]=Number(input.value); value.textContent=input.value; playing=false; show(position); };
+  label.append(title,input,value); document.getElementById("controls").append(label);
+}
+timeSlider.oninput = () => { playing=false; show(Number(timeSlider.value)); };
+document.getElementById("play").onclick = async () => {
+  if (playing) { playing=false; return; }
+  if (position>=1) position=0;
+  playing=true; const start=performance.now()-position*duration*1000;
+  while(playing && position<1 && !broken) {
+    await show(Math.min(1,(performance.now()-start)/(duration*1000)));
+    await new Promise(resolve=>setTimeout(resolve,33));
+  }
+  playing=false;
+};
+document.getElementById("reset").onclick = () => { playing=false; show(0); };
+async function record() {
+  playing=false; await render(0);
+  const mime = ["video/webm;codecs=vp9","video/webm;codecs=vp8"].find(v=>MediaRecorder.isTypeSupported(v));
+  if (!mime) throw new Error("浏览器不支持 WebM 视频编码");
+  const stream=canvas.captureStream(24);
+  const recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:4000000});
+  const chunks=[]; let size=0;
+  const completed=new Promise((resolve,reject)=>{
+    recorder.ondataavailable=e=>{ chunks.push(e.data); size+=e.data.size; if(size>80*1024*1024){recorder.stop();reject(new Error('视频超过 80MB 限制'));} };
+    recorder.onerror=e=>reject(new Error(e.error?.message || "视频编码失败"));
+    recorder.onstop=resolve;
+  });
+  recorder.start(1000); const start=performance.now(); let frames=0;
+  try {
+    while (performance.now()-start<duration*1000) {
+      await render(Math.min(1,(performance.now()-start)/(duration*1000))); frames++;
+      await new Promise(resolve=>setTimeout(resolve,1000/24));
+    }
+    await render(1); await new Promise(resolve=>setTimeout(resolve,150));
+    recorder.stop(); await completed;
+  } finally { stream.getTracks().forEach(track=>track.stop()); }
+  const blob=new Blob(chunks,{type:mime});
+  const video=document.createElement("video"); video.muted=true; video.src=URL.createObjectURL(blob);
+  await new Promise((resolve,reject)=>{video.onloadeddata=resolve;video.onerror=()=>reject(new Error('视频解码验证失败'));});
+  const dimensions={width:video.videoWidth,height:video.videoHeight}; URL.revokeObjectURL(video.src);
+  const data=await new Promise(resolve=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result.split(',')[1]);reader.readAsDataURL(blob);});
+  return {data,mime,frames,duration_seconds:duration,recorded_seconds:(performance.now()-start)/1000,...dimensions};
+}
+window.visualization = {render,record,params,duration,ready:render(0)};
+window.visualization.ready.catch(e=>fail(e.message));
+</script></body></html>

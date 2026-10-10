@@ -1,0 +1,86 @@
+{
+  "story": {
+    "interaction_goals": [
+      "调节求导点、初始间隔以及示例函数"
+    ],
+    "math_notes": [
+      "割线斜率=[f(x₀+h)−f(x₀)]/h。",
+      "h>0 趋于零，不取零避免除零。",
+      "f(x)=x² 时差商=2x₀+h，导数=2x₀。",
+      "使用 f(x)=x² 与导数 2x",
+      "默认求导点为 1"
+    ],
+    "objectives": [
+      "函数曲线与两个点",
+      "割线逐渐逼近切线",
+      "差商数值收敛到导数"
+    ],
+    "scenes": [
+      {
+        "id": "S1",
+        "math": "割线斜率=[f(x₀+h)−f(x₀)]/h。",
+        "narration": "画出 f(x)=x²、P、Q 及割线和切线。",
+        "seconds": 5,
+        "title": "函数曲线与两个点",
+        "visual": "画出 f(x)=x²、P、Q 及割线和切线。"
+      },
+      {
+        "id": "S2",
+        "math": "h>0 趋于零，不取零避免除零。",
+        "narration": "h 从初始间隔指数减小，两点靠近、橙色割线趋向紫色切线。",
+        "seconds": 5,
+        "title": "割线逐渐逼近切线",
+        "visual": "h 从初始间隔指数减小，两点靠近、橙色割线趋向紫色切线。"
+      },
+      {
+        "id": "S3",
+        "math": "f(x)=x² 时差商=2x₀+h，导数=2x₀。",
+        "narration": "同步呈现差商、解析导数与绝对误差。",
+        "seconds": 5,
+        "title": "差商数值收敛到导数",
+        "visual": "同步呈现差商、解析导数与绝对误差。"
+      }
+    ],
+    "summary": "MOCK 离线教学演示；真实 API 会依据任意概念编写方案及代码。",
+    "title": "割线逼近切线"
+  },
+  "program": {
+    "code": "\nfunction draw(ctx,t,p) {\n const cubic=p.curve>0.5, f=x=>cubic?Math.sin(x):x*x, df=x=>cubic?Math.cos(x):2*x;\n const x=p.x0, h=p.hstart*Math.pow(0.001,Math.max(0,(t-.2)/.8));\n const slope=(f(x+h)-f(x))/h, exact=df(x);\n const X=x=>290+x*88, Y=y=>365-y*48;\n const line=(a,b,c,d,color,w=2)=>{ctx.strokeStyle=color;ctx.lineWidth=w;ctx.beginPath();ctx.moveTo(a,b);ctx.lineTo(c,d);ctx.stroke();};\n const point=(x,y,color)=>{ctx.fillStyle=color;ctx.beginPath();ctx.arc(X(x),Y(y),6,0,7);ctx.fill();};\n ctx.fillStyle='#f7f9fc';ctx.fillRect(0,0,960,540);\n for(let i=-2;i<=3;i++)line(X(i),95,X(i),410,'#e1e7ef',1);\n line(55,Y(0),555,Y(0),'#91a0b3');line(X(0),90,X(0),413,'#91a0b3');\n ctx.strokeStyle='#4664d8';ctx.lineWidth=3;ctx.beginPath();\n for(let i=0;i<=200;i++){const q=-2.5+i/40;const px=X(q),py=Y(f(q));i?ctx.lineTo(px,py):ctx.moveTo(px,py);}ctx.stroke();\n const a=x-.95,b=x+1.5;\n line(X(a),Y(f(x)+exact*(a-x)),X(b),Y(f(x)+exact*(b-x)),'#7e61b8',3);\n line(X(a),Y(f(x)+slope*(a-x)),X(b),Y(f(x)+slope*(b-x)),'#db742a',3);\n point(x,f(x),'#4664d8');point(x+h,f(x+h),'#db742a');\n ctx.font='18px sans-serif';ctx.fillStyle='#213750';ctx.fillText(cubic?'f(x) = sin(x)':'f(x) = x²',65,103);\n ctx.fillText('x',540,Y(0)-10);ctx.fillText('f(x)',X(0)+9,92);\n ctx.fillText('P',X(x)-18,Y(f(x))-12);ctx.fillText('Q',X(x+h)+10,Y(f(x+h))-10);\n ctx.font='21px sans-serif';ctx.fillText('差商 → 导数',610,125);\n ctx.font='18px sans-serif';ctx.fillText('h = '+h.toFixed(5),610,169);\n ctx.fillStyle='#db742a';ctx.fillText('割线斜率 = '+slope.toFixed(5),610,207);\n ctx.fillStyle='#7e61b8';ctx.fillText('切线斜率 = '+exact.toFixed(5),610,245);\n ctx.fillStyle='#213750';ctx.fillText('|误差| = '+Math.abs(slope-exact).toFixed(5),610,283);\n ctx.fillText('[f(x₀+h) − f(x₀)] / h',610,335);\n line(615,391,615+Math.min(260,Math.abs(slope-exact)*160),391,'#db742a',9);\n return {metrics:{h,slope,derivative:exact,error:Math.abs(slope-exact),x0:x}};\n}\n",
+    "controls": [
+      {
+        "id": "x0",
+        "label": "求导点 x₀",
+        "min": -1.5,
+        "max": 1.5,
+        "step": 0.1,
+        "value": 1.0
+      },
+      {
+        "id": "hstart",
+        "label": "初始间隔 h",
+        "min": 0.2,
+        "max": 1.5,
+        "step": 0.1,
+        "value": 1.0
+      },
+      {
+        "id": "curve",
+        "label": "函数：0 为平方，1 为正弦",
+        "min": 0.0,
+        "max": 1.0,
+        "step": 1.0,
+        "value": 0.0
+      }
+    ],
+    "covered_decision_ids": [
+      "199d932053a1496d84892eaf2ae4cb44",
+      "d9381f0d5b4742ecaf9af73a552c25c2"
+    ],
+    "explanation": "MOCK 示例：数值随动画时间和参数即时重算。",
+    "limitations": [
+      "此代码来自离线测试样例，未经真实模型或教师审阅。"
+    ]
+  },
+  "plan_hash": "681cb85c55cb9dfd92195e4e37940bf79cbaa2eba7da45148d884f8462764d85",
+  "provider": "mock"
+}

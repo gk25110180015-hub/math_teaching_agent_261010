@@ -1,0 +1,154 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27;; worker-src blob:; style-src &#x27;unsafe-inline&#x27;; img-src data: blob:; media-src blob:; connect-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;">
+<title>三维曲面与下降轨迹</title>
+<style>body{font:16px system-ui,sans-serif;margin:0;padding:20px;background:#edf1f7;color:#18283b}main{max-width:1040px;margin:auto}canvas{width:100%;background:#f7f9fc;border-radius:12px;box-shadow:0 8px 35px #1c36511a}button{padding:9px 20px;border:1px solid #bdcbe5;border-radius:7px;background:white;color:#213d8f;cursor:pointer}.toolbar{display:flex;gap:12px;align-items:center;margin:16px 0}#time{flex:1}#controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}label{display:grid;grid-template-columns:1fr 2fr 50px;gap:8px;align-items:center;background:white;padding:14px;border-radius:8px}#caption{min-height:45px;line-height:1.7}small{color:#607189}#status{color:#a12c2c}input{min-width:0}</style></head>
+<body><main><p><small>MOCK 离线示例 · 调整参数，观察数学过程 · 无声动画与中文字幕 · 待教师复核</small></p>
+<canvas id="scene" width="960" height="540" aria-label="数学概念动画"></canvas>
+<div class="toolbar"><button id="play">播放 / 暂停</button><button id="reset">从头开始</button><input id="time" aria-label="动画进度" type="range" min="0" max="1" step="0.001" value="0"></div>
+<p id="caption"></p><div id="controls"></div><p id="status" role="alert"></p>
+<details><summary>数学说明与适用范围</summary><p>MOCK 示例：数值随动画时间和参数即时重算。</p><ul><li>∇f=(a x,y)，a∈[1,2]。</li><li>(x,y)←(x,y)−α(a x,y)。</li><li>0&lt;α&lt;2/max(a,1) 时二次函数梯度下降收敛。</li><li>默认步长为 0.1</li><li>曲率 a=1</li><li>此代码来自离线测试样例，未经真实模型或教师审阅。</li></ul></details>
+</main><script type="application/json" id="project">{"story": {"interaction_goals": ["调节步长、初始点、曲面曲率和三维视角"], "math_notes": ["∇f=(a x,y)，a∈[1,2]。", "(x,y)←(x,y)−α(a x,y)。", "0\u003cα\u003c2/max(a,1) 时二次函数梯度下降收敛。", "默认步长为 0.1", "曲率 a=1"], "objectives": ["认识三维目标曲面", "沿负梯度逐步更新", "观察函数值下降与收敛"], "scenes": [{"id": "S1", "math": "∇f=(a x,y)，a∈[1,2]。", "narration": "绘出 f(x,y)=(a x²+y²)/2 的三维网格曲面及初始点。", "seconds": 5, "title": "认识三维目标曲面", "visual": "绘出 f(x,y)=(a x²+y²)/2 的三维网格曲面及初始点。"}, {"id": "S2", "math": "(x,y)←(x,y)−α(a x,y)。", "narration": "依照负梯度迭代，橙色路径位于目标曲面上。", "seconds": 5, "title": "沿负梯度逐步更新", "visual": "依照负梯度迭代，橙色路径位于目标曲面上。"}, {"id": "S3", "math": "0\u003cα\u003c2/max(a,1) 时二次函数梯度下降收敛。", "narration": "点逐渐接近 (0,0,0)，并显示步数和函数值。", "seconds": 5, "title": "观察函数值下降与收敛", "visual": "点逐渐接近 (0,0,0)，并显示步数和函数值。"}], "summary": "MOCK 离线教学演示；真实 API 会依据任意概念编写方案及代码。", "title": "三维曲面与下降轨迹"}, "program": {"code": "\nfunction draw(ctx,t,p) {\n const f=(x,y)=\u003e(p.curvature*x*x+y*y)/2;\n const angle=p.angle,ca=Math.cos(angle),sa=Math.sin(angle);\n const project=(x,y,z)=\u003e[360+53*(ca*x-sa*y),325+21*(sa*x+ca*y)-25*z];\n const line=(a,b,color,width=1)=\u003e{ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(...a);ctx.lineTo(...b);ctx.stroke();};\n ctx.fillStyle='#f7f9fc';ctx.fillRect(0,0,960,540);\n for(let i=-12;i\u003c=12;i++)for(let j=-12;j\u003c12;j++){\n   let x=i/5,y=j/5;\n   line(project(x,y,f(x,y)),project(x,y+.2,f(x,y+.2)),'#b5c8e4');\n   line(project(y,x,f(y,x)),project(y+.2,x,f(y+.2,x)),'#b5c8e4');\n }\n line(project(-3,0,0),project(3,0,0),'#69819d',2);line(project(0,-3,0),project(0,3,0),'#69819d',2);\n ctx.font='17px sans-serif';ctx.fillStyle='#1d3651';ctx.fillText('x',...project(3,0,0));ctx.fillText('y',...project(0,3,0));\n let x=p.start,y=1.6,previous=project(x,y,f(x,y));const steps=Math.floor(t*36);\n for(let k=0;k\u003csteps;k++){\n   x-=p.alpha*p.curvature*x;y-=p.alpha*y;const next=project(x,y,f(x,y));line(previous,next,'#dd7427',3);previous=next;\n }\n const z=f(x,y),xy=project(x,y,z),min=project(0,0,0);\n ctx.fillStyle='#6a56b3';ctx.beginPath();ctx.arc(...min,6,0,7);ctx.fill();\n ctx.fillStyle='#dd7427';ctx.beginPath();ctx.arc(...xy,7,0,7);ctx.fill();\n ctx.font='19px sans-serif';ctx.fillStyle='#203853';ctx.fillText('三维目标曲面与下降轨迹',50,104);\n ctx.fillText('f(x,y) = ('+p.curvature.toFixed(1)+'x² + y²) / 2',595,144);\n ctx.fillText('第 '+steps+' 步 · α = '+p.alpha.toFixed(2),595,190);\n ctx.fillText('x = '+x.toFixed(5)+'   y = '+y.toFixed(5),595,234);\n ctx.fillText('f(x,y) = '+z.toFixed(7),595,278);\n ctx.fillText('∇f = (a·x, y)',595,326);\n ctx.fillText('xₖ₊₁ = xₖ − α∇f(xₖ)',595,365);\n ctx.font='17px sans-serif';ctx.fillText('紫色：极小值点 (0,0,0)',595,405);\n return {metrics:{step:steps,x,y,objective:z,gradient_norm:Math.hypot(p.curvature*x,y)}};\n}\n", "controls": [{"id": "alpha", "label": "学习率 α", "min": 0.03, "max": 0.9, "step": 0.01, "value": 0.1}, {"id": "start", "label": "初始 x", "min": 0.5, "max": 2.2, "step": 0.1, "value": 2.0}, {"id": "curvature", "label": "曲率 a", "min": 1.0, "max": 2.0, "step": 0.1, "value": 1.0}, {"id": "angle", "label": "三维视角", "min": -0.8, "max": 1.4, "step": 0.05, "value": 0.6}], "covered_decision_ids": ["794ee1e7b2a448f5a8410ac3c6e0e02c", "6abad3122d404ace8b129234e4515772"], "explanation": "MOCK 示例：数值随动画时间和参数即时重算。", "limitations": ["此代码来自离线测试样例，未经真实模型或教师审阅。"]}}</script><script>/* Owned runtime. Model code executes only in a disposable, network-blocked worker. */
+"use strict";
+const project = JSON.parse(document.getElementById("project").textContent);
+const canvas = document.getElementById("scene");
+const ctx = canvas.getContext("2d");
+const timeSlider = document.getElementById("time");
+const statusBox = document.getElementById("status");
+const duration = project.story.scenes.reduce((n, s) => n + s.seconds, 0);
+const params = Object.fromEntries(project.program.controls.map(c => [c.id, c.value]));
+let position = 0, playing = false, serial = 0, requests = new Map(), broken = null;
+const workerSource = `"use strict";\n${project.program.code}\n;
+const surface = new OffscreenCanvas(960, 540);
+const context = surface.getContext('2d');
+self.onmessage = function(event) {
+  const {id,t,p} = event.data;
+  try {
+    surface.width = 960; surface.height = 540;
+    context.fillStyle = '#f7f9fc'; context.fillRect(0,0,960,540);
+    context.save(); const result = draw(context,t,p); context.restore();
+    const bitmap = surface.transferToImageBitmap();
+    self.postMessage({id,bitmap,result}, [bitmap]);
+  } catch (error) { self.postMessage({id,error:String(error.message || error)}); }
+};`;
+const workerURL = URL.createObjectURL(new Blob([workerSource], {type: "text/javascript"}));
+const worker = new Worker(workerURL);
+URL.revokeObjectURL(workerURL);
+function fail(message) {
+  broken = String(message); playing = false; statusBox.textContent = `动画运行失败：${broken}`;
+  worker.terminate();
+  for (const value of requests.values()) { clearTimeout(value.timer); value.reject(new Error(broken)); }
+  requests.clear();
+}
+worker.onerror = e => { e.preventDefault(); fail(e.message || "动画代码无法运行"); };
+worker.onmessage = e => {
+  const item = requests.get(e.data.id);
+  if (!item) { if (e.data.bitmap) e.data.bitmap.close(); return; }
+  requests.delete(e.data.id); clearTimeout(item.timer);
+  if (e.data.error) { item.reject(new Error(e.data.error)); return; }
+  item.resolve(e.data);
+};
+function requestFrame(t, p) {
+  if (broken) return Promise.reject(new Error(broken));
+  return new Promise((resolve,reject) => {
+    const id = ++serial;
+    const timer = setTimeout(() => fail("单帧超过 3 秒，请修复代码后重试"), 3000);
+    requests.set(id, {resolve,reject,timer}); worker.postMessage({id,t,p});
+  });
+}
+function lines(text, x, y, width, lineHeight, maxLines) {
+  let line = "", count = 0;
+  for (const char of text) {
+    if (ctx.measureText(line + char).width > width) {
+      ctx.fillText(line, x, y); y += lineHeight; line = "";
+      if (++count >= maxLines - 1) break;
+    }
+    line += char;
+  }
+  ctx.fillText(line, x, y);
+}
+function currentScene(t) {
+  let end = 0;
+  return project.story.scenes.find(s => { end += s.seconds; return t * duration < end; }) || project.story.scenes.at(-1);
+}
+async function render(t, overrides = {}) {
+  t = Math.max(0, Math.min(1, t));
+  const frame = await requestFrame(t, {...params, ...overrides});
+  ctx.setTransform(1,0,0,1,0,0); ctx.drawImage(frame.bitmap,0,0); frame.bitmap.close();
+  // Hash just the plot area, before captions; a changing subtitle cannot pass animation checks.
+  const pixels = ctx.getImageData(0,68,960,367).data;
+  let signature = 2166136261;
+  for (let i=0;i<pixels.length;i+=4) { signature = Math.imul(signature ^ pixels[i],16777619); signature = Math.imul(signature ^ pixels[i+1],16777619); signature = Math.imul(signature ^ pixels[i+2],16777619); }
+  const scene = currentScene(t);
+  ctx.fillStyle = "#f7f9fc"; ctx.fillRect(0,0,960,68); ctx.fillRect(0,435,960,105);
+  ctx.fillStyle = "#18283b"; ctx.font = "bold 25px sans-serif";
+  lines(project.story.title,28,34,890,28,1);
+  ctx.fillStyle = "#567087"; ctx.font = "16px sans-serif";
+  ctx.fillText(`${scene.title} · ${(t*duration).toFixed(1)} / ${duration} 秒`,28,59);
+  ctx.fillStyle = "#1d3651"; ctx.font = "20px sans-serif";
+  lines(scene.narration,28,465,900,27,2);
+  ctx.fillStyle = "#4562d9"; ctx.fillRect(0,534,960*t,6);
+  position = t; timeSlider.value = String(t);
+  document.getElementById("caption").textContent = scene.narration;
+  return {metrics: frame.result?.metrics || {}, plot_signature: String(signature >>> 0)};
+}
+let rendering = false;
+async function show(t) {
+  if (rendering) return;
+  rendering = true;
+  try { await render(t); } catch (e) { fail(e.message); }
+  finally { rendering = false; }
+}
+for (const control of project.program.controls) {
+  const label = document.createElement("label");
+  const title = document.createElement("span"); title.textContent = control.label;
+  const input = document.createElement("input"); input.type="range";
+  input.min=control.min; input.max=control.max; input.step=control.step; input.value=control.value;
+  input.id=`param-${control.id}`; input.setAttribute("aria-label",control.label);
+  const value = document.createElement("output"); value.textContent=control.value;
+  input.oninput = () => { params[control.id]=Number(input.value); value.textContent=input.value; playing=false; show(position); };
+  label.append(title,input,value); document.getElementById("controls").append(label);
+}
+timeSlider.oninput = () => { playing=false; show(Number(timeSlider.value)); };
+document.getElementById("play").onclick = async () => {
+  if (playing) { playing=false; return; }
+  if (position>=1) position=0;
+  playing=true; const start=performance.now()-position*duration*1000;
+  while(playing && position<1 && !broken) {
+    await show(Math.min(1,(performance.now()-start)/(duration*1000)));
+    await new Promise(resolve=>setTimeout(resolve,33));
+  }
+  playing=false;
+};
+document.getElementById("reset").onclick = () => { playing=false; show(0); };
+async function record() {
+  playing=false; await render(0);
+  const mime = ["video/webm;codecs=vp9","video/webm;codecs=vp8"].find(v=>MediaRecorder.isTypeSupported(v));
+  if (!mime) throw new Error("浏览器不支持 WebM 视频编码");
+  const stream=canvas.captureStream(24);
+  const recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:4000000});
+  const chunks=[]; let size=0;
+  const completed=new Promise((resolve,reject)=>{
+    recorder.ondataavailable=e=>{ chunks.push(e.data); size+=e.data.size; if(size>80*1024*1024){recorder.stop();reject(new Error('视频超过 80MB 限制'));} };
+    recorder.onerror=e=>reject(new Error(e.error?.message || "视频编码失败"));
+    recorder.onstop=resolve;
+  });
+  recorder.start(1000); const start=performance.now(); let frames=0;
+  try {
+    while (performance.now()-start<duration*1000) {
+      await render(Math.min(1,(performance.now()-start)/(duration*1000))); frames++;
+      await new Promise(resolve=>setTimeout(resolve,1000/24));
+    }
+    await render(1); await new Promise(resolve=>setTimeout(resolve,150));
+    recorder.stop(); await completed;
+  } finally { stream.getTracks().forEach(track=>track.stop()); }
+  const blob=new Blob(chunks,{type:mime});
+  const video=document.createElement("video"); video.muted=true; video.src=URL.createObjectURL(blob);
+  await new Promise((resolve,reject)=>{video.onloadeddata=resolve;video.onerror=()=>reject(new Error('视频解码验证失败'));});
+  const dimensions={width:video.videoWidth,height:video.videoHeight}; URL.revokeObjectURL(video.src);
+  const data=await new Promise(resolve=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result.split(',')[1]);reader.readAsDataURL(blob);});
+  return {data,mime,frames,duration_seconds:duration,recorded_seconds:(performance.now()-start)/1000,...dimensions};
+}
+window.visualization = {render,record,params,duration,ready:render(0)};
+window.visualization.ready.catch(e=>fail(e.message));
+</script></body></html>

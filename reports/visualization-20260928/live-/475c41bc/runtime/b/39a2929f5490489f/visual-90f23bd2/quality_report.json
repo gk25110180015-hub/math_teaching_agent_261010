@@ -1,0 +1,335 @@
+{
+  "status": "PASS_WITH_REVIEW_REQUIRED",
+  "created_at": "2026-09-28T14:18:00.833144+00:00",
+  "plan_hash": "24967a1aee157520f7bfbed424bca67852032bb92b38503dedf06326d90c4e70",
+  "provider": "live",
+  "code_review": {
+    "approved": true,
+    "issues": [],
+    "limitations": [
+      "本次仅做代码与确认方案的静态数学核查，未对实际渲染帧做人工视觉审阅；文字/元素遮挡、字体溢出等观感问题未逐帧确认。",
+      "第二幕的双侧逼近只在 h=±(0.02+mag(1-q)) 范围内收缩，最小约 ±0.02，未继续任意趋近 0；切线在 |h|<0.18 时渐显（透明度 (0.18-|h|)/0.16），属于有限非零 h 的近似展示，与方案中“h=0 只标注极限位置”一致。",
+      "display 控件只改变第三幕右侧面板文字（数值/化简/切线方程）；第一、二幕面板与切线绘制不受其影响，第三幕切线无论 display 取值都始终绘制，display=2 仅额外显示切线方程文字。",
+      "h 滑杆只缩放第一、二幕的 h 轨迹与差商；第三幕固定使用 1、0.5、0.1、0.01 时间序列（程序 explanation/limitations 已声明，方案 S3 也要求固定序列）。",
+      "函数范围收敛为两个固定预设 f(x)=x^2 与 f(x)=2x+1（均 a=1），未提供决策记录选项 GUIDED_X2_DEFAULT 中“输入附近多项式函数与基准点”的能力；该收敛由确认方案的 changes 与 math_notes 明确记录，切换时 A 点与公式同步更新正确（(1,1)/(1,3)）。",
+      "第三幕的因式分解、约去 h、结果 2+h 三行在 display=1 时同时呈现，而非随播放逐行出现；默认 display=0 时只显示 h 与差商序列。",
+      "绘图区横纵比例不一致（x 方向约 137 px/单位，y 方向约 23.2 px/单位），割线“旋转为切线”的视觉角度被纵向压缩；数值、公式与导数结论（斜率 2）不受影响，但几何直觉的斜率观感被拉伸。",
+      "第三幕与第二幕末端的切线虚线从 y≈436 处起始，略超出 y=68..435 的可视带约 1px，并与底部“预设①/②：f(x)=…，a=1”文字在 x≈130 处交叉；仅为观感问题，不涉及数学错误。",
+      "未包含不可导反例（尖点/断点），面板文字“双侧极限相同 ⇒ 可导”只在 x^2 与 2x+1 两个多项式预设（a=1）上被验证，未展示导数不存在的对照情形。",
+      "差商与斜率显示为 4 位有限小数，仅作数值近似展示；面板已明确“有限差商不等于极限”“h=0 不参与差商”，未把某次差商等同于严格极限。"
+    ]
+  },
+  "render": {
+    "status": "PASS",
+    "samples": [
+      {
+        "time": 0.0,
+        "metrics": {
+          "scene": 1,
+          "h": 0.5,
+          "delta_y": 1.25,
+          "secant_slope": 2.5,
+          "right_secant_slope": 2.5,
+          "left_secant_slope": 1.5,
+          "derivative": 2,
+          "function": "x^2",
+          "seconds": 0
+        },
+        "plot_signature": "4244733628"
+      },
+      {
+        "time": 0.25,
+        "metrics": {
+          "scene": 1,
+          "h": 0.26625,
+          "delta_y": 0.6033890624999998,
+          "secant_slope": 2.2662499999999994,
+          "right_secant_slope": 2.2662499999999994,
+          "left_secant_slope": 1.73375,
+          "derivative": 2,
+          "function": "x^2",
+          "seconds": 8.5
+        },
+        "plot_signature": "1204525581"
+      },
+      {
+        "time": 0.5,
+        "metrics": {
+          "scene": 2,
+          "h": -0.43666666666666665,
+          "delta_y": -0.6826555555555556,
+          "secant_slope": 1.5633333333333335,
+          "right_secant_slope": 2.436666666666666,
+          "left_secant_slope": 1.5633333333333335,
+          "derivative": 2,
+          "function": "x^2",
+          "seconds": 17
+        },
+        "plot_signature": "1004251290"
+      },
+      {
+        "time": 0.75,
+        "metrics": {
+          "scene": 3,
+          "h": 0.5,
+          "delta_y": 1.25,
+          "secant_slope": 2.5,
+          "right_secant_slope": 2.5,
+          "left_secant_slope": 1.5,
+          "derivative": 2,
+          "function": "x^2",
+          "seconds": 25.5
+        },
+        "plot_signature": "2917043252"
+      },
+      {
+        "time": 1.0,
+        "metrics": {
+          "scene": 3,
+          "h": 0.01,
+          "delta_y": 0.020100000000000007,
+          "secant_slope": 2.0100000000000007,
+          "right_secant_slope": 2.0100000000000007,
+          "left_secant_slope": 1.9900000000000029,
+          "derivative": 2,
+          "function": "x^2",
+          "seconds": 34
+        },
+        "plot_signature": "2501120429"
+      }
+    ],
+    "controls": [
+      {
+        "id": "h",
+        "status": "PASS",
+        "probes": [
+          {
+            "time": 0.37,
+            "min": {
+              "metrics": {
+                "scene": 2,
+                "h": 0.0257,
+                "delta_y": 0.052060490000000126,
+                "secant_slope": 2.025700000000005,
+                "right_secant_slope": 2.025700000000005,
+                "left_secant_slope": 1.9743000000000037,
+                "derivative": 2,
+                "function": "x^2",
+                "seconds": 12.58
+              },
+              "plot_signature": "2939328221"
+            },
+            "max": {
+              "metrics": {
+                "scene": 2,
+                "h": 0.5900000000000001,
+                "delta_y": 1.5281000000000002,
+                "secant_slope": 2.59,
+                "right_secant_slope": 2.59,
+                "left_secant_slope": 1.41,
+                "derivative": 2,
+                "function": "x^2",
+                "seconds": 12.58
+              },
+              "plot_signature": "3374093048"
+            }
+          },
+          {
+            "time": 0.73,
+            "min": {
+              "metrics": {
+                "scene": 3,
+                "h": 1,
+                "delta_y": 3,
+                "secant_slope": 3,
+                "right_secant_slope": 3,
+                "left_secant_slope": 1,
+                "derivative": 2,
+                "function": "x^2",
+                "seconds": 24.82
+              },
+              "plot_signature": "1037528825"
+            },
+            "max": {
+              "metrics": {
+                "scene": 3,
+                "h": 1,
+                "delta_y": 3,
+                "secant_slope": 3,
+                "right_secant_slope": 3,
+                "left_secant_slope": 1,
+                "derivative": 2,
+                "function": "x^2",
+                "seconds": 24.82
+              },
+              "plot_signature": "1037528825"
+            }
+          }
+        ]
+      },
+      {
+        "id": "preset",
+        "status": "PASS",
+        "probes": [
+          {
+            "time": 0.37,
+            "min": {
+              "metrics": {
+                "scene": 2,
+                "h": 0.30500000000000005,
+                "delta_y": 0.7030250000000005,
+                "secant_slope": 2.305000000000001,
+                "right_secant_slope": 2.305000000000001,
+                "left_secant_slope": 1.695,
+                "derivative": 2,
+                "function": "x^2",
+                "seconds": 12.58
+              },
+              "plot_signature": "1190315803"
+            },
+            "max": {
+              "metrics": {
+                "scene": 2,
+                "h": 0.30500000000000005,
+                "delta_y": 0.6100000000000003,
+                "secant_slope": 2.000000000000001,
+                "right_secant_slope": 2.000000000000001,
+                "left_secant_slope": 2.000000000000001,
+                "derivative": 2,
+                "function": "2x+1",
+                "seconds": 12.58
+              },
+              "plot_signature": "233245517"
+            }
+          },
+          {
+            "time": 0.73,
+            "min": {
+              "metrics": {
+                "scene": 3,
+                "h": 1,
+                "delta_y": 3,
+                "secant_slope": 3,
+                "right_secant_slope": 3,
+                "left_secant_slope": 1,
+                "derivative": 2,
+                "function": "x^2",
+                "seconds": 24.82
+              },
+              "plot_signature": "1037528825"
+            },
+            "max": {
+              "metrics": {
+                "scene": 3,
+                "h": 1,
+                "delta_y": 2,
+                "secant_slope": 2,
+                "right_secant_slope": 2,
+                "left_secant_slope": 2,
+                "derivative": 2,
+                "function": "2x+1",
+                "seconds": 24.82
+              },
+              "plot_signature": "2839917508"
+            }
+          }
+        ]
+      },
+      {
+        "id": "display",
+        "status": "PASS",
+        "probes": [
+          {
+            "time": 0.37,
+            "min": {
+              "metrics": {
+                "scene": 2,
+                "h": 0.30500000000000005,
+                "delta_y": 0.7030250000000005,
+                "secant_slope": 2.305000000000001,
+                "right_secant_slope": 2.305000000000001,
+                "left_secant_slope": 1.695,
+                "derivative": 2,
+                "function": "x^2",
+                "seconds": 12.58
+              },
+              "plot_signature": "1190315803"
+            },
+            "max": {
+              "metrics": {
+                "scene": 2,
+                "h": 0.30500000000000005,
+                "delta_y": 0.7030250000000005,
+                "secant_slope": 2.305000000000001,
+                "right_secant_slope": 2.305000000000001,
+                "left_secant_slope": 1.695,
+                "derivative": 2,
+                "function": "x^2",
+                "seconds": 12.58
+              },
+              "plot_signature": "1190315803"
+            }
+          },
+          {
+            "time": 0.73,
+            "min": {
+              "metrics": {
+                "scene": 3,
+                "h": 1,
+                "delta_y": 3,
+                "secant_slope": 3,
+                "right_secant_slope": 3,
+                "left_secant_slope": 1,
+                "derivative": 2,
+                "function": "x^2",
+                "seconds": 24.82
+              },
+              "plot_signature": "1037528825"
+            },
+            "max": {
+              "metrics": {
+                "scene": 3,
+                "h": 1,
+                "delta_y": 3,
+                "secant_slope": 3,
+                "right_secant_slope": 3,
+                "left_secant_slope": 1,
+                "derivative": 2,
+                "function": "x^2",
+                "seconds": 24.82
+              },
+              "plot_signature": "51669548"
+            }
+          }
+        ]
+      }
+    ],
+    "network_requests_blocked": 0,
+    "human_visual_review": "NOT_RUN",
+    "code_execution": "browser_web_worker",
+    "video": {
+      "mime": "video/webm;codecs=vp9",
+      "frames": 567,
+      "duration_seconds": 34,
+      "recorded_seconds": 34.22120000000298,
+      "width": 960,
+      "height": 540,
+      "bytes": 3122792
+    }
+  },
+  "human_math_review": "NOT_RUN",
+  "human_visual_review": "NOT_RUN",
+  "limitations": [
+    "Canvas动画只能用有限个非零h近似双侧极限，不能把某一次差商等同于严格导数。",
+    "函数选择仅限确认方案中的两个固定预设，不提供任意函数文本输入。",
+    "第三幕的h序列按确认方案固定，不由h滑杆缩放；h滑杆主要影响第一、二幕的几何位置和差商。"
+  ],
+  "covered_decision_ids": [
+    "d59bb3ef51814044aadd8a22ae8e4a06",
+    "a6e098a7cd2844fcbe291a2fa2f9b4ae",
+    "bc3e134305fd4175afe66cdee8d182c3",
+    "8c59c91b2aa34d39b6a58b7a1ac6326a",
+    "e0085af3af3d45808ab281be2d07c615"
+  ],
+  "format": "WebM VP8/VP9, 960x540, silent animation with Chinese captions"
+}

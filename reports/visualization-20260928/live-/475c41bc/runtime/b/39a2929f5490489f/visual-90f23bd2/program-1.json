@@ -1,0 +1,42 @@
+{
+  "code": "function draw(ctx, t, p) {\n  var W = 960, H = 540;\n  var z = Number(t); if (!isFinite(z)) z = 0;\n  z = Math.max(0, Math.min(1, z));\n  var mag = Number(p.h); if (!isFinite(mag)) mag = 0.5;\n  mag = Math.max(0.01, Math.min(1, mag));\n  var preset = Number(p.preset) >= 0.5 ? 1 : 0;\n  var mode = Math.max(0, Math.min(2, Math.round(Number(p.display) || 0)));\n  var sec = z * 34;\n  var scene = sec < 10 ? 1 : (sec < 22 ? 2 : 3);\n  var local = scene === 1 ? sec / 10 : scene === 2 ? (sec - 10) / 12 : (sec - 22) / 12;\n  var isX2 = preset === 0;\n  var a = 1;\n  function f(x) { return isX2 ? x * x : 2 * x + 1; }\n  function df() { return isX2 ? 2 : 2; }\n  var h;\n  if (scene === 1) {\n    h = mag * (1 - 0.55 * Math.min(1, local));\n  } else if (scene === 2) {\n    var q = local < 0.5 ? local * 2 : (local - 0.5) * 2;\n    var side = local < 0.5 ? 1 : -1;\n    h = side * mag * (1 - 0.9 * q);\n  } else {\n    var seq = [1, 0.5, 0.1, 0.01];\n    var k = Math.min(3, Math.floor(local * 4));\n    h = seq[k] * Math.max(0.1, Math.min(2, mag / 0.5));\n    h = Math.min(1, h);\n  }\n  if (Math.abs(h) < 0.01) h = h < 0 ? -0.01 : 0.01;\n  var ya = f(a), xb = a + h, yb = f(xb), dy = yb - ya;\n  var slope = dy / h, tangent = df();\n  var left = 70, bottom = 400, pw = 585, ph = 285;\n  var xmin = -2, xmax = 4, ymin = -1, ymax = 10;\n  function X(x) { return left + (x - xmin) / (xmax - xmin) * pw; }\n  function Y(y) { return bottom - (y - ymin) / (ymax - ymin) * ph; }\n  function txt(s, x, y, n, c, al) {\n    ctx.font = (n || 17) + 'px sans-serif';\n    ctx.fillStyle = c || '#263238'; ctx.textAlign = al || 'left'; ctx.textBaseline = 'middle';\n    ctx.fillText(String(s), x, y);\n  }\n  function ln(x1, y1, x2, y2, c, w, dash) {\n    ctx.save(); ctx.strokeStyle = c; ctx.lineWidth = w || 2; ctx.setLineDash(dash || []);\n    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); ctx.restore();\n  }\n  ctx.fillStyle = '#f8fbff'; ctx.fillRect(0, 0, W, H);\n  txt('从割线到切线：导数是瞬时变化率', 480, 28, 24, '#17324d', 'center');\n  txt('第' + scene + '幕：' + (scene === 1 ? '两点确定割线' : scene === 2 ? '双侧逼近切线' : 'x² 的具体计算'), 48, 64, 19, '#6b3fa0');\n  ctx.strokeStyle = '#d4e1ec'; ctx.lineWidth = 1; ctx.strokeRect(35, 85, 890, 350);\n  for (var gx = -2; gx <= 4; gx++) ln(X(gx), Y(ymin), X(gx), Y(ymax), '#e5edf3', 1);\n  for (var gy = 0; gy <= 10; gy += 2) ln(X(xmin), Y(gy), X(xmax), Y(gy), '#e5edf3', 1);\n  ln(X(xmin), Y(0), X(xmax), Y(0), '#334e68', 2);\n  ln(X(0), Y(ymin), X(0), Y(ymax), '#334e68', 2);\n  for (gx = -2; gx <= 4; gx++) txt(gx, X(gx), Y(0) + 17, 14, '#526b7a', 'center');\n  for (gy = 0; gy <= 10; gy += 2) txt(gy, X(0) - 10, Y(gy), 14, '#526b7a', 'right');\n  txt('x', X(xmax) + 12, Y(0), 17, '#263238'); txt('y', X(0), Y(ymax) - 12, 17, '#263238');\n  ctx.save(); ctx.strokeStyle = '#2878c8'; ctx.lineWidth = 3; ctx.beginPath();\n  var started = false;\n  for (var i = 0; i <= 220; i++) {\n    var xx = xmin + (xmax - xmin) * i / 220, yy = f(xx);\n    if (yy >= ymin && yy <= ymax) { if (!started) { ctx.moveTo(X(xx), Y(yy)); started = true; } else ctx.lineTo(X(xx), Y(yy)); }\n  }\n  ctx.stroke(); ctx.restore();\n  var Ax = X(a), Ay = Y(ya), Bx = X(xb), By = Y(yb);\n  var tlo = xmin, thi = xmax;\n  var ty1 = ya + tangent * (tlo - a), ty2 = ya + tangent * (thi - a);\n  ctx.save(); ctx.beginPath(); ctx.rect(left, 100, pw, 300); ctx.clip();\n  ln(X(tlo), Y(ty1), X(thi), Y(ty2), '#8d4bbb', 2.5, [7, 5]);\n  ctx.restore();\n  ln(Ax, Ay, Bx, By, '#ee8b2d', 4);\n  ln(Ax, Ay, Bx, Ay, '#ee8b2d', 2, [5, 4]);\n  ln(Bx, Ay, Bx, By, '#ee8b2d', 2, [5, 4]);\n  ctx.fillStyle = '#17324d'; ctx.beginPath(); ctx.arc(Ax, Ay, 6, 0, Math.PI * 2); ctx.fill();\n  ctx.fillStyle = '#ee8b2d'; ctx.beginPath(); ctx.arc(Bx, By, 6, 0, Math.PI * 2); ctx.fill();\n  txt('A=(1,' + ya.toFixed(2) + ')', Ax + 10, Ay - 17, 17, '#17324d');\n  txt('B=(1+h,' + yb.toFixed(2) + ')', Bx + 10, By - 17, 17, '#b55b12');\n  txt('h=' + h.toFixed(2), (Ax + Bx) / 2, Ay + 21, 17, '#b55b12', 'center');\n  txt('Δy=' + dy.toFixed(2), Bx + 40, (Ay + By) / 2, 17, '#b55b12', 'center');\n  ctx.fillStyle = '#ffffff'; ctx.fillRect(682, 100, 225, 302); ctx.strokeStyle = '#c4d6e5'; ctx.strokeRect(682, 100, 225, 302);\n  txt('数值与公式', 795, 122, 20, '#17324d', 'center');\n  if (mode === 0) {\n    txt('差商 m=Δy/h', 700, 158, 18, '#b55b12');\n    txt('m=' + slope.toFixed(4), 700, 190, 19, '#b55b12');\n    txt('h=' + h.toFixed(2) + '（h≠0）', 700, 222, 18, '#263238');\n    txt('Δy=' + dy.toFixed(2), 700, 254, 18, '#263238');\n    txt(scene === 2 ? (h > 0 ? '右侧 h>0' : '左侧 h<0') : '有限差商', 700, 294, 18, '#2878c8');\n    txt('有限逼近不等于极限', 700, 330, 16, '#6b3fa0');\n  } else if (mode === 1) {\n    if (isX2) {\n      txt('[f(1+h)-f(1)]/h', 700, 158, 17, '#263238');\n      txt('=[(1+h)²−1]/h', 700, 190, 17, '#263238');\n      txt('=[2h+h²]/h', 700, 222, 18, '#263238');\n      txt('=2+h（h≠0）', 700, 254, 18, '#b55b12');\n      txt('h→0 时趋向 2', 700, 294, 18, '#6b3fa0');\n    } else {\n      txt('[2(1+h)+1−3]/h', 700, 158, 17, '#263238');\n      txt('=2h/h=2', 700, 196, 18, '#b55b12');\n      txt('两侧差商都为 2', 700, 238, 18, '#6b3fa0');\n      txt('约去 h 需 h≠0', 700, 280, 17, '#263238');\n    }\n  } else {\n    txt('切线斜率 f′(1)=' + tangent.toFixed(2), 700, 164, 18, '#6b3fa0');\n    txt(isX2 ? 'y−1=2(x−1)' : 'y−3=2(x−1)', 700, 204, 20, '#2878c8');\n    txt('h=0 仅为极限位置', 700, 250, 17, '#b55b12');\n    txt('双侧极限相同 ⇒ 可导', 700, 292, 17, '#6b3fa0');\n    txt('切线与曲线在 A 附近重合', 700, 332, 16, '#263238');\n  }\n  txt('预设 ' + (isX2 ? '① f(x)=x²，a=1' : '② f(x)=2x+1，a=1') + '   |   ' + sec.toFixed(1) + ' / 34 秒', 480, 458, 17, '#263238', 'center');\n  var finiteSlope = isFinite(slope) ? slope : 0;\n  return {metrics:{scene:scene,h:h,delta_y:dy,secant_slope:finiteSlope,derivative:tangent,function:isX2?'x^2':'2x+1',seconds:sec}};\n}",
+  "controls": [
+    {
+      "id": "h",
+      "label": "非零 h 的大小",
+      "min": 0.01,
+      "max": 1.0,
+      "step": 0.01,
+      "value": 0.5
+    },
+    {
+      "id": "preset",
+      "label": "预设函数（0:x²，1:2x+1）",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 1.0,
+      "value": 0.0
+    },
+    {
+      "id": "display",
+      "label": "显示模式（0数值，1化简，2切线）",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 1.0,
+      "value": 0.0
+    }
+  ],
+  "covered_decision_ids": [
+    "d59bb3ef51814044aadd8a22ae8e4a06",
+    "a6e098a7cd2844fcbe291a2fa2f9b4ae",
+    "bc3e134305fd4175afe66cdee8d182c3",
+    "8c59c91b2aa34d39b6a58b7a1ac6326a",
+    "e0085af3af3d45808ab281be2d07c615"
+  ],
+  "explanation": "代码严格按34秒累计时间切换三幕，使用两个固定预设函数并同步更新基准点 A。动画展示正、负 h 的双侧逼近，h 始终非零，h=0 只标为极限位置；差商由真实有限差分计算。第三幕保留 x² 的因式分解、约去 h、2+h 和切线方程，并让预设函数、h 大小及显示模式在全部镜头中产生可观察影响。未实现时间轴、播放或暂停控件，由宿主播放器统一控制传入的 t。",
+  "limitations": [
+    "有限 Canvas 动画只能用有限个非零 h 近似极限，不能将单次差商等同于导数。",
+    "函数选择仅限确认方案中的 x² 与 2x+1，不提供任意函数文本输入。",
+    "双侧动画在正、负方向切换时以极限位置为分界，h=0 不参与差商计算。"
+  ]
+}

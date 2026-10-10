@@ -1,0 +1,45 @@
+{
+  "code": "\nfunction draw(ctx,t,p) {\n const f=(x,y)=>(p.curvature*x*x+y*y)/2;\n const angle=p.angle,ca=Math.cos(angle),sa=Math.sin(angle);\n const project=(x,y,z)=>[360+53*(ca*x-sa*y),325+21*(sa*x+ca*y)-25*z];\n const line=(a,b,color,width=1)=>{ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(...a);ctx.lineTo(...b);ctx.stroke();};\n ctx.fillStyle='#f7f9fc';ctx.fillRect(0,0,960,540);\n for(let i=-12;i<=12;i++)for(let j=-12;j<12;j++){\n   let x=i/5,y=j/5;\n   line(project(x,y,f(x,y)),project(x,y+.2,f(x,y+.2)),'#b5c8e4');\n   line(project(y,x,f(y,x)),project(y+.2,x,f(y+.2,x)),'#b5c8e4');\n }\n line(project(-3,0,0),project(3,0,0),'#69819d',2);line(project(0,-3,0),project(0,3,0),'#69819d',2);\n ctx.font='17px sans-serif';ctx.fillStyle='#1d3651';ctx.fillText('x',...project(3,0,0));ctx.fillText('y',...project(0,3,0));\n let x=p.start,y=1.6,previous=project(x,y,f(x,y));const steps=Math.floor(t*36);\n for(let k=0;k<steps;k++){\n   x-=p.alpha*p.curvature*x;y-=p.alpha*y;const next=project(x,y,f(x,y));line(previous,next,'#dd7427',3);previous=next;\n }\n const z=f(x,y),xy=project(x,y,z),min=project(0,0,0);\n ctx.fillStyle='#6a56b3';ctx.beginPath();ctx.arc(...min,6,0,7);ctx.fill();\n ctx.fillStyle='#dd7427';ctx.beginPath();ctx.arc(...xy,7,0,7);ctx.fill();\n ctx.font='19px sans-serif';ctx.fillStyle='#203853';ctx.fillText('三维目标曲面与下降轨迹',50,104);\n ctx.fillText('f(x,y) = ('+p.curvature.toFixed(1)+'x² + y²) / 2',595,144);\n ctx.fillText('第 '+steps+' 步 · α = '+p.alpha.toFixed(2),595,190);\n ctx.fillText('x = '+x.toFixed(5)+'   y = '+y.toFixed(5),595,234);\n ctx.fillText('f(x,y) = '+z.toFixed(7),595,278);\n ctx.fillText('∇f = (a·x, y)',595,326);\n ctx.fillText('xₖ₊₁ = xₖ − α∇f(xₖ)',595,365);\n ctx.font='17px sans-serif';ctx.fillText('紫色：极小值点 (0,0,0)',595,405);\n return {metrics:{step:steps,x,y,objective:z,gradient_norm:Math.hypot(p.curvature*x,y)}};\n}\n",
+  "controls": [
+    {
+      "id": "alpha",
+      "label": "学习率 α",
+      "min": 0.03,
+      "max": 0.9,
+      "step": 0.01,
+      "value": 0.1
+    },
+    {
+      "id": "start",
+      "label": "初始 x",
+      "min": 0.5,
+      "max": 2.2,
+      "step": 0.1,
+      "value": 2.0
+    },
+    {
+      "id": "curvature",
+      "label": "曲率 a",
+      "min": 1.0,
+      "max": 2.0,
+      "step": 0.1,
+      "value": 1.0
+    },
+    {
+      "id": "angle",
+      "label": "三维视角",
+      "min": -0.8,
+      "max": 1.4,
+      "step": 0.05,
+      "value": 0.6
+    }
+  ],
+  "covered_decision_ids": [
+    "794ee1e7b2a448f5a8410ac3c6e0e02c",
+    "6abad3122d404ace8b129234e4515772"
+  ],
+  "explanation": "MOCK 示例：数值随动画时间和参数即时重算。",
+  "limitations": [
+    "此代码来自离线测试样例，未经真实模型或教师审阅。"
+  ]
+}
